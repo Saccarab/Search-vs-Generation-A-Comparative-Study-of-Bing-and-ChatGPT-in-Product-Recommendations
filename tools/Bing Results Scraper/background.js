@@ -4,7 +4,7 @@ console.log('Bing Search Scraper with Content Extraction - Background script loa
 
 // Hardcoded values for timeout and delay
 const CONTENT_TIMEOUT = 15000; // 15 seconds
-const RATE_LIMIT_MS = 1000; // 1 second between requests to same domain
+const RATE_LIMIT_MS = 3000; // 3 seconds between requests to same domain
 
 // Initialize sidepanel on extension install/startup
 chrome.runtime.onInstalled.addListener(() => {

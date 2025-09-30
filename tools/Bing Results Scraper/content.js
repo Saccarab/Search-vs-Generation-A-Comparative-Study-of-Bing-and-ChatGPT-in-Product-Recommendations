@@ -4,8 +4,8 @@ console.log("Bing Search Scraper with Content Extraction - Content script loaded
 
 // Hardcoded values for timeout and delay
 const CONTENT_TIMEOUT = 15000; // 15 seconds
-const REQUEST_DELAY = 2000; // 2 seconds between requests
-const MAX_CONCURRENT = 3; // Maximum concurrent content requests
+const REQUEST_DELAY = 5000; // 5 seconds between requests
+const MAX_CONCURRENT = 1; // Maximum concurrent content requests
 
 // ================== SELECTORS ==================
 const SEARCH_INPUT = '#sb_form_q';
