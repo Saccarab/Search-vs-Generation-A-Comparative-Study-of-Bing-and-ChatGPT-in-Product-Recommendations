@@ -256,6 +256,8 @@ function extractSearchResults() {
   const adElements = document.querySelectorAll('.b_ad, .b_adTop, .b_adBottom, [data-apurl]');
   console.log(`Total .b_algo elements: ${allResultElements.length}, Ad elements: ${adElements.length}, Organic: ${resultElements.length}`);
   
+  let resultPosition = 1;  // FIXED: Track actual result position separately
+  
   resultElements.forEach((resultElement, index) => {
     try {
       // Double-check this isn't an ad
@@ -293,7 +295,7 @@ function extractSearchResults() {
       // Only add if we have title and URL
       if (title && actualUrl) {
         results.push({
-          position: index + 1,
+          position: resultPosition++,  // FIXED: Use sequential counter instead of forEach index
           title: title,
           url: actualUrl,
           domain: extractDomain(actualUrl),
@@ -301,7 +303,7 @@ function extractSearchResults() {
           snippet: snippet
         });
         
-        // console.log(`Extracted organic result ${index + 1}: ${actualUrl}`);
+        // console.log(`Extracted organic result ${resultPosition - 1}: ${actualUrl}`);
       } else {
         // console.warn(`Skipped result ${index + 1}: Missing data`);
       }
@@ -379,7 +381,7 @@ function extractTextFromHtml(html) {
     
     return text;
   } catch (error) {
-    console.error('Error extracting text from HTML:', error);
+    // console.error('Error extracting text from HTML:', error);
     return '';
   }
 }
@@ -426,7 +428,7 @@ async function extractContentFromResults(results, options = {}) {
           extractedText = extractTextFromHtml(content);
           console.log(`Extracted ${extractedText.length} characters from ${result.domain}`);
         } else {
-          console.warn(`Failed to fetch content from ${result.url}: ${error}`);
+          // console.warn(`Failed to fetch content from ${result.url}: ${error}`);
         }
         
         return {
@@ -437,7 +439,7 @@ async function extractContentFromResults(results, options = {}) {
         };
         
       } catch (error) {
-        console.error(`Error processing ${result.url}:`, error);
+        // console.error(`Error processing ${result.url}:`, error);
         return {
           ...result,
           content: '',
@@ -702,7 +704,7 @@ async function processQueries(queries, maxResultsPerQuery = 50, extractContent =
       }
       
     } catch (error) {
-      console.error(`Error processing query "${query}":`, error);
+      // (`Error processing query "${query}":`, error);
       
       reportError(i + 1, error.message);
       
@@ -763,7 +765,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log('Scraping completed successfully');
         sendResponse("finished!");
       } catch (err) {
-        console.error('Scraping error:', err);
+        // console.error('Scraping error:', err);
         chrome.runtime.sendMessage({
           action: 'scrapingError',
           error: err.message

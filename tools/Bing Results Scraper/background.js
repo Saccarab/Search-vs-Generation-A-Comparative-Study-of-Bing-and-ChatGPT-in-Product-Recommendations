@@ -45,7 +45,7 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
       
       // Check response status
       if (!response.ok) {
-        console.warn(`HTTP ${response.status} for ${url}`);
+        // console.warn(`HTTP ${response.status} for ${url}`);
         return {
           content: '',
           error: `HTTP ${response.status}: ${response.statusText}`
@@ -57,7 +57,7 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
       if (!contentType.toLowerCase().includes('text/html') && 
           !contentType.toLowerCase().includes('text/plain') &&
           !contentType.toLowerCase().includes('application/xhtml')) {
-        console.warn(`Non-HTML content type: ${contentType} for ${url}`);
+        // console.warn(`Non-HTML content type: ${contentType} for ${url}`);
         return {
           content: '',
           error: `Unsupported content type: ${contentType.split(';')[0]}`
@@ -79,7 +79,7 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
     }
     
   } catch (error) {
-    console.warn(`Background: Failed to fetch ${url}:`, error.message);
+    // console.warn(`Background: Failed to fetch ${url}:`, error.message);
     
     let errorMessage = error.message;
     
@@ -148,7 +148,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     result.error ? `with error: ${result.error}` : 'successfully');
         sendResponse(result);
       } catch (error) {
-        console.error(`Background: Content fetch error for ${message.url}:`, error);
+        // console.error(`Background: Content fetch error for ${message.url}:`, error);
         sendResponse({
           content: '',
           error: error.message || 'Unknown error'
