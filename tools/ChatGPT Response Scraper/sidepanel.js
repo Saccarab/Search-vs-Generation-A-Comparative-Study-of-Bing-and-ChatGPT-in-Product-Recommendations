@@ -47,6 +47,7 @@ let scrapingState = {
     completed: 0,
     errors: 0,
     errorList: [],
+    retries: 0,
     currentQueryIndex: -1,
     currentRun: 0,
     runsPerQuery: 1,
@@ -279,6 +280,7 @@ function startScraping() {
         completed: 0,
         errors: 0,
         errorList: [],
+        retries: 0,
         currentQueryIndex: 0,
         currentRun: 1,
         runsPerQuery: runs,
@@ -309,7 +311,7 @@ function startScraping() {
 }
 
 function updateProgressDisplay() {
-    const { completed, totalOperations, currentQueryIndex, currentRun, runsPerQuery } = scrapingState;
+    const { completed, totalOperations, currentQueryIndex, currentRun, runsPerQuery, retries } = scrapingState;
     
     // Progress bar
     const progress = Math.round((completed / totalOperations) * 100);
@@ -321,7 +323,8 @@ function updateProgressDisplay() {
     if (currentQueryIndex < uploadedQueries.length) {
         const query = uploadedQueries[currentQueryIndex];
         currentQuery.textContent = query.length > 50 ? query.substring(0, 50) + '...' : query;
-        progressStatus.textContent = `Scraping query ${currentQueryIndex + 1} of ${uploadedQueries.length} (Run ${currentRun}/${runsPerQuery})`;
+        const retryInfo = retries > 0 ? ` • ${retries} retries` : '';
+        progressStatus.textContent = `Scraping query ${currentQueryIndex + 1} of ${uploadedQueries.length} (Run ${currentRun}/${runsPerQuery})${retryInfo}`;
     }
     
     // Stats
@@ -414,6 +417,7 @@ function resetApp() {
         completed: 0,
         errors: 0,
         errorList: [],
+        retries: 0,
         currentQueryIndex: -1,
         currentRun: 0,
         runsPerQuery: 1,
@@ -497,6 +501,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             if (message.completed !== undefined) {
                 scrapingState.completed = message.completed;
             }
+            if (message.retryAttempt) {
+                scrapingState.retries++;
+                console.log(`Retry attempt ${message.retryCount}/${message.maxRetries} for current query`);
+            }
             updateProgressDisplay();
             break;
             
@@ -529,6 +537,7 @@ The extension will:
 • Create new temporary chats for each query
 • Collect responses and source links from ChatGPT
 • Handle multiple runs per query automatically
+• Automatically retry up to 3 times if web search is forced but no sources appear
 • Export results to CSV
 
 Consider using the official OpenAI API instead:
@@ -537,11 +546,13 @@ https://platform.openai.com/docs/api-reference
 CSV Output Columns:
 • query_index: Query number (1, 2, 3...)
 • run_number: Run number for the query (1, 2, 3...)
+• retry_count: Number of retries needed (0, 1, 2, 3)
 • query: The original search query
 • response_text: ChatGPT's full response
 • web_search_forced: Whether web search was forced
 • sources_cited: URLs from citations section
-• sources_additional: URLs from additional sources section`;
+• sources_additional: URLs from additional sources section
+• no_sources_warning: YES if forced web search failed after all retries`;
 
     alert(helpText);
 }

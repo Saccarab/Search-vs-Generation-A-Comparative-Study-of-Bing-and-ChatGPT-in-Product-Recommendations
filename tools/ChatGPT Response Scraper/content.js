@@ -202,7 +202,7 @@ async function extractSourceLinks() {
       urlObj.search = params.toString();
       return urlObj.toString();
     } catch (error) {
-      console.warn('Failed to parse URL:', url);
+      // console.warn('Failed to parse URL:', url);
       return url;
     }
   }
@@ -409,7 +409,7 @@ function reportProgress(data) {
       ...data
     });
   } catch (error) {
-    console.warn('Failed to report progress:', error);
+    // console.warn('Failed to report progress:', error);
   }
 }
 
@@ -421,30 +421,28 @@ function reportError(queryIndex, error) {
       error: error
     });
   } catch (error) {
-    console.warn('Failed to report error:', error);
+    // console.warn('Failed to report error:', error);
   }
 }
 
 // ================== AUTOMATIZATION ==================
 
-async function collectQueryResponse(query, force_web_search = true) {
-  // console.log(`[Query Processing] Starting query: "${query.substring(0, 50)}..."`);
+async function collectQueryResponse(query, force_web_search = true, retryCount = 0, maxRetries = 3) {
+  const attemptLabel = retryCount > 0 ? ` (Retry ${retryCount}/${maxRetries})` : '';
+  console.log(`[Query Processing] Starting query: "${query.substring(0, 50)}..."${attemptLabel}`);
   
   await pauseSeconds(getRandomInt(1, 3));
 
   // open new chat
-  // console.log('[Step 1/8] Opening new chat...');
   await simulateClick(NEW_CHAT_BTN);
   await pauseSeconds(getRandomInt(1, 3));
 
   // open new temp chat
-  // console.log('[Step 2/8] Enabling temporary chat...');
   await simulateClick(TEMP_CHAT_BTN);
   await pauseSeconds(getRandomInt(1, 3));
 
   // enable web search -> only if force_web_search is true
   if (force_web_search) {
-    // console.log('[Step 3/8] Enabling web search...');
     await clickWebSearch();
     await pauseSeconds(getRandomInt(1, 3));
   } else {
@@ -452,22 +450,18 @@ async function collectQueryResponse(query, force_web_search = true) {
   }
 
   // type query
-  // console.log('[Step 4/8] Typing query...');
   await simulateTyping(TEXT_FIELD, query);
   await pauseSeconds(getRandomInt(1, 3));
 
   // send query
-  // console.log('[Step 5/8] Sending query...');
   await simulateClick(SEND_QUERY_BTN);
   await pauseSeconds(getRandomInt(1, 3));
 
   // wait for response end
-  // console.log('[Step 6/8] Waiting for response...');
   await waitForResponseFinished(SEND_QUERY_BTN);
   await pauseSeconds(getRandomInt(1, 3));
 
   // get response text
-  // console.log('[Step 7/8] Extracting response text...');
   const response_text = await getResponse(ASSISTANT_MSG);
   await pauseSeconds(getRandomInt(1, 3));
 
@@ -475,12 +469,12 @@ async function collectQueryResponse(query, force_web_search = true) {
   const result = {
     query: query,
     response_text: response_text,
-    web_search_forced: force_web_search
+    web_search_forced: force_web_search,
+    retry_count: retryCount
   };
 
   // ALWAYS try to extract source links (ChatGPT sometimes uses sources automatically)
   try {
-    //console.log('[Step 8/8] Extracting source links...');
     // Check if sources button exists before trying to click it
     const sourcesButton = document.querySelector(OPEN_SOURCES_BTN);
     if (sourcesButton) {
@@ -506,15 +500,37 @@ async function collectQueryResponse(query, force_web_search = true) {
       console.log(`No sources button found - ChatGPT did not use web search for this query${force_web_search ? ' (despite being forced)' : ''}`);
       result.sources_cited = [];
       result.sources_additional = [];
+      
+      // FAILSAFE: If web search was forced but no sources found, retry
+      if (force_web_search && retryCount < maxRetries) {
+        // console.warn(`[Failsafe] Web search was forced but no sources found. Retrying... (${retryCount + 1}/${maxRetries})`);
+        
+        // Report retry attempt to sidepanel
+        reportProgress({
+          retryAttempt: true,
+          retryCount: retryCount + 1,
+          maxRetries: maxRetries
+        });
+        
+        // Add a small delay before retry
+        await pauseSeconds(getRandomInt(2, 4));
+        
+        // Recursive retry
+        return await collectQueryResponse(query, force_web_search, retryCount + 1, maxRetries);
+      } else if (force_web_search && retryCount >= maxRetries) {
+        console.error(`[Failsafe] Max retries (${maxRetries}) reached. Proceeding without sources.`);
+        result.no_sources_warning = true;
+      }
     }
   } catch (error) {
-    console.warn('Error extracting sources:', error.message);
+    // console.warn('Error extracting sources:', error.message);
     // Set empty arrays if source extraction fails
     result.sources_cited = [];
     result.sources_additional = [];
+    result.extraction_error = error.message;
   }
 
-  // console.log(`[Query Complete] Successfully processed query with ${result.response_text ? result.response_text.length : 0} characters of response`);
+  console.log(`[Query Complete] Successfully processed query with ${result.response_text ? result.response_text.length : 0} characters of response${result.no_sources_warning ? ' (WARNING: No sources despite forced web search)' : ''}`);
   return result;
 }
 
@@ -566,7 +582,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
           response_text: result.response_text,
           web_search_forced: result.web_search_forced,
           sources_cited: formatSources(result.sources_cited),
-          sources_additional: formatSources(result.sources_additional)
+          sources_additional: formatSources(result.sources_additional),
         };
         
         results.push(enrichedResult);
@@ -601,7 +617,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
           response_text: `ERROR: ${error.message}`,
           web_search_forced: force_web_search,
           sources_cited: '',
-          sources_additional: ''
+          sources_additional: '',
         };
         
         results.push(errorResult);
