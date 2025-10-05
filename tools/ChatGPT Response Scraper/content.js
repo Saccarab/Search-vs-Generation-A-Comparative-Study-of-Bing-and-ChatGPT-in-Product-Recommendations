@@ -558,20 +558,25 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         
         const result = await collectQueryResponse(query, force_web_search);
         
-        // Helper function to safely convert source data to string
+        // Helper function to safely convert source data to Python list string format
         const formatSources = (sources) => {
-          if (!sources) return '';
+          if (!sources) return '[]';
           if (Array.isArray(sources)) {
-            if (sources.length === 0) return '';
-            return sources.map(source => {
-              if (typeof source === 'string') return source;
-              if (typeof source === 'object' && source.url) return source.url;
-              if (typeof source === 'object' && source.link) return source.link;
-              return JSON.stringify(source);
-            }).join('; ');
+            if (sources.length === 0) return '[]';
+            const urls = sources.map(source => {
+              let url;
+              if (typeof source === 'string') url = source;
+              else if (typeof source === 'object' && source.url) url = source.url;
+              else if (typeof source === 'object' && source.link) url = source.link;
+              else url = JSON.stringify(source);
+              
+              // Escape single quotes in URL and wrap in quotes
+              return `'${url.replace(/'/g, "\\'")}'`;
+            });
+            return `[${urls.join(', ')}]`;
           }
-          if (typeof sources === 'string') return sources;
-          return JSON.stringify(sources);
+          if (typeof sources === 'string') return `['${sources.replace(/'/g, "\\'")}']`;
+          return '[]';
         };
         
         // Add run number and index to result
