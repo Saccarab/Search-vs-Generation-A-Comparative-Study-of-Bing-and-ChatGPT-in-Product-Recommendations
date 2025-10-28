@@ -1,18 +1,16 @@
-// Bing Search Results Scraper with Content Extraction - Background Script
+// console.log('Bing Search Scraper with Content Extraction - Background script loaded');
 
-console.log('Bing Search Scraper with Content Extraction - Background script loaded');
-
-// Hardcoded values for timeout and delay
+// timeout & delay
 const CONTENT_TIMEOUT = 15000; // 15 seconds
 const RATE_LIMIT_MS = 3000; // 3 seconds between requests to same domain
 
-// Initialize sidepanel on extension install/startup
+// init sidepanel on extension install/startup
 chrome.runtime.onInstalled.addListener(() => {
   console.log('Extension installed - Setting up sidepanel');
   chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
 });
 
-// Handle extension startup
+// handle extension startup
 chrome.runtime.onStartup.addListener(() => {
   console.log('Extension started - Sidepanel ready');
 });
@@ -23,12 +21,11 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
   try {
     console.log(`Background: Fetching content from ${url}`);
     
-    // Create abort controller for timeout
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
     
     try {
-      // Fetch with minimal headers to avoid blocks
+      // fetch with minimal headers to avoid blocks
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -37,13 +34,12 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
         },
         signal: controller.signal,
         redirect: 'follow',
-        mode: 'cors', // Explicitly set CORS mode
-        credentials: 'omit' // Don't send credentials
+        mode: 'cors', 
+        credentials: 'omit'
       });
       
       clearTimeout(timeoutId);
       
-      // Check response status
       if (!response.ok) {
         // console.warn(`HTTP ${response.status} for ${url}`);
         return {
@@ -52,7 +48,6 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
         };
       }
       
-      // Check content type
       const contentType = response.headers.get('content-type') || '';
       if (!contentType.toLowerCase().includes('text/html') && 
           !contentType.toLowerCase().includes('text/plain') &&
@@ -64,7 +59,6 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
         };
       }
       
-      // Read response text
       const html = await response.text();
       console.log(`Background: Successfully fetched ${html.length} characters from ${url}`);
       
@@ -82,8 +76,6 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
     // console.warn(`Background: Failed to fetch ${url}:`, error.message);
     
     let errorMessage = error.message;
-    
-    // Provide more user-friendly error messages
     if (error.name === 'AbortError') {
       errorMessage = 'Request timeout';
     } else if (error.message.includes('Failed to fetch')) {
@@ -101,7 +93,6 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
   }
 }
 
-// Rate limiting for content fetching
 const urlFetchHistory = new Map();
 
 function canFetchUrl(url) {
@@ -119,12 +110,12 @@ function canFetchUrl(url) {
     console.log(`Rate limit: waiting ${waitTime}ms for ${domain}`);
     return false;
   } catch (error) {
-    return true; // Allow if URL parsing fails
+    return true; // allow if URL parsing fails
   }
 }
 
 async function fetchWithRateLimit(url, timeout) {
-  // Check rate limit
+  // check rate limit
   while (!canFetchUrl(url)) {
     await new Promise(resolve => setTimeout(resolve, 100));
   }
@@ -133,14 +124,14 @@ async function fetchWithRateLimit(url, timeout) {
 }
 
 // =============== COMMUNICATION RELAY ===============
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log('Background received message:', message.action, 'from:', sender.tab ? 'content script' : 'sidepanel');
   
-  // Handle content fetching requests
+  // content fetching requests
   if (message.action === 'fetchContent') {
     console.log(`Background: Content fetch request for ${message.url}`);
     
-    // Use async handler
     (async () => {
       try {
         const result = await fetchWithRateLimit(message.url, message.timeout || CONTENT_TIMEOUT);
@@ -156,7 +147,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
     })();
     
-    return true; // Keep message channel open for async response
+    return true; // keep message channel open for async response
   }
   
   // content to sidepanel relay
@@ -167,17 +158,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     message.action === 'queryError'
   )) {
     console.log('Relaying message to sidepanel:', message.action);
-    return false; // Let the message propagate normally
+    return false; 
   }
   
-  // Handle direct background script actions
+  // handle direct background script actions
   if (message.action === 'backgroundPing') {
     console.log('Background script ping received');
     sendResponse({ status: 'background active' });
     return true;
   }
   
-  // Log unhandled messages
   if (message.action) {
     console.log('Unhandled message action:', message.action);
   }
@@ -185,14 +175,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   return false;
 });
 
-// Handle tab updates to ensure content script stays connected
+// handle tab updates to ensure content script stays connected
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url && tab.url.includes('bing.com')) {
     console.log('Bing tab updated and ready:', tabId);
   }
 });
 
-// Handle connection errors
+// handle connection errors
 chrome.runtime.onConnect.addListener((port) => {
   console.log('Extension connection established:', port.name);
   
@@ -205,16 +195,16 @@ chrome.runtime.onConnect.addListener((port) => {
   });
 });
 
-// Monitor extension health
+// monitor extension health
 setInterval(() => {
   chrome.tabs.query({ url: '*://www.bing.com/*' }, (tabs) => {
     if (tabs.length > 0) {
       console.log(`Health check: ${tabs.length} Bing tab(s) open`);
     }
   });
-}, 60000); // Check every minute
+}, 60000); // check every minute
 
-// Handle extension errors
+// handle extension errors
 chrome.runtime.onSuspend.addListener(() => {
   console.log('Extension suspending...');
 });
@@ -223,7 +213,6 @@ chrome.runtime.onSuspendCanceled.addListener(() => {
   console.log('Extension suspension canceled');
 });
 
-// Clean up old rate limit entries periodically
 setInterval(() => {
   const now = Date.now();
   const cutoff = now - (60 * 60 * 1000); // 1 hour ago
@@ -235,9 +224,9 @@ setInterval(() => {
   }
   
   console.log(`Rate limit cleanup: ${urlFetchHistory.size} domains tracked`);
-}, 10 * 60 * 1000); // Clean every 10 minutes
+}, 10 * 60 * 1000); // clean every 10 minutes
 
-// Export for debugging
+// export for debugging
 if (typeof globalThis !== 'undefined') {
   globalThis.backgroundScript = {
     version: '2.1.0',
@@ -251,4 +240,4 @@ if (typeof globalThis !== 'undefined') {
   };
 }
 
-console.log('Background script ready - content fetching enabled');
+// console.log('Background script ready - content fetching enabled');

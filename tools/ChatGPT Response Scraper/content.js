@@ -31,11 +31,11 @@ async function simulateClick(selector) {
     throw new Error(`Element with selector "${selector}" not found!`);
   }
 
-  // Use pointer events first (works better with modern UI)
+  // use pointer events first
   element.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
   element.dispatchEvent(new PointerEvent("pointerup", { bubbles: true }));
 
-  // Then dispatch click event
+  // then dispatch click event
   const event = new MouseEvent("click", {
     bubbles: true,
     cancelable: true,
@@ -71,7 +71,7 @@ async function simulateTyping(selector, text, minDelay = 80, maxDelay = 200) {
 
 async function waitForSelector(selector, timeout = 15000) {
   return new Promise((resolve) => {
-    // Check immediately
+    // check immediately
     const el = document.querySelector(selector);
     if (el) return resolve(el);
 
@@ -105,7 +105,7 @@ async function clickWebSearch() {
     element.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
     element.dispatchEvent(new PointerEvent("pointerup", { bubbles: true }));
 
-    // Then dispatch click event
+    // dispatch click event
     const event = new MouseEvent("click", {
       bubbles: true,
       cancelable: true,
@@ -136,7 +136,7 @@ async function waitForResponseFinished(selector, timeoutMs = 120000) {
       clearTimeout(timer);
     };
 
-    // Observe the body for attribute changes and node replacements
+    // observe the body for attribute changes and node replacements
     observer.observe(document.body, {
       childList: true,
       subtree: true,
@@ -144,13 +144,13 @@ async function waitForResponseFinished(selector, timeoutMs = 120000) {
       attributeFilter: ["data-testid"],
     });
 
-    // Timeout to prevent hanging forever
+    // timeout to prevent hanging forever
     const timer = setTimeout(() => {
       cleanup();
       reject(new Error("Timeout waiting for response to finish"));
     }, timeoutMs);
 
-    // Immediate check in case it's already in "finished" state
+    // immediate check in case it's already in "finished" state
     check();
   });
 }
@@ -181,17 +181,17 @@ async function extractSourceLinks() {
   const moreLinks = [];
   const seenUrls = new Set();
 
-  // Helper function to clean UTM parameters from URLs
+  // helper function to clean UTM parameters from URLs
   function cleanUrl(url) {
     try {
       const urlObj = new URL(url);
       const params = new URLSearchParams(urlObj.search);
       
-      // Remove all UTM and tracking parameters
+      // remove all UTM and tracking parameters
       const trackingParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', 'ref', 'source'];
       trackingParams.forEach(param => {
         params.delete(param);
-        // Also remove variations
+        // also remove variations
         for (const [key] of params) {
           if (key.toLowerCase().startsWith(param.toLowerCase() + '_') || key.toLowerCase().includes('utm_')) {
             params.delete(key);
@@ -207,7 +207,7 @@ async function extractSourceLinks() {
     }
   }
 
-  // Helper function to extract links from a section
+  // helper function to extract links from a section
   function extractLinksFromSection(sectionElement) {
     if (!sectionElement) return [];
     
@@ -221,7 +221,7 @@ async function extractSourceLinks() {
         if (!seenUrls.has(cleanedUrl)) {
           seenUrls.add(cleanedUrl);
           
-          // Extract metadata with more fallback selectors
+          // extract metadata with more fallback selectors
           const titleElement = link.querySelector('.line-clamp-2.text-sm.font-semibold') || 
                               link.querySelector('.font-semibold') ||
                               link.querySelector('h3, h4, h5');
@@ -248,7 +248,7 @@ async function extractSourceLinks() {
   }
 
   try {
-    // Strategy 1: Look for sections by their header structure (most reliable)
+    // strategy 1: look for sections by their header structure (most reliable)
     const sectionHeaders = document.querySelectorAll('li.sticky, li[class*="sticky"], .sticky li');
     
     for (const header of sectionHeaders) {
@@ -281,7 +281,7 @@ async function extractSourceLinks() {
       }
     }
 
-    // Strategy 2: Search by text content with broader selectors
+    // strategy 2: search by text content with broader selectors
     if (citations.length === 0 && moreLinks.length === 0) {
       console.log('Fallback: Searching for sections by text content');
       
@@ -292,7 +292,7 @@ async function extractSourceLinks() {
         
         if (text === 'citations') {
           console.log('Found Citations section via fallback');
-          // Look for the next ul element in various ways
+          // look for the next ul element in various ways
           let container = element.nextElementSibling;
           if (!container) container = element.parentElement?.nextElementSibling;
           if (!container && element.parentElement) {
@@ -331,7 +331,7 @@ async function extractSourceLinks() {
       }
     }
 
-    // Strategy 3: Ultimate fallback - collect all external links
+    // strategy 3: collect all external links
     if (citations.length === 0 && moreLinks.length === 0) {
       console.log('Ultimate fallback: Collecting all external links');
       
@@ -358,7 +358,7 @@ async function extractSourceLinks() {
         }
       });
       
-      // If we found some links, assume they're all citations since we can't distinguish
+      // if we found some links, assume they're all citations since we can't distinguish
       if (collectedLinks.length > 0) {
         citations.push(...collectedLinks);
         console.log(`Ultimate fallback collected ${collectedLinks.length} links as citations`);
@@ -381,16 +381,16 @@ async function extractSourceLinks() {
 function convertToCSV(results) {
   if (results.length === 0) return '';
   
-  // Get headers from first result
+  // get headers from first result
   const headers = Object.keys(results[0]);
   
-  // Create CSV content
+  // create CSV content
   let csvContent = headers.join(',') + '\n';
   
   results.forEach(result => {
     const row = headers.map(header => {
       const value = result[header] || '';
-      // Escape quotes and wrap in quotes if contains comma, quote, or newline
+      // escape quotes and wrap in quotes if contains comma, quote, or newline
       const escapedValue = String(value).replace(/"/g, '""');
       return /[,"\n\r]/.test(escapedValue) ? `"${escapedValue}"` : escapedValue;
     });
@@ -473,9 +473,9 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
     retry_count: retryCount
   };
 
-  // ALWAYS try to extract source links (ChatGPT sometimes uses sources automatically)
+  // ALWAYS try to extract source links
   try {
-    // Check if sources button exists before trying to click it
+    // check if sources button exists before trying to click it
     const sourcesButton = document.querySelector(OPEN_SOURCES_BTN);
     if (sourcesButton) {
       console.log('Sources button found - extracting sources');
@@ -484,7 +484,7 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
       
       const sourceLinks = await extractSourceLinks();
       
-      // Try to close the sources panel
+      // try to close the sources panel
       const closeButton = document.querySelector(CLOSE_SOURCES_BTN);
       if (closeButton) {
         await simulateClick(CLOSE_SOURCES_BTN);
@@ -495,7 +495,7 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
       result.sources_cited = sourceLinks.citations || [];
       result.sources_additional = sourceLinks.additional || [];
       
-      // Create union of cited and additional sources
+      // create union of cited and additional sources
       const seenUrls = new Set();
       result.sources_all = [];
       
@@ -506,31 +506,31 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
         }
       }
       
-      // Helper function to extract domain in format domain.something (second-level domain + TLD)
+      // helper function to extract domain in format domain.something (second-level domain + TLD)
       const extractDomain = (source) => {
         try {
           const url = new URL(source.url);
           const hostname = url.hostname || '';
           
-          // Split hostname by dots
+          // split hostname by dots
           const parts = hostname.split('.');
           
-          // If less than 2 parts, return as is
+          // if less than 2 parts, return as is
           if (parts.length < 2) return hostname;
           
-          // Return last two parts (domain.tld)
+          // return last two parts (domain.tld)
           return parts.slice(-2).join('.');
         } catch (e) {
           return '';
         }
       };
       
-      // Extract domains from each source type
+      // extract domains from each source type
       result.domains_cited = result.sources_cited.map(source => extractDomain(source)).filter(Boolean);
       result.domains_additional = result.sources_additional.map(source => extractDomain(source)).filter(Boolean);
       result.domains_all = result.sources_all.map(source => extractDomain(source)).filter(Boolean);
       
-      // Remove duplicate domains for domains_all
+      // remove duplicate domains for domains_all
       const uniqueDomains = new Set(result.domains_all);
       result.domains_all = Array.from(uniqueDomains);
       
@@ -544,21 +544,21 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
       result.domains_additional = [];
       result.domains_all = [];
       
-      // FAILSAFE: If web search was forced but no sources found, retry
+      // FAILSAFE: if web search was forced but no sources found, retry
       if (force_web_search && retryCount < maxRetries) {
         // console.warn(`[Failsafe] Web search was forced but no sources found. Retrying... (${retryCount + 1}/${maxRetries})`);
         
-        // Report retry attempt to sidepanel
+        // report retry attempt to sidepanel
         reportProgress({
           retryAttempt: true,
           retryCount: retryCount + 1,
           maxRetries: maxRetries
         });
         
-        // Add a small delay before retry
+        // add a small delay before retry
         await pauseSeconds(getRandomInt(2, 4));
         
-        // Recursive retry
+        // recursive retry
         return await collectQueryResponse(query, force_web_search, retryCount + 1, maxRetries);
       } else if (force_web_search && retryCount >= maxRetries) {
         console.error(`[Failsafe] Max retries (${maxRetries}) reached. Proceeding without sources.`);
@@ -567,7 +567,7 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
     }
   } catch (error) {
     // console.warn('Error extracting sources:', error.message);
-    // Set empty arrays if source extraction fails
+    // set empty arrays if source extraction fails
     result.sources_cited = [];
     result.sources_additional = [];
     result.sources_all = [];
@@ -595,7 +595,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
       try {
         console.log(`[Progress] Query ${i + 1}/${queries.length}, Run ${run}/${runs_per_q}`);
         
-        // Report progress to sidepanel
+        // report progress to sidepanel
         reportProgress({
           queryIndex: i,
           run: run,
@@ -605,7 +605,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         
         const result = await collectQueryResponse(query, force_web_search);
         
-        // Helper function to safely convert source data to Python list string format
+        // helper function to safely convert source data to Python list string format
         const formatSources = (sources) => {
           if (!sources) return '[]';
           if (Array.isArray(sources)) {
@@ -617,7 +617,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
               else if (typeof source === 'object' && source.link) url = source.link;
               else url = JSON.stringify(source);
               
-              // Escape single quotes in URL and wrap in quotes
+              // escape single quotes in URL and wrap in quotes
               return `'${url.replace(/'/g, "\\'")}'`;
             });
             return `[${urls.join(', ')}]`;
@@ -626,7 +626,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
           return '[]';
         };
         
-        // Add run number and index to result
+        // add run number and index to result
         const enrichedResult = {
           query_index: i + 1,
           run_number: run,
@@ -644,7 +644,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         results.push(enrichedResult);
         completedOperations++;
         
-        // Report completion of this operation
+        // report completion of this operation
         reportProgress({
           completed: completedOperations,
           totalOperations: totalOperations
@@ -652,7 +652,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         
         console.log(`[Success] Completed operation ${completedOperations}/${totalOperations}`);
         
-        // Add delay between queries to avoid rate limiting
+        // add delay between queries to avoid rate limiting
         if (!(i === queries.length - 1 && run === runs_per_q)) {
           const delaySeconds = getRandomInt(2, 5);
           // console.log(`[Delay] Waiting ${delaySeconds} seconds before next query...`);
@@ -662,10 +662,10 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
       } catch (error) {
         console.error(`[Error] Processing query "${query}" (run ${run}):`, error);
         
-        // Report error to sidepanel
+        // report error to sidepanel
         reportError(i + 1, error.message);
         
-        // Add error result
+        // add error result
         const errorResult = {
           query_index: i + 1,
           run_number: run,
@@ -680,16 +680,16 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         results.push(errorResult);
         completedOperations++;
         
-        // Report completion even for errors
+        // report completion even for errors
         reportProgress({
           completed: completedOperations,
           totalOperations: totalOperations
         });
         
-        // Don't stop the entire process for one error, continue with next
+        // don't stop the entire process for one error, continue with next
         console.log(`[Recovery] Continuing with next query after error...`);
         
-        // Still add delay after errors
+        // still add delay after errors
         if (!(i === queries.length - 1 && run === runs_per_q)) {
           await pauseSeconds(getRandomInt(2, 5));
         }
@@ -716,7 +716,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         const csvData = await processQueries(queries, runs_per_q, force_web_search);
         
-        // Send CSV data back to sidepanel
+        // send CSV data back to sidepanel
         chrome.runtime.sendMessage({
           action: 'dataCollectionComplete',
           csvData: csvData,

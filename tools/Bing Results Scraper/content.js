@@ -1,17 +1,16 @@
-// Bing Search Results Scraper with Content Extraction - Content Script
+// console.log("Bing Search Scraper with Content Extraction - Content script loaded");
 
-console.log("Bing Search Scraper with Content Extraction - Content script loaded");
-
-// Hardcoded values for timeout and delay
+// values for timeout and delay
 const CONTENT_TIMEOUT = 15000; // 15 seconds
 const REQUEST_DELAY = 5000; // 5 seconds between requests
-const MAX_CONCURRENT = 1; // Maximum concurrent content requests
+const MAX_CONCURRENT = 1; // max concurrent content requests
 
 // ================== SELECTORS ==================
+
 const SEARCH_INPUT = '#sb_form_q';
 const SEARCH_BUTTON = '#sb_form_go';
 
-// Target only organic results, exclude ads
+// target only organic results, exclude ads
 const SEARCH_RESULTS = '.b_algo:not(.b_adTop):not(.b_adBottom):not([data-apurl])';
 const RESULT_TITLE = 'h2 a';
 const RESULT_URL = 'cite';
@@ -36,15 +35,15 @@ async function simulateClick(selector) {
     throw new Error(`Element with selector "${selector}" not found!`);
   }
 
-  // Scroll element into view
+  // scroll element into view
   element.scrollIntoView({ behavior: 'smooth', block: 'center' });
   await pauseSeconds(0.5);
 
-  // Use pointer events first
+  // use pointer events first
   element.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
   element.dispatchEvent(new PointerEvent("pointerup", { bubbles: true }));
 
-  // Then dispatch click event
+  // then dispatch click event
   const event = new MouseEvent("click", {
     bubbles: true,
     cancelable: true,
@@ -62,16 +61,16 @@ async function simulateTyping(selector, text, clearFirst = true) {
   element.focus();
   
   if (clearFirst) {
-    // Clear existing text
+    // clear existing text
     element.value = '';
     element.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
-  // Type character by character
+  // type character by character
   for (const char of text) {
     element.value += char;
     element.dispatchEvent(new Event('input', { bubbles: true }));
-    await pauseSeconds(getRandomInt(50, 150) / 1000); // Random typing speed
+    await pauseSeconds(getRandomInt(50, 150) / 1000); // random typing speed
   }
 }
 
@@ -99,11 +98,11 @@ async function waitForSelector(selector, timeout = 15000) {
 }
 
 async function waitForResultsToLoad() {
-  // Wait for search results to appear and stabilize
+  // wait for search results to appear and stabilize
   await waitForSelector(SEARCH_RESULTS, 10000);
   await pauseSeconds(getRandomInt(2, 4));
   
-  // Wait a bit more to ensure all results are loaded
+  // wait a bit more to ensure all results are loaded
   let previousCount = 0;
   let stableCount = 0;
   
@@ -111,7 +110,7 @@ async function waitForResultsToLoad() {
     const currentCount = document.querySelectorAll(SEARCH_RESULTS).length;
     if (currentCount === previousCount && currentCount > 0) {
       stableCount++;
-      if (stableCount >= 3) break; // Results are stable
+      if (stableCount >= 3) break; // results are stable
     } else {
       stableCount = 0;
     }
@@ -124,15 +123,15 @@ function getActualUrl(linkElement) {
   const originalUrl = linkElement.href;
   
   try {
-    // Method 1: Try to parse Bing redirect parameters
+    // method 1: try to parse Bing redirect parameters
     if (originalUrl.includes('bing.com')) {
       const url = new URL(originalUrl);
       
-      // Pattern 1: Check 'u' parameter with base64 decoding
+      // pattern 1: check 'u' parameter with base64 decoding
       if (url.searchParams.has('u')) {
         let encodedUrl = url.searchParams.get('u');
         
-        // Try URL decoding first
+        // try URL decoding first
         try {
           const urlDecoded = decodeURIComponent(encodedUrl);
           if (urlDecoded.startsWith('http')) {
@@ -143,13 +142,13 @@ function getActualUrl(linkElement) {
           // URL decoding failed, continue to base64
         }
         
-        // Try base64 decoding (Bing often uses this)
+        // try base64 decoding (Bing often uses this)
         try {
-          // Remove common prefixes that Bing adds before base64
+          // remove common prefixes that Bing adds before base64
           if (encodedUrl.startsWith('a1')) {
             encodedUrl = encodedUrl.substring(2);
           } else if (encodedUrl.match(/^[a-zA-Z0-9]{1,4}/)) {
-            // Try removing first 1-4 characters if they look like prefixes
+            // try removing first 1-4 characters if they look like prefixes
             for (let prefixLen = 1; prefixLen <= 4; prefixLen++) {
               try {
                 const testUrl = encodedUrl.substring(prefixLen);
@@ -159,12 +158,12 @@ function getActualUrl(linkElement) {
                   return cleanUrl(decoded);
                 }
               } catch (e) {
-                // Continue trying different prefix lengths
+                // continue trying different prefix lengths
               }
             }
           }
           
-          // Try direct base64 decode
+          // try direct base64 decode
           const directDecoded = atob(encodedUrl);
           if (directDecoded.startsWith('http')) {
             console.log(`Base64 decoded: ${originalUrl.substring(0, 50)}... -> ${directDecoded}`);
@@ -174,7 +173,7 @@ function getActualUrl(linkElement) {
           // console.warn('Base64 decoding failed:', e.message);
         }
         
-        // Try hex decoding as fallback
+        // try hex decoding as fallback
         try {
           if (encodedUrl.match(/^[0-9a-f]+$/i)) {
             const hexDecoded = encodedUrl.match(/.{1,2}/g).map(byte => String.fromCharCode(parseInt(byte, 16))).join('');
@@ -184,11 +183,11 @@ function getActualUrl(linkElement) {
             }
           }
         } catch (e) {
-          // Continue to next method
+          // continue to next method
         }
       }
       
-      // Pattern 2: Check URL in pathname
+      // pattern 2: check URL in pathname
       const pathMatch = originalUrl.match(/\/(?:aclick|ck)\/.*?u=([^&]+)/);
       if (pathMatch) {
         const encodedUrl = decodeURIComponent(pathMatch[1]);
@@ -210,7 +209,7 @@ function getActualUrl(linkElement) {
       // console.warn(`  u parameter value: ${url.searchParams.get('u') || 'not found'}`);
     }
     
-    // If URL doesn't need processing or parsing failed, return cleaned original
+    // if URL doesn't need processing or parsing failed, return cleaned original
     return cleanUrl(originalUrl);
     
   } catch (error) {
@@ -226,7 +225,7 @@ function cleanUrl(url) {
     const urlObj = new URL(url);
     const params = new URLSearchParams(urlObj.search);
     
-    // Remove tracking parameters
+    // remove tracking parameters
     const trackingParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', 'ref', 'source'];
     trackingParams.forEach(param => params.delete(param));
     
@@ -251,16 +250,16 @@ function extractSearchResults() {
   
   console.log(`Found ${resultElements.length} organic search results on current page`);
   
-  // First, let's verify we're only getting organic results
+  // first, let's verify we're only getting organic results
   const allResultElements = document.querySelectorAll('.b_algo');
   const adElements = document.querySelectorAll('.b_ad, .b_adTop, .b_adBottom, [data-apurl]');
   console.log(`Total .b_algo elements: ${allResultElements.length}, Ad elements: ${adElements.length}, Organic: ${resultElements.length}`);
   
-  let resultPosition = 1;  // FIXED: Track actual result position separately
+  let resultPosition = 1;
   
   resultElements.forEach((resultElement, index) => {
     try {
-      // Double-check this isn't an ad
+      // double-check this isn't an ad
       if (resultElement.classList.contains('b_ad') || 
           resultElement.classList.contains('b_adTop') || 
           resultElement.classList.contains('b_adBottom') ||
@@ -270,7 +269,7 @@ function extractSearchResults() {
         return;
       }
       
-      // Extract title and URL
+      // extract title and URL
       const titleElement = resultElement.querySelector(RESULT_TITLE);
       const title = titleElement?.textContent?.trim() || '';
       
@@ -281,21 +280,21 @@ function extractSearchResults() {
       
       console.log(`Processing organic result ${index + 1}: ${title}`);
       
-      // Get the actual URL by parsing redirect
+      // get the actual URL by parsing redirect
       const actualUrl = getActualUrl(titleElement);
       
-      // Extract snippet
+      // extract snippet
       const snippetElement = resultElement.querySelector(RESULT_SNIPPET);
       const snippet = snippetElement?.textContent?.trim() || '';
       
-      // Extract displayed URL/domain
+      // extract displayed URL/domain
       const citeElement = resultElement.querySelector(RESULT_URL);
       const displayUrl = citeElement?.textContent?.trim() || extractDomain(actualUrl);
       
-      // Only add if we have title and URL
+      // only add if we have title and URL
       if (title && actualUrl) {
         results.push({
-          position: resultPosition++,  // FIXED: Use sequential counter instead of forEach index
+          position: resultPosition++,
           title: title,
           url: actualUrl,
           domain: extractDomain(actualUrl),
@@ -325,7 +324,7 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
       resolve({ content: '', error: 'Timeout' });
     }, timeout);
 
-    // Send message to background script to fetch content
+    // send message to background script to fetch content
     chrome.runtime.sendMessage({
       action: 'fetchContent',
       url: url,
@@ -343,15 +342,15 @@ async function fetchUrlContent(url, timeout = CONTENT_TIMEOUT) {
 
 function extractTextFromHtml(html) {
   try {
-    // Create a temporary element to parse HTML
+    // create a temporary element to parse HTML
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
     
-    // Remove script and style elements
+    // remove script and style elements
     const scripts = tempDiv.querySelectorAll('script, style, noscript');
     scripts.forEach(el => el.remove());
     
-    // Remove common non-content elements
+    // remove common non-content elements
     const nonContentSelectors = [
       'nav', 'header', 'footer', 'aside', 
       '.navigation', '.nav', '.menu', '.sidebar',
@@ -364,16 +363,16 @@ function extractTextFromHtml(html) {
       elements.forEach(el => el.remove());
     });
     
-    // Get text content
+    // get text content
     let text = tempDiv.textContent || tempDiv.innerText || '';
     
-    // Clean up the text
+    // clean up the text
     text = text
-      .replace(/\s+/g, ' ') // Replace multiple whitespace with single space
-      .replace(/\n\s*\n/g, '\n') // Remove empty lines
+      .replace(/\s+/g, ' ') // replace multiple whitespace with single space
+      .replace(/\n\s*\n/g, '\n') // remove empty lines
       .trim();
     
-    // Limit text length to prevent huge content
+    // limit text length to prevent huge content
     const maxLength = Infinity;
     if (text.length > maxLength) {
       text = text.substring(0, maxLength) + '...';
@@ -399,12 +398,12 @@ async function extractContentFromResults(results, options = {}) {
   
   const enrichedResults = [];
   
-  // Process in batches to avoid overwhelming servers
+  // process in batches to avoid overwhelming servers
   for (let i = 0; i < results.length; i += MAX_CONCURRENT) {
     const batch = results.slice(i, i + MAX_CONCURRENT);
     console.log(`Processing content batch ${Math.floor(i / MAX_CONCURRENT) + 1}/${Math.ceil(results.length / MAX_CONCURRENT)}`);
     
-    // Report progress
+    // report progress
     reportProgress({
       contentPhase: true,
       contentProgress: i,
@@ -412,7 +411,7 @@ async function extractContentFromResults(results, options = {}) {
       currentUrl: batch[0]?.url
     });
     
-    // Process batch concurrently
+    // process batch concurrently
     const batchPromises = batch.map(async (result, batchIndex) => {
       const globalIndex = i + batchIndex;
       
@@ -452,14 +451,14 @@ async function extractContentFromResults(results, options = {}) {
     const batchResults = await Promise.all(batchPromises);
     enrichedResults.push(...batchResults);
     
-    // Add delay between batches (except for the last batch)
+    // add delay between batches (except for the last batch)
     if (i + MAX_CONCURRENT < results.length) {
       console.log(`Waiting ${REQUEST_DELAY}ms before next batch...`);
       await pauseSeconds(REQUEST_DELAY / 1000);
     }
   }
   
-  // Final progress update
+  // final progress update
   reportProgress({
     contentPhase: true,
     contentProgress: results.length,
@@ -478,7 +477,7 @@ async function extractContentFromResults(results, options = {}) {
 async function searchAndExtractResults(query, maxResults = 50) {
   console.log(`Starting search for query: "${query}" (max ${maxResults} results)`);
   
-  // Navigate to Bing homepage if not already there
+  // navigate to Bing homepage if not already there
   if (!window.location.href.includes('bing.com')) {
     window.location.href = 'https://www.bing.com';
     await pauseSeconds(3);
@@ -490,17 +489,17 @@ async function searchAndExtractResults(query, maxResults = 50) {
   const maxAttempts = 3;
   
   try {
-    // Perform initial search
+    // perform initial search
     await simulateTyping(SEARCH_INPUT, query, true);
     await pauseSeconds(getRandomInt(1, 2));
     await simulateClick(SEARCH_BUTTON);
     await waitForResultsToLoad();
     
-    // Extract results from first page
+    // extract results from first page
     let pageResults = extractSearchResults();
     console.log(`Page ${pageNumber}: Found ${pageResults.length} results`);
     
-    // Add page number to results
+    // add page number to results
     pageResults = pageResults.map(result => ({
       ...result,
       page: pageNumber,
@@ -509,8 +508,8 @@ async function searchAndExtractResults(query, maxResults = 50) {
     
     allResults.push(...pageResults);
     
-    // Continue to next pages if we need more results
-    while (allResults.length < maxResults && pageNumber < 10) { // Limit to 10 pages max
+    // continue to next pages if we need more results
+    while (allResults.length < maxResults && pageNumber < 10) { // limit to 10 pages max
       const nextButton = document.querySelector(NEXT_PAGE_BUTTON);
       
       if (!nextButton) {
@@ -519,7 +518,7 @@ async function searchAndExtractResults(query, maxResults = 50) {
       }
       
       try {
-        // Click next page
+        // click next page
         await simulateClick(NEXT_PAGE_BUTTON);
         await waitForResultsToLoad();
         
@@ -532,7 +531,7 @@ async function searchAndExtractResults(query, maxResults = 50) {
           break;
         }
         
-        // Add page number and update positions
+        // add page number and update positions
         pageResults = pageResults.map(result => ({
           ...result,
           page: pageNumber,
@@ -541,9 +540,9 @@ async function searchAndExtractResults(query, maxResults = 50) {
         
         allResults.push(...pageResults);
         
-        // Add delay between pages
+        // add delay between pages
         await pauseSeconds(getRandomInt(2, 4));
-        attempts = 0; // Reset attempts counter on successful page
+        attempts = 0; // reset attempts counter on successful page
         
       } catch (error) {
         attempts++;
@@ -554,12 +553,12 @@ async function searchAndExtractResults(query, maxResults = 50) {
           break;
         }
         
-        // Wait a bit longer before retrying
+        // wait a bit longer before retrying
         await pauseSeconds(getRandomInt(3, 5));
       }
     }
     
-    // Trim to max results if needed
+    // trim to max results if needed
     if (allResults.length > maxResults) {
       allResults = allResults.slice(0, maxResults);
     }
@@ -576,19 +575,19 @@ async function searchAndExtractResults(query, maxResults = 50) {
 function convertToCSV(results) {
   if (results.length === 0) return '';
   
-  // CSV headers - now including content fields
+  // CSV headers
   const headers = [
     'query', 'position', 'page', 'title', 'url', 'domain', 'displayUrl', 'snippet',
     'content', 'contentLength', 'contentError'
   ];
   
-  // Create CSV content
+  // create CSV content
   let csvContent = headers.join(',') + '\n';
   
   results.forEach(result => {
     const row = headers.map(header => {
       const value = result[header] || '';
-      // Escape quotes and wrap in quotes if contains comma, quote, or newline
+      // escape quotes and wrap in quotes if contains comma, quote, or newline
       const escapedValue = String(value).replace(/"/g, '""');
       return /[,"\n\r]/.test(escapedValue) ? `"${escapedValue}"` : escapedValue;
     });
@@ -638,7 +637,7 @@ async function processQueries(queries, maxResultsPerQuery = 50, extractContent =
     try {
       console.log(`Processing query ${i + 1}/${totalQueries}: "${query}"`);
       
-      // Report progress
+      // report progress
       reportProgress({
         queryIndex: i,
         completed: completedQueries,
@@ -649,14 +648,14 @@ async function processQueries(queries, maxResultsPerQuery = 50, extractContent =
       
       const results = await searchAndExtractResults(query, maxResultsPerQuery);
       
-      // Add query to each result
+      // add query to each result
       let enrichedResults = results.map(result => ({
         query: query,
         queryIndex: i + 1,
         ...result
       }));
       
-      // Extract content if enabled
+      // extract content if enabled
       if (extractContent && results.length > 0) {
         console.log(`Extracting content for ${results.length} URLs from query "${query}"`);
         
@@ -675,7 +674,7 @@ async function processQueries(queries, maxResultsPerQuery = 50, extractContent =
           extractContent: true
         });
       } else {
-        // Add empty content fields if content extraction is disabled
+        // add empty content fields if content extraction is disabled
         enrichedResults = enrichedResults.map(result => ({
           ...result,
           content: '',
@@ -687,7 +686,7 @@ async function processQueries(queries, maxResultsPerQuery = 50, extractContent =
       allResults.push(...enrichedResults);
       completedQueries++;
       
-      // Report completion of this query
+      // report completion of this query
       reportProgress({
         completed: completedQueries,
         totalQueries: totalQueries,
@@ -696,7 +695,7 @@ async function processQueries(queries, maxResultsPerQuery = 50, extractContent =
       
       console.log(`Completed query ${i + 1}/${totalQueries} with ${results.length} results`);
       
-      // Add delay between queries to be respectful
+      // add delay between queries to be respectful
       if (i < queries.length - 1) {
         const delaySeconds = getRandomInt(5, 10);
         console.log(`Waiting ${delaySeconds} seconds before next query...`);
@@ -708,7 +707,7 @@ async function processQueries(queries, maxResultsPerQuery = 50, extractContent =
       
       reportError(i + 1, error.message);
       
-      // Add error result
+      // add error result
       const errorResult = {
         query: query,
         queryIndex: i + 1,
@@ -727,10 +726,10 @@ async function processQueries(queries, maxResultsPerQuery = 50, extractContent =
       allResults.push(errorResult);
       completedQueries++;
       
-      // Continue with next query
+      // continue with next query
       console.log('Continuing with next query after error...');
       
-      // Add delay even after errors
+      // add delay even after errors
       if (i < queries.length - 1) {
         await pauseSeconds(getRandomInt(3, 6));
       }
@@ -755,7 +754,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         const csvData = await processQueries(queries, maxResults, extractContent);
         
-        // Send CSV data back to sidepanel
+        // send CSV data back to sidepanel
         chrome.runtime.sendMessage({
           action: 'scrapingComplete',
           csvData: csvData,

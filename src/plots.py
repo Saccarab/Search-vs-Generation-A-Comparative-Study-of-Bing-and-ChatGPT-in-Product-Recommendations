@@ -79,17 +79,15 @@ def boxplot(
         If True, add a faint horizontal grid.
         
     ylim : tuple, optional
-        (ymin, ymax) limits for the y-axis.
+        (ymin, ymax) limits for the y-axis. Note: y-axis is fixed to [0, 1] with 0.1 steps.
     """
     sns.set(style="whitegrid", font_scale=1.1)
-
     # determine category order
     if order is None:
         # Preserve the order of appearance
         order = list(pd.Index(df[x_col]).astype("category").cat.categories) \
                 if pd.api.types.is_categorical_dtype(df[x_col]) \
                 else list(pd.unique(df[x_col]))
-
     # build a palette with number of colors
     if isinstance(palette, str):
         palette = sns.color_palette(palette, n_colors = len(order))
@@ -99,9 +97,7 @@ def boxplot(
             palette = (palette * times)[:len(order)]
         else:
             palette = palette[:len(order)]
-
     fig, ax = plt.subplots(figsize = figsize)
-
     # boxplot 
     sns.boxplot(
         data = df,
@@ -115,7 +111,6 @@ def boxplot(
         legend = False,
         ax = ax,
     )
-
     # optional points
     if add_points:
         sns.stripplot(
@@ -129,21 +124,18 @@ def boxplot(
             size = point_size,
             ax = ax,
         )
-
     # labels & aesthetics
     ax.set_title(title if title is not None else "Boxplot", pad = 15)
     ax.set_xlabel(xlabel if xlabel is not None else x_col)
     ax.set_ylabel(ylabel if ylabel is not None else y_col)
-
     if rotate_xticks:
         ax.set_xticklabels(ax.get_xticklabels(), rotation = rotate_xticks, ha = "right")
-
     if grid_y:
         ax.grid(True, axis = "y", linestyle = "--", alpha = 0.2)
-
-    if ylim is not None:
-        ax.set_ylim(*ylim)
-
+    
+    ax.set_ylim(-0.05, 1.05)
+    ax.set_yticks(np.arange(0, 1.1, 0.1))
+    
     fig.tight_layout()
     plt.show()
     

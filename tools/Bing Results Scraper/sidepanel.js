@@ -1,5 +1,3 @@
-// Bing Search Results Scraper with Content Extraction - Sidepanel Controller
-
 // DOM Elements
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
@@ -16,11 +14,11 @@ const startButton = document.getElementById('startButton');
 const maxResultsInput = document.getElementById('maxResults');
 const totalResultsDisplay = document.getElementById('totalResults');
 
-// Content extraction elements
+// content extraction elements
 const extractContentCheckbox = document.getElementById('extractContent');
 const estimatedDuration = document.getElementById('estimatedDuration');
 
-// Progress elements
+// progress elements
 const progressStatus = document.getElementById('progressStatus');
 const progressFill = document.getElementById('progressFill');
 const progressPercent = document.getElementById('progressPercent');
@@ -33,13 +31,13 @@ const errorCountDisplay = document.getElementById('errorCount');
 const recentErrors = document.getElementById('recentErrors');
 const errorList = document.getElementById('errorList');
 
-// Phase progress elements
+// phase progress elements
 const phaseProgress = document.getElementById('phaseProgress');
 const phaseLabel = document.getElementById('phaseLabel');
 const phaseStatus = document.getElementById('phaseStatus');
 const phaseFill = document.getElementById('phaseFill');
 
-// Results elements
+// results elements
 const resultsSummary = document.getElementById('resultsSummary');
 const searchResultsCount = document.getElementById('searchResultsCount');
 const contentExtractedCount = document.getElementById('contentExtractedCount');
@@ -48,11 +46,11 @@ const downloadSize = document.getElementById('downloadSize');
 const downloadButton = document.getElementById('downloadButton');
 const newScrapingButton = document.getElementById('newScrapingButton');
 
-// Hardcoded values for timeout and delay
+// values for timeout and delay
 const CONTENT_TIMEOUT = 15000; // 15 seconds
 const REQUEST_DELAY = 2000; // 2 seconds
 
-// State
+// state
 let uploadedQueries = [];
 let scrapingState = {
     isRunning: false,
@@ -72,41 +70,41 @@ let scrapingState = {
     contentExtracted: 0
 };
 
-// Initialize
+// initialize
 document.addEventListener('DOMContentLoaded', initializeApp);
 
 function initializeApp() {
     setupEventListeners();
     updateConfiguration();
     
-    // Initial state - show upload section
+    // initial state - show upload section
     showSection('upload');
 }
 
 function setupEventListeners() {
-    // File upload events
+    // file upload events
     dropZone.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
     
-    // Drag and drop events
+    // drag and drop events
     dropZone.addEventListener('dragover', handleDragOver);
     dropZone.addEventListener('dragleave', handleDragLeave);
     dropZone.addEventListener('drop', handleDrop);
     
-    // Configuration events
+    // configuration events
     maxResultsInput.addEventListener('input', updateConfiguration);
     extractContentCheckbox.addEventListener('change', updateConfiguration);
     
-    // Control events
+    // control events
     startButton.addEventListener('click', startScraping);
     downloadButton.addEventListener('click', downloadResults);
     newScrapingButton.addEventListener('click', resetApp);
     
-    // Footer events
+    // footer events
     document.getElementById('helpLink').addEventListener('click', showHelp);
 }
 
-// File handling
+// file handling
 function handleDragOver(e) {
     e.preventDefault();
     dropZone.classList.add('dragover');
@@ -177,7 +175,7 @@ function parseCSV(csvText, file) {
         return;
     }
     
-    // Success - show file info and next steps
+    // success - show file info and next steps
     dropZone.classList.add('uploaded');
     showFileInfo(file);
     updateConfiguration();
@@ -227,21 +225,21 @@ function updateConfiguration() {
     const maxResults = parseInt(maxResultsInput.value) || 10;
     const extractContent = extractContentCheckbox.checked;
     
-    // Update total results
+    // update total results
     const total = uploadedQueries.length * maxResults;
     totalResultsDisplay.textContent = total;
     
-    // Calculate estimated duration
+    // calculate estimated duration
     let estimatedMinutes = 0;
     if (uploadedQueries.length > 0) {
-        // Base time estimation based on real performance:
-        // - Search: ~30-45 seconds per query (includes pagination, delays, etc.)
+        // base time estimation based on real performance:
+        // - search: ca 30-45 seconds per query (includes pagination, delays, etc.)
         estimatedMinutes = uploadedQueries.length * 0.6; // 0.6 minutes = 36 seconds per query
         
-        // Add time for content extraction if enabled
+        // add time for content extraction if enabled
         if (extractContent) {
-            // Content extraction: ~2-3 seconds per result when batched
-            // Assuming 80% success rate and 3 concurrent requests
+            // content extraction: ca 2-3 seconds per result when batched
+            // assuming 80% success rate and 3 concurrent requests
             const avgSuccessfulResults = Math.ceil(total * 0.8);
             const contentExtractionMinutes = (avgSuccessfulResults * 2.5) / 60; // 2.5 seconds per result
             
@@ -306,7 +304,7 @@ function hideSection(section) {
     }
 }
 
-// Scraping control
+// scraping control
 function startScraping() {
     if (uploadedQueries.length === 0) {
         showStatus('Please upload a CSV file first', 'warning');
@@ -316,7 +314,7 @@ function startScraping() {
     const maxResults = parseInt(maxResultsInput.value) || 10;
     const extractContent = extractContentCheckbox.checked;
     
-    // Initialize scraping state
+    // initialize scraping state
     scrapingState = {
         isRunning: true,
         startTime: Date.now(),
@@ -335,7 +333,7 @@ function startScraping() {
         contentExtracted: 0
     };
     
-    // Update UI
+    // update UI
     startButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Starting...</span>';
     startButton.disabled = true;
     
@@ -345,7 +343,7 @@ function startScraping() {
     
     updateProgressDisplay();
     
-    // Send command to content script
+    // send command to content script
     sendCommand({
         action: 'startScraping',
         queries: uploadedQueries,
@@ -359,13 +357,13 @@ function startScraping() {
 function updateProgressDisplay() {
     const { completed, totalQueries, currentQueryIndex, currentPhase } = scrapingState;
     
-    // Main progress bar (overall completion)
+    // main progress bar (overall completion)
     const progress = Math.round((completed / totalQueries) * 100);
     progressFill.style.width = progress + '%';
     progressPercent.textContent = progress + '%';
     progressCount.textContent = `${completed} / ${totalQueries}`;
     
-    // Current task
+    // current task
     if (currentQueryIndex < uploadedQueries.length) {
         const query = uploadedQueries[currentQueryIndex];
         currentQuery.textContent = query.length > 50 ? query.substring(0, 50) + '...' : query;
@@ -379,7 +377,7 @@ function updateProgressDisplay() {
         }
     }
     
-    // Phase-specific progress
+    // phase-specific progress
     if (currentPhase === 'content' && scrapingState.contentTotal > 0) {
         phaseProgress.style.display = 'block';
         phaseLabel.textContent = 'Content Extraction';
@@ -391,11 +389,11 @@ function updateProgressDisplay() {
         phaseProgress.style.display = 'none';
     }
     
-    // Stats
+    // stats
     completedCount.textContent = completed;
     errorCountDisplay.textContent = scrapingState.errors;
     
-    // Estimated time
+    // estimated time
     if (completed > 0 && scrapingState.startTime) {
         const elapsed = Date.now() - scrapingState.startTime;
         const avgTimePerQuery = elapsed / completed;
@@ -406,7 +404,7 @@ function updateProgressDisplay() {
         estimatedTime.textContent = 'Calculating...';
     }
     
-    // Show errors if any
+    // show errors if any
     if (scrapingState.errors > 0) {
         recentErrors.style.display = 'block';
         updateErrorList();
@@ -415,7 +413,7 @@ function updateProgressDisplay() {
 
 function updateErrorList() {
     errorList.innerHTML = '';
-    const recentErrorsList = scrapingState.errorList.slice(-3); // Show last 3 errors
+    const recentErrorsList = scrapingState.errorList.slice(-3); // show last 3 errors
     
     recentErrorsList.forEach(error => {
         const errorItem = document.createElement('div');
@@ -431,11 +429,11 @@ function showResults(csvData, totalQueries) {
     hideSection('progress');
     showSection('results');
     
-    // Count results from CSV
+    // count results from CSV
     const lines = csvData.split('\n').filter(line => line.trim() !== '');
-    const totalResults = Math.max(0, lines.length - 1); // Minus header
+    const totalResults = Math.max(0, lines.length - 1); // minus header
     
-    // Count successful content extractions (look for non-empty content)
+    // count successful content extractions (look for non-empty content)
     let contentSuccessCount = 0;
     if (scrapingState.extractContent) {
         const contentColumnIndex = lines[0].split(',').indexOf('content');
@@ -453,11 +451,11 @@ function showResults(csvData, totalQueries) {
     scrapingState.searchResults = totalResults;
     scrapingState.contentExtracted = contentSuccessCount;
     
-    // Update results info
+    // update results info
     const successRate = Math.round(((totalQueries - scrapingState.errors) / totalQueries) * 100);
     resultsSummary.textContent = `Scraping completed! ${successRate}% success rate`;
     
-    // Update stats
+    // update stats
     searchResultsCount.textContent = totalResults;
     contentExtractedCount.textContent = scrapingState.extractContent ? contentSuccessCount : 'N/A';
     
@@ -468,7 +466,7 @@ function showResults(csvData, totalQueries) {
     const sizeKB = Math.round(new Blob([csvData]).size / 1024);
     downloadSize.textContent = `${sizeKB} KB • ${totalResults} results`;
     
-    // Auto-download
+    // auto-download
     downloadCSV(csvData, filename);
 }
 
@@ -494,7 +492,7 @@ function downloadCSV(csvContent, filename) {
 }
 
 function resetApp() {
-    // Reset state
+    // reset state
     uploadedQueries = [];
     scrapingState = {
         isRunning: false,
@@ -514,7 +512,7 @@ function resetApp() {
         contentExtracted: 0
     };
     
-    // Reset UI
+    // reset UI
     resetUploadState();
     hideSection('config');
     hideSection('action');
@@ -534,7 +532,7 @@ function resetUploadState() {
     fileInfoCard.style.display = 'none';
 }
 
-// Communication
+// communication
 function sendCommand(command) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         if (!tabs.length) {
@@ -544,7 +542,7 @@ function sendCommand(command) {
         
         const activeTabId = tabs[0].id;
         
-        // Check if we're on Bing
+        // check if we're on Bing
         if (!tabs[0].url.includes('bing.com')) {
             showStatus('Please navigate to bing.com first', 'error');
             return;
@@ -561,7 +559,7 @@ function sendCommand(command) {
     });
 }
 
-// Listen for messages from content script
+// listen for messages from content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.action) {
         case 'scrapingComplete':
@@ -580,7 +578,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             break;
             
         case 'progressUpdate':
-            // Update query progress
+            // update query progress
             if (message.queryIndex !== undefined) {
                 scrapingState.currentQueryIndex = message.queryIndex;
             }
@@ -593,12 +591,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     message.currentQuery;
             }
             
-            // Update phase
+            // update phase
             if (message.phase) {
                 scrapingState.currentPhase = message.phase;
             }
             
-            // Update content extraction progress
+            // update content extraction progress
             if (message.contentPhase) {
                 scrapingState.currentPhase = 'content';
                 if (message.contentProgress !== undefined) {
@@ -626,7 +624,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-// Helper functions
+// helper functions
 function showHelp() {
     const helpText = `Bing Search Results Scraper with Content Extraction Help:
 
@@ -679,6 +677,6 @@ Tips:
     alert(helpText);
 }
 
-// Export for global access
+// export for global access
 window.getUploadedQueries = () => uploadedQueries;
 window.getScrapingState = () => scrapingState;

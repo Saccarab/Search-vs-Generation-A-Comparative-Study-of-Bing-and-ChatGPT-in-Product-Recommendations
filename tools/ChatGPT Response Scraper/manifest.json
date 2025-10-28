@@ -1,10 +1,9 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT Response Scraper",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "Research tool for extracting search results from ChatGPT - USE AT YOUR OWN RISK",
-  "author": "ChatGPT Scraper Team",
-  "homepage_url": "https://github.com/your-repo/chatgpt-scraper",
+  "author": "LMCM",
 
   "permissions": [
     "tabs",

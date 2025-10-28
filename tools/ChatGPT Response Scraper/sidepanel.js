@@ -1,7 +1,3 @@
-// ChatGPT Response Scraper - Sidepanel Controller
-// WARNING: This extension may violate OpenAI's Terms of Service
-// Use responsibly and consider official APIs for production applications
-
 // DOM Elements
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
@@ -19,7 +15,7 @@ const runsPerQInput = document.getElementById('runsPerQ');
 const totalOpsDisplay = document.getElementById('totalOps');
 const webSearchToggle = document.getElementById('webSearchToggle');
 
-// Progress elements
+// progress elements
 const progressStatus = document.getElementById('progressStatus');
 const progressFill = document.getElementById('progressFill');
 const progressPercent = document.getElementById('progressPercent');
@@ -31,14 +27,14 @@ const errorCountDisplay = document.getElementById('errorCount');
 const recentErrors = document.getElementById('recentErrors');
 const errorList = document.getElementById('errorList');
 
-// Results elements
+// results elements
 const resultsSummary = document.getElementById('resultsSummary');
 const downloadFilename = document.getElementById('downloadFilename');
 const downloadSize = document.getElementById('downloadSize');
 const downloadButton = document.getElementById('downloadButton');
 const newCollectionButton = document.getElementById('newCollectionButton');
 
-// State
+// state
 let uploadedQueries = [];
 let scrapingState = {
     isRunning: false,
@@ -55,39 +51,39 @@ let scrapingState = {
     forceWebSearch: true
 };
 
-// Initialize
+// init
 document.addEventListener('DOMContentLoaded', initializeApp);
 
 function initializeApp() {
     setupEventListeners();
     updateTotalOperations();
     
-    // Initial state - show upload section
+    // init state - show upload section
     showSection('upload');
 }
 
 function setupEventListeners() {
-    // File upload events
+    // file upload events
     dropZone.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
     
-    // Drag and drop events
+    // drag and drop events
     dropZone.addEventListener('dragover', handleDragOver);
     dropZone.addEventListener('dragleave', handleDragLeave);
     dropZone.addEventListener('drop', handleDrop);
     
-    // Control events
+    // control events
     runsPerQInput.addEventListener('input', updateTotalOperations);
     webSearchToggle.addEventListener('change', handleWebSearchToggle);
     startButton.addEventListener('click', startScraping);
     downloadButton.addEventListener('click', downloadResults);
     newCollectionButton.addEventListener('click', resetApp);
     
-    // Footer events
+    // footer events
     document.getElementById('helpLink').addEventListener('click', showHelp);
 }
 
-// File handling
+// file handling
 function handleDragOver(e) {
     e.preventDefault();
     dropZone.classList.add('dragover');
@@ -158,7 +154,7 @@ function parseCSV(csvText, file) {
         return;
     }
     
-    // Success - show file info and next steps
+    // success - show file info and next steps
     dropZone.classList.add('uploaded');
     showFileInfo(file);
     updateTotalOperations();
@@ -209,7 +205,7 @@ function updateTotalOperations() {
     const total = uploadedQueries.length * runs;
     totalOpsDisplay.textContent = total;
     
-    // Update estimated time (rough estimate: 30 seconds per operation)
+    // update estimated time (rough estimate: 30 seconds per operation)
     const estimatedMinutes = Math.ceil((total * 30) / 60);
     if (total > 0) {
         document.querySelector('.input-hint').textContent = `~${estimatedMinutes} min estimated`;
@@ -261,7 +257,7 @@ function hideSection(section) {
     }
 }
 
-// Scraping control
+// scraping control
 function startScraping() {
     if (uploadedQueries.length === 0) {
         showStatus('Please upload a CSV file first', 'warning');
@@ -271,7 +267,7 @@ function startScraping() {
     const runs = parseInt(runsPerQInput.value) || 1;
     const forceWebSearch = webSearchToggle.checked;
     
-    // Initialize scraping state
+    // init scraping state
     scrapingState = {
         isRunning: true,
         startTime: Date.now(),
@@ -288,11 +284,11 @@ function startScraping() {
         forceWebSearch: forceWebSearch
     };
     
-    // Update UI
+    // update UI
     startButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Scraping...</span>';
     startButton.disabled = true;
     
-    // Disable toggle during processing
+    // disable toggle during processing
     webSearchToggle.disabled = true;
     
     hideSection('config');
@@ -301,7 +297,7 @@ function startScraping() {
     
     updateProgressDisplay();
     
-    // Send command to content script
+    // send command to content script
     sendCommand({
         action: 'startDataCollection',
         queries: uploadedQueries,
@@ -313,13 +309,13 @@ function startScraping() {
 function updateProgressDisplay() {
     const { completed, totalOperations, currentQueryIndex, currentRun, runsPerQuery, retries } = scrapingState;
     
-    // Progress bar
+    // progress bar
     const progress = Math.round((completed / totalOperations) * 100);
     progressFill.style.width = progress + '%';
     progressPercent.textContent = progress + '%';
     progressCount.textContent = `${completed} / ${totalOperations}`;
     
-    // Current task
+    // current task
     if (currentQueryIndex < uploadedQueries.length) {
         const query = uploadedQueries[currentQueryIndex];
         currentQuery.textContent = query.length > 50 ? query.substring(0, 50) + '...' : query;
@@ -327,11 +323,11 @@ function updateProgressDisplay() {
         progressStatus.textContent = `Scraping query ${currentQueryIndex + 1} of ${uploadedQueries.length} (Run ${currentRun}/${runsPerQuery})${retryInfo}`;
     }
     
-    // Stats
+    // stats
     completedCount.textContent = completed;
     errorCountDisplay.textContent = scrapingState.errors;
     
-    // Estimated time
+    // estimated time
     if (completed > 0 && scrapingState.startTime) {
         const elapsed = Date.now() - scrapingState.startTime;
         const avgTimePerOp = elapsed / completed;
@@ -342,7 +338,7 @@ function updateProgressDisplay() {
         estimatedTime.textContent = 'Calculating...';
     }
     
-    // Show errors if any
+    // show errors if any
     if (scrapingState.errors > 0) {
         recentErrors.style.display = 'block';
         updateErrorList();
@@ -351,7 +347,7 @@ function updateProgressDisplay() {
 
 function updateErrorList() {
     errorList.innerHTML = '';
-    const recentErrorsList = scrapingState.errorList.slice(-3); // Show last 3 errors
+    const recentErrorsList = scrapingState.errorList.slice(-3); // show last 3 errors
     
     recentErrorsList.forEach(error => {
         const errorItem = document.createElement('div');
@@ -367,10 +363,10 @@ function showResults(csvData, totalResults) {
     hideSection('progress');
     showSection('results');
     
-    // Re-enable toggle
+    // reenable toggle
     webSearchToggle.disabled = false;
     
-    // Update results info
+    // update results info
     const successRate = Math.round(((totalResults - scrapingState.errors) / totalResults) * 100);
     resultsSummary.textContent = `Scraping completed successfully! ${successRate}% success rate (${scrapingState.errors} errors)`;
     
@@ -382,7 +378,7 @@ function showResults(csvData, totalResults) {
     const resultCount = csvData.split('\n').length - 1; // Minus header
     downloadSize.textContent = `${sizeKB} KB • ${resultCount} results`;
     
-    // Auto-download
+    // auto download
     downloadCSV(csvData, filename);
 }
 
@@ -408,7 +404,7 @@ function downloadCSV(csvContent, filename) {
 }
 
 function resetApp() {
-    // Reset state
+    // reset state
     uploadedQueries = [];
     scrapingState = {
         isRunning: false,
@@ -425,7 +421,7 @@ function resetApp() {
         forceWebSearch: true
     };
     
-    // Reset UI
+    // reset UI
     resetUploadState();
     hideSection('config');
     hideSection('action');
@@ -446,7 +442,7 @@ function resetUploadState() {
     fileInfoCard.style.display = 'none';
 }
 
-// Communication
+// communication
 function sendCommand(command) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         if (!tabs.length) {
@@ -456,7 +452,7 @@ function sendCommand(command) {
         
         const activeTabId = tabs[0].id;
         
-        // Check if we're on ChatGPT
+        // check if we're on ChatGPT
         if (!tabs[0].url.includes('chatgpt.com')) {
             showStatus('Please navigate to chatgpt.com first', 'error');
             return;
@@ -473,7 +469,7 @@ function sendCommand(command) {
     });
 }
 
-// Listen for messages from content script
+// listen for messages from content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.action) {
         case 'dataCollectionComplete':
@@ -519,7 +515,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-// Helper functions
+// helper functions
 function showHelp() {
     const helpText = `ChatGPT Response Scraper Help:
 
@@ -557,6 +553,6 @@ CSV Output Columns:
     alert(helpText);
 }
 
-// Export for global access
+// export for global access
 window.getUploadedQueries = () => uploadedQueries;
 window.getScrapingState = () => scrapingState;
