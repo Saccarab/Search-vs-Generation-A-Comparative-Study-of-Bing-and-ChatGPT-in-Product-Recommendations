@@ -54,8 +54,6 @@ A central contribution of this repository is the development of **two dedicated 
 - Retrieves linked webpage content for downstream product extraction
 - Removes tracking and referral parameters to ensure clean source comparison
 
-These extensions enable reproducible, large-scale collection of real user-facing outputs from both systems and are essential for the comparative methodology used in the thesis.
-
 ---
 
 ## Experimental Design
@@ -101,6 +99,8 @@ The repository implements the full evaluation framework proposed in the thesis, 
   - Cross-System Mean Source Overlap (CSMSO)
   - Mean Internal Product Overlap (MIPO)
   - Mean Internal Source Overlap (MISO)
+  - Cross-Query Mean Internal Product Overlap (CQMIPO)
+  - Cross-Query Mean Internal Source Overlap (CQMISO)
 
 These metrics allow systematic comparison between traditional and generative search behavior.
 
@@ -115,3 +115,8 @@ This repository is intended to support:
 
 Due to the evolving nature of proprietary search and LLM systems, exact numerical results may vary over time, but the methodology remains transferable.
 
+---
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
