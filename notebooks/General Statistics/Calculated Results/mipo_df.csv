@@ -1,0 +1,49 @@
+,query,product,market_type,query_level,mipo_mean,mipo_var,mipo_std
+0,What is the best smartphone?,Smartphone,Commodity / Saturated,General,0.7407407407407408,0.03566529492455418,0.18885257457751053
+1,What is the best smartphone under 1000 dollars?,Smartphone,Commodity / Saturated,General & Price,0.7916666666666666,0.0034722222222222225,0.05892556509887896
+2,What is the best smartphone under 1000 dollars with a good camera?,Smartphone,Commodity / Saturated,General & Price & Feature,0.875,0.0,0.0
+3,What is the best smartphone under 1000 dollars with a good camera and long battery life?,Smartphone,Commodity / Saturated,General & Price & Feature & Feature,0.5833333333333334,0.04513888888888889,0.21245914639969937
+4,What is the best laptop?,Laptop,Commodity / Saturated,General,0.3592592592592592,0.0038134430727023313,0.0617530814834558
+5,What is the best laptop under 1500 dollars?,Laptop,Commodity / Saturated,General & Price,0.125,0.010416666666666666,0.10206207261596575
+6,What is the best laptop under 1500 dollars with good performance?,Laptop,Commodity / Saturated,General & Price & Feature,0.3333333333333333,0.0,0.0
+7,What is the best laptop under 1500 dollars with good performance and a lightweight design?,Laptop,Commodity / Saturated,General & Price & Feature & Feature,0.2916666666666667,0.024305555555555552,0.15590239111558088
+8,What is the best smartwatch?,Smartwatch,Commodity / Saturated,General,0.7916666666666666,0.0034722222222222225,0.05892556509887896
+9,What is the best smartwatch under 800 dollars?,Smartwatch,Commodity / Saturated,General & Price,0.7083333333333334,0.0034722222222222225,0.05892556509887896
+10,What is the best smartwatch under 800 dollars with heart rate monitor?,Smartwatch,Commodity / Saturated,General & Price & Feature,0.20833333333333334,0.003472222222222222,0.05892556509887896
+11,What is the best smartwatch under 800 dollars with heart rate monitor and long battery life?,Smartwatch,Commodity / Saturated,General & Price & Feature & Feature,0.14814814814814814,0.0027434842249657062,0.05237828008789241
+12,What are the best headphones?,Headphones,Commodity / Saturated,General,0.75,0.010416666666666666,0.10206207261596575
+13,What are the best headphones under 500 dollars?,Headphones,Commodity / Saturated,General & Price,0.5944444444444444,0.006728395061728392,0.08202679477907443
+14,What are the best headphones under 500 dollars with noise cancellation?,Headphones,Commodity / Saturated,General & Price & Feature,0.6481481481481481,0.020747599451303163,0.14404027024170415
+15,What are the best headphones under 500 dollars with noise cancellation and comfortable fit?,Headphones,Commodity / Saturated,General & Price & Feature & Feature,0.7916666666666666,0.0034722222222222225,0.05892556509887896
+16,What is the best drone?,Drone,Niche / Emerging,General,0.5,0.0020576131687242817,0.04536092116265147
+17,What is the best drone under 3000 dollars?,Drone,Niche / Emerging,General & Price,0.5952380952380952,0.007936507936507938,0.08908708063747481
+18,What is the best drone under 3000 dollars with 4k camera?,Drone,Niche / Emerging,General & Price & Feature,0.41071428571428575,0.0006377551020408158,0.02525381361380526
+19,What is the best drone under 3000 dollars with 4k camera and long battery life?,Drone,Niche / Emerging,General & Price & Feature & Feature,0.625,0.010416666666666666,0.10206207261596575
+20,What is the best 3d printer?,3D Printer,Niche / Emerging,General,0.9249999999999999,0.0029166666666666664,0.05400617248673217
+21,What is the best 3d printer under 2000 dollars?,3D Printer,Niche / Emerging,General & Price,0.5740740740740741,0.004801097393689984,0.06928995160692482
+22,What is the best 3d printer under 2000 dollars with high precision?,3D Printer,Niche / Emerging,General & Price & Feature,0.5555555555555555,0.016589506172839507,0.1288002568818848
+23,What is the best 3d printer under 2000 dollars with high precision and a large build volume?,3D Printer,Niche / Emerging,General & Price & Feature & Feature,0.4490740740740741,0.04916838134430727,0.2217394447190379
+24,What is the best vr headset?,VR Headset,Niche / Emerging,General,0.875,0.0,0.0
+25,What is the best vr headset under 1000 dollars?,VR Headset,Niche / Emerging,General & Price,0.5416666666666666,0.00687358276643991,0.0829070730784769
+26,What is the best vr headset under 1000 dollars with high resolution?,VR Headset,Niche / Emerging,General & Price & Feature,0.7916666666666666,0.008101851851851857,0.09001028747788697
+27,What is the best vr headset under 1000 dollars with high resolution and wide field of view?,VR Headset,Niche / Emerging,General & Price & Feature & Feature,0.5952380952380952,0.007936507936507938,0.08908708063747481
+28,What is the best portable projector?,Portable Projector,Niche / Emerging,General,0.8425925925925926,0.0021004801097393687,0.045830995076905856
+29,What is the best portable projector under 2500 dollars?,Portable Projector,Niche / Emerging,General & Price,0.3333333333333333,0.03555555555555555,0.18856180831641264
+30,What is the best portable projector under 2500 dollars with high brightness?,Portable Projector,Niche / Emerging,General & Price & Feature,0.0,0.0,0.0
+31,What is the best portable projector under 2500 dollars with high brightness and built-in speakers?,Portable Projector,Niche / Emerging,General & Price & Feature & Feature,0.16666666666666666,0.003472222222222222,0.05892556509887896
+32,What is the best electric car?,Electric Car,High-Involvement / High-Cost,General,0.7777777777777778,0.006172839506172845,0.07856742013183865
+33,What is the best electric car under 50000 dollars?,Electric Car,High-Involvement / High-Cost,General & Price,0.7666666666666666,0.0005555555555555565,0.023570226039551605
+34,What is the best electric car under 50000 dollars with long range?,Electric Car,High-Involvement / High-Cost,General & Price & Feature,0.5666666666666668,0.028888888888888895,0.16996731711975951
+35,What is the best electric car under 50000 dollars with long range and fast charging?,Electric Car,High-Involvement / High-Cost,General & Price & Feature & Feature,0.6333333333333333,0.06888888888888889,0.26246692913372704
+36,What is the best electric bicycle?,Electric Bicycle,High-Involvement / High-Cost,General,0.37777777777777777,0.0911934156378601,0.30198247571317793
+37,What is the best electric bicycle under 7500 dollars?,Electric Bicycle,High-Involvement / High-Cost,General & Price,0.16666666666666666,0.003472222222222222,0.05892556509887896
+38,What is the best electric bicycle under 7500 dollars with good battery life?,Electric Bicycle,High-Involvement / High-Cost,General & Price & Feature,0.24537037037037038,0.011616941015089165,0.1077819141372483
+39,What is the best electric bicycle under 7500 dollars with good battery life and a lightweight frame?,Electric Bicycle,High-Involvement / High-Cost,General & Price & Feature & Feature,0.08333333333333333,0.01388888888888889,0.11785113019775792
+40,What is the best digital piano?,Digital Piano,High-Involvement / High-Cost,General,0.8666666666666667,0.0022222222222222214,0.04714045207910316
+41,What is the best digital piano under 5000 dollars?,Digital Piano,High-Involvement / High-Cost,General & Price,0.3592592592592592,0.0038134430727023313,0.0617530814834558
+42,What is the best digital piano under 5000 dollars with weighted keys?,Digital Piano,High-Involvement / High-Cost,General & Price & Feature,0.3333333333333333,0.07256235827664399,0.2693740118805895
+43,What is the best digital piano under 5000 dollars with weighted keys and Bluetooth connectivity?,Digital Piano,High-Involvement / High-Cost,General & Price & Feature & Feature,0.3333333333333333,0.0034722222222222225,0.05892556509887896
+44,What is the best refrigerator?,Refrigerator,High-Involvement / High-Cost,General,0.25,0.03125,0.1767766952966369
+45,What is the best refrigerator under 5000 dollars?,Refrigerator,High-Involvement / High-Cost,General & Price,0.4166666666666667,0.024305555555555552,0.15590239111558088
+46,What is the best refrigerator under 5000 dollars with a built-in ice maker?,Refrigerator,High-Involvement / High-Cost,General & Price & Feature,0.16666666666666666,0.003472222222222222,0.05892556509887896
+47,What is the best refrigerator under 5000 dollars with a built-in ice maker and smart Wi-Fi connectivity?,Refrigerator,High-Involvement / High-Cost,General & Price & Feature & Feature,0.16666666666666666,0.003472222222222222,0.05892556509887896
