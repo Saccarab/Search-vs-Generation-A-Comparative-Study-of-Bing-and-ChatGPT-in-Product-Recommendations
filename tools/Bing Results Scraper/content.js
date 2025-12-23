@@ -59,18 +59,50 @@ async function simulateTyping(selector, text, clearFirst = true) {
   }
   
   element.focus();
+  element.click(); // Ensure focus
+  await pauseSeconds(0.2);
   
   if (clearFirst) {
     // clear existing text
     element.value = '';
     element.dispatchEvent(new Event('input', { bubbles: true }));
+    element.dispatchEvent(new Event('change', { bubbles: true }));
+    await pauseSeconds(0.2);
   }
 
-  // type character by character
+  // Set value directly first to ensure it sticks
+  // element.value = text;
+  
+  // Then "type" it for visual effect and event triggers
   for (const char of text) {
-    element.value += char;
+    // element.value += char; // This appends if we don't clear perfectly
+    // Better: update value incrementally
+    const currentLen = element.value.length;
+    // element.value = text.substring(0, currentLen + 1); // This might be buggy if we didn't start empty
+    
+    // Simplest reliable way for React inputs:
+    document.execCommand('insertText', false, char);
+    
+    // Fallback if execCommand doesn't work (deprecated but effective)
+    if (!element.value.endsWith(char)) {
+        element.value += char;
+    }
+
     element.dispatchEvent(new Event('input', { bubbles: true }));
-    await pauseSeconds(getRandomInt(50, 150) / 1000); // random typing speed
+    element.dispatchEvent(new Event('change', { bubbles: true }));
+    element.dispatchEvent(new KeyboardEvent('keydown', { key: char, bubbles: true }));
+    element.dispatchEvent(new KeyboardEvent('keyup', { key: char, bubbles: true }));
+    
+    await pauseSeconds(getRandomInt(10, 50) / 1000); // faster typing
+  }
+  
+  // Final verification
+  await pauseSeconds(0.5);
+  if (element.value !== text) {
+      console.log(`Typing mismatch. Wanted: "${text}", Got: "${element.value}". Forcing value.`);
+      element.value = text;
+      element.dispatchEvent(new Event('input', { bubbles: true }));
+      element.dispatchEvent(new Event('change', { bubbles: true }));
   }
 }
 
@@ -472,131 +504,6 @@ async function extractContentFromResults(results, options = {}) {
   return enrichedResults;
 }
 
-// ================== SEARCH AND PROCESSING ==================
-
-async function searchAndExtractResults(query, maxResults = 50) {
-  console.log(`Starting search for query: "${query}" (max ${maxResults} results)`);
-  
-  // navigate to Bing homepage if not already there
-  if (!window.location.href.includes('bing.com')) {
-    window.location.href = 'https://www.bing.com';
-    await pauseSeconds(3);
-  }
-  
-  let allResults = [];
-  let pageNumber = 1;
-  let attempts = 0;
-  const maxAttempts = 3;
-  
-  try {
-    // perform initial search
-    await simulateTyping(SEARCH_INPUT, query, true);
-    await pauseSeconds(getRandomInt(1, 2));
-    await simulateClick(SEARCH_BUTTON);
-    await waitForResultsToLoad();
-    
-    // extract results from first page
-    let pageResults = extractSearchResults();
-    console.log(`Page ${pageNumber}: Found ${pageResults.length} results`);
-    
-    // add page number to results
-    pageResults = pageResults.map(result => ({
-      ...result,
-      page: pageNumber,
-      position: allResults.length + result.position
-    }));
-    
-    allResults.push(...pageResults);
-    
-    // continue to next pages if we need more results
-    while (allResults.length < maxResults && pageNumber < 10) { // limit to 10 pages max
-      const nextButton = document.querySelector(NEXT_PAGE_BUTTON);
-      
-      if (!nextButton) {
-        console.log('No more pages available');
-        break;
-      }
-      
-      try {
-        // click next page
-        await simulateClick(NEXT_PAGE_BUTTON);
-        await waitForResultsToLoad();
-        
-        pageNumber++;
-        pageResults = extractSearchResults();
-        console.log(`Page ${pageNumber}: Found ${pageResults.length} results`);
-        
-        if (pageResults.length === 0) {
-          console.log('No results found on this page, stopping pagination');
-          break;
-        }
-        
-        // add page number and update positions
-        pageResults = pageResults.map(result => ({
-          ...result,
-          page: pageNumber,
-          position: allResults.length + result.position
-        }));
-        
-        allResults.push(...pageResults);
-        
-        // add delay between pages
-        await pauseSeconds(getRandomInt(2, 4));
-        attempts = 0; // reset attempts counter on successful page
-        
-      } catch (error) {
-        attempts++;
-        // console.warn(`Error on page ${pageNumber}, attempt ${attempts}:`, error);
-        
-        if (attempts >= maxAttempts) {
-          // console.log(`Max attempts reached for page ${pageNumber}, stopping pagination`);
-          break;
-        }
-        
-        // wait a bit longer before retrying
-        await pauseSeconds(getRandomInt(3, 5));
-      }
-    }
-    
-    // trim to max results if needed
-    if (allResults.length > maxResults) {
-      allResults = allResults.slice(0, maxResults);
-    }
-    
-    // console.log(`Search completed: ${allResults.length} total results collected`);
-    return allResults;
-    
-  } catch (error) {
-    // console.error(`Error during search for "${query}":`, error);
-    throw error;
-  }
-}
-
-function convertToCSV(results) {
-  if (results.length === 0) return '';
-  
-  // CSV headers
-  const headers = [
-    'query', 'position', 'page', 'title', 'url', 'domain', 'displayUrl', 'snippet',
-    'content', 'contentLength', 'contentError'
-  ];
-  
-  // create CSV content
-  let csvContent = headers.join(',') + '\n';
-  
-  results.forEach(result => {
-    const row = headers.map(header => {
-      const value = result[header] || '';
-      // escape quotes and wrap in quotes if contains comma, quote, or newline
-      const escapedValue = String(value).replace(/"/g, '""');
-      return /[,"\n\r]/.test(escapedValue) ? `"${escapedValue}"` : escapedValue;
-    });
-    csvContent += row.join(',') + '\n';
-  });
-  
-  return csvContent;
-}
-
 // ================== PROGRESS REPORTING ==================
 
 function reportProgress(data) {
@@ -610,169 +517,89 @@ function reportProgress(data) {
   }
 }
 
-function reportError(queryIndex, error) {
+// ================== ATOMIC ACTIONS ==================
+
+async function performSearch(query) {
+  console.log(`Performing search for: "${query}"`);
+  
   try {
-    chrome.runtime.sendMessage({
-      action: 'queryError',
-      queryIndex: queryIndex,
-      error: error
-    });
+    // Check if we are already on a result page for this query
+    const currentInput = document.querySelector(SEARCH_INPUT);
+    
+    // Normalize for comparison
+    const currentVal = currentInput ? currentInput.value.trim() : '';
+    const targetVal = query.trim();
+    
+    if (currentInput && currentVal === targetVal && document.querySelectorAll(SEARCH_RESULTS).length > 0) {
+      console.log('Already on results page for this query');
+      return { status: 'ready', method: 'existing' };
+    }
+
+    // type and click search
+    await simulateTyping(SEARCH_INPUT, query, true);
+    await pauseSeconds(0.5);
+    
+    // VERIFY INPUT BEFORE CLICKING
+    const inputAfterTyping = document.querySelector(SEARCH_INPUT);
+    if (inputAfterTyping.value !== query) {
+         console.warn("Input mismatch before search! Retrying typing...");
+         inputAfterTyping.value = query;
+         inputAfterTyping.dispatchEvent(new Event('input', { bubbles: true }));
+         await pauseSeconds(0.5);
+    }
+    
+    await simulateClick(SEARCH_BUTTON);
+    
+    // We expect the page to reload here. 
+    // If it's an SPA, we wait for results.
+    // If it reloads, this script dies (and that's okay, sidepanel handles it).
+    
+    try {
+        await waitForResultsToLoad();
+        // If we got here, it was an SPA update!
+        return { status: 'ready', method: 'spa' };
+    } catch (e) {
+        // If it reloaded, we probably won't reach here.
+        // Or if it timed out.
+        return { status: 'unknown' };
+    }
+    
   } catch (error) {
-    // console.warn('Failed to report error:', error);
+    throw error;
   }
 }
 
-// ================== MAIN PROCESSING ==================
-
-async function processQueries(queries, maxResultsPerQuery = 50, extractContent = true) {
-  const allResults = [];
-  const totalQueries = queries.length;
-  let completedQueries = 0;
+async function scrapeCurrentPage(extractContent = true) {
+  console.log('Scraping current page...');
   
-  console.log(`Starting to process ${totalQueries} queries (${maxResultsPerQuery} results each, content extraction: ${extractContent})`);
+  await waitForResultsToLoad();
   
-  for (let i = 0; i < queries.length; i++) {
-    const query = queries[i];
-    
-    try {
-      console.log(`Processing query ${i + 1}/${totalQueries}: "${query}"`);
-      
-      // report progress
-      reportProgress({
-        queryIndex: i,
-        completed: completedQueries,
-        totalQueries: totalQueries,
-        currentQuery: query,
-        phase: 'search'
-      });
-      
-      const results = await searchAndExtractResults(query, maxResultsPerQuery);
-      
-      // add query to each result
-      let enrichedResults = results.map(result => ({
-        query: query,
-        queryIndex: i + 1,
-        ...result
-      }));
-      
-      // extract content if enabled
-      if (extractContent && results.length > 0) {
-        console.log(`Extracting content for ${results.length} URLs from query "${query}"`);
-        
-        reportProgress({
-          queryIndex: i,
-          completed: completedQueries,
-          totalQueries: totalQueries,
-          currentQuery: query,
-          phase: 'content',
-          contentPhase: true,
-          contentProgress: 0,
-          contentTotal: results.length
-        });
-        
-        enrichedResults = await extractContentFromResults(enrichedResults, {
-          extractContent: true
-        });
-      } else {
-        // add empty content fields if content extraction is disabled
-        enrichedResults = enrichedResults.map(result => ({
-          ...result,
-          content: '',
-          contentLength: 0,
-          contentError: extractContent ? '' : 'Content extraction disabled'
-        }));
-      }
-      
-      allResults.push(...enrichedResults);
-      completedQueries++;
-      
-      // report completion of this query
-      reportProgress({
-        completed: completedQueries,
-        totalQueries: totalQueries,
-        phase: 'complete'
-      });
-      
-      console.log(`Completed query ${i + 1}/${totalQueries} with ${results.length} results`);
-      
-      // add delay between queries to be respectful
-      if (i < queries.length - 1) {
-        const delaySeconds = getRandomInt(5, 10);
-        console.log(`Waiting ${delaySeconds} seconds before next query...`);
-        await pauseSeconds(delaySeconds);
-      }
-      
-    } catch (error) {
-      // (`Error processing query "${query}":`, error);
-      
-      reportError(i + 1, error.message);
-      
-      // add error result
-      const errorResult = {
-        query: query,
-        queryIndex: i + 1,
-        position: 0,
-        page: 0,
-        title: `ERROR: ${error.message}`,
-        url: '',
-        domain: '',
-        displayUrl: '',
-        snippet: '',
-        content: '',
-        contentLength: 0,
-        contentError: error.message
-      };
-      
-      allResults.push(errorResult);
-      completedQueries++;
-      
-      // continue with next query
-      console.log('Continuing with next query after error...');
-      
-      // add delay even after errors
-      if (i < queries.length - 1) {
-        await pauseSeconds(getRandomInt(3, 6));
-      }
-    }
+  let results = extractSearchResults();
+  
+  if (extractContent && results.length > 0) {
+    console.log(`Extracting content for ${results.length} results`);
+    results = await extractContentFromResults(results, { extractContent });
   }
   
-  console.log(`Processing completed: ${allResults.length} total results collected`);
-  return convertToCSV(allResults);
+  return results;
 }
 
 // ================== COMMUNICATION ==================
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "startScraping") {
-    (async () => {
-      try {
-        const queries = message.queries || [];
-        const maxResults = message.maxResultsPerQuery || 50;
-        const extractContent = message.extractContent !== false; // Default to true
-        
-        console.log(`Starting scraping for ${queries.length} queries, max ${maxResults} results each, content extraction: ${extractContent}`);
-        
-        const csvData = await processQueries(queries, maxResults, extractContent);
-        
-        // send CSV data back to sidepanel
-        chrome.runtime.sendMessage({
-          action: 'scrapingComplete',
-          csvData: csvData,
-          totalQueries: queries.length
-        });
-        
-        console.log('Scraping completed successfully');
-        sendResponse("finished!");
-      } catch (err) {
-        // console.error('Scraping error:', err);
-        chrome.runtime.sendMessage({
-          action: 'scrapingError',
-          error: err.message
-        });
-        sendResponse("error");
-      }
-    })();
-
-    return true;
+  // ACTION: SEARCH
+  if (message.action === "performSearch") {
+    performSearch(message.query)
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ status: 'error', error: err.message }));
+    return true; // async response
+  }
+  
+  // ACTION: SCRAPE
+  if (message.action === "scrapePage") {
+    scrapeCurrentPage(message.extractContent)
+      .then(results => sendResponse({ status: 'success', results: results }))
+      .catch(err => sendResponse({ status: 'error', error: err.message }));
+    return true; // async response
   }
 });
