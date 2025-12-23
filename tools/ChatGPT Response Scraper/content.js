@@ -5,6 +5,7 @@ const NEW_CHAT_BTN = 'a[data-testid="create-new-chat-button"]';
 const TEMP_CHAT_BTN = 'button[aria-label="Turn on temporary chat"]';
 const PLUS_BTN = "#composer-plus-btn";
 const SEARCH_WEB_BTN = 'div[role="menuitemradio"]';
+const SEARCH_QUERY_BUBBLE = 'div.text-token-text-secondary.dir-ltr'; // Add selector for search query bubble
 const TEXT_FIELD = "#prompt-textarea";
 const SEND_QUERY_BTN = "#composer-submit-button";
 const COPY_RESPONSE_TEXT_BTN = '[data-testid="copy-turn-action-button"]';
@@ -119,11 +120,47 @@ async function clickWebSearch() {
 
 async function waitForResponseFinished(selector, timeoutMs = 120000) {
   return new Promise((resolve, reject) => {
+    // Capture search query while waiting
+    let capturedSearchQuery = null;
+
+    // Define search query capturing logic
+    const captureSearchQuery = () => {
+        if (capturedSearchQuery) return; // Already captured
+
+        // Strategy 1: Find any element with "Searching for" text (Case Insensitive)
+        const candidates = document.querySelectorAll('div, span, button');
+        for (const el of candidates) {
+            const text = el.textContent.trim();
+            const match = text.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
+            if (match) {
+                console.log(`[Search Query] Found during wait: "${match[1]}"`);
+                capturedSearchQuery = match[1]; // Store only the query part
+                return;
+            }
+        }
+
+        // Strategy 2: Look for the specific "Search" tool output container
+        const grayTextElements = document.querySelectorAll('span.text-token-text-secondary');
+        for (const el of grayTextElements) {
+            const text = el.textContent.trim();
+            const match = text.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
+            if (match) {
+                console.log(`[Search Query] Found during wait via class: "${match[1]}"`);
+                capturedSearchQuery = match[1]; // Store only the query part
+                return;
+            }
+        }
+    };
+
     const check = () => {
+      // Try to capture search query at every check interval
+      captureSearchQuery();
+
       const btn = document.querySelector(selector);
       if (btn && btn.getAttribute("data-testid") === "send-button") {
         cleanup();
-        resolve(btn);
+        // Resolve with the captured query if we found one
+        resolve(capturedSearchQuery); 
         return true;
       }
       return false;
@@ -155,16 +192,82 @@ async function waitForResponseFinished(selector, timeoutMs = 120000) {
   });
 }
 
+// NOTE: This function is now largely redundant but kept for fallback or post-wait checks
+async function getSearchQuery(preCapturedQuery) {
+  if (preCapturedQuery) return preCapturedQuery;
+
+  await pauseSeconds(1); // Small pause to let UI settle
+  try {
+    // Strategy 1: Find any element with "Searching for" text (Case Insensitive)
+    const candidates = document.querySelectorAll('div, span, button');
+    for (const el of candidates) {
+      const text = el.textContent.trim();
+      const match = text.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
+      if (match) {
+        console.log(`[Search Query] Found via text scan (post-wait): "${match[1]}"`);
+        return match[1];
+      }
+    }
+
+    // Strategy 2: Look for the specific "Search" tool output container
+    const grayTextElements = document.querySelectorAll('span.text-token-text-secondary');
+    for (const el of grayTextElements) {
+        const text = el.textContent.trim();
+        const match = text.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
+        if (match) {
+            console.log(`[Search Query] Found via class scan (post-wait): "${match[1]}"`);
+            return match[1];
+        }
+        
+        if (el.parentElement) {
+             const parentText = el.parentElement.textContent.trim();
+             const parentMatch = parentText.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
+             if (parentMatch) {
+                 console.log(`[Search Query] Found via parent context (post-wait): "${parentMatch[1]}"`);
+                 return parentMatch[1];
+             }
+        }
+    }
+  } catch (e) {
+    console.error("Error getting search query:", e);
+  }
+  
+  return "N/A";
+}
+
 async function getResponse(selector) {
   const messageElements = document.querySelectorAll(selector);
 
   if (messageElements.length > 0) {
     const lastResponse = messageElements[messageElements.length - 1];
-    const text = lastResponse.textContent || lastResponse.innerText;
+    
+    // CLONE the element so we can modify it (expand links) without breaking the UI
+    const clone = lastResponse.cloneNode(true);
+    
+    // Find all citation links in the clone
+    const links = clone.querySelectorAll('a[target="_blank"]');
+    
+    links.forEach(link => {
+      const url = link.href;
+      const text = link.textContent;
+      // Replace link text with "Text (URL)"
+      // We clean the URL to remove UTM params if possible, or just use full URL
+      try {
+        const cleanUrlObj = new URL(url);
+        // clear common tracking params
+        ['utm_source', 'utm_medium', 'utm_campaign'].forEach(p => cleanUrlObj.searchParams.delete(p));
+        link.textContent = `${text} [${cleanUrlObj.toString()}]`;
+      } catch (e) {
+        link.textContent = `${text} [${url}]`;
+      }
+    });
+
+    const text = clone.textContent || clone.innerText;
 
     if (navigator.clipboard && window.isSecureContext) {
       try {
-        await navigator.clipboard.writeText(text);
+        // We still copy the ORIGINAL text to clipboard, not our modified one
+        await navigator.clipboard.writeText(lastResponse.textContent);
       } catch (err) {
         //skip
       }
@@ -457,9 +560,12 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
   await simulateClick(SEND_QUERY_BTN);
   await pauseSeconds(getRandomInt(1, 3));
 
-  // wait for response end
-  await waitForResponseFinished(SEND_QUERY_BTN);
+  // wait for response end AND capture search query during the wait
+  const capturedSearchQuery = await waitForResponseFinished(SEND_QUERY_BTN);
   await pauseSeconds(getRandomInt(1, 3));
+
+  // Fallback: If we missed it during the stream, try one last check
+  const generated_search_query = await getSearchQuery(capturedSearchQuery);
 
   // get response text
   const response_text = await getResponse(ASSISTANT_MSG);
@@ -468,6 +574,7 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
   // prepare return object
   const result = {
     query: query,
+    generated_search_query: generated_search_query || "N/A", // Add to result object
     response_text: response_text,
     web_search_forced: force_web_search,
     retry_count: retryCount
@@ -631,6 +738,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
           query_index: i + 1,
           run_number: run,
           query: result.query,
+          generated_search_query: result.generated_search_query, // Include in enriched result
           response_text: result.response_text,
           web_search_forced: result.web_search_forced,
           sources_cited: formatSources(result.sources_cited),
