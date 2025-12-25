@@ -179,6 +179,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url && tab.url.includes('bing.com')) {
     console.log('Bing tab updated and ready:', tabId);
+    
+    // Notify sidepanel that page is ready
+    chrome.runtime.sendMessage({
+      action: 'bingPageLoaded',
+      tabId: tabId,
+      url: tab.url
+    }).catch(err => {
+      // Ignore errors if sidepanel is not open
+      // console.log('Could not notify sidepanel (might be closed)');
+    });
   }
 });
 
