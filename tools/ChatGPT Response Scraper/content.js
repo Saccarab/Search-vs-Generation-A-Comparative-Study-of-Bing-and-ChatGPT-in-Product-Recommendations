@@ -45,7 +45,7 @@ async function simulateClick(selector) {
   element.dispatchEvent(event);
 }
 
-async function simulateTyping(selector, text, minDelay = 80, maxDelay = 200) {
+async function simulateTyping(selector, text, minDelay = 10, maxDelay = 30) {
   const element = await waitForSelector(selector);
   if (!element) {
     throw new Error(`Element with selector "${selector}" not found!`);
@@ -492,7 +492,13 @@ function convertToCSV(results) {
   
   results.forEach(result => {
     const row = headers.map(header => {
-      const value = result[header] || '';
+      let value = result[header] || '';
+      
+      // If it's the response text or search query, replace newlines with spaces to keep CSV clean
+      if (header === 'response_text' || header === 'query' || header === 'generated_search_query') {
+          value = String(value).replace(/[\r\n]+/g, '  ');
+      }
+      
       // escape quotes and wrap in quotes if contains comma, quote, or newline
       const escapedValue = String(value).replace(/"/g, '""');
       return /[,"\n\r]/.test(escapedValue) ? `"${escapedValue}"` : escapedValue;
@@ -534,42 +540,42 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
   const attemptLabel = retryCount > 0 ? ` (Retry ${retryCount}/${maxRetries})` : '';
   console.log(`[Query Processing] Starting query: "${query.substring(0, 50)}..."${attemptLabel}`);
   
-  await pauseSeconds(getRandomInt(1, 3));
+  await pauseSeconds(getRandomInt(0.5, 1));
 
   // open new chat
   await simulateClick(NEW_CHAT_BTN);
-  await pauseSeconds(getRandomInt(1, 3));
+  await pauseSeconds(getRandomInt(0.5, 1));
 
   // open new temp chat
   await simulateClick(TEMP_CHAT_BTN);
-  await pauseSeconds(getRandomInt(1, 3));
+  await pauseSeconds(getRandomInt(0.5, 1));
 
   // enable web search -> only if force_web_search is true
   if (force_web_search) {
     await clickWebSearch();
-    await pauseSeconds(getRandomInt(1, 3));
+    await pauseSeconds(getRandomInt(0.5, 1));
   } else {
     console.log('[Step 3/8] Skipping web search (disabled by user)...');
   }
 
   // type query
   await simulateTyping(TEXT_FIELD, query);
-  await pauseSeconds(getRandomInt(1, 3));
+  await pauseSeconds(getRandomInt(0.2, 0.5));
 
   // send query
   await simulateClick(SEND_QUERY_BTN);
-  await pauseSeconds(getRandomInt(1, 3));
+  await pauseSeconds(getRandomInt(0.5, 1));
 
   // wait for response end AND capture search query during the wait
   const capturedSearchQuery = await waitForResponseFinished(SEND_QUERY_BTN);
-  await pauseSeconds(getRandomInt(1, 3));
+  await pauseSeconds(getRandomInt(0.5, 1));
 
   // Fallback: If we missed it during the stream, try one last check
   const generated_search_query = await getSearchQuery(capturedSearchQuery);
 
   // get response text
   const response_text = await getResponse(ASSISTANT_MSG);
-  await pauseSeconds(getRandomInt(1, 3));
+  await pauseSeconds(getRandomInt(0.5, 1));
 
   // prepare return object
   const result = {
@@ -587,7 +593,7 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
     if (sourcesButton) {
       console.log('Sources button found - extracting sources');
       await simulateClick(OPEN_SOURCES_BTN);
-      await pauseSeconds(getRandomInt(3, 5));
+      await pauseSeconds(getRandomInt(1, 2));
       
       const sourceLinks = await extractSourceLinks();
       
@@ -595,7 +601,7 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
       const closeButton = document.querySelector(CLOSE_SOURCES_BTN);
       if (closeButton) {
         await simulateClick(CLOSE_SOURCES_BTN);
-        await pauseSeconds(getRandomInt(1, 3));
+        await pauseSeconds(getRandomInt(0.5, 1));
       }
       
       // add source data to result
@@ -762,7 +768,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         
         // add delay between queries to avoid rate limiting
         if (!(i === queries.length - 1 && run === runs_per_q)) {
-          const delaySeconds = getRandomInt(2, 5);
+          const delaySeconds = getRandomInt(1, 2);
           // console.log(`[Delay] Waiting ${delaySeconds} seconds before next query...`);
           await pauseSeconds(delaySeconds);
         }
