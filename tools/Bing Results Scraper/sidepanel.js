@@ -345,14 +345,13 @@ function triggerScrape(tabId) {
 
 function saveQueryResults(results) {
     const query = uploadedQueries[scrapingState.currentQueryIndex];
-    // Add query metadata to each result and FIX POSITION
+    // Add query metadata to each result and FIX POSITION STRICTLY
     const enrichedResults = results.map((r, index) => ({
         query: query,
         ...r,
-        // Overwrite position with global rank
-        // If 'r.position' exists (1-based on page), add offset.
-        // If not, use index + 1 + offset.
-        position: (scrapingState.currentPageOffset) + (r.position ? parseInt(r.position) : (index + 1))
+        // STRICT SEQUENTIAL POSITION
+        // Ignore r.position and Bing offset. Just count what we have collected.
+        position: scrapingState.resultsForCurrentQuery + index + 1
     }));
     scrapingState.collectedResults.push(...enrichedResults);
     scrapingState.resultsForCurrentQuery += results.length;
