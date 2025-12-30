@@ -702,7 +702,9 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
   console.log(`[Collection Start] Processing ${queries.length} queries with ${runs_per_q} runs each (${totalOperations} total operations), web search: ${force_web_search ? 'forced' : 'optional'}`);
   
   for (let i = 0; i < queries.length; i++) {
-    const query = queries[i];
+    const qObj = queries[i];
+    const query = (typeof qObj === 'string') ? qObj : (qObj?.query || '');
+    const prompt_id = (typeof qObj === 'object' && qObj) ? (qObj.prompt_id || '') : '';
     
     for (let run = 1; run <= runs_per_q; run++) {
       try {
@@ -743,6 +745,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         const enrichedResult = {
           query_index: i + 1,
           run_number: run,
+          prompt_id: prompt_id,
           query: result.query,
           generated_search_query: result.generated_search_query, // Include in enriched result
           response_text: result.response_text,
@@ -783,6 +786,7 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         const errorResult = {
           query_index: i + 1,
           run_number: run,
+          prompt_id: prompt_id,
           query: query,
           response_text: `ERROR: ${error.message}`,
           web_search_forced: force_web_search,

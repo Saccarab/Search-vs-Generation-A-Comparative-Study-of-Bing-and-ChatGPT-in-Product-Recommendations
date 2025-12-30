@@ -35,6 +35,7 @@ const downloadButton = document.getElementById('downloadButton');
 const newCollectionButton = document.getElementById('newCollectionButton');
 
 // state
+// Each entry is { query: string, prompt_id?: string }
 let uploadedQueries = [];
 let scrapingState = {
     isRunning: false,
@@ -136,6 +137,7 @@ function parseCSV(csvText, file) {
     }
     
     const queryIndex = headers.indexOf('query');
+    const promptIdIndex = headers.includes('prompt_id') ? headers.indexOf('prompt_id') : -1;
     uploadedQueries = [];
     
     for (let i = 1; i < lines.length; i++) {
@@ -144,8 +146,9 @@ function parseCSV(csvText, file) {
         
         const values = parseCSVLine(line);
         const query = values[queryIndex]?.trim().replace(/['"]/g, '');
+        const prompt_id = promptIdIndex >= 0 ? (values[promptIdIndex]?.trim().replace(/['"]/g, '') || '') : '';
         if (query) {
-            uploadedQueries.push(query);
+            uploadedQueries.push({ query, prompt_id });
         }
     }
     
@@ -317,7 +320,8 @@ function updateProgressDisplay() {
     
     // current task
     if (currentQueryIndex < uploadedQueries.length) {
-        const query = uploadedQueries[currentQueryIndex];
+        const qObj = uploadedQueries[currentQueryIndex];
+        const query = (typeof qObj === 'string') ? qObj : (qObj?.query || '');
         currentQuery.textContent = query.length > 50 ? query.substring(0, 50) + '...' : query;
         const retryInfo = retries > 0 ? ` • ${retries} retries` : '';
         progressStatus.textContent = `Scraping query ${currentQueryIndex + 1} of ${uploadedQueries.length} (Run ${currentRun}/${runsPerQuery})${retryInfo}`;
@@ -522,7 +526,7 @@ function showHelp() {
 LEGAL WARNING: This tool may violate OpenAI's Terms of Service. Use at your own risk.
 
 How to use:
-1. Upload a CSV file with a 'query' column
+1. Upload a CSV file with a 'query' column (optional: 'prompt_id')
 2. Set the number of runs per query (1-10)
 3. Toggle 'Force Web Search' on/off (sources are collected regardless)
 4. Click 'Start Scraping'
@@ -543,6 +547,7 @@ CSV Output Columns:
 • query_index: Query number (1, 2, 3...)
 • run_number: Run number for the query (1, 2, 3...)
 • retry_count: Number of retries needed (0, 1, 2, 3)
+• prompt_id: Carried through from input CSV (if provided)
 • query: The original search query
 • response_text: ChatGPT's full response
 • web_search_forced: Whether web search was forced
