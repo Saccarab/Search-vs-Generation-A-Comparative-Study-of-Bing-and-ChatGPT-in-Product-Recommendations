@@ -85,7 +85,7 @@ async function simulateTyping(selector, text, clearFirst = true) {
     
     // Fallback if execCommand doesn't work (deprecated but effective)
     if (!element.value.endsWith(char)) {
-        element.value += char;
+    element.value += char;
     }
 
     element.dispatchEvent(new Event('input', { bubbles: true }));
@@ -101,7 +101,7 @@ async function simulateTyping(selector, text, clearFirst = true) {
   if (element.value !== text) {
       console.log(`Typing mismatch. Wanted: "${text}", Got: "${element.value}". Forcing value.`);
       element.value = text;
-      element.dispatchEvent(new Event('input', { bubbles: true }));
+    element.dispatchEvent(new Event('input', { bubbles: true }));
       element.dispatchEvent(new Event('change', { bubbles: true }));
   }
 }
@@ -525,7 +525,7 @@ async function performSearch(query) {
   try {
     // Check if we are already on a result page for this query
     const currentInput = document.querySelector(SEARCH_INPUT);
-    
+      
     // Normalize for comparison
     const currentVal = currentInput ? currentInput.value.trim() : '';
     const targetVal = query.trim();
@@ -546,8 +546,8 @@ async function performSearch(query) {
          inputAfterTyping.value = query;
          inputAfterTyping.dispatchEvent(new Event('input', { bubbles: true }));
          await pauseSeconds(0.5);
-    }
-    
+      }
+      
     await simulateClick(SEARCH_BUTTON);
     
     // We expect the page to reload here. 
@@ -562,9 +562,9 @@ async function performSearch(query) {
         // If it reloaded, we probably won't reach here.
         // Or if it timed out.
         return { status: 'unknown' };
-    }
-    
-  } catch (error) {
+      }
+      
+    } catch (error) {
     throw error;
   }
 }
