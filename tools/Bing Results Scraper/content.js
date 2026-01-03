@@ -381,6 +381,27 @@ function extractTextFromHtml(html) {
     // remove script and style elements
     const scripts = tempDiv.querySelectorAll('script, style, noscript');
     scripts.forEach(el => el.remove());
+
+    // remove obviously hidden elements (best-effort)
+    // Note: this is heuristic (we don't have computed styles here), but it reduces
+    // false positives where text exists in source but isn't visible to users.
+    const hiddenSelectors = [
+      '[hidden]',
+      '[aria-hidden="true"]',
+      '[style*="display:none"]',
+      '[style*="display: none"]',
+      '[style*="visibility:hidden"]',
+      '[style*="visibility: hidden"]',
+      // common utility classes
+      '.sr-only',
+      '.visually-hidden',
+      '.hidden',
+      '.invisible'
+    ];
+    hiddenSelectors.forEach(selector => {
+      const elements = tempDiv.querySelectorAll(selector);
+      elements.forEach(el => el.remove());
+    });
     
     // remove common non-content elements
     const nonContentSelectors = [
@@ -417,13 +438,156 @@ function extractTextFromHtml(html) {
   }
 }
 
+function extractMetadataFromHtml(html) {
+  const meta = {
+    page_title: '',
+    meta_description: '',
+    canonical_url: '',
+    has_schema_markup: false,
+    schema_types: '',
+    table_count: 0,
+    has_table: false,
+    published_date: '',
+    modified_date: '',
+    js_render_suspected: false,
+  };
+
+  try {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+
+    // title
+    meta.page_title =
+      (doc.querySelector('meta[property="og:title"]')?.getAttribute('content') || '').trim() ||
+      (doc.querySelector('title')?.textContent || '').trim();
+
+    // description
+    meta.meta_description =
+      (doc.querySelector('meta[name="description"]')?.getAttribute('content') || '').trim() ||
+      (doc.querySelector('meta[property="og:description"]')?.getAttribute('content') || '').trim();
+
+    // canonical
+    meta.canonical_url = (doc.querySelector('link[rel="canonical"]')?.getAttribute('href') || '').trim();
+
+    // tables
+    meta.table_count = doc.querySelectorAll('table').length;
+    meta.has_table = meta.table_count > 0;
+
+    // schema
+    const schemaScripts = Array.from(doc.querySelectorAll('script[type="application/ld+json"]'));
+    if (schemaScripts.length > 0) meta.has_schema_markup = true;
+
+    const schemaTypes = new Set();
+    const dateCandidates = { published: [], modified: [] };
+
+    const addType = (t) => {
+      if (!t) return;
+      if (Array.isArray(t)) t.forEach(addType);
+      else schemaTypes.add(String(t));
+    };
+
+    const walkSchema = (obj) => {
+      if (!obj) return;
+      if (Array.isArray(obj)) return obj.forEach(walkSchema);
+      if (typeof obj !== 'object') return;
+
+      addType(obj['@type']);
+      if (obj.datePublished) dateCandidates.published.push(obj.datePublished);
+      if (obj.dateModified) dateCandidates.modified.push(obj.dateModified);
+
+      // common container fields
+      if (obj['@graph']) walkSchema(obj['@graph']);
+      if (obj.mainEntity) walkSchema(obj.mainEntity);
+      if (obj.mainEntityOfPage) walkSchema(obj.mainEntityOfPage);
+    };
+
+    for (const s of schemaScripts) {
+      const raw = (s.textContent || '').trim();
+      if (!raw) continue;
+      try {
+        const parsed = JSON.parse(raw);
+        walkSchema(parsed);
+      } catch {
+        // ignore malformed JSON-LD
+      }
+    }
+
+    meta.schema_types = Array.from(schemaTypes).slice(0, 20).join('|');
+
+    // meta-based dates
+    const metaDateSelectors = [
+      'meta[property="article:published_time"]',
+      'meta[name="pubdate"]',
+      'meta[name="publishdate"]',
+      'meta[name="timestamp"]',
+      'meta[name="date"]',
+      'meta[itemprop="datePublished"]',
+    ];
+    const metaModSelectors = [
+      'meta[property="article:modified_time"]',
+      'meta[name="lastmod"]',
+      'meta[name="last-modified"]',
+      'meta[itemprop="dateModified"]',
+    ];
+
+    const firstMetaContent = (selectors) => {
+      for (const sel of selectors) {
+        const v = (doc.querySelector(sel)?.getAttribute('content') || '').trim();
+        if (v) return v;
+      }
+      return '';
+    };
+
+    meta.published_date = firstMetaContent(metaDateSelectors) || (dateCandidates.published[0] || '');
+    meta.modified_date = firstMetaContent(metaModSelectors) || (dateCandidates.modified[0] || '');
+
+    // JS-render heuristic (best-effort): low extracted text + SPA markers
+    const spaMarkers = [
+      '__NEXT_DATA__',
+      'data-reactroot',
+      'id="app"',
+      'id="root"',
+      'window.__INITIAL_STATE__',
+      'webpackJsonp',
+      'ng-version',
+    ];
+    const markerHit = spaMarkers.some(m => html.includes(m));
+
+    // Approx text length without running full extraction again:
+    // Take body textContent quickly and measure.
+    const bodyTextLen = (doc.body?.textContent || '').replace(/\s+/g, ' ').trim().length;
+    meta.js_render_suspected = bodyTextLen < 400 && markerHit;
+
+  } catch {
+    // return defaults
+  }
+
+  return meta;
+}
+
 async function extractContentFromResults(results, options = {}) {
   const { 
     extractContent = true
   } = options;
   
   if (!extractContent) {
-    return results.map(result => ({ ...result, content: '', contentError: '' }));
+    // Keep schema/metadata columns present even when content extraction is disabled
+    // so the CSV has a stable schema across runs.
+    return results.map(result => ({
+      ...result,
+      content: '',
+      contentError: '',
+      contentLength: 0,
+      page_title: '',
+      meta_description: '',
+      canonical_url: '',
+      has_schema_markup: false,
+      schema_types: '',
+      table_count: 0,
+      has_table: false,
+      published_date: '',
+      modified_date: '',
+      js_render_suspected: false,
+    }));
   }
   
   console.log(`Starting content extraction for ${results.length} URLs`);
@@ -457,11 +621,20 @@ async function extractContentFromResults(results, options = {}) {
         
         if (content && !error) {
           extractedText = extractTextFromHtml(content);
+          const meta = extractMetadataFromHtml(content);
           console.log(`Extracted ${extractedText.length} characters from ${result.domain}`);
+
+          return {
+            ...result,
+            ...meta,
+            content: extractedText,
+            contentError: contentError,
+            contentLength: extractedText.length
+          };
         } else {
           // console.warn(`Failed to fetch content from ${result.url}: ${error}`);
         }
-        
+
         return {
           ...result,
           content: extractedText,
@@ -475,7 +648,17 @@ async function extractContentFromResults(results, options = {}) {
           ...result,
           content: '',
           contentError: error.message,
-          contentLength: 0
+          contentLength: 0,
+          page_title: '',
+          meta_description: '',
+          canonical_url: '',
+          has_schema_markup: false,
+          schema_types: '',
+          table_count: 0,
+          has_table: false,
+          published_date: '',
+          modified_date: '',
+          js_render_suspected: false,
         };
       }
     });
