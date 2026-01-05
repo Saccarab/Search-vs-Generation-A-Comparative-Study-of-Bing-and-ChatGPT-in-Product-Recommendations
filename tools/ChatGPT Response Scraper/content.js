@@ -122,45 +122,69 @@ async function waitForResponseFinished(selector, timeoutMs = 120000) {
   return new Promise((resolve, reject) => {
     // Capture search query while waiting
     let capturedSearchQuery = null;
+    let webSearchTriggered = false;
+
+    const normalize = (s) => (s || '').replace(/\s+/g, ' ').trim();
+    const parseSearchingFor = (s) => {
+      const t = normalize(s);
+      // Matches:
+      // - Searching for X
+      // - Searching the web for X
+      // - Searched the web for X
+      const m = t.match(/(?:Searching|Searched)\s+(?:the\s+web\s+)?for\s+(.+)/i);
+      if (!m) return null;
+      return normalize(m[1]).replace(/^["“”']+|["“”']+$/g, '') || null;
+    };
 
     // Define search query capturing logic
     const captureSearchQuery = () => {
-        if (capturedSearchQuery) return; // Already captured
+      // NOTE: We create a fresh temp chat per query, so stale "Searching..." matches across turns are unlikely.
+      // Still, we *prefer* the latest assistant scope first (lower noise), then fall back to scanning the full document.
+      const msgEls = document.querySelectorAll(ASSISTANT_MSG);
+      const scope = (msgEls && msgEls.length) ? msgEls[msgEls.length - 1] : document;
 
-        // Strategy 1: Find any element with "Searching for" text (Case Insensitive)
-        const candidates = document.querySelectorAll('div, span, button');
+      const scopeText = normalize(scope.textContent);
+      const fullText = normalize(document.body?.textContent || '');
+      if (
+        /Searching\s+the\s+web/i.test(scopeText) ||
+        /Searching\s+(?:the\s+web\s+)?for/i.test(scopeText) ||
+        /Searching\s+the\s+web/i.test(fullText) ||
+        /Searching\s+(?:the\s+web\s+)?for/i.test(fullText)
+      ) {
+        webSearchTriggered = true;
+      }
+
+      if (capturedSearchQuery) return; // Already captured
+
+      // Find explicit "Searching ... for <query>"
+      const scan = (root) => {
+        const candidates = root.querySelectorAll('div, span, p, button, li');
+        let lastMatch = null;
         for (const el of candidates) {
-            const text = el.textContent.trim();
-            const match = text.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
-            if (match) {
-                console.log(`[Search Query] Found during wait: "${match[1]}"`);
-                capturedSearchQuery = match[1]; // Store only the query part
-                return;
-            }
+          const q = parseSearchingFor(el.textContent);
+          if (q) lastMatch = q;
         }
+        if (lastMatch) {
+          console.log(`[Search Query] Found during wait: "${lastMatch}"`);
+          capturedSearchQuery = lastMatch;
+          return true;
+        }
+        return false;
+      };
 
-        // Strategy 2: Look for the specific "Search" tool output container
-        const grayTextElements = document.querySelectorAll('span.text-token-text-secondary');
-        for (const el of grayTextElements) {
-            const text = el.textContent.trim();
-            const match = text.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
-            if (match) {
-                console.log(`[Search Query] Found during wait via class: "${match[1]}"`);
-                capturedSearchQuery = match[1]; // Store only the query part
-                return;
-            }
-        }
+      if (scope && scope !== document) {
+        if (scan(scope)) return;
+      }
+      scan(document);
     };
 
     const check = () => {
-      // Try to capture search query at every check interval
       captureSearchQuery();
 
       const btn = document.querySelector(selector);
       if (btn && btn.getAttribute("data-testid") === "send-button") {
         cleanup();
-        // Resolve with the captured query if we found one
-        resolve(capturedSearchQuery); 
+        resolve({ searchQuery: capturedSearchQuery, webSearchTriggered });
         return true;
       }
       return false;
@@ -170,10 +194,10 @@ async function waitForResponseFinished(selector, timeoutMs = 120000) {
 
     const cleanup = () => {
       observer.disconnect();
+      clearInterval(pollId);
       clearTimeout(timer);
     };
 
-    // observe the body for attribute changes and node replacements
     observer.observe(document.body, {
       childList: true,
       subtree: true,
@@ -181,13 +205,16 @@ async function waitForResponseFinished(selector, timeoutMs = 120000) {
       attributeFilter: ["data-testid"],
     });
 
-    // timeout to prevent hanging forever
     const timer = setTimeout(() => {
       cleanup();
       reject(new Error("Timeout waiting for response to finish"));
     }, timeoutMs);
 
-    // immediate check in case it's already in "finished" state
+    // Poll in case the UI updates without triggering a useful mutation at the right time
+    const pollId = setInterval(() => {
+      try { captureSearchQuery(); } catch {}
+    }, 250);
+
     check();
   });
 }
@@ -198,35 +225,37 @@ async function getSearchQuery(preCapturedQuery) {
 
   await pauseSeconds(1); // Small pause to let UI settle
   try {
-    // Strategy 1: Find any element with "Searching for" text (Case Insensitive)
-    const candidates = document.querySelectorAll('div, span, button');
-    for (const el of candidates) {
-      const text = el.textContent.trim();
-      const match = text.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
-      if (match) {
-        console.log(`[Search Query] Found via text scan (post-wait): "${match[1]}"`);
-        return match[1];
+    const normalize = (s) => (s || '').replace(/\s+/g, ' ').trim();
+    const parseSearchingFor = (s) => {
+      const t = normalize(s);
+      const m = t.match(/(?:Searching|Searched)\s+(?:the\s+web\s+)?for\s+(.+)/i);
+      if (!m) return null;
+      return normalize(m[1]).replace(/^["“”']+|["“”']+$/g, '') || null;
+    };
+
+    const msgEls = document.querySelectorAll(ASSISTANT_MSG);
+    const scope = (msgEls && msgEls.length) ? msgEls[msgEls.length - 1] : document;
+
+    const scan = (root) => {
+      const candidates = root.querySelectorAll('div, span, p, button, li');
+      let lastMatch = null;
+      for (const el of candidates) {
+        const q = parseSearchingFor(el.textContent);
+        if (q) lastMatch = q;
       }
+      return lastMatch;
+    };
+
+    const scoped = (scope && scope !== document) ? scan(scope) : null;
+    if (scoped) {
+      console.log(`[Search Query] Found (post-wait, scoped): "${scoped}"`);
+      return scoped;
     }
 
-    // Strategy 2: Look for the specific "Search" tool output container
-    const grayTextElements = document.querySelectorAll('span.text-token-text-secondary');
-    for (const el of grayTextElements) {
-        const text = el.textContent.trim();
-        const match = text.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
-        if (match) {
-            console.log(`[Search Query] Found via class scan (post-wait): "${match[1]}"`);
-            return match[1];
-        }
-        
-        if (el.parentElement) {
-             const parentText = el.parentElement.textContent.trim();
-             const parentMatch = parentText.match(/^(?:Searching|Searched)\s+for\s+(.+)$/i);
-             if (parentMatch) {
-                 console.log(`[Search Query] Found via parent context (post-wait): "${parentMatch[1]}"`);
-                 return parentMatch[1];
-             }
-        }
+    const full = scan(document);
+    if (full) {
+      console.log(`[Search Query] Found (post-wait, full scan): "${full}"`);
+      return full;
     }
   } catch (e) {
     console.error("Error getting search query:", e);
@@ -277,6 +306,230 @@ async function getResponse(selector) {
   }
 
   return null;
+}
+
+// ================== ITEM-LEVEL (INLINE) EXTRACTION ==================
+// Goal: export an ordered array of items + their inline citation chip URLs (including +N carousel)
+// into a single JSON column per run (items_json). This avoids rewriting the whole exporter.
+
+function safeText(el) {
+  return (el?.textContent || el?.innerText || '').replace(/\s+/g, ' ').trim();
+}
+
+function deriveItemName(itemText) {
+  if (!itemText) return '';
+  const m = itemText.match(/^\s*([^—\-:]{2,80})\s*[—\-:]\s+/);
+  if (m) return m[1].trim();
+  const words = itemText.split(/\s+/).filter(Boolean);
+  return words.slice(0, 3).join(' ').trim();
+}
+
+function cleanInlineUrl(url) {
+  try {
+    const urlObj = new URL(url);
+    const params = new URLSearchParams(urlObj.search);
+    const trackingParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', 'ref', 'source'];
+    trackingParams.forEach(param => {
+      params.delete(param);
+      for (const [key] of params) {
+        if (key.toLowerCase().startsWith(param.toLowerCase() + '_') || key.toLowerCase().includes('utm_')) {
+          params.delete(key);
+        }
+      }
+    });
+    urlObj.search = params.toString();
+    return urlObj.toString();
+  } catch {
+    return url;
+  }
+}
+
+function extractDomainFromUrl(url) {
+  try {
+    const u = new URL(url);
+    const h = (u.hostname || '').toLowerCase();
+    return h.startsWith('www.') ? h.slice(4) : h;
+  } catch {
+    return '';
+  }
+}
+
+function findVisiblePopoverContainer() {
+  const candidates = Array.from(
+    document.querySelectorAll(
+      'div[role="dialog"], div[role="tooltip"], div[role="menu"], div[class*="popover"], div[class*="tooltip"]'
+    )
+  );
+  let best = null;
+  let bestScore = 0;
+  for (const c of candidates) {
+    const rect = c.getBoundingClientRect();
+    if (rect.width < 120 || rect.height < 60) continue;
+    const links = c.querySelectorAll('a[href^="http"]');
+    const txt = safeText(c);
+    const score = links.length * 10 + (txt.length > 0 ? 1 : 0);
+    if (score > bestScore) {
+      bestScore = score;
+      best = c;
+    }
+  }
+  return best;
+}
+
+async function closePopover() {
+  try {
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  } catch {}
+  await pauseSeconds(0.2);
+}
+
+function extractLinksFromPopover(container) {
+  if (!container) return [];
+  const out = [];
+  const seen = new Set();
+  const linkEls = container.querySelectorAll('a[href^="http"]');
+  linkEls.forEach(a => {
+    const href = a.href;
+    if (!href || href.includes('chatgpt.com')) return;
+    const cleaned = cleanInlineUrl(href);
+    if (seen.has(cleaned)) return;
+    seen.add(cleaned);
+    out.push({
+      url: cleaned,
+      domain: extractDomainFromUrl(cleaned),
+      title: safeText(a) || '',
+    });
+  });
+  return out;
+}
+
+async function tryExpandPopoverCarousel(container, maxSteps = 8) {
+  if (!container) return [];
+  const collected = [];
+  const seenUrls = new Set();
+
+  const collect = () => {
+    const links = extractLinksFromPopover(container);
+    for (const l of links) {
+      if (!seenUrls.has(l.url)) {
+        seenUrls.add(l.url);
+        collected.push(l);
+      }
+    }
+  };
+
+  collect();
+
+  for (let i = 0; i < maxSteps; i++) {
+    const nextBtn =
+      container.querySelector('button[aria-label*="Next"], button[aria-label*="next"], button[title*="Next"], button[title*="next"]') ||
+      Array.from(container.querySelectorAll('button')).find(b => /next/i.test(safeText(b)));
+    if (!nextBtn) break;
+
+    const disabled = nextBtn.disabled || nextBtn.getAttribute('aria-disabled') === 'true';
+    if (disabled) break;
+
+    nextBtn.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+    nextBtn.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+    nextBtn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+    await pauseSeconds(0.25);
+
+    const beforeCount = collected.length;
+    collect();
+    if (collected.length === beforeCount) break;
+  }
+
+  return collected;
+}
+
+async function extractInlineItemCitations() {
+  const messageElements = document.querySelectorAll(ASSISTANT_MSG);
+  if (!messageElements || messageElements.length === 0) return [];
+  const lastResponse = messageElements[messageElements.length - 1];
+
+  const items = [];
+  let currentSection = '';
+  let itemPos = 0;
+
+  const normalizeUrl = (u) => {
+    try { return cleanUrl(u); } catch { return u; }
+  };
+
+  const walker = document.createTreeWalker(lastResponse, NodeFilter.SHOW_ELEMENT);
+  while (walker.nextNode()) {
+    const el = walker.currentNode;
+    const tag = el.tagName ? el.tagName.toLowerCase() : '';
+    if (/^h[1-6]$/.test(tag)) {
+      const t = safeText(el);
+      if (t) currentSection = t;
+      continue;
+    }
+
+    if (tag === 'li') {
+      const clone = el.cloneNode(true);
+      clone.querySelectorAll('button, [role="button"], .rounded-full, .badge, .chip').forEach(n => n.remove());
+      const itemText = safeText(clone);
+      if (!itemText) continue;
+
+      itemPos += 1;
+      const itemName = deriveItemName(itemText);
+
+      const chipCandidates = Array.from(el.querySelectorAll('button, [role="button"], a'))
+        .filter(c => {
+          const t = safeText(c);
+          if (!t) return false;
+          if (t.length > 50) return false;
+          if (/copy|share|edit/i.test(t)) return false;
+          return true;
+        })
+        .slice(0, 6);
+
+      const chipGroups = [];
+      for (const chip of chipCandidates) {
+        try {
+          // IMPORTANT: Never click anchor links; ChatGPT source links are <a target="_blank"> and will open tabs.
+          // For anchors, just read the href and treat it as a single-link group.
+          if (chip && chip.tagName && chip.tagName.toLowerCase() === 'a') {
+            const href = chip.href || chip.getAttribute('href') || '';
+            if (href && /^https?:\/\//i.test(href)) {
+              chipGroups.push({ links: [normalizeUrl(href)] });
+            }
+            continue;
+          }
+
+          chip.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+          chip.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
+          chip.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+          await pauseSeconds(0.35);
+
+          const pop = findVisiblePopoverContainer();
+          if (!pop) {
+            await closePopover();
+            continue;
+          }
+          const links = await tryExpandPopoverCarousel(pop, 10);
+          await closePopover();
+
+          if (links && links.length > 0) {
+            // group order is the group identifier
+            chipGroups.push({ links });
+          }
+        } catch {
+          await closePopover();
+        }
+      }
+
+      items.push({
+        item_section_title: currentSection,
+        item_position: itemPos,
+        item_name: itemName,
+        item_text: itemText,
+        chip_groups: chipGroups,
+      });
+    }
+  }
+
+  return items;
 }
 
 async function extractSourceLinks() {
@@ -567,11 +820,11 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
   await pauseSeconds(getRandomInt(0.5, 1));
 
   // wait for response end AND capture search query during the wait
-  const capturedSearchQuery = await waitForResponseFinished(SEND_QUERY_BTN);
+  const waitResult = await waitForResponseFinished(SEND_QUERY_BTN);
   await pauseSeconds(getRandomInt(0.5, 1));
 
   // Fallback: If we missed it during the stream, try one last check
-  const generated_search_query = await getSearchQuery(capturedSearchQuery);
+  const generated_search_query = await getSearchQuery(waitResult?.searchQuery);
 
   // get response text
   const response_text = await getResponse(ASSISTANT_MSG);
@@ -581,6 +834,7 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
   const result = {
     query: query,
     generated_search_query: generated_search_query || "N/A", // Add to result object
+    web_search_triggered: !!waitResult?.webSearchTriggered,
     response_text: response_text,
     web_search_forced: force_web_search,
     retry_count: retryCount
@@ -719,6 +973,14 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         });
         
         const result = await collectQueryResponse(query, force_web_search);
+
+        // Item-level inline extraction (chips/+N) serialized as JSON. We keep the exporter 1-row-per-run.
+        let items = [];
+        try {
+          items = await extractInlineItemCitations();
+        } catch (e) {
+          items = [];
+        }
         
         // helper function to safely convert source data to Python list string format
         const formatSources = (sources) => {
@@ -750,6 +1012,17 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
           generated_search_query: result.generated_search_query, // Include in enriched result
           response_text: result.response_text,
           web_search_forced: result.web_search_forced,
+          web_search_triggered: result.web_search_triggered,
+          items_json: (() => { try { return JSON.stringify(items); } catch { return '[]'; } })(),
+          items_count: Array.isArray(items) ? items.length : 0,
+          items_with_citations_count: Array.isArray(items)
+            ? items.filter(it => Array.isArray(it.chip_groups) && it.chip_groups.some(g => Array.isArray(g.links) && g.links.length > 0)).length
+            : 0,
+          // Keep the existing URL-list columns for easy joins/overlap, but also provide JSON arrays of objects
+          // so you can analyze which snippet/title ChatGPT showed per URL (and preserve ordering).
+          sources_cited_json: (() => { try { return JSON.stringify(result.sources_cited || []); } catch { return '[]'; } })(),
+          sources_additional_json: (() => { try { return JSON.stringify(result.sources_additional || []); } catch { return '[]'; } })(),
+          sources_all_json: (() => { try { return JSON.stringify(result.sources_all || []); } catch { return '[]'; } })(),
           sources_cited: formatSources(result.sources_cited),
           sources_additional: formatSources(result.sources_additional),
           sources_all: formatSources(result.sources_all),
@@ -788,8 +1061,16 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
           run_number: run,
           prompt_id: prompt_id,
           query: query,
+          generated_search_query: 'N/A',
           response_text: `ERROR: ${error.message}`,
           web_search_forced: force_web_search,
+          web_search_triggered: false,
+          items_json: '[]',
+          items_count: 0,
+          items_with_citations_count: 0,
+          sources_cited_json: '[]',
+          sources_additional_json: '[]',
+          sources_all_json: '[]',
           sources_cited: '',
           sources_additional: '',
           sources_all: '',
