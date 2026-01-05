@@ -49,7 +49,7 @@ let scrapingState = {
     currentRun: 0,
     runsPerQuery: 1,
     csvData: null,
-    forceWebSearch: true
+    forceWebSearch: false
 };
 
 // init
@@ -61,6 +61,10 @@ function initializeApp() {
     
     // init state - show upload section
     showSection('upload');
+
+    // default to organic behavior (don't force web search)
+    scrapingState.forceWebSearch = false;
+    if (webSearchToggle) webSearchToggle.checked = false;
 }
 
 function setupEventListeners() {
@@ -422,7 +426,7 @@ function resetApp() {
         currentRun: 0,
         runsPerQuery: 1,
         csvData: null,
-        forceWebSearch: true
+        forceWebSearch: false
     };
     
     // reset UI
@@ -434,7 +438,7 @@ function resetApp() {
     
     startButton.innerHTML = '<i class="fas fa-play"></i><span>Start Scraping</span>';
     startButton.disabled = false;
-    webSearchToggle.checked = true;
+    webSearchToggle.checked = false;
     webSearchToggle.disabled = false;
     runsPerQInput.value = 1;
     updateTotalOperations();
