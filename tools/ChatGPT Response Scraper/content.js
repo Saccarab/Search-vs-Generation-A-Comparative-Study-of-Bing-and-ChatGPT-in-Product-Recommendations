@@ -745,7 +745,9 @@ function convertToCSV(results) {
   
   results.forEach(result => {
     const row = headers.map(header => {
-      let value = result[header] || '';
+      // IMPORTANT: don't use `|| ''` here because it converts valid falsy values (0, false) to empty strings.
+      // We want to preserve 0/false in the CSV for proper downstream parsing.
+      let value = (result[header] ?? '');
       
       // If it's the response text or search query, replace newlines with spaces to keep CSV clean
       if (header === 'response_text' || header === 'query' || header === 'generated_search_query') {
@@ -952,6 +954,53 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
   const results = [];
   const totalOperations = queries.length * runs_per_q;
   let completedOperations = 0;
+
+  // ---------- Fallback helpers (when UI doesn't render <a> tags / <li> lists) ----------
+  const extractUrlsFromText = (text) => {
+    const s = String(text || '');
+    // Match http(s) URLs, stop at whitespace or common trailing punctuation
+    const re = /https?:\/\/[^\s<>"')\]]+/gi;
+    const found = s.match(re) || [];
+    const seen = new Set();
+    const out = [];
+    for (let u of found) {
+      u = u.replace(/[.,;:!?]+$/g, ''); // strip trailing punctuation
+      try { u = cleanUrl(u); } catch {}
+      if (!u || seen.has(u)) continue;
+      seen.add(u);
+      out.push(u);
+    }
+    return out;
+  };
+
+  const buildItemsFromTextUrls = (text, urls) => {
+    const s = String(text || '').replace(/\s+/g, ' ').trim();
+    const items = [];
+    let pos = 0;
+    for (const u of (urls || [])) {
+      pos += 1;
+      // Try to capture a short label immediately preceding the URL.
+      const idx = s.toLowerCase().indexOf(u.toLowerCase());
+      let label = '';
+      if (idx > 0) {
+        const left = s.slice(0, idx);
+        // Take last ~80 chars and trim to last sentence-ish boundary.
+        const windowText = left.slice(Math.max(0, left.length - 120));
+        const parts = windowText.split(/(?:\.\s+|\|\s+|—\s+|-\s+|\u2022\s+|:\s+)/);
+        label = (parts[parts.length - 1] || '').trim();
+      }
+      if (!label) label = u;
+      const name = deriveItemName(label);
+      items.push({
+        item_section_title: 'response_text_fallback',
+        item_position: pos,
+        item_name: name,
+        item_text: label,
+        chip_groups: [{ links: [u] }],
+      });
+    }
+    return items;
+  };
   
   console.log(`[Collection Start] Processing ${queries.length} queries with ${runs_per_q} runs each (${totalOperations} total operations), web search: ${force_web_search ? 'forced' : 'optional'}`);
   
@@ -981,6 +1030,28 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         } catch (e) {
           items = [];
         }
+
+        // Fallback: if the assistant response contains URLs but the UI didn't render list items / clickable anchors,
+        // synthesize sources + items from response_text so we don't lose the run.
+        try {
+          const hasNoSources =
+            (!Array.isArray(result.sources_cited) || result.sources_cited.length === 0) &&
+            (!Array.isArray(result.sources_additional) || result.sources_additional.length === 0);
+          const textUrls = extractUrlsFromText(result.response_text);
+
+          if (hasNoSources && textUrls.length > 0) {
+            result.sources_cited = textUrls.map(u => ({ url: u, title: '', description: '', domain: extractDomain(u) }));
+            result.sources_additional = [];
+            result.sources_all = [...result.sources_cited];
+            result.domains_cited = result.sources_cited.map(o => o.domain).filter(Boolean);
+            result.domains_additional = [];
+            result.domains_all = [...new Set(result.domains_cited)];
+          }
+
+          if ((!Array.isArray(items) || items.length === 0) && textUrls.length > 0) {
+            items = buildItemsFromTextUrls(result.response_text, textUrls);
+          }
+        } catch {}
         
         // helper function to safely convert source data to Python list string format
         const formatSources = (sources) => {
