@@ -1,0 +1,271 @@
+run_id,prompt_id,run_number,generated_search_query,section,bucket_k,n_sources,n_bing,n_overlap,frac_sources_in_bing,overlap_coeff,n_domains,n_bing_domains,n_domain_overlap,frac_domains_in_bing,domain_overlap_coeff
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,cited,1,11,1,0,0.0,0.0,10,1,0,0.0,0.0
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,cited,3,11,3,0,0.0,0.0,10,3,0,0.0,0.0
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,cited,5,11,5,0,0.0,0.0,10,4,1,0.1,0.25
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,cited,10,11,10,0,0.0,0.0,10,8,1,0.1,0.125
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,cited,30,11,30,0,0.0,0.0,10,23,4,0.4,0.4
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,additional,1,13,1,1,0.07692307692307693,1.0,12,1,1,0.08333333333333333,1.0
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,additional,3,13,3,3,0.23076923076923078,1.0,12,3,3,0.25,1.0
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,additional,5,13,5,3,0.23076923076923078,0.6,12,4,4,0.3333333333333333,1.0
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,additional,10,13,10,4,0.3076923076923077,0.4,12,8,5,0.4166666666666667,0.625
+P0001_r1,P0001,1,free website or program to translate video and add subtitles automatically,additional,30,13,30,5,0.38461538461538464,0.38461538461538464,12,23,7,0.5833333333333334,0.5833333333333334
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,cited,1,7,1,0,0.0,0.0,7,1,0,0.0,0.0
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,cited,3,7,3,0,0.0,0.0,7,3,0,0.0,0.0
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,cited,5,7,5,0,0.0,0.0,7,5,0,0.0,0.0
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,cited,10,7,10,1,0.14285714285714285,0.14285714285714285,7,10,1,0.14285714285714285,0.14285714285714285
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,cited,30,7,30,1,0.14285714285714285,0.14285714285714285,7,25,3,0.42857142857142855,0.42857142857142855
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,additional,1,18,1,1,0.05555555555555555,1.0,15,1,1,0.06666666666666667,1.0
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,additional,3,18,3,1,0.05555555555555555,0.3333333333333333,15,3,1,0.06666666666666667,0.3333333333333333
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,additional,5,18,5,1,0.05555555555555555,0.2,15,5,1,0.06666666666666667,0.2
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,additional,10,18,10,1,0.05555555555555555,0.1,15,10,2,0.13333333333333333,0.2
+P0001_r2,P0001,2,free website or program to translate video and add subtitles automatically 20-minute video,additional,30,18,30,3,0.16666666666666666,0.16666666666666666,15,25,6,0.4,0.4
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,cited,1,7,1,1,0.14285714285714285,1.0,7,1,1,0.14285714285714285,1.0
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,cited,3,7,3,1,0.14285714285714285,0.3333333333333333,7,3,1,0.14285714285714285,0.3333333333333333
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,cited,5,7,5,1,0.14285714285714285,0.2,7,5,2,0.2857142857142857,0.4
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,cited,10,7,10,1,0.14285714285714285,0.14285714285714285,7,10,3,0.42857142857142855,0.42857142857142855
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,cited,30,7,30,1,0.14285714285714285,0.14285714285714285,7,24,4,0.5714285714285714,0.5714285714285714
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,additional,1,18,1,0,0.0,0.0,15,1,0,0.0,0.0
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,additional,3,18,3,2,0.1111111111111111,0.6666666666666666,15,3,2,0.13333333333333333,0.6666666666666666
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,additional,5,18,5,2,0.1111111111111111,0.4,15,5,3,0.2,0.6
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,additional,10,18,10,3,0.16666666666666666,0.3,15,10,5,0.3333333333333333,0.5
+P0001_r3,P0001,3,free website program translate video and add subtitles automatically,additional,30,18,30,4,0.2222222222222222,0.2222222222222222,15,24,7,0.4666666666666667,0.4666666666666667
+P0002_r1,P0002,1,free AI tools for audio transcription,cited,1,10,1,1,0.1,1.0,8,1,1,0.125,1.0
+P0002_r1,P0002,1,free AI tools for audio transcription,cited,3,10,3,1,0.1,0.3333333333333333,8,3,1,0.125,0.3333333333333333
+P0002_r1,P0002,1,free AI tools for audio transcription,cited,5,10,5,1,0.1,0.2,8,5,1,0.125,0.2
+P0002_r1,P0002,1,free AI tools for audio transcription,cited,10,10,10,2,0.2,0.2,8,10,2,0.25,0.25
+P0002_r1,P0002,1,free AI tools for audio transcription,cited,30,10,30,2,0.2,0.2,8,28,5,0.625,0.625
+P0002_r1,P0002,1,free AI tools for audio transcription,additional,1,15,1,0,0.0,0.0,15,1,0,0.0,0.0
+P0002_r1,P0002,1,free AI tools for audio transcription,additional,3,15,3,0,0.0,0.0,15,3,0,0.0,0.0
+P0002_r1,P0002,1,free AI tools for audio transcription,additional,5,15,5,1,0.06666666666666667,0.2,15,5,1,0.06666666666666667,0.2
+P0002_r1,P0002,1,free AI tools for audio transcription,additional,10,15,10,2,0.13333333333333333,0.2,15,10,2,0.13333333333333333,0.2
+P0002_r1,P0002,1,free AI tools for audio transcription,additional,30,15,30,2,0.13333333333333333,0.13333333333333333,15,28,3,0.2,0.2
+P0002_r2,P0002,2,free AI audio transcription tools,cited,1,11,1,0,0.0,0.0,11,1,0,0.0,0.0
+P0002_r2,P0002,2,free AI audio transcription tools,cited,3,11,3,0,0.0,0.0,11,3,0,0.0,0.0
+P0002_r2,P0002,2,free AI audio transcription tools,cited,5,11,5,1,0.09090909090909091,0.2,11,5,1,0.09090909090909091,0.2
+P0002_r2,P0002,2,free AI audio transcription tools,cited,10,11,10,4,0.36363636363636365,0.4,11,10,5,0.45454545454545453,0.5
+P0002_r2,P0002,2,free AI audio transcription tools,cited,30,11,25,4,0.36363636363636365,0.36363636363636365,11,23,5,0.45454545454545453,0.45454545454545453
+P0002_r2,P0002,2,free AI audio transcription tools,additional,1,10,1,0,0.0,0.0,10,1,0,0.0,0.0
+P0002_r2,P0002,2,free AI audio transcription tools,additional,3,10,3,0,0.0,0.0,10,3,0,0.0,0.0
+P0002_r2,P0002,2,free AI audio transcription tools,additional,5,10,5,0,0.0,0.0,10,5,0,0.0,0.0
+P0002_r2,P0002,2,free AI audio transcription tools,additional,10,10,10,0,0.0,0.0,10,10,1,0.1,0.1
+P0002_r2,P0002,2,free AI audio transcription tools,additional,30,10,25,1,0.1,0.1,10,23,3,0.3,0.3
+P0002_r3,P0002,3,free AI tools for audio transcription,cited,1,10,1,1,0.1,1.0,9,1,1,0.1111111111111111,1.0
+P0002_r3,P0002,3,free AI tools for audio transcription,cited,3,10,3,3,0.3,1.0,9,3,3,0.3333333333333333,1.0
+P0002_r3,P0002,3,free AI tools for audio transcription,cited,5,10,5,3,0.3,0.6,9,5,3,0.3333333333333333,0.6
+P0002_r3,P0002,3,free AI tools for audio transcription,cited,10,10,10,3,0.3,0.3,9,9,4,0.4444444444444444,0.4444444444444444
+P0002_r3,P0002,3,free AI tools for audio transcription,cited,30,10,24,4,0.4,0.4,9,23,5,0.5555555555555556,0.5555555555555556
+P0002_r3,P0002,3,free AI tools for audio transcription,additional,1,14,1,0,0.0,0.0,13,1,0,0.0,0.0
+P0002_r3,P0002,3,free AI tools for audio transcription,additional,3,14,3,0,0.0,0.0,13,3,0,0.0,0.0
+P0002_r3,P0002,3,free AI tools for audio transcription,additional,5,14,5,2,0.14285714285714285,0.4,13,5,2,0.15384615384615385,0.4
+P0002_r3,P0002,3,free AI tools for audio transcription,additional,10,14,10,2,0.14285714285714285,0.2,13,9,3,0.23076923076923078,0.3333333333333333
+P0002_r3,P0002,3,free AI tools for audio transcription,additional,30,14,24,3,0.21428571428571427,0.21428571428571427,13,23,5,0.38461538461538464,0.38461538461538464
+P0003_r1,P0003,1,tools available for text to speech software options,cited,1,8,1,0,0.0,0.0,7,1,0,0.0,0.0
+P0003_r1,P0003,1,tools available for text to speech software options,cited,3,8,3,1,0.125,0.3333333333333333,7,3,1,0.14285714285714285,0.3333333333333333
+P0003_r1,P0003,1,tools available for text to speech software options,cited,5,8,5,2,0.25,0.4,7,5,2,0.2857142857142857,0.4
+P0003_r1,P0003,1,tools available for text to speech software options,cited,10,8,10,2,0.25,0.25,7,10,2,0.2857142857142857,0.2857142857142857
+P0003_r1,P0003,1,tools available for text to speech software options,cited,30,8,24,2,0.25,0.25,7,23,2,0.2857142857142857,0.2857142857142857
+P0003_r1,P0003,1,tools available for text to speech software options,additional,1,14,1,0,0.0,0.0,14,1,0,0.0,0.0
+P0003_r1,P0003,1,tools available for text to speech software options,additional,3,14,3,0,0.0,0.0,14,3,0,0.0,0.0
+P0003_r1,P0003,1,tools available for text to speech software options,additional,5,14,5,1,0.07142857142857142,0.2,14,5,1,0.07142857142857142,0.2
+P0003_r1,P0003,1,tools available for text to speech software options,additional,10,14,10,2,0.14285714285714285,0.2,14,10,2,0.14285714285714285,0.2
+P0003_r1,P0003,1,tools available for text to speech software options,additional,30,14,24,3,0.21428571428571427,0.21428571428571427,14,23,3,0.21428571428571427,0.21428571428571427
+P0003_r2,P0003,2,tools available for text to speech software options,cited,1,9,1,1,0.1111111111111111,1.0,9,1,1,0.1111111111111111,1.0
+P0003_r2,P0003,2,tools available for text to speech software options,cited,3,9,3,3,0.3333333333333333,1.0,9,3,3,0.3333333333333333,1.0
+P0003_r2,P0003,2,tools available for text to speech software options,cited,5,9,5,4,0.4444444444444444,0.8,9,5,4,0.4444444444444444,0.8
+P0003_r2,P0003,2,tools available for text to speech software options,cited,10,9,10,5,0.5555555555555556,0.5555555555555556,9,10,5,0.5555555555555556,0.5555555555555556
+P0003_r2,P0003,2,tools available for text to speech software options,cited,30,9,26,6,0.6666666666666666,0.6666666666666666,9,25,6,0.6666666666666666,0.6666666666666666
+P0003_r2,P0003,2,tools available for text to speech software options,additional,1,9,1,0,0.0,0.0,9,1,0,0.0,0.0
+P0003_r2,P0003,2,tools available for text to speech software options,additional,3,9,3,0,0.0,0.0,9,3,0,0.0,0.0
+P0003_r2,P0003,2,tools available for text to speech software options,additional,5,9,5,0,0.0,0.0,9,5,0,0.0,0.0
+P0003_r2,P0003,2,tools available for text to speech software options,additional,10,9,10,4,0.4444444444444444,0.4444444444444444,9,10,4,0.4444444444444444,0.4444444444444444
+P0003_r2,P0003,2,tools available for text to speech software options,additional,30,9,26,5,0.5555555555555556,0.5555555555555556,9,25,5,0.5555555555555556,0.5555555555555556
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,cited,1,7,1,0,0.0,0.0,7,1,0,0.0,0.0
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,cited,3,7,3,0,0.0,0.0,7,3,0,0.0,0.0
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,cited,5,7,5,0,0.0,0.0,7,5,0,0.0,0.0
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,cited,10,7,10,0,0.0,0.0,7,10,0,0.0,0.0
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,cited,30,7,30,1,0.14285714285714285,0.14285714285714285,7,25,1,0.14285714285714285,0.14285714285714285
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,additional,1,15,1,0,0.0,0.0,15,1,0,0.0,0.0
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,additional,3,15,3,1,0.06666666666666667,0.3333333333333333,15,3,1,0.06666666666666667,0.3333333333333333
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,additional,5,15,5,1,0.06666666666666667,0.2,15,5,1,0.06666666666666667,0.2
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,additional,10,15,10,2,0.13333333333333333,0.2,15,10,3,0.2,0.3
+P0003_r3,P0003,3,tools for text to speech services available 2026 text to speech,additional,30,15,30,3,0.2,0.2,15,25,4,0.26666666666666666,0.26666666666666666
+P0004_r1,P0004,1,best speech to text solutions,cited,1,4,1,0,0.0,0.0,4,1,0,0.0,0.0
+P0004_r1,P0004,1,best speech to text solutions,cited,3,4,3,2,0.5,0.6666666666666666,4,3,2,0.5,0.6666666666666666
+P0004_r1,P0004,1,best speech to text solutions,cited,5,4,5,2,0.5,0.5,4,5,2,0.5,0.5
+P0004_r1,P0004,1,best speech to text solutions,cited,10,4,10,2,0.5,0.5,4,10,2,0.5,0.5
+P0004_r1,P0004,1,best speech to text solutions,cited,30,4,30,2,0.5,0.5,4,28,2,0.5,0.5
+P0004_r1,P0004,1,best speech to text solutions,additional,1,17,1,0,0.0,0.0,16,1,0,0.0,0.0
+P0004_r1,P0004,1,best speech to text solutions,additional,3,17,3,0,0.0,0.0,16,3,0,0.0,0.0
+P0004_r1,P0004,1,best speech to text solutions,additional,5,17,5,2,0.11764705882352941,0.4,16,5,2,0.125,0.4
+P0004_r1,P0004,1,best speech to text solutions,additional,10,17,10,3,0.17647058823529413,0.3,16,10,3,0.1875,0.3
+P0004_r1,P0004,1,best speech to text solutions,additional,30,17,30,5,0.29411764705882354,0.29411764705882354,16,28,5,0.3125,0.3125
+P0004_r2,P0004,2,best speech to text solutions,cited,1,9,1,0,0.0,0.0,8,1,0,0.0,0.0
+P0004_r2,P0004,2,best speech to text solutions,cited,3,9,3,1,0.1111111111111111,0.3333333333333333,8,3,2,0.25,0.6666666666666666
+P0004_r2,P0004,2,best speech to text solutions,cited,5,9,5,1,0.1111111111111111,0.2,8,5,2,0.25,0.4
+P0004_r2,P0004,2,best speech to text solutions,cited,10,9,10,1,0.1111111111111111,0.1111111111111111,8,10,2,0.25,0.25
+P0004_r2,P0004,2,best speech to text solutions,cited,30,9,28,3,0.3333333333333333,0.3333333333333333,8,28,4,0.5,0.5
+P0004_r2,P0004,2,best speech to text solutions,additional,1,11,1,0,0.0,0.0,10,1,0,0.0,0.0
+P0004_r2,P0004,2,best speech to text solutions,additional,3,11,3,1,0.09090909090909091,0.3333333333333333,10,3,1,0.1,0.3333333333333333
+P0004_r2,P0004,2,best speech to text solutions,additional,5,11,5,3,0.2727272727272727,0.6,10,5,3,0.3,0.6
+P0004_r2,P0004,2,best speech to text solutions,additional,10,11,10,4,0.36363636363636365,0.4,10,10,4,0.4,0.4
+P0004_r2,P0004,2,best speech to text solutions,additional,30,11,28,4,0.36363636363636365,0.36363636363636365,10,28,4,0.4,0.4
+P0004_r3,P0004,3,best speech to text solutions,cited,1,9,1,0,0.0,0.0,8,1,0,0.0,0.0
+P0004_r3,P0004,3,best speech to text solutions,cited,3,9,3,1,0.1111111111111111,0.3333333333333333,8,3,1,0.125,0.3333333333333333
+P0004_r3,P0004,3,best speech to text solutions,cited,5,9,5,1,0.1111111111111111,0.2,8,5,1,0.125,0.2
+P0004_r3,P0004,3,best speech to text solutions,cited,10,9,10,3,0.3333333333333333,0.3333333333333333,8,10,3,0.375,0.375
+P0004_r3,P0004,3,best speech to text solutions,cited,30,9,30,3,0.3333333333333333,0.3333333333333333,8,28,3,0.375,0.375
+P0004_r3,P0004,3,best speech to text solutions,additional,1,16,1,0,0.0,0.0,15,1,0,0.0,0.0
+P0004_r3,P0004,3,best speech to text solutions,additional,3,16,3,1,0.0625,0.3333333333333333,15,3,1,0.06666666666666667,0.3333333333333333
+P0004_r3,P0004,3,best speech to text solutions,additional,5,16,5,2,0.125,0.4,15,5,3,0.2,0.6
+P0004_r3,P0004,3,best speech to text solutions,additional,10,16,10,4,0.25,0.4,15,10,5,0.3333333333333333,0.5
+P0004_r3,P0004,3,best speech to text solutions,additional,30,16,30,4,0.25,0.25,15,28,7,0.4666666666666667,0.4666666666666667
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,cited,1,11,1,0,0.0,0.0,11,1,0,0.0,0.0
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,cited,3,11,3,1,0.09090909090909091,0.3333333333333333,11,3,1,0.09090909090909091,0.3333333333333333
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,cited,5,11,5,1,0.09090909090909091,0.2,11,5,2,0.18181818181818182,0.4
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,cited,10,11,10,1,0.09090909090909091,0.1,11,10,4,0.36363636363636365,0.4
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,cited,30,11,30,1,0.09090909090909091,0.09090909090909091,11,25,5,0.45454545454545453,0.45454545454545453
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,additional,1,14,1,0,0.0,0.0,13,1,1,0.07692307692307693,1.0
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,additional,3,14,3,0,0.0,0.0,13,3,1,0.07692307692307693,0.3333333333333333
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,additional,5,14,5,1,0.07142857142857142,0.2,13,5,3,0.23076923076923078,0.6
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,additional,10,14,10,1,0.07142857142857142,0.1,13,10,5,0.38461538461538464,0.5
+P0005_r1,P0005,1,free applications that read text in naturalistic voices text to speech free apps,additional,30,14,30,1,0.07142857142857142,0.07142857142857142,13,25,5,0.38461538461538464,0.38461538461538464
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,cited,1,7,1,1,0.14285714285714285,1.0,6,1,1,0.16666666666666666,1.0
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,cited,3,7,3,1,0.14285714285714285,0.3333333333333333,6,3,2,0.3333333333333333,0.6666666666666666
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,cited,5,7,5,1,0.14285714285714285,0.2,6,5,2,0.3333333333333333,0.4
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,cited,10,7,10,1,0.14285714285714285,0.14285714285714285,6,10,2,0.3333333333333333,0.3333333333333333
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,cited,30,7,30,1,0.14285714285714285,0.14285714285714285,6,24,3,0.5,0.5
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,additional,1,16,1,0,0.0,0.0,12,1,0,0.0,0.0
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,additional,3,16,3,1,0.0625,0.3333333333333333,12,3,1,0.08333333333333333,0.3333333333333333
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,additional,5,16,5,2,0.125,0.4,12,5,2,0.16666666666666666,0.4
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,additional,10,16,10,4,0.25,0.4,12,10,5,0.4166666666666667,0.5
+P0005_r2,P0005,2,free applications that read text in natural voices text to speech free apps,additional,30,16,30,4,0.25,0.25,12,24,6,0.5,0.5
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,cited,1,10,1,0,0.0,0.0,10,1,0,0.0,0.0
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,cited,3,10,3,0,0.0,0.0,10,3,0,0.0,0.0
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,cited,5,10,5,0,0.0,0.0,10,5,1,0.1,0.2
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,cited,10,10,10,1,0.1,0.1,10,10,3,0.3,0.3
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,cited,30,10,30,1,0.1,0.1,10,26,4,0.4,0.4
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,additional,1,16,1,0,0.0,0.0,14,1,0,0.0,0.0
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,additional,3,16,3,1,0.0625,0.3333333333333333,14,3,2,0.14285714285714285,0.6666666666666666
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,additional,5,16,5,2,0.125,0.4,14,5,3,0.21428571428571427,0.6
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,additional,10,16,10,2,0.125,0.2,14,10,5,0.35714285714285715,0.5
+P0005_r3,P0005,3,free applications that can read text aloud naturalistic voices text to speech free apps,additional,30,16,30,3,0.1875,0.1875,14,26,6,0.42857142857142855,0.42857142857142855
+P0006_r1,P0006,1,text to speech software options besides Outplayed,cited,1,8,1,0,0.0,0.0,7,1,0,0.0,0.0
+P0006_r1,P0006,1,text to speech software options besides Outplayed,cited,3,8,3,1,0.125,0.3333333333333333,7,3,1,0.14285714285714285,0.3333333333333333
+P0006_r1,P0006,1,text to speech software options besides Outplayed,cited,5,8,5,3,0.375,0.6,7,5,3,0.42857142857142855,0.6
+P0006_r1,P0006,1,text to speech software options besides Outplayed,cited,10,8,10,4,0.5,0.5,7,10,4,0.5714285714285714,0.5714285714285714
+P0006_r1,P0006,1,text to speech software options besides Outplayed,cited,30,8,27,4,0.5,0.5,7,26,4,0.5714285714285714,0.5714285714285714
+P0006_r1,P0006,1,text to speech software options besides Outplayed,additional,1,12,1,0,0.0,0.0,12,1,0,0.0,0.0
+P0006_r1,P0006,1,text to speech software options besides Outplayed,additional,3,12,3,1,0.08333333333333333,0.3333333333333333,12,3,1,0.08333333333333333,0.3333333333333333
+P0006_r1,P0006,1,text to speech software options besides Outplayed,additional,5,12,5,1,0.08333333333333333,0.2,12,5,2,0.16666666666666666,0.4
+P0006_r1,P0006,1,text to speech software options besides Outplayed,additional,10,12,10,3,0.25,0.3,12,10,4,0.3333333333333333,0.4
+P0006_r1,P0006,1,text to speech software options besides Outplayed,additional,30,12,27,3,0.25,0.25,12,26,4,0.3333333333333333,0.3333333333333333
+P0006_r2,P0006,2,text to speech software options besides Outplayed,cited,1,6,1,0,0.0,0.0,5,1,0,0.0,0.0
+P0006_r2,P0006,2,text to speech software options besides Outplayed,cited,3,6,3,0,0.0,0.0,5,3,0,0.0,0.0
+P0006_r2,P0006,2,text to speech software options besides Outplayed,cited,5,6,5,0,0.0,0.0,5,5,0,0.0,0.0
+P0006_r2,P0006,2,text to speech software options besides Outplayed,cited,10,6,10,1,0.16666666666666666,0.16666666666666666,5,10,1,0.2,0.2
+P0006_r2,P0006,2,text to speech software options besides Outplayed,cited,30,6,30,1,0.16666666666666666,0.16666666666666666,5,30,2,0.4,0.4
+P0006_r2,P0006,2,text to speech software options besides Outplayed,additional,1,15,1,1,0.06666666666666667,1.0,14,1,1,0.07142857142857142,1.0
+P0006_r2,P0006,2,text to speech software options besides Outplayed,additional,3,15,3,3,0.2,1.0,14,3,3,0.21428571428571427,1.0
+P0006_r2,P0006,2,text to speech software options besides Outplayed,additional,5,15,5,5,0.3333333333333333,1.0,14,5,5,0.35714285714285715,1.0
+P0006_r2,P0006,2,text to speech software options besides Outplayed,additional,10,15,10,6,0.4,0.6,14,10,6,0.42857142857142855,0.6
+P0006_r2,P0006,2,text to speech software options besides Outplayed,additional,30,15,30,7,0.4666666666666667,0.4666666666666667,14,30,7,0.5,0.5
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,cited,1,7,1,0,0.0,0.0,6,1,0,0.0,0.0
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,cited,3,7,3,2,0.2857142857142857,0.6666666666666666,6,3,2,0.3333333333333333,0.6666666666666666
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,cited,5,7,5,3,0.42857142857142855,0.6,6,5,3,0.5,0.6
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,cited,10,7,10,4,0.5714285714285714,0.5714285714285714,6,10,4,0.6666666666666666,0.6666666666666666
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,cited,30,7,30,5,0.7142857142857143,0.7142857142857143,6,29,5,0.8333333333333334,0.8333333333333334
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,additional,1,12,1,0,0.0,0.0,10,1,0,0.0,0.0
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,additional,3,12,3,0,0.0,0.0,10,3,0,0.0,0.0
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,additional,5,12,5,1,0.08333333333333333,0.2,10,5,1,0.1,0.2
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,additional,10,12,10,3,0.25,0.3,10,10,3,0.3,0.3
+P0006_r3,P0006,3,text-to-speech software options besides Outplayed TTS tools,additional,30,12,30,4,0.3333333333333333,0.3333333333333333,10,29,4,0.4,0.4
+P0007_r1,P0007,1,real-time voice translator apps best,cited,1,7,1,1,0.14285714285714285,1.0,6,1,1,0.16666666666666666,1.0
+P0007_r1,P0007,1,real-time voice translator apps best,cited,3,7,3,2,0.2857142857142857,0.6666666666666666,6,3,2,0.3333333333333333,0.6666666666666666
+P0007_r1,P0007,1,real-time voice translator apps best,cited,5,7,5,3,0.42857142857142855,0.6,6,5,3,0.5,0.6
+P0007_r1,P0007,1,real-time voice translator apps best,cited,10,7,10,4,0.5714285714285714,0.5714285714285714,6,10,4,0.6666666666666666,0.6666666666666666
+P0007_r1,P0007,1,real-time voice translator apps best,cited,30,7,30,5,0.7142857142857143,0.7142857142857143,6,23,5,0.8333333333333334,0.8333333333333334
+P0007_r1,P0007,1,real-time voice translator apps best,additional,1,9,1,0,0.0,0.0,8,1,0,0.0,0.0
+P0007_r1,P0007,1,real-time voice translator apps best,additional,3,9,3,1,0.1111111111111111,0.3333333333333333,8,3,1,0.125,0.3333333333333333
+P0007_r1,P0007,1,real-time voice translator apps best,additional,5,9,5,2,0.2222222222222222,0.4,8,5,2,0.25,0.4
+P0007_r1,P0007,1,real-time voice translator apps best,additional,10,9,10,6,0.6666666666666666,0.6666666666666666,8,10,6,0.75,0.75
+P0007_r1,P0007,1,real-time voice translator apps best,additional,30,9,30,6,0.6666666666666666,0.6666666666666666,8,23,6,0.75,0.75
+P0007_r2,P0007,2,real-time voice translator app recommendations,cited,1,3,1,0,0.0,0.0,3,1,0,0.0,0.0
+P0007_r2,P0007,2,real-time voice translator app recommendations,cited,3,3,3,1,0.3333333333333333,0.3333333333333333,3,3,1,0.3333333333333333,0.3333333333333333
+P0007_r2,P0007,2,real-time voice translator app recommendations,cited,5,3,5,1,0.3333333333333333,0.3333333333333333,3,5,2,0.6666666666666666,0.6666666666666666
+P0007_r2,P0007,2,real-time voice translator app recommendations,cited,10,3,10,1,0.3333333333333333,0.3333333333333333,3,10,2,0.6666666666666666,0.6666666666666666
+P0007_r2,P0007,2,real-time voice translator app recommendations,cited,30,3,30,1,0.3333333333333333,0.3333333333333333,3,26,2,0.6666666666666666,0.6666666666666666
+P0007_r2,P0007,2,real-time voice translator app recommendations,additional,1,14,1,1,0.07142857142857142,1.0,14,1,1,0.07142857142857142,1.0
+P0007_r2,P0007,2,real-time voice translator app recommendations,additional,3,14,3,2,0.14285714285714285,0.6666666666666666,14,3,3,0.21428571428571427,1.0
+P0007_r2,P0007,2,real-time voice translator app recommendations,additional,5,14,5,3,0.21428571428571427,0.6,14,5,4,0.2857142857142857,0.8
+P0007_r2,P0007,2,real-time voice translator app recommendations,additional,10,14,10,8,0.5714285714285714,0.8,14,10,9,0.6428571428571429,0.9
+P0007_r2,P0007,2,real-time voice translator app recommendations,additional,30,14,30,8,0.5714285714285714,0.5714285714285714,14,26,11,0.7857142857142857,0.7857142857142857
+P0007_r3,P0007,3,real-time voice translator apps recommendations,cited,1,4,1,0,0.0,0.0,4,1,0,0.0,0.0
+P0007_r3,P0007,3,real-time voice translator apps recommendations,cited,3,4,3,1,0.25,0.3333333333333333,4,3,1,0.25,0.3333333333333333
+P0007_r3,P0007,3,real-time voice translator apps recommendations,cited,5,4,5,1,0.25,0.25,4,5,1,0.25,0.25
+P0007_r3,P0007,3,real-time voice translator apps recommendations,cited,10,4,10,1,0.25,0.25,4,10,1,0.25,0.25
+P0007_r3,P0007,3,real-time voice translator apps recommendations,cited,30,4,30,1,0.25,0.25,4,26,1,0.25,0.25
+P0007_r3,P0007,3,real-time voice translator apps recommendations,additional,1,13,1,1,0.07692307692307693,1.0,11,1,1,0.09090909090909091,1.0
+P0007_r3,P0007,3,real-time voice translator apps recommendations,additional,3,13,3,2,0.15384615384615385,0.6666666666666666,11,3,2,0.18181818181818182,0.6666666666666666
+P0007_r3,P0007,3,real-time voice translator apps recommendations,additional,5,13,5,4,0.3076923076923077,0.8,11,5,4,0.36363636363636365,0.8
+P0007_r3,P0007,3,real-time voice translator apps recommendations,additional,10,13,10,8,0.6153846153846154,0.8,11,10,8,0.7272727272727273,0.8
+P0007_r3,P0007,3,real-time voice translator apps recommendations,additional,30,13,30,8,0.6153846153846154,0.6153846153846154,11,26,10,0.9090909090909091,0.9090909090909091
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,cited,1,10,1,1,0.1,1.0,10,1,1,0.1,1.0
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,cited,3,10,3,2,0.2,0.6666666666666666,10,3,2,0.2,0.6666666666666666
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,cited,5,10,5,3,0.3,0.6,10,5,3,0.3,0.6
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,cited,10,10,10,6,0.6,0.6,10,10,6,0.6,0.6
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,cited,30,10,30,6,0.6,0.6,10,26,7,0.7,0.7
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,additional,1,11,1,0,0.0,0.0,10,1,0,0.0,0.0
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,additional,3,11,3,1,0.09090909090909091,0.3333333333333333,10,3,1,0.1,0.3333333333333333
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,additional,5,11,5,2,0.18181818181818182,0.4,10,5,3,0.3,0.6
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,additional,10,11,10,3,0.2727272727272727,0.3,10,10,4,0.4,0.4
+P0008_r1,P0008,1,software live call subtitles same language and translation separate line,additional,30,11,30,3,0.2727272727272727,0.2727272727272727,10,26,4,0.4,0.4
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,cited,1,10,1,0,0.0,0.0,10,1,0,0.0,0.0
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,cited,3,10,3,1,0.1,0.3333333333333333,10,3,2,0.2,0.6666666666666666
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,cited,5,10,5,1,0.1,0.2,10,5,2,0.2,0.4
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,cited,10,10,10,4,0.4,0.4,10,9,5,0.5,0.5555555555555556
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,cited,30,10,30,4,0.4,0.4,10,26,6,0.6,0.6
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,additional,1,11,1,0,0.0,0.0,11,1,0,0.0,0.0
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,additional,3,11,3,1,0.09090909090909091,0.3333333333333333,11,3,1,0.09090909090909091,0.3333333333333333
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,additional,5,11,5,3,0.2727272727272727,0.6,11,5,3,0.2727272727272727,0.6
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,additional,10,11,10,4,0.36363636363636365,0.4,11,9,5,0.45454545454545453,0.5555555555555556
+P0008_r2,P0008,2,software live call subtitles same language and separate translation line live captions translation for Zoom Teams etc,additional,30,11,30,5,0.45454545454545453,0.45454545454545453,11,26,7,0.6363636363636364,0.6363636363636364
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,cited,1,7,1,1,0.14285714285714285,1.0,7,1,1,0.14285714285714285,1.0
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,cited,3,7,3,2,0.2857142857142857,0.6666666666666666,7,3,2,0.2857142857142857,0.6666666666666666
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,cited,5,7,5,2,0.2857142857142857,0.4,7,5,2,0.2857142857142857,0.4
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,cited,10,7,10,3,0.42857142857142855,0.42857142857142855,7,10,4,0.5714285714285714,0.5714285714285714
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,cited,30,7,30,3,0.42857142857142855,0.42857142857142855,7,25,5,0.7142857142857143,0.7142857142857143
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,additional,1,15,1,0,0.0,0.0,12,1,0,0.0,0.0
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,additional,3,15,3,1,0.06666666666666667,0.3333333333333333,12,3,2,0.16666666666666666,0.6666666666666666
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,additional,5,15,5,2,0.13333333333333333,0.4,12,5,4,0.3333333333333333,0.8
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,additional,10,15,10,4,0.26666666666666666,0.4,12,10,6,0.5,0.6
+P0008_r3,P0008,3,software live call subtitles same language and separate translation line real time captions translation video calls,additional,30,15,30,4,0.26666666666666666,0.26666666666666666,12,25,6,0.5,0.5
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,cited,1,9,1,0,0.0,0.0,9,1,1,0.1111111111111111,1.0
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,cited,3,9,3,2,0.2222222222222222,0.6666666666666666,9,3,3,0.3333333333333333,1.0
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,cited,5,9,5,3,0.3333333333333333,0.6,9,5,4,0.4444444444444444,0.8
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,cited,10,9,10,3,0.3333333333333333,0.3333333333333333,9,10,5,0.5555555555555556,0.5555555555555556
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,cited,30,9,30,5,0.5555555555555556,0.5555555555555556,9,23,8,0.8888888888888888,0.8888888888888888
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,additional,1,9,1,1,0.1111111111111111,1.0,9,1,1,0.1111111111111111,1.0
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,additional,3,9,3,1,0.1111111111111111,0.3333333333333333,9,3,1,0.1111111111111111,0.3333333333333333
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,additional,5,9,5,1,0.1111111111111111,0.2,9,5,1,0.1111111111111111,0.2
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,additional,10,9,10,4,0.4444444444444444,0.4444444444444444,9,10,4,0.4444444444444444,0.4444444444444444
+P0009_r1,P0009,1,live translation software for video chats Zoom Teams live translation,additional,30,9,30,4,0.4444444444444444,0.4444444444444444,9,23,4,0.4444444444444444,0.4444444444444444
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,cited,1,8,1,1,0.125,1.0,8,1,1,0.125,1.0
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,cited,3,8,3,2,0.25,0.6666666666666666,8,3,3,0.375,1.0
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,cited,5,8,5,2,0.25,0.4,8,5,3,0.375,0.6
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,cited,10,8,10,3,0.375,0.375,8,10,5,0.625,0.625
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,cited,30,8,30,5,0.625,0.625,8,24,7,0.875,0.875
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,additional,1,10,1,0,0.0,0.0,10,1,0,0.0,0.0
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,additional,3,10,3,0,0.0,0.0,10,3,1,0.1,0.3333333333333333
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,additional,5,10,5,1,0.1,0.2,10,5,2,0.2,0.4
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,additional,10,10,10,2,0.2,0.2,10,10,5,0.5,0.5
+P0009_r2,P0009,2,live translation software for video chats Zoom Teams live translation options,additional,30,10,30,4,0.4,0.4,10,24,7,0.7,0.7
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,cited,1,11,1,1,0.09090909090909091,1.0,9,1,1,0.1111111111111111,1.0
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,cited,3,11,3,1,0.09090909090909091,0.3333333333333333,9,3,2,0.2222222222222222,0.6666666666666666
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,cited,5,11,5,3,0.2727272727272727,0.6,9,5,4,0.4444444444444444,0.8
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,cited,10,11,10,3,0.2727272727272727,0.3,9,10,4,0.4444444444444444,0.4444444444444444
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,cited,30,11,30,5,0.45454545454545453,0.45454545454545453,9,23,6,0.6666666666666666,0.6666666666666666
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,additional,1,9,1,0,0.0,0.0,8,1,0,0.0,0.0
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,additional,3,9,3,1,0.1111111111111111,0.3333333333333333,8,3,2,0.25,0.6666666666666666
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,additional,5,9,5,1,0.1111111111111111,0.2,8,5,2,0.25,0.4
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,additional,10,9,10,4,0.4444444444444444,0.4444444444444444,8,10,5,0.625,0.625
+P0009_r3,P0009,3,live translation software for video chats Zoom Teams real-time translation,additional,30,9,30,5,0.5555555555555556,0.5555555555555556,8,23,6,0.75,0.75

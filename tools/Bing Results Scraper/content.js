@@ -2,8 +2,9 @@
 
 // values for timeout and delay
 const CONTENT_TIMEOUT = 15000; // 15 seconds
-const REQUEST_DELAY = 5000; // 5 seconds between requests
-const MAX_CONCURRENT = 1; // max concurrent content requests
+// Defaults; sidepanel can override per run via message options.
+const DEFAULT_CONTENT_DELAY_MS = 1000; // delay between batches
+const DEFAULT_MAX_CONCURRENT = 2; // max concurrent content requests
 
 // ================== SELECTORS ==================
 
@@ -14,7 +15,16 @@ const SEARCH_BUTTON = '#sb_form_go';
 const SEARCH_RESULTS = '.b_algo:not(.b_adTop):not(.b_adBottom):not([data-apurl])';
 const RESULT_TITLE = 'h2 a';
 const RESULT_URL = 'cite';
-const RESULT_SNIPPET = '.b_caption p, .b_caption .b_dList';
+// Bing snippets show up in a few different structures depending on result type / layout.
+// Keep this broad but still scoped to the result card.
+const RESULT_SNIPPET = [
+  '.b_caption p',
+  '.b_caption .b_dList',
+  '.b_caption span',
+  '.b_caption div',
+  '.b_paractl',
+  '.b_snippet',
+].join(', ');
 const NEXT_PAGE_BUTTON = '.sb_pagN';
 const CURRENT_PAGE = '.sb_pagS';
 
@@ -279,6 +289,16 @@ function extractDomain(url) {
 function extractSearchResults() {
   const results = [];
   const resultElements = document.querySelectorAll(SEARCH_RESULTS);
+  // Track Bing SERP page number for later analysis/debugging
+  const pageNum = (() => {
+    try {
+      const t = document.querySelector(CURRENT_PAGE)?.textContent?.trim() || '';
+      const n = parseInt(t, 10);
+      return Number.isFinite(n) ? n : 1;
+    } catch {
+      return 1;
+    }
+  })();
   
   console.log(`Found ${resultElements.length} organic search results on current page`);
   
@@ -317,7 +337,15 @@ function extractSearchResults() {
       
       // extract snippet
       const snippetElement = resultElement.querySelector(RESULT_SNIPPET);
-      const snippet = snippetElement?.textContent?.trim() || '';
+      let snippet = snippetElement?.textContent?.trim() || '';
+      // Fallback: some results render the snippet outside `.b_caption` or in a different element.
+      if (!snippet) {
+        const pCandidates = Array.from(resultElement.querySelectorAll('p'))
+          .map(p => p.textContent?.trim() || '')
+          .filter(t => t && t.length > 20 && t.length < 500);
+        // choose the first reasonable paragraph-like text
+        snippet = pCandidates[0] || '';
+      }
       
       // extract displayed URL/domain
       const citeElement = resultElement.querySelector(RESULT_URL);
@@ -331,7 +359,8 @@ function extractSearchResults() {
           url: actualUrl,
           domain: extractDomain(actualUrl),
           displayUrl: displayUrl,
-          snippet: snippet
+          snippet: snippet,
+          page_num: pageNum,
         });
         
         // console.log(`Extracted organic result ${resultPosition - 1}: ${actualUrl}`);
@@ -381,27 +410,6 @@ function extractTextFromHtml(html) {
     // remove script and style elements
     const scripts = tempDiv.querySelectorAll('script, style, noscript');
     scripts.forEach(el => el.remove());
-
-    // remove obviously hidden elements (best-effort)
-    // Note: this is heuristic (we don't have computed styles here), but it reduces
-    // false positives where text exists in source but isn't visible to users.
-    const hiddenSelectors = [
-      '[hidden]',
-      '[aria-hidden="true"]',
-      '[style*="display:none"]',
-      '[style*="display: none"]',
-      '[style*="visibility:hidden"]',
-      '[style*="visibility: hidden"]',
-      // common utility classes
-      '.sr-only',
-      '.visually-hidden',
-      '.hidden',
-      '.invisible'
-    ];
-    hiddenSelectors.forEach(selector => {
-      const elements = tempDiv.querySelectorAll(selector);
-      elements.forEach(el => el.remove());
-    });
     
     // remove common non-content elements
     const nonContentSelectors = [
@@ -566,7 +574,10 @@ function extractMetadataFromHtml(html) {
 
 async function extractContentFromResults(results, options = {}) {
   const { 
-    extractContent = true
+    extractContent = true,
+    contentMaxChars = 20000,
+    contentDelayMs = DEFAULT_CONTENT_DELAY_MS,
+    contentConcurrency = DEFAULT_MAX_CONCURRENT
   } = options;
   
   if (!extractContent) {
@@ -577,6 +588,7 @@ async function extractContentFromResults(results, options = {}) {
       content: '',
       contentError: '',
       contentLength: 0,
+      content_truncated: 0,
       page_title: '',
       meta_description: '',
       canonical_url: '',
@@ -593,11 +605,22 @@ async function extractContentFromResults(results, options = {}) {
   console.log(`Starting content extraction for ${results.length} URLs`);
   
   const enrichedResults = [];
+
+  const maxConcurrent = (() => {
+    const n = parseInt(contentConcurrency, 10);
+    if (!Number.isFinite(n)) return DEFAULT_MAX_CONCURRENT;
+    return Math.max(1, Math.min(5, n));
+  })();
+  const delayMs = (() => {
+    const n = parseInt(contentDelayMs, 10);
+    if (!Number.isFinite(n)) return DEFAULT_CONTENT_DELAY_MS;
+    return Math.max(0, Math.min(20000, n));
+  })();
   
   // process in batches to avoid overwhelming servers
-  for (let i = 0; i < results.length; i += MAX_CONCURRENT) {
-    const batch = results.slice(i, i + MAX_CONCURRENT);
-    console.log(`Processing content batch ${Math.floor(i / MAX_CONCURRENT) + 1}/${Math.ceil(results.length / MAX_CONCURRENT)}`);
+  for (let i = 0; i < results.length; i += maxConcurrent) {
+    const batch = results.slice(i, i + maxConcurrent);
+    console.log(`Processing content batch ${Math.floor(i / maxConcurrent) + 1}/${Math.ceil(results.length / maxConcurrent)} (concurrency=${maxConcurrent})`);
     
     // report progress
     reportProgress({
@@ -620,16 +643,29 @@ async function extractContentFromResults(results, options = {}) {
         let contentError = error || '';
         
         if (content && !error) {
-          extractedText = extractTextFromHtml(content);
+          const fullText = extractTextFromHtml(content);
+          const fullLen = fullText.length;
+          let truncated = 0;
+          const maxChars = Number.isFinite(Number(contentMaxChars)) ? Math.max(0, Number(contentMaxChars)) : 20000;
+          if (maxChars === 0) {
+            extractedText = '';
+            truncated = fullLen > 0 ? 1 : 0;
+          } else if (fullLen > maxChars) {
+            extractedText = fullText.substring(0, maxChars);
+            truncated = 1;
+          } else {
+            extractedText = fullText;
+          }
           const meta = extractMetadataFromHtml(content);
-          console.log(`Extracted ${extractedText.length} characters from ${result.domain}`);
+          console.log(`Extracted ${fullLen} characters from ${result.domain}${truncated ? ` (stored ${extractedText.length})` : ''}`);
 
           return {
             ...result,
             ...meta,
             content: extractedText,
             contentError: contentError,
-            contentLength: extractedText.length
+            contentLength: fullLen,
+            content_truncated: truncated
           };
         } else {
           // console.warn(`Failed to fetch content from ${result.url}: ${error}`);
@@ -639,7 +675,8 @@ async function extractContentFromResults(results, options = {}) {
           ...result,
           content: extractedText,
           contentError: contentError,
-          contentLength: extractedText.length
+          contentLength: extractedText.length,
+          content_truncated: 0
         };
         
       } catch (error) {
@@ -649,6 +686,7 @@ async function extractContentFromResults(results, options = {}) {
           content: '',
           contentError: error.message,
           contentLength: 0,
+          content_truncated: 0,
           page_title: '',
           meta_description: '',
           canonical_url: '',
@@ -667,9 +705,9 @@ async function extractContentFromResults(results, options = {}) {
     enrichedResults.push(...batchResults);
     
     // add delay between batches (except for the last batch)
-    if (i + MAX_CONCURRENT < results.length) {
-      console.log(`Waiting ${REQUEST_DELAY}ms before next batch...`);
-      await pauseSeconds(REQUEST_DELAY / 1000);
+    if (i + maxConcurrent < results.length && delayMs > 0) {
+      console.log(`Waiting ${delayMs}ms before next batch...`);
+      await pauseSeconds(delayMs / 1000);
     }
   }
   
@@ -681,7 +719,7 @@ async function extractContentFromResults(results, options = {}) {
     contentComplete: true
   });
   
-  const successfulExtractions = enrichedResults.filter(r => r.content && !r.contentError).length;
+  const successfulExtractions = enrichedResults.filter(r => (Number(r.contentLength) || 0) > 0 && !r.contentError).length;
   console.log(`Content extraction completed: ${successfulExtractions}/${results.length} successful`);
   
   return enrichedResults;
@@ -752,7 +790,12 @@ async function performSearch(query) {
   }
 }
 
-async function scrapeCurrentPage(extractContent = true) {
+async function scrapeCurrentPage(
+  extractContent = true,
+  contentMaxChars = 20000,
+  contentDelayMs = DEFAULT_CONTENT_DELAY_MS,
+  contentConcurrency = DEFAULT_MAX_CONCURRENT
+) {
   console.log('Scraping current page...');
   
   await waitForResultsToLoad();
@@ -761,7 +804,12 @@ async function scrapeCurrentPage(extractContent = true) {
   
   if (extractContent && results.length > 0) {
     console.log(`Extracting content for ${results.length} results`);
-    results = await extractContentFromResults(results, { extractContent });
+    results = await extractContentFromResults(results, {
+      extractContent,
+      contentMaxChars,
+      contentDelayMs,
+      contentConcurrency,
+    });
   }
   
   return results;
@@ -780,7 +828,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   
   // ACTION: SCRAPE
   if (message.action === "scrapePage") {
-    scrapeCurrentPage(message.extractContent)
+    scrapeCurrentPage(
+      message.extractContent,
+      message.contentMaxChars,
+      message.contentDelayMs,
+      message.contentConcurrency
+    )
       .then(results => sendResponse({ status: 'success', results: results }))
       .catch(err => sendResponse({ status: 'error', error: err.message }));
     return true; // async response

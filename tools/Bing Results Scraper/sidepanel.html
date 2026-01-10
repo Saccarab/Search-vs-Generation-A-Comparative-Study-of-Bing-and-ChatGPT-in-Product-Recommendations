@@ -108,6 +108,54 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Content size safety (prevents crashes on large runs) -->
+                <div class="config-grid" id="contentLimitsSection">
+                    <div class="config-item">
+                        <label for="contentMaxChars">
+                            <i class="fas fa-file-lines"></i>
+                            Max content characters to store (per URL)
+                        </label>
+                        <div class="input-group">
+                            <input type="number" id="contentMaxChars" min="0" max="200000" value="20000" step="1000">
+                            <span class="input-hint">0 = metadata only (safer)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speed controls -->
+                <div class="config-grid" id="speedControlsSection">
+                    <div class="config-item">
+                        <label for="queryDelayMs">
+                            <i class="fas fa-stopwatch"></i>
+                            Delay between queries (ms)
+                        </label>
+                        <div class="input-group">
+                            <input type="number" id="queryDelayMs" min="0" max="20000" value="1500" step="250">
+                            <span class="input-hint">Lower = faster, more risk</span>
+                        </div>
+                    </div>
+                    <div class="config-item">
+                        <label for="contentDelayMs">
+                            <i class="fas fa-stopwatch"></i>
+                            Delay between content fetches (ms)
+                        </label>
+                        <div class="input-group">
+                            <input type="number" id="contentDelayMs" min="0" max="20000" value="1000" step="250">
+                            <span class="input-hint">Used when Extract Content is ON</span>
+                        </div>
+                    </div>
+                    <div class="config-item">
+                        <label for="contentConcurrency">
+                            <i class="fas fa-layer-group"></i>
+                            Content fetch concurrency
+                        </label>
+                        <div class="input-group">
+                            <input type="number" id="contentConcurrency" min="1" max="5" value="2" step="1">
+                            <span class="input-hint">2 is usually safe</span>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="config-info">
                     <div class="info-item">

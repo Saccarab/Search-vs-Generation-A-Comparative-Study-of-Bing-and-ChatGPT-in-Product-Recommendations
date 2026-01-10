@@ -17,6 +17,12 @@ const totalResultsDisplay = document.getElementById('totalResults');
 // content extraction elements
 const extractContentCheckbox = document.getElementById('extractContent');
 const estimatedDuration = document.getElementById('estimatedDuration');
+const contentMaxCharsInput = document.getElementById('contentMaxChars');
+const contentLimitsSection = document.getElementById('contentLimitsSection');
+// speed controls
+const queryDelayMsInput = document.getElementById('queryDelayMs');
+const contentDelayMsInput = document.getElementById('contentDelayMs');
+const contentConcurrencyInput = document.getElementById('contentConcurrency');
 
 // progress elements
 const progressStatus = document.getElementById('progressStatus');
@@ -46,10 +52,11 @@ const downloadSize = document.getElementById('downloadSize');
 const downloadButton = document.getElementById('downloadButton');
 const newScrapingButton = document.getElementById('newScrapingButton');
 
-// values for timeout and delay
-const REQUEST_DELAY = 5000; // 5 seconds between searches
+// defaults (UI can override)
+const DEFAULT_QUERY_DELAY_MS = 1500;
 
 // state
+// Each entry is { query: string, run_id?: string }
 let uploadedQueries = [];
 let scrapingState = {
     isRunning: false,
@@ -61,6 +68,10 @@ let scrapingState = {
     currentQueryIndex: -1,
     maxResultsPerQuery: 10,
     extractContent: false,
+    contentMaxChars: 20000,
+    queryDelayMs: DEFAULT_QUERY_DELAY_MS,
+    contentDelayMs: 1000,
+    contentConcurrency: 2,
     collectedResults: [], // Store all results here
     currentPhase: 'search', // 'search', 'content', 'complete'
     contentProgress: 0,
@@ -90,6 +101,10 @@ function setupEventListeners() {
     // configuration events
     maxResultsInput.addEventListener('input', updateConfiguration);
     extractContentCheckbox.addEventListener('change', updateConfiguration);
+    if (contentMaxCharsInput) contentMaxCharsInput.addEventListener('input', updateConfiguration);
+    if (queryDelayMsInput) queryDelayMsInput.addEventListener('input', updateConfiguration);
+    if (contentDelayMsInput) contentDelayMsInput.addEventListener('input', updateConfiguration);
+    if (contentConcurrencyInput) contentConcurrencyInput.addEventListener('input', updateConfiguration);
     
     // control events
     startButton.addEventListener('click', startScraping);
@@ -131,6 +146,7 @@ function parseCSV(csvText, file) {
     if (!headers.includes('query')) { showStatus('CSV must have a "query" column', 'error'); return; }
     
     const queryIndex = headers.indexOf('query');
+    const runIdIndex = headers.includes('run_id') ? headers.indexOf('run_id') : -1;
     uploadedQueries = [];
     
     for (let i = 1; i < lines.length; i++) {
@@ -138,7 +154,8 @@ function parseCSV(csvText, file) {
         if (!line) continue;
         const values = parseCSVLine(line);
         const query = values[queryIndex]?.trim().replace(/['"]/g, '');
-        if (query) uploadedQueries.push(query);
+        const run_id = runIdIndex >= 0 ? (values[runIdIndex]?.trim().replace(/['"]/g, '') || '') : '';
+        if (query) uploadedQueries.push({ query, run_id });
     }
     
     if (uploadedQueries.length === 0) { showStatus('No valid queries found in the CSV file', 'error'); return; }
@@ -182,15 +199,28 @@ function formatFileSize(bytes) {
 function updateConfiguration() {
     const maxResults = parseInt(maxResultsInput.value) || 10;
     const extractContent = extractContentCheckbox.checked;
+    const contentMaxChars = Math.max(0, parseInt(contentMaxCharsInput?.value || '20000', 10) || 0);
+    const queryDelayMs = Math.max(0, Math.min(20000, parseInt(queryDelayMsInput?.value || String(DEFAULT_QUERY_DELAY_MS), 10) || DEFAULT_QUERY_DELAY_MS));
+    const contentDelayMs = Math.max(0, Math.min(20000, parseInt(contentDelayMsInput?.value || '1000', 10) || 1000));
+    const contentConcurrency = Math.max(1, Math.min(5, parseInt(contentConcurrencyInput?.value || '2', 10) || 2));
     const total = uploadedQueries.length * maxResults;
     totalResultsDisplay.textContent = total;
+
+    // Show/hide the content limiter UI when extraction is on/off
+    if (contentLimitsSection) {
+        contentLimitsSection.style.display = extractContent ? 'grid' : 'none';
+    }
     
     let estimatedMinutes = 0;
     if (uploadedQueries.length > 0) {
-        estimatedMinutes = uploadedQueries.length * 0.6;
+        // Rough estimate: navigation + wait; use configured delay as a proxy
+        estimatedMinutes = (uploadedQueries.length * (0.6 + (queryDelayMs / 1000) * 0.15));
         if (extractContent) {
             const avgSuccessfulResults = Math.ceil(total * 0.8);
-            const contentExtractionMinutes = (avgSuccessfulResults * 2.5) / 60;
+            // content delay is the dominant knob; keep estimate conservative
+            const perUrlSeconds = 1.5 + (contentDelayMs / 1000) * 0.6;
+            const effConcurrency = Math.max(1, contentConcurrency);
+            const contentExtractionMinutes = (avgSuccessfulResults * perUrlSeconds) / 60 / effConcurrency;
             estimatedMinutes += contentExtractionMinutes;
         }
     }
@@ -241,6 +271,10 @@ function startScraping() {
         resultsForCurrentQuery: 0, // Track count for current query
         maxResultsPerQuery: parseInt(maxResultsInput.value) || 10,
         extractContent: extractContentCheckbox.checked,
+        contentMaxChars: Math.max(0, parseInt(contentMaxCharsInput?.value || '20000', 10) || 0),
+        queryDelayMs: Math.max(0, Math.min(20000, parseInt(queryDelayMsInput?.value || String(DEFAULT_QUERY_DELAY_MS), 10) || DEFAULT_QUERY_DELAY_MS)),
+        contentDelayMs: Math.max(0, Math.min(20000, parseInt(contentDelayMsInput?.value || '1000', 10) || 1000)),
+        contentConcurrency: Math.max(1, Math.min(5, parseInt(contentConcurrencyInput?.value || '2', 10) || 2)),
         collectedResults: [],
         currentPhase: 'search',
         contentProgress: 0,
@@ -278,7 +312,8 @@ function processNextQuery() {
     scrapingState.currentPhase = 'search';
     updateProgressDisplay();
 
-    const query = uploadedQueries[scrapingState.currentQueryIndex];
+    const qObj = uploadedQueries[scrapingState.currentQueryIndex];
+    const query = (typeof qObj === 'string') ? qObj : (qObj?.query || '');
     const encodedQuery = encodeURIComponent(query);
     
     // Add pagination parameter if offset > 0
@@ -312,7 +347,10 @@ function triggerScrape(tabId) {
     // Send Scrape Command
     chrome.tabs.sendMessage(tabId, { 
         action: 'scrapePage', 
-        extractContent: scrapingState.extractContent 
+        extractContent: scrapingState.extractContent,
+        contentMaxChars: scrapingState.contentMaxChars,
+        contentDelayMs: scrapingState.contentDelayMs,
+        contentConcurrency: scrapingState.contentConcurrency
     }, (response) => {
         if (chrome.runtime.lastError) {
             handleQueryError(`Connection error: ${chrome.runtime.lastError.message}`);
@@ -344,15 +382,36 @@ function triggerScrape(tabId) {
 }
 
 function saveQueryResults(results) {
-    const query = uploadedQueries[scrapingState.currentQueryIndex];
+    const qObj = uploadedQueries[scrapingState.currentQueryIndex];
+    const query = (typeof qObj === 'string') ? qObj : (qObj?.query || '');
+    const run_id = (typeof qObj === 'object' && qObj) ? (qObj.run_id || '') : '';
     // Add query metadata to each result and FIX POSITION STRICTLY
-    const enrichedResults = results.map((r, index) => ({
+    const maxChars = Math.max(0, parseInt(scrapingState.contentMaxChars || 0, 10) || 0);
+    const enrichedResults = results.map((r, index) => {
+        // Safety: even if content script returns full text, keep memory bounded.
+        // 0 means "metadata only" (drop stored text).
+        let content = r.content || '';
+        let contentTruncated = r.content_truncated || '';
+        if (typeof content !== 'string') content = String(content || '');
+        if (maxChars === 0 && content) {
+            content = '';
+            contentTruncated = contentTruncated || '1';
+        } else if (maxChars > 0 && content.length > maxChars) {
+            content = content.slice(0, maxChars);
+            contentTruncated = contentTruncated || '1';
+        }
+
+        return ({
+        run_id: run_id,
         query: query,
         ...r,
         // STRICT SEQUENTIAL POSITION
         // Ignore r.position and Bing offset. Just count what we have collected.
-        position: scrapingState.resultsForCurrentQuery + index + 1
-    }));
+            position: scrapingState.resultsForCurrentQuery + index + 1,
+            content: content,
+            content_truncated: contentTruncated
+        });
+    });
     scrapingState.collectedResults.push(...enrichedResults);
     scrapingState.resultsForCurrentQuery += results.length;
     // Don't increment scrapingState.completed here anymore, done in pagination logic
@@ -373,9 +432,10 @@ function handleQueryError(errorMsg) {
 function scheduleNext() {
     if (!scrapingState.isRunning) return;
     
-    let delay = REQUEST_DELAY;
-    // Add random jitter
-    delay += Math.floor(Math.random() * 2000); 
+    // Configurable delay between query navigations.
+    // Add small jitter to avoid looking perfectly robotic.
+    let delay = Math.max(0, parseInt(scrapingState.queryDelayMs || DEFAULT_QUERY_DELAY_MS, 10) || DEFAULT_QUERY_DELAY_MS);
+    delay += Math.floor(Math.random() * 750);
 
     console.log(`Waiting ${delay}ms before next query...`);
     setTimeout(() => {
@@ -400,8 +460,42 @@ function generateCSV(results) {
     results.forEach(r => Object.keys(r).forEach(k => allKeys.add(k)));
     const headers = Array.from(allKeys).sort();
     
-    // Ensure 'query' and 'position' are first
-    const orderedHeaders = ['query', 'position', ...headers.filter(h => h!=='query' && h!=='position')];
+    // Stable, analysis-friendly header order (always include expected metadata fields)
+    const preferred = [
+        'query',
+        'position',
+        'run_id',
+        'title',
+        'snippet',
+        'displayUrl',
+        'domain',
+        'url',
+        'page_num',
+        // content + extraction status
+        'content',
+        'contentLength',
+        'contentError',
+        'content_truncated',
+        // page metadata/features we rely on later
+        'page_title',
+        'meta_description',
+        'canonical_url',
+        'has_schema_markup',
+        'schema_types',
+        'table_count',
+        'has_table',
+        'published_date',
+        'modified_date',
+        'js_render_suspected',
+    ];
+    const preferredSet = new Set(preferred);
+    // Ensure preferred columns exist in the header list even if some rows don't contain them
+    preferred.forEach(k => allKeys.add(k));
+    const all = Array.from(allKeys);
+    const orderedHeaders = [
+        ...preferred,
+        ...all.filter(h => !preferredSet.has(h)).sort()
+    ];
     
     let csv = orderedHeaders.join(',') + '\n';
     
@@ -457,8 +551,9 @@ function updateProgressDisplay() {
     progressCount.textContent = `${completed} / ${totalQueries}`;
     
     if (currentQueryIndex >= 0 && currentQueryIndex < uploadedQueries.length) {
-        const query = uploadedQueries[currentQueryIndex];
-        currentQuery.textContent = query.length > 50 ? query.substring(0, 50) + '...' : query;
+        const qObj = uploadedQueries[currentQueryIndex];
+        const qText = (typeof qObj === 'object' && qObj) ? (qObj.query || '') : String(qObj || '');
+        currentQuery.textContent = qText.length > 50 ? qText.substring(0, 50) + '...' : qText;
         
         if (currentPhase === 'search') {
             taskLabel.textContent = 'Searching...';
@@ -560,7 +655,7 @@ function resetUploadState() {
 }
 
 function showHelp() {
-    alert("Bing Scraper v2.1\n\n1. Upload CSV with 'query' column.\n2. Click Start.\n3. The tool will navigate Bing automatically.\n4. Do not close the side panel while running.\n\nNote: 'Extract Content' visits each result page, which takes longer.");
+    alert("Bing Scraper v2.1\n\n1. Upload CSV with 'query' column (optional: 'run_id').\n2. Click Start.\n3. The tool will navigate Bing automatically.\n4. Do not close the side panel while running.\n\nNote: 'Extract Content' visits each result page, which takes longer.");
 }
 
 // export
