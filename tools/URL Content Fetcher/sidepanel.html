@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>URL Content Fetcher</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <h2>URL Content Fetcher</h2>
+      <p class="muted">Upload a CSV with a <code>url</code> column. Exports a CSV with extracted text + metadata.</p>
+
+      <div class="card">
+        <label class="label">CSV file</label>
+        <input id="file" type="file" accept=".csv" />
+        <div id="fileInfo" class="muted"></div>
+      </div>
+
+      <div class="card grid">
+        <div>
+          <label class="label">Concurrency</label>
+          <input id="concurrency" type="number" min="1" max="6" value="2" />
+        </div>
+        <div>
+          <label class="label">Delay between batches (ms)</label>
+          <input id="delayMs" type="number" min="0" max="20000" value="500" />
+        </div>
+        <div>
+          <label class="label">Timeout per URL (ms)</label>
+          <input id="timeoutMs" type="number" min="1000" max="60000" value="20000" />
+        </div>
+        <div>
+          <label class="label">Max content chars in CSV</label>
+          <input id="maxChars" type="number" min="0" max="200000" value="20000" />
+          <div class="muted small">0 = metadata only</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <label class="checkbox-label">
+          <input id="browserFallback" type="checkbox" checked />
+          <span>Browser fallback for blocked pages (403/429/5xx)</span>
+        </label>
+        <div class="muted small">Opens page in real tab to bypass Cloudflare/DDoS protection. Slower but more reliable.</div>
+        <div style="margin-top:8px">
+          <label class="label">Browser wait time (ms)</label>
+          <input id="browserWaitMs" type="number" min="2000" max="60000" value="15000" />
+          <div class="muted small">Max time to wait for Cloudflare/DDoS challenges to clear</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button id="start" disabled>Start</button>
+        <button id="stop" disabled class="secondary">Stop</button>
+        <div id="status" class="status"></div>
+        <div class="progress">
+          <div id="bar" class="bar"></div>
+        </div>
+        <div id="progressText" class="muted small"></div>
+      </div>
+
+      <div class="card">
+        <button id="download" disabled>Download CSV</button>
+        <div id="summary" class="muted small"></div>
+      </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>
+

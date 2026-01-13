@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "URL Content Fetcher (CSV)",
+  "version": "0.2.0",
+  "description": "Fetch HTML in browser context from a CSV of URLs, extract clean text + metadata, export CSV (research tool).",
+  "permissions": ["sidePanel", "downloads", "storage", "tabs", "scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "side_panel": { "default_path": "sidepanel.html" },
+  "background": { "service_worker": "background.js" },
+  "action": { "default_title": "Open URL Content Fetcher" },
+  "minimum_chrome_version": "108",
+  "content_security_policy": { "extension_pages": "script-src 'self'; object-src 'self';" }
+}
+
