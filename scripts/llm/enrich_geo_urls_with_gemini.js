@@ -34,6 +34,32 @@ const path = require("path");
 const ExcelJS = require("exceljs");
 const Bottleneck = require("bottleneck");
 
+// We use Google's GenAI SDK (`@google/genai`) instead of raw fetch().
+// This gives better compatibility with Google's recommended integrations and
+// tends to provide clearer errors for quota/overload conditions (429/503).
+let _genAiClientPromise = null;
+async function getGenAiClient(apiKey) {
+  if (_genAiClientPromise) return _genAiClientPromise;
+  _genAiClientPromise = (async () => {
+    const mod = await import("@google/genai");
+    const GoogleGenAI = mod.GoogleGenAI || mod.default?.GoogleGenAI;
+    if (!GoogleGenAI) throw new Error("Failed to load GoogleGenAI from @google/genai");
+    // By default we use the Gemini API (apiKey). Optionally, you can switch to Vertex AI:
+    //   GEMINI_VERTEXAI=1 GOOGLE_CLOUD_PROJECT=... GOOGLE_CLOUD_LOCATION=global
+    const useVertex = String(process.env.GEMINI_VERTEXAI || "").trim() === "1";
+    if (useVertex) {
+      const project = String(process.env.GOOGLE_CLOUD_PROJECT || process.env.GCLOUD_PROJECT || "").trim();
+      const location = String(process.env.GOOGLE_CLOUD_LOCATION || "global").trim();
+      if (!project) throw new Error("GEMINI_VERTEXAI=1 requires GOOGLE_CLOUD_PROJECT (or GCLOUD_PROJECT)");
+      return new GoogleGenAI({ vertexai: true, project, location });
+    }
+    return new GoogleGenAI({ apiKey });
+  })();
+  return _genAiClientPromise;
+}
+
+// (no retry/backoff logic; keep the script minimal)
+
 function getApiKey() {
   return (
     (process.env.GEMINI_API_KEY || "").trim() ||
@@ -142,32 +168,27 @@ function fillPrompt(template, { url, title, snippet, extractedText }) {
     .replaceAll("{EXTRACTED_TEXT}", (extractedText || "").slice(0, 12000));
 }
 
-async function geminiGenerateJson({ apiKey, model, prompt, timeoutMs }) {
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/${modelPath(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
-  const payload = {
-    contents: [{ role: "user", parts: [{ text: prompt }] }],
-    generationConfig: { temperature: 0.0 },
-  };
-
-  // NOTE: No AbortController timeout by request (per user request).
-  // If you want a "give up" timer without aborting the HTTP request, use Bottleneck's
-  // `expiration` option when scheduling jobs (see below).
-  const res = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  const body = await res.text();
-  if (!res.ok) {
-    const err = new Error(`HTTP ${res.status} ${res.statusText}`);
-    err.httpStatus = res.status;
-    err.httpBodySnippet = body.slice(0, 800);
+async function geminiGenerateJson({ apiKey, model, prompt }) {
+  try {
+    const client = await getGenAiClient(apiKey);
+    const result = await client.models.generateContent({
+      model,
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      config: { temperature: 0.0 },
+    });
+    const outText = result?.text || "";
+    const cleaned = String(outText).replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
+    return JSON.parse(cleaned);
+  } catch (e) {
+    // Normalize for our logging/retry logic
+    const err = new Error(String(e?.message || e));
+    err.name = e?.name || "Error";
+    err.httpStatus = e?.status || e?.response?.status || e?.httpStatus || 0;
+    // Some SDK errors provide a structured response body
+    const body = e?.responseBody || e?.response?.data || e?.details || "";
+    if (body) err.httpBodySnippet = String(body).slice(0, 800);
     throw err;
   }
-  const data = JSON.parse(body);
-  const outText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-  const cleaned = outText.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
-  return JSON.parse(cleaned);
 }
 
 function sheetHeaderMap(sheet) {
@@ -246,10 +267,9 @@ async function main() {
     process.exit(2);
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-1.5-flash-latest";
-  // Kept for compatibility, but not used for AbortController anymore.
-  // You can use it as Bottleneck job expiration (see JOB_EXPIRATION_MS).
-  const timeoutMs = Number(process.env.GEMINI_TIMEOUT_MS || "900000");
+  // Default to Gemini 3 Flash Preview (matches our current workflow / CLI preview model name).
+  // Override with GEMINI_MODEL if needed.
+  const model = process.env.GEMINI_MODEL || "gemini-3-flash-preview";
   const concurrency = Number(process.env.CONCURRENCY || "5");
   const minTimeMs = Number(process.env.MIN_TIME_MS || "400"); // spacing between starting jobs
   const jobExpirationMs = Number(process.env.JOB_EXPIRATION_MS || "0"); // 0 = no expiration
@@ -388,7 +408,7 @@ async function main() {
           const extractedText = hasCp ? fs.readFileSync(cp, "utf8") : "";
           const m = meta.get(url) || { title: "", snippet: "" };
           const prompt = fillPrompt(promptTemplate, { url, title: m.title, snippet: m.snippet, extractedText });
-          const parsed = await geminiGenerateJson({ apiKey, model, prompt, timeoutMs });
+          const parsed = await geminiGenerateJson({ apiKey, model, prompt });
           return { url, parsed, rowIdx };
         }
       )
@@ -448,9 +468,14 @@ async function main() {
             };
             if (e?.httpStatus) err.http_status = e.httpStatus;
             if (e?.httpBodySnippet) err.http_body_snippet = e.httpBodySnippet;
+            if (e?.causeCode) err.cause_code = String(e.causeCode);
+            if (e?.causeMessage) err.cause_message = String(e.causeMessage).slice(0, 500);
 
             appendJsonlLine(jsonlPath, { url, ok: false, model, error: err });
-            console.log(`[gemini] fail url=${url} err=${err.type}: ${err.message.slice(0, 120)}`);
+            const extra = [];
+            if (err.http_status) extra.push(`http=${err.http_status}`);
+            if (err.cause_code) extra.push(`cause=${err.cause_code}`);
+            console.log(`[gemini] fail url=${url} err=${err.type}: ${err.message.slice(0, 120)}${extra.length ? ` (${extra.join(" ")})` : ""}`);
             failed++;
 
             writesSinceCheckpoint++;

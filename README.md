@@ -215,6 +215,22 @@ This populates:
 - `listicles` sheet (for listicle URLs)
 - `listicle_products` sheet (products mentioned in listicles)
 
+### Alternative Step 7 (OpenAI GPT labeling)
+
+If you choose to label pages using **OpenAI GPT models** (e.g. **GPT‑5 mini**) instead of Gemini, use:
+
+```bash
+export OPEN_AI_KEY="your-openai-key"
+export OPENAI_MODEL="gpt-5-mini"   # override as needed
+
+node scripts/llm/enrich_geo_urls_with_gpt.js \
+  --xlsx geo_updated.xlsx \
+  --save-every 1 \
+  --allow-no-content
+```
+
+**Research transparency requirement**: If you run this GPT script, explicitly state in your thesis/methods section that labeling was performed with **OpenAI GPT** (not Gemini). The script writes an audit log to `data/llm/page_labels_gpt.jsonl`.
+
 ---
 
 ## Excel Schema (`geo_updated.xlsx`)
@@ -383,7 +399,8 @@ python scripts/ingest/cleanup_geo_urls_redirects_and_dups.py --xlsx geo_updated.
 │   │   ├── ingest_url_content_fetcher_export_to_geo_xlsx.js
 │   │   └── export_urls_missing_content_csv.js
 │   ├── llm/
-│   │   └── enrich_geo_urls_with_gemini.js
+│   │   ├── enrich_geo_urls_with_gemini.js
+│   │   └── enrich_geo_urls_with_gpt.js
 │   └── metrics/
 │       └── compute_serp_overlap.py
 ├── tools/

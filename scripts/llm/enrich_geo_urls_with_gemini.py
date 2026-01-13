@@ -316,7 +316,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--xlsx", required=True)
     ap.add_argument("--max-urls", type=int, default=0, help="If >0, process at most N URLs")
-    ap.add_argument("--model", default="gemini-1.5-flash-latest")
+    ap.add_argument("--model", default="gemini-3-flash-preview")
     ap.add_argument("--timeout", type=int, default=60)
     ap.add_argument("--overwrite", action="store_true", help="Overwrite existing labels if present")
     ap.add_argument("--prompt-file", default="prompts/page_label_prompt_v1.txt", help="Prompt template path")
