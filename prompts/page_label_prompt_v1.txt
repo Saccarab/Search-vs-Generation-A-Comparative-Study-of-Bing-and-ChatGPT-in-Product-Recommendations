@@ -14,7 +14,13 @@ type (choose exactly one):
 - forum_ugc
 - news_article
 - editorial_article
+- reference
 - other
+
+### Type guidance (important)
+- reference: high-authority neutral reference/encyclopedia/knowledge-base pages whose primary goal is factual description (not selling/reviewing).
+  Examples: Wikipedia (wikipedia.org), encyclopedia-style pages, dictionaries, official standards/spec pages.
+  If URL domain ends with wikipedia.org OR the page clearly looks like an encyclopedia entry (sections like History/Technology/References), choose reference.
 
 content_format (choose exactly one):
 - best_of_list
@@ -77,8 +83,18 @@ has_sources_or_citations (0/1):
 0 otherwise
 
 freshness_cue_strength (0–5):
-0 = no updated/current-year cues
-5 = strong explicit “updated” cues + current-year framing
+Score based ONLY on explicit cues visible in the provided title/snippet/meta/extracted text (do not guess).
+Examples of cues: "Updated Jan 2026", "Last updated", "2025/2026" in title, "as of 2026", "new for 2026", changelog entries, "recently updated".
+0 = no freshness/updated/current-year cues
+1 = very weak cues (generic "new" wording without any year/date)
+2 = some cues (a year is mentioned OR page has a dated timestamp but not clearly framed as updated/current)
+3 = clear cues (explicit publish date OR clear year framing relevant to recency)
+4 = strong cues (explicit "updated" date OR strong current-year framing)
+5 = very strong cues (explicit "last updated" + current-year framing and/or multiple strong recency signals)
+
+tone definitions (to disambiguate):
+- promotional: marketing-leaning but still informational; highlights benefits/features; limited pressure; few/no aggressive CTAs.
+- salesy: high conversion pressure; repeated CTAs ("buy", "sign up", "start free trial"), urgency/scarcity ("limited time"), discounts/pricing emphasis, lead-capture funnels.
 
 ## Listicle extraction rules (only if type == "listicle")
 - Extract up to 25 items into listicle_products.

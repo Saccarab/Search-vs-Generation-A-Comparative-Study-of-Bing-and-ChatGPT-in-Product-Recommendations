@@ -294,6 +294,18 @@ def main() -> None:
         additional = parse_sources_json(r.get("sources_additional_json"))
         items = parse_items_json(r.get("items_json"))
 
+        # Map URL -> cite_position in sources panel (cited first, then additional)
+        # NOTE: This is not "inline order". It's the position in the Sources panel list (1..N).
+        sources_panel_pos: Dict[str, int] = {}
+        for i, it in enumerate(cited, start=1):
+            u = (it.get("url") or "").strip()
+            if u and u not in sources_panel_pos:
+                sources_panel_pos[u] = i
+        for i, it in enumerate(additional, start=1):
+            u = (it.get("url") or "").strip()
+            if u and u not in sources_panel_pos:
+                sources_panel_pos[u] = i
+
         # Helper: map URL -> title/description/domain from sources panel JSON (best-effort)
         url_meta = {}
         for it in cited + additional:
@@ -353,6 +365,7 @@ def main() -> None:
                         if not domain:
                             domain = extract_domain(url)
 
+                        sp_pos = sources_panel_pos.get(url, None)
                         key = (run_id, url, "inline", "", str(item_position or ""), str(j))
                         if key in existing_citation_keys:
                             continue
@@ -362,7 +375,9 @@ def main() -> None:
                             h_cit,
                             {
                                 "run_id": run_id,
-                                "cite_position": None,
+                                # For inline rows, we store the Sources-panel position (if that URL appears there).
+                                # Inline ordering itself is captured by item_position + citation_in_group_rank.
+                                "cite_position": sp_pos,
                                 "citation_title": title,
                                 "url": url,
                                 "citation_domain": domain,
@@ -376,6 +391,9 @@ def main() -> None:
                                 "item_text": item_text,
                                 "citation_group_size": group_size,
                                 "citation_in_group_rank": j,
+                                # Optional column (if present in the workbook): explicit duplicate of cite_position
+                                # to make analysis intent clearer without overloading cite_position semantics.
+                                "sources_panel_cite_position": sp_pos,
                             },
                         )
             except Exception:

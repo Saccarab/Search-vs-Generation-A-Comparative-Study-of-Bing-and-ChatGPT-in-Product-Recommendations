@@ -39,6 +39,43 @@ TRACKING_PARAMS_EXACT = {
     "spm",
 }
 
+AD_HOST_SUFFIXES = (
+    "doubleclick.net",
+    "googleadservices.com",
+    "googlesyndication.com",
+    "adservice.google.com",
+)
+
+
+def is_ad_click_url(raw_url: str) -> bool:
+    """
+    Return True if this URL looks like an ad click / ad redirect that should be excluded.
+    """
+    if not raw_url or not isinstance(raw_url, str):
+        return False
+    url = raw_url.strip()
+    if not url:
+        return False
+    if "://" not in url:
+        url = "https://" + url
+    try:
+        parts = urlsplit(url)
+        host = (parts.netloc or "").lower()
+        if host.startswith("www."):
+            host = host[4:]
+        # Known ad hosts
+        if any(host == s or host.endswith("." + s) for s in AD_HOST_SUFFIXES):
+            return True
+        # Bing ad click endpoints
+        if host.endswith("bing.com") and (parts.path.startswith("/aclick") or parts.path.startswith("/clk") or parts.path.startswith("/sclk")):
+            return True
+        # Common google searchads redirect path
+        if "doubleclick.net/searchads" in (parts.geturl() or "").lower():
+            return True
+        return False
+    except Exception:
+        return False
+
 
 def normalize_url_key(raw_url: str) -> str:
     """
@@ -153,6 +190,7 @@ def clean_bing_export(
         "groups": 0,
         "dropped_missing_url": 0,
         "dropped_duplicate_url": 0,
+        "dropped_ad_click_url": 0,
         "content_snapshots_written": 0,
     }
 
@@ -187,6 +225,9 @@ def clean_bing_export(
             raw_url = (rr.get("url") or "").strip()
             if not raw_url:
                 stats["dropped_missing_url"] += 1
+                continue
+            if is_ad_click_url(raw_url):
+                stats["dropped_ad_click_url"] += 1
                 continue
             url_key = normalize_url_key(raw_url)
             if not url_key:

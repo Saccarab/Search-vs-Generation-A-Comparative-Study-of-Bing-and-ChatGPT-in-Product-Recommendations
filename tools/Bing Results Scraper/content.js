@@ -286,6 +286,31 @@ function extractDomain(url) {
   }
 }
 
+function isAdClickUrl(url) {
+  try {
+    const u = new URL(url);
+    const host = (u.hostname || '').toLowerCase().replace(/^www\./, '');
+    const href = u.href.toLowerCase();
+    // Common ad/redirect hosts we do NOT want in the dataset
+    const badHosts = [
+      'ad.doubleclick.net',
+      'doubleclick.net',
+      'googleadservices.com',
+      'googlesyndication.com',
+      'adservice.google.com',
+    ];
+    if (badHosts.some(h => host === h || host.endsWith(`.${h}`))) return true;
+    // Bing ad click endpoints
+    if (host.endsWith('bing.com') && (href.includes('/aclick') || href.includes('/clk') || href.includes('/sclk'))) return true;
+    // Google searchads redirect pattern
+    if (href.includes('doubleclick.net/searchads')) return true;
+    return false;
+  } catch {
+    // If URL can't be parsed, don't classify it as ad here.
+    return false;
+  }
+}
+
 function extractSearchResults() {
   const results = [];
   const resultElements = document.querySelectorAll(SEARCH_RESULTS);
@@ -334,6 +359,10 @@ function extractSearchResults() {
       
       // get the actual URL by parsing redirect
       const actualUrl = getActualUrl(titleElement);
+      if (actualUrl && isAdClickUrl(actualUrl)) {
+        console.log(`Skipping ad-click URL: ${actualUrl.substring(0, 120)}...`);
+        return;
+      }
       
       // extract snippet
       const snippetElement = resultElement.querySelector(RESULT_SNIPPET);

@@ -25,6 +25,9 @@ import json
 import os
 import re
 import time
+import random
+import sys
+import hashlib
 from pathlib import Path
 from typing import Dict, Optional, Set, Tuple
 
@@ -240,6 +243,29 @@ def fill_prompt(template: str, *, url: str, title: str, snippet: str, text: str)
         .replace("{EXTRACTED_TEXT}", (text or "")[:12000])
     )
 
+def build_gemini_payload(prompt: str) -> dict:
+    return {"contents": [{"role": "user", "parts": [{"text": prompt}]}], "generationConfig": {"temperature": 0.0}}
+
+
+def approx_tokens_from_chars(n_chars: int) -> int:
+    # crude heuristic for English-ish text: ~4 chars/token
+    return int(max(0, n_chars) / 4)
+
+
+def dump_payload(*, dump_dir: str, url: str, prompt: str, model: str) -> str:
+    """
+    Write the exact request payload body (no API key) to disk for deterministic replay.
+    Returns the written file path.
+    """
+    os.makedirs(dump_dir, exist_ok=True)
+    h = hashlib.sha256(url.encode("utf-8")).hexdigest()[:12]
+    out = os.path.join(dump_dir, f"payload_{h}.json")
+    payload = build_gemini_payload(prompt)
+    payload["_debug"] = {"url": url, "model": model, "prompt_chars": len(prompt), "approx_tokens": approx_tokens_from_chars(len(prompt))}
+    with open(out, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False)
+    return out
+
 def load_processed_urls_from_jsonl(path: str) -> Tuple[Set[str], Set[str]]:
     """
     Return (ok_urls, failed_urls) from a JSONL audit log.
@@ -290,7 +316,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--xlsx", required=True)
     ap.add_argument("--max-urls", type=int, default=0, help="If >0, process at most N URLs")
-    ap.add_argument("--model", default="gemini-3-flash-preview")
+    ap.add_argument("--model", default="gemini-1.5-flash-latest")
     ap.add_argument("--timeout", type=int, default=60)
     ap.add_argument("--overwrite", action="store_true", help="Overwrite existing labels if present")
     ap.add_argument("--prompt-file", default="prompts/page_label_prompt_v1.txt", help="Prompt template path")
@@ -301,6 +327,36 @@ def main() -> None:
         "--retry-failures",
         action="store_true",
         help="If set, re-attempt URLs previously logged as ok=false in the JSONL audit log.",
+    )
+    ap.add_argument("--retries", type=int, default=2, help="Retry count for transient failures (ReadTimeout/429/503).")
+    ap.add_argument("--retry-backoff", type=float, default=2.0, help="Base backoff seconds between retries.")
+    ap.add_argument(
+        "--retry-timeout-mult",
+        type=float,
+        default=1.5,
+        help="Multiply timeout on each retry (e.g. 1.5 => 60s, 90s, 135s...).",
+    )
+    ap.add_argument(
+        "--max-seconds-per-url",
+        type=float,
+        default=0.0,
+        help="Hard budget per URL for Gemini attempts (seconds). 0 disables. "
+        "Example: 45 means we will not spend more than ~45s total on a single URL (including retries/backoff).",
+    )
+    ap.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Print one line per API attempt (URL, attempt #, timeout, success/error, backoff).",
+    )
+    ap.add_argument(
+        "--log-payload-stats",
+        action="store_true",
+        help="Print payload stats per URL (prompt chars, approx tokens).",
+    )
+    ap.add_argument(
+        "--dump-payloads-dir",
+        default="",
+        help="If set, write the exact request payload JSON (no API key) for failed URLs into this directory.",
     )
     ap.add_argument(
         "--only-urls",
@@ -398,7 +454,84 @@ def main() -> None:
             text = open(cp, "r", encoding="utf-8", errors="ignore").read()
             title, snippet = lookup.get(url, ("", ""))
             prompt = fill_prompt(template, url=url, title=title, snippet=snippet, text=text)
-            parsed = gemini_generate_json(api_key=api_key, model=args.model, prompt=prompt, timeout=args.timeout)
+            if args.log_payload_stats:
+                print(
+                    f"[payload] url={url} prompt_chars={len(prompt)} approx_tokens~{approx_tokens_from_chars(len(prompt))}",
+                    flush=True,
+                )
+            # Retry transient failures (timeouts / throttling) with backoff.
+            parsed = None
+            last_err: Optional[Exception] = None
+            attempts = max(1, int(args.retries) + 1)
+            url_t0 = time.time()
+            for attempt in range(1, attempts + 1):
+                try:
+                    # Enforce per-URL time budget if set
+                    if args.max_seconds_per_url and args.max_seconds_per_url > 0:
+                        elapsed = time.time() - url_t0
+                        remaining = float(args.max_seconds_per_url) - elapsed
+                        if remaining <= 0:
+                            raise TimeoutError(
+                                f"Per-URL budget exceeded ({args.max_seconds_per_url}s) before attempt {attempt}/{attempts}"
+                            )
+                    else:
+                        remaining = None
+
+                    t = int(float(args.timeout) * (float(args.retry_timeout_mult) ** (attempt - 1)))
+                    if remaining is not None:
+                        # Don't start an attempt that can't possibly finish within budget
+                        t = max(1, min(t, int(remaining)))
+                    if args.verbose:
+                        print(
+                            f"[gemini] url={url} attempt={attempt}/{attempts} timeout={t}s",
+                            flush=True,
+                        )
+                    t0 = time.time()
+                    parsed = gemini_generate_json(api_key=api_key, model=args.model, prompt=prompt, timeout=t)
+                    if args.verbose:
+                        dt = time.time() - t0
+                        print(f"[gemini] ok url={url} dt={dt:.1f}s", flush=True)
+                    last_err = None
+                    break
+                except Exception as e:
+                    last_err = e
+                    # Decide if retryable
+                    retryable = False
+                    if isinstance(e, (requests.exceptions.ReadTimeout, requests.exceptions.ConnectTimeout, requests.exceptions.ConnectionError)):
+                        retryable = True
+                    elif isinstance(e, requests.HTTPError) and getattr(e, "response", None) is not None:
+                        try:
+                            sc = int(e.response.status_code)
+                            if sc in (429, 500, 502, 503, 504):
+                                retryable = True
+                        except Exception:
+                            pass
+
+                    if (attempt >= attempts) or (not retryable):
+                        if args.verbose:
+                            print(
+                                f"[gemini] fail url={url} attempt={attempt}/{attempts} retryable={retryable} err={type(e).__name__}: {str(e)[:200]}",
+                                flush=True,
+                            )
+                        break
+                    # backoff + jitter
+                    base = max(0.0, float(args.retry_backoff))
+                    sleep_s = base * (2 ** (attempt - 1)) + random.random() * 0.25
+                    if args.max_seconds_per_url and args.max_seconds_per_url > 0:
+                        elapsed = time.time() - url_t0
+                        remaining = float(args.max_seconds_per_url) - elapsed
+                        if remaining <= 0:
+                            break
+                        sleep_s = min(sleep_s, max(0.0, remaining))
+                    if args.verbose:
+                        print(
+                            f"[gemini] retrying url={url} in {sleep_s:.2f}s (err={type(e).__name__})",
+                            flush=True,
+                        )
+                    time.sleep(sleep_s)
+
+            if parsed is None:
+                raise last_err or RuntimeError("Gemini request failed without exception.")
 
             # --- urls ---
             uo = parsed.get("urls") if isinstance(parsed, dict) else None
@@ -476,6 +609,16 @@ def main() -> None:
             with open(args.log_jsonl, "a", encoding="utf-8") as lf:
                 lf.write(json.dumps({"url": url, "ok": False, "error": err}) + "\n")
             fail_urls.add(url)
+            if args.verbose:
+                print(f"[gemini] wrote failure log url={url} type={err.get('type')}", flush=True)
+            if args.dump_payloads_dir:
+                try:
+                    out = dump_payload(dump_dir=args.dump_payloads_dir, url=url, prompt=prompt, model=args.model)
+                    if args.verbose or args.log_payload_stats:
+                        print(f"[payload] dumped failed payload -> {out}", flush=True)
+                except Exception as de:
+                    if args.verbose:
+                        print(f"[payload] dump failed url={url} err={type(de).__name__}: {str(de)[:200]}", flush=True)
 
         if processed % 20 == 0:
             print(f"processed {processed} (labeled={labeled}, skipped={skipped}, failed={failed})")
@@ -485,6 +628,7 @@ def main() -> None:
             wb.save(args.xlsx)
             last_saved_at = processed
             print(f"checkpoint saved at processed={processed}")
+            sys.stdout.flush()
 
     wb.save(args.xlsx)
     print("Done.")

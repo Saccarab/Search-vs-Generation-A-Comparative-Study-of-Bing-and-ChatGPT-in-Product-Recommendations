@@ -56,7 +56,7 @@ const newScrapingButton = document.getElementById('newScrapingButton');
 const DEFAULT_QUERY_DELAY_MS = 1500;
 
 // state
-// Each entry is { query: string, run_id?: string }
+// Each entry is: { query: string, run_id?: string }
 let uploadedQueries = [];
 let scrapingState = {
     isRunning: false,
@@ -143,8 +143,12 @@ function parseCSV(csvText, file) {
     if (lines.length < 2) { showStatus('CSV must have header and at least one data row', 'error'); return; }
     
     const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/['"]/g, ''));
-    if (!headers.includes('query')) { showStatus('CSV must have a "query" column', 'error'); return; }
-    
+    const hasQuery = headers.includes('query');
+    if (!hasQuery) {
+        showStatus('CSV must have a "query" column', 'error');
+        return;
+    }
+
     const queryIndex = headers.indexOf('query');
     const runIdIndex = headers.includes('run_id') ? headers.indexOf('run_id') : -1;
     uploadedQueries = [];
@@ -153,7 +157,7 @@ function parseCSV(csvText, file) {
         const line = lines[i].trim();
         if (!line) continue;
         const values = parseCSVLine(line);
-        const query = values[queryIndex]?.trim().replace(/['"]/g, '');
+        const query = queryIndex >= 0 ? (values[queryIndex]?.trim().replace(/['"]/g, '') || '') : '';
         const run_id = runIdIndex >= 0 ? (values[runIdIndex]?.trim().replace(/['"]/g, '') || '') : '';
         if (query) uploadedQueries.push({ query, run_id });
     }
@@ -552,7 +556,7 @@ function updateProgressDisplay() {
     
     if (currentQueryIndex >= 0 && currentQueryIndex < uploadedQueries.length) {
         const qObj = uploadedQueries[currentQueryIndex];
-        const qText = (typeof qObj === 'object' && qObj) ? (qObj.query || '') : String(qObj || '');
+        const qText = (typeof qObj === 'object' && qObj) ? (qObj.query || qObj.url || '') : String(qObj || '');
         currentQuery.textContent = qText.length > 50 ? qText.substring(0, 50) + '...' : qText;
         
         if (currentPhase === 'search') {
@@ -655,7 +659,7 @@ function resetUploadState() {
 }
 
 function showHelp() {
-    alert("Bing Scraper v2.1\n\n1. Upload CSV with 'query' column (optional: 'run_id').\n2. Click Start.\n3. The tool will navigate Bing automatically.\n4. Do not close the side panel while running.\n\nNote: 'Extract Content' visits each result page, which takes longer.");
+    alert("Bing Scraper\n\nInput:\n- CSV with 'query' column (optional: 'run_id')\n\n1. Click Start.\n2. The tool will navigate Bing automatically and collect organic results.\n\nNote: Content extraction can take longer; use concurrency/delay controls to tune.");
 }
 
 // export

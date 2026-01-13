@@ -36,6 +36,13 @@ from urllib.parse import parse_qsl, urlencode, urlparse, urlsplit, urlunsplit
 import openpyxl
 import requests
 
+try:
+    # Optional but strongly recommended for consistent, extension-like extraction.
+    # Install: pip install beautifulsoup4 lxml
+    from bs4 import BeautifulSoup  # type: ignore
+except Exception:  # pragma: no cover
+    BeautifulSoup = None  # type: ignore
+
 
 TRACKING_PARAM_PREFIXES = ("utm_",)
 TRACKING_PARAMS_EXACT = {
@@ -53,7 +60,8 @@ TRACKING_PARAMS_EXACT = {
 
 RE_SCRIPT_STYLE = re.compile(r"(?is)<(script|style|noscript)[^>]*>.*?</\\1>")
 RE_TAGS = re.compile(r"<[^>]+>")
-RE_SPACE = re.compile(r"\\s+")
+RE_SPACE = re.compile(r"[ \\t\\f\\v]+")
+RE_NEWLINES = re.compile(r"(\\r\\n|\\r|\\n)+")
 WORD_RE = re.compile(r"[A-Za-z0-9]+(?:'[A-Za-z0-9]+)?")
 
 
@@ -115,13 +123,136 @@ def extract_domain(raw_url: str) -> str:
         return ""
 
 
+BLOCK_TAGS = (
+    "p",
+    "div",
+    "li",
+    "br",
+    "tr",
+    "td",
+    "th",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "section",
+    "article",
+    "header",
+    "footer",
+    "main",
+    "aside",
+)
+
+
+def _looks_like_css_or_boilerplate(line: str) -> bool:
+    s = (line or "").strip()
+    if not s:
+        return True
+    low = s.lower()
+
+    # Common CSS / build artifact patterns that leak through naive stripping
+    if low.startswith("@layer ") or low.startswith("@media ") or low.startswith("@supports "):
+        return True
+    if low.startswith(":root") or low.startswith("--") or "css" in low and "{".encode() and "}" in low:
+        # keep simple: :root / CSS vars are never useful for content
+        return True
+    if "var(--" in low or "--color-" in low or "--font-" in low:
+        return True
+    if low.startswith("function(") or "webpack" in low or "window.__" in low:
+        return True
+
+    # If line is mostly punctuation/code-like, drop it
+    letters = sum(ch.isalpha() for ch in s)
+    nonletters = len(s) - letters
+    if letters <= 5 and len(s) > 40:
+        return True
+    if letters > 0 and (nonletters / max(1, letters)) > 2.5:
+        return True
+
+    return False
+
+
 def strip_html_to_text(html: str) -> str:
+    """
+    Extract *visible-ish* page text.
+
+    Preference: match the Bing extension behavior:
+      - parse HTML into a DOM-like tree
+      - remove script/style/noscript
+      - remove common non-content containers (nav/header/footer/aside + ad/cookie/popup-ish classes)
+      - take textContent and collapse whitespace to a single line
+
+    Fallback: a regex-based stripper (less accurate) if BeautifulSoup isn't installed.
+    """
     if not html:
         return ""
-    html2 = RE_SCRIPT_STYLE.sub(" ", html)
+
+    if BeautifulSoup is not None:
+        try:
+            soup = BeautifulSoup(html, "lxml")
+
+            # remove script/style/noscript (extension parity)
+            for el in soup.select("script, style, noscript"):
+                el.decompose()
+
+            # remove common non-content tags (extension parity)
+            for el in soup.select("nav, header, footer, aside"):
+                el.decompose()
+
+            # remove common non-content classes/ids (extension parity-ish)
+            junk_tokens = (
+                "navigation",
+                "nav",
+                "menu",
+                "sidebar",
+                "advertisement",
+                "ad",
+                "ads",
+                "cookie",
+                "popup",
+                "modal",
+                "overlay",
+            )
+            # If any token appears in class/id, drop the node
+            for el in soup.find_all(True):
+                try:
+                    cid = " ".join(
+                        filter(
+                            None,
+                            [
+                                " ".join(el.get("class", []) or []),
+                                str(el.get("id") or ""),
+                            ],
+                        )
+                    ).lower()
+                except Exception:
+                    continue
+                if not cid:
+                    continue
+                if any(tok in cid for tok in junk_tokens):
+                    el.decompose()
+
+            text = soup.get_text(" ", strip=True).replace("\u00a0", " ")
+            text = re.sub(r"\\s+", " ", text).strip()
+            return text
+        except Exception:
+            # fall through to regex fallback
+            pass
+
+    # ---- fallback (regex) ----
+    html2 = RE_SCRIPT_STYLE.sub("\n", html)
+    html2 = re.sub(r"(?is)<\\s*br\\s*/?>", "\n", html2)
+    html2 = re.sub(r"(?is)</\\s*(%s)\\s*>" % "|".join(BLOCK_TAGS), "\n", html2)
+    html2 = re.sub(r"(?is)<\\s*(%s)(\\s+[^>]*)?>" % "|".join(BLOCK_TAGS), "\n", html2)
     txt = RE_TAGS.sub(" ", html2)
-    txt = RE_SPACE.sub(" ", txt).strip()
-    return txt
+    txt = txt.replace("\u00a0", " ")
+    txt = RE_SPACE.sub(" ", txt)
+    txt = RE_NEWLINES.sub("\n", txt)
+    lines = [ln.strip() for ln in txt.split("\n")]
+    lines = [ln for ln in lines if not _looks_like_css_or_boilerplate(ln)]
+    return " ".join([ln for ln in lines if ln]).strip()
 
 
 def count_words(text: str) -> int:
@@ -184,6 +315,17 @@ def main() -> None:
     ap.add_argument("--sleep", type=float, default=0.0, help="Sleep seconds between fetches")
     ap.add_argument("--overwrite", action="store_true", help="Overwrite existing content_path/fields")
     ap.add_argument("--min-text-chars", type=int, default=200, help="Minimum extracted text chars to accept as usable")
+    ap.add_argument(
+        "--only-url",
+        action="append",
+        default=[],
+        help="Process only these exact URL(s). Can be passed multiple times. If set, overrides normal selection.",
+    )
+    ap.add_argument(
+        "--url-contains",
+        default="",
+        help="Process only URLs whose raw URL string contains this substring (case-insensitive).",
+    )
     args = ap.parse_args()
 
     xlsx = Path(args.xlsx)
@@ -207,6 +349,8 @@ def main() -> None:
     wrote_files = 0
     skipped_has_content = 0
     failed = 0
+    only_urls = {u.strip() for u in (args.only_url or []) if str(u).strip()}
+    contains = (args.url_contains or "").strip().lower()
 
     for r in range(2, ws_urls.max_row + 1):
         raw_url = ws_urls.cell(r, hu["url"]).value
@@ -215,6 +359,13 @@ def main() -> None:
         url = str(raw_url).strip()
         if not url:
             continue
+
+        if only_urls:
+            if url not in only_urls:
+                continue
+        elif contains:
+            if contains not in url.lower():
+                continue
 
         existing_cp = str(ws_urls.cell(r, hu["content_path"]).value or "").strip()
         if existing_cp and not args.overwrite:
