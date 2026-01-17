@@ -42,28 +42,30 @@ const clearDebugLogsButton = document.getElementById('clearDebugLogsButton');
 const resultsSummary = document.getElementById('resultsSummary');
 const downloadFilename = document.getElementById('downloadFilename');
 const downloadSize = document.getElementById('downloadSize');
-const downloadButton = document.getElementById('downloadButton');
-const newCollectionButton = document.getElementById('newCollectionButton');
-
-// state
-// Each entry is { query: string, prompt_id?: string }
-let uploadedQueries = [];
-let scrapingState = {
-    isRunning: false,
-    startTime: null,
-    totalQueries: 0,
-    completed: 0,
-    errors: 0,
-    errorList: [],
-    retries: 0,
-    currentQueryIndex: -1,
-    currentRun: 0,
-    runsPerQuery: 1,
-    csvData: null,
-    forceWebSearch: false,
-    manualAssistPlusN: false,
-    autoClickPlusN: false
-};
+    const downloadButton = document.getElementById('downloadButton');
+    const newCollectionButton = document.getElementById('newCollectionButton');
+    const downloadProgressButton = document.getElementById('downloadProgressButton');
+    
+    // state
+    // Each entry is { query: string, prompt_id?: string }
+    let uploadedQueries = [];
+    let scrapingState = {
+        isRunning: false,
+        startTime: null,
+        totalQueries: 0,
+        completed: 0,
+        errors: 0,
+        errorList: [],
+        retries: 0,
+        currentQueryIndex: -1,
+        currentRun: 0,
+        runsPerQuery: 1,
+        csvData: null,
+        collectedResults: [],
+        forceWebSearch: false,
+        manualAssistPlusN: false,
+        autoClickPlusN: false
+    };
 
 // debug log state
 const DEBUG_LOG_MAX = 300;
@@ -110,6 +112,9 @@ function setupEventListeners() {
     startButton.addEventListener('click', startScraping);
     downloadButton.addEventListener('click', downloadResults);
     newCollectionButton.addEventListener('click', resetApp);
+    if (downloadProgressButton) {
+        downloadProgressButton.addEventListener('click', downloadProgress);
+    }
 
     if (clearDebugLogsButton) {
         clearDebugLogsButton.addEventListener('click', () => {
@@ -358,6 +363,7 @@ function startScraping() {
         currentRun: 1,
         runsPerQuery: runs,
         csvData: null,
+        collectedResults: [],
         forceWebSearch: forceWebSearch,
         manualAssistPlusN: manualAssistPlusN,
         autoClickPlusN: autoClickPlusN
@@ -484,6 +490,49 @@ function downloadResults() {
     }
 }
 
+function downloadProgress() {
+    if (!scrapingState.collectedResults || scrapingState.collectedResults.length === 0) {
+        showStatus('No results collected yet', 'warning');
+        return;
+    }
+    
+    const csvData = convertToCSV(scrapingState.collectedResults);
+    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+    const filename = `chatgpt_results_partial_${timestamp}.csv`;
+    downloadCSV(csvData, filename);
+    showStatus(`Downloaded ${scrapingState.collectedResults.length} partial results`, 'success');
+}
+
+function convertToCSV(results) {
+  if (!results || results.length === 0) return '';
+  
+  // get headers from first result (or merge all keys if inconsistent, but usually consistent)
+  const headers = Object.keys(results[0]);
+  
+  // create CSV content
+  let csvContent = headers.join(',') + '\n';
+  
+  results.forEach(result => {
+    const row = headers.map(header => {
+      // IMPORTANT: don't use `|| ''` here because it converts valid falsy values (0, false) to empty strings.
+      // We want to preserve 0/false in the CSV for proper downstream parsing.
+      let value = (result[header] ?? '');
+      
+      // If it's the response text or search query, replace newlines with spaces to keep CSV clean
+      if (header === 'response_text' || header === 'query' || header === 'generated_search_query') {
+          value = String(value).replace(/[\r\n]+/g, '  ');
+      }
+      
+      // escape quotes and wrap in quotes if contains comma, quote, or newline
+      const escapedValue = String(value).replace(/"/g, '""');
+      return /[,"\n\r]/.test(escapedValue) ? `"${escapedValue}"` : escapedValue;
+    });
+    csvContent += row.join(',') + '\n';
+  });
+  
+  return csvContent;
+}
+
 function downloadCSV(csvContent, filename) {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
@@ -512,6 +561,7 @@ function resetApp() {
         currentRun: 0,
         runsPerQuery: 1,
         csvData: null,
+        collectedResults: [],
         forceWebSearch: false
     };
     
@@ -605,6 +655,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             if (message.retryAttempt) {
                 scrapingState.retries++;
                 console.log(`Retry attempt ${message.retryCount}/${message.maxRetries} for current query`);
+            }
+            if (message.result) {
+                scrapingState.collectedResults.push(message.result);
             }
             updateProgressDisplay();
             break;

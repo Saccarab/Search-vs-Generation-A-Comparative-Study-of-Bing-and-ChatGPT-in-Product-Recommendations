@@ -1,7 +1,7 @@
 console.log("ChatGPT Response Scraper - Content script loaded");
 
 // Debug logging: prints to DevTools console and also streams into the extension sidepanel.
-const BUILD_ID = "2026-01-17T15:00Z";
+const BUILD_ID = "2026-01-17T15:15Z";
 const DEBUG_LOGS_ENABLED = true;
 function debugLog(msg) {
   if (!DEBUG_LOGS_ENABLED) return;
@@ -1759,7 +1759,8 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         // report completion of this operation
         reportProgress({
           completed: completedOperations,
-          totalOperations: totalOperations
+          totalOperations: totalOperations,
+          result: enrichedResult
         });
         
         console.log(`[Success] Completed operation ${completedOperations}/${totalOperations}`);
@@ -1804,7 +1805,8 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         // report completion even for errors
         reportProgress({
           completed: completedOperations,
-          totalOperations: totalOperations
+          totalOperations: totalOperations,
+          result: errorResult
         });
         
         // don't stop the entire process for one error, continue with next
