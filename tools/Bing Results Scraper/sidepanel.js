@@ -148,7 +148,7 @@ function parseCSV(csvText, file) {
         showStatus('CSV must have a "query" column', 'error');
         return;
     }
-
+    
     const queryIndex = headers.indexOf('query');
     const runIdIndex = headers.includes('run_id') ? headers.indexOf('run_id') : -1;
     uploadedQueries = [];
@@ -209,7 +209,7 @@ function updateConfiguration() {
     const contentConcurrency = Math.max(1, Math.min(5, parseInt(contentConcurrencyInput?.value || '2', 10) || 2));
     const total = uploadedQueries.length * maxResults;
     totalResultsDisplay.textContent = total;
-
+    
     // Show/hide the content limiter UI when extraction is on/off
     if (contentLimitsSection) {
         contentLimitsSection.style.display = extractContent ? 'grid' : 'none';
@@ -235,7 +235,7 @@ function updateConfiguration() {
             const hours = Math.floor(estimatedMinutes / 60);
             const mins = Math.ceil(estimatedMinutes % 60);
             estimatedDuration.textContent = mins === 0 ? `~${hours}h` : `~${hours}h ${mins}m`;
-        }
+            }
     } else estimatedDuration.textContent = 'Upload queries to calculate';
 }
 
@@ -283,7 +283,8 @@ function startScraping() {
         currentPhase: 'search',
         contentProgress: 0,
         contentTotal: 0,
-        waitingForPageLoad: false
+        waitingForPageLoad: false,
+        nextPageUrl: null // Store actual next page URL from Bing
     };
     
     // UI Updates
@@ -304,6 +305,7 @@ function processNextQuery() {
     if (scrapingState.currentPageOffset === 0) {
         scrapingState.currentQueryIndex++;
         scrapingState.resultsForCurrentQuery = 0;
+        scrapingState.nextPageUrl = null; // Reset for new query
     }
     
     // CHECK COMPLETION
@@ -318,18 +320,15 @@ function processNextQuery() {
 
     const qObj = uploadedQueries[scrapingState.currentQueryIndex];
     const query = (typeof qObj === 'string') ? qObj : (qObj?.query || '');
-    const encodedQuery = encodeURIComponent(query);
     
-    // Add pagination parameter if offset > 0
-    let searchUrl = `https://www.bing.com/search?q=${encodedQuery}`;
-    if (scrapingState.currentPageOffset > 0) {
-        searchUrl += `&first=${scrapingState.currentPageOffset + 1}`;
-    }
+    // Only navigate for first page; pagination is handled by clicking Next
+    const searchUrl = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+    console.log('Starting fresh search:', searchUrl);
 
     // NAVIGATE
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         if (tabs[0]) {
-            console.log(`Navigating to: ${searchUrl} (Offset: ${scrapingState.currentPageOffset})`);
+            console.log(`Navigating to: ${searchUrl}`);
             scrapingState.waitingForPageLoad = true;
             chrome.tabs.update(tabs[0].id, { url: searchUrl });
             // Now we wait for 'bingPageLoaded' message from background.js
@@ -347,7 +346,7 @@ function triggerScrape(tabId) {
     console.log("Triggering scrape on tab", tabId);
     scrapingState.currentPhase = 'content';
     updateProgressDisplay();
-
+    
     // Send Scrape Command
     chrome.tabs.sendMessage(tabId, { 
         action: 'scrapePage', 
@@ -360,26 +359,50 @@ function triggerScrape(tabId) {
             handleQueryError(`Connection error: ${chrome.runtime.lastError.message}`);
             // If error, force move to next query to avoid loop
             scrapingState.currentPageOffset = 0;
+            scrapingState.nextPageUrl = null;
             scheduleNext();
         } else if (response && response.status === 'success') {
             saveQueryResults(response.results);
+            // Store the next page URL from Bing
+            scrapingState.nextPageUrl = response.nextPageUrl || null;
             
             // PAGINATION LOGIC:
-            // If we found results AND we haven't hit the limit yet, try next page
+            // If we found results AND we haven't hit the limit yet, try clicking next
             if (response.results.length > 0 && scrapingState.resultsForCurrentQuery < scrapingState.maxResultsPerQuery) {
-                console.log(`Pagination: Collected ${scrapingState.resultsForCurrentQuery} so far. Target: ${scrapingState.maxResultsPerQuery}. Moving to next page.`);
-                scrapingState.currentPageOffset += 10; // Bing steps by 10
-                scheduleNext();
+                console.log(`Pagination: Collected ${scrapingState.resultsForCurrentQuery} so far. Target: ${scrapingState.maxResultsPerQuery}. Clicking next page.`);
+                // Click the Next button instead of navigating
+                chrome.tabs.sendMessage(tabId, { action: 'clickNextPage' }, (clickResponse) => {
+                    console.log('Click response:', clickResponse, 'lastError:', chrome.runtime.lastError);
+                    if (chrome.runtime.lastError || !clickResponse?.clicked) {
+                        // No next page or error - done with this query
+                        console.log('No next page available or click failed');
+                        scrapingState.currentPageOffset = 0;
+                        scrapingState.nextPageUrl = null;
+                        scrapingState.completed++;
+                        scheduleNext();
+                    } else {
+                        // Clicked successfully - wait for content to update then scrape again
+                        console.log('Click successful, waiting 3s for page to update...');
+                        scrapingState.currentPageOffset += 10;
+                        // Wait 3 seconds then scrape directly (Bing might not do a full reload)
+                        setTimeout(() => {
+                            console.log('Timeout done, triggering scrape...');
+                            triggerScrape(tabId);
+                        }, 3000);
+                    }
+                });
             } else {
                 // Done with this query
                 console.log(`Pagination: Done with query. Collected ${scrapingState.resultsForCurrentQuery} results.`);
                 scrapingState.currentPageOffset = 0;
+                scrapingState.nextPageUrl = null;
                 scrapingState.completed++; // Only increment completed when query is FULLY done
                 scheduleNext();
             }
         } else {
             handleQueryError(response ? response.error : "Unknown error");
             scrapingState.currentPageOffset = 0; // Skip to next query on error
+            scrapingState.nextPageUrl = null;
             scheduleNext();
         }
     });
@@ -389,6 +412,15 @@ function saveQueryResults(results) {
     const qObj = uploadedQueries[scrapingState.currentQueryIndex];
     const query = (typeof qObj === 'string') ? qObj : (qObj?.query || '');
     const run_id = (typeof qObj === 'object' && qObj) ? (qObj.run_id || '') : '';
+    
+    // Stop exactly at maxResultsPerQuery - don't overshoot
+    const remaining = scrapingState.maxResultsPerQuery - scrapingState.resultsForCurrentQuery;
+    if (remaining <= 0) {
+        console.log('Already have enough results, skipping this batch');
+        return;
+    }
+    results = results.slice(0, remaining);
+    
     // Add query metadata to each result and FIX POSITION STRICTLY
     const maxChars = Math.max(0, parseInt(scrapingState.contentMaxChars || 0, 10) || 0);
     const enrichedResults = results.map((r, index) => {
@@ -567,7 +599,7 @@ function updateProgressDisplay() {
             taskLabel.textContent = 'Extracting content...';
             phaseProgress.style.display = 'block';
             phaseLabel.textContent = 'Page Content';
-            phaseStatus.textContent = `${scrapingState.contentProgress} / ${scrapingState.contentTotal}`;
+        phaseStatus.textContent = `${scrapingState.contentProgress} / ${scrapingState.contentTotal}`;
             const pp = Math.round((scrapingState.contentProgress / Math.max(1, scrapingState.contentTotal)) * 100);
             phaseFill.style.width = pp + '%';
         }

@@ -1,4 +1,5 @@
-// console.log("Bing Search Scraper with Content Extraction - Content script loaded");
+const SCRAPER_VERSION = 'ads-filter-v3';
+console.log(`Bing Search Scraper content.js loaded (${SCRAPER_VERSION})`);
 
 // values for timeout and delay
 const CONTENT_TIMEOUT = 15000; // 15 seconds
@@ -161,6 +162,15 @@ async function waitForResultsToLoad() {
   }
 }
 
+// Decode base64url (handles - and _ characters, adds padding)
+function base64urlDecode(str) {
+  // Replace base64url chars with standard base64
+  let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+  // Add padding if needed
+  while (base64.length % 4) base64 += '=';
+  return atob(base64);
+}
+
 function getActualUrl(linkElement) {
   const originalUrl = linkElement.href;
   
@@ -194,7 +204,7 @@ function getActualUrl(linkElement) {
             for (let prefixLen = 1; prefixLen <= 4; prefixLen++) {
               try {
                 const testUrl = encodedUrl.substring(prefixLen);
-                const decoded = atob(testUrl);
+                const decoded = base64urlDecode(testUrl);
                 if (decoded.startsWith('http')) {
                   console.log(`Base64 decoded (prefix ${prefixLen}): ${originalUrl.substring(0, 50)}... -> ${decoded}`);
                   return cleanUrl(decoded);
@@ -206,7 +216,7 @@ function getActualUrl(linkElement) {
           }
           
           // try direct base64 decode
-          const directDecoded = atob(encodedUrl);
+          const directDecoded = base64urlDecode(encodedUrl);
           if (directDecoded.startsWith('http')) {
             console.log(`Base64 decoded: ${originalUrl.substring(0, 50)}... -> ${directDecoded}`);
             return cleanUrl(directDecoded);
@@ -234,7 +244,7 @@ function getActualUrl(linkElement) {
       if (pathMatch) {
         const encodedUrl = decodeURIComponent(pathMatch[1]);
         try {
-          const base64Decoded = atob(encodedUrl.replace(/^a1/, ''));
+          const base64Decoded = base64urlDecode(encodedUrl.replace(/^a1/, ''));
           if (base64Decoded.startsWith('http')) {
             console.log(`Path base64 decoded: ${originalUrl.substring(0, 50)}... -> ${base64Decoded}`);
             return cleanUrl(base64Decoded);
@@ -311,9 +321,90 @@ function isAdClickUrl(url) {
   }
 }
 
+function isSponsoredResultElement(resultElement) {
+  if (!resultElement) return false;
+  
+  // If the visible text starts with "Sponsored" (often prepended to the snippet line),
+  // treat it as an ad even if DOM markers are missing.
+  try {
+    const text = (resultElement.innerText || '').replace(/\s+/g, ' ').trim();
+    if (/^Sponsored\b/i.test(text)) {
+      console.log('SKIPPING AD (text prefix):', resultElement.querySelector('h2')?.textContent);
+      return true;
+    }
+  } catch (e) {}
+
+  // Direct DOM markers from the observed sponsored card HTML.
+  if (
+    resultElement.querySelector('.adsMvCarousel, .adsMvC, .b_ads1line, .ad_em') ||
+    resultElement.querySelector('.mnau')
+  ) {
+    console.log('SKIPPING AD (marker class):', resultElement.querySelector('h2')?.textContent);
+    return true;
+  }
+
+  // Check parent <li> and siblings for ad markers
+  const parentLi = resultElement.closest('li');
+  if (parentLi) {
+    const parentHtml = parentLi.outerHTML || '';
+    if (/adsMv|b_ads|ad_em|mv-data="Ads|sponsored/i.test(parentHtml)) {
+      console.log('SKIPPING AD (parent):', resultElement.querySelector('h2')?.textContent);
+      return true;
+    }
+    
+    // Check previous sibling for "Sponsored" label
+    let sibling = parentLi.previousElementSibling;
+    for (let i = 0; i < 3 && sibling; i++) {
+      const siblingText = sibling.textContent || '';
+      if (/sponsored/i.test(siblingText) && siblingText.length < 100) {
+        console.log('SKIPPING AD (sibling):', resultElement.querySelector('h2')?.textContent);
+        return true;
+      }
+      sibling = sibling.previousElementSibling;
+    }
+  }
+  
+  // Check ::before pseudo-elements (Bing injects "Sponsored" here).
+  // Distinguish WEB vs Sponsored by subtle padding differences on the snippet <p>.
+  const elementsToCheck = [resultElement, ...resultElement.querySelectorAll('*')];
+  for (const el of elementsToCheck) {
+    try {
+      const style = window.getComputedStyle(el, '::before');
+      const content = style.content;
+      if (content && content !== 'none' && content !== '""' && /sponsored/i.test(content)) {
+        console.log('SKIPPING AD (::before text):', resultElement.querySelector('h2')?.textContent);
+        return true;
+      }
+      if (
+        content &&
+        /^url\(/i.test(content) &&
+        el.tagName === 'P' &&
+        el.closest('.b_caption')
+      ) {
+        // In your layout: WEB uses padding 0 2px, Sponsored uses 0 1px.
+        const pad = style.padding || '';
+        if (/\b0px 1px\b/.test(pad)) {
+          console.log('SKIPPING AD (::before image padding 0 1px):', resultElement.querySelector('h2')?.textContent);
+          return true;
+        }
+      }
+    } catch (e) {}
+  }
+  
+  // Check HTML patterns in the result itself
+  const html = resultElement.outerHTML || '';
+  if (/adsMv|b_ads|ad_em|mv-data="Ads/i.test(html)) {
+    console.log('SKIPPING AD (html):', resultElement.querySelector('h2')?.textContent);
+    return true;
+  }
+  
+  return false;
+}
+
 function extractSearchResults() {
   const results = [];
   const resultElements = document.querySelectorAll(SEARCH_RESULTS);
+  let skippedSponsored = 0;
   // Track Bing SERP page number for later analysis/debugging
   const pageNum = (() => {
     try {
@@ -336,13 +427,10 @@ function extractSearchResults() {
   
   resultElements.forEach((resultElement, index) => {
     try {
-      // double-check this isn't an ad
-      if (resultElement.classList.contains('b_ad') || 
-          resultElement.classList.contains('b_adTop') || 
-          resultElement.classList.contains('b_adBottom') ||
-          resultElement.hasAttribute('data-apurl') ||
-          resultElement.querySelector('.b_ad')) {
-        console.log(`Skipping ad element at position ${index + 1}`);
+      // double-check this isn't sponsored/ads (Bing sometimes wraps ads as .b_algo)
+      if (isSponsoredResultElement(resultElement)) {
+        console.log(`Skipping sponsored/ad element at position ${index + 1}`);
+        skippedSponsored += 1;
         return;
       }
       
@@ -361,6 +449,12 @@ function extractSearchResults() {
       const actualUrl = getActualUrl(titleElement);
       if (actualUrl && isAdClickUrl(actualUrl)) {
         console.log(`Skipping ad-click URL: ${actualUrl.substring(0, 120)}...`);
+        return;
+      }
+      
+      // Skip if URL is still bing.com (failed to decode = probably ad)
+      if (actualUrl && actualUrl.includes('bing.com/ck/')) {
+        console.log(`Skipping undecoded bing redirect: ${actualUrl.substring(0, 80)}...`);
         return;
       }
       
@@ -402,7 +496,7 @@ function extractSearchResults() {
     }
   });
   
-  console.log(`Successfully extracted ${results.length} organic results`);
+  console.log(`Successfully extracted ${results.length} organic results (skipped sponsored: ${skippedSponsored})`);
   return results;
 }
 
@@ -841,7 +935,12 @@ async function scrapeCurrentPage(
     });
   }
   
-  return results;
+  // Get the Next page URL from Bing's actual button
+  const nextBtn = document.querySelector('.sb_pagN');
+  const nextPageUrl = nextBtn ? nextBtn.href : null;
+  console.log('Next page URL:', nextPageUrl);
+  
+  return { results, nextPageUrl };
 }
 
 // ================== COMMUNICATION ==================
@@ -863,8 +962,24 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       message.contentDelayMs,
       message.contentConcurrency
     )
-      .then(results => sendResponse({ status: 'success', results: results }))
+      .then(({ results, nextPageUrl }) => sendResponse({ status: 'success', results, nextPageUrl }))
       .catch(err => sendResponse({ status: 'error', error: err.message }));
     return true; // async response
+  }
+  
+  // ACTION: CLICK NEXT PAGE
+  if (message.action === "clickNextPage") {
+    (async () => {
+      const nextBtn = document.querySelector('.sb_pagN');
+      if (nextBtn) {
+        console.log('Clicking Next button...');
+        nextBtn.click();
+        sendResponse({ status: 'success', clicked: true });
+      } else {
+        console.log('No Next button found');
+        sendResponse({ status: 'success', clicked: false });
+      }
+    })();
+    return true;
   }
 });
