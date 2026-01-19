@@ -7,6 +7,7 @@ const elDelayMs = document.getElementById("delayMs");
 const elTimeoutMs = document.getElementById("timeoutMs");
 const elMaxChars = document.getElementById("maxChars");
 const elBrowserFallback = document.getElementById("browserFallback");
+const elForceBrowser = document.getElementById("forceBrowser");
 const elBrowserWaitMs = document.getElementById("browserWaitMs");
 const elStart = document.getElementById("start");
 const elStop = document.getElementById("stop");
@@ -270,13 +271,14 @@ async function run() {
   const timeoutMs = Math.max(1000, Math.min(60000, Number(elTimeoutMs.value || 20000) || 20000));
   const maxChars = Math.max(0, Math.min(200000, Number(elMaxChars.value || 20000) || 20000));
   const useBrowserFallback = elBrowserFallback?.checked ?? true;
+  const forceBrowser = elForceBrowser?.checked ?? false;
   const browserWaitMs = Math.max(2000, Math.min(60000, Number(elBrowserWaitMs?.value || 15000) || 15000));
 
   let done = 0;
   let browserFallbackCount = 0;
 
-  // When using browser fallback, process one URL at a time to avoid tab overload
-  const effectiveConcurrency = useBrowserFallback ? 1 : concurrency;
+  // When using browser fallback or force browser, process one URL at a time
+  const effectiveConcurrency = (useBrowserFallback || forceBrowser) ? 1 : concurrency;
 
   for (let i = 0; i < urls.length; i += effectiveConcurrency) {
     if (!isRunning) break;
@@ -287,13 +289,19 @@ async function run() {
         const started = Date.now();
         const dom = domainOf(url);
 
-        // First try normal fetch
-        let fr = await fetchOne(url, timeoutMs);
+        let fr = { ok: false, status: 0, html: "" };
         let usedBrowser = false;
 
-        // If fetch failed and browser fallback is enabled, try browser mode
-        if (useBrowserFallback && (!fr.ok || !fr.html) && shouldTryBrowserFallback(fr.status)) {
-          setStatus(`Browser fallback: ${dom}...`);
+        // SKIP direct fetch if Force Browser is on
+        if (!forceBrowser) {
+          fr = await fetchOne(url, timeoutMs);
+        }
+
+        // Trigger browser if Force Browser is on OR if direct fetch failed
+        const triggerBrowser = forceBrowser || (useBrowserFallback && (!fr.ok || !fr.html) && shouldTryBrowserFallback(fr.status));
+
+        if (triggerBrowser) {
+          setStatus(`${forceBrowser ? "Force browser" : "Browser fallback"}: ${dom}...`);
           const br = await fetchViaBrowser(url, browserWaitMs);
           usedBrowser = true;
           browserFallbackCount++;

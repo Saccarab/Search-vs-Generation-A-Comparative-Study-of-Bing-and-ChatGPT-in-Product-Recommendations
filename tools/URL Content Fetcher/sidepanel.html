@@ -43,10 +43,15 @@
           <span>Browser fallback for blocked pages (403/429/5xx)</span>
         </label>
         <div class="muted small">Opens page in real tab to bypass Cloudflare/DDoS protection. Slower but more reliable.</div>
-        <div style="margin-top:8px">
+        <label class="checkbox-label" style="margin-top:12px; display:flex">
+          <input id="forceBrowser" type="checkbox" />
+          <span style="color:#d32f2f; font-weight:bold">FORCE BROWSER MODE (everything via real tab)</span>
+        </label>
+        <div class="muted small">Bypass direct fetch entirely. Best for "Thin Content" retries (YouTube, App Stores).</div>
+        <div style="margin-top:12px">
           <label class="label">Browser wait time (ms)</label>
           <input id="browserWaitMs" type="number" min="2000" max="60000" value="15000" />
-          <div class="muted small">Max time to wait for Cloudflare/DDoS challenges to clear</div>
+          <div class="muted small">Max time to wait for dynamic content or DDoS challenges to clear</div>
         </div>
       </div>
 
