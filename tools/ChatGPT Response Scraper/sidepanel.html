@@ -103,39 +103,6 @@
                             </label>
                         </div>
                     </div>
-                    <div class="toggle-item" style="margin-top: 1rem;">
-                        <div class="toggle-info">
-                            <label for="manualAssistToggle">
-                                <i class="fas fa-hand-pointer"></i>
-                                Manual Assist for +N Citations
-                            </label>
-                            <span class="toggle-description">If a +N citation popover won’t open via automation, the scraper will pause and
-                                ask you to hover/click so it can capture all links.</span>
-                        </div>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="manualAssistToggle">
-                            <label for="manualAssistToggle" class="toggle-label">
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="toggle-item" style="margin-top: 1rem;">
-                        <div class="toggle-info">
-                            <label for="autoClickPlusNToggle">
-                                <i class="fas fa-mouse-pointer"></i>
-                                Auto-click +N pills
-                            </label>
-                            <span class="toggle-description">Try to open +N popovers and page through sources automatically. Disable if it
-                                “steals” the click from you or races your manual hover/click.</span>
-                        </div>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="autoClickPlusNToggle">
-                            <label for="autoClickPlusNToggle" class="toggle-label">
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-                    </div>
                 </div>
                 
                 <div class="config-info">
@@ -181,14 +148,6 @@
                     </div>
                 </div>
 
-                <div class="assist-alert" id="assistAlert" style="display: none;">
-                    <div class="assist-alert-title">
-                        <i class="fas fa-hand-pointer"></i>
-                        Action needed
-                    </div>
-                    <div class="assist-alert-body" id="assistAlertBody"></div>
-                </div>
-
                 <div class="progress-stats">
                     <div class="stat-item">
                         <i class="fas fa-check-circle"></i>
@@ -211,22 +170,6 @@
                     <h4><i class="fas fa-exclamation-circle"></i> Recent Errors</h4>
                     <div class="error-list" id="errorList"></div>
                 </div>
-<div class="progress-actions" style="margin-top: 1rem; text-align: center;">
-    <button id="downloadProgressButton" class="secondary-button" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
-        <i class="fas fa-file-export"></i> Download Progress
-    </button>
-</div>
-
-<div class="debug-logs" id="debugLogs" style="display: none;">
-    <div class="debug-logs-header">
-        <h4><i class="fas fa-terminal"></i> Debug Logs</h4>
-        <button id="clearDebugLogsButton" class="debug-clear-button" type="button">
-            <i class="fas fa-trash"></i>
-            <span>Clear</span>
-        </button>
-    </div>
-    <div class="debug-logs-body" id="debugLogsBody"></div>
-</div>
             </section>
 
             <!-- Results Section -->

@@ -14,8 +14,6 @@ const startButton = document.getElementById('startButton');
 const runsPerQInput = document.getElementById('runsPerQ');
 const totalOpsDisplay = document.getElementById('totalOps');
 const webSearchToggle = document.getElementById('webSearchToggle');
-const manualAssistToggle = document.getElementById('manualAssistToggle');
-const autoClickPlusNToggle = document.getElementById('autoClickPlusNToggle');
 
 // progress elements
 const progressStatus = document.getElementById('progressStatus');
@@ -29,47 +27,30 @@ const errorCountDisplay = document.getElementById('errorCount');
 const recentErrors = document.getElementById('recentErrors');
 const errorList = document.getElementById('errorList');
 
-// manual assist elements
-const assistAlert = document.getElementById('assistAlert');
-const assistAlertBody = document.getElementById('assistAlertBody');
-
-// debug logs elements
-const debugLogs = document.getElementById('debugLogs');
-const debugLogsBody = document.getElementById('debugLogsBody');
-const clearDebugLogsButton = document.getElementById('clearDebugLogsButton');
-
 // results elements
 const resultsSummary = document.getElementById('resultsSummary');
 const downloadFilename = document.getElementById('downloadFilename');
 const downloadSize = document.getElementById('downloadSize');
-    const downloadButton = document.getElementById('downloadButton');
-    const newCollectionButton = document.getElementById('newCollectionButton');
-    const downloadProgressButton = document.getElementById('downloadProgressButton');
-    
-    // state
-    // Each entry is { query: string, prompt_id?: string }
-    let uploadedQueries = [];
-    let scrapingState = {
-        isRunning: false,
-        startTime: null,
-        totalQueries: 0,
-        completed: 0,
-        errors: 0,
-        errorList: [],
-        retries: 0,
-        currentQueryIndex: -1,
-        currentRun: 0,
-        runsPerQuery: 1,
-        csvData: null,
-        collectedResults: [],
-        forceWebSearch: false,
-        manualAssistPlusN: false,
-        autoClickPlusN: false
-    };
+const downloadButton = document.getElementById('downloadButton');
+const newCollectionButton = document.getElementById('newCollectionButton');
 
-// debug log state
-const DEBUG_LOG_MAX = 300;
-let debugLogLines = [];
+// state
+// Each entry is { query: string, prompt_id?: string }
+let uploadedQueries = [];
+let scrapingState = {
+    isRunning: false,
+    startTime: null,
+    totalQueries: 0,
+    completed: 0,
+    errors: 0,
+    errorList: [],
+    retries: 0,
+    currentQueryIndex: -1,
+    currentRun: 0,
+    runsPerQuery: 1,
+    csvData: null,
+    forceWebSearch: false
+};
 
 // init
 document.addEventListener('DOMContentLoaded', initializeApp);
@@ -84,14 +65,6 @@ function initializeApp() {
     // default to organic behavior (don't force web search)
     scrapingState.forceWebSearch = false;
     if (webSearchToggle) webSearchToggle.checked = false;
-
-    // default: manual assist ON (recommended) — some +N popovers won't open without real user hover/click
-    scrapingState.manualAssistPlusN = true;
-    if (manualAssistToggle) manualAssistToggle.checked = true;
-
-    // default: auto-click OFF (it can race user interaction and make us miss href swaps)
-    scrapingState.autoClickPlusN = false;
-    if (autoClickPlusNToggle) autoClickPlusNToggle.checked = false;
 }
 
 function setupEventListeners() {
@@ -107,21 +80,9 @@ function setupEventListeners() {
     // control events
     runsPerQInput.addEventListener('input', updateTotalOperations);
     webSearchToggle.addEventListener('change', handleWebSearchToggle);
-    if (manualAssistToggle) manualAssistToggle.addEventListener('change', handleManualAssistToggle);
-    if (autoClickPlusNToggle) autoClickPlusNToggle.addEventListener('change', handleAutoClickPlusNToggle);
     startButton.addEventListener('click', startScraping);
     downloadButton.addEventListener('click', downloadResults);
     newCollectionButton.addEventListener('click', resetApp);
-    if (downloadProgressButton) {
-        downloadProgressButton.addEventListener('click', downloadProgress);
-    }
-
-    if (clearDebugLogsButton) {
-        clearDebugLogsButton.addEventListener('click', () => {
-            debugLogLines = [];
-            renderDebugLogs();
-        });
-    }
     
     // footer events
     document.getElementById('helpLink').addEventListener('click', showHelp);
@@ -263,16 +224,6 @@ function handleWebSearchToggle() {
     console.log('Web search setting:', scrapingState.forceWebSearch ? 'enabled' : 'disabled');
 }
 
-function handleManualAssistToggle() {
-    scrapingState.manualAssistPlusN = !!manualAssistToggle.checked;
-    console.log('Manual assist (+N) setting:', scrapingState.manualAssistPlusN ? 'enabled' : 'disabled');
-}
-
-function handleAutoClickPlusNToggle() {
-    scrapingState.autoClickPlusN = !!autoClickPlusNToggle.checked;
-    console.log('Auto-click (+N) setting:', scrapingState.autoClickPlusN ? 'enabled' : 'disabled');
-}
-
 function showStatus(message, type) {
     status.textContent = message;
     status.className = `status-message ${type}`;
@@ -313,30 +264,6 @@ function hideSection(section) {
     }
 }
 
-function appendDebugLog(message) {
-    const ts = new Date().toISOString().slice(11, 19); // HH:MM:SS
-    const line = `[${ts}] ${String(message || '')}`;
-    debugLogLines.push(line);
-    if (debugLogLines.length > DEBUG_LOG_MAX) {
-        debugLogLines = debugLogLines.slice(-DEBUG_LOG_MAX);
-    }
-    renderDebugLogs();
-}
-
-function renderDebugLogs() {
-    if (!debugLogs || !debugLogsBody) return;
-    debugLogs.style.display = debugLogLines.length ? 'block' : 'none';
-    debugLogsBody.innerHTML = '';
-    for (const line of debugLogLines) {
-        const div = document.createElement('div');
-        div.className = 'debug-log-line';
-        div.textContent = line;
-        debugLogsBody.appendChild(div);
-    }
-    // keep scrolled to bottom
-    debugLogsBody.scrollTop = debugLogsBody.scrollHeight;
-}
-
 // scraping control
 function startScraping() {
     if (uploadedQueries.length === 0) {
@@ -346,8 +273,6 @@ function startScraping() {
     
     const runs = parseInt(runsPerQInput.value) || 1;
     const forceWebSearch = webSearchToggle.checked;
-    const manualAssistPlusN = !!(manualAssistToggle && manualAssistToggle.checked);
-    const autoClickPlusN = !!(autoClickPlusNToggle && autoClickPlusNToggle.checked);
     
     // init scraping state
     scrapingState = {
@@ -363,10 +288,7 @@ function startScraping() {
         currentRun: 1,
         runsPerQuery: runs,
         csvData: null,
-        collectedResults: [],
-        forceWebSearch: forceWebSearch,
-        manualAssistPlusN: manualAssistPlusN,
-        autoClickPlusN: autoClickPlusN
+        forceWebSearch: forceWebSearch
     };
     
     // update UI
@@ -375,31 +297,19 @@ function startScraping() {
     
     // disable toggle during processing
     webSearchToggle.disabled = true;
-    if (manualAssistToggle) manualAssistToggle.disabled = true;
-    if (autoClickPlusNToggle) autoClickPlusNToggle.disabled = true;
     
     hideSection('config');
     hideSection('action');
     showSection('progress');
     
     updateProgressDisplay();
-
-    // clear prior debug logs for new run
-    debugLogLines = [];
-    renderDebugLogs();
-
-    // clear any previous assist prompt
-    if (assistAlert) assistAlert.style.display = 'none';
-    if (assistAlertBody) assistAlertBody.textContent = '';
     
     // send command to content script
     sendCommand({
         action: 'startDataCollection',
         queries: uploadedQueries,
         runs_per_q: runs,
-        force_web_search: forceWebSearch,
-        manual_assist_plusN: manualAssistPlusN,
-        auto_click_plusN: autoClickPlusN
+        force_web_search: forceWebSearch
     });
 }
 
@@ -463,8 +373,6 @@ function showResults(csvData, totalResults) {
     
     // reenable toggle
     webSearchToggle.disabled = false;
-    if (manualAssistToggle) manualAssistToggle.disabled = false;
-    if (autoClickPlusNToggle) autoClickPlusNToggle.disabled = false;
     
     // update results info
     const successRate = Math.round(((totalResults - scrapingState.errors) / totalResults) * 100);
@@ -488,49 +396,6 @@ function downloadResults() {
         const filename = `chatgpt_results_${timestamp}.csv`;
         downloadCSV(scrapingState.csvData, filename);
     }
-}
-
-function downloadProgress() {
-    if (!scrapingState.collectedResults || scrapingState.collectedResults.length === 0) {
-        showStatus('No results collected yet', 'warning');
-        return;
-    }
-    
-    const csvData = convertToCSV(scrapingState.collectedResults);
-    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-    const filename = `chatgpt_results_partial_${timestamp}.csv`;
-    downloadCSV(csvData, filename);
-    showStatus(`Downloaded ${scrapingState.collectedResults.length} partial results`, 'success');
-}
-
-function convertToCSV(results) {
-  if (!results || results.length === 0) return '';
-  
-  // get headers from first result (or merge all keys if inconsistent, but usually consistent)
-  const headers = Object.keys(results[0]);
-  
-  // create CSV content
-  let csvContent = headers.join(',') + '\n';
-  
-  results.forEach(result => {
-    const row = headers.map(header => {
-      // IMPORTANT: don't use `|| ''` here because it converts valid falsy values (0, false) to empty strings.
-      // We want to preserve 0/false in the CSV for proper downstream parsing.
-      let value = (result[header] ?? '');
-      
-      // If it's the response text or search query, replace newlines with spaces to keep CSV clean
-      if (header === 'response_text' || header === 'query' || header === 'generated_search_query') {
-          value = String(value).replace(/[\r\n]+/g, '  ');
-      }
-      
-      // escape quotes and wrap in quotes if contains comma, quote, or newline
-      const escapedValue = String(value).replace(/"/g, '""');
-      return /[,"\n\r]/.test(escapedValue) ? `"${escapedValue}"` : escapedValue;
-    });
-    csvContent += row.join(',') + '\n';
-  });
-  
-  return csvContent;
 }
 
 function downloadCSV(csvContent, filename) {
@@ -561,7 +426,6 @@ function resetApp() {
         currentRun: 0,
         runsPerQuery: 1,
         csvData: null,
-        collectedResults: [],
         forceWebSearch: false
     };
     
@@ -576,19 +440,8 @@ function resetApp() {
     startButton.disabled = false;
     webSearchToggle.checked = false;
     webSearchToggle.disabled = false;
-    if (manualAssistToggle) {
-        manualAssistToggle.checked = false;
-        manualAssistToggle.disabled = false;
-    }
-    if (autoClickPlusNToggle) {
-        autoClickPlusNToggle.checked = false;
-        autoClickPlusNToggle.disabled = false;
-    }
     runsPerQInput.value = 1;
     updateTotalOperations();
-
-    debugLogLines = [];
-    renderDebugLogs();
 }
 
 function resetUploadState() {
@@ -656,9 +509,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 scrapingState.retries++;
                 console.log(`Retry attempt ${message.retryCount}/${message.maxRetries} for current query`);
             }
-            if (message.result) {
-                scrapingState.collectedResults.push(message.result);
-            }
             updateProgressDisplay();
             break;
             
@@ -669,26 +519,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 message: message.error
             });
             updateProgressDisplay();
-            break;
-
-        case 'debugLog':
-            appendDebugLog(message.message || message.log || '');
-            break;
-
-        case 'userAssist':
-            // { active: boolean, message: string }
-            if (assistAlert && assistAlertBody) {
-                const active = message.active !== false;
-                if (active) {
-                    assistAlertBody.textContent = String(message.message || '');
-                    assistAlert.style.display = 'block';
-                } else {
-                    assistAlert.style.display = 'none';
-                    assistAlertBody.textContent = '';
-                }
-            }
-            // also mirror into debug logs for history
-            if (message.message) appendDebugLog(`[assist] ${message.message}`);
             break;
     }
 });
