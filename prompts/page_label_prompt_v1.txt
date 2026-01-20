@@ -6,6 +6,7 @@ If info is missing, use empty string, 0, or [] — do NOT guess.
 ## Enums
 type (choose exactly one):
 - listicle
+- marketplace_directory
 - product_page
 - category_page
 - review_article
@@ -18,9 +19,9 @@ type (choose exactly one):
 - other
 
 ### Type guidance (important)
-- reference: high-authority neutral reference/encyclopedia/knowledge-base pages whose primary goal is factual description (not selling/reviewing).
-  Examples: Wikipedia (wikipedia.org), encyclopedia-style pages, dictionaries, official standards/spec pages.
-  If URL domain ends with wikipedia.org OR the page clearly looks like an encyclopedia entry (sections like History/Technology/References), choose reference.
+- marketplace_directory: Pages that aggregate multiple software or products into a directory or category listing, often with user ratings and "Visit Website" buttons. Examples: Capterra, G2, SoftwareAdvice, GetApp.
+- listicle: Articles or blog posts titled like "Best [X] tools for [Y]" or "Top 10 [X]". Usually written by a publisher/author rather than being a automated directory.
+- reference: high-authority neutral reference/encyclopedia/knowledge-base pages whose primary goal is factual description (not selling/reviewing). Examples: Wikipedia, official standards.
 
 content_format (choose exactly one):
 - best_of_list
@@ -49,7 +50,7 @@ primary_intent (choose exactly one):
 - navigational
 - mixed
 
-mention_type (for listicle items; choose exactly one):
+mention_type (for products found in lists; choose exactly one):
 - headline
 - subheading_best_for
 - paragraph_blurb
@@ -62,6 +63,7 @@ promotional_intensity_score: integer 0–5
 expertise_signal_score: integer 0–5
 spamminess_score: integer 0–5
 freshness_cue_strength: integer 0–5
+readability_score: integer 0–5
 
 ## Binary fields (0/1)
 has_pros_cons
@@ -70,9 +72,11 @@ has_sources_or_citations
 listicle_has_ranked_order
 
 ## Definitions
-has_pros_cons (0/1):
-1 if the page clearly contains a Pros/Cons section or equivalent (Advantages/Disadvantages, What we like/What we don’t)
-0 otherwise
+readability_score (0–5): How easy the page is to scan and understand based on the text structure (clear headings, concise paragraphs, simple language). 5 = exceptionally readable.
+has_pros_cons (0/1): 1 if the page clearly contains a Pros/Cons section or equivalent.
+has_clear_authorship (0/1): 1 if explicit author/editor attribution exists.
+has_sources_or_citations (0/1): 1 if the page text indicates sources/references/citations.
+freshness_cue_strength (0–5): Score based ONLY on explicit cues (e.g., "Updated Jan 2026", "2026 in title").
 
 has_clear_authorship (0/1):
 1 if explicit author/editor attribution exists (e.g., “By X”, bio, “Reviewed by”)
@@ -104,10 +108,8 @@ tone definitions (to disambiguate):
 - is_host_domain: 1 if product_domain == listicle_domain, else 0.
 - notes: MUST include a short snippet from the provided text showing the item mention (for auditability). If you found an explicit URL/domain for the item, include it in notes as well.
 
-## Bias definition (0/1) (only meaningful for listicles)
-bias (0/1):
-Set bias=1 ONLY if the host's own domain (listicle_domain) is listed as an item AND it is ranked #1 (position_in_listicle == 1).
-Otherwise bias=0.
+## Bias definition (0/1)
+bias (0/1): Set bias=1 ONLY if the host's own domain is listed as an item AND it is ranked #1.
 
 ## REQUIRED OUTPUT JSON (MUST match keys exactly)
 {
@@ -118,6 +120,7 @@ Otherwise bias=0.
     "tone": "",
     "promotional_intensity_score": 0,
     "freshness_cue_strength": 0,
+    "readability_score": 0,
     "has_pros_cons": 0,
     "has_clear_authorship": 0,
     "has_sources_or_citations": 0,
@@ -129,7 +132,7 @@ Otherwise bias=0.
   "listicle_products": []
 }
 
-## If type == "listicle", set listicles object to:
+## If type == "listicle" OR type == "marketplace_directory", set listicles object to:
 {
   "listicle_url": "{URL}",
   "listicle_domain": "{URL_DOMAIN}",
@@ -163,5 +166,3 @@ Snippet/meta: {SNIPPET_OR_META_DESCRIPTION}
 
 Extracted text (may be truncated):
 {EXTRACTED_TEXT}
-
-
