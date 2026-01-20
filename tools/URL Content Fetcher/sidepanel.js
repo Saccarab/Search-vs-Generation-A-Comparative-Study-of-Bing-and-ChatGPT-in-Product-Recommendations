@@ -15,6 +15,7 @@ const elStatus = document.getElementById("status");
 const elBar = document.getElementById("bar");
 const elProgressText = document.getElementById("progressText");
 const elDownload = document.getElementById("download");
+const elDownloadProgress = document.getElementById("downloadProgress");
 const elSummary = document.getElementById("summary");
 
 let urls = [];
@@ -481,4 +482,5 @@ elStop.addEventListener("click", () => {
 });
 
 elDownload.addEventListener("click", download);
+elDownloadProgress.addEventListener("click", download);
 
