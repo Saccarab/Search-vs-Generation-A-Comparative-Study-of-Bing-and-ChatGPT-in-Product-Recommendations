@@ -7,6 +7,7 @@ If info is missing, use empty string, 0, or [] — do NOT guess.
 type (choose exactly one):
 - listicle
 - marketplace_directory
+- app_store_listing
 - product_page
 - category_page
 - review_article
@@ -20,6 +21,7 @@ type (choose exactly one):
 
 ### Type guidance (important)
 - marketplace_directory: Pages that aggregate multiple software or products into a directory or category listing, often with user ratings and "Visit Website" buttons. Examples: Capterra, G2, SoftwareAdvice, GetApp.
+- app_store_listing: Official app store or extension store pages for a specific product. Examples: Google Play Store, Apple App Store, Chrome Web Store, Edge Add-ons Store.
 - listicle: Articles or blog posts titled like "Best [X] tools for [Y]" or "Top 10 [X]". Usually written by a publisher/author rather than being a automated directory.
 - reference: high-authority neutral reference/encyclopedia/knowledge-base pages whose primary goal is factual description (not selling/reviewing). Examples: Wikipedia, official standards.
 
