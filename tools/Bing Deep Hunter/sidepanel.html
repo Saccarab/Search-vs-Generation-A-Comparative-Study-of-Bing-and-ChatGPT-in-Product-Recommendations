@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bing Deep Hunter</title>
+  <style>
+    body { font-family: sans-serif; padding: 10px; font-size: 13px; background: #f9f9f9; }
+    .container { display: flex; flex-direction: column; gap: 10px; }
+    .section { display: none; margin-bottom: 10px; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 4px; }
+    #uploadSection { display: block; }
+    #dropZone { border: 2px dashed #ccc; padding: 20px; text-align: center; cursor: pointer; }
+    #dropZone:hover { border-color: #0078d4; }
+    textarea { width: 100%; height: 80px; margin-bottom: 10px; }
+    .progress-bar { width: 100%; height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin: 10px 0; }
+    .progress-fill { height: 100%; background: #0078d4; width: 0%; transition: width 0.3s; }
+    button { cursor: pointer; padding: 8px 12px; border-radius: 4px; border: 1px solid #ccc; background: #fff; width: 100%; margin-top: 5px; }
+    #startButton { background: #0078d4; color: white; border: none; }
+    .status-text { font-size: 11px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>Bing Deep Hunter</h3>
+    
+    <div id="uploadSection" class="section">
+      <div id="dropZone">Click or drop CSV here</div>
+      <input type="file" id="fileInput" style="display:none">
+      <div id="fileInfoCard" style="display:none; margin-top:10px">
+        <span id="fileName"></span> (<span id="queryCount"></span> queries)
+      </div>
+    </div>
+
+    <div id="configSection" class="section">
+      <label>Max Rank: <input type="number" id="maxResults" value="200" step="10"></label>
+      <p class="status-text">Target URLs (optional, logs to console):</p>
+      <textarea id="target-urls"></textarea>
+    </div>
+
+    <div id="actionSection" class="section">
+      <button id="startButton">Start Deep Hunt</button>
+    </div>
+
+    <div id="progressSection" class="section">
+      <p id="taskLabel">Hunting...</p>
+      <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+      <p class="status-text"><span id="progressPercent">0%</span> (<span id="progressCount">0/0</span>)</p>
+      <p id="currentQuery" class="status-text" style="font-weight:bold"></p>
+    </div>
+
+    <div id="resultsSection" class="section">
+      <p>Hunt Complete!</p>
+      <p class="status-text">Found <span id="searchResultsCount">0</span> results.</p>
+      <button id="downloadButton">Download CSV</button>
+      <button id="newScrapingButton">New Hunt</button>
+    </div>
+
+    <div id="status" class="status-text" style="display:none; color:red; margin-top:10px"></div>
+  </div>
+  <script src="sidepanel.js"></script>
+</body>
+</html>
