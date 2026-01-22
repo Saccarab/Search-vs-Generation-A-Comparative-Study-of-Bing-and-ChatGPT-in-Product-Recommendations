@@ -17,6 +17,7 @@ const elProgressText = document.getElementById("progressText");
 const elDownload = document.getElementById("download");
 const elDownloadProgress = document.getElementById("downloadProgress");
 const elSummary = document.getElementById("summary");
+const elGrabCurrentTab = document.getElementById("grabCurrentTab");
 
 let urls = [];
 let results = [];
@@ -483,4 +484,151 @@ elStop.addEventListener("click", () => {
 
 elDownload.addEventListener("click", download);
 elDownloadProgress.addEventListener("click", download);
+
+async function grabCurrentTab() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab || !tab.id) {
+      setStatus("No active tab found.");
+      return;
+    }
+
+    const url = tab.url;
+    if (!url || url.startsWith("chrome://")) {
+      setStatus("Cannot grab this page.");
+      return;
+    }
+
+    setStatus(`Grabbing ${domainOf(url)}...`);
+
+    const scriptResult = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: () => {
+        // Extract text content
+        const clone = document.body.cloneNode(true);
+        clone.querySelectorAll("script, style, noscript").forEach((n) => n.remove());
+        const nonContentSelectors = [
+          "nav", "header", "footer", "aside",
+          ".navigation", ".nav", ".menu", ".sidebar",
+          ".advertisement", ".ad", ".ads", ".cookie", ".popup", ".modal", ".overlay",
+        ];
+        nonContentSelectors.forEach((sel) => {
+          try { clone.querySelectorAll(sel).forEach((n) => n.remove()); } catch {}
+        });
+        let text = (clone.textContent || clone.innerText || "")
+          .replace(/\u00a0/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+
+        // Extract metadata
+        const getMeta = (sel, attr = "content") => {
+          try { return (document.querySelector(sel)?.getAttribute(attr) || "").trim(); } catch { return ""; }
+        };
+        const page_title =
+          getMeta('meta[property="og:title"]') ||
+          (document.querySelector("title")?.textContent || "").trim();
+        const meta_description =
+          getMeta('meta[name="description"]') ||
+          getMeta('meta[property="og:description"]');
+        const canonical_url = getMeta('link[rel="canonical"]', "href");
+        const has_schema_markup = document.querySelectorAll('script[type="application/ld+json"]').length > 0 ? 1 : 0;
+
+        // Dates
+        let published_date = "";
+        let modified_date = "";
+        const dateSelectors = [
+          ['meta[property="article:published_time"]', "content"],
+          ['meta[name="pubdate"]', "content"],
+          ['meta[name="publishdate"]', "content"],
+          ['meta[name="timestamp"]', "content"],
+          ['meta[name="date"]', "content"],
+          ['meta[itemprop="datePublished"]', "content"],
+        ];
+        for (const [sel, attr] of dateSelectors) {
+          const v = getMeta(sel, attr);
+          if (v) { published_date = v; break; }
+        }
+        const modSelectors = [
+          ['meta[property="article:modified_time"]', "content"],
+          ['meta[name="lastmod"]', "content"],
+          ['meta[name="last-modified"]', "content"],
+          ['meta[itemprop="dateModified"]', "content"],
+        ];
+        for (const [sel, attr] of modSelectors) {
+          const v = getMeta(sel, attr);
+          if (v) { modified_date = v; break; }
+        }
+        document.querySelectorAll('script[type="application/ld+json"]').forEach((s) => {
+          try {
+            const obj = JSON.parse(s.textContent || "");
+            const walk = (o) => {
+              if (!o) return;
+              if (Array.isArray(o)) return o.forEach(walk);
+              if (typeof o !== "object") return;
+              if (o.datePublished && !published_date) published_date = o.datePublished;
+              if (o.dateModified && !modified_date) modified_date = o.dateModified;
+              if (o["@graph"]) walk(o["@graph"]);
+            };
+            walk(obj);
+          } catch {}
+        });
+
+        return {
+          text,
+          page_title,
+          meta_description,
+          canonical_url,
+          has_schema_markup,
+          published_date,
+          modified_date,
+        };
+      },
+    });
+
+    const extracted = scriptResult?.[0]?.result;
+    if (!extracted) {
+      setStatus("Extraction failed.");
+      return;
+    }
+
+    const maxChars = Math.max(0, Math.min(200000, Number(elMaxChars.value || 20000) || 20000));
+    const fullLen = extracted.text.length;
+    let content = extracted.text;
+    let truncated = 0;
+    if (maxChars === 0) {
+      content = "";
+      truncated = fullLen > 0 ? 1 : 0;
+    } else if (fullLen > maxChars) {
+      content = extracted.text.slice(0, maxChars);
+      truncated = 1;
+    }
+
+    const res = {
+      url,
+      final_url: url,
+      domain: domainOf(url),
+      status: 200,
+      error: "",
+      page_title: extracted.page_title,
+      meta_description: extracted.meta_description,
+      canonical_url: extracted.canonical_url,
+      published_date: extracted.published_date,
+      modified_date: extracted.modified_date,
+      has_schema_markup: extracted.has_schema_markup,
+      js_render_suspected: 0,
+      content_length: fullLen,
+      content_truncated: truncated,
+      content,
+    };
+
+    results.push(res);
+    elDownload.disabled = false;
+    setStatus(`Successfully grabbed: ${extracted.page_title}`);
+    elSummary.textContent = `Rows: ${results.length} | manual grab: 1`;
+  } catch (err) {
+    setStatus(`Error: ${err.message}`);
+  }
+}
+
+elGrabCurrentTab.addEventListener("click", grabCurrentTab);
 
