@@ -65,13 +65,15 @@ promotional_intensity_score: integer 0–5
 expertise_signal_score: integer 0–5
 spamminess_score: integer 0–5
 freshness_cue_strength: integer 0–5
+heading_density: integer 0–5 (0=no subheadings, 5=very frequent subheadings/sections)
 readability_score: integer 0–5
-
-## Binary fields (0/1)
-has_pros_cons
-has_clear_authorship
-has_sources_or_citations
-listicle_has_ranked_order
+has_tables: 1 if the page contains one or more <table> elements or comparison grids
+has_numbered_lists: 1 if the page uses <ol> or explicit "1., 2., 3." numbering
+has_bullet_points: 1 if the page uses <ul> or clear bulleted lists
+has_pros_cons: 1 if the page clearly contains a Pros/Cons section or equivalent.
+has_clear_authorship: 1 if explicit author/editor attribution exists.
+has_sources_or_citations: 1 if the page text indicates sources/references/citations.
+listicle_has_ranked_order: 1 if the listicle uses rankings.
 
 ## Definitions
 readability_score (0–5): How easy the page is to scan and understand based on the text structure (clear headings, concise paragraphs, simple language). 5 = exceptionally readable.
@@ -102,7 +104,7 @@ tone definitions (to disambiguate):
 - promotional: marketing-leaning but still informational; highlights benefits/features; limited pressure; few/no aggressive CTAs.
 - salesy: high conversion pressure; repeated CTAs ("buy", "sign up", "start free trial"), urgency/scarcity ("limited time"), discounts/pricing emphasis, lead-capture funnels.
 
-## Listicle extraction rules (only if type == "listicle")
+## Listicle & Directory extraction rules (only if type == "listicle" OR type == "marketplace_directory")
 - Extract up to 25 items into listicle_products.
 - Only include items clearly recommended/compared in the provided text.
 - position_in_listicle: use explicit numbering if present; else order of appearance (start at 1).
@@ -123,6 +125,10 @@ bias (0/1): Set bias=1 ONLY if the host's own domain is listed as an item AND it
     "promotional_intensity_score": 0,
     "freshness_cue_strength": 0,
     "readability_score": 0,
+    "heading_density": 0,
+    "has_tables": 0,
+    "has_numbered_lists": 0,
+    "has_bullet_points": 0,
     "has_pros_cons": 0,
     "has_clear_authorship": 0,
     "has_sources_or_citations": 0,

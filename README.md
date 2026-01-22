@@ -101,6 +101,36 @@ Use the **Bing Results Scraper** Chrome extension:
 
 Output: `data/bing_results_*.csv`
 
+#### Targeted Top-100 scrape (for “missing” citation diagnosis)
+If you want to test whether “not in Bing Top-30” citations are truly absent vs just ranked 31–100,
+you can scrape **Top-100 only for a small subset of runs** (e.g., prompt_ids P0003/P0004 where Capterra was inline-cited).
+
+1. Export a subset input CSV from the workbook:
+
+```bash
+python scripts/metrics/export_bing_input_subset_from_geo_xlsx.py \
+  --xlsx geo_final.xlsx \
+  --out data/ingest/bing_input_subset_P0003_P0004.csv \
+  --prompt-ids P0003,P0004
+```
+
+2. In the Bing scraper extension, set **Results per query = 100**, upload that subset CSV, scrape, and export CSV.
+3. Clean with `--top-n 100`, then ingest into a *copy* of the workbook (recommended):
+   - This lets you recompute overlap against Top-100 without overwriting your original Top-30 run.
+4. Recompute citation metrics with Top-100 buckets (example):
+
+```bash
+python scripts/metrics/compute_citation_metrics.py \
+  --xlsx geo_final_top100_subset.xlsx \
+  --out-dir data/metrics \
+  --prefix geo_final_top100_subset \
+  --buckets 1,3,5,10,30,100
+```
+
+Interpretation:
+- If a URL is **missing in Top-30 but present in Top-100**, it suggests “rank cutoff” rather than a different source.
+- If it is **missing even in Top-100**, it strengthens the claim that the citation is not explained by the observed Bing SERP (at that locale/time).
+
 ---
 
 ### Step 4: Clean Bing Export
@@ -329,6 +359,29 @@ python scripts/metrics/compute_serp_overlap.py \
   --xlsx geo_updated.xlsx \
   --output data/metrics/overlap_results.csv
 ```
+
+### Compute Citation Metrics (Inline + Marginal Gain)
+This script produces the “extra” citation-focused metrics that are feasible from the workbook alone (no re-scraping needed):
+- **Inline / cited / additional** overlap vs Bing Top-\(k\) (k ∈ {1,3,5,10,30})
+- **Rank-bucket distribution** of citations (1, 2–3, 4–5, 6–10, 11–30, not-in-Top30)
+- **Duplicate vs unique** citation counts (rows vs unique URLs/domains)
+- **Not-in-Top30 breakdowns** (top domains, `urls.type` distribution)
+- **Marginal gain** of “additional” (and “cited”) sources beyond inline, restricted to Bing Top-30
+
+Run:
+
+```bash
+python scripts/metrics/compute_citation_metrics.py --xlsx geo_final.xlsx --out-dir data/metrics --prefix geo_final
+```
+
+Outputs (under `data/metrics/`):
+- `geo_final_citation_counts_by_run.csv`
+- `geo_final_citation_overlap_by_run.csv`
+- `geo_final_citation_rank_bucket_summary.csv`
+- `geo_final_citation_not_in_top30_top_domains.csv`
+- `geo_final_citation_not_in_top30_type_breakdown.csv`
+- `geo_final_citation_marginal_gain_top30_by_run.csv`
+- `geo_final_citation_overall_summary.csv`
 
 ### Patch Wikipedia URLs to `type: reference`
 ```bash
