@@ -533,7 +533,12 @@ def dashboard():
 
     return render_template_string(DASHBOARD_TEMPLATE, 
                                  page_data=page_data,
-                                 total_citations=total_citations,
+                                 total_all=total_all,
+                                 matched_all=matched_all,
+                                 total_main=total_main,
+                                 matched_main=matched_main,
+                                 total_add=total_add,
+                                 matched_add=matched_add,
                                  matched_top30=matched_top30,
                                  matched_deep=matched_deep,
                                  invisible_domains=invisible_domains)
