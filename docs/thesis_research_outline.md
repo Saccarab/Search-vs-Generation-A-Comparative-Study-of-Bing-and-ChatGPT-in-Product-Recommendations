@@ -33,6 +33,12 @@
 - Revealed the "Pagination Loop" and "Page 2 Cliff" problems in Bing
 - Proved the need for Deep Hunt methodology
 
+### 1.2.2 Methodological Evolution: From Top 30 to "Deep Hunt" (Rank 150)
+- **Initial Assumption:** Our study began with a standard retrieval depth of the **Top 30 Bing results**, assuming this would capture the vast majority of relevant citations used by ChatGPT.
+- **The Discovery of "UI Erasure":** Upon qualitative review using our custom Data Viewer, we observed a significant "Visibility Gap." ChatGPT was citing high-quality, relevant pages that were completely missing from the Top 30 human-facing results.
+- **The Pivot to Rank 150:** To test whether these citations were truly "invisible" or merely "buried," we expanded our methodology to a **"Deep Hunt" (Rank 150)**. 
+- **Key Finding of the Pivot:** We discovered that Bing often surfaces the exact pages ChatGPT cites, but hides them deep within pagination loops or beyond the "Page 2 Cliff" (Rank 11+). This methodological shift allowed us to prove that the difference between Search and GenAI is often a **UI and Ranking problem**, not just an indexing one.
+
 ## 1.3 Localization & Retrieval Environment
 
 *How geographical context affects the comparison between Search and GenAI.*
@@ -386,7 +392,6 @@
 - Compare their DNA to:
   1. Top 10 cited links
   2. Top 10 ignored links
-- **Hypothesis:** Grounded Deep links have high information density but low "SEO optimization"
 
 ---
 
