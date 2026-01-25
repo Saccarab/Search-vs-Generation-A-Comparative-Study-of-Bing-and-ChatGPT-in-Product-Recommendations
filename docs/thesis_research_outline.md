@@ -55,14 +55,20 @@
   2. **Avoiding "Regional Noise":** Prevents Bing from surfacing local retailers or regional blogs that ChatGPT would never see, which would artificially lower the overlap percentage.
   3. **Global Tech Standard:** Most product recommendations in the "AI/Software" category (our primary focus) are global in nature, making the US SERP the most relevant "Ground Truth."
 
+### 1.3.4 The "Invisible" Citation Problem vs. Empirical Evidence
+- **The Observation:** A significant portion (~35%) of ChatGPT's citations were not found in the standard Top 30 Bing results.
+- **The "Deep Hunt" Resolution:** Our expanded methodology (Rank 150) proved that many of these "invisible" citations are actually present in the Bing index, but buried deep within the SERP (Rank 100+).
+- **Key Conclusion:** The "Visibility Gap" is primarily a **retrieval depth and UI issue**. ChatGPT's API access allows it to surface high-quality content that Bing's human-facing UI suppresses or fails to paginate correctly. This reinforces the argument that Search and GenAI are accessing the same index but through different "visibility filters."
+
 ## 1.4 Theoretical Framework: From SEO to GEO
 
 *Tracing the evolution of information retrieval from keyword matching to generative synthesis.*
 
 ### 1.4.1 The Evolution of Search Optimization
 - **Traditional SEO (Search Engine Optimization):** Focus on keyword density, backlink authority, and technical performance to rank in a 10-blue-link UI.
-- **The Rise of AEO (Answer Engine Optimization):** Optimizing for featured snippets and voice assistants (Siri/Alexa) where only one "best" answer is surfaced.
-- **GEO (Generative Engine Optimization):** The new frontier. Optimizing content to be cited and synthesized by LLMs in a conversational context.
+- **The Convergence of AEO & GEO:** These terms are often used interchangeably to describe the shift toward optimizing content for direct synthesis.
+    - **AEO (Answer Engine Optimization):** Focuses on being the "single best answer" for voice assistants and featured snippets.
+    - **GEO (Generative Engine Optimization):** Focuses on being cited and synthesized by LLMs in conversational RAG (Retrieval-Augmented Generation) workflows.
 
 ### 1.4.2 The Genesis and Evolution of RAG (Retrieval-Augmented Generation)
 - **The "Stochastic Parrot" Era (Pre-2023):** Early LLMs relied purely on "parametric knowledge"—static information frozen at the time of training. This led to the "hallucination problem" and the "stale data" bottleneck.
@@ -85,6 +91,14 @@
 - **The Scaling Limit:** You cannot train a model every hour to keep up with the web. Retrieval is the only scalable solution for real-time information.
 - **Thesis Argument:** GEO is not a replacement for SEO; it is **SEO's final form**. Search is the "cheaper, better, faster" engine that feeds the LLM's reasoning core.
 
+### 1.4.5 The Structural Pivot: From "Search" to "Grounding"
+- **The August 11, 2025 Retirement:** Microsoft officially decommissioned the legacy Bing Search APIs, forcing a migration to **"Grounding with Bing Search"** as part of the Azure AI Agents ecosystem.
+- **Defining "Grounding":** Unlike traditional search ranking (which optimizes for human click-through rates), **Grounding** is the process of anchoring an LLM's response in real-time, verifiable web data to reduce hallucinations and ensure factual accuracy.
+- **Retrieval Asymmetry:** This shift codifies the "Two-Web" reality:
+    1. **The Human Web (Ranking):** Optimized for SEO, ads, and engagement.
+    2. **The Agent Web (Grounding):** Optimized for information density, extraction potential, and factual synthesis.
+- **Thesis Connection:** Our discovery that ChatGPT citations are often buried at **Rank 31-150** in the Human Web proves that the "Grounding" engine uses a different set of priorities than the "Ranking" engine.
+
 ## 1.5 The Commercial Catalyst for RAG
 
 *Why product recommendations are the "Front Line" of Generative Search.*
@@ -100,11 +114,19 @@
     - **Prompt Volume Analysis:** Leveraging **Profound's** database to select real-world prompts actually used by consumers.
     - **Deliberate Intent Filtering:** From the broad set of available user prompts, we **deliberately filtered for high commercial intent**. This ensures the study reflects the specific segment of search where AI synthesis is most active and where the "Extractive Nature" of the model is most visible.
     - **Domain Expertise:** Queries were focused on the **AI and Software-as-a-Service (SaaS)** sectors—a domain where the author has significant professional expertise—allowing for more nuanced qualitative analysis of the "Signal vs. Noise" in results.
-- **Experimental Rigor:** Each of the 80 prompts was executed in **3 independent runs** (240+ total responses) to analyze the consistency and stochastic nature of the retrieval process.
+- **Experimental Rigor:** Each of the 80 prompts was executed in **3 independent runs** (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
 
 ### 1.5.3 The GEO Industry Landscape
-- **The "Gold Rush" of AEO/GEO:** The rapid rise of companies like **Profound** and **Perplexity AI**, and the significant venture capital they have secured, underscores the industry's recognition that the "Answer Engine" is the next multi-billion dollar shift in tech.
+- **The "Gold Rush" of AEO/GEO:** The rapid rise of companies like **Profound** and **Perplexity AI** underscores the industry's recognition that the "Answer Engine" is the next multi-billion dollar shift in tech.
+- **Venture Capital Validation:** A landmark moment occurred on August 12, 2025, when **Profound raised $35 million in a Series B round led by Sequoia Capital**, bringing its total funding to $58.5 million ([Fortune, 2025](https://fortune.com/2025/08/12/ai-search-startup-profound-raises-35-million-series-b-sequoia/)).
+- **The "Salesforce of AI Search":** This funding round validated the concept of building a "generational company" centered on helping brands monitor and optimize for how they surface in AI-generated responses across models like ChatGPT, Gemini, and Claude.
 - **The Hype vs. Reality:** While the hype is centered on "killing search," our research suggests the reality is a **deeper integration** where search becomes the infrastructure for AI.
+
+### 1.4.6 The "Rewritten Query": The Orchestrator's Intent
+- **Defining the Rewritten Query:** ChatGPT does not simply pass the user's prompt to Bing. Instead, its internal orchestrator "rewrites" the prompt into one or more optimized search queries.
+- **Freshness Injection:** A key behavior observed is the **automatic injection of temporal markers** (e.g., appending "2025" or "2026" to a query like "best transcription software"). This proves the model's inherent bias toward freshness as a primary quality signal.
+- **Explicit Localization via Rewriting:** We observed that the model often injects geographical markers into the rewritten query based on implicit user context, even when the original prompt is global.
+- **The "Query Drift" Problem:** Across multiple runs of the same prompt, the rewritten queries can vary significantly. This "Query Drift" is a primary driver of the stochastic nature of GenAI search results—different queries lead to different grounding chunks, which lead to different recommendations.
 
 ---
 
@@ -281,7 +303,11 @@
 
 ### 2.7.1 Research Questions:
 
-1. **Citation Stability:**
+1. **RAG Trigger Variability:**
+   - **The "Stochastic RAG" Phenomenon:** We observed that for the exact same prompt, RAG (web search) may trigger in Run 1 and Run 2, but fail to trigger in Run 3, resulting in a response based purely on parametric knowledge.
+   - **Thesis Implication:** This highlights the instability of the LLM orchestrator. A user's chance of receiving a grounded, up-to-date answer is stochastic, even when the intent is clearly commercial.
+
+2. **Citation Stability:**
    - If ChatGPT cites a source in Run 1, does it cite the same source in Run 2/3/4?
    - What % of citations are "stable" (appear in 3+ runs)?
    - What % are "one-off" (appear in only 1 run)?
@@ -397,8 +423,9 @@
 
 # Part 4: Research Gaps & Future Work
 
-1. **Deeper Crawling:** We stopped at Rank 150; going to 300+ might find more matches
-2. **Temporal Analysis:** How do results change over time? (Run the same queries in 3 months)
+1. **Deeper Crawling:** We stopped at Rank 150; going to 300+ might find more matches.
+2. **Longitudinal Consistency (Expanded Runs):** While this study used 3-4 runs per prompt, future work should expand this to 10+ runs to achieve statistical significance in "stochastic retrieval" patterns and to better map the "long tail" of citations that appear only in rare instances.
+3. **Temporal Analysis:** How do results change over time? (Run the same queries in 3 months).
 3. **Query Category Segmentation:** Do certain product categories have better/worse overlap?
 4. **Multi-Model Comparison:** Compare ChatGPT vs. Gemini vs. Claude on the same queries
 5. **User Study:** Do humans prefer ChatGPT's recommendations or Bing's Top 10?
@@ -458,6 +485,7 @@
 | **Content DNA**        | The structural characteristics of a page (tables, lists, headings) that make it "extractable"                                                       |
 | **Domain Match**       | When Bing found a page from the same domain but different URL than what ChatGPT cited                                                               |
 | **Strict Match**       | When Bing found the exact same URL that ChatGPT cited                                                                                               |
+| **Grounding**          | The process of anchoring an LLM's response in real-time, verifiable web data to reduce hallucinations and ensure factual accuracy                   |
 
 ---
 
