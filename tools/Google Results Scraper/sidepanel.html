@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bing Search Scraper with Content Extraction</title>
+    <link rel="stylesheet" href="sidepanel.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <i class="fas fa-search header-icon"></i>
+                <div class="header-text">
+                    <h1>Bing Scraper</h1>
+                    <p>Search Results & Content Extraction Tool</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Disclaimer Section -->
+            <section class="disclaimer-section">
+                <div class="disclaimer-content">
+                    <i class="fas fa-exclamation-triangle disclaimer-icon"></i>
+                    <div class="disclaimer-text">
+                        <h3>Legal Disclaimer</h3>
+                        <p>This tool may violate Microsoft's ToS and website robots.txt files. Content extraction may be subject to copyright restrictions. Use responsibly and at your own risk.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- File Upload Section -->
+            <section class="upload-section">
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-content">
+                        <i class="fas fa-cloud-upload-alt drop-icon"></i>
+                        <h3>Upload CSV File</h3>
+                        <p>Drop your CSV file here or click to select</p>
+                        <p class="file-requirements">CSV must contain a 'query' column</p>
+                    </div>
+                    <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                </div>
+
+                <div class="status-message" id="status" style="display: none;"></div>
+                
+                <div class="file-info-card" id="fileInfoCard" style="display: none;">
+                    <div class="file-info-header">
+                        <i class="fas fa-file-csv"></i>
+                        <span class="file-name" id="fileName"></span>
+                    </div>
+                    <div class="file-stats">
+                        <div class="stat">
+                            <span class="stat-label">Rows:</span>
+                            <span class="stat-value" id="queryCount">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Size:</span>
+                            <span class="stat-value" id="fileSize">0 KB</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Configuration Section -->
+            <section class="config-section" id="configSection" style="display: none;">
+                <h3><i class="fas fa-cog"></i> Configuration</h3>
+                
+                <!-- Search Configuration -->
+                <div class="config-grid">
+                    <div class="config-item">
+                        <label for="maxResults">
+                            <i class="fas fa-list-ol"></i>
+                            Results per Query
+                        </label>
+                        <div class="input-group">
+                            <input type="number" id="maxResults" min="1" max="100" value="10" step="1">
+                            <span class="input-hint">1-100 results</span>
+                        </div>
+                    </div>
+                    <div class="config-item">
+                        <label>
+                            <i class="fas fa-calculator"></i>
+                            Total Search Results
+                        </label>
+                        <div class="total-operations" id="totalResults">0</div>
+                    </div>
+                </div>
+
+                <!-- Content Extraction Toggle -->
+                <div class="config-toggle-section">
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <label for="extractContent">
+                                <i class="fas fa-globe"></i>
+                                Extract full website content
+                            </label>
+                            <div class="toggle-description">
+                                Fetch and extract text content from each URL
+                            </div>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="extractContent" checked>
+                            <label for="extractContent" class="toggle-label">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content size safety (prevents crashes on large runs) -->
+                <div class="config-grid" id="contentLimitsSection">
+                    <div class="config-item">
+                        <label for="contentMaxChars">
+                            <i class="fas fa-file-lines"></i>
+                            Max content characters to store (per URL)
+                        </label>
+                        <div class="input-group">
+                            <input type="number" id="contentMaxChars" min="0" max="200000" value="20000" step="1000">
+                            <span class="input-hint">0 = metadata only (safer)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speed controls -->
+                <div class="config-grid" id="speedControlsSection">
+                    <div class="config-item">
+                        <label for="queryDelayMs">
+                            <i class="fas fa-stopwatch"></i>
+                            Delay between queries (ms)
+                        </label>
+                        <div class="input-group">
+                            <input type="number" id="queryDelayMs" min="0" max="20000" value="1500" step="250">
+                            <span class="input-hint">Lower = faster, more risk</span>
+                        </div>
+                    </div>
+                    <div class="config-item">
+                        <label for="contentDelayMs">
+                            <i class="fas fa-stopwatch"></i>
+                            Delay between content fetches (ms)
+                        </label>
+                        <div class="input-group">
+                            <input type="number" id="contentDelayMs" min="0" max="20000" value="1000" step="250">
+                            <span class="input-hint">Used when Extract Content is ON</span>
+                        </div>
+                    </div>
+                    <div class="config-item">
+                        <label for="contentConcurrency">
+                            <i class="fas fa-layer-group"></i>
+                            Content fetch concurrency
+                        </label>
+                        <div class="input-group">
+                            <input type="number" id="contentConcurrency" min="1" max="5" value="2" step="1">
+                            <span class="input-hint">2 is usually safe</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="config-info">
+                    <div class="info-item">
+                        <i class="fas fa-info-circle"></i>
+                        <span>The scraper will collect search results first, then extract content from each URL. Content extraction adds significant time but provides valuable text data.</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Estimated time: <span id="estimatedDuration">Calculating...</span></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Section -->
+            <section class="action-section" id="actionSection" style="display: none;">
+                <button id="startButton" class="action-button">
+                    <i class="fas fa-play"></i>
+                    <span>Start Scraping</span>
+                </button>
+            </section>
+
+            <!-- Progress Section -->
+            <section class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-header">
+                    <h3><i class="fas fa-tasks"></i> Progress</h3>
+                    <div class="progress-status" id="progressStatus">Initializing...</div>
+                </div>
+                
+                <!-- Main Progress Bar -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressPercent">0%</span>
+                        <span id="progressCount">0 / 0</span>
+                    </div>
+                </div>
+
+                <!-- Current Task -->
+                <div class="current-task" id="currentTask">
+                    <div class="task-info">
+                        <div class="task-label" id="taskLabel">Current Query:</div>
+                        <div class="task-content" id="currentQuery">-</div>
+                    </div>
+                    <div class="task-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+
+                <!-- Phase-specific Progress -->
+                <div class="phase-progress" id="phaseProgress" style="display: none;">
+                    <div class="phase-header">
+                        <span class="phase-label" id="phaseLabel">Content Extraction</span>
+                        <span class="phase-status" id="phaseStatus">0 / 0</span>
+                    </div>
+                    <div class="progress-bar phase-bar">
+                        <div class="progress-fill" id="phaseFill"></div>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+                <div class="progress-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="stat-label">Completed:</span>
+                        <span class="stat-value" id="completedCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        <span class="stat-label">Est. Time:</span>
+                        <span class="stat-value" id="estimatedTime">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span class="stat-label">Errors:</span>
+                        <span class="stat-value" id="errorCount">0</span>
+                    </div>
+                </div>
+
+                <div class="recent-errors" id="recentErrors" style="display: none;">
+                    <h4><i class="fas fa-exclamation-circle"></i> Recent Errors</h4>
+                    <div class="error-list" id="errorList"></div>
+                </div>
+
+                <!-- Checkpoint download (available mid-run) -->
+                <button id="checkpointDownloadButton" class="secondary-button" disabled>
+                    <i class="fas fa-download"></i>
+                    <span>Download Checkpoint (partial)</span>
+                </button>
+
+                <!-- Stop run (keeps partial results in memory + allows download) -->
+                <button id="stopRunButton" class="secondary-button" style="margin-top: 0.5rem;">
+                    <i class="fas fa-stop"></i>
+                    <span>Stop Run (keep partial)</span>
+                </button>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h3><i class="fas fa-download"></i> Results</h3>
+                    <div class="results-summary">
+                        <span id="resultsSummary">Scraping completed successfully!</span>
+                    </div>
+                </div>
+                
+                <div class="results-stats">
+                    <div class="result-stat">
+                        <i class="fas fa-search"></i>
+                        <div class="stat-details">
+                            <span class="stat-number" id="searchResultsCount">0</span>
+                            <span class="stat-description">Search Results</span>
+                        </div>
+                    </div>
+                    <div class="result-stat">
+                        <i class="fas fa-globe"></i>
+                        <div class="stat-details">
+                            <span class="stat-number" id="contentExtractedCount">0</span>
+                            <span class="stat-description">Content Extracted</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="download-info">
+                    <i class="fas fa-file-csv"></i>
+                    <div class="download-details">
+                        <div class="download-filename" id="downloadFilename">results.csv</div>
+                        <div class="download-size" id="downloadSize">Preparing download...</div>
+                    </div>
+                </div>
+
+                <button id="downloadButton" class="download-button">
+                    <i class="fas fa-download"></i>
+                    <span>Download Results</span>
+                </button>
+
+                <button id="newScrapingButton" class="secondary-button">
+                    <i class="fas fa-plus"></i>
+                    <span>Start New Scraping</span>
+                </button>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" id="helpLink"><i class="fas fa-question-circle"></i> Help</a>
+                <a href="https://docs.microsoft.com/en-us/bing/search-apis/" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Official API
+                </a>
+            </div>
+            <div class="version">v1.0.0</div>
+        </footer>
+    </div>
+
+    <script src="sidepanel.js"></script>
+</body>
+</html>
