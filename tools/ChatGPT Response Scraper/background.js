@@ -22,11 +22,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     message.action === 'dataCollectionComplete' ||
     message.action === 'dataCollectionError' ||
     message.action === 'progressUpdate' ||
-    message.action === 'queryError'
+    message.action === 'queryError' ||
+    message.action === 'checkpointDownload'
   )) {
     // these messages from content script should be forwarded to sidepanel
     // the sidepanel is already listening for these messages directly
     console.log('Relaying message to sidepanel:', message.action);
+    
+    // For checkpoint downloads, trigger the download immediately from background
+    if (message.action === 'checkpointDownload' && message.csvData) {
+      const blob = new Blob([message.csvData], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      chrome.downloads.download({
+        url: url,
+        filename: message.filename || `chatgpt_checkpoint_${Date.now()}.csv`,
+        saveAs: false // Auto-save to default downloads folder
+      }, (downloadId) => {
+        console.log(`[Checkpoint] Downloaded: ${message.filename}, ID: ${downloadId}, Results: ${message.resultCount}`);
+        // Clean up the blob URL after a delay
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+      });
+    }
+    
     return false; // Let the message propagate normally
   }
   

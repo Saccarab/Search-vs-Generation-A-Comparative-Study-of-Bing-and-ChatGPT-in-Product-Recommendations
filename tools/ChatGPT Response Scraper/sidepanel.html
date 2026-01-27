@@ -103,6 +103,38 @@
                             </label>
                         </div>
                     </div>
+                    
+                    <!-- Auto-Checkpoint (NEW) -->
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <label for="checkpointEvery">
+                                <i class="fas fa-save"></i>
+                                Auto-save Checkpoint
+                            </label>
+                            <span class="toggle-description">Save results every N queries to prevent data loss. Recommended for large runs (80+ queries).</span>
+                        </div>
+                        <div class="input-group compact">
+                            <input type="number" id="checkpointEvery" min="0" max="100" value="20" style="width: 60px;">
+                            <span class="input-hint">0 = off</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Include Raw API (NEW) -->
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <label for="includeRawApi">
+                                <i class="fas fa-database"></i>
+                                Include Raw API Data
+                            </label>
+                            <span class="toggle-description">Include full streaming response (~90% larger files). Disable for faster downloads.</span>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="includeRawApi">
+                            <label for="includeRawApi" class="toggle-label">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="config-info">
@@ -148,23 +180,29 @@
                     </div>
                 </div>
 
-                <div class="progress-stats">
-                    <div class="stat-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span class="stat-label">Completed:</span>
-                        <span class="stat-value" id="completedCount">0</span>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span class="stat-label">Completed:</span>
+                            <span class="stat-value" id="completedCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <span class="stat-label">Est. Time:</span>
+                            <span class="stat-value" id="estimatedTime">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span class="stat-label">Errors:</span>
+                            <span class="stat-value" id="errorCount">0</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <i class="fas fa-clock"></i>
-                        <span class="stat-label">Est. Time:</span>
-                        <span class="stat-value" id="estimatedTime">-</span>
+
+                    <div class="mid-session-actions" style="margin-top: 15px; text-align: center;">
+                        <button id="midSessionDownload" class="secondary-button" style="width: 100%; padding: 8px; font-size: 0.9em;">
+                            <i class="fas fa-download"></i> Download Current Progress
+                        </button>
                     </div>
-                    <div class="stat-item">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span class="stat-label">Errors:</span>
-                        <span class="stat-value" id="errorCount">0</span>
-                    </div>
-                </div>
 
                 <div class="recent-errors" id="recentErrors" style="display: none;">
                     <h4><i class="fas fa-exclamation-circle"></i> Recent Errors</h4>

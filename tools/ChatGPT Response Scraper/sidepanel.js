@@ -84,6 +84,20 @@ function setupEventListeners() {
     downloadButton.addEventListener('click', downloadResults);
     newCollectionButton.addEventListener('click', resetApp);
     
+    // Add "Download Current" button listener
+    const midSessionDownloadBtn = document.getElementById('midSessionDownload');
+    if (midSessionDownloadBtn) {
+        midSessionDownloadBtn.addEventListener('click', () => {
+            if (scrapingState.currentResults && scrapingState.currentResults.length > 0) {
+                const csvData = convertToCSV(scrapingState.currentResults);
+                const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+                downloadCSV(csvData, `chatgpt_partial_${timestamp}.csv`);
+            } else {
+                showStatus('No data collected yet to download', 'warning');
+            }
+        });
+    }
+    
     // footer events
     document.getElementById('helpLink').addEventListener('click', showHelp);
 }
@@ -274,6 +288,12 @@ function startScraping() {
     const runs = parseInt(runsPerQInput.value) || 1;
     const forceWebSearch = webSearchToggle.checked;
     
+    // Get checkpoint and raw API settings from DOM (if elements exist)
+    const checkpointInput = document.getElementById('checkpointEvery');
+    const includeRawApiToggle = document.getElementById('includeRawApi');
+    const checkpointEvery = checkpointInput ? (parseInt(checkpointInput.value) || 20) : 20;
+    const includeRawApi = includeRawApiToggle ? includeRawApiToggle.checked : false; // Default OFF for big runs
+    
     // init scraping state
     scrapingState = {
         isRunning: true,
@@ -288,7 +308,9 @@ function startScraping() {
         currentRun: 1,
         runsPerQuery: runs,
         csvData: null,
-        forceWebSearch: forceWebSearch
+        forceWebSearch: forceWebSearch,
+        checkpointCount: 0,
+        currentResults: [] // Track results for mid-session download
     };
     
     // update UI
@@ -297,6 +319,8 @@ function startScraping() {
     
     // disable toggle during processing
     webSearchToggle.disabled = true;
+    if (checkpointInput) checkpointInput.disabled = true;
+    if (includeRawApiToggle) includeRawApiToggle.disabled = true;
     
     hideSection('config');
     hideSection('action');
@@ -309,8 +333,12 @@ function startScraping() {
         action: 'startDataCollection',
         queries: uploadedQueries,
         runs_per_q: runs,
-        force_web_search: forceWebSearch
+        force_web_search: forceWebSearch,
+        checkpointEvery: checkpointEvery,
+        includeRawApi: includeRawApi
     });
+    
+    console.log(`[Sidepanel] Starting with checkpoint every ${checkpointEvery}, include raw API: ${includeRawApi}`);
 }
 
 function updateProgressDisplay() {
@@ -426,7 +454,8 @@ function resetApp() {
         currentRun: 0,
         runsPerQuery: 1,
         csvData: null,
-        forceWebSearch: false
+        forceWebSearch: false,
+        checkpointCount: 0
     };
     
     // reset UI
@@ -440,6 +469,19 @@ function resetApp() {
     startButton.disabled = false;
     webSearchToggle.checked = false;
     webSearchToggle.disabled = false;
+    
+    // Reset checkpoint controls
+    const checkpointInput = document.getElementById('checkpointEvery');
+    const includeRawApiToggle = document.getElementById('includeRawApi');
+    if (checkpointInput) {
+        checkpointInput.value = 20;
+        checkpointInput.disabled = false;
+    }
+    if (includeRawApiToggle) {
+        includeRawApiToggle.checked = false;
+        includeRawApiToggle.disabled = false;
+    }
+    
     runsPerQInput.value = 1;
     updateTotalOperations();
 }
@@ -491,6 +533,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             startButton.innerHTML = '<i class="fas fa-play"></i><span>Start Scraping</span>';
             startButton.disabled = false;
             webSearchToggle.disabled = false;
+            // Re-enable checkpoint controls
+            const checkpointInput = document.getElementById('checkpointEvery');
+            const includeRawApiToggle = document.getElementById('includeRawApi');
+            if (checkpointInput) checkpointInput.disabled = false;
+            if (includeRawApiToggle) includeRawApiToggle.disabled = false;
             hideSection('progress');
             showSection('action');
             break;
@@ -504,6 +551,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             }
             if (message.completed !== undefined) {
                 scrapingState.completed = message.completed;
+            }
+            if (message.result) {
+                scrapingState.currentResults.push(message.result);
             }
             if (message.retryAttempt) {
                 scrapingState.retries++;
@@ -519,6 +569,23 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 message: message.error
             });
             updateProgressDisplay();
+            break;
+            
+        case 'checkpointDownload':
+            // Handle checkpoint notification (download is handled by background.js)
+            scrapingState.checkpointCount = message.checkpointNumber || (scrapingState.checkpointCount + 1);
+            const checkpointStatus = message.isFinal 
+                ? `Final save: ${message.resultCount} results` 
+                : `Auto-saved checkpoint #${scrapingState.checkpointCount}: ${message.resultCount} results`;
+            console.log(`[Checkpoint] ${checkpointStatus}`);
+            // Update progress status to show checkpoint was saved
+            if (progressStatus) {
+                const currentText = progressStatus.textContent;
+                progressStatus.textContent = `${currentText} • ${message.isFinal ? 'Saved' : 'Checkpoint saved'}`;
+                setTimeout(() => {
+                    updateProgressDisplay(); // Restore normal status
+                }, 2000);
+            }
             break;
     }
 });

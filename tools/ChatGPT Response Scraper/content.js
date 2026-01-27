@@ -1,13 +1,68 @@
 console.log("ChatGPT Response Scraper - Content script loaded");
 
-// selectors
-const NEW_CHAT_BTN = 'a[data-testid="create-new-chat-button"]';
-const TEMP_CHAT_BTN = 'button[aria-label="Turn on temporary chat"]';
-const PLUS_BTN = "#composer-plus-btn";
-const SEARCH_WEB_BTN = 'div[role="menuitemradio"]';
-const SEARCH_QUERY_BUBBLE = 'div.text-token-text-secondary.dir-ltr'; // Add selector for search query bubble
-const TEXT_FIELD = "#prompt-textarea";
-const SEND_QUERY_BTN = "#composer-submit-button";
+// ================== API INTERCEPTOR INJECTION ==================
+// Inject the interceptor script into the page context to hook fetch
+(function injectInterceptor() {
+    const script = document.createElement('script');
+    script.src = chrome.runtime.getURL('injected.js');
+    script.onload = function() {
+        console.log('[Content] Interceptor script injected');
+        this.remove();
+    };
+    script.onerror = function(e) {
+        console.error('[Content] Failed to inject interceptor:', e);
+    };
+    (document.head || document.documentElement).appendChild(script);
+})();
+
+// Store for intercepted API data - will be populated by messages from injected.js
+window.__INTERCEPTED_API_DATA = null;
+window.__INTERCEPTED_API_DATA_TIMESTAMP = 0;
+
+// Listen for messages from the injected script
+window.addEventListener('message', function(event) {
+    if (event.source !== window) return;
+    if (event.data && event.data.type === 'CHATGPT_API_INTERCEPT') {
+        console.log('[Content] Received intercepted API data:', event.data.payload);
+        window.__INTERCEPTED_API_DATA = event.data.payload;
+        window.__INTERCEPTED_API_DATA_TIMESTAMP = Date.now();
+    }
+});
+
+// Helper function to wait for intercepted API data with timeout
+async function waitForInterceptedData(timeoutMs = 8000, pollIntervalMs = 200) {
+    const startTime = Date.now();
+    const startTimestamp = window.__INTERCEPTED_API_DATA_TIMESTAMP;
+    
+    console.log('[Content] Waiting for intercepted API data (timeout: ' + timeoutMs + 'ms)...');
+    
+    while (Date.now() - startTime < timeoutMs) {
+        // Check if we got new data after we started waiting
+        if (window.__INTERCEPTED_API_DATA_TIMESTAMP > startTimestamp && window.__INTERCEPTED_API_DATA) {
+            const data = window.__INTERCEPTED_API_DATA;
+            // Verify it has meaningful data
+            if (data.search_model_queries?.length > 0 || 
+                data.search_result_groups?.length > 0 || 
+                data.content_references?.length > 0) {
+                console.log('[Content] Got intercepted data after ' + (Date.now() - startTime) + 'ms');
+                return data;
+            }
+        }
+        await new Promise(resolve => setTimeout(resolve, pollIntervalMs));
+    }
+    
+    console.log('[Content] Timeout waiting for intercepted data, returning whatever we have');
+    return window.__INTERCEPTED_API_DATA;
+}
+
+// Updated selectors with robust fallbacks
+const NEW_CHAT_BTN = 'a[data-testid="create-new-chat-button"], a[href="/"], button[aria-label="New chat"]';
+const TEMP_CHAT_BTN = 'button[aria-label="Turn on temporary chat"], [data-testid="temporary-chat-toggle"]';
+const PLUS_BTN = "#composer-plus-btn, button[aria-label=\"Attach files\"]";
+const SEARCH_WEB_BTN = 'div[role="menuitemradio"], [data-testid="web-search-toggle"]';
+const SEARCH_QUERY_BUBBLE = 'div.text-token-text-secondary.dir-ltr'; 
+const TEXT_FIELD = "#prompt-textarea, [contenteditable=\"true\"]";
+const SEND_QUERY_BTN = "#composer-submit-button, [data-testid=\"send-button\"]";
 const COPY_RESPONSE_TEXT_BTN = '[data-testid="copy-turn-action-button"]';
 const ASSISTANT_MSG = '[data-message-author-role="assistant"]';
 const OPEN_SOURCES_BTN = 'button[aria-label="Sources"]';
@@ -29,9 +84,21 @@ async function pauseSeconds(s) {
 async function simulateClick(selector) {
   const element = await waitForSelector(selector);
   if (!element) {
+    console.error(`[Scraper] Element NOT FOUND for selector: ${selector}`);
+    // Try a broad fallback if it's the NEW_CHAT_BTN
+    if (selector === NEW_CHAT_BTN) {
+        const fallback = document.querySelector('a[href="/"], button[aria-label*="New"]');
+        if (fallback) {
+            console.log("[Scraper] Using emergency fallback for New Chat button");
+            return await performClick(fallback);
+        }
+    }
     throw new Error(`Element with selector "${selector}" not found!`);
   }
+  return await performClick(element);
+}
 
+async function performClick(element) {
   // use pointer events first
   element.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
   element.dispatchEvent(new PointerEvent("pointerup", { bubbles: true }));
@@ -43,6 +110,7 @@ async function simulateClick(selector) {
     view: window,
   });
   element.dispatchEvent(event);
+  return true;
 }
 
 async function simulateTyping(selector, text, minDelay = 10, maxDelay = 30) {
@@ -72,12 +140,23 @@ async function simulateTyping(selector, text, minDelay = 10, maxDelay = 30) {
 
 async function waitForSelector(selector, timeout = 15000) {
   return new Promise((resolve) => {
+    // Split the selector by comma to handle multiple potential matches
+    const selectors = selector.split(',').map(s => s.trim());
+    
+    const findElement = () => {
+      for (const s of selectors) {
+        const el = document.querySelector(s);
+        if (el) return el;
+      }
+      return null;
+    };
+
     // check immediately
-    const el = document.querySelector(selector);
+    const el = findElement();
     if (el) return resolve(el);
 
     const observer = new MutationObserver(() => {
-      const found = document.querySelector(selector);
+      const found = findElement();
       if (found) {
         clearTimeout(timer);
         observer.disconnect();
@@ -795,6 +874,10 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
   const attemptLabel = retryCount > 0 ? ` (Retry ${retryCount}/${maxRetries})` : '';
   console.log(`[Query Processing] Starting query: "${query.substring(0, 50)}..."${attemptLabel}`);
   
+  // Clear any previous intercepted data before starting new query
+  window.__INTERCEPTED_API_DATA = null;
+  window.__INTERCEPTED_API_DATA_TIMESTAMP = 0;
+  
   await pauseSeconds(getRandomInt(0.5, 1));
 
   // open new chat
@@ -832,6 +915,27 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
   const response_text = await getResponse(ASSISTANT_MSG);
   await pauseSeconds(getRandomInt(0.5, 1));
 
+  // Capture intercepted API data - wait up to 8 seconds for streaming to complete
+  const interceptedData = await waitForInterceptedData(8000, 200);
+  
+  // CRITICAL: Clear the global storage IMMEDIATELY after capturing it for this query
+  // This ensures the NEXT query in the loop doesn't accidentally pick up this data
+  // if its own intercept fails or is delayed.
+  window.__INTERCEPTED_API_DATA = null;
+  window.__INTERCEPTED_API_DATA_TIMESTAMP = 0;
+
+  if (interceptedData) {
+    console.log('[Query Processing] Captured API data:', {
+      hidden_queries: interceptedData.search_model_queries?.length || 0,
+      search_result_groups: interceptedData.search_result_groups?.length || 0,
+      content_references: interceptedData.content_references?.length || 0,
+      sonic_classification: interceptedData.sonic_classification_result ? 'captured' : 'none',
+      raw_messages: interceptedData.raw_messages?.length || 0
+    });
+  } else {
+    console.log('[Query Processing] No intercepted API data captured');
+  }
+
   // prepare return object
   const result = {
     query: query,
@@ -839,10 +943,116 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
     web_search_triggered: !!waitResult?.webSearchTriggered,
     response_text: response_text,
     web_search_forced: force_web_search,
-    retry_count: retryCount
+    retry_count: retryCount,
+    // API intercepted data
+    hidden_queries: interceptedData?.search_model_queries || [],
+    search_result_groups: interceptedData?.search_result_groups || [],
+    content_references: interceptedData?.content_references || [],
+    sonic_classification_result: interceptedData?.sonic_classification_result || null,
+    raw_api_messages: interceptedData?.raw_messages || []
   };
 
-  // ALWAYS try to extract source links
+  return result;
+}
+
+async function processQueries(queries, runs_per_q = 1, force_web_search = true, options = {}) {
+  const results = [];
+  const totalOperations = queries.length * runs_per_q;
+  let completedOperations = 0;
+  
+  // Checkpoint configuration
+  const checkpointEvery = options.checkpointEvery || 20; // Save every N results
+  const includeRawApi = options.includeRawApi !== false; // Default: include (set false to reduce size by ~90%)
+  const sessionId = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  let checkpointCount = 0;
+  
+  // Helper to trigger checkpoint download
+  const triggerCheckpoint = (resultsToSave, isFinal = false) => {
+    checkpointCount++;
+    const label = isFinal ? 'final' : `checkpoint_${checkpointCount}`;
+    const csvData = convertToCSV(resultsToSave);
+    
+    chrome.runtime.sendMessage({
+      action: 'checkpointDownload',
+      csvData: csvData,
+      filename: `chatgpt_results_${sessionId}_${label}.csv`,
+      checkpointNumber: checkpointCount,
+      isFinal: isFinal,
+      resultCount: resultsToSave.length
+    });
+    
+    console.log(`[Checkpoint] ${isFinal ? 'Final' : `#${checkpointCount}`} - Saved ${resultsToSave.length} results`);
+  };
+
+  // ---------- Fallback helpers (when UI doesn't render <a> tags / <li> lists) ----------
+  const extractUrlsFromText = (text) => {
+    const s = String(text || '');
+    // Match http(s) URLs, stop at whitespace or common trailing punctuation
+    const re = /https?:\/\/[^\s<>"')\]]+/gi;
+    const found = s.match(re) || [];
+    const seen = new Set();
+    const out = [];
+    for (let u of found) {
+      u = u.replace(/[.,;:!?]+$/g, ''); // strip trailing punctuation
+      try { u = cleanUrl(u); } catch {}
+      if (!u || seen.has(u)) continue;
+      seen.add(u);
+      out.push(u);
+    }
+    return out;
+  };
+
+  const buildItemsFromTextUrls = (text, urls) => {
+    const s = String(text || '').replace(/\s+/g, ' ').trim();
+    const items = [];
+    let pos = 0;
+    for (const u of (urls || [])) {
+      pos += 1;
+      // Try to capture a short label immediately preceding the URL.
+      const idx = s.toLowerCase().indexOf(u.toLowerCase());
+      let label = '';
+      if (idx > 0) {
+        const left = s.slice(0, idx);
+        // Take last ~80 chars and trim to last sentence-ish boundary.
+        const windowText = left.slice(Math.max(0, left.length - 120));
+        const parts = windowText.split(/(?:\.\s+|\|\s+|—\s+|-\s+|\u2022\s+|:\s+)/);
+        label = (parts[parts.length - 1] || '').trim();
+      }
+      if (!label) label = u;
+      const name = deriveItemName(label);
+      items.push({
+        item_section_title: 'response_text_fallback',
+        item_position: pos,
+        item_name: name,
+        item_text: label,
+        chip_groups: [{ links: [u] }],
+      });
+    }
+    return items;
+  };
+  
+  console.log(`[Collection Start] Processing ${queries.length} queries with ${runs_per_q} runs each (${totalOperations} total operations), web search: ${force_web_search ? 'forced' : 'optional'}`);
+  
+  for (let i = 0; i < queries.length; i++) {
+    const qObj = queries[i];
+    const query = (typeof qObj === 'string') ? qObj : (qObj?.query || '');
+    const prompt_id = (typeof qObj === 'object' && qObj) ? (qObj.prompt_id || '') : '';
+    
+    for (let run = 1; run <= runs_per_q; run++) {
+      try {
+        console.log(`[Progress] Query ${i + 1}/${queries.length}, Run ${run}/${runs_per_q}`);
+        
+        // report progress to sidepanel
+        reportProgress({
+          queryIndex: i,
+          run: run,
+          completed: completedOperations,
+          totalOperations: totalOperations
+        });
+        
+        const result = await collectQueryResponse(query, force_web_search);
+
+        // ALWAYS try to extract source links
   try {
     // check if sources button exists before trying to click it
     const sourcesButton = document.querySelector(OPEN_SOURCES_BTN);
@@ -945,113 +1155,6 @@ async function collectQueryResponse(query, force_web_search = true, retryCount =
     result.domains_all = [];
     result.extraction_error = error.message;
   }
-
-  console.log(`[Query Complete] Successfully processed query with ${result.response_text ? result.response_text.length : 0} characters of response${result.no_sources_warning ? ' (WARNING: No sources despite forced web search)' : ''}`);
-  return result;
-}
-
-async function processQueries(queries, runs_per_q = 1, force_web_search = true) {
-  const results = [];
-  const totalOperations = queries.length * runs_per_q;
-  let completedOperations = 0;
-
-  // ---------- Fallback helpers (when UI doesn't render <a> tags / <li> lists) ----------
-  const extractUrlsFromText = (text) => {
-    const s = String(text || '');
-    // Match http(s) URLs, stop at whitespace or common trailing punctuation
-    const re = /https?:\/\/[^\s<>"')\]]+/gi;
-    const found = s.match(re) || [];
-    const seen = new Set();
-    const out = [];
-    for (let u of found) {
-      u = u.replace(/[.,;:!?]+$/g, ''); // strip trailing punctuation
-      try { u = cleanUrl(u); } catch {}
-      if (!u || seen.has(u)) continue;
-      seen.add(u);
-      out.push(u);
-    }
-    return out;
-  };
-
-  const buildItemsFromTextUrls = (text, urls) => {
-    const s = String(text || '').replace(/\s+/g, ' ').trim();
-    const items = [];
-    let pos = 0;
-    for (const u of (urls || [])) {
-      pos += 1;
-      // Try to capture a short label immediately preceding the URL.
-      const idx = s.toLowerCase().indexOf(u.toLowerCase());
-      let label = '';
-      if (idx > 0) {
-        const left = s.slice(0, idx);
-        // Take last ~80 chars and trim to last sentence-ish boundary.
-        const windowText = left.slice(Math.max(0, left.length - 120));
-        const parts = windowText.split(/(?:\.\s+|\|\s+|—\s+|-\s+|\u2022\s+|:\s+)/);
-        label = (parts[parts.length - 1] || '').trim();
-      }
-      if (!label) label = u;
-      const name = deriveItemName(label);
-      items.push({
-        item_section_title: 'response_text_fallback',
-        item_position: pos,
-        item_name: name,
-        item_text: label,
-        chip_groups: [{ links: [u] }],
-      });
-    }
-    return items;
-  };
-  
-  console.log(`[Collection Start] Processing ${queries.length} queries with ${runs_per_q} runs each (${totalOperations} total operations), web search: ${force_web_search ? 'forced' : 'optional'}`);
-  
-  for (let i = 0; i < queries.length; i++) {
-    const qObj = queries[i];
-    const query = (typeof qObj === 'string') ? qObj : (qObj?.query || '');
-    const prompt_id = (typeof qObj === 'object' && qObj) ? (qObj.prompt_id || '') : '';
-    
-    for (let run = 1; run <= runs_per_q; run++) {
-      try {
-        console.log(`[Progress] Query ${i + 1}/${queries.length}, Run ${run}/${runs_per_q}`);
-        
-        // report progress to sidepanel
-        reportProgress({
-          queryIndex: i,
-          run: run,
-          completed: completedOperations,
-          totalOperations: totalOperations
-        });
-        
-        const result = await collectQueryResponse(query, force_web_search);
-
-        // Item-level inline extraction (chips/+N) serialized as JSON. We keep the exporter 1-row-per-run.
-        let items = [];
-        try {
-          items = await extractInlineItemCitations();
-        } catch (e) {
-          items = [];
-        }
-
-        // Fallback: if the assistant response contains URLs but the UI didn't render list items / clickable anchors,
-        // synthesize sources + items from response_text so we don't lose the run.
-        try {
-          const hasNoSources =
-            (!Array.isArray(result.sources_cited) || result.sources_cited.length === 0) &&
-            (!Array.isArray(result.sources_additional) || result.sources_additional.length === 0);
-          const textUrls = extractUrlsFromText(result.response_text);
-
-          if (hasNoSources && textUrls.length > 0) {
-            result.sources_cited = textUrls.map(u => ({ url: u, title: '', description: '', domain: extractDomain(u) }));
-            result.sources_additional = [];
-            result.sources_all = [...result.sources_cited];
-            result.domains_cited = result.sources_cited.map(o => o.domain).filter(Boolean);
-            result.domains_additional = [];
-            result.domains_all = [...new Set(result.domains_cited)];
-          }
-
-          if ((!Array.isArray(items) || items.length === 0) && textUrls.length > 0) {
-            items = buildItemsFromTextUrls(result.response_text, textUrls);
-          }
-        } catch {}
         
         // helper function to safely convert source data to Python list string format
         const formatSources = (sources) => {
@@ -1081,6 +1184,15 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
           prompt_id: prompt_id,
           query: result.query,
           generated_search_query: result.generated_search_query, // Include in enriched result
+          // API intercepted data (raw from network)
+          hidden_queries_json: (() => { try { return JSON.stringify(result.hidden_queries || []); } catch { return '[]'; } })(),
+          search_result_groups_json: (() => { try { return JSON.stringify(result.search_result_groups || []); } catch { return '[]'; } })(),
+          content_references_json: (() => { try { return JSON.stringify(result.content_references || []); } catch { return '[]'; } })(),
+          sonic_classification_json: (() => { try { return JSON.stringify(result.sonic_classification_result || null); } catch { return 'null'; } })(),
+          // Only include raw API if enabled (this is the HUGE column - can be 200KB+ per query)
+          raw_api_response_json: includeRawApi 
+            ? (() => { try { return JSON.stringify(result.raw_api_messages || []); } catch { return '[]'; } })()
+            : '[EXCLUDED_FOR_SIZE]',
           response_text: result.response_text,
           web_search_forced: result.web_search_forced,
           web_search_triggered: result.web_search_triggered,
@@ -1105,11 +1217,17 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         results.push(enrichedResult);
         completedOperations++;
         
-        // report completion of this operation
+        // report completion of this operation and send the result back for mid-session download
         reportProgress({
           completed: completedOperations,
-          totalOperations: totalOperations
+          totalOperations: totalOperations,
+          result: enrichedResult
         });
+        
+        // AUTO-CHECKPOINT: Save every N results to prevent data loss and memory issues
+        if (checkpointEvery > 0 && results.length > 0 && results.length % checkpointEvery === 0) {
+          triggerCheckpoint([...results], false);
+        }
         
         console.log(`[Success] Completed operation ${completedOperations}/${totalOperations}`);
         
@@ -1133,6 +1251,11 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
           prompt_id: prompt_id,
           query: query,
           generated_search_query: 'N/A',
+          hidden_queries_json: '[]',
+          search_result_groups_json: '[]',
+          content_references_json: '[]',
+          sonic_classification_json: 'null',
+          raw_api_response_json: '[]',
           response_text: `ERROR: ${error.message}`,
           web_search_forced: force_web_search,
           web_search_triggered: false,
@@ -1153,7 +1276,8 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
         // report completion even for errors
         reportProgress({
           completed: completedOperations,
-          totalOperations: totalOperations
+          totalOperations: totalOperations,
+          result: errorResult
         });
         
         // don't stop the entire process for one error, continue with next
@@ -1168,6 +1292,12 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true) 
   }
   
   console.log(`[Collection Complete] Processed ${totalOperations} operations with ${results.length} results`);
+  
+  // Final checkpoint - save all results
+  if (results.length > 0) {
+    triggerCheckpoint([...results], true);
+  }
+  
   return convertToCSV(results);
 }
 
@@ -1182,9 +1312,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const runs_per_q = message.runs_per_q || 1;
         const force_web_search = message.force_web_search !== undefined ? message.force_web_search : true;
         
-        console.log(`[Extension] Starting data collection for ${queries.length} queries, ${runs_per_q} runs each, web search: ${force_web_search ? 'forced' : 'optional'}`);
+        // New options for checkpointing and file size control
+        const options = {
+          checkpointEvery: message.checkpointEvery || 20, // Auto-save every N results (0 = disabled)
+          includeRawApi: message.includeRawApi !== false   // Include raw API data (false = ~90% smaller files)
+        };
         
-        const csvData = await processQueries(queries, runs_per_q, force_web_search);
+        console.log(`[Extension] Starting data collection for ${queries.length} queries, ${runs_per_q} runs each, web search: ${force_web_search ? 'forced' : 'optional'}, checkpoint every ${options.checkpointEvery}, include raw API: ${options.includeRawApi}`);
+        
+        const csvData = await processQueries(queries, runs_per_q, force_web_search, options);
         
         // send CSV data back to sidepanel
         chrome.runtime.sendMessage({

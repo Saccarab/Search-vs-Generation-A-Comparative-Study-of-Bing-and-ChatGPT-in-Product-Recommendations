@@ -32,7 +32,7 @@
     {
       "matches": ["https://chatgpt.com/*"],
       "js": ["content.js"],
-      "run_at": "document_idle",
+      "run_at": "document_start",
       "all_frames": false
     }
   ],
@@ -50,7 +50,7 @@
 
   "web_accessible_resources": [
     {
-      "resources": ["icons/*"],
+      "resources": ["icons/*", "injected.js"],
       "matches": ["https://chatgpt.com/*"]
     }
   ],
