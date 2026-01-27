@@ -110,6 +110,18 @@ function setupEventListeners() {
     startButton.addEventListener('click', startScraping);
     downloadButton.addEventListener('click', downloadResults);
     newScrapingButton.addEventListener('click', resetApp);
+
+    // Add "Download Checkpoint" button listener
+    const checkpointBtn = document.getElementById('checkpointDownloadButton');
+    if (checkpointBtn) {
+        checkpointBtn.addEventListener('click', downloadCheckpoint);
+    }
+
+    // Add "Stop Run" button listener
+    const stopBtn = document.getElementById('stopRunButton');
+    if (stopBtn) {
+        stopBtn.addEventListener('click', stopRun);
+    }
     
     // footer events
     document.getElementById('helpLink').addEventListener('click', showHelp);
@@ -290,6 +302,10 @@ function startScraping() {
     // UI Updates
     startButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Running...</span>';
     startButton.disabled = true;
+    
+    const checkpointBtn = document.getElementById('checkpointDownloadButton');
+    if (checkpointBtn) checkpointBtn.disabled = false;
+
     hideSection('config');
     hideSection('action');
     showSection('progress');
@@ -486,6 +502,40 @@ function finishScraping() {
     // Generate CSV
     const csvContent = generateCSV(scrapingState.collectedResults);
     showResults(csvContent, scrapingState.totalQueries);
+}
+
+function downloadCheckpoint() {
+    if (scrapingState.collectedResults && scrapingState.collectedResults.length > 0) {
+        const csvData = generateCSV(scrapingState.collectedResults);
+        const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+        downloadCSV(csvData, `bing_partial_${timestamp}.csv`);
+        showStatus(`Downloaded ${scrapingState.collectedResults.length} results`, 'success');
+    } else {
+        showStatus('No data collected yet to download', 'warning');
+    }
+}
+
+function stopRun() {
+    if (!scrapingState.isRunning) {
+        showStatus('No run in progress', 'warning');
+        return;
+    }
+    
+    scrapingState.isRunning = false;
+    showStatus('Stopping run... (partial results preserved)', 'warning');
+    
+    // If we have results, show them
+    if (scrapingState.collectedResults && scrapingState.collectedResults.length > 0) {
+        const csvContent = generateCSV(scrapingState.collectedResults);
+        showResults(csvContent, scrapingState.completed);
+    } else {
+        // Reset UI
+        hideSection('progress');
+        showSection('config');
+        showSection('action');
+        startButton.innerHTML = '<i class="fas fa-play"></i><span>Start Scraping</span>';
+        startButton.disabled = false;
+    }
 }
 
 function generateCSV(results) {
