@@ -27,132 +27,56 @@ DASHBOARD_TEMPLATE = """
 </head>
 <body>
     <div class="nav">
-        <a href="/">← Back to Consistency Viewer</a>
+        <a href="/">← Back to Run Viewer</a>
     </div>
-    <h1>GEO Research Dashboard</h1>
+    <h1>GEO Research Dashboard - Enterprise</h1>
     
     <div class="grid">
         <div class="card">
-            <h2>Overall Coverage (Standard + Deep Hunt)</h2>
-            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
-                <!-- All Citations -->
+            <h2>Overall Coverage (Deep Hunt Top 200)</h2>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                 <div style="background:#f9fafb; padding:15px; border-radius:8px; text-align:center;">
-                    <div class="stat-label">Combined (All)</div>
-                    <div class="stat-big">{{ "%.1f"|format(matched_all / total_all * 100) }}%</div>
+                    <div class="stat-label">All Citations</div>
+                    <div class="stat-big">{{ "%.1f"|format(matched_all / total_all * 100 if total_all > 0 else 0) }}%</div>
                     <div style="font-size:11px; color:#666;">{{ matched_all }} / {{ total_all }}</div>
                 </div>
-                
-                <!-- Main Citations -->
                 <div style="background:#ecfdf5; padding:15px; border-radius:8px; text-align:center;">
-                    <div class="stat-label" style="color:#065f46; font-weight:bold;">Core Recommendations</div>
-                    <div class="stat-big" style="color:#059669;">{{ "%.1f"|format(matched_main / total_main * 100) }}%</div>
+                    <div class="stat-label" style="color:#065f46; font-weight:bold;">Cited Only</div>
+                    <div class="stat-big" style="color:#059669;">{{ "%.1f"|format(matched_main / total_main * 100 if total_main > 0 else 0) }}%</div>
                     <div style="font-size:11px; color:#065f46;">{{ matched_main }} / {{ total_main }}</div>
-                    <div style="font-size:10px; color:#065f46; margin-top:4px;">(Cited + Inline)</div>
-                </div>
-
-                <!-- Additional Citations -->
-                <div style="background:#f3f4f6; padding:15px; border-radius:8px; text-align:center;">
-                    <div class="stat-label">"Additional" Links</div>
-                    <div class="stat-big" style="color:#4b5563;">{{ "%.1f"|format(matched_add / total_add * 100) }}%</div>
-                    <div style="font-size:11px; color:#666;">{{ matched_add }} / {{ total_add }}</div>
-                </div>
-            </div>
-            
-            <div style="margin-top:20px; padding-top:15px; border-top:1px solid #eee;">
-                <h3 style="font-size:14px; margin:0 0 10px 0; color:#666;">Standard Top 30 vs Deep Hunt (All Citations)</h3>
-                <div style="display:flex; gap:20px;">
-                    <div>
-                        <span style="font-weight:bold; color:#d97706;">{{ "%.1f"|format(matched_top30 / total_all * 100) }}%</span>
-                        <span style="font-size:12px; color:#666;">Top 30 Only</span>
-                    </div>
-                    <div>
-                        <span style="font-weight:bold; color:#10a37f;">{{ "%.1f"|format(matched_deep / total_all * 100) }}%</span>
-                        <span style="font-size:12px; color:#666;">Deep Hunt Only</span>
-                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="card" style="grid-column: span 2;">
-            <h2>Citation Matches by Bing Page (The "Page 2 Slump")</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width:60px;">Page</th>
-                        <th style="width:100px;">Matches</th>
-                        <th>Distribution</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% set max_matches = page_data|map(attribute='match_count')|max %}
-                    {% for p in page_data %}
-                    <tr>
-                        <td><b>Pg {{ p.page_num|int }}</b></td>
-                        <td>{{ p.match_count }}</td>
-                        <td>
-                            <div class="bar-container">
-                                <div class="bar {{ 'slump' if p.page_num == 2 else '' }}" style="width: {{ (p.match_count / max_matches * 100) }}%"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <p style="font-size:12px; color:#666; margin-top:15px;">
-                * Note how Page 2 (red) drops significantly compared to Page 1, while Page 3 and 4 often recover.
-            </p>
-        </div>
-
+        
         <div class="card">
-            <h2>Top "Invisible" Domains</h2>
-            <p style="font-size:12px; color:#666;">Citations never found in Top 150</p>
-            <div style="max-height: 500px; overflow-y: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Domain</th>
-                            <th>Count</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for d in invisible_domains %}
-                        <tr>
-                            <td>{{ d.citation_domain }}</td>
-                            <td>{{ d.count }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <h2>Top Invisible Domains (Not in Bing)</h2>
+            <table>
+                <tr><th>Domain</th><th>Count</th></tr>
+                {% for row in invisible_domains[:15] %}
+                <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>Page Distribution of Matches</h2>
+            <table>
+                <tr><th>Page</th><th>Matches</th></tr>
+                {% for row in page_data %}
+                <tr><td>Page {{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
 </body>
 </html>
 """
 
-app = Flask(__name__)
-app.jinja_env.add_extension('jinja2.ext.do')
-DB_PATH = 'geo_fresh.db'
-# Combined legit results from 01-17 and 01-18
-RAW_CSV_PATH = r'data/ingest/chatgpt_results_viewer_combined.csv'
-
-# Load the raw CSV once at startup
-print(f"Loading raw data from {RAW_CSV_PATH}...")
-try:
-    df_raw = pd.read_csv(RAW_CSV_PATH, low_memory=False)
-    if 'run_id' not in df_raw.columns:
-        df_raw['run_id'] = df_raw['prompt_id'].astype(str) + '_r' + df_raw['run_number'].astype(str)
-    df_raw = df_raw.set_index('run_id')
-    print(f"Successfully loaded {len(df_raw)} runs from CSV.")
-except Exception as e:
-    print(f"Error loading CSV: {e}")
-    df_raw = pd.DataFrame()
-
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GEO Data Consistency Viewer (Deep Hunt Edition)</title>
+    <title>ChatGPT + Bing Enterprise Viewer</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; height: 100vh; margin: 0; background: #f4f4f9; }
         #sidebar { width: 280px; background: #202123; color: white; overflow-y: auto; padding: 15px; flex-shrink: 0; }
@@ -162,38 +86,37 @@ HTML_TEMPLATE = """
         .prompt-item.active { background: #444654; font-weight: bold; border-left-color: #10a37f; }
         
         .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .header { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .query-pill { background: #e7f3ff; color: #007bff; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; display: inline-block; }
-        
-        .mode-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
-        .mode-btn { padding: 8px 16px; border-radius: 5px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-weight: bold; }
-        .mode-btn.active { background: #10a37f; color: white; border-color: #10a37f; }
+        .header { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .query-pill { background: #e7f3ff; color: #007bff; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; display: inline-block; margin-right: 10px; margin-bottom: 5px; }
+        .hidden-queries { background: #fef3c7; color: #d97706; padding: 5px 15px; border-radius: 20px; font-size: 12px; display: inline-block; margin-bottom: 5px; }
 
         .comparison-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .source-label { font-size: 12px; font-weight: bold; color: #888; text-transform: uppercase; margin-bottom: 10px; display: block; }
         
-        .chatgpt-items { margin: 0; padding: 0; list-style: none; }
-        .chatgpt-item { margin-bottom: 15px; line-height: 1.6; font-size: 14px; position: relative; padding-left: 20px; }
-        .chatgpt-item::before { content: "•"; position: absolute; left: 0; color: #10a37f; font-weight: bold; }
-        .item-name { font-weight: bold; color: #000; }
+        .citation-item { margin-bottom: 12px; padding: 10px; background: #f9fafb; border-radius: 8px; border-left: 4px solid #10a37f; }
+        .citation-item.additional { border-left-color: #6b7280; }
+        .citation-type { font-size: 10px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: bold; margin-right: 6px; }
+        .citation-type.cited { background: #d1fae5; color: #065f46; }
+        .citation-type.additional { background: #f3f4f6; color: #6b7280; }
+        .citation-title { font-weight: bold; color: #111; font-size: 14px; }
+        .citation-url { font-size: 12px; color: #10a37f; word-break: break-all; }
+        .bing-rank { background: #10a37f; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; margin-left: 8px; }
+        .bing-rank.not-found { background: #ef4444; }
         
-        .chip-group { display: inline-flex; gap: 4px; margin-left: 8px; vertical-align: middle; flex-wrap: wrap; }
-        .citation-pill { background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1px 8px; font-size: 10px; color: #666; text-decoration: none; display: inline-block; white-space: nowrap; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { text-align: left; background: #f8f9fa; padding: 12px; border-bottom: 2px solid #dee2e6; }
-        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 13px; vertical-align: top; }
-        .rank-badge { background: #6e6e80; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; }
-        .match-row { background: #fff9c4 !important; }
-        .citation-type-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: bold; margin-right: 6px; display: inline-block; }
-        .citation-type-badge.cited { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
-        .citation-type-badge.inline { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-        .citation-type-badge.additional { background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb; }
-        a { color: #10a37f; text-decoration: none; }
+        .bing-item { padding: 10px; border-bottom: 1px solid #eee; }
+        .bing-item.matched { background: #fef9c3; }
+        .bing-rank-num { background: #6b7280; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; margin-right: 10px; }
+        .bing-title { font-weight: bold; color: #111; font-size: 13px; }
+        .bing-url { font-size: 11px; color: #10a37f; word-break: break-all; }
+        .bing-snippet { font-size: 12px; color: #666; margin-top: 4px; }
         
         .raw-text-box { 
-            white-space: pre-wrap; font-family: monospace; font-size: 12px; color: #555; background: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #eee; max-height: 300px; overflow-y: auto; margin-top: 20px;
+            white-space: pre-wrap; font-family: monospace; font-size: 12px; color: #555; 
+            background: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #eee; 
+            max-height: 400px; overflow-y: auto; margin-top: 10px;
         }
+        a { color: #10a37f; text-decoration: none; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -201,142 +124,213 @@ HTML_TEMPLATE = """
         <div style="margin-bottom: 20px; padding: 10px; background: #10a37f; border-radius: 5px; text-align: center;">
             <a href="/dashboard" style="text-decoration:none; color:white; font-weight:bold;">📊 VIEW DASHBOARD</a>
         </div>
-        <h3>Runs</h3>
+        <h3 style="color:#888; font-size:12px;">RUNS ({{ run_ids|length }})</h3>
         {% for rid in run_ids %}
-        <a href="/?run_id={{ rid }}&mode={{ mode }}" style="text-decoration:none; color:inherit;" onclick="sessionStorage.setItem('sidebarScroll', document.getElementById('sidebar').scrollTop);">
-            <div id="item-{{ rid }}" class="prompt-item {{ 'active' if rid == active_run_id else '' }}">
+        <a href="/?run_id={{ rid }}" style="text-decoration:none; color:inherit;">
+            <div class="prompt-item {{ 'active' if rid == active_run_id else '' }}">
                 {{ rid }}
             </div>
         </a>
         {% endfor %}
     </div>
     
-    <script>
-        // Restore sidebar scroll position
-        window.onload = function() {
-            var scrollPos = sessionStorage.getItem('sidebarScroll');
-            if (scrollPos) {
-                document.getElementById('sidebar').scrollTop = scrollPos;
-            }
-            // Also scroll the active item into view
-            var activeItem = document.querySelector('.prompt-item.active');
-            if (activeItem) {
-                activeItem.scrollIntoView({ block: 'nearest' });
-            }
-        };
-    </script>
-    
     <div id="content">
         {% if run_raw %}
         <div class="card">
             <div class="header">
-                <div>
-                    <div class="query-pill">Query: {{ run_raw.query }}</div>
-                    <div class="query-pill" style="background:#fef3c7; color:#d97706; margin-left:10px;">Bing: {{ run_raw.generated_search_query }}</div>
+                <h2 style="margin:0 0 10px 0;">{{ active_run_id }}</h2>
+                <div class="query-pill">Prompt: {{ run_raw.query }}</div>
+                {% if run_raw.hidden_queries %}
+                <div class="hidden-queries">🔍 Hidden Queries: {{ run_raw.hidden_queries }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- Stats Bar -->
+            <div style="display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                <div style="background: {{ '#d1fae5' if run_raw.web_search_triggered == 'True' or run_raw.web_search_triggered == True else '#fee2e2' }}; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Web Search:</strong> {{ '✓ Triggered' if run_raw.web_search_triggered == 'True' or run_raw.web_search_triggered == True else '✗ Not Triggered' }}
                 </div>
-                <h2 style="margin:0;">Consistency Check</h2>
+                {% if run_raw.web_search_forced %}
+                <div style="background: #fef3c7; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Forced:</strong> {{ run_raw.web_search_forced }}
+                </div>
+                {% endif %}
+                <div style="background: #e0e7ff; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Items:</strong> {{ run_raw.items_count or 0 }}
+                </div>
+                <div style="background: #f3e8ff; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>With Citations:</strong> {{ run_raw.items_with_citations_count or 0 }}
+                </div>
+                <div style="background: #f3f4f6; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Total Sources:</strong> {{ cit_db|length }}
+                </div>
             </div>
 
-            <div class="mode-toggle">
-                <a href="/?run_id={{ active_run_id }}&mode=standard" class="mode-btn {{ 'active' if mode == 'standard' else '' }}">Standard (Top 30)</a>
-                <a href="/?run_id={{ active_run_id }}&mode=deep" class="mode-btn {{ 'active' if mode == 'deep' else '' }}">Deep Hunt (Rank 150)</a>
-                <a href="/?run_id={{ active_run_id }}&mode=combined" class="mode-btn {{ 'active' if mode == 'combined' else '' }}">Combined (All)</a>
-            </div>
-
-            <div class="comparison-container">
-                <div style="border-right: 1px solid #eee; padding-right: 20px;">
-                    <span class="source-label">Source: Raw ChatGPT Response</span>
-                    <div class="chatgpt-items">
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                <!-- LEFT: Unified ChatGPT Response Feed -->
+                <div>
+                    <span class="source-label">ChatGPT Response</span>
+                    
+                    <!-- Unified Response Feed -->
+                    <div style="background: #f7f7f8; border-radius: 12px; padding: 20px; margin-top: 10px;">
                         {% if items_raw %}
                             {% for item in items_raw %}
-                            <div class="chatgpt-item">
-                                <span class="item-name">{{ item.item_name }}</span>
-                                <p style="margin: 4px 0;">{{ item.item_text }}</p>
-                                <div class="chip-group">
+                            {% set link_count = namespace(value=0) %}
+                            {% if item.chip_groups %}
+                                {% for g in item.chip_groups %}
+                                    {% set link_count.value = link_count.value + (g.links|length if g.links else 0) %}
+                                {% endfor %}
+                            {% endif %}
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size: 14px; color: #111; line-height: 1.7;">
+                                    <strong style="color: #10a37f;">{{ item.item_position }}. {{ item.item_name or '' }}</strong>
+                                    {% if item.item_text %} – {{ item.item_text }}{% endif %}
+                                </div>
+                                {% if item.chip_groups %}
+                                <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
                                     {% for group in item.chip_groups %}
                                         {% for link in group.links %}
-                                        <a href="{{ link }}" class="citation-pill" target="_blank">Source</a>
+                                        {% set clean_url = link.replace('?utm_source=chatgpt.com', '').replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/') %}
+                                        {% set bing_match = namespace(found=false, rank=None, q_num=None) %}
+                                        {% for cit in cit_db %}
+                                            {% set cit_url_clean = (cit.url or '').replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/') %}
+                                            {% if clean_url == cit_url_clean or clean_url in cit_url_clean or cit_url_clean in clean_url %}
+                                                {% if cit.bing_rank %}
+                                                    {% set bing_match.found = true %}
+                                                    {% set bing_match.rank = cit.bing_rank %}
+                                                    {% set bing_match.q_num = cit.bing_query_num %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <a href="{{ link }}" target="_blank" style="font-size: 11px; background: {{ '#d1fae5' if bing_match.found else '#fee2e2' }}; color: {{ '#065f46' if bing_match.found else '#991b1b' }}; padding: 4px 10px; border-radius: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                            {{ clean_url[:35] }}{% if clean_url|length > 35 %}...{% endif %}
+                                            {% if bing_match.found %}
+                                            <span style="background: #10a37f; color: white; padding: 1px 5px; border-radius: 8px; font-size: 9px; font-weight: bold;">
+                                                #{{ bing_match.rank }} Q{{ bing_match.q_num }}
+                                            </span>
+                                            {% endif %}
+                                        </a>
                                         {% endfor %}
                                     {% endfor %}
                                 </div>
-                            </div>
-                            {% endfor %}
-                        {% endif %}
-                        
-                        <div class="source-label" style="margin-top: 20px;">Full Response Text</div>
-                        <div class="raw-text-box">{{ run_raw.response_text }}</div>
-                    </div>
-                </div>
-
-                <div style="padding-left: 10px;">
-                    <span class="source-label">Citations In Excel ({{ cit_db|length }} found)</span>
-                    <div class="excel-citation-list">
-                        {% for c in cit_db %}
-                        <div style="margin-bottom: 8px; border-bottom: 1px dashed #eee; padding-bottom: 4px;">
-                            <div style="font-weight:bold; color:#333;">
-                                <span class="citation-type-badge {{ c.citation_type }}">{{ c.citation_type }}</span>
-                                {{ c.item_entity_name or c.item_name or 'N/A' }}
-                                {% set found_rank = [] %}
-                                {% for b in bing %}
-                                    {% if b.url == c.url or b.result_domain == c.citation_domain %}
-                                        {% do found_rank.append(b.result_rank or b.absolute_rank) %}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if found_rank %}
-                                    <a href="#rank-{{ found_rank[0] }}" style="margin-left:10px; background:#fff9c4; color:#d97706; padding:1px 6px; border-radius:4px; font-size:10px; border:1px solid #d97706;">RANK {{ found_rank[0] }}</a>
-                                {% else %}
-                                    <span style="margin-left:10px; background:#fee2e2; color:#b91c1c; padding:1px 6px; border-radius:4px; font-size:10px; border:1px solid #b91c1c;">NOT IN TOP 150</span>
                                 {% endif %}
                             </div>
-                            <div style="font-size:11px; color:#666;">{{ c.url }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <div style="color: #888; font-style: italic;">Loading response...</div>
+                        {% endif %}
+                        
+                        <!-- All Citations Summary -->
+                        <div style="border-top: 1px solid #ddd; margin-top: 15px; padding-top: 15px;">
+                            <div style="font-size: 11px; color: #666; font-weight: bold; margin-bottom: 8px;">ALL SOURCES ({{ cit_db|length }})</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                            {% for cit in cit_db %}
+                                <div style="font-size: 10px; background: {{ '#d1fae5' if cit.bing_rank else '#fee2e2' }}; color: {{ '#065f46' if cit.bing_rank else '#991b1b' }}; padding: 3px 8px; border-radius: 10px;">
+                                    {{ cit.domain }}
+                                    {% if cit.bing_rank %}
+                                    <span style="font-weight: bold;">#{{ cit.bing_rank }}</span>
+                                    {% else %}
+                                    <span style="font-weight: bold;">✗</span>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            </div>
                         </div>
-                        {% endfor %}
+                    </div>
+                    
+                    <!-- Raw Response (collapsible) -->
+                    <details style="margin-top: 15px;">
+                        <summary style="cursor: pointer; font-size: 12px; color: #666; font-weight: bold;">RAW RESPONSE TEXT</summary>
+                        <div class="raw-text-box" style="margin-top: 10px;">{{ run_raw.response_text or 'No response text available' }}</div>
+                    </details>
+
+                    {% if prompt_volatility %}
+                    <div style="margin-top: 20px; padding: 12px; background: #fff1f2; border: 1px solid #fda4af; border-radius: 8px;">
+                        <h3 style="margin-top:0; color: #9f1239; font-size: 13px;">🚨 BING VOLATILITY ({{ prompt_volatility|length }} cases)</h3>
+                        <div style="max-height: 150px; overflow-y: auto;">
+                            {% for case in prompt_volatility %}
+                            <div style="margin-bottom: 8px; padding: 6px; background: white; border-radius: 4px; font-size: 10px; border-left: 2px solid #f43f5e;">
+                                <strong>{{ case.domain }}</strong><br>
+                                <span style="color: #059669;">✓ Found in: {{ case.in_bing|join(', ') }}</span><br>
+                                <span style="color: #dc2626;">✗ Missing in: {{ case.not_in_bing|join(', ') }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- RIGHT: Bing Results -->
+                <div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
+                        <span class="source-label" style="margin-bottom:0;">Bing Results ({{ bing_results|length }})</span>
+                        <div id="query-filters" style="font-size: 10px;">
+                            {% for q_text in unique_queries %}
+                            <label style="cursor:pointer; display: flex; align-items: center; gap: 4px; background: #f3f4f6; padding: 3px 6px; border-radius: 4px; margin-bottom: 4px;">
+                                <input type="checkbox" class="query-toggle" data-query="{{ q_text }}" checked> 
+                                <strong style="color:#007bff;">Q{{ loop.index }}:</strong> <span style="color:#555;">{{ q_text[:40] }}...</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div id="bing-results-container" style="max-height: 700px; overflow-y: auto;">
+                    {% for b in bing_results %}
+                    {% set q_num = '?' %}
+                    {% if b['query'] in unique_queries %}
+                        {% set q_num = unique_queries.index(b['query']) + 1 %}
+                    {% endif %}
+                    <div class="bing-item {{ 'matched' if b['is_cited'] else '' }}" data-query-text="{{ b['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px;">
+                        <span class="bing-rank-num" style="font-size: 10px;">#{{ b['position'] }}</span>
+                        <span style="background:#e0e7ff; color:#3730a3; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold;">Q{{ q_num }}</span>
+                        <span style="background:#f3f4f6; color:#666; padding:1px 4px; border-radius:3px; font-size:9px; margin-left:4px;">Pg {{ b['page_num'] or '?' }}</span>
+                        {% if b['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold;">✓</span>{% endif %}
+                        <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">{{ (b['title'] or 'No title')[:50] }}...</div>
+                        <div style="font-size: 10px; color: #10a37f;">{{ b['domain'] }}</div>
+                    </div>
+                    {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="header">
-                <h2 style="margin:0;">Bing Results ({{ mode.upper() }} Mode)</h2>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 50px;">Rank</th>
-                        <th>Title & URL</th>
-                        <th>Domain Match</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for b in bing %}
-                    <tr id="rank-{{ b.result_rank or b.absolute_rank }}" class="{{ 'match-row' if b.is_cited else '' }}">
-                        <td>
-                            <span class="rank-badge">{{ b.result_rank or b.absolute_rank }}</span>
-                            <div style="font-size: 9px; color: #888; margin-top: 2px;">Pg {{ b.page_num or ((((b.absolute_rank|int) - 1) // 10) + 1) }}</div>
-                        </td>
-                        <td>
-                            <div style="font-weight:bold;"><a href="{{ b.url }}" target="_blank">{{ b.result_title or b.title or b.url }}</a></div>
-                            <div style="font-size:11px; color:#666;">{{ b.url }}</div>
-                        </td>
-                        <td>
-                            <span style="font-weight:500;">{{ b.result_domain }}</span>
-                            {% if b.is_cited %}<br><b style="color:#d97706; font-size:10px;">[CITED]</b>{% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <script>
+            document.querySelectorAll('.query-toggle').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const queryText = this.getAttribute('data-query');
+                    const isVisible = this.checked;
+                    
+                    document.querySelectorAll(`.bing-item[data-query-text="${queryText}"]`).forEach(item => {
+                        item.style.display = isVisible ? 'block' : 'none';
+                    });
+                });
+            });
+        </script>
+        
         {% else %}
-        <div style="text-align:center; margin-top:100px; color:#888;">
-            <h1>Select a run from the sidebar</h1>
+        <div class="card">
+            <h2>Welcome to ChatGPT + Bing Enterprise Viewer</h2>
+            <p>Select a run from the sidebar to view its citations and Bing results.</p>
+            <p><strong>Stats:</strong></p>
+            <ul>
+                <li>{{ run_ids|length }} total runs</li>
+                <li>86,938 Bing Deep Hunt results</li>
+                <li>4,457 ChatGPT citations</li>
+            </ul>
         </div>
         {% endif %}
     </div>
 </body>
 </html>
 """
+
+app = Flask(__name__)
+
+DB_PATH = 'geo_fresh.db'
+
+# Load the raw CSV once at startup
+print(f"Loading raw data from {DB_PATH} (Database Only Mode)...")
+df_raw = pd.DataFrame() # We are using the DB for everything now
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)
@@ -346,187 +340,157 @@ def get_db():
 @app.route('/')
 def index():
     run_id = request.args.get('run_id')
-    mode = request.args.get('mode', 'standard')
     db = get_db()
     
-    run_ids = [r['run_id'] for r in db.execute('SELECT run_id FROM runs ORDER BY prompt_id, run_id').fetchall()]
+    run_ids = [r['run_id'] for r in db.execute('SELECT run_id FROM runs ORDER BY prompt_id, run_number').fetchall()]
     
     run_raw = None
-    items_raw = []
     cit_db = []
     bing_results = []
+    items_raw = []
+    unique_queries = []
+    prompt_volatility = []
     
     if run_id:
-        # Normalize run_id for lookup
-        df_raw['temp_run_id'] = df_raw.index.astype(str)
+        # Get run data from database
+        db_run = db.execute('''
+            SELECT p.prompt as query, r.generated_search_query, r.response_text, r.hidden_queries, r.items_json,
+                   r.web_search_triggered, r.web_search_forced, r.items_count, r.items_with_citations_count
+            FROM runs r
+            LEFT JOIN prompts p ON r.prompt_id = p.prompt_id
+            WHERE r.run_id = ?
+        ''', (run_id,)).fetchone()
         
-        # Check both the generated index and the prompt_id/run_number combo
-        if run_id in df_raw.index:
-            row_raw = df_raw.loc[run_id]
-            if isinstance(row_raw, pd.DataFrame): row_raw = row_raw.iloc[0]
+        if db_run:
             run_raw = {
-                'query': row_raw.get('query', ''),
-                'generated_search_query': row_raw.get('generated_search_query', ''),
-                'response_text': row_raw.get('response_text', '')
+                'query': db_run['query'] or 'N/A',
+                'generated_search_query': db_run['generated_search_query'] or 'N/A',
+                'response_text': db_run['response_text'] or '',
+                'hidden_queries': db_run['hidden_queries'] or '',
+                'web_search_triggered': db_run['web_search_triggered'],
+                'web_search_forced': db_run['web_search_forced'],
+                'items_count': db_run['items_count'],
+                'items_with_citations_count': db_run['items_with_citations_count']
             }
+            # Parse items_json for structured display
             try:
-                items_raw = json.loads(row_raw.get('items_json', '[]'))
+                items_raw = json.loads(db_run['items_json'] or '[]')
             except:
                 items_raw = []
         else:
-            # Try matching by building the ID if index lookup failed
-            df_raw['temp_id'] = df_raw['prompt_id'].astype(str) + '_r' + df_raw['run_number'].astype(str)
-            if run_id in df_raw['temp_id'].values:
-                row_raw = df_raw[df_raw['temp_id'] == run_id].iloc[0]
-                run_raw = {
-                    'query': row_raw.get('query', ''),
-                    'generated_search_query': row_raw.get('generated_search_query', ''),
-                    'response_text': row_raw.get('response_text', '')
-                }
-                try:
-                    items_raw = json.loads(row_raw.get('items_json', '[]'))
-                except:
-                    items_raw = []
-            else:
-                # FALLBACK: If not in CSV, try to get from the database 'runs' table joined with prompts
-                # Note: DB uses 'rewritten_query' instead of 'generated_search_query' and 'prompt_text' in prompts table
-                db_run = db.execute('''
-                    SELECT p.prompt_text as query, r.rewritten_query as generated_search_query, r.response_text, r.items_json 
-                    FROM runs r
-                    LEFT JOIN prompts_updated p ON r.prompt_id = p.prompt_id
-                    WHERE r.run_id = ?
-                ''', (run_id,)).fetchone()
-                
-                if db_run:
-                    run_raw = {
-                        'query': db_run['query'] or 'N/A',
-                        'generated_search_query': db_run['generated_search_query'] or 'N/A',
-                        'response_text': db_run['response_text'] or ''
-                    }
-                    try:
-                        items_raw = json.loads(db_run['items_json'] or '[]')
-                    except:
-                        items_raw = []
-                else:
-                    run_raw = {'query': 'N/A', 'generated_search_query': 'N/A', 'response_text': f'Run {run_id} not found in CSV or DB'}
-                    items_raw = []
+            run_raw = {'query': 'N/A', 'generated_search_query': 'N/A', 'response_text': f'Run {run_id} not found', 'hidden_queries': '', 'web_search_triggered': None, 'web_search_forced': None, 'items_count': 0, 'items_with_citations_count': 0}
 
-        cit_db = db.execute('SELECT * FROM citations WHERE run_id = ?', (run_id,)).fetchall()
+        # Get citations with Bing rank AND which query it came from
+        cit_rows = db.execute('''
+            SELECT c.*, 
+                   (SELECT MIN(b.position) FROM bing_results b WHERE b.url_normalized = c.url_normalized AND b.run_id = c.run_id) as bing_rank,
+                   (SELECT b.query FROM bing_results b WHERE b.url_normalized = c.url_normalized AND b.run_id = c.run_id ORDER BY b.position ASC LIMIT 1) as bing_query
+            FROM citations c 
+            WHERE c.run_id = ?
+            ORDER BY c.citation_type, c.position
+        ''', (run_id,)).fetchall()
         
-        if mode == 'deep':
-            # Query the new bing_deep_hunt table
-            bing_results = db.execute('''
-                SELECT *, 
-                EXISTS(SELECT 1 FROM citations c WHERE c.run_id = b.run_id AND (c.url = b.url OR c.citation_domain = b.result_domain)) as is_cited,
-                (absolute_rank > 30) as is_deep_match
-                FROM bing_deep_hunt b 
-                WHERE run_id = ? 
-                ORDER BY absolute_rank ASC
-            ''', (run_id,)).fetchall()
-        elif mode == 'combined':
-            # Factor in BOTH Standard (Top 30) and Deep Hunt (Top 150)
-            bing_results = db.execute('''
-                WITH Combined AS (
-                    SELECT url, result_rank as absolute_rank, 1 as page_num, result_domain, result_title as title, run_id
-                    FROM bing_results 
-                    WHERE run_id = ?
-                    UNION ALL
-                    SELECT url, absolute_rank, page_num, result_domain, title, run_id
-                    FROM bing_deep_hunt 
-                    WHERE run_id = ?
-                ),
-                Ranked AS (
-                    SELECT *, 
-                    ROW_NUMBER() OVER (PARTITION BY url ORDER BY absolute_rank ASC) as rn
-                    FROM Combined
-                )
-                SELECT *,
-                EXISTS(SELECT 1 FROM citations c WHERE c.run_id = r.run_id AND (c.url = r.url OR c.citation_domain = r.result_domain)) as is_cited,
-                (absolute_rank > 30) as is_deep_match
-                FROM Ranked r
-                WHERE rn = 1
-                ORDER BY absolute_rank ASC
-            ''', (run_id, run_id)).fetchall()
-        else:
-            # Standard Top 30
-            bing_results = db.execute('''
-                SELECT *, 
-                EXISTS(SELECT 1 FROM citations c WHERE c.run_id = b.run_id AND (c.url = b.url OR c.citation_domain = b.result_domain)) as is_cited,
-                0 as is_deep_match
-                FROM bing_results b 
-                WHERE run_id = ? 
-                ORDER BY result_rank ASC
-            ''', (run_id,)).fetchall()
+        cit_db = [dict(row) for row in cit_rows]
+        
+        # Map query text to Q1/Q2 number
+        query_to_num = {q: i+1 for i, q in enumerate(sorted(list(set(b['query'] for b in db.execute('SELECT DISTINCT query FROM bing_results WHERE run_id = ?', (run_id,)).fetchall()))))}
+        for cit in cit_db:
+            if cit.get('bing_query'):
+                cit['bing_query_num'] = query_to_num.get(cit['bing_query'], '?')
+        
+        # Get Bing results with citation match flag
+        bing_rows = db.execute('''
+            SELECT b.*, 
+                   EXISTS(SELECT 1 FROM citations c WHERE c.run_id = b.run_id AND c.url_normalized = b.url_normalized) as is_cited
+            FROM bing_results b 
+            WHERE b.run_id = ? 
+            ORDER BY b.position ASC
+        ''', (run_id,)).fetchall()
+        
+        bing_results = [dict(row) for row in bing_rows]
+
+        # Get unique queries for this run to power the checkboxes
+        unique_queries = sorted(list(set(b['query'] for b in bing_results)))
+
+        # Get volatility cases for this prompt
+        if db_run:
+            volatility_cases = db.execute('''
+                SELECT c.url_normalized, c.domain, 
+                       GROUP_CONCAT(DISTINCT r.run_id) as cited_runs
+                FROM citations c
+                JOIN runs r ON c.run_id = r.run_id
+                WHERE c.prompt_id = ?
+                GROUP BY c.url_normalized
+                HAVING COUNT(DISTINCT c.run_id) >= 2
+            ''', (db_run['prompt_id'],)).fetchall()
+            
+            for case in volatility_cases:
+                url_norm = case['url_normalized']
+                bing_status = db.execute('''
+                    SELECT r.run_id, b.position, b.page_num
+                    FROM runs r
+                    LEFT JOIN bing_results b ON r.run_id = b.run_id AND b.url_normalized = ?
+                    WHERE r.prompt_id = ?
+                ''', (url_norm, db_run['prompt_id'])).fetchall()
+                
+                has_bing = [r for r in bing_status if r['position'] is not None]
+                no_bing = [r for r in bing_status if r['position'] is None]
+                
+                if has_bing and no_bing:
+                    prompt_volatility.append({
+                        'domain': case['domain'],
+                        'url_norm': url_norm,
+                        'in_bing': [f"{r['run_id']} (Rank #{r['position']} Pg {r['page_num']})" for r in has_bing],
+                        'not_in_bing': [r['run_id'] for r in no_bing]
+                    })
 
     return render_template_string(HTML_TEMPLATE, 
                                  run_ids=run_ids, 
                                  active_run_id=run_id,
                                  run_raw=run_raw,
-                                 items_raw=items_raw,
                                  cit_db=cit_db,
-                                 bing=bing_results,
-                                 mode=mode)
+                                 bing_results=bing_results,
+                                 unique_queries=unique_queries if run_id else [],
+                                 items_raw=items_raw,
+                                 prompt_volatility=prompt_volatility)
 
 @app.route('/dashboard')
 def dashboard():
     db = get_db()
     
-    # 1. Page-based distribution
+    # Page-based distribution
     page_data = db.execute('''
-        SELECT b.page_num, COUNT(DISTINCT c.rowid) as match_count
-        FROM bing_deep_hunt b
-        JOIN citations c ON b.run_id = c.run_id 
-          AND (b.url = c.url OR b.result_domain = c.norm_domain)
+        SELECT b.page_num, COUNT(DISTINCT c.id) as match_count
+        FROM bing_results b
+        JOIN citations c ON c.url_normalized = b.url_normalized AND c.run_id = b.run_id
+        WHERE b.page_num IS NOT NULL
         GROUP BY b.page_num
         ORDER BY b.page_num
     ''').fetchall()
     
-    # 2. Coverage Stats
-    
-    # Helper for Combined Match (Standard OR Deep)
+    # Coverage Stats
     match_sql = """
-        (EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND (b.url = c.url OR b.result_domain = c.norm_domain))
-        OR 
-        EXISTS (SELECT 1 FROM bing_deep_hunt d WHERE d.run_id = c.run_id AND (d.url = c.url OR d.result_domain = c.norm_domain)))
+        EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized)
     """
 
     # All Citations
     total_all = db.execute('SELECT COUNT(*) FROM citations').fetchone()[0]
-    matched_all = db.execute(f'SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE {match_sql}').fetchone()[0]
+    matched_all = db.execute(f'SELECT COUNT(DISTINCT c.id) FROM citations c WHERE {match_sql}').fetchone()[0]
 
-    # Main Citations (Cited + Inline)
-    total_main = db.execute("SELECT COUNT(*) FROM citations WHERE citation_type != 'additional'").fetchone()[0]
-    matched_main = db.execute(f"SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE citation_type != 'additional' AND {match_sql}").fetchone()[0]
+    # Main Citations (cited type)
+    total_main = db.execute("SELECT COUNT(*) FROM citations WHERE citation_type = 'cited'").fetchone()[0]
+    matched_main = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE citation_type = 'cited' AND {match_sql}").fetchone()[0]
 
-    # Additional Citations
-    total_add = db.execute("SELECT COUNT(*) FROM citations WHERE citation_type = 'additional'").fetchone()[0]
-    matched_add = db.execute(f"SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE citation_type = 'additional' AND {match_sql}").fetchone()[0]
-
-    # Legacy Stats for Comparison
-    matched_top30 = db.execute('''
-        SELECT COUNT(DISTINCT c.rowid)
-        FROM citations c
-        JOIN bing_results b ON b.run_id = c.run_id 
-          AND (b.url = c.url OR b.result_domain = c.norm_domain)
-    ''').fetchone()[0]
-    
-    matched_deep = db.execute('''
-        SELECT COUNT(DISTINCT c.rowid)
-        FROM citations c
-        JOIN bing_deep_hunt b ON b.run_id = c.run_id 
-          AND (b.url = c.url OR b.result_domain = c.norm_domain)
-    ''').fetchone()[0]
-
-    # 3. Top Invisible Domains
+    # Top Invisible Domains (not in Bing results)
     invisible_domains = db.execute('''
-        SELECT norm_domain as citation_domain, COUNT(*) as count
+        SELECT domain, COUNT(*) as count
         FROM citations c
         WHERE NOT EXISTS (
-            SELECT 1 FROM bing_deep_hunt b 
+            SELECT 1 FROM bing_results b 
             WHERE b.run_id = c.run_id 
-              AND (b.url = c.url OR b.result_domain = c.norm_domain)
+              AND b.url_normalized = c.url_normalized
         )
-        GROUP BY norm_domain
+        GROUP BY domain
         ORDER BY count DESC
         LIMIT 100
     ''').fetchall()
@@ -537,10 +501,6 @@ def dashboard():
                                  matched_all=matched_all,
                                  total_main=total_main,
                                  matched_main=matched_main,
-                                 total_add=total_add,
-                                 matched_add=matched_add,
-                                 matched_top30=matched_top30,
-                                 matched_deep=matched_deep,
                                  invisible_domains=invisible_domains)
 
 if __name__ == '__main__':
