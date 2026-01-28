@@ -38,23 +38,22 @@ DASHBOARD_TEMPLATE = """
                 <!-- All Citations -->
                 <div style="background:#f9fafb; padding:15px; border-radius:8px; text-align:center;">
                     <div class="stat-label">Combined (All)</div>
-                    <div class="stat-big">{{ "%.1f"|format(matched_all / total_all * 100) }}%</div>
-                    <div style="font-size:11px; color:#666;">{{ matched_all }} / {{ total_all }}</div>
+                    <div class="stat-big">{{ "%.1f"|format(matched_all_strict / total_all * 100) }}% <span style="font-size:12px; color:#666;">(Strict)</span></div>
+                    <div class="stat-big" style="font-size:18px; color:#999;">{{ "%.1f"|format(matched_all_domain / total_all * 100) }}% <span style="font-size:10px;">(Domain)</span></div>
                 </div>
                 
                 <!-- Main Citations -->
                 <div style="background:#ecfdf5; padding:15px; border-radius:8px; text-align:center;">
                     <div class="stat-label" style="color:#065f46; font-weight:bold;">Core Recommendations</div>
-                    <div class="stat-big" style="color:#059669;">{{ "%.1f"|format(matched_main / total_main * 100) }}%</div>
-                    <div style="font-size:11px; color:#065f46;">{{ matched_main }} / {{ total_main }}</div>
-                    <div style="font-size:10px; color:#065f46; margin-top:4px;">(Cited + Inline)</div>
+                    <div class="stat-big" style="color:#059669;">{{ "%.1f"|format(matched_main_strict / total_main * 100) }}% <span style="font-size:12px;">(Strict)</span></div>
+                    <div class="stat-big" style="font-size:18px; color:#059669; opacity:0.6;">{{ "%.1f"|format(matched_main_domain / total_main * 100) }}% <span style="font-size:10px;">(Domain)</span></div>
                 </div>
 
                 <!-- Additional Citations -->
                 <div style="background:#f3f4f6; padding:15px; border-radius:8px; text-align:center;">
                     <div class="stat-label">"Additional" Links</div>
-                    <div class="stat-big" style="color:#4b5563;">{{ "%.1f"|format(matched_add / total_add * 100) }}%</div>
-                    <div style="font-size:11px; color:#666;">{{ matched_add }} / {{ total_add }}</div>
+                    <div class="stat-big" style="color:#4b5563;">{{ "%.1f"|format(matched_add_strict / total_add * 100) }}% <span style="font-size:12px;">(Strict)</span></div>
+                    <div class="stat-big" style="font-size:18px; color:#4b5563; opacity:0.6;">{{ "%.1f"|format(matched_add_domain / total_add * 100) }}% <span style="font-size:10px;">(Domain)</span></div>
                 </div>
             </div>
             
@@ -130,6 +129,126 @@ DASHBOARD_TEMPLATE = """
 </html>
 """
 
+PROMPT_LIST_TEMPLATE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prompt Analysis List</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f4f4f9; padding: 40px; }
+        .nav { margin-bottom: 30px; }
+        .nav a { text-decoration: none; color: #10a37f; font-weight: bold; margin-right: 20px; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f9fafb; }
+        .stability-high { color: #059669; font-weight: bold; }
+        .stability-low { color: #dc2626; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">← Back to Consistency Viewer</a>
+    </div>
+    <h1>Prompt Analysis</h1>
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Prompt ID</th>
+                    <th>Total Unique Citations</th>
+                    <th>Stability (3+ Runs)</th>
+                    <th>Stability %</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in prompts %}
+                <tr>
+                    <td><b>{{ p.prompt_id }}</b></td>
+                    <td>{{ p.unique_citations }}</td>
+                    <td>{{ p.stable_citations_3plus }}</td>
+                    <td class="{{ 'stability-high' if p.stability_pct > 50 else ('stability-low' if p.stability_pct < 25 else '') }}">
+                        {{ "%.1f"|format(p.stability_pct) }}%
+                    </td>
+                    <td><a href="/prompt/{{ p.prompt_id }}" style="color:#3b82f6; font-weight:bold;">Analyze Drift →</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+"""
+
+PROMPT_DETAIL_TEMPLATE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prompt Detail: {{ prompt_id }}</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f4f4f9; padding: 40px; }
+        .nav { margin-bottom: 30px; }
+        .nav a { text-decoration: none; color: #10a37f; font-weight: bold; margin-right: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        h2 { margin-top: 0; color: #333; font-size: 18px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        .query-box { background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-bottom: 10px; }
+        .run-label { font-size: 11px; font-weight: bold; color: #666; text-transform: uppercase; }
+        .url-list { font-size: 13px; }
+        .url-item { padding: 4px 0; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; }
+        .stable-badge { background: #d1fae5; color: #065f46; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+        .oneoff-badge { background: #f3f4f6; color: #6b7280; padding: 2px 6px; border-radius: 4px; font-size: 10px; }
+        .invisible-badge { background: #fee2e2; color: #b91c1c; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/prompts">← Back to Prompt List</a>
+    </div>
+    <h1>Analysis for {{ prompt_id }}</h1>
+    
+    <div class="card">
+        <h2>Rewritten Query Drift</h2>
+        {% for run in runs %}
+        <div class="query-box">
+            <div class="run-label">{{ run.run_id }}</div>
+            <div style="font-size: 15px; margin-top: 5px;">{{ run.rewritten_query or 'NO REWRITTEN QUERY' }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <h2>Citation Stability & Visibility</h2>
+        <div class="url-list">
+            <div class="url-item" style="font-weight:bold; background:#f9fafb; padding:8px;">
+                <span>URL</span>
+                <span>Status</span>
+            </div>
+            {% for c in citations %}
+            <div class="url-item">
+                <span style="max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    <a href="{{ c.url }}" target="_blank">{{ c.url }}</a>
+                </span>
+                <div style="display:flex; gap:5px;">
+                    {% if c.run_count >= 3 %}
+                        <span class="stable-badge">STABLE ({{ c.run_count }} Runs)</span>
+                    {% else %}
+                        <span class="oneoff-badge">{{ c.run_count }} Runs</span>
+                    {% endif %}
+                    
+                    {% if c.in_bing == 0 %}
+                        <span class="invisible-badge">INVISIBLE</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+"""
+
 app = Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.do')
 DB_PATH = 'geo_fresh.db'
@@ -185,6 +304,8 @@ HTML_TEMPLATE = """
         td { padding: 12px; border-bottom: 1px solid #eee; font-size: 13px; vertical-align: top; }
         .rank-badge { background: #6e6e80; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; }
         .match-row { background: #fff9c4 !important; }
+        .domain-match-row { background: #f0fdf4 !important; }
+        .duplicate-rank { color: #ef4444; font-weight: bold; font-size: 10px; margin-top: 2px; }
         .citation-type-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: bold; margin-right: 6px; display: inline-block; }
         .citation-type-badge.cited { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
         .citation-type-badge.inline { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
@@ -200,6 +321,9 @@ HTML_TEMPLATE = """
     <div id="sidebar">
         <div style="margin-bottom: 20px; padding: 10px; background: #10a37f; border-radius: 5px; text-align: center;">
             <a href="/dashboard" style="text-decoration:none; color:white; font-weight:bold;">📊 VIEW DASHBOARD</a>
+        </div>
+        <div style="margin-bottom: 20px; padding: 10px; background: #3b82f6; border-radius: 5px; text-align: center;">
+            <a href="/prompts" style="text-decoration:none; color:white; font-weight:bold;">🔍 PROMPT ANALYSIS</a>
         </div>
         <h3>Runs</h3>
         {% for rid in run_ids %}
@@ -277,13 +401,22 @@ HTML_TEMPLATE = """
                                 <span class="citation-type-badge {{ c.citation_type }}">{{ c.citation_type }}</span>
                                 {{ c.item_entity_name or c.item_name or 'N/A' }}
                                 {% set found_rank = [] %}
+                                {% set is_exact = [] %}
                                 {% for b in bing %}
-                                    {% if b.url == c.url or b.result_domain == c.citation_domain %}
+                                    {% if b.url == c.url %}
                                         {% do found_rank.append(b.result_rank or b.absolute_rank) %}
+                                        {% do is_exact.append(True) %}
+                                    {% elif b.result_domain == c.citation_domain %}
+                                        {% do found_rank.append(b.result_rank or b.absolute_rank) %}
+                                        {% do is_exact.append(False) %}
                                     {% endif %}
                                 {% endfor %}
                                 {% if found_rank %}
-                                    <a href="#rank-{{ found_rank[0] }}" style="margin-left:10px; background:#fff9c4; color:#d97706; padding:1px 6px; border-radius:4px; font-size:10px; border:1px solid #d97706;">RANK {{ found_rank[0] }}</a>
+                                    {% if is_exact[0] %}
+                                        <a href="#rank-{{ found_rank[0] }}" style="margin-left:10px; background:#fff9c4; color:#d97706; padding:1px 6px; border-radius:4px; font-size:10px; border:1px solid #d97706;">RANK {{ found_rank[0] }} (EXACT)</a>
+                                    {% else %}
+                                        <a href="#rank-{{ found_rank[0] }}" style="margin-left:10px; background:#f0fdf4; color:#166534; padding:1px 6px; border-radius:4px; font-size:10px; border:1px solid #166534;">RANK {{ found_rank[0] }} (DOMAIN)</a>
+                                    {% endif %}
                                 {% else %}
                                     <span style="margin-left:10px; background:#fee2e2; color:#b91c1c; padding:1px 6px; border-radius:4px; font-size:10px; border:1px solid #b91c1c;">NOT IN TOP 150</span>
                                 {% endif %}
@@ -309,10 +442,15 @@ HTML_TEMPLATE = """
                     </tr>
                 </thead>
                 <tbody>
+                    {% set displayed_ranks = [] %}
                     {% for b in bing %}
-                    <tr id="rank-{{ b.result_rank or b.absolute_rank }}" class="{{ 'match-row' if b.is_cited else '' }}">
+                    <tr id="rank-{{ b.result_rank or b.absolute_rank }}" class="{{ 'match-row' if b.is_cited else ('domain-match-row' if b.is_domain_match else '') }}">
                         <td>
                             <span class="rank-badge">{{ b.result_rank or b.absolute_rank }}</span>
+                            {% if (b.result_rank or b.absolute_rank) in displayed_ranks %}
+                                <div class="duplicate-rank">DUPLICATE</div>
+                            {% endif %}
+                            {% do displayed_ranks.append(b.result_rank or b.absolute_rank) %}
                             <div style="font-size: 9px; color: #888; margin-top: 2px;">Pg {{ b.page_num or ((((b.absolute_rank|int) - 1) // 10) + 1) }}</div>
                         </td>
                         <td>
@@ -321,7 +459,8 @@ HTML_TEMPLATE = """
                         </td>
                         <td>
                             <span style="font-weight:500;">{{ b.result_domain }}</span>
-                            {% if b.is_cited %}<br><b style="color:#d97706; font-size:10px;">[CITED]</b>{% endif %}
+                            {% if b.is_cited %}<br><b style="color:#d97706; font-size:10px;">[EXACT MATCH]</b>
+                            {% elif b.is_domain_match %}<br><b style="color:#166534; font-size:10px;">[DOMAIN MATCH]</b>{% endif %}
                         </td>
                     </tr>
                     {% endfor %}
@@ -357,6 +496,8 @@ def index():
     bing_results = []
     
     if run_id:
+        platforms_list = ['apple.com', 'google.com', 'microsoft.com', 'chrome.google.com', 'play.google.com', 'apps.apple.com', 'amazon.com']
+        platforms = "('apple.com', 'google.com', 'microsoft.com', 'chrome.google.com', 'play.google.com', 'apps.apple.com', 'amazon.com')"
         # Normalize run_id for lookup
         df_raw['temp_run_id'] = df_raw.index.astype(str)
         
@@ -415,9 +556,13 @@ def index():
         
         if mode == 'deep':
             # Query the new bing_deep_hunt table
-            bing_results = db.execute('''
+            bing_results = db.execute(f'''
                 SELECT *, 
-                EXISTS(SELECT 1 FROM citations c WHERE c.run_id = b.run_id AND (c.url = b.url OR c.citation_domain = b.result_domain)) as is_cited,
+                EXISTS(SELECT 1 FROM citations c WHERE c.run_id = b.run_id AND c.url = b.url) as is_cited,
+                (
+                    b.result_domain NOT IN {platforms}
+                    AND EXISTS(SELECT 1 FROM citations c WHERE c.run_id = b.run_id AND c.citation_domain = b.result_domain AND c.url != b.url)
+                ) as is_domain_match,
                 (absolute_rank > 30) as is_deep_match
                 FROM bing_deep_hunt b 
                 WHERE run_id = ? 
@@ -425,13 +570,13 @@ def index():
             ''', (run_id,)).fetchall()
         elif mode == 'combined':
             # Factor in BOTH Standard (Top 30) and Deep Hunt (Top 150)
-            bing_results = db.execute('''
+            bing_results = db.execute(f'''
                 WITH Combined AS (
                     SELECT url, result_rank as absolute_rank, 1 as page_num, result_domain, result_title as title, run_id
                     FROM bing_results 
                     WHERE run_id = ?
                     UNION ALL
-                    SELECT url, absolute_rank, page_num, result_domain, title, run_id
+                    SELECT url, absolute_rank, page_num, result_domain, url as title, run_id
                     FROM bing_deep_hunt 
                     WHERE run_id = ?
                 ),
@@ -441,7 +586,11 @@ def index():
                     FROM Combined
                 )
                 SELECT *,
-                EXISTS(SELECT 1 FROM citations c WHERE c.run_id = r.run_id AND (c.url = r.url OR c.citation_domain = r.result_domain)) as is_cited,
+                EXISTS(SELECT 1 FROM citations c WHERE c.run_id = r.run_id AND c.url = r.url) as is_cited,
+                (
+                    r.result_domain NOT IN {platforms}
+                    AND EXISTS(SELECT 1 FROM citations c WHERE c.run_id = r.run_id AND c.citation_domain = r.result_domain AND c.url != r.url)
+                ) as is_domain_match,
                 (absolute_rank > 30) as is_deep_match
                 FROM Ranked r
                 WHERE rn = 1
@@ -449,9 +598,13 @@ def index():
             ''', (run_id, run_id)).fetchall()
         else:
             # Standard Top 30
-            bing_results = db.execute('''
+            bing_results = db.execute(f'''
                 SELECT *, 
-                EXISTS(SELECT 1 FROM citations c WHERE c.run_id = b.run_id AND (c.url = b.url OR c.citation_domain = b.result_domain)) as is_cited,
+                EXISTS(SELECT 1 FROM citations c WHERE c.run_id = b.run_id AND c.url = b.url) as is_cited,
+                (
+                    b.result_domain NOT IN {platforms}
+                    AND EXISTS(SELECT 1 FROM citations c WHERE c.run_id = b.run_id AND c.citation_domain = b.result_domain AND c.url != b.url)
+                ) as is_domain_match,
                 0 as is_deep_match
                 FROM bing_results b 
                 WHERE run_id = ? 
@@ -482,49 +635,70 @@ def dashboard():
     ''').fetchall()
     
     # 2. Coverage Stats
+    platforms = "('apple.com', 'google.com', 'microsoft.com', 'chrome.google.com', 'play.google.com', 'apps.apple.com', 'amazon.com')"
     
-    # Helper for Combined Match (Standard OR Deep)
-    match_sql = """
-        (EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND (b.url = c.url OR b.result_domain = c.norm_domain))
+    match_sql_strict = "(EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url = c.url) OR EXISTS (SELECT 1 FROM bing_deep_hunt d WHERE d.run_id = c.run_id AND d.url = c.url))"
+    
+    # Domain match SQL: Allow domain matching ONLY if the domain is NOT a platform domain
+    match_sql_domain = f"""(
+        {match_sql_strict} 
         OR 
-        EXISTS (SELECT 1 FROM bing_deep_hunt d WHERE d.run_id = c.run_id AND (d.url = c.url OR d.result_domain = c.norm_domain)))
-    """
+        (
+            c.norm_domain NOT IN {platforms}
+            AND (
+                EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.result_domain = c.norm_domain)
+                OR 
+                EXISTS (SELECT 1 FROM bing_deep_hunt d WHERE d.run_id = c.run_id AND d.result_domain = c.norm_domain)
+            )
+        )
+    )"""
 
     # All Citations
     total_all = db.execute('SELECT COUNT(*) FROM citations').fetchone()[0]
-    matched_all = db.execute(f'SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE {match_sql}').fetchone()[0]
+    matched_all_strict = db.execute(f'SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE {match_sql_strict}').fetchone()[0]
+    matched_all_domain = db.execute(f'SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE {match_sql_domain}').fetchone()[0]
 
     # Main Citations (Cited + Inline)
     total_main = db.execute("SELECT COUNT(*) FROM citations WHERE citation_type != 'additional'").fetchone()[0]
-    matched_main = db.execute(f"SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE citation_type != 'additional' AND {match_sql}").fetchone()[0]
+    matched_main_strict = db.execute(f"SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE citation_type != 'additional' AND {match_sql_strict}").fetchone()[0]
+    matched_main_domain = db.execute(f"SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE citation_type != 'additional' AND {match_sql_domain}").fetchone()[0]
 
     # Additional Citations
     total_add = db.execute("SELECT COUNT(*) FROM citations WHERE citation_type = 'additional'").fetchone()[0]
-    matched_add = db.execute(f"SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE citation_type = 'additional' AND {match_sql}").fetchone()[0]
+    matched_add_strict = db.execute(f"SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE citation_type = 'additional' AND {match_sql_strict}").fetchone()[0]
+    matched_add_domain = db.execute(f"SELECT COUNT(DISTINCT c.rowid) FROM citations c WHERE citation_type = 'additional' AND {match_sql_domain}").fetchone()[0]
 
     # Legacy Stats for Comparison
-    matched_top30 = db.execute('''
+    matched_top30 = db.execute(f'''
         SELECT COUNT(DISTINCT c.rowid)
         FROM citations c
-        JOIN bing_results b ON b.run_id = c.run_id 
-          AND (b.url = c.url OR b.result_domain = c.norm_domain)
+        WHERE (EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url = c.url))
+        OR (
+            c.norm_domain NOT IN {platforms}
+            AND EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.result_domain = c.norm_domain)
+        )
     ''').fetchone()[0]
     
-    matched_deep = db.execute('''
+    matched_deep = db.execute(f'''
         SELECT COUNT(DISTINCT c.rowid)
         FROM citations c
-        JOIN bing_deep_hunt b ON b.run_id = c.run_id 
-          AND (b.url = c.url OR b.result_domain = c.norm_domain)
+        WHERE (EXISTS (SELECT 1 FROM bing_deep_hunt b WHERE b.run_id = c.run_id AND b.url = c.url))
+        OR (
+            c.norm_domain NOT IN {platforms}
+            AND EXISTS (SELECT 1 FROM bing_deep_hunt b WHERE b.run_id = c.run_id AND b.result_domain = c.norm_domain)
+        )
     ''').fetchone()[0]
 
     # 3. Top Invisible Domains
-    invisible_domains = db.execute('''
+    invisible_domains = db.execute(f'''
         SELECT norm_domain as citation_domain, COUNT(*) as count
         FROM citations c
-        WHERE NOT EXISTS (
-            SELECT 1 FROM bing_deep_hunt b 
-            WHERE b.run_id = c.run_id 
-              AND (b.url = c.url OR b.result_domain = c.norm_domain)
+        WHERE NOT (
+            (EXISTS (SELECT 1 FROM bing_deep_hunt b WHERE b.run_id = c.run_id AND b.url = c.url))
+            OR (
+                c.norm_domain NOT IN {platforms}
+                AND EXISTS (SELECT 1 FROM bing_deep_hunt b WHERE b.run_id = c.run_id AND b.result_domain = c.norm_domain)
+            )
         )
         GROUP BY norm_domain
         ORDER BY count DESC
@@ -534,14 +708,57 @@ def dashboard():
     return render_template_string(DASHBOARD_TEMPLATE, 
                                  page_data=page_data,
                                  total_all=total_all,
-                                 matched_all=matched_all,
+                                 matched_all_strict=matched_all_strict,
+                                 matched_all_domain=matched_all_domain,
                                  total_main=total_main,
-                                 matched_main=matched_main,
+                                 matched_main_strict=matched_main_strict,
+                                 matched_main_domain=matched_main_domain,
                                  total_add=total_add,
-                                 matched_add=matched_add,
+                                 matched_add_strict=matched_add_strict,
+                                 matched_add_domain=matched_add_domain,
                                  matched_top30=matched_top30,
                                  matched_deep=matched_deep,
                                  invisible_domains=invisible_domains)
+
+@app.route('/prompts')
+def prompts_list():
+    # Load the consistency report we just generated
+    report_path = 'data/metrics/cross_run_consistency_report.csv'
+    if not os.path.exists(report_path):
+        return "Consistency report not found. Please run scripts/metrics/analyze_cross_run_consistency.py first."
+    
+    df = pd.read_csv(report_path)
+    prompts = df.to_dict('records')
+    return render_template_string(PROMPT_LIST_TEMPLATE, prompts=prompts)
+
+@app.route('/prompt/<prompt_id>')
+def prompt_detail(prompt_id):
+    db = get_db()
+    
+    # 1. Get rewritten queries for all runs of this prompt
+    runs = db.execute('''
+        SELECT run_id, rewritten_query 
+        FROM runs 
+        WHERE prompt_id = ? 
+        ORDER BY run_id
+    ''', (prompt_id,)).fetchall()
+    
+    # 2. Get citation stability and visibility for this prompt
+    citations = db.execute('''
+        SELECT c.url, 
+               COUNT(DISTINCT c.run_id) as run_count,
+               (SELECT COUNT(*) FROM bing_results b WHERE b.run_id = r.run_id AND b.url = c.url) as in_bing
+        FROM citations c
+        JOIN runs r ON c.run_id = r.run_id
+        WHERE r.prompt_id = ?
+        GROUP BY c.url
+        ORDER BY run_count DESC, c.url ASC
+    ''', (prompt_id,)).fetchall()
+    
+    return render_template_string(PROMPT_DETAIL_TEMPLATE, 
+                                 prompt_id=prompt_id, 
+                                 runs=runs, 
+                                 citations=citations)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
