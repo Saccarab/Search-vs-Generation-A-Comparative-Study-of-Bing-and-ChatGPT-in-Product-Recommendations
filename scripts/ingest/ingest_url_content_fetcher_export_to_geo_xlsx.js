@@ -72,11 +72,23 @@ function normalizeUrlKey(rawUrl) {
     if (host.startsWith("www.")) host = host.slice(4);
     let pathname = p.pathname || "/";
     if (pathname.length > 1 && pathname.endsWith("/")) pathname = pathname.slice(0, -1);
-    const dropExact = new Set(["gclid", "fbclid", "msclkid", "yclid", "mc_cid", "mc_eid", "igshid"]);
+    const isMicrosoftApps = host === "apps.microsoft.com";
+    const dropExact = new Set([
+      "gclid",
+      "fbclid",
+      "msclkid",
+      "yclid",
+      "mc_cid",
+      "mc_eid",
+      "igshid",
+      "test_uuid",
+      "test_variant",
+    ]);
     const kept = [];
     for (const [k, v] of p.searchParams.entries()) {
       const lk = k.toLowerCase();
       if (lk.startsWith("utm_")) continue;
+      if (isMicrosoftApps && (lk === "hl" || lk === "gl")) continue;
       if (dropExact.has(lk)) continue;
       kept.push([k, v]);
     }
@@ -165,7 +177,10 @@ function parseArgs(argv) {
     else if (a === "--run-label") out.runLabel = argv[++i] || "";
     else if (a === "--overwrite") out.overwrite = true;
     else if (a === "--create-missing-urls") out.createMissingUrls = true;
-    else if (a === "--min-text-chars") out.minTextChars = Number(argv[++i] || "200") || 200;
+    else if (a === "--min-text-chars") {
+      const val = argv[++i];
+      out.minTextChars = (val !== undefined && val !== "") ? Number(val) : 200;
+    }
     else if (a === "--max") out.max = Number(argv[++i] || "0") || 0;
   }
   return out;
@@ -213,7 +228,17 @@ async function main() {
     if (!url) continue;
     const k = normalizeUrlKey(url);
     if (!k) continue;
-    if (!keyToRow.has(k)) keyToRow.set(k, r);
+    if (!keyToRow.has(k)) {
+      keyToRow.set(k, r);
+      continue;
+    }
+    const existingRowIdx = keyToRow.get(k);
+    const existingUrl = getCell(ws, existingRowIdx, h, "url");
+    const existingLen = existingUrl ? existingUrl.length : 0;
+    const currentLen = url.length;
+    if (currentLen && (!existingLen || currentLen < existingLen)) {
+      keyToRow.set(k, r);
+    }
   }
 
   let processed = 0;
@@ -333,6 +358,9 @@ async function main() {
     setCell(ws, rowIdx, h, "canonical_url", canonicalUrl);
     setCell(ws, rowIdx, h, "published_date", publishedDate);
     setCell(ws, rowIdx, h, "modified_date", modifiedDate);
+    if (h.has("missing_reason")) {
+      setCell(ws, rowIdx, h, "missing_reason", "");
+    }
     updated++;
   }
 

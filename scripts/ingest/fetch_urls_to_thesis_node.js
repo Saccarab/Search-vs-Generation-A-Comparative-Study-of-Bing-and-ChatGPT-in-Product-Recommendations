@@ -292,6 +292,7 @@ function parseArgs(argv) {
     onlyUrl: [],
     urlContains: "",
     onlyContentPathContains: "",
+    includeAdditionalOnly: false,
   };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
@@ -308,6 +309,7 @@ function parseArgs(argv) {
     else if (a === "--only-url") out.onlyUrl.push(argv[++i]);
     else if (a === "--url-contains") out.urlContains = argv[++i] || "";
     else if (a === "--only-content-path-contains") out.onlyContentPathContains = argv[++i] || "";
+    else if (a === "--include-additional-only") out.includeAdditionalOnly = true;
   }
   return out;
 }
@@ -360,6 +362,8 @@ async function main() {
   await wb.xlsx.readFile(args.xlsx);
   const ws = wb.getWorksheet("urls");
   if (!ws) throw new Error("Workbook missing sheet: urls");
+  const wsCit = wb.getWorksheet("citations");
+  const wsBing = wb.getWorksheet("bing_results");
   const h = sheetHeaderMap(ws);
 
   const required = ["url", "domain", "content_path", "content_word_count", "has_schema_markup", "fetched_at"];
@@ -376,6 +380,34 @@ async function main() {
   const contains = safeStr(args.urlContains).toLowerCase();
   const onlyCpContains = safeStr(args.onlyContentPathContains).toLowerCase();
 
+  // Default: skip URLs that appear ONLY as citation_type=additional (\"More\" panel)
+  // and are not referenced by inline/cited citations or by Bing results.
+  // This keeps additional sources for analysis, but avoids fetch cost at scale.
+  const keepKeys = new Set();
+  if (wsBing) {
+    const hb = sheetHeaderMap(wsBing);
+    if (hb.has("url")) {
+      for (let r = 2; r <= wsBing.rowCount; r++) {
+        const u = getCell(wsBing, r, hb, "url");
+        const k = normalizeUrlKey(u);
+        if (k) keepKeys.add(k);
+      }
+    }
+  }
+  if (wsCit) {
+    const hc = sheetHeaderMap(wsCit);
+    if (hc.has("url") && hc.has("citation_type")) {
+      for (let r = 2; r <= wsCit.rowCount; r++) {
+        const u = getCell(wsCit, r, hc, "url");
+        const t = safeStr(getCell(wsCit, r, hc, "citation_type")).toLowerCase();
+        if (!u) continue;
+        if (t === "additional") continue;
+        const k = normalizeUrlKey(u);
+        if (k) keepKeys.add(k);
+      }
+    }
+  }
+
   const limiter = new Bottleneck({ maxConcurrent: Math.max(1, args.concurrency), minTime: Math.max(0, args.minTimeMs) });
   const writeLimiter = new Bottleneck({ maxConcurrent: 1 });
 
@@ -383,6 +415,7 @@ async function main() {
   let fetchedOk = 0;
   let failed = 0;
   let skipped = 0;
+  let skippedAdditionalOnly = 0;
   let written = 0;
 
   const tasks = [];
@@ -393,6 +426,15 @@ async function main() {
 
     if (onlyUrls.size && !onlyUrls.has(url)) continue;
     if (!onlyUrls.size && contains && !url.toLowerCase().includes(contains)) continue;
+
+    // Skip additional-only URLs unless explicitly included or targeted with --only-url
+    if (!args.includeAdditionalOnly && !onlyUrls.size && keepKeys.size) {
+      const k = normalizeUrlKey(url);
+      if (k && !keepKeys.has(k)) {
+        skippedAdditionalOnly++;
+        continue;
+      }
+    }
 
     const existingCp = getCell(ws, r, h, "content_path");
     if (onlyCpContains) {
@@ -553,7 +595,7 @@ async function main() {
   }
 
   console.log("Done.");
-  console.log({ processed, fetchedOk, failed, skipped, written, outDir, noUpdateXlsx: args.noUpdateXlsx });
+  console.log({ processed, fetchedOk, failed, skipped, skippedAdditionalOnly, written, outDir, noUpdateXlsx: args.noUpdateXlsx });
 }
 
 main().catch((e) => {

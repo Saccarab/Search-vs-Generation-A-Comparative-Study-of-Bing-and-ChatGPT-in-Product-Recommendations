@@ -156,6 +156,41 @@ def sheet_header_map(ws) -> Dict[str, int]:
     return m
 
 
+def ensure_column(ws, header: Dict[str, int], col_name: str) -> int:
+    """
+    Ensure a column exists in the sheet; if missing, append it to the header row.
+    Returns the 1-based column index.
+    """
+    if col_name in header:
+        return header[col_name]
+    new_col = ws.max_column + 1
+    ws.cell(row=1, column=new_col).value = col_name
+    header[col_name] = new_col
+    return new_col
+
+
+def split_entity_names(item_name: str) -> List[str]:
+    """
+    Best-effort split of a combined item_name into multiple entity names.
+    Example: "Clideo & Flixier" -> ["Clideo", "Flixier"].
+    This is intentionally conservative; if we can't split confidently, return [item_name].
+    """
+    s = safe_str(item_name)
+    if not s:
+        return []
+    # Normalize some common separators
+    # NOTE: order matters; handle " & " and " and " before commas.
+    for sep in [" & ", " and ", " / ", " | ", " + "]:
+        if sep in s:
+            parts = [p.strip() for p in s.split(sep) if p.strip()]
+            return parts if len(parts) >= 2 else [s]
+    # comma-separated names
+    if ", " in s:
+        parts = [p.strip() for p in s.split(",") if p.strip()]
+        return parts if len(parts) >= 2 else [s]
+    return [s]
+
+
 def find_row_by_key(ws, col_idx: int, key: str) -> Optional[int]:
     """Return row number where ws[row, col_idx] == key, else None."""
     for r in range(2, ws.max_row + 1):
@@ -235,6 +270,12 @@ def main() -> None:
     h_bing = sheet_header_map(ws_bing)
     h_urls = sheet_header_map(ws_urls)
 
+    # Optional: disambiguate multiple inline citation chip groups within the same list item.
+    # (E.g., a bullet that mentions two products with two separate citation chips.)
+    ensure_column(ws_cit, h_cit, "citation_group_index")
+    # Optional: best-effort entity name per chip group (lets you split "Clideo & Flixier" later)
+    ensure_column(ws_cit, h_cit, "item_entity_name")
+
     # ---- runs ----
     chat["run_id"] = chat.apply(lambda r: f"{r['prompt_id']}_r{int(r['run_number'])}", axis=1)
     for _, r in chat.iterrows():
@@ -256,6 +297,7 @@ def main() -> None:
                 "citation_count": citation_count,
                 "ui_session": args.ui_session,
                 "rewritten_query": rewritten,
+                "response_text": str(r.get("response_text", "") or "").strip(),
                 "user_location": args.user_location,
                 "notes": args.notes,
                 "vpn_status": args.vpn_status,
@@ -281,10 +323,12 @@ def main() -> None:
             url = ws_cit.cell(rr, h_cit["url"]).value
             ctype = ws_cit.cell(rr, h_cit["citation_type"]).value
             if rid and url and ctype:
+                group_idx = str(ws_cit.cell(rr, h_cit.get("citation_group_index", 0)).value or "").strip()
                 key = (str(rid).strip(), str(url).strip(), str(ctype).strip(),
                        str(ws_cit.cell(rr, h_cit.get("cite_position", 0)).value or "").strip(),
                        str(ws_cit.cell(rr, h_cit.get("item_position", 0)).value or "").strip(),
-                       str(ws_cit.cell(rr, h_cit.get("citation_in_group_rank", 0)).value or "").strip())
+                       str(ws_cit.cell(rr, h_cit.get("citation_in_group_rank", 0)).value or "").strip(),
+                       group_idx)
                 existing_citation_keys.add(key)
 
     for _, r in chat.iterrows():
@@ -349,11 +393,15 @@ def main() -> None:
                 item_name = safe_str(item.get("item_name", ""))
                 item_text = safe_str(item.get("item_text", ""))
                 chip_groups = item.get("chip_groups", []) or []
-                for group in chip_groups:
+                for group_index, group in enumerate(chip_groups, start=1):
                     links = group.get("links", []) if isinstance(group, dict) else []
                     if not isinstance(links, list) or not links:
                         continue
                     group_size = len(links)
+                    entity_names = split_entity_names(item_name)
+                    entity_name = ""
+                    if entity_names and 1 <= group_index <= len(entity_names):
+                        entity_name = entity_names[group_index - 1]
                     for j, link in enumerate(links, start=1):
                         url = safe_str(link)
                         if not url:
@@ -366,7 +414,7 @@ def main() -> None:
                             domain = extract_domain(url)
 
                         sp_pos = sources_panel_pos.get(url, None)
-                        key = (run_id, url, "inline", "", str(item_position or ""), str(j))
+                        key = (run_id, url, "inline", "", str(item_position or ""), str(j), str(group_index))
                         if key in existing_citation_keys:
                             continue
 
@@ -389,6 +437,8 @@ def main() -> None:
                                 "item_position": item_position,
                                 "item_name": item_name,
                                 "item_text": item_text,
+                                "item_entity_name": entity_name,
+                                "citation_group_index": group_index,
                                 "citation_group_size": group_size,
                                 "citation_in_group_rank": j,
                                 # Optional column (if present in the workbook): explicit duplicate of cite_position
