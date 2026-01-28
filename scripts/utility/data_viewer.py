@@ -489,28 +489,28 @@ def index():
                 run_raw['complex_search_prob'] = 0
                 run_raw['no_search_prob'] = 0
             
-                # Calculate rejected sources (retrieved but not cited/additional)
-                try:
-                    srg = json.loads(run_raw['search_result_groups_json'] or '[]')
-                    cited = set(s['url'] for s in json.loads(run_raw['sources_cited_json'] or '[]'))
-                    additional = set(s['url'] for s in json.loads(run_raw['sources_additional_json'] or '[]'))
-                    all_used = cited | additional
-                    
-                    rejected = []
-                    for group in srg:
-                        for entry in group.get('entries', []):
-                            if entry.get('url') and entry['url'] not in all_used:
-                                rejected.append({
-                                    'url': entry['url'],
-                                    'title': entry.get('title', ''),
-                                    'domain': group.get('domain', ''),
-                                    'snippet': (entry.get('snippet') or '')[:100]
-                                })
-                    run_raw['rejected_sources'] = rejected
-                    print(f"DEBUG: Found {len(rejected)} rejected sources for {run_id}")
-                except Exception as e:
-                    print(f"ERROR calculating rejected: {e}")
-                    run_raw['rejected_sources'] = []
+            # Calculate rejected sources (retrieved but not cited/additional)
+            try:
+                srg = json.loads(run_raw['search_result_groups_json'] or '[]')
+                cited = set(s['url'] for s in json.loads(run_raw['sources_cited_json'] or '[]'))
+                additional = set(s['url'] for s in json.loads(run_raw['sources_additional_json'] or '[]'))
+                all_used = cited | additional
+                
+                rejected = []
+                for group in srg:
+                    for entry in group.get('entries', []):
+                        if entry.get('url') and entry['url'] not in all_used:
+                            rejected.append({
+                                'url': entry['url'],
+                                'title': entry.get('title', ''),
+                                'domain': group.get('domain', ''),
+                                'snippet': (entry.get('snippet') or '')[:100]
+                            })
+                run_raw['rejected_sources'] = rejected
+                print(f"DEBUG: Found {len(rejected)} rejected sources for {run_id}")
+            except Exception as e:
+                print(f"ERROR calculating rejected: {e}")
+                run_raw['rejected_sources'] = []
             
             # Parse items_json for structured display
             try:
