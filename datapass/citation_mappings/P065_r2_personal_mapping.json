@@ -1,0 +1,340 @@
+{
+  "run_id": "P065_r2",
+  "account_type": "personal",
+  "prompt": "Are there any free audio to text transcription services?",
+  "metadata": {
+    "hidden_queries": [
+      "free audio to text transcription services",
+      "audio transcription free services online"
+    ],
+    "sonic_classification": {
+      "latency_ms": 87.1677469694987,
+      "simple_search_prob": 0.9862240032168886,
+      "complex_search_prob": 0.0004629302578343886,
+      "no_search_prob": 0.013313066525276978,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free audio to text transcription services"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 98,
+        "end_idx": 104
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.uniscribe.co/",
+      "url_position": 120,
+      "claim_text": "Yes — there are several free audio‑to‑text transcription tools you can use online or in apps: Breev+6UniScribe+6Notta+6",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 320,
+        "end_idx": 339
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.uniscribe.co/",
+          "title": "Convert audio and video to text online for free",
+          "snippet": "UniScribe lets you upload audio and video files or paste YouTube Links, quickly turning them into text with AI. It also creates summaries, mind maps, ...",
+          "domain": "www.uniscribe.co",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.uniscribe.co/",
+      "url_position": 272,
+      "claim_text": "Free online transcription services UniScribe – upload audio/video or paste YouTube links to get AI transcripts. UniScribe",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 400,
+        "end_idx": 419
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.notta.ai/en/tools/audio-to-text-converter",
+      "url_position": 359,
+      "claim_text": "Notta – simple free audio‑to‑text converter online. Notta",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 496,
+        "end_idx": 515
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://riverside.com/transcription",
+      "url_position": 494,
+      "claim_text": "Riverside Transcription – free AI transcriptions in 100+ languages. Riverside",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 597,
+        "end_idx": 616
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.canva.com/features/audio-to-text-converter/",
+      "url_position": 616,
+      "claim_text": "Canva Audio‑to‑Text – upload audio to convert to text/captions for free. canva.com",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 695,
+        "end_idx": 714
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechnotes.co/",
+      "url_position": 767,
+      "claim_text": "Speechnotes – speech‑to‑text dictation and file upload transcription. Speech to Text Online",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 776,
+        "end_idx": 795
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://audiototext.com/",
+      "url_position": 859,
+      "claim_text": "AudioToText.com – instant free online transcription. AudioToText",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 867,
+        "end_idx": 887
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://breev.ai/en/audio-transcription",
+      "url_position": 956,
+      "claim_text": "Breev – simple free upload‑based transcription without signup. Breev",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1002,
+        "end_idx": 1022
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/",
+      "url_position": 1112,
+      "claim_text": "Apps / services with free tiers Otter.ai – has a free plan with a limited number of minutes per month. otter.ai",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1130,
+        "end_idx": 1131
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otranscribe.com/",
+      "url_position": 1246,
+      "claim_text": "Simple tools for manual transcription oTranscribe – free web tool to help type while listening. otranscribe.com",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.uniscribe.co/",
+        "title": "Convert audio and video to text online for free",
+        "domain": "UniScribe"
+      },
+      {
+        "url": "https://www.notta.ai/en/tools/audio-to-text-converter",
+        "title": "Audio to Text Converter 🔊 Free Audio transcription",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://riverside.com/transcription",
+        "title": "Audio & Video Transcription. Powered by AI.",
+        "domain": "Riverside"
+      },
+      {
+        "url": "https://www.canva.com/features/audio-to-text-converter/",
+        "title": "Free Audio to Text Converter: Transcribe audio to text",
+        "domain": "canva.com"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "Speech to Text Online"
+      },
+      {
+        "url": "https://audiototext.com/",
+        "title": "Free Audio to Text Converter",
+        "domain": "AudioToText"
+      },
+      {
+        "url": "https://breev.ai/en/audio-transcription",
+        "title": "Transcribe audio without registration - Breev",
+        "domain": "Breev"
+      },
+      {
+        "url": "https://otter.ai/",
+        "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://otranscribe.com/",
+        "title": "oTranscribe",
+        "domain": "otranscribe.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.descript.com/transcription",
+        "title": "Free AI Transcription for Audio & Video | Fast & Accurate",
+        "domain": "descript.com"
+      },
+      {
+        "url": "https://support.microsoft.com/en-us/office/transcribe-your-recordings-7fc2efec-245e-45f0-b053-2a97531ecf57",
+        "title": "Transcribe your recordings",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/free-transcription-software",
+        "title": "Best Free Transcription Software: 6 Tools Tested ... - Jamie AI",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://www.reddit.com/r/TechnologyProTips/comments/1ftt4xi/looking_for_an_app_or_website_that_converts_audio/",
+        "title": "Looking for an app or website that converts audio to text ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/software/comments/13g1lly/free_and_easy_audio_transcription_ai/",
+        "title": "Free and easy audio transcription AI? : r/software",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://restream.io/tools/transcribe-audio-to-text",
+        "title": "Transcribe Audio to Text: AI Transcription Software",
+        "domain": "restream.io"
+      },
+      {
+        "url": "https://meetgeek.ai/blog/best-free-transcription-software",
+        "title": "4 Best Free Transcription Software For 2026",
+        "domain": "meetgeek.ai"
+      },
+      {
+        "url": "https://www.transcribe.mov/",
+        "title": "transcribe.mov: Free Online Transcription for Video and Audio",
+        "domain": "transcribe.mov"
+      },
+      {
+        "url": "https://www.happyscribe.com/audio-to-text",
+        "title": "Convert Audio to Text Free | AI Transcription Tool",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://deepgram.com/free-transcription",
+        "title": "Free Transcription Tool",
+        "domain": "deepgram.com"
+      },
+      {
+        "url": "https://podcast.adobe.com/en/transcribe-audio-with-adobe-podcast",
+        "title": "Transcribe a file",
+        "domain": "adobe.com"
+      },
+      {
+        "url": "https://elevenlabs.io/audio-to-text",
+        "title": "Transcribe Audio to Text with AI",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://otter.ai/free-ai-transcription",
+        "title": "AI Transcription Free: Fast, Easy, Accurate Transcription",
+        "domain": "otter.ai"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 14,
+    "total_all": 23
+  },
+  "response_stats": {
+    "total_length": 1433,
+    "citation_count": 10,
+    "chars_with_citations": 161
+  }
+}

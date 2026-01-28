@@ -1,0 +1,339 @@
+{
+  "run_id": "P073_r1",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend the best video translator for YouTube?",
+  "metadata": {
+    "hidden_queries": [
+      "best video translator for YouTube subtitles translation tools",
+      "YouTube video translator tools comparison YouTube auto translate services"
+    ],
+    "sonic_classification": {
+      "latency_ms": 9.080901276320219,
+      "simple_search_prob": 0.9773789267643763,
+      "complex_search_prob": 0.012390873326632863,
+      "no_search_prob": 0.010230199908990815,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best video translator for YouTube subtitles translation tools"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 394,
+        "end_idx": 426
+      },
+      "citation_token": "citeturn0search0turn0search2",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.vmeg.ai/tools/youtube-subtitle-translator/",
+          "title": "YouTube Subtitle Translator – Convert & Translate Subtitles Instantly ...",
+          "snippet": "The Most Complete YouTube Video Translator for Global Reach Translate YouTube Subtitles into 170+ Global Languages ... You can translate YouTube subtitles to English, Spanish, Turkish, Japanese, Arabic, and more than 170 languages. ... Translate YouTube Subtitle Now",
+          "domain": "www.vmeg.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.vmeg.ai/tools/youtube-video-translator/",
+          "title": "YouTube Video Translator – Translate YouTube Videos to English",
+          "snippet": "Use VMEG YouTube Video Translator to translate YouTube videos and audio to english and into 170+ languages online. Clone your voice, choose from 7,000+ AI voices, auto-sync subtitles, and share translated videos instantly.",
+          "domain": "www.vmeg.ai",
+          "ref_type": "search",
+          "ref_index": 2,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_2"
+        }
+      ],
+      "inline_url": "https://www.vmeg.ai/tools/youtube-subtitle-translator/",
+      "url_position": 387,
+      "claim_text": "Here are top video translator options you can use for YouTube videos — tools that handle transcription, subtitle translation, and in some cases dubbing: Best overall (most complete features) VMEG – auto-generates subtitles from a URL, translates into 170+ languages, exports SRT or embedded captions, and even dubs with 7,000+ AI voices. Works without downloading the video. VMEG AI+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 528,
+        "end_idx": 548
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.veed.io/tools/video-translator",
+      "url_position": 548,
+      "claim_text": "VEED.io – strong support for 125+ subtitle languages and dubbed audio; simple editor workflow. VEED.IO",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 669,
+        "end_idx": 689
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.kapwing.com/tools/translate",
+      "url_position": 712,
+      "claim_text": "Content creator–friendly Kapwing – browser-based translator with 100+ language support and subtitle editing. Kapwing",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 781,
+        "end_idx": 800
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.notta.ai/en/blog/subtitle-translator",
+          "title": "6 Best Subtitle Translators for 2025 [Free & Paid] - Notta",
+          "snippet": "Pricing Free #2 Notta: Best for accurate audio transcriptions & translations If you're looking for a subtitle translator that works well for podcasts, interviews, YouTube videos, or anything you name it, then Notta is the right tool for you. It offers a lot of impressive features, such as transcription, translation, and summarization.",
+          "domain": "www.notta.ai",
+          "ref_type": "search",
+          "ref_index": 3,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_3"
+        }
+      ],
+      "inline_url": "https://www.notta.ai/en/blog/subtitle-translator",
+      "url_position": 846,
+      "claim_text": "Notta – accurate transcription + translation, good for YouTube clips and interviews. Notta",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 937,
+        "end_idx": 954
+      },
+      "citation_token": "citeturn0search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.unite.ai/best-ai-video-translation-tools/",
+      "url_position": 1035,
+      "claim_text": "Advanced AI translation & dubbing Rask AI / Flixier – tools with dubbing + voice options and large language support (~130+). unite.ai+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1048,
+        "end_idx": 1068
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.transmonkey.ai/youtube-video-translator",
+      "url_position": 1175,
+      "claim_text": "TransMonkey AI – AI translator with quality focus (video + subtitles). Transmonkey",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1189,
+        "end_idx": 1208
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://noiz.io/blog/how-to-translate-youtube-videos-useful-tools/",
+      "url_position": 1345,
+      "claim_text": "Free / simple options YouTube auto-translate – built-in subtitle translation (limited accuracy but no cost). Noiz",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1287,
+        "end_idx": 1306
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://zeemo.ai/tools/video-translator",
+      "url_position": 1492,
+      "claim_text": "Zeemo AI – free video translator with high accuracy subtitles (trial). Zeemo",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.vmeg.ai/tools/youtube-subtitle-translator/",
+        "title": "YouTube Subtitle Translator – Convert & Translate Subtitles Instantly ...",
+        "domain": "VMEG AI"
+      },
+      {
+        "url": "https://www.veed.io/tools/video-translator",
+        "title": "Instant Video Translator - Translate with AI - VEED.IO",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://www.kapwing.com/tools/translate",
+        "title": "Video Translator — Quickly Translate With AI - Kapwing",
+        "domain": "Kapwing"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/subtitle-translator",
+        "title": "6 Best Subtitle Translators for 2025 [Free & Paid] - Notta",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://www.unite.ai/best-ai-video-translation-tools/",
+        "title": "10 Best AI Video Translation Tools (January 2026) - Unite.AI",
+        "domain": "unite.ai"
+      },
+      {
+        "url": "https://www.transmonkey.ai/youtube-video-translator",
+        "title": "YouTube Video Translator: Translate YouTube Videos with AI",
+        "domain": "Transmonkey"
+      },
+      {
+        "url": "https://noiz.io/blog/how-to-translate-youtube-videos-useful-tools/",
+        "title": "How to Translate YouTube Videos: Best Tools | Noiz",
+        "domain": "Noiz"
+      },
+      {
+        "url": "https://zeemo.ai/tools/video-translator",
+        "title": "Free Online Video Translator With High Accuracy - Zeemo AI",
+        "domain": "Zeemo"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://youtubedownload.minitool.com/news/youtube-video-translator.html",
+        "title": "YouTube Video Translator Selection Guide: Our Top 4 Picks",
+        "domain": "minitool.com"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/blog/how-to-use-a-youtube-video-transcript-translator-in-2026-a-complete-guide-with-immersive-translate/",
+        "title": "How to Use a YouTube Video Transcript Translator in 2026 — A Complete ...",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://www.opus.pro/blog/best-subtitle-translation-tools",
+        "title": "12 Best Subtitle Translation Tools (100+ Languages)",
+        "domain": "opus.pro"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-ai-video-translator",
+        "title": "8 Best AI Video Translators of 2025 (For Multilingual Transcription ...",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://unifab.ai/resource/free-video-translator",
+        "title": "6 Best Free Video Translators in 2025 - unifab.ai",
+        "domain": "unifab.ai"
+      },
+      {
+        "url": "https://www.jogg.ai/blog/top-10-youtube-video-translators-2025/",
+        "title": "10 Best YouTube Video Translators | 2025 - jogg.ai",
+        "domain": "jogg.ai"
+      },
+      {
+        "url": "https://mapify.so/blog/best-subtitle-translators",
+        "title": "6 Best Subtitle Translators to Truly Understand Any Video in 2026",
+        "domain": "mapify.so"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-video-translators",
+        "title": "7 Best AI Video Translators in 2025",
+        "domain": "usefulai.com"
+      },
+      {
+        "url": "https://www.vmeg.ai/tools/youtube-video-translator/",
+        "title": "YouTube Video Translator – Translate YouTube Videos to English",
+        "domain": "vmeg.ai"
+      },
+      {
+        "url": "https://gaga.art/blog/ai-video-translator/",
+        "title": "5 Best AI Video Translator Tools in 2026 - gaga.art",
+        "domain": "gaga.art"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/video/",
+        "title": "AI Video Translator with Real-Time Bilingual Subtitles | Immersive ...",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://web.viitor.io/blog/20251120-en-video-translation",
+        "title": "How to Translate YouTube Videos to English Without Captions | Easy AI ...",
+        "domain": "viitor.io"
+      },
+      {
+        "url": "https://flixier.com/tools/translate-your-video-online",
+        "title": "AI Video Translator | AI Dubbing & Subtitles in 130+ Languages",
+        "domain": "flixier.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 13,
+    "total_all": 21
+  },
+  "response_stats": {
+    "total_length": 1867,
+    "citation_count": 8,
+    "chars_with_citations": 166
+  }
+}

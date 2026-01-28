@@ -1,0 +1,375 @@
+{
+  "run_id": "P006_r1",
+  "account_type": "enterprise",
+  "prompt": "I have an audio and I need the transcript. Which app or AI tool can I use?",
+  "metadata": {
+    "hidden_queries": [
+      "apps or AI tools to transcribe audio to text",
+      "best speech-to-text transcription tools AI"
+    ],
+    "sonic_classification": {
+      "latency_ms": 11.724608018994331,
+      "simple_search_prob": 0.948266137673362,
+      "complex_search_prob": 0.002316256451041518,
+      "no_search_prob": 0.049417605875596494,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "apps or AI tools to transcribe audio to text"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 208,
+        "end_idx": 227
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/audio-to-text",
+      "url_position": 204,
+      "claim_text": "Here are reliable apps and AI tools you can use to transcribe audio to text: Free / Easy to Start Otter.ai – Upload audio or record live, gets pretty accurate transcripts, searchable/editable. Otter.ai",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 329,
+        "end_idx": 334
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://audiototext.com/",
+      "url_position": 347,
+      "claim_text": "AudioToText.com – Free online tool; no sign-up needed, supports common formats like MP3/WAV. audiototext.com",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 432,
+        "end_idx": 451
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://freescribe.app/",
+      "url_position": 461,
+      "claim_text": "FreeScribe.app – Free AI transcription with speaker ID and export options. FreeScribe",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 532,
+        "end_idx": 542
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://restream.io/tools/transcribe-audio-to-text",
+      "url_position": 569,
+      "claim_text": "Restream Transcription – Simple browser transcriber with good accuracy. Restream",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 614,
+        "end_idx": 634
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://soundwise.ai/speech-to-text",
+      "url_position": 689,
+      "claim_text": "SoundWise.ai – Free speech-to-text online converter. soundwise.ai",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 744,
+        "end_idx": 763
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/best-ai-tools-for-transcription/",
+      "url_position": 831,
+      "claim_text": "More Accurate / Feature-Rich Sonix – High-accuracy AI transcription, multi-language, summaries. Sonix",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 841,
+        "end_idx": 861
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://turboscribe.ai/",
+      "url_position": 975,
+      "claim_text": "TurboScribe – Unlimited audio/video transcription in many languages. TurboScribe",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 926,
+        "end_idx": 927
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.descript.com/blog/article/best-free-audio-to-text-converters",
+      "url_position": 1067,
+      "claim_text": "Descript – Desktop tool with editing and transcription. Descript",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1072,
+        "end_idx": 1090
+      },
+      "citation_token": "citeturn0news30",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.androidcentral.com/apps-software/the-gemini-app-feature-you-actually-wanted-is-here",
+          "title": "The Gemini app feature you actually wanted is here",
+          "snippet": "Google's Gemini app has launched a highly anticipated feature that allows users to upload and process audio files across Android, iOS, and the web. The app now supports MP3, M4A, and WAV formats and automatically transcribes uploaded audio, extracts key points, highlights important quotes or action items, and generates clear summaries. This update caters especially to users looking to convert meetings, lectures, interviews, or voice notes into searchable, organized documents. According to Josh Woodward, VP of Google Labs and Gemini, this was the most requested user feature.\n\nUsers can access the feature via the plus menu on mobile or \"Upload files\" on the web. Audio upload limitations include a cap of 10 files at once with a total duration not exceeding 10 minutes for free users—double the five-minute video limit. Paid users receive higher caps. However, the 10-file per prompt rule still applies universally to all upload types. Despite these boundaries, the generous audio allowances and robust summarization capabilities make this a valuable addition to Gemini’s AI toolset.",
+          "domain": "www.androidcentral.com",
+          "ref_type": "news",
+          "ref_index": 30,
+          "turn_index": 0,
+          "pub_date": 1757416860,
+          "ref_key": "0_news_30"
+        }
+      ],
+      "inline_url": "https://www.androidcentral.com/apps-software/the-gemini-app-feature-you-actually-wanted-is-here",
+      "url_position": 1272,
+      "claim_text": "Other Options Google Gemini (via app/web) – Upload audio for transcription plus summaries (limits on free use). Android Central",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1176,
+        "end_idx": 1196
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://evernote.com/en-us/ai-transcribe/audio-to-text",
+          "title": "Transcribe Audio to Text by Evernote - Fast, Accurate and Easy",
+          "snippet": "Convert audio to text instantly with our AI-powered transcription tool. Fast, accurate, and easy to use—perfect for meetings, interviews, and more.",
+          "domain": "evernote.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://evernote.com/en-us/ai-transcribe/audio-to-text",
+      "url_position": 1457,
+      "claim_text": "Evernote AI Transcribe – If you use Evernote, it has built-in transcription. Evernote",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1357,
+        "end_idx": 1376
+      },
+      "citation_token": "citeturn0search0",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://usefulai.com/tools/ai-transcription?utm_source=chatgpt.com",
+          "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+          "snippet": "AI Transcription Tools are software applications that use artificial intelligence and machine learning to help you transcribe audio and video recordings into text.",
+          "domain": "usefulai.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://usefulai.com/tools/ai-transcription",
+      "url_position": 1673,
+      "claim_text": "Tips Start with free tools to test your audio quality and clarity. For interviews/meetings with multiple speakers, pick tools with speaker ID. usefulai.com",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://otter.ai/audio-to-text",
+        "title": "Convert Audio to Text: Free, Instant AI Transcription",
+        "domain": "Otter.ai"
+      },
+      {
+        "url": "https://audiototext.com/",
+        "title": "Free Audio to Text Converter - Transcribe Audio Online | AudioToText.com",
+        "domain": "audiototext.com"
+      },
+      {
+        "url": "https://freescribe.app/",
+        "title": "freescribe.app - Free Unlimited AI Audio to Text, No Registration Required",
+        "domain": "FreeScribe"
+      },
+      {
+        "url": "https://restream.io/tools/transcribe-audio-to-text",
+        "title": "Transcribe Audio to Text: AI Transcription Software | Restream",
+        "domain": "Restream"
+      },
+      {
+        "url": "https://soundwise.ai/speech-to-text",
+        "title": "Free, Unlimited AI Speech to Text Converter | SoundWise.ai",
+        "domain": "soundwise.ai"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-ai-tools-for-transcription/",
+        "title": "12 Best AI Tools For Transcription in 2026 [Complete Guide]",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://turboscribe.ai/",
+        "title": "Transcribe Audio and Video to Text | TurboScribe",
+        "domain": "TurboScribe"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-free-audio-to-text-converters",
+        "title": "6 best free audio-to-text converters in 2025 - Descript",
+        "domain": "Descript"
+      },
+      {
+        "url": "https://www.androidcentral.com/apps-software/the-gemini-app-feature-you-actually-wanted-is-here",
+        "title": "The Gemini app feature you actually wanted is here",
+        "domain": "Android Central"
+      },
+      {
+        "url": "https://evernote.com/en-us/ai-transcribe/audio-to-text",
+        "title": "Transcribe Audio to Text by Evernote - Fast, Accurate and Easy",
+        "domain": "Evernote"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-transcription",
+        "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+        "domain": "usefulai.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+        "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026 - Sonix",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://deepgram.com/10-useful-ai-apps-for-transcription",
+        "title": "Turn Speech To Text With These AI Transcription Apps",
+        "domain": "deepgram.com"
+      },
+      {
+        "url": "https://voicetype.com/blog/best-ai-transcription-software",
+        "title": "12 Best AI Transcription Software of 2025: In-Depth Reviews",
+        "domain": "voicetype.com"
+      },
+      {
+        "url": "https://geekflare.com/best/best-transcription-software/",
+        "title": "17 Best Transcription Software for Audio to Text in 2025 - Geekflare",
+        "domain": "geekflare.com"
+      },
+      {
+        "url": "https://www.tomedes.com/translator-hub/best-ai-transcription",
+        "title": "9 Best AI Transcription Tools in 2025 - tomedes.com",
+        "domain": "tomedes.com"
+      },
+      {
+        "url": "https://www.digitalocean.com/resources/articles/ai-transcription-tools",
+        "title": "10 AI Transcription Tools to Convert Speech to Text in 2025",
+        "domain": "digitalocean.com"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-speech-to-text-tools",
+        "title": "Best Speech to Text Tools for 2025: Top 7 Compared",
+        "domain": "descript.com"
+      },
+      {
+        "url": "https://www.lindy.ai/blog/best-speech-to-text-software",
+        "title": "I Tried 25+ Best Speech-to-Text Software: Here Are My Top 12 Picks - Lindy",
+        "domain": "lindy.ai"
+      },
+      {
+        "url": "https://blogwings.com/speech-to-text-transcription-ai-tools/",
+        "title": "7 Best Speech-to-Text Transcription AI Tools - blogwings.com",
+        "domain": "blogwings.com"
+      },
+      {
+        "url": "https://otter.ai/blog/best-automatic-transcription-tools",
+        "title": "8 Best Automatic Transcription Tools for 2025 - Otter.ai",
+        "domain": "otter.ai"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 10,
+    "total_all": 21
+  },
+  "response_stats": {
+    "total_length": 1805,
+    "citation_count": 11,
+    "chars_with_citations": 170
+  }
+}

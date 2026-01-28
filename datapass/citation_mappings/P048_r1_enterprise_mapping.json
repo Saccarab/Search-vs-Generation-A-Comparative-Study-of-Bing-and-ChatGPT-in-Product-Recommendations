@@ -1,0 +1,299 @@
+{
+  "run_id": "P048_r1",
+  "account_type": "enterprise",
+  "prompt": "Can I add a live translation app to calls?",
+  "metadata": {
+    "hidden_queries": [
+      "Can I add live translation app to phone calls live translation during calls how to do",
+      "ライブ通話 翻訳アプリ 通話中 翻訳 phone call live translation apps"
+    ],
+    "sonic_classification": {
+      "latency_ms": 14.90875007584691,
+      "simple_search_prob": 0.8909716004694994,
+      "complex_search_prob": 0.004840272219505075,
+      "no_search_prob": 0.10418812731099551,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Can I add live translation app to phone calls live translation during calls how to do"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 510,
+        "end_idx": 542
+      },
+      "citation_token": "citeturn0search0turn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.macrumors.com/how-to/ios-26-translate-phone-calls-real-time/",
+          "title": "iOS 26: Translate Phone Calls in Real Time on iPhone",
+          "snippet": "In iOS 26, Apple's Live Translation feature can turn your iPhone into a real-time interpreter during phone calls.",
+          "domain": "www.macrumors.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759843980,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.macrumors.com/how-to/ios-26-translate-phone-calls-real-time/",
+      "url_position": 505,
+      "claim_text": "Yes — you can add live translation to calls, but how you do it depends on your device and tools: 1) Built-in phone translation (no third-party app needed) iPhone (iOS 26+) now has a Live Translation feature inside the Phone app for real-time call translation. You make/receive a call, tap More → Live Translation, and the system translates speech both ways and can show text on screen. It works during one-on-one calls in supported languages and switches to speaker if not using headphones. MacRumors+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 792,
+        "end_idx": 823
+      },
+      "citation_token": "citeturn0search1turn0news24",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.aiphone.ai/blog/ja/voice-translation-app-for-multilingual-calls/",
+          "title": "おすすめ電話通訳アプリ6選｜2025年版",
+          "snippet": "Live Translate（Google Pixel 8） 対応機種： Pixel 8 / 8 Pro Pixel 8シリーズに標準搭載されたLive Translateは、電話やメッセージ中の音声・テキストをリアルタイムで翻訳する機能です。 主な機能： 通話中のライブ翻訳： 会話中の音声をリアルタイムで文字起こし＆翻訳し、画面上に表示 Live Caption統合 ...",
+          "domain": "www.aiphone.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1748563200,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.aiphone.ai/blog/ja/voice-translation-app-for-multilingual-calls/",
+      "url_position": 830,
+      "claim_text": "2) Android options Some Android phones (e.g., Google Pixel, Samsung with latest UI/updates) include live translation features for phone calls that translate both sides as you talk; availability and languages vary by model and OS version. Aiphone+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1124,
+        "end_idx": 1125
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ezdubs.ai/phone-call-translator",
+      "url_position": 1209,
+      "claim_text": "3) Third-party apps There are apps designed to translate calls or provide real-time translators for VoIP/Internet calls (e.g., dedicated call translator apps or services like EzDubs). These typically work by placing the call through the app or overlaying translation on top of normal calls. EzDubs",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1650,
+        "end_idx": 1669
+      },
+      "citation_token": "citeturn0search3",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://lifestyle.assist-all.co.jp/live-translation-app-comparison-best-choice/?utm_source=chatgpt.com",
+          "title": "ライブ翻訳アプリで失敗なし！無料と有料を徹底比較し用途別にベストな選び方を伝授 - ハウスケアラボ",
+          "snippet": "ライブ翻訳アプリは、音声認識→翻訳→音声合成までを数秒で処理し、会話を橋渡しします。 Googleは100以上の言語をサポートし、主要アプリはオフラインやカメラ翻訳にも対応します。 一方で、雑音や回線遅延が精度と反応速度を下げるのも事実。",
+          "domain": "lifestyle.assist-all.co.jp",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://lifestyle.assist-all.co.jp/live-translation-app-comparison-best-choice/",
+      "url_position": 1756,
+      "claim_text": "Note: They often require you or the other party to use the app/service, may replace voices with a synthetic translator, and quality/lag vary. Key limitations to be skeptical about Not universal on all phones — built-in live call translation is new and limited to certain devices/OS versions. May need Internet or data unless the phone’s on-device translation supports offline. Accuracy and lag — live translation isn’t perfect; background noise and accents affect quality. lifestyle.assist-all.co.jp",
+      "url_index": 3
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.macrumors.com/how-to/ios-26-translate-phone-calls-real-time/",
+        "title": "iOS 26: Translate Phone Calls in Real Time on iPhone",
+        "domain": "MacRumors"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/ja/voice-translation-app-for-multilingual-calls/",
+        "title": "おすすめ電話通訳アプリ6選｜2025年版",
+        "domain": "Aiphone"
+      },
+      {
+        "url": "https://ezdubs.ai/phone-call-translator",
+        "title": "Live Phone Call Translator App | EzDubs",
+        "domain": "EzDubs"
+      },
+      {
+        "url": "https://lifestyle.assist-all.co.jp/live-translation-app-comparison-best-choice/",
+        "title": "ライブ翻訳アプリで失敗なし！無料と有料を徹底比較し用途別にベストな選び方を伝授 - ハウスケアラボ",
+        "domain": "lifestyle.assist-all.co.jp"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://voiceping.net/ja/blog/guide-voice-translation-apps/",
+        "title": "【2026年最新】音声翻訳アプリおすすめ32選！無料・ビジネス向け・PC対応を徹底比較",
+        "domain": "voiceping.net"
+      },
+      {
+        "url": "https://support.apple.com/en-us/123720",
+        "title": "Use Live Translation on iPhone - Apple Support",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://lifestyle.assist-all.co.jp/live-translation-iphone-airpods-guide/",
+        "title": "ライブ翻訳機能で通話も対面も即通訳！iPhoneやAirPodsを使いこなすための最新ガイド - ハウスケアラボ",
+        "domain": "assist-all.co.jp"
+      },
+      {
+        "url": "https://www.tomsguide.com/phones/iphones/how-to-use-live-translations-in-the-ios-26-phone-app",
+        "title": "How to use live translations in the iOS 26 Phone app | Tom's Guide",
+        "domain": "tomsguide.com"
+      },
+      {
+        "url": "https://www.macobserver.com/tips/how-to/messages-live-translation-how-to-use-ios-26/",
+        "title": "How to Turn On Live Translations on iPhone for Phone, Messages, and ...",
+        "domain": "macobserver.com"
+      },
+      {
+        "url": "https://appleworld.today/2025/09/how-to-turn-on-live-translation-in-ios-26/",
+        "title": "How to Turn on Live Translation in iOS 26 – Apple World Today",
+        "domain": "appleworld.today"
+      },
+      {
+        "url": "https://allthings.how/enable-live-translation-on-ios-26-iphone-and-airpods-setup/",
+        "title": "Enable Live Translation on iOS 26 — iPhone and AirPods setup",
+        "domain": "allthings.how"
+      },
+      {
+        "url": "https://www.igeeksblog.com/how-to-use-live-translation-in-ios-26-on-iphone/",
+        "title": "How to Use Live Translation in iOS 26 – iGeeksBlog",
+        "domain": "igeeksblog.com"
+      },
+      {
+        "url": "https://www.macworld.com/article/2816543/everyone-will-want-to-try-apples-live-translation-this-fall-heres-where-to-find-it.html",
+        "title": "Live translation in iOS 26: How it works and where to find it - Macworld",
+        "domain": "macworld.com"
+      },
+      {
+        "url": "https://rimo.app/blogs/voice-translation-tools",
+        "title": "リアルタイム音声翻訳ツール・アプリ30選！Web会議・PC・スマホ別におすすめをご紹介 | Rimo",
+        "domain": "rimo.app"
+      },
+      {
+        "url": "https://www.jotme.io/jp/blog/best-live-translation",
+        "title": "2025年に実際に試した7つのベストAIライブ翻訳ツール",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.ithinkdiff.com/ios-26-live-translation-calls-messages-offline/",
+        "title": "Everything to know about iOS 26’s Live Translation for calls and messages",
+        "domain": "ithinkdiff.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/top-phone-call-translators/",
+        "title": "Top 6 Phone Call Translator Apps for Multilingual Calls in 2025",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.samsung.com/ae/support/mobile-devices/how-to-use-phone-app-live-translate-during-call/",
+        "title": "How to use Phone app - Live translate during call? - Samsung ae",
+        "domain": "samsung.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/ja/%E9%9B%BB%E8%A9%B1%E3%81%AE%E9%80%9A%E8%A9%B1%E3%82%92%E7%BF%BB%E8%A8%B3%E3%81%99%E3%82%8B/",
+        "title": "電話の通話を翻訳する7つの方法 - aiphone.ai",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://support.apple.com/ja-jp/123720",
+        "title": "iPhoneでライブ翻訳を使う - Apple サポート (日本)",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://www.notta.ai/blog/real-time-voice-translation-apps-recommendations",
+        "title": "2025年版｜リアルタイム音声翻訳アプリおすすめ25選【無料・iPhone／Android／PC】",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://app-liv.jp/education/reference/3172/",
+        "title": "【2026年】音声翻訳アプリおすすめ10選 同時通訳を無料で",
+        "domain": "app-liv.jp"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=ja&id=com.aiphone.secondphonenumber",
+        "title": "AI Phone: リアルタイム通話翻訳, 音声翻訳 - Google Play のアプリ",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=YXGfYjd4ikU",
+        "title": "iPhone 17: How to Use Live Translation During Calls - YouTube",
+        "domain": "youtube.com"
+      }
+    ],
+    "total_cited": 4,
+    "total_additional": 20,
+    "total_all": 24
+  },
+  "response_stats": {
+    "total_length": 1960,
+    "citation_count": 4,
+    "chars_with_citations": 83
+  }
+}

@@ -1,0 +1,398 @@
+{
+  "run_id": "P027_r3",
+  "account_type": "personal",
+  "prompt": "Best Video Translator for agencies to expand reach and speed up content creation.",
+  "metadata": {
+    "hidden_queries": [
+      "best video translator tools for agencies expand reach speed content creation",
+      "video translation software AI for agencies translate video subtitles dubbing"
+    ],
+    "sonic_classification": {
+      "latency_ms": 2.8018869925290346,
+      "simple_search_prob": 0.9237695271109536,
+      "complex_search_prob": 0.05202712164299032,
+      "no_search_prob": 0.024203351246056062,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best video translator tools for agencies expand reach speed content creation"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 125,
+        "end_idx": 155
+      },
+      "citation_token": "citeturn0search0turn0search",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.colossyan.com/posts/5-best-video-translator-software-options-for-global-content-reach",
+          "title": "5 Best Video Translator Software Options for Global ...",
+          "snippet": "You now understand the five best video translator software options for global content reach, from revolutionary AI avatar regeneration (Colossyan) to ...Read more",
+          "domain": "www.colossyan.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.colossyan.com/posts/5-best-video-translator-software-options-for-global-content-reach",
+      "url_position": 133,
+      "claim_text": "Here are top AI-powered video translation tools great for agencies to scale multilingual content quickly and efficiently:Colossyan+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 319,
+        "end_idx": 352
+      },
+      "citation_token": "citeturn0search3turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.heygen.com/blog/10-best-ai-video-translators-i-tested-in-2025-free-paid-tools-reviewed?utm_source=chatgpt.com",
+          "title": "10 Best AI Video Translators I Tested in 2025 (Free & Paid ...",
+          "snippet": "Oct 8, 2025 — HeyGen leads with 175+ languages, voice cloning, and precise lip sync, while Synthesia, ElevenLabs, and Rask.ai stand out in specialized areas.Read more",
+          "domain": "heygen.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://www.heygen.com/translate",
+      "url_position": 395,
+      "claim_text": "🔝 Best Overall for Agencies HeyGen – Instant translation into 175+ languages with AI voice output and lip sync suited for social and marketing videos.HeyGen+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 508,
+        "end_idx": 527
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.rask.ai/",
+          "title": "Leading AI video localization & dubbing tool",
+          "snippet": "Automatically translate video & audio into 130+ languages · Localize content at scale with Rask API · SOC 2 Type II Certified · VoiceClone · Multi-speaker feature.Read more",
+          "domain": "www.rask.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.rask.ai/",
+      "url_position": 583,
+      "claim_text": "Rask AI – Enterprise-friendly localization with 130+ languages, multi-speaker detection, and voice cloning (API available for workflow automation).Rask",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 650,
+        "end_idx": 670
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.smartcat.com/video-translation/",
+          "title": "The #1 AI Video Translator: Fast, on-brand video translation",
+          "snippet": "Translate videos into 280+ languages with Smartcat Media Translation Agent. Instant, accurate subtitles and AI dubbing for global reach.",
+          "domain": "www.smartcat.com",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_11"
+        }
+      ],
+      "inline_url": "https://www.smartcat.com/video-translation/",
+      "url_position": 726,
+      "claim_text": "Smartcat – Translate into 280+ languages, with integrated subtitling + AI dubbing and brand voice consistency.Smartcat",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 786,
+        "end_idx": 805
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/",
+      "url_position": 891,
+      "claim_text": "Maestra – Full pipeline: auto transcription, subtitles, AI voiceovers, and voice cloning in 125+ languages.Maestra AI",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 939,
+        "end_idx": 959
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vozo.ai/video-translate",
+      "url_position": 1043,
+      "claim_text": "📌 Great for Fast Turnaround & Content Speed Vozo.ai – AI voice cloning + lip sync + editable subtitles for 110+ languages.Vozo",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1062,
+        "end_idx": 1082
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenpal.com/tool/ai-video-translator",
+      "url_position": 1186,
+      "claim_text": "ScreenPal AI Translator – Quick subtitles + voiceovers in 140+ languages; easy web-based tool.ScreenPal",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1193,
+        "end_idx": 1212
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.synthesia.io/post/best-video-translator-apps",
+      "url_position": 1348,
+      "claim_text": "Kapwing – Simple interface for quick subtitle translation + basic dubbing inside an all-in-one editor.Synthesia",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1324,
+        "end_idx": 1325
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://allvoicelab.com/blog/top-10-ai-video-translator-tools-in-2025-subtitle-removal-ai-dubbing-and-voice-cloning",
+      "url_position": 1524,
+      "claim_text": "📌 Alternatives Worth Considering VEED.io – Video editing + automatic translation/subtitles workflow.All Voice Lab",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1479,
+        "end_idx": 1499
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://elevenlabs.io/dubbing-studio",
+      "url_position": 1780,
+      "claim_text": "ElevenLabs (AI dubbing features) – Excellent voice quality for dubbed content (audio-centric but pairs well with video tools).ElevenLabs",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1758,
+        "end_idx": 1777
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.colossyan.com/posts/5-best-video-translator-software-options-for-global-content-reach",
+          "title": "5 Best Video Translator Software Options for Global ...",
+          "snippet": "You now understand the five best video translator software options for global content reach, from revolutionary AI avatar regeneration (Colossyan) to ...Read more",
+          "domain": "www.colossyan.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.colossyan.com/posts/5-best-video-translator-software-options-for-global-content-reach",
+      "url_position": 2050,
+      "claim_text": "How to choose for agency use: High-volume localization: Smartcat or Maestra. Fast social content: HeyGen, Vozo, Kapwing. API integration & automation: Rask AI. Voice quality: ElevenLabs + pairing with subtitle tools.Colossyan",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.colossyan.com/posts/5-best-video-translator-software-options-for-global-content-reach",
+        "title": "5 Best Video Translator Software Options for Global ...",
+        "domain": "Colossyan"
+      },
+      {
+        "url": "https://www.heygen.com/translate",
+        "title": "AI Video Translator – Translate Videos into 175+ Languages",
+        "domain": "HeyGen"
+      },
+      {
+        "url": "https://www.rask.ai/",
+        "title": "Leading AI video localization & dubbing tool",
+        "domain": "Rask"
+      },
+      {
+        "url": "https://www.smartcat.com/video-translation/",
+        "title": "The #1 AI Video Translator: Fast, on-brand video translation",
+        "domain": "Smartcat"
+      },
+      {
+        "url": "https://maestra.ai/",
+        "title": "AI Media Translation, Subtitles & Dubbing Platform | Maestra",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.vozo.ai/video-translate",
+        "title": "AI Video Translator: Translate Videos to 110+ Languages",
+        "domain": "Vozo"
+      },
+      {
+        "url": "https://screenpal.com/tool/ai-video-translator",
+        "title": "AI Video Translator",
+        "domain": "ScreenPal"
+      },
+      {
+        "url": "https://www.synthesia.io/post/best-video-translator-apps",
+        "title": "The 10 Best AI Video Translation Tools (Tried & Tested)",
+        "domain": "Synthesia"
+      },
+      {
+        "url": "https://allvoicelab.com/blog/top-10-ai-video-translator-tools-in-2025-subtitle-removal-ai-dubbing-and-voice-cloning",
+        "title": "Top 10 AI Video Translator Tools in 2025: Subtitle Removal ...",
+        "domain": "All Voice Lab"
+      },
+      {
+        "url": "https://elevenlabs.io/dubbing-studio",
+        "title": "AI Dubbing: Localize Content Across 29 Languages",
+        "domain": "ElevenLabs"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://perso.ai/blog/ai-video-translator-tools-for-agencies-side-by-side-comparisons",
+        "title": "AI Video Translator Tools for Agencies: Side-by- ...",
+        "domain": "perso.ai"
+      },
+      {
+        "url": "https://perso.ai/",
+        "title": "Best AI Video Translator & Dubbing for Creator Business | Perso",
+        "domain": "perso.ai"
+      },
+      {
+        "url": "https://www.feisworld.com/blog/best-ai-video-translation-tools",
+        "title": "The Best AI Video Translation Tools Of 2026 (Our Top 5 ...",
+        "domain": "feisworld.com"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://dubly.ai/",
+        "title": "Dubly.AI – Translate Videos with AI & Lip Sync | Fast, Natural ...",
+        "domain": "dubly.ai"
+      },
+      {
+        "url": "https://vimeo.com/features/ai-translation",
+        "title": "AI Automatic Language Video Translator for Dubbing & ...",
+        "domain": "vimeo.com"
+      },
+      {
+        "url": "https://www.heygen.com/blog/10-best-ai-video-translators-i-tested-in-2025-free-paid-tools-reviewed",
+        "title": "10 Best AI Video Translators I Tested in 2025 (Free & Paid ...",
+        "domain": "heygen.com"
+      },
+      {
+        "url": "https://xtm.cloud/blog/ai-translation-tools/",
+        "title": "The Best AI Translation Tools for 2025",
+        "domain": "xtm.cloud"
+      },
+      {
+        "url": "https://www.storyblocks.com/resources/blog/20-ai-video-tools-to-speed-up-content-creation",
+        "title": "20 Best AI video tools to speed up content creation",
+        "domain": "storyblocks.com"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://maestra.ai/tools/video-translator",
+        "title": "AI Video Translator with Voice Cloning & Lip Sync | Free Trial",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.happyscribe.com/blog/best-ai-video-translator-tools-2026",
+        "title": "5 Best AI video translator tools [2026]",
+        "domain": "happyscribe.com"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 12,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 2272,
+    "citation_count": 11,
+    "chars_with_citations": 220
+  }
+}

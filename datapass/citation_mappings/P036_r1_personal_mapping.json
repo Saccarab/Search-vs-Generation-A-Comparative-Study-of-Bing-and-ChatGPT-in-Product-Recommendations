@@ -1,0 +1,62 @@
+{
+  "run_id": "P036_r1",
+  "account_type": "personal",
+  "prompt": "What is the accurate translator English to Japanese with audio?",
+  "metadata": {
+    "hidden_queries": [],
+    "sonic_classification": null,
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 105,
+        "end_idx": 129
+      },
+      "citation_token": "entity[\"company\",\"Deep",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 294,
+        "end_idx": 295
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 487,
+        "end_idx": 516
+      },
+      "citation_token": "entity[\"company\",\"Microsoft",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 624,
+        "end_idx": 634
+      },
+      "citation_token": "entity[\"",
+      "type": "hidden",
+      "sources": []
+    }
+  ],
+  "source_summary": {
+    "cited": [],
+    "additional": [],
+    "total_cited": 0,
+    "total_additional": 0,
+    "total_all": 0
+  },
+  "response_stats": {
+    "total_length": 679,
+    "citation_count": 4,
+    "chars_with_citations": 64
+  }
+}

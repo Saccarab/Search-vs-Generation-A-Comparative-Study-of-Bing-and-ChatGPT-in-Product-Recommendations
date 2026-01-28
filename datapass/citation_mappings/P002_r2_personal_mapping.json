@@ -1,0 +1,539 @@
+{
+  "run_id": "P002_r2",
+  "account_type": "personal",
+  "prompt": "What are some text-to-speech services that can create conversations with multiple voices?",
+  "metadata": {
+    "hidden_queries": [
+      "text-to-speech services multiple voices conversation AI TTS multi-voice",
+      "text to speech tools that support dialogue with multiple voices"
+    ],
+    "sonic_classification": {
+      "latency_ms": 8.240310000473983,
+      "simple_search_prob": 0.9766613571813865,
+      "complex_search_prob": 0.01427214629430674,
+      "no_search_prob": 0.009066496524306791,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "text-to-speech services multiple voices conversation AI TTS multi-voice"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 365,
+        "end_idx": 398
+      },
+      "citation_token": "citeturn0search0turn0search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://elevenlabs.io/",
+          "title": "ElevenLabs: Free AI Voice Generator & Voice Agents Platform",
+          "snippet": "Create lifelike speech with our AI voice generator and voice agents platform. Access 5000+ voices in 70+ languages with secure APIs and SDKs.",
+          "domain": "elevenlabs.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://elevenlabs.io/blog/eleven-v3-audio-tags-bringing-multi-character-dialogue-to-life",
+          "title": "Eleven v3 Audio Tags: Multi-Character Dialogue in AI ...",
+          "snippet": "Oct 16, 2025 — Create dynamic multi-character dialogue with Eleven v3 Audio Tags. Script overlapping voices, interruptions, and emotional shifts.",
+          "domain": "elevenlabs.io",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://elevenlabs.io/",
+      "url_position": 365,
+      "claim_text": "Here are some text-to-speech services and tools that can generate conversations with multiple distinct voices (good for dialogs, podcasts, or scripts with character lines): AI platforms with multi-voice or multi-speaker support ElevenLabs – very natural voices and now supports multi-character dialogue with voice tags (script different characters). ElevenLabs+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 508,
+        "end_idx": 527
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://play.ht/",
+      "url_position": 500,
+      "claim_text": "Play.ht (multi-voice TTS) – supports creating conversations in one audio file with different voices. Play.ht",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 598,
+        "end_idx": 609
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.kukarella.com/",
+      "url_position": 592,
+      "claim_text": "Kukarella – built for multi-speaker dialogues and voiceovers. Kukarella",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 721,
+        "end_idx": 755
+      },
+      "citation_token": "citeturn0search11turn0search19",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://ai.google.dev/gemini-api/docs/speech-generation?utm_source=chatgpt.com",
+          "title": "Speech generation (text-to-speech) | Gemini API",
+          "snippet": "The Gemini API can transform text input into single speaker or multi-speaker audio using native text-to-speech (TTS) generation capabilities.",
+          "domain": "google.dev",
+          "ref_type": "search",
+          "ref_index": 19,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_19"
+        }
+      ],
+      "inline_url": "https://docs.cloud.google.com/text-to-speech/docs/gemini-tts",
+      "url_position": 745,
+      "claim_text": "Google Gemini / Google Cloud TTS – API can generate multi-speaker audio from structured text. Google Cloud Documentation+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 838,
+        "end_idx": 858
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://typecast.ai/",
+      "url_position": 892,
+      "claim_text": "Typecast.ai – large voice library, good for character dialogs in content. Typecast",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 944,
+        "end_idx": 963
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://medium.com/freelancers-hub/best-ai-voice-generators-2025-review-i-tested-20-tools-to-find-the-top-5-0c2b45070273",
+          "title": "I Tested 25+ AI Voice Generators: Here are the Top 7 for ...",
+          "snippet": "Listnr claims to be one of the most widely used AI voice generators. This tool offers 1,000+ different voices and supports over 142 languages.Read more",
+          "domain": "medium.com",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://medium.com/freelancers-hub/best-ai-voice-generators-2025-review-i-tested-20-tools-to-find-the-top-5-0c2b45070273",
+      "url_position": 1000,
+      "claim_text": "Listnr – lots of voices; often used for podcasts with more than one speaker. Medium",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1089,
+        "end_idx": 1108
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voice.ai/ai-voice",
+          "title": "Free AI Voice Generator",
+          "snippet": "Create voices in any style with our free AI voice generator. Experience unmatched quality, speed, and stability powered by cutting-edge AI technology.",
+          "domain": "voice.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://voice.ai/ai-voice",
+      "url_position": 1246,
+      "claim_text": "Voice-focused TTS tools with varied voices Voice.ai – generate or import multiple custom voices for characters. Voice.ai",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1175,
+        "end_idx": 1195
+      },
+      "citation_token": "citeturn0search29",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/",
+      "url_position": 1341,
+      "claim_text": "Murf.ai – many voices you can mix for different speakers. Murf AI",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1311,
+        "end_idx": 1359
+      },
+      "citation_token": "citeturn0search21turn0search37turn0search27",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://fish.audio/",
+          "title": "Fish Audio: Best AI Text To Speech & Free Voice Cloning",
+          "snippet": "Studio-grade AI text-to-speech and instant voice cloning. Industry-leading TTS with unmatched emotion control, 1000 + voices in 70 + languages.",
+          "domain": "fish.audio",
+          "ref_type": "search",
+          "ref_index": 21,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_21"
+        },
+        {
+          "url": "https://voxify.ai/?utm_source=chatgpt.com",
+          "title": "Best AI Voice Generator | Text to speech | Voxify",
+          "snippet": "Transform content with Voxify's AI voice generator. 450+ male, female & kid voices. Customize pitch, speed & emotion. Start creating immersive audio now!",
+          "domain": "voxify.ai",
+          "ref_type": "search",
+          "ref_index": 37,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_37"
+        },
+        {
+          "url": "https://www.readspeaker.com/?utm_source=chatgpt.com",
+          "title": "Text to Speech with 200+ Realistic AI Voices in 50+ languages",
+          "snippet": "Transform your content into lifelike audio with our AI Voice Generator. Choose from over 50 languages and 200 expressive, natural-sounding AI-powered voices.",
+          "domain": "readspeaker.com",
+          "ref_type": "search",
+          "ref_index": 27,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_27"
+        }
+      ],
+      "inline_url": "https://fish.audio/",
+      "url_position": 1489,
+      "claim_text": "Fish Audio / Voxify / ReadSpeaker – large voice collections that let you assign different voices to lines. Fish Audio+2Voxify+2",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1480,
+        "end_idx": 1486
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://allvoicelab.com/",
+      "url_position": 1634,
+      "claim_text": "Developer / advanced options All Voice Lab – API for voice cloning + TTS to build multi-voice experiences. All Voice Lab",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1583,
+        "end_idx": 1603
+      },
+      "citation_token": "citeturn0search35",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://inworld.ai/tts",
+      "url_position": 1747,
+      "claim_text": "Inworld TTS – voice cloning + expressive controls for character dialogue. Inworld AI",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1814,
+        "end_idx": 1824
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://elevenlabs.io/blog/eleven-v3-audio-tags-bringing-multi-character-dialogue-to-life",
+      "url_position": 1989,
+      "claim_text": "If you need real-time conversational TTS or voice-agent style interactions, some cloud APIs above (like Gemini or ElevenLabs with audio tags) let you specify different voices per speaker in one session. ElevenLabs+1",
+      "url_index": 11
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://elevenlabs.io/",
+        "title": "ElevenLabs: Free AI Voice Generator & Voice Agents Platform",
+        "domain": "ElevenLabs"
+      },
+      {
+        "url": "https://play.ht/",
+        "title": "#1 Free AI Voice Generator, Text to Speech, & AI Voice Over",
+        "domain": "Play.ht"
+      },
+      {
+        "url": "https://www.kukarella.com/",
+        "title": "AI Dialogue & Voiceover Platform | Create Narrations & Visual ...",
+        "domain": "Kukarella"
+      },
+      {
+        "url": "https://docs.cloud.google.com/text-to-speech/docs/gemini-tts",
+        "title": "Gemini-TTS | Cloud Text-to-Speech - Google Cloud Documentation",
+        "domain": "Google Cloud Documentation"
+      },
+      {
+        "url": "https://typecast.ai/",
+        "title": "AI Voice Generator & Text-to-Speech | Voiceover Tool",
+        "domain": "Typecast"
+      },
+      {
+        "url": "https://medium.com/freelancers-hub/best-ai-voice-generators-2025-review-i-tested-20-tools-to-find-the-top-5-0c2b45070273",
+        "title": "I Tested 25+ AI Voice Generators: Here are the Top 7 for ...",
+        "domain": "Medium"
+      },
+      {
+        "url": "https://voice.ai/ai-voice",
+        "title": "Free AI Voice Generator",
+        "domain": "Voice.ai"
+      },
+      {
+        "url": "https://murf.ai/",
+        "title": "Murf AI: Free AI Voice Generator & Text to Speech Online",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://fish.audio/",
+        "title": "Fish Audio: Best AI Text To Speech & Free Voice Cloning",
+        "domain": "Fish Audio"
+      },
+      {
+        "url": "https://allvoicelab.com/",
+        "title": "All Voice Lab: High Fidelity Voice Cloning & Text-to-Speech",
+        "domain": "All Voice Lab"
+      },
+      {
+        "url": "https://inworld.ai/tts",
+        "title": "Top-Rated TTS & Voice Cloning",
+        "domain": "Inworld AI"
+      },
+      {
+        "url": "https://elevenlabs.io/blog/eleven-v3-audio-tags-bringing-multi-character-dialogue-to-life",
+        "title": "Eleven v3 Audio Tags: Multi-Character Dialogue in AI ...",
+        "domain": "ElevenLabs"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.bentoml.com/blog/exploring-the-world-of-open-source-text-to-speech-models",
+        "title": "The Best Open-Source Text-to-Speech Models in 2026 - BentoML",
+        "domain": "bentoml.com"
+      },
+      {
+        "url": "https://modal.com/blog/open-source-tts",
+        "title": "The Top Open-Source Text to Speech (TTS) Models - Modal",
+        "domain": "modal.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=lIDxTzABK94",
+        "title": "Best AI Voice Generators (2025 Review) – Free, Realistic & Easy to ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.facebook.com/groups/aitoolsfoteachers/posts/1060861748783743/",
+        "title": "What AI tools can convert text to a conversation with two different ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/ArtificialInteligence/comments/1fqvood/looking_for_tts_ai_tool_with_multiple_speaker/",
+        "title": "Looking for TTS AI Tool with Multiple Speaker Support for Podcast ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://speechify.com/blog/text-to-speech-2-speakers-revolutionizing-audio-communication/?srsltid=AfmBOoq3iCxsNXTtX9ghf9voB4sI7BgoRZzSXFO71a066HXuFdeO7aaL",
+        "title": "Text to Speech 2 Speakers: Revolutionizing Audio Communication",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/software/comments/10yw81e/texttospeech_for_a_text_of_a_conversation_between/",
+        "title": "Text-to-speech for a text of a conversation between multiple people",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.voices.com/text-to-speech",
+        "title": "AI Voice Text-To-Speech: Real-time & Authentic",
+        "domain": "voices.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/",
+        "title": "AI Voices - NaturalReader Home",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech with Gemini and ChatGPT AI Voices",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://notegpt.io/text-to-speech",
+        "title": "Text to Speech with AI Free, Natural & Realistic AI Voices - NoteGPT",
+        "domain": "notegpt.io"
+      },
+      {
+        "url": "https://notegpt.io/ai-voice-generator",
+        "title": "AI Voice Generator – Create Multiple Natural Voices Online",
+        "domain": "notegpt.io"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/voices-ai-change-your-voice/id6461268224",
+        "title": "Voices AI: Change Your Voice - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://getvoices.ai/",
+        "title": "Voices AI: AI Voice Generator & AI Celebrity Voice Changer",
+        "domain": "getvoices.ai"
+      },
+      {
+        "url": "https://www.allvoicelab.com/blog/best-text-to-speech-apis-of-2025",
+        "title": "Top 10 Text-to-Speech APIs in 2025: Compare Features, ...",
+        "domain": "allvoicelab.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.leonfiedler.voiceai",
+        "title": "Voices AI: Voice Changer - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://cloud.google.com/text-to-speech",
+        "title": "Text-to-Speech AI: Lifelike Speech Synthesis - Google Cloud",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/speech-generation",
+        "title": "Speech generation (text-to-speech) | Gemini API",
+        "domain": "google.dev"
+      },
+      {
+        "url": "https://elevenlabs.io/text-to-speech",
+        "title": "Free Text To Speech Online with Lifelike AI Voices",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://www.kukarella.com/resources/text-to-speech/how-to-create-realistic-multi-speaker-dialogues-with-ai",
+        "title": "How to Create Realistic Multi-Speaker Dialogues with AI",
+        "domain": "kukarella.com"
+      },
+      {
+        "url": "https://solutions.georgy.dev/runtime-text-to-speech",
+        "title": "Runtime Text To Speech",
+        "domain": "georgy.dev"
+      },
+      {
+        "url": "https://www.respeecher.com/blog/best-ai-text-to-speech-tools",
+        "title": "Best AI Text-to-Speech Tools for Realistic Voice Generation",
+        "domain": "respeecher.com"
+      },
+      {
+        "url": "https://www.readspeaker.com/",
+        "title": "Text to Speech with 200+ Realistic AI Voices in 50+ languages",
+        "domain": "readspeaker.com"
+      },
+      {
+        "url": "https://www.speechmatics.com/company/articles-and-news/best-tts-apis-in-2025-top-12-text-to-speech-services-for-developers",
+        "title": "Best TTS APIs in 2026: Top 12 Text-to-Speech services for ...",
+        "domain": "speechmatics.com"
+      },
+      {
+        "url": "https://www.hume.ai/blog/introducing-octave",
+        "title": "Introducing OCTAVE (Omni-Capable Text and Voice Engine)",
+        "domain": "hume.ai"
+      },
+      {
+        "url": "https://www.hume.ai/",
+        "title": "Home • Hume AI",
+        "domain": "hume.ai"
+      },
+      {
+        "url": "https://www.acapela-group.com/",
+        "title": "Acapela Group: Text To Speech (TTS) Solutions, Personalized ...",
+        "domain": "acapela-group.com"
+      },
+      {
+        "url": "https://voxify.ai/",
+        "title": "Best AI Voice Generator | Text to speech | Voxify",
+        "domain": "voxify.ai"
+      },
+      {
+        "url": "https://notevibes.com/",
+        "title": "Notevibes - Professional Text-to-Speech | AI Voice Generator ...",
+        "domain": "notevibes.com"
+      }
+    ],
+    "total_cited": 12,
+    "total_additional": 29,
+    "total_all": 41
+  },
+  "response_stats": {
+    "total_length": 2082,
+    "citation_count": 12,
+    "chars_with_citations": 259
+  }
+}

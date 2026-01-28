@@ -1,0 +1,563 @@
+{
+  "run_id": "P047_r1",
+  "account_type": "personal",
+  "prompt": "I need a Chrome extension for live Chinese to English translation that works better than the built-in live caption feature.",
+  "metadata": {
+    "hidden_queries": [
+      "Chrome extension live Chinese to English translation",
+      "Chrome 插件 实时 中文 英语 翻译 Chrome extension live Chinese English translate"
+    ],
+    "sonic_classification": {
+      "latency_ms": 0.06466696504503489,
+      "simple_search_prob": 0.8199909996461727,
+      "complex_search_prob": 0.17004102772071403,
+      "no_search_prob": 0.009967972633113248,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Chrome extension live Chinese to English translation"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 342,
+        "end_idx": 361
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn?hl=zh-CN",
+          "title": "Speech Translator - Chrome 应用商店",
+          "snippet": "Dec 27, 2023 — 实时翻译任何视频、音频或直播。 此扩展程序使用由Google提供支持的语音识别技术，将来自任何来源的语音转换为文本：转录过程。然后，它使用所选服务将 ...Read more",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn?hl=zh-CN",
+      "url_position": 351,
+      "claim_text": "Here are solid Chrome extension options better than Chrome’s built-in live caption for live or real-time Chinese → English translation: 🔹 Best for real-time audio/video translation Speech Translator – translates live audio (video, meetings, livestreams) from Chinese to English in real time using speech recognition + translation. Chrome Web Store",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 494,
+        "end_idx": 514
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho?hl=zh-CN",
+          "title": "ViiTor实时翻译- AI翻译&实时双语字幕&免费- Chrome 应用商店",
+          "snippet": "ViiTor实时翻译插件为音视频直播、在线视频、线上会议提供音频实时转写和翻译，实现双语字幕功能。 ⭐️核心功能: - 扩展程序识别页面中的音源内容，并转换为所需文字。 - 支持 ...",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho?hl=zh-CN",
+      "url_position": 599,
+      "claim_text": "ViiTor 实时翻译 (ViiTor Translate AI) – captures audio from pages/streams and shows live translated subtitles (supports Mandarin). Chrome Web Store",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 645,
+        "end_idx": 665
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/",
+          "title": "JotMe - Live Translator & AI Interpreter",
+          "snippet": "JotMe supports 107 languages for live translation and transcription on its desktop app and Chrome extension, including English, Japanese, Korean, Spanish ...Read more",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/",
+      "url_position": 842,
+      "claim_text": "JotMe – Live Translator & AI Interpreter – provides live translation + transcription in Chrome (supports Chinese → English). JotMe",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 980,
+        "end_idx": 999
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/immersive-translate-trans/bpoadfkcbjbfhfodiogcnhhhpibjhbnh?hl=zh-CN",
+          "title": "沉浸式翻译- 网页翻译插件| PDF翻译| 免费- Chrome 应用商店",
+          "snippet": "Dec 6, 2025 — 【沉浸式翻译】免费的（原文/译文）双语对照网页翻译插件，支持PDF翻译（保留排版），视频双语字幕翻译（Youtube, Netflix），EPUB电子书翻译；支持人工智能AI ...",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 2,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_2"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/immersive-translate-trans/bpoadfkcbjbfhfodiogcnhhhpibjhbnh?hl=zh-CN",
+      "url_position": 1184,
+      "claim_text": "(These are closer to live captions but improved over Chrome’s built-in by leveraging dedicated speech-to-text + translation.) 🔹 Good for text & webpage translation (not true live audio) Immersive Translate (沉浸式翻译) – AI-powered text and video subtitle translation with side-by-side bilingual view. Chrome Web Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1129,
+        "end_idx": 1148
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.deepl.com/en/chrome-extension",
+          "title": "DeepL for Chrome: communicate with the world in your ...",
+          "snippet": "Select source text on a webpage and click the DeepL icon to instantly translate · Select your editable text, and click the DeepL icon to translate your writing.",
+          "domain": "www.deepl.com",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        }
+      ],
+      "inline_url": "https://www.deepl.com/en/chrome-extension",
+      "url_position": 1430,
+      "claim_text": "DeepL for Chrome – high-quality translation (select text → instant translate); DeepL usually better accuracy than Google’s. deepl.com",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1233,
+        "end_idx": 1253
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://magicfanyi.youdao.com/",
+      "url_position": 1576,
+      "claim_text": "有道灵动翻译 (Youdao Magic Translate) – Chrome text/page translator with AI support. magicfanyi.youdao.com",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1372,
+        "end_idx": 1392
+      },
+      "citation_token": "citeturn0search31",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/simple-translate/ibplnjkanclpjokhdolnendpplpjiace?hl=en",
+          "title": "Simple Translate - Chrome Web Store",
+          "snippet": "Quickly translate selected or typed text on web pages. Supports Google Translate and DeepL API. When you select text, the translation button pops up.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 31,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_31"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/simple-translate/ibplnjkanclpjokhdolnendpplpjiace?hl=en",
+      "url_position": 1740,
+      "claim_text": "Simple Translate – lightweight translate popup supporting Google/DeepL APIs for quick selected text translation. Chrome Web Store",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1543,
+        "end_idx": 1563
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/zhongwen-chinese-english/kkmlkkjojmombglmlpbpapmhcaljjkde",
+          "title": "Zhongwen: Chinese-English Dictionary - Chrome Web Store",
+          "snippet": "Great tool for learning Chinese. Includes links to Chinese Grammar Wiki. Supports adding words to Skritter. The most popular Chinese popup dictionary.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 12,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_12"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/zhongwen-chinese-english/kkmlkkjojmombglmlpbpapmhcaljjkde",
+      "url_position": 1995,
+      "claim_text": "🔹 For reading Chinese with inline help Zhongwen: Chinese-English Dictionary – hover for word meanings/pinyin (not full page translate). Chrome Web Store",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1638,
+        "end_idx": 1658
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/chinese-tools/aicnjppelckphnaiohdpicomfaedhnfk?hl=en",
+      "url_position": 2183,
+      "claim_text": "Chinese Tools – selected text translate + pinyin, dictionary lookup. Chrome Web Store",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1863,
+        "end_idx": 1883
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://noiz.io/blog/the-7-best-translation-extensions-for-chrome/",
+      "url_position": 2474,
+      "claim_text": "✅ Notes Most extensions translate text/web pages; only a few handle live audio/video translation like the ones above. Accuracy varies by engine (DeepL generally outperforms built-in). noiz.io",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 2019,
+        "end_idx": 2066
+      },
+      "citation_token": "citeturn0search6turn0search17turn0search14",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn?hl=zh-CN",
+          "title": "Speech Translator - Chrome 应用商店",
+          "snippet": "Dec 27, 2023 — 实时翻译任何视频、音频或直播。 此扩展程序使用由Google提供支持的语音识别技术，将来自任何来源的语音转换为文本：转录过程。然后，它使用所选服务将 ...Read more",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        },
+        {
+          "url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho?hl=zh-CN",
+          "title": "ViiTor实时翻译- AI翻译&实时双语字幕&免费- Chrome 应用商店",
+          "snippet": "ViiTor实时翻译插件为音视频直播、在线视频、线上会议提供音频实时转写和翻译，实现双语字幕功能。 ⭐️核心功能: - 扩展程序识别页面中的音源内容，并转换为所需文字。 - 支持 ...",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_17"
+        },
+        {
+          "url": "https://www.jotme.io/",
+          "title": "JotMe - Live Translator & AI Interpreter",
+          "snippet": "JotMe supports 107 languages for live translation and transcription on its desktop app and Chrome extension, including English, Japanese, Korean, Spanish ...Read more",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_14"
+        },
+        {
+          "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn?hl=zh-CN&utm_source=chatgpt.com",
+          "title": "Speech Translator - Chrome 应用商店",
+          "snippet": "Dec 27, 2023 — 实时翻译任何视频、音频或直播。 此扩展程序使用由Google提供支持的语音识别技术，将来自任何来源的语音转换为文本：转录过程。然后，它使用所选服务将 ...Read more",
+          "domain": "Chrome Web Store",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn?hl=zh-CN",
+      "url_position": 2700,
+      "claim_text": "For best live audio, choose a plugin focused on speech-to-text + translation (e.g., Speech Translator, ViiTor, JotMe). Chrome Web Store+2Chrome Web Store+2",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn?hl=zh-CN",
+        "title": "Speech Translator - Chrome 应用商店",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho?hl=zh-CN",
+        "title": "ViiTor实时翻译- AI翻译&实时双语字幕&免费- Chrome 应用商店",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://www.jotme.io/",
+        "title": "JotMe - Live Translator & AI Interpreter",
+        "domain": "JotMe"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/immersive-translate-trans/bpoadfkcbjbfhfodiogcnhhhpibjhbnh?hl=zh-CN",
+        "title": "沉浸式翻译- 网页翻译插件| PDF翻译| 免费- Chrome 应用商店",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://www.deepl.com/en/chrome-extension",
+        "title": "DeepL for Chrome: communicate with the world in your ...",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://magicfanyi.youdao.com/",
+        "title": "有道灵动翻译",
+        "domain": "magicfanyi.youdao.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/simple-translate/ibplnjkanclpjokhdolnendpplpjiace?hl=en",
+        "title": "Simple Translate - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/zhongwen-chinese-english/kkmlkkjojmombglmlpbpapmhcaljjkde",
+        "title": "Zhongwen: Chinese-English Dictionary - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/chinese-tools/aicnjppelckphnaiohdpicomfaedhnfk?hl=en",
+        "title": "Chinese Tools - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://noiz.io/blog/the-7-best-translation-extensions-for-chrome/",
+        "title": "7 Best Chrome Translation Extensions: Comparison - Noiz",
+        "domain": "noiz.io"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://blog.csdn.net/2501_90561511/article/details/147470443",
+        "title": "【实用】chrome浏览器安装翻译插件 - CSDN博客",
+        "domain": "csdn.net"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=IjQQnvqcRqg",
+        "title": "【强烈推荐】完全免费！最新谷歌浏览器支持视频字幕翻译 - YouTube",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://blog.csdn.net/weixin_43172326/article/details/133945374",
+        "title": "一款免费的实时网页翻译字幕+大模型总结插件 - CSDN博客",
+        "domain": "csdn.net"
+      },
+      {
+        "url": "https://missyybai.medium.com/chrome-%E8%8B%B1%E6%96%87%E7%BF%BB%E8%AD%AF%E5%A4%96%E6%8E%9B%E6%8E%A8%E8%96%A6-%E5%A5%BD%E7%94%A8%E5%88%B0%E6%88%91%E7%82%BA%E6%AD%A4%E8%80%8C%E5%AF%AB%E4%B8%80%E7%AF%87%E6%96%87-83ee45c3c104",
+        "title": "Chrome 英文翻譯外掛推薦，好用到我為此而寫一篇文 - 閃閃發亮",
+        "domain": "medium.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb?hl=en",
+        "title": "Google Translate - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/chrome/answer/10538231?hl=en",
+        "title": "Manage captions and translations in Chrome",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb?hl=zh-CN",
+        "title": "Google 翻译- Chrome 应用商店",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/%E6%99%BA%E8%AF%91%E7%BD%91%E9%A1%B5%E7%BF%BB%E8%AF%91-%E8%87%AA%E5%8A%A8%E7%BF%BB%E8%AF%91%E3%80%81%E5%8F%8C%E8%AF%AD%E5%AF%B9%E7%85%A7%E3%80%81ai%E5%AF%B9%E8%AF%9D/baganeegkidlaebaigikopklmhkdkkbk",
+        "title": "智译网页翻译-自动翻译、双语对照、AI对话- Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb",
+        "title": "Google Translate - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/chrome/answer/10538231?hl=zh-Hans",
+        "title": "在Chrome 中管理字幕和翻译",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/chrome/answer/173424?co=GENIE.Platform%3DDesktop&hl=zh-Hans",
+        "title": "翻译网页和更改Chrome 语言- 电脑",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/traduttore_video_tradurre_video_online/285433175728?hl=zh",
+        "title": "视频翻译器- 在线翻译视频和语音",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/chrome/answer/173424?co=GENIE.Platform%3DDesktop&hl=en",
+        "title": "Translate pages and change Chrome languages - Computer",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/immersive-translate-trans/bpoadfkcbjbfhfodiogcnhhhpibjhbnh?hl=en",
+        "title": "Immersive Translate - Translate Web & PDF",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chrome.google.com/webstore/detail/translator/pnpdnibdembnnlaiibkeandepjajegoi?gl=HK&hl=zh-CN",
+        "title": "翻译者- Chrome 应用商店",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/slides_translator/333911051422",
+        "title": "Slides Translator - Google Workspace Marketplace",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/chinalife/comments/10nxns0/browser_extensions_for_translating_entire/",
+        "title": "Browser extensions for translating entire webpages in ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://flexiclasses.com/mandarin/chrome-extensions/",
+        "title": "10 Best Chrome Extensions for Learning Chinese",
+        "domain": "flexiclasses.com"
+      },
+      {
+        "url": "https://www.deepl.com/zh/chrome-extension",
+        "title": "DeepL Chrome 扩展：在浏览器中与世界交流",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://visor.oregon.gov/other-languages/chinese",
+        "title": "如何安装谷歌翻译扩展 - Visor - Oregon.gov",
+        "domain": "oregon.gov"
+      },
+      {
+        "url": "https://blog.csdn.net/weixin_74774974/article/details/135706295",
+        "title": "插件分享Chrome浏览器实现外语翻译自由原创",
+        "domain": "csdn.net"
+      },
+      {
+        "url": "https://www.pixiebrix.com/blog/best-translation-extensions-chrome/",
+        "title": "The Best Translation Extensions for Chrome",
+        "domain": "pixiebrix.com"
+      },
+      {
+        "url": "https://blog.pixiebrix.com/blog/best-translation-extensions-chrome",
+        "title": "The Best Translation Extensions for Chrome",
+        "domain": "pixiebrix.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=9Z2kKdwFzMw",
+        "title": "Chrome超好用的翻譯擴充功能！不僅可以雙語顯示，還可以 ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/",
+        "title": "Immersive Translate - Next-Gen AI Translator | Bilingual ...",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://immersivetranslate.cn/",
+        "title": "沉浸式翻译- 免费双语对照网页翻译插件",
+        "domain": "immersivetranslate.cn"
+      },
+      {
+        "url": "https://help.method.me/en/articles/6653416-how-to-add-the-google-translate-extension-in-chrome",
+        "title": "How to add the Google Translate extension in Chrome",
+        "domain": "method.me"
+      },
+      {
+        "url": "https://chrome.zzzmh.cn/info/aapbdbdomjkkjkaonfhkkikfgjllcleb",
+        "title": "Google 翻译_2.0.16_Chrome插件下载",
+        "domain": "zzzmh.cn"
+      },
+      {
+        "url": "https://www.wps.com/blog/7-best-translation-chrome-extensions/",
+        "title": "7 Best Translation Chrome Extensions 2025",
+        "domain": "wps.com"
+      },
+      {
+        "url": "https://www.smartcat.com/extension-translator/chinese/",
+        "title": "AI-Powered Chinese Translator Chrome Extension",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://www.smartcat.com/integrations/chrome-extension/",
+        "title": "Chrome Translation Plugin | Translate Any Website with AI",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://app.genape.ai/zh-TW/tutorial-article/ai-generator/translation-chrome-extensions",
+        "title": "9個好用的Chrome 翻譯擴充套件，輕鬆暢遊國外網站 - GenApe",
+        "domain": "genape.ai"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 32,
+    "total_all": 42
+  },
+  "response_stats": {
+    "total_length": 2858,
+    "citation_count": 11,
+    "chars_with_citations": 244
+  }
+}

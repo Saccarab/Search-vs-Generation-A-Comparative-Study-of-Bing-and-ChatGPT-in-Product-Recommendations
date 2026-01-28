@@ -13,56 +13,103 @@ DASHBOARD_TEMPLATE = """
         body { font-family: -apple-system, sans-serif; background: #f4f4f9; margin: 0; padding: 40px; }
         .nav { margin-bottom: 30px; }
         .nav a { text-decoration: none; color: #10a37f; font-weight: bold; margin-right: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
         .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         h2 { margin-top: 0; color: #333; font-size: 18px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
-        .stat-big { font-size: 36px; font-weight: bold; color: #10a37f; }
+        .stat-big { font-size: 36px; font-weight: bold; }
         .stat-label { color: #666; font-size: 14px; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 13px; }
-        .bar-container { background: #eee; height: 20px; border-radius: 10px; overflow: hidden; margin-top: 5px; }
-        .bar { background: #10a37f; height: 100%; }
-        .slump { background: #f87171 !important; }
+        .enterprise { border-left: 4px solid #3b82f6; }
+        .personal { border-left: 4px solid #f59e0b; }
     </style>
 </head>
 <body>
     <div class="nav">
         <a href="/">← Back to Run Viewer</a>
     </div>
-    <h1>GEO Research Dashboard - Enterprise</h1>
+    <h1>GEO Research Dashboard</h1>
     
     <div class="grid">
-        <div class="card">
-            <h2>Overall Coverage (Deep Hunt Top 200)</h2>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                <div style="background:#f9fafb; padding:15px; border-radius:8px; text-align:center;">
+        <!-- Enterprise Stats -->
+        <div class="card enterprise">
+            <h2 style="color: #3b82f6;">🏢 Enterprise Account</h2>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#eff6ff; padding:15px; border-radius:8px; text-align:center;">
                     <div class="stat-label">All Citations</div>
-                    <div class="stat-big">{{ "%.1f"|format(matched_all / total_all * 100 if total_all > 0 else 0) }}%</div>
-                    <div style="font-size:11px; color:#666;">{{ matched_all }} / {{ total_all }}</div>
+                    <div class="stat-big" style="color:#3b82f6;">{{ "%.1f"|format(ent_matched_all / ent_total_all * 100 if ent_total_all > 0 else 0) }}%</div>
+                    <div style="font-size:11px; color:#666;">{{ ent_matched_all }} / {{ ent_total_all }}</div>
                 </div>
-                <div style="background:#ecfdf5; padding:15px; border-radius:8px; text-align:center;">
-                    <div class="stat-label" style="color:#065f46; font-weight:bold;">Cited Only</div>
-                    <div class="stat-big" style="color:#059669;">{{ "%.1f"|format(matched_main / total_main * 100 if total_main > 0 else 0) }}%</div>
-                    <div style="font-size:11px; color:#065f46;">{{ matched_main }} / {{ total_main }}</div>
+                <div style="background:#dbeafe; padding:15px; border-radius:8px; text-align:center;">
+                    <div class="stat-label" style="font-weight:bold;">Cited Only</div>
+                    <div class="stat-big" style="color:#1d4ed8;">{{ "%.1f"|format(ent_matched_main / ent_total_main * 100 if ent_total_main > 0 else 0) }}%</div>
+                    <div style="font-size:11px; color:#1e40af;">{{ ent_matched_main }} / {{ ent_total_main }}</div>
                 </div>
+            </div>
+            <div style="font-size: 12px; color: #666;">
+                <strong>Runs:</strong> {{ ent_runs }} | <strong>Bing Results:</strong> {{ ent_bing }}
             </div>
         </div>
         
-        <div class="card">
-            <h2>Top Invisible Domains (Not in Bing)</h2>
+        <!-- Personal Stats -->
+        <div class="card personal">
+            <h2 style="color: #f59e0b;">👤 Personal Account</h2>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#fffbeb; padding:15px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">All Citations</div>
+                    <div class="stat-big" style="color:#f59e0b;">{{ "%.1f"|format(pers_matched_all / pers_total_all * 100 if pers_total_all > 0 else 0) }}%</div>
+                    <div style="font-size:11px; color:#666;">{{ pers_matched_all }} / {{ pers_total_all }}</div>
+                </div>
+                <div style="background:#fef3c7; padding:15px; border-radius:8px; text-align:center;">
+                    <div class="stat-label" style="font-weight:bold;">Cited Only</div>
+                    <div class="stat-big" style="color:#d97706;">{{ "%.1f"|format(pers_matched_main / pers_total_main * 100 if pers_total_main > 0 else 0) }}%</div>
+                    <div style="font-size:11px; color:#92400e;">{{ pers_matched_main }} / {{ pers_total_main }}</div>
+                </div>
+            </div>
+            <div style="font-size: 12px; color: #666;">
+                <strong>Runs:</strong> {{ pers_runs }} | <strong>Bing Results:</strong> {{ pers_bing }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <div class="card enterprise">
+            <h2>Enterprise - Top Invisible Domains</h2>
             <table>
                 <tr><th>Domain</th><th>Count</th></tr>
-                {% for row in invisible_domains[:15] %}
+                {% for row in ent_invisible[:10] %}
                 <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
                 {% endfor %}
             </table>
         </div>
         
-        <div class="card">
-            <h2>Page Distribution of Matches</h2>
+        <div class="card personal">
+            <h2>Personal - Top Invisible Domains</h2>
+            <table>
+                <tr><th>Domain</th><th>Count</th></tr>
+                {% for row in pers_invisible[:10] %}
+                <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <div class="card enterprise">
+            <h2>Enterprise - Page Distribution</h2>
             <table>
                 <tr><th>Page</th><th>Matches</th></tr>
-                {% for row in page_data %}
+                {% for row in ent_page_data %}
+                <tr><td>Page {{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <div class="card personal">
+            <h2>Personal - Page Distribution</h2>
+            <table>
+                <tr><th>Page</th><th>Matches</th></tr>
+                {% for row in pers_page_data %}
                 <tr><td>Page {{ row[0] }}</td><td>{{ row[1] }}</td></tr>
                 {% endfor %}
             </table>
@@ -124,11 +171,24 @@ HTML_TEMPLATE = """
         <div style="margin-bottom: 20px; padding: 10px; background: #10a37f; border-radius: 5px; text-align: center;">
             <a href="/dashboard" style="text-decoration:none; color:white; font-weight:bold;">📊 VIEW DASHBOARD</a>
         </div>
+        
+        <!-- Account Type Filter -->
+        <div style="margin-bottom: 15px; padding: 8px; background: #343541; border-radius: 5px;">
+            <div style="font-size: 10px; color: #888; margin-bottom: 5px;">FILTER BY ACCOUNT</div>
+            <div style="display: flex; gap: 5px;">
+                <a href="/?filter=all" style="flex:1; text-align:center; padding: 4px; border-radius: 3px; font-size: 11px; text-decoration:none; {{ 'background:#10a37f; color:white;' if account_filter == 'all' else 'background:#444654; color:#ccc;' }}">All</a>
+                <a href="/?filter=enterprise" style="flex:1; text-align:center; padding: 4px; border-radius: 3px; font-size: 11px; text-decoration:none; {{ 'background:#3b82f6; color:white;' if account_filter == 'enterprise' else 'background:#444654; color:#ccc;' }}">Enterprise</a>
+                <a href="/?filter=personal" style="flex:1; text-align:center; padding: 4px; border-radius: 3px; font-size: 11px; text-decoration:none; {{ 'background:#f59e0b; color:white;' if account_filter == 'personal' else 'background:#444654; color:#ccc;' }}">Personal</a>
+            </div>
+        </div>
+        
         <h3 style="color:#888; font-size:12px;">RUNS ({{ run_ids|length }})</h3>
         {% for rid in run_ids %}
-        <a href="/?run_id={{ rid }}" style="text-decoration:none; color:inherit;">
-            <div class="prompt-item {{ 'active' if rid == active_run_id else '' }}">
-                {{ rid }}
+        {% set is_personal = '_personal' in rid %}
+        <a href="/?run_id={{ rid }}&filter={{ account_filter }}" style="text-decoration:none; color:inherit;">
+            <div class="prompt-item {{ 'active' if rid == active_run_id else '' }}" style="border-left-color: {{ '#f59e0b' if is_personal else '#3b82f6' }};">
+                <span style="font-size: 9px; padding: 1px 4px; border-radius: 2px; margin-right: 4px; {{ 'background:#f59e0b; color:white;' if is_personal else 'background:#3b82f6; color:white;' }}">{{ 'P' if is_personal else 'E' }}</span>
+                {{ rid.replace('_personal', '') }}
             </div>
         </a>
         {% endfor %}
@@ -226,24 +286,53 @@ HTML_TEMPLATE = """
                             </div>
                             {% endfor %}
                         {% else %}
-                            <div style="color: #888; font-style: italic;">Loading response...</div>
+                            {% if run_raw.response_text %}
+                            <div style="font-size: 13px; color: #333; line-height: 1.7;">
+                                {{ run_raw.formatted_response|safe }}
+                            </div>
+                            {% else %}
+                            <div style="color: #888; font-style: italic;">No response data available</div>
+                            {% endif %}
                         {% endif %}
                         
-                        <!-- All Citations Summary -->
+                        <!-- Cited Sources -->
                         <div style="border-top: 1px solid #ddd; margin-top: 15px; padding-top: 15px;">
-                            <div style="font-size: 11px; color: #666; font-weight: bold; margin-bottom: 8px;">ALL SOURCES ({{ cit_db|length }})</div>
-                            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                            {% for cit in cit_db %}
-                                <div style="font-size: 10px; background: {{ '#d1fae5' if cit.bing_rank else '#fee2e2' }}; color: {{ '#065f46' if cit.bing_rank else '#991b1b' }}; padding: 3px 8px; border-radius: 10px;">
-                                    {{ cit.domain }}
-                                    {% if cit.bing_rank %}
-                                    <span style="font-weight: bold;">#{{ cit.bing_rank }}</span>
-                                    {% else %}
-                                    <span style="font-weight: bold;">✗</span>
-                                    {% endif %}
-                                </div>
+                            {% set cited_sources = cit_db|selectattr('citation_type', 'equalto', 'cited')|list %}
+                            {% set additional_sources = cit_db|selectattr('citation_type', 'equalto', 'additional')|list %}
+                            
+                            <div style="font-size: 11px; color: #065f46; font-weight: bold; margin-bottom: 8px;">✅ CITED SOURCES ({{ cited_sources|length }})</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 15px;">
+                            {% for cit in cited_sources %}
+                                <a href="{{ cit.url }}" target="_blank" style="text-decoration: none;">
+                                    <div style="font-size: 10px; background: {{ '#d1fae5' if cit.bing_rank else '#fee2e2' }}; color: {{ '#065f46' if cit.bing_rank else '#991b1b' }}; padding: 3px 8px; border-radius: 10px;">
+                                        {{ cit.domain }} 🔗
+                                        {% if cit.bing_rank %}
+                                        <span style="font-weight: bold;">#{{ cit.bing_rank }} Q{{ cit.bing_query_num }}</span>
+                                        {% else %}
+                                        <span style="font-weight: bold;">✗</span>
+                                        {% endif %}
+                                    </div>
+                                </a>
                             {% endfor %}
                             </div>
+                            
+                            {% if additional_sources %}
+                            <div style="font-size: 11px; color: #6b7280; font-weight: bold; margin-bottom: 8px;">➕ ADDITIONAL SOURCES ({{ additional_sources|length }})</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                            {% for cit in additional_sources %}
+                                <a href="{{ cit.url }}" target="_blank" style="text-decoration: none;">
+                                    <div style="font-size: 10px; background: {{ '#e0f2fe' if cit.bing_rank else '#f3f4f6' }}; color: {{ '#0369a1' if cit.bing_rank else '#6b7280' }}; padding: 3px 8px; border-radius: 10px;">
+                                        {{ cit.domain }} 🔗
+                                        {% if cit.bing_rank %}
+                                        <span style="font-weight: bold;">#{{ cit.bing_rank }}</span>
+                                        {% else %}
+                                        <span style="font-weight: bold;">✗</span>
+                                        {% endif %}
+                                    </div>
+                                </a>
+                            {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                         
                         <!-- Rejected Sources (retrieved but not cited) -->
@@ -406,16 +495,24 @@ def get_db():
 _raw_data_cache = None
 
 def get_raw_network_data(run_id):
-    """Load raw network data from CSV for a specific run."""
+    """Load raw network data from CSV/JSON for a specific run."""
     global _raw_data_cache
     
     if _raw_data_cache is None:
         import csv
+        import json as json_module
+        import sys
+        
+        # Increase CSV field size limit for large response fields
+        csv.field_size_limit(sys.maxsize)
+        
+        _raw_data_cache = {}
+        
+        # Load enterprise data
         csv_path = 'datapass/chatgpt_results_2026-01-27T11-23-04-enterprise.csv'
         try:
             with open(csv_path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
-                _raw_data_cache = {}
                 for row in reader:
                     rid = f"{row['prompt_id']}_r{row['run_number']}"
                     _raw_data_cache[rid] = {
@@ -427,17 +524,48 @@ def get_raw_network_data(run_id):
                         'sonic_classification_json': row.get('sonic_classification_json', '{}')
                     }
         except Exception as e:
-            print(f"Error loading CSV: {e}")
-            _raw_data_cache = {}
+            print(f"Error loading enterprise CSV: {e}")
+        
+        # Load personal data
+        personal_csv = 'datapass/personal_data_run/chatgpt_results_2026-01-28T02-25-34.csv'
+        try:
+            with open(personal_csv, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    rid = f"{row['prompt_id']}_r{row['run_number']}_personal"
+                    _raw_data_cache[rid] = {
+                        'hidden_queries_json': row.get('hidden_queries_json', '[]'),
+                        'search_result_groups_json': row.get('search_result_groups_json', '[]'),
+                        'sources_cited_json': row.get('sources_cited_json', '[]'),
+                        'sources_all_json': row.get('sources_all_json', '[]'),
+                        'sources_additional_json': row.get('sources_additional_json', '[]'),
+                        'sonic_classification_json': row.get('sonic_classification_json', '{}')
+                    }
+        except Exception as e:
+            print(f"Error loading personal CSV: {e}")
     
     return _raw_data_cache.get(run_id, {})
 
 @app.route('/')
 def index():
     run_id = request.args.get('run_id')
+    account_filter = request.args.get('filter', 'all')
     db = get_db()
     
-    run_ids = [r['run_id'] for r in db.execute('SELECT run_id FROM runs ORDER BY prompt_id, run_number').fetchall()]
+    # Get runs ordered: enterprise first (sorted by prompt_id, run_number), then personal
+    if account_filter == 'enterprise':
+        run_ids = [r['run_id'] for r in db.execute(
+            "SELECT run_id FROM runs WHERE account_type = 'enterprise' ORDER BY prompt_id, run_number"
+        ).fetchall()]
+    elif account_filter == 'personal':
+        run_ids = [r['run_id'] for r in db.execute(
+            "SELECT run_id FROM runs WHERE account_type = 'personal' ORDER BY prompt_id, run_number"
+        ).fetchall()]
+    else:
+        # All: Enterprise first, then Personal
+        run_ids = [r['run_id'] for r in db.execute(
+            "SELECT run_id FROM runs ORDER BY account_type DESC, prompt_id, run_number"
+        ).fetchall()]
     
     run_raw = None
     cit_db = []
@@ -517,6 +645,291 @@ def index():
                 items_raw = json.loads(db_run['items_json'] or '[]')
             except:
                 items_raw = []
+            
+            # If no structured items, format response_text with inline citation chips
+            if not items_raw and run_raw.get('response_text'):
+                import re
+                import html
+                
+                response_text = run_raw['response_text']
+                
+                # Build Bing rank lookup for this run
+                bing_lookup = {}
+                bing_rows = db.execute('''
+                    SELECT url_normalized, MIN(position) as rank, query
+                    FROM bing_results 
+                    WHERE run_id = ?
+                    GROUP BY url_normalized
+                ''', (run_id,)).fetchall()
+                for br in bing_rows:
+                    bing_lookup[br['url_normalized']] = {'rank': br['rank'], 'query': br['query']}
+                
+                def normalize_url(url):
+                    if not url: return ""
+                    url = url.lower().replace('https://', '').replace('http://', '').replace('www.', '')
+                    if '?' in url: url = url.split('?')[0]
+                    return url.rstrip('/')
+                
+                # === RECONSTRUCTOR: Build ref_index -> URL lookup from search_result_groups_json ===
+                ref_index_to_url = {}
+                try:
+                    srg_json_str = extra_data.get('search_result_groups_json', '[]') or '[]'
+                    srg = json.loads(srg_json_str)
+                    for group in srg:
+                        # Handle groups with 'entries'
+                        if isinstance(group, dict) and 'entries' in group:
+                            for entry in group.get('entries', []):
+                                ref_id = entry.get('ref_id', {})
+                                if ref_id and 'ref_index' in ref_id:
+                                    ref_index_to_url[int(ref_id['ref_index'])] = {
+                                        'url': entry.get('url', ''),
+                                        'title': entry.get('title', ''),
+                                        'domain': group.get('domain', entry.get('attribution', ''))
+                                    }
+                        # Handle direct entries (not in a group)
+                        elif isinstance(group, dict) and group.get('ref_id') and 'ref_index' in group.get('ref_id', {}):
+                            ref_index_to_url[int(group['ref_id']['ref_index'])] = {
+                                'url': group.get('url', ''),
+                                'title': group.get('title', ''),
+                                'domain': group.get('attribution', '')
+                            }
+                    print(f"DEBUG: Built ref_index lookup with {len(ref_index_to_url)} entries")
+                except Exception as e:
+                    print(f"ERROR building ref_index lookup: {e}")
+                
+                # === Parse content_references_json to find multi-chip tokens ===
+                multi_chips_list = [] # List of {start_idx, matched_text, urls}
+                multi_chips_map = {} # start_idx -> urls
+                try:
+                    refs_json_str = extra_data.get('content_references_json', '[]') or '[]'
+                    refs_json = json.loads(refs_json_str)
+                    for ref in refs_json:
+                        if isinstance(ref, dict) and ref.get('matched_text'):
+                            matched = ref['matched_text']
+                            # Look for patterns like "citeturn0search3turn0search36" (multiple searchX)
+                            search_indices = re.findall(r'turn0search(\d+)', matched)
+                            if len(search_indices) > 1:
+                                # This is a multi-chip!
+                                urls_for_chip = []
+                                for idx_str in search_indices:
+                                    idx = int(idx_str)
+                                    if idx in ref_index_to_url:
+                                        urls_for_chip.append(ref_index_to_url[idx])
+                                if urls_for_chip:
+                                    mc_data = {
+                                        'start_idx': ref.get('start_idx', 0),
+                                        'matched_text': matched,
+                                        'urls': urls_for_chip
+                                    }
+                                    multi_chips_list.append(mc_data)
+                                    multi_chips_map[ref.get('start_idx', 0)] = urls_for_chip
+                    print(f"DEBUG: Found {len(multi_chips_list)} multi-chip citations")
+                except Exception as e:
+                    print(f"ERROR parsing content_references_json: {e}")
+                
+                # Build a map of all cited URLs for this run
+                all_cited_urls = []
+                try:
+                    cited_json = json.loads(run_raw.get('sources_cited_json', '[]') or '[]')
+                    for s in cited_json:
+                        if s.get('url'):
+                            all_cited_urls.append(s.get('url'))
+                    
+                    # Also look in content_references_json for raw URLs
+                    refs_json_str = extra_data.get('content_references_json', '[]') or '[]'
+                    refs_json = json.loads(refs_json_str)
+                    for r in refs_json:
+                        if isinstance(r, str) and r.startswith('http'):
+                            all_cited_urls.append(r)
+                except:
+                    pass
+
+                # Deduplicate while preserving order
+                seen_urls = set()
+                unique_cited = []
+                for u in all_cited_urls:
+                    if u not in seen_urls:
+                        unique_cited.append(u)
+                        seen_urls.add(u)
+                all_cited_urls = unique_cited
+                
+                # Track which URLs we've already placed chips for
+                used_urls = set()
+
+                def replace_url(match):
+                    url = match.group(1)
+                    start_pos = match.start()
+                    url_norm = normalize_url(url)
+                    
+                    # Check if this position corresponds to a known multi-chip
+                    # We look for a multi-chip that starts near this [URL] tag
+                    # ChatGPT usually puts the [URL] right after the multi-chip token
+                    multi_chip_urls = None
+                    for idx_pos, urls in multi_chips_map.items():
+                        if abs(idx_pos - start_pos) < 50: # Close proximity
+                            multi_chip_urls = urls
+                            break
+                    
+                    if multi_chip_urls:
+                        chips_html = []
+                        for u_info in multi_chip_urls:
+                            u = u_info['url']
+                            u_norm = normalize_url(u)
+                            used_urls.add(u_norm)
+                            
+                            clean_u = u.replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
+                            domain = clean_u.split('/')[0] if '/' in clean_u else clean_u
+                            
+                            bing_info = bing_lookup.get(u_norm, {})
+                            bing_rank = bing_info.get('rank')
+                            
+                            if bing_rank:
+                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>')
+                            else:
+                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>')
+                        return "".join(chips_html)
+                    
+                    # Fallback to single chip
+                    used_urls.add(url_norm)
+                    clean_url = url.replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
+                    domain = clean_url.split('/')[0] if '/' in clean_url else clean_url
+                    
+                    bing_info = bing_lookup.get(url_norm, {})
+                    bing_rank = bing_info.get('rank')
+                    
+                    if bing_rank:
+                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>'
+                    else:
+                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>'
+                
+                # 1. Replace [URL] patterns first (now with multi-chip reconstruction)
+                # We use a while loop or finditer to handle indices correctly as we modify the string
+                formatted = response_text
+                
+                # Sort multi-chips by start_idx descending so we don't break indices of earlier ones
+                sorted_multi_indices = sorted(multi_chips_map.keys(), reverse=True)
+                
+                # Track used URLs for the "Recovered" section at the bottom
+                used_urls = set()
+
+                # First, handle the multi-chips by looking for the [URL] tags that follow them
+                # ChatGPT usually outputs: [Token][URL]
+                for mc_start in sorted_multi_indices:
+                    # Find the [URL] tag that immediately follows this multi-chip token
+                    # We look within a reasonable range after the token
+                    search_range = formatted[mc_start:mc_start+200]
+                    match = re.search(r'\[([^\]]+)\]', search_range)
+                    
+                    if match:
+                        match_start_in_formatted = mc_start + match.start()
+                        match_end_in_formatted = mc_start + match.end()
+                        
+                        urls_data = multi_chips_map[mc_start]
+                        chips_html = []
+                        for u_info in urls_data:
+                            u = u_info['url']
+                            u_norm = normalize_url(u)
+                            used_urls.add(u_norm)
+                            
+                            clean_u = u.replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
+                            domain = clean_u.split('/')[0] if '/' in clean_u else clean_u
+                            
+                            bing_info = bing_lookup.get(u_norm, {})
+                            bing_rank = bing_info.get('rank')
+                            
+                            if bing_rank:
+                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>')
+                            else:
+                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>')
+                        
+                        # Replace the [URL] tag with our multiple chips
+                        formatted = formatted[:match_start_in_formatted] + "".join(chips_html) + formatted[match_end_in_formatted:]
+
+                # Now handle any remaining single [URL] tags
+                def replace_single_url(match):
+                    url = match.group(1)
+                    url_norm = normalize_url(url)
+                    
+                    # If this URL was already part of a multi-chip, we might want to skip it 
+                    # but usually they are distinct in the text.
+                    used_urls.add(url_norm)
+                    
+                    clean_url = url.replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
+                    domain = clean_url.split('/')[0] if '/' in clean_url else clean_url
+                    
+                    bing_info = bing_lookup.get(url_norm, {})
+                    bing_rank = bing_info.get('rank')
+                    
+                    if bing_rank:
+                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>'
+                    else:
+                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>'
+
+                formatted = re.sub(r'\[([^\]]+)\]', replace_single_url, formatted)
+                
+                # 2. Find any cited URLs that weren't in the [URL] text and add them as chips
+                # This handles any remaining URLs that didn't get matched to a chip
+                remaining_chips = []
+                for url in all_cited_urls:
+                    url_norm = normalize_url(url)
+                    if url_norm not in used_urls:
+                        clean_url = url.replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
+                        domain = clean_url.split('/')[0] if '/' in clean_url else clean_url
+                        bing_info = bing_lookup.get(url_norm, {})
+                        bing_rank = bing_info.get('rank')
+                        
+                        chip_html = ""
+                        if bing_rank:
+                            chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>'
+                        else:
+                            chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>'
+                        remaining_chips.append(chip_html)
+                        used_urls.add(url_norm)
+                        
+                        chip_html = ""
+                        if bing_rank:
+                            chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>'
+                        else:
+                            chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>'
+                        remaining_chips.append(chip_html)
+                        used_urls.add(url_norm)
+
+                # Append missing chips to the end of the response
+                if remaining_chips:
+                    formatted += '<div style="margin-top:10px; padding-top:10px; border-top:1px dashed #ddd;"><span style="font-size:11px; color:#666; font-weight:bold;">RECOVERED HIDDEN CITATIONS (FROM NETWORK DATA):</span><br>' + " ".join(remaining_chips) + '</div>'
+
+                # === Display Multi-Chip Analysis (the "+1" breakdown) ===
+                if multi_chips_list:
+                    multi_chip_html = '<div style="margin-top:15px; padding:12px; background:#fef3c7; border:1px solid #f59e0b; border-radius:8px;"><span style="font-size:12px; color:#92400e; font-weight:bold;">🔗 MULTI-CHIP CITATIONS ANALYSIS ("+1" Breakdown)</span><br>'
+                    multi_chip_html += '<span style="font-size:10px; color:#78350f;">ChatGPT combined multiple sources into single citation chips. Here are the hidden links:</span><br><br>'
+                    
+                    for i, mc in enumerate(multi_chips_list):
+                        multi_chip_html += f'<div style="margin-bottom:10px; padding:8px; background:white; border-radius:4px;">'
+                        multi_chip_html += f'<span style="font-size:10px; color:#666;">Token: <code>{html.escape(mc["matched_text"][:50])}...</code></span><br>'
+                        multi_chip_html += f'<span style="font-size:11px; font-weight:bold;">Links ({len(mc["urls"])}):</span><br>'
+                        
+                        for url_info in mc['urls']:
+                            url = url_info['url']
+                            url_norm = normalize_url(url)
+                            domain = url_info['domain'] or url.split('/')[2] if '/' in url else url
+                            bing_info = bing_lookup.get(url_norm, {})
+                            bing_rank = bing_info.get('rank')
+                            
+                            if bing_rank:
+                                multi_chip_html += f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:10px; background:#d1fae5; color:#065f46; padding:2px 6px; border-radius:10px; text-decoration:none; margin:2px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 3px;border-radius:4px;font-size:8px;font-weight:bold;">#{bing_rank}</span></a>'
+                            else:
+                                multi_chip_html += f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:10px; background:#fee2e2; color:#991b1b; padding:2px 6px; border-radius:10px; text-decoration:none; margin:2px;">{html.escape(domain)} ✗</a>'
+                        
+                        multi_chip_html += '</div>'
+                    
+                    multi_chip_html += '</div>'
+                    formatted += multi_chip_html
+
+                # Replace newlines with <br>
+                formatted = formatted.replace('\n', '<br>')
+                run_raw['formatted_response'] = formatted
+            else:
+                run_raw['formatted_response'] = ''
         else:
             run_raw = {'query': 'N/A', 'generated_search_query': 'N/A', 'response_text': f'Run {run_id} not found', 'hidden_queries': '', 'web_search_triggered': None, 'web_search_forced': None, 'items_count': 0, 'items_with_citations_count': 0, 'hidden_queries_json': '[]', 'search_result_groups_json': '[]', 'sources_cited_json': '[]', 'sources_all_json': '[]', 'simple_search_prob': 0, 'complex_search_prob': 0, 'no_search_prob': 0, 'rejected_sources': []}
 
@@ -560,56 +973,78 @@ def index():
                                  cit_db=cit_db,
                                  bing_results=bing_results,
                                  unique_queries=unique_queries if run_id else [],
-                                 items_raw=items_raw)
+                                 items_raw=items_raw,
+                                 account_filter=account_filter)
 
 @app.route('/dashboard')
 def dashboard():
     db = get_db()
     
-    # Page-based distribution
-    page_data = db.execute('''
+    match_sql = "EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized)"
+    
+    # ===== ENTERPRISE STATS =====
+    ent_runs = db.execute("SELECT COUNT(*) FROM runs WHERE account_type = 'enterprise'").fetchone()[0]
+    ent_bing = db.execute("SELECT COUNT(*) FROM bing_results WHERE account_type = 'enterprise'").fetchone()[0]
+    
+    ent_total_all = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'enterprise'").fetchone()[0]
+    ent_matched_all = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'enterprise' AND {match_sql}").fetchone()[0]
+    
+    ent_total_main = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'enterprise' AND citation_type = 'cited'").fetchone()[0]
+    ent_matched_main = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'enterprise' AND citation_type = 'cited' AND {match_sql}").fetchone()[0]
+    
+    ent_invisible = db.execute('''
+        SELECT domain, COUNT(*) as count
+        FROM citations c
+        WHERE account_type = 'enterprise' AND NOT EXISTS (
+            SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized
+        )
+        GROUP BY domain ORDER BY count DESC LIMIT 15
+    ''').fetchall()
+    
+    ent_page_data = db.execute('''
         SELECT b.page_num, COUNT(DISTINCT c.id) as match_count
         FROM bing_results b
         JOIN citations c ON c.url_normalized = b.url_normalized AND c.run_id = b.run_id
-        WHERE b.page_num IS NOT NULL
-        GROUP BY b.page_num
-        ORDER BY b.page_num
+        WHERE b.page_num IS NOT NULL AND b.account_type = 'enterprise'
+        GROUP BY b.page_num ORDER BY b.page_num
     ''').fetchall()
     
-    # Coverage Stats
-    match_sql = """
-        EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized)
-    """
-
-    # All Citations
-    total_all = db.execute('SELECT COUNT(*) FROM citations').fetchone()[0]
-    matched_all = db.execute(f'SELECT COUNT(DISTINCT c.id) FROM citations c WHERE {match_sql}').fetchone()[0]
-
-    # Main Citations (cited type)
-    total_main = db.execute("SELECT COUNT(*) FROM citations WHERE citation_type = 'cited'").fetchone()[0]
-    matched_main = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE citation_type = 'cited' AND {match_sql}").fetchone()[0]
-
-    # Top Invisible Domains (not in Bing results)
-    invisible_domains = db.execute('''
+    # ===== PERSONAL STATS =====
+    pers_runs = db.execute("SELECT COUNT(*) FROM runs WHERE account_type = 'personal'").fetchone()[0]
+    pers_bing = db.execute("SELECT COUNT(*) FROM bing_results WHERE account_type = 'personal'").fetchone()[0]
+    
+    pers_total_all = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'personal'").fetchone()[0]
+    pers_matched_all = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal' AND {match_sql}").fetchone()[0]
+    
+    pers_total_main = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'personal' AND citation_type = 'cited'").fetchone()[0]
+    pers_matched_main = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal' AND citation_type = 'cited' AND {match_sql}").fetchone()[0]
+    
+    pers_invisible = db.execute('''
         SELECT domain, COUNT(*) as count
         FROM citations c
-        WHERE NOT EXISTS (
-            SELECT 1 FROM bing_results b 
-            WHERE b.run_id = c.run_id 
-              AND b.url_normalized = c.url_normalized
+        WHERE account_type = 'personal' AND NOT EXISTS (
+            SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized
         )
-        GROUP BY domain
-        ORDER BY count DESC
-        LIMIT 100
+        GROUP BY domain ORDER BY count DESC LIMIT 15
+    ''').fetchall()
+    
+    pers_page_data = db.execute('''
+        SELECT b.page_num, COUNT(DISTINCT c.id) as match_count
+        FROM bing_results b
+        JOIN citations c ON c.url_normalized = b.url_normalized AND c.run_id = b.run_id
+        WHERE b.page_num IS NOT NULL AND b.account_type = 'personal'
+        GROUP BY b.page_num ORDER BY b.page_num
     ''').fetchall()
 
-    return render_template_string(DASHBOARD_TEMPLATE, 
-                                 page_data=page_data,
-                                 total_all=total_all,
-                                 matched_all=matched_all,
-                                 total_main=total_main,
-                                 matched_main=matched_main,
-                                 invisible_domains=invisible_domains)
+    return render_template_string(DASHBOARD_TEMPLATE,
+                                 ent_runs=ent_runs, ent_bing=ent_bing,
+                                 ent_total_all=ent_total_all, ent_matched_all=ent_matched_all,
+                                 ent_total_main=ent_total_main, ent_matched_main=ent_matched_main,
+                                 ent_invisible=ent_invisible, ent_page_data=ent_page_data,
+                                 pers_runs=pers_runs, pers_bing=pers_bing,
+                                 pers_total_all=pers_total_all, pers_matched_all=pers_matched_all,
+                                 pers_total_main=pers_total_main, pers_matched_main=pers_matched_main,
+                                 pers_invisible=pers_invisible, pers_page_data=pers_page_data)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

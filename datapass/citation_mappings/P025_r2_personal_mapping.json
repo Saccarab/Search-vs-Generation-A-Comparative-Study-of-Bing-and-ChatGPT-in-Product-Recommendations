@@ -1,0 +1,398 @@
+{
+  "run_id": "P025_r2",
+  "account_type": "personal",
+  "prompt": "Are there any free applications that can read text in naturalistic voices?",
+  "metadata": {
+    "hidden_queries": [
+      "free applications that can read text in naturalistic voices text-to-speech free apps",
+      "free natural voice text reader apps for iPhone Android desktop"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.108291986398399,
+      "simple_search_prob": 0.9880998378623244,
+      "complex_search_prob": 0.0021949196410719386,
+      "no_search_prob": 0.009705242496603702,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free applications that can read text in naturalistic voices text-to-speech free apps"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 244,
+        "end_idx": 277
+      },
+      "citation_token": "citeturn0search0turn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.naturalreaders.com/webapp.html",
+          "title": "Free Text to Speech Online",
+          "snippet": "NaturalReader converts any text, PDF, image, webpage and physical book into natural-sounding audio featuring the newest and highest AI voice technology.Read more",
+          "domain": "www.naturalreaders.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.naturalreaders.com/?utm_source=chatgpt.com",
+          "title": "AI Voices - NaturalReader Home",
+          "snippet": "NaturalReader: Free Text to Speech for Online, Mobile App, Commercial license and Education with AI voices.",
+          "domain": "naturalreaders.com",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://www.naturalreaders.com/webapp.html",
+      "url_position": 253,
+      "claim_text": "Yes — there are free tools that can read text aloud using natural-sounding voices: 🗣️ Free & Online / Cross-Platform NaturalReader (web & apps) – Free online TTS with natural voices; also has mobile apps and a browser extension. naturalreaders.com+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 361,
+        "end_idx": 381
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://ttsreader.com/",
+          "title": "TTSReader | Text To Speech Reader Online. Accurate & Free",
+          "snippet": "Instantly turns any text to natural sounding speech for listening online or generating downloadable audio. Reads out loud any document, text, book & webpage.Read more",
+          "domain": "ttsreader.com",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://ttsreader.com/",
+      "url_position": 399,
+      "claim_text": "TTSReader – Free browser tool that reads text aloud and supports download. TTSReader Text To Speech",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 480,
+        "end_idx": 499
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://notegpt.io/text-to-speech",
+          "title": "Text to Speech with AI Free, Natural & Realistic AI Voices",
+          "snippet": "NoteGPT Text to Speech supports 100+ unique voices and works in any language you type—no limits, no setup. It's completely free, with no sign-up required.Read more",
+          "domain": "notegpt.io",
+          "ref_type": "search",
+          "ref_index": 12,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_12"
+        }
+      ],
+      "inline_url": "https://notegpt.io/text-to-speech",
+      "url_position": 523,
+      "claim_text": "NoteGPT Text to Speech – Free web tool with many voices and languages, no sign-up needed. NoteGPT",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 628,
+        "end_idx": 647
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechify.com/?srsltid=AfmBOopaJ2cJxagoLyK-qgoT5wKfS5JDzNC6oSOAviXJoETXgjR4Alqx",
+      "url_position": 686,
+      "claim_text": "📱 Mobile Apps (Free tiers) Speechify – Reads articles, PDFs, books with natural AI voices; free option available. Speechify",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 755,
+        "end_idx": 774
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://elevenreader.io/",
+      "url_position": 889,
+      "claim_text": "ElevenReader (by ElevenLabs) – Natural voice reader app for PDFs/articles/ebooks with a free plan. ElevenReader",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 850,
+        "end_idx": 870
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechcentral.net/",
+      "url_position": 1002,
+      "claim_text": "Speech Central – Free tier on iOS/Android with good voice quality. speechcentral.net",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 980,
+        "end_idx": 1000
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.facebook.com/groups/assistive.technology.group/posts/8080664795321914/",
+      "url_position": 1142,
+      "claim_text": "Voice Dream Reader – Has free/basic reading features (may need in-app purchases for premium voices). Facebook",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1377,
+        "end_idx": 1383
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+      "url_position": 1584,
+      "claim_text": "⚙️ Other (less natural but usable) Built-in OS readers Windows Narrator, macOS VoiceOver – free screen readers with basic AI voices. Android / iOS text-to-speech engine — free built-in voices (quality varies). All above options let you paste or load text and hear it read in a voice that’s much closer to natural speech than old robotic TTS. TechRadar",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1619,
+        "end_idx": 1639
+      },
+      "citation_token": "citeturn0search34",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/ESpeak",
+          "title": "ESpeak",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 34,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_34"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/ESpeak?utm_source=chatgpt.com",
+          "title": "ESpeak",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/ESpeak",
+      "url_position": 1881,
+      "claim_text": "If you want fully open-source desktop software, there are tools like eSpeakNG (more robotic) or using screen readers with high-quality voices, but for casual natural voices the apps/web tools above are best. en.wikipedia.org",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.naturalreaders.com/webapp.html",
+        "title": "Free Text to Speech Online",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://ttsreader.com/",
+        "title": "TTSReader | Text To Speech Reader Online. Accurate & Free",
+        "domain": "TTSReader Text To Speech"
+      },
+      {
+        "url": "https://notegpt.io/text-to-speech",
+        "title": "Text to Speech with AI Free, Natural & Realistic AI Voices",
+        "domain": "NoteGPT"
+      },
+      {
+        "url": "https://speechify.com/?srsltid=AfmBOopaJ2cJxagoLyK-qgoT5wKfS5JDzNC6oSOAviXJoETXgjR4Alqx",
+        "title": "Speechify: Free Text to Speech & Voice Typing AI Assistant ...",
+        "domain": "Speechify"
+      },
+      {
+        "url": "https://elevenreader.io/",
+        "title": "ElevenReader: Free Text Read Aloud App",
+        "domain": "ElevenReader"
+      },
+      {
+        "url": "https://speechcentral.net/",
+        "title": "Speech Central: AI Text-to-Speech App iPhone|Mac|Android",
+        "domain": "speechcentral.net"
+      },
+      {
+        "url": "https://www.facebook.com/groups/assistive.technology.group/posts/8080664795321914/",
+        "title": "What are free text-to-speech reading options without ...",
+        "domain": "Facebook"
+      },
+      {
+        "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+        "title": "Best free text-to-speech software of 2025",
+        "domain": "TechRadar"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/ESpeak",
+        "title": "ESpeak",
+        "domain": "en.wikipedia.org"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.reddit.com/r/GetStudying/comments/16r6hn8/best_free_natural_sounding_text_to_speech_program/",
+        "title": "Best Free Natural Sounding Text to Speech program?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/opensource/comments/1mgfgy2/does_anybody_know_of_a_free_opensource/",
+        "title": "Does anybody know of a free open-source text-to-speech ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/audiobooks/comments/163qkx2/looking_for_a_good_text_to_speech_app_or/",
+        "title": "Looking for a good text to speech app or something along.",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/naturalreader-text-to-speech/id1487572960",
+        "title": "NaturalReader - Text To Speech - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/id/app/naturalreader-text-to-speech/id1487572960",
+        "title": "NaturalReader - Text To Speech - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/ky/app/naturalreader-text-to-speech/id1487572960",
+        "title": "NaturalReader - Text To Speech - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/speechify-voice-ai-assistant/id1209815023",
+        "title": "Speechify – Voice AI Assistant - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://voicetonotes.ai/blog/best-voice-to-text-app-android-iphone/",
+        "title": "14 Best Voice to Text Apps for Android, iPhone & PC (2026)",
+        "domain": "voicetonotes.ai"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.cliffweitzman.speechify2",
+        "title": "Speechify – Voice AI Assistant - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.naturalsoft.personalweb",
+        "title": "NaturalReader - Text to Speech - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.alpaca.android.readout",
+        "title": "Text to Speech - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/naturalreader-ai-text-to/kohfgcgbkjodfcfkcackpagifgbcmimk?hl=en",
+        "title": "NaturalReader - AI Text to Speech - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://speechify.com/?srsltid=AfmBOooES4NX-9SC1WiBtxSs0hp0ZvaB4MQyIJzQh0JJMN9REU9kshu3",
+        "title": "Speechify: Free Text to Speech & Voice Typing AI Assistant ...",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/",
+        "title": "AI Voices - NaturalReader Home",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech with Gemini and ChatGPT AI Voices",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "speechnotes.co"
+      },
+      {
+        "url": "https://www.voicedream.com/",
+        "title": "Voice Dream Reader - Text to Speech App",
+        "domain": "voicedream.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 17,
+    "total_all": 26
+  },
+  "response_stats": {
+    "total_length": 1921,
+    "citation_count": 9,
+    "chars_with_citations": 176
+  }
+}

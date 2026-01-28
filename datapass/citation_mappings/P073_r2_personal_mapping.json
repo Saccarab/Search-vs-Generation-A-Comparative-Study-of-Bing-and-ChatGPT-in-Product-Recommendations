@@ -1,0 +1,504 @@
+{
+  "run_id": "P073_r2",
+  "account_type": "personal",
+  "prompt": "Can you recommend the best video translator for YouTube?",
+  "metadata": {
+    "hidden_queries": [
+      "best video translator for YouTube tools translate videos",
+      "video translation tools for YouTube captions translation software"
+    ],
+    "sonic_classification": {
+      "latency_ms": 12.49666721560061,
+      "simple_search_prob": 0.9814495479805496,
+      "complex_search_prob": 0.009352569660910394,
+      "no_search_prob": 0.009197882358539987,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best video translator for YouTube tools translate videos"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 155,
+        "end_idx": 187
+      },
+      "citation_token": "citeturn0search0turn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.synthesia.io/post/best-video-translator-apps",
+          "title": "The 6 Best AI Video Translator Apps of 2025 (Compared) - Synthesia",
+          "snippet": "The Best AI Video Translation Apps: Synthesia; Maestra; Elevenlabs; Kapwing; Veed; Rask AI. Breaking through language barriers can open up ...",
+          "domain": "www.synthesia.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1753401600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.synthesia.io/post/best-video-translator-apps",
+      "url_position": 163,
+      "claim_text": "Here are some of the best tools to translate YouTube videos, ranging from simple caption translators to full AI‑powered dubbing and subtitle solutions:Synthesia+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 391,
+        "end_idx": 410
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://reccloud.com/youtube-video-translator",
+      "url_position": 428,
+      "claim_text": "🌍 Online Translators (easy link‑based) • RecCloud YouTube Translator – Paste a YouTube link and get translated subtitles in 100+ languages; useful for quick subtitle generation without installs.RecCloud",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 499,
+        "end_idx": 505
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.translate.mom/",
+      "url_position": 572,
+      "claim_text": "• TranslateMom – Web tool to translate YouTube videos and generate subtitles/dubs.TranslateMom",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 613,
+        "end_idx": 633
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://heywatcher.com/en",
+      "url_position": 701,
+      "claim_text": "• Hey Watcher – Paste YouTube links for instant translation with natural voice options.Hey Watcher",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 727,
+        "end_idx": 747
+      },
+      "citation_token": "citeturn0search31",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vozo.ai/translate-youtube-video-to-english",
+      "url_position": 822,
+      "claim_text": "• Vozo.ai – Simple link paste → select language → get subtitles/lip‑synced translation.Vozo",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 925,
+        "end_idx": 945
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/",
+      "url_position": 1061,
+      "claim_text": "🧠 AI Video Translators (more control, better quality) • Maestra – Translate + AI dubbing + voice cloning in 125+ languages; good balance of auto captions and voiceover.Maestra AI",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1056,
+        "end_idx": 1076
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.rask.ai/",
+      "url_position": 1193,
+      "claim_text": "• Rask.ai – Strong auto transcription and subtitle translation for YouTube videos; supports long videos.Rask",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1171,
+        "end_idx": 1177
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.heygen.com/translate",
+      "url_position": 1312,
+      "claim_text": "• HeyGen – AI video translator supporting 175+ languages with dubbed voice and lip sync.HeyGen",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1308,
+        "end_idx": 1328
+      },
+      "citation_token": "citeturn0search32",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://videotranslator.blipcut.com/",
+      "url_position": 1475,
+      "claim_text": "• BlipCut AI – Free/paid online translator with AI dubbing, multiple speaker support, and good language range.Video Translator",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1478,
+        "end_idx": 1497
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/video-cc-translator/fhbpmacbgklobobcieiaoibpjhdnmcfn",
+          "title": "Video CC translator - Chrome Web Store",
+          "snippet": "This extension automatically translates subtitles (Closed Captions, CC) in real-time using Google Translate and DeepL. Easily understand foreign-language ...",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 3,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_3"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/video-cc-translator/fhbpmacbgklobobcieiaoibpjhdnmcfn",
+      "url_position": 1672,
+      "claim_text": "🛠 Tools & Extensions (browser‑side help) • Video CC Translator (Chrome) – Real‑time automatic subtitle translation while watching YouTube.Chrome Web Store",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1609,
+        "end_idx": 1628
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/youtube-translator-youtub/ndbhldoclidahhoogmgklimmomnnepjg",
+          "title": "YouTube Translator & YouTube Video Dubbing",
+          "snippet": "Automatically translate Youtube videos in real time and play them in your language. Note: Currently, only YouTube videos with subtitle files can be translated.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/youtube-translator-youtub/ndbhldoclidahhoogmgklimmomnnepjg",
+      "url_position": 1891,
+      "claim_text": "• YouTube Translator & Dubbing (Chrome) – Translate and play translated subtitles directly in the player.Chrome Web Store",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1811,
+        "end_idx": 1831
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://support.google.com/youtube/answer/4792576?hl=en",
+          "title": "YouTube tools to translate your content - Google Help",
+          "snippet": "To grow your international audience, make your videos more accessible in other languages with our translation tools: ... Translate videos, subtitles, & captions.",
+          "domain": "support.google.com",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://support.google.com/youtube/answer/4792576?hl=en",
+      "url_position": 2181,
+      "claim_text": "🧠 Built‑In/YouTube Studio Options • YouTube Auto‑Translate – YouTube can auto‑translate captions into other languages if the original captions exist; free but less accurate.Google Help",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 2168,
+        "end_idx": 2187
+      },
+      "citation_token": "citeturn0search0",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.synthesia.io/post/best-video-translator-apps",
+          "title": "The 6 Best AI Video Translator Apps of 2025 (Compared) - Synthesia",
+          "snippet": "The Best AI Video Translation Apps: Synthesia; Maestra; Elevenlabs; Kapwing; Veed; Rask AI. Breaking through language barriers can open up ...",
+          "domain": "www.synthesia.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1753401600,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.synthesia.io/post/best-video-translator-apps?utm_source=chatgpt.com",
+          "title": "The 6 Best AI Video Translator Apps of 2025 (Compared) - Synthesia",
+          "snippet": "The Best AI Video Translation Apps: Synthesia; Maestra; Elevenlabs; Kapwing; Veed; Rask AI. Breaking through language barriers can open up ...",
+          "domain": "Synthesia",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.synthesia.io/post/best-video-translator-apps",
+      "url_position": 2567,
+      "claim_text": "Quick tip: for best quality and control (especially if you want dubbed audio and high‑accuracy subtitles), AI‑based services like Maestra, Rask, HeyGen, or BlipCut are top choices. For fast free results just to understand or watch a video in your language, browser extensions or RecCloud/TranslateMom will do the job.Synthesia",
+      "url_index": 12
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.synthesia.io/post/best-video-translator-apps",
+        "title": "The 6 Best AI Video Translator Apps of 2025 (Compared) - Synthesia",
+        "domain": "Synthesia"
+      },
+      {
+        "url": "https://reccloud.com/youtube-video-translator",
+        "title": "YouTube Video Translator Powered by AI",
+        "domain": "RecCloud"
+      },
+      {
+        "url": "https://www.translate.mom/",
+        "title": "YouTube Video Translator, AI Subtitles and Captions ...",
+        "domain": "TranslateMom"
+      },
+      {
+        "url": "https://heywatcher.com/en",
+        "title": "Hey Watcher - YouTube video translator AI | Convert YouTube ...",
+        "domain": "Hey Watcher"
+      },
+      {
+        "url": "https://www.vozo.ai/translate-youtube-video-to-english",
+        "title": "Translate Youtube Video to English",
+        "domain": "Vozo"
+      },
+      {
+        "url": "https://maestra.ai/",
+        "title": "AI Transcription & Real-Time Translation Platform - Maestra",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.rask.ai/",
+        "title": "Leading AI video localization & dubbing tool",
+        "domain": "Rask"
+      },
+      {
+        "url": "https://www.heygen.com/translate",
+        "title": "AI Video Translator – Translate Videos into 175+ Languages",
+        "domain": "HeyGen"
+      },
+      {
+        "url": "https://videotranslator.blipcut.com/",
+        "title": "Free AI Video Translator: Translate Videos to 140+ Languages",
+        "domain": "Video Translator"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/video-cc-translator/fhbpmacbgklobobcieiaoibpjhdnmcfn",
+        "title": "Video CC translator - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/youtube-translator-youtub/ndbhldoclidahhoogmgklimmomnnepjg",
+        "title": "YouTube Translator & YouTube Video Dubbing",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://support.google.com/youtube/answer/4792576?hl=en",
+        "title": "YouTube tools to translate your content - Google Help",
+        "domain": "Google Help"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.transyncai.com/blog-how-to-translate-youtube-video-to-english/",
+        "title": "How to Translate YouTube Video to English (2025 Guide)",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=87rfGSUFq-g",
+        "title": "How to Online Translate Your Subtitles for Free - YouTube",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/languagelearning/comments/1fdxxb2/youtube_translators/",
+        "title": "YouTube translators : r/languagelearning - Reddit",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+        "title": "7 Best AI Video Translator Apps of 2025 [Tested] - Notta",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://www.reddit.com/r/premiere/comments/1av0pzz/what_is_the_best_video_translation_app/",
+        "title": "What is the best video translation app? : r/premiere - Reddit",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=LZz03myFuWA",
+        "title": "Auto Translate YouTube Video into your Language",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/TranslationStudies/comments/1avvd5i/whats_the_easiest_way_to_translate_a_youtube/",
+        "title": "What's the easiest way to translate a YouTube video? I'm ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/androidapps/comments/x1cl0s/app_for_translating_youtube_subtitles_in_real/",
+        "title": "App for translating YouTube subtitles in real time (to other ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/translate-and-speak-subti/gmimaknkjommijabfploclcikgjacpdn",
+        "title": "Translate and Speak Subtitles for YouTube - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/youtube-translator-youtub/ndbhldoclidahhoogmgklimmomnnepjg?hl=en-US",
+        "title": "YouTube Translator & YouTube Video Dubbing",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/video_translator_translate_video_voice_o/285433175728",
+        "title": "Translate Video & Voice online - Google Workspace Marketplace",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.mmt.translingua",
+        "title": "Translate subtitles for videos - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-video-translator/",
+        "title": "AI Video Translator: Translate a video with AI - Canva",
+        "domain": "canva.com"
+      },
+      {
+        "url": "https://www.canva.com/features/video-translator/",
+        "title": "Video translator: Translate video captions instantly",
+        "domain": "canva.com"
+      },
+      {
+        "url": "https://www.happyscribe.com/translate-video",
+        "title": "AI Video Translator - HappyScribe",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://perso.ai/",
+        "title": "Best AI Video Translator & Dubbing for Creator Business | Perso",
+        "domain": "perso.ai"
+      },
+      {
+        "url": "https://akool.com/apps/video-translation",
+        "title": "Best Free AI Video Translation | Best Lip Sync AI | AKOOL",
+        "domain": "akool.com"
+      },
+      {
+        "url": "https://maestra.ai/tools/video-translator",
+        "title": "AI Video Translator with Voice Cloning & Lip Sync | Free Trial",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.adobe.com/products/firefly/features/translate-video.html",
+        "title": "Translate Video with AI - Adobe Firefly",
+        "domain": "adobe.com"
+      },
+      {
+        "url": "https://www.smartcat.com/video-translation/",
+        "title": "The #1 AI Video Translator: Fast, on-brand video translation",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://subtitletools.com/",
+        "title": "Subtitle Tools - Online tools to fix your subtitles",
+        "domain": "subtitletools.com"
+      },
+      {
+        "url": "https://www.trancy.org/",
+        "title": "Trancy - YouTube AI Bilingual Subtitles & Language Reactor Pro",
+        "domain": "trancy.org"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/",
+        "title": "Immersive Translate - Next-Gen AI Translator | Bilingual ...",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://filmora.wondershare.com/video-editing-tools/youtube-video-translator.html",
+        "title": "Top 10 YouTube Video Translators for Subtitles and AI Dubbing",
+        "domain": "wondershare.com"
+      },
+      {
+        "url": "https://www.vozo.ai/blogs/translate-youtube-subtitles",
+        "title": "How to Add Translated Subtitles to YouTube Videos",
+        "domain": "vozo.ai"
+      }
+    ],
+    "total_cited": 12,
+    "total_additional": 25,
+    "total_all": 37
+  },
+  "response_stats": {
+    "total_length": 2627,
+    "citation_count": 13,
+    "chars_with_citations": 240
+  }
+}

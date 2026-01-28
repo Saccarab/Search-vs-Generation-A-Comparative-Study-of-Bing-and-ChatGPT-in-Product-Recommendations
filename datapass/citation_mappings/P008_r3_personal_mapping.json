@@ -1,0 +1,340 @@
+{
+  "run_id": "P008_r3",
+  "account_type": "personal",
+  "prompt": "Is there an AI that changes your voice?",
+  "metadata": {
+    "hidden_queries": [
+      "AI that changes your voice software voice changer AI",
+      "Is there AI that changes your voice what tools change your voice"
+    ],
+    "sonic_classification": {
+      "latency_ms": 4.328205017372966,
+      "simple_search_prob": 0.8791277851505387,
+      "complex_search_prob": 0.000622847198717011,
+      "no_search_prob": 0.1202493676507443,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "AI that changes your voice software voice changer AI"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 238,
+        "end_idx": 257
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Voice_changer",
+          "title": "Voice changer - WikipediaAI Voice Changer: Use AI To Change Your Voice For Free",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1768927620,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Voice_changer",
+      "url_position": 246,
+      "claim_text": "Yes — there are AI tools that can change your voice. They use artificial intelligence to modify your speech in real time or from recordings, letting you sound like a different gender, age, accent, or even a specific character or style. Wikipedia",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 373,
+        "end_idx": 406
+      },
+      "citation_token": "citeturn0search2turn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voice.ai/ai-voice-changer?utm_source=chatgpt.com",
+          "title": "AI Voice Changer for PC & Mac",
+          "snippet": "Voice.ai allows you to change your voice in real-time across many different apps including Zoom, Discord, Minecraft, GTA5, Fortnite, Valorant, League of Legends ...Read more",
+          "domain": "voice.ai",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://voice.ai/",
+      "url_position": 409,
+      "claim_text": "Examples of AI voice-changing tools: Voice.ai – real-time AI voice changer for games, chats, streaming. Voice.ai+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 525,
+        "end_idx": 526
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://elevenlabs.io/voice-changer",
+      "url_position": 551,
+      "claim_text": "ElevenLabs AI Voice Changer – transforms uploaded or recorded audio into another voice with natural delivery. ElevenLabs",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 628,
+        "end_idx": 647
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/voice-changer",
+      "url_position": 673,
+      "claim_text": "Murf AI Voice Changer – modifies your voice and offers many preset voices. Murf AI",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 721,
+        "end_idx": 740
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.voicemod.net/en/voice-changer/",
+      "url_position": 780,
+      "claim_text": "Voicemod – live voice effects and AI-powered modulation for PCs. Voicemod",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 830,
+        "end_idx": 850
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.altered.ai/",
+      "url_position": 915,
+      "claim_text": "Altered Studio – professional real-time voice changer with custom “voice skins.” Altered",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 940,
+        "end_idx": 974
+      },
+      "citation_token": "citeturn0search11turn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://app.kits.ai/?utm_source=chatgpt.com",
+          "title": "AI Voice Studio | Change a voice with Kits.AI",
+          "snippet": "Upload your audio and edit your voice in our in-browser workflow, choosing from a variety of royalty-free artist or instrument AI voice generators.",
+          "domain": "kits.ai",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://www.lalal.ai/voice-changer/",
+      "url_position": 1030,
+      "claim_text": "LALAL.AI Voice Changer and Kits.AI – other AI tools that change tone/timbre. lalal.ai+1",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1095,
+        "end_idx": 1114
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://elevenlabs.io/voice-changer",
+      "url_position": 1199,
+      "claim_text": "These range from simple real-time voice effects to more advanced AI that tries to preserve emotion and speaking style. ElevenLabs",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Voice_changer",
+        "title": "Voice changer - WikipediaAI Voice Changer: Use AI To Change Your Voice For Free",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://voice.ai/",
+        "title": "Voice.ai: Free AI Voice Changer & Voice Agent Platform",
+        "domain": "Voice.ai"
+      },
+      {
+        "url": "https://elevenlabs.io/voice-changer",
+        "title": "AI Voice Changer: Use AI To Change Your Voice For Free",
+        "domain": "ElevenLabs"
+      },
+      {
+        "url": "https://murf.ai/voice-changer",
+        "title": "AI Voice Changer: Change Your Voice With a Realistic ...",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://www.voicemod.net/en/voice-changer/",
+        "title": "best real-time voice changer",
+        "domain": "Voicemod"
+      },
+      {
+        "url": "https://www.altered.ai/",
+        "title": "Professional AI Voice Changer Software and Services | Altered",
+        "domain": "Altered"
+      },
+      {
+        "url": "https://www.lalal.ai/voice-changer/",
+        "title": "LALAL.AI Voice Changer",
+        "domain": "lalal.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://apps.microsoft.com/detail/9npwj4x3v8pr?gl=US&hl=en-US",
+        "title": "AI Voice Changer - Download and install on Windows",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://medium.com/freelancers-hub/best-ai-voice-generators-2025-review-i-tested-20-tools-to-find-the-top-5-0c2b45070273",
+        "title": "I Tested 25+ AI Voice Generators: Here are the Top 7 for ...",
+        "domain": "medium.com"
+      },
+      {
+        "url": "https://www.beatoven.ai/blog/10-best-ai-voice-changers-key-features-pricing-details/",
+        "title": "10 Best AI Voice Changers [Key Features + Pricing Details] -",
+        "domain": "beatoven.ai"
+      },
+      {
+        "url": "https://www.audiocipher.com/post/ai-voice-generators",
+        "title": "10 Best AI Singing Voice Generators for Making Music in ...",
+        "domain": "audiocipher.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.leonfiedler.voiceai",
+        "title": "Voices AI: Voice Changer - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://dubbingai.io/",
+        "title": "Dubbing AI- AI Voice Changer For Gamers and Streamers",
+        "domain": "dubbingai.io"
+      },
+      {
+        "url": "https://www.reddit.com/r/musicproduction/comments/1gnpu8x/voice_changing_vst_for_people_who_can_sing_but/",
+        "title": "Voice changing vst for people who can sing but hate ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://app.kits.ai/",
+        "title": "AI Voice Studio | Change a voice with Kits.AI",
+        "domain": "kits.ai"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=d3B3BiCmczc",
+        "title": "The Best AI Voice Changer (Full Tutorial)",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://speechify.com/voice-changer/?srsltid=AfmBOop-GymOWt1x6Bql-XdAi8VMRBXlFfdikWcVGwJFZGSsRyFKouCW",
+        "title": "The Best AI Voice Changer",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://speechify.com/voice-changer/?srsltid=AfmBOopfJIMVG9Z9r-9h4DclSXNdtIARBfhehLsbRNly1uCYfhzRiQZI",
+        "title": "The Best AI Voice Changer",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://dev.to/nitinfab/i-tried-25-ai-voice-generators-these-7-are-the-best-for-realistic-voices-2025-4h07",
+        "title": "I Tried 25+ AI Voice Generators - These 7 Are the Best for ...",
+        "domain": "dev.to"
+      },
+      {
+        "url": "https://voice.ai/ai-voice-changer",
+        "title": "AI Voice Changer for PC & Mac",
+        "domain": "voice.ai"
+      },
+      {
+        "url": "https://audimee.com/",
+        "title": "Audimee - Unlimited Vocals, Creative Freedom",
+        "domain": "audimee.com"
+      },
+      {
+        "url": "https://getvoices.ai/",
+        "title": "Voices AI: AI Voice Generator & AI Celebrity Voice Changer",
+        "domain": "getvoices.ai"
+      },
+      {
+        "url": "https://voice-swap.ai/",
+        "title": "Voice-Swap | AI Voice Transformation Tool for Musicians ...",
+        "domain": "voice-swap.ai"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 16,
+    "total_all": 23
+  },
+  "response_stats": {
+    "total_length": 1359,
+    "citation_count": 8,
+    "chars_with_citations": 164
+  }
+}

@@ -1,0 +1,259 @@
+{
+  "run_id": "P022_r1",
+  "account_type": "enterprise",
+  "prompt": "What are some free AI tools for audio transcription?",
+  "metadata": {
+    "hidden_queries": [
+      "free AI tools for audio transcription",
+      "best free speech to text transcription tools online"
+    ],
+    "sonic_classification": {
+      "latency_ms": 13.221015688031912,
+      "simple_search_prob": 0.9961396983987252,
+      "complex_search_prob": 0.00024582384334881054,
+      "no_search_prob": 0.0036144777579260076,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free AI tools for audio transcription"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 258,
+        "end_idx": 277
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/free-ai-transcription",
+      "url_position": 258,
+      "claim_text": "Here are some free AI-powered tools you can use to transcribe audio to text (basic plans or free tiers available): Web/Dedicated Transcription Tools Otter.ai – AI meeting and file transcription with searchable, editable text; free tier available. Otter.ai",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 373,
+        "end_idx": 392
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://turboscribe.ai/u/tools/free-ai-transcription-tool",
+          "title": "Free AI Transcription | TurboScribe",
+          "snippet": "TurboScribe is a free, browser-based AI transcription tool that turns audio and video into accurate text in seconds. Skip manual typing—our GPU-powered engine, built on Whisper (the most accurate and powerful AI speech-to-text technology), delivers fast, reliable transcripts for podcasts, meetings, interviews, lectures, and more.",
+          "domain": "turboscribe.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://turboscribe.ai/u/tools/free-ai-transcription-tool",
+      "url_position": 402,
+      "claim_text": "TurboScribe – Browser-based AI transcription for audio/video files; no account needed. turboscribe.ai",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 469,
+        "end_idx": 489
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://riverside.com/transcription",
+      "url_position": 545,
+      "claim_text": "Restream Transcription – Free audio/video transcription in browser. riverside.com",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 608,
+        "end_idx": 628
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://deepgram.com/free-transcription",
+      "url_position": 707,
+      "claim_text": "Deepgram Free Transcription – Online AI speech-to-text tool you can use for conversations and uploaded files. deepgram.com",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 727,
+        "end_idx": 747
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://audiototext.com/",
+      "url_position": 856,
+      "claim_text": "AudioToText.com – Simple free online speech-to-text converter; supports multiple formats. audiototext.com",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 804,
+        "end_idx": 824
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://soundwise.ai/speech-to-text",
+      "url_position": 945,
+      "claim_text": "SoundWise.ai – Free AI speech-to-text web tool. soundwise.ai",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 956,
+        "end_idx": 975
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+          "title": "10 Best Free AI Transcription Tools for Fast & Accurate Transcripts",
+          "snippet": "Explore 10 best free AI transcription tools to convert speech to text quickly and accurately, featuring top software for real-time and on-demand transcription.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1765756800,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+      "url_position": 1114,
+      "claim_text": "Simple Speech-to-Text / Dictation Google Docs Voice Typing – Free built-in dictation in Google Docs (real-time only). maestra.ai",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1053,
+        "end_idx": 1072
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+      "url_position": 1114,
+      "claim_text": "Simple Speech-to-Text / Dictation Google Docs Voice Typing – Free built-in dictation in Google Docs (real-time only). maestra.ai",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1192,
+        "end_idx": 1211
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+      "url_position": 1114,
+      "claim_text": "Simple Speech-to-Text / Dictation Google Docs Voice Typing – Free built-in dictation in Google Docs (real-time only). maestra.ai",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1321,
+        "end_idx": 1340
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+          "title": "10 Best Free AI Transcription Tools for Fast & Accurate Transcripts",
+          "snippet": "Explore 10 best free AI transcription tools to convert speech to text quickly and accurately, featuring top software for real-time and on-demand transcription.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1765756800,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+      "url_position": 1114,
+      "claim_text": "Simple Speech-to-Text / Dictation Google Docs Voice Typing – Free built-in dictation in Google Docs (real-time only). maestra.ai",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [],
+    "additional": [],
+    "total_cited": 0,
+    "total_additional": 0,
+    "total_all": 0
+  },
+  "response_stats": {
+    "total_length": 1553,
+    "citation_count": 10,
+    "chars_with_citations": 194
+  }
+}

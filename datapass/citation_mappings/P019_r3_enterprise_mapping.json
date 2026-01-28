@@ -1,0 +1,348 @@
+{
+  "run_id": "P019_r3",
+  "account_type": "enterprise",
+  "prompt": "Quel est le meilleur logiciel de traduction instantané ?",
+  "metadata": {
+    "hidden_queries": [
+      "meilleur logiciel de traduction instantanée",
+      "best real-time translation software comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 1.5828129835426807,
+      "simple_search_prob": 0.955598578049462,
+      "complex_search_prob": 0.001637031154418559,
+      "no_search_prob": 0.04276439079611942,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "meilleur logiciel de traduction instantanée"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 357,
+        "end_idx": 388
+      },
+      "citation_token": "citeturn0search0turn0news24",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://screenapp.io/blog/best-real-time-translators",
+          "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+          "snippet": "Discover the best real-time translator apps and devices of 2026. We tested accuracy, speed, and features to help you find the perfect solution for travel, business, and conversation.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752105600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 346,
+      "claim_text": "Voici les meilleurs logiciels/applications de traduction instantanée, selon leurs points forts : 1) Google Translate – le plus polyvalent Traduction texte, voix, images en temps réel dans plus de 100 langues. Disponible gratuitement sur mobile et web. Permet la traduction live de conversations (même via écouteurs) grâce à l’IA. ScreenApp+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 619,
+        "end_idx": 638
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.deepl.com/fr/translator",
+      "url_position": 627,
+      "claim_text": "2) DeepL – précision supérieure pour les textes Souvent considéré comme plus naturel et précis que la concurrence pour les paires de langues européennes. Idéal pour documents, textes longs ou usage professionnel. deepl.com",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 827,
+        "end_idx": 846
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://screenapp.io/blog/best-real-time-translators",
+          "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+          "snippet": "Discover the best real-time translator apps and devices of 2026. We tested accuracy, speed, and features to help you find the perfect solution for travel, business, and conversation.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752105600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 853,
+      "claim_text": "3) Microsoft Translator – solide pour communication pro Traduction instantanée de textes, voix, conversations multi-appareils. Gratuit et intégré à certains outils Microsoft. ScreenApp",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1009,
+        "end_idx": 1028
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://screenapp.io/blog/best-real-time-translators",
+          "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+          "snippet": "Discover the best real-time translator apps and devices of 2026. We tested accuracy, speed, and features to help you find the perfect solution for travel, business, and conversation.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752105600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 1070,
+      "claim_text": "4) Naver Papago – bon pour langues asiatiques Plus précis pour le coréen, japonais, chinois. Reconnaissance vocale et écrite utile pour ces langues. ScreenApp",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1207,
+        "end_idx": 1226
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://screenapp.io/blog/best-real-time-translators",
+          "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+          "snippet": "Discover the best real-time translator apps and devices of 2026. We tested accuracy, speed, and features to help you find the perfect solution for travel, business, and conversation.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752105600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 1303,
+      "claim_text": "5) iTranslate / SayHi Translate – mobile simple Interfaces épurées pour traductions rapides en voyage. Plans gratuits avec options payantes pour fonctions avancées. ScreenApp",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1466,
+        "end_idx": 1496
+      },
+      "citation_token": "citeturn0news22turn0news23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 22,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_22"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 1593,
+      "claim_text": "Cas matériels intéressants (si tu veux pas seulement une application) : Earbuds/ dispositifs de traduction en temps réel comme Timekettle ou autres solutions audio qui traduisent la conversation en direct dans les oreilles. SFGATE+1",
+      "url_index": 5
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+        "domain": "ScreenApp"
+      },
+      {
+        "url": "https://www.deepl.com/fr/translator",
+        "title": "DeepL Traduction – DeepL Translate : le meilleur traducteur au monde",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.techradar.com/best/best-translation-software",
+        "title": "Best translation software of 2025 - TechRadar",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://fr.vidnoz.com/intelligence-artificielle/application-traduction-instantanee.html",
+        "title": "Les 6 meilleures applications de traduction instantanée 2025",
+        "domain": "vidnoz.com"
+      },
+      {
+        "url": "https://www.aruco.com/intelligence-artificielle/meilleur-traducteur-en-ligne/",
+        "title": "Quel est le Meilleur Traducteur en Ligne ? Deepl, ChatGPT, GG Trad ...",
+        "domain": "aruco.com"
+      },
+      {
+        "url": "https://crowdin.com/blog/best-machine-translation-software",
+        "title": "The List of Best Machine Translation Software Out There",
+        "domain": "crowdin.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://screenapp.io/fr/blog/best-real-time-translators",
+        "title": "10 meilleurs traducteurs en temps réel de 2026 - screenapp.io",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.machinetranslation.com/blog/best-machine-translation-software",
+        "title": "The 10 Best Machine Translation Software in 2025",
+        "domain": "machinetranslation.com"
+      },
+      {
+        "url": "https://taia.io/resources/blog/best-translation-software",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools by Features ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-translation-software",
+        "title": "8 Best Translation Software to Use in 2025 (Free & Paid)",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/fr/applications-de-traduction-en-temps-reel/",
+        "title": "10 Meilleures Applications de Traduction en Temps Réel",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.clubic.com/application-mobile/best-pick-380846-les-meilleures-applications-de-traduction-sur-android.html",
+        "title": "Quelles sont les meilleures applications de traduction ... - Clubic",
+        "domain": "clubic.com"
+      },
+      {
+        "url": "https://www.lesnumeriques.com/intelligence-artificielle/quelles-sont-les-meilleures-ia-pour-traduire-du-texte-dans-diverses-langues-a234422.html",
+        "title": "Quelles sont les meilleures IA pour traduire du texte dans diverses ...",
+        "domain": "lesnumeriques.com"
+      },
+      {
+        "url": "https://les10meilleurs.net/meilleurs-traducteurs-gratuits-guide/",
+        "title": "Les 10 meilleurs traducteurs gratuits en 2025 : Votre guide ultime",
+        "domain": "les10meilleurs.net"
+      },
+      {
+        "url": "https://www.leptidigital.fr/productivite/traducteurs-gratuits-25540/",
+        "title": "Top 18 traducteurs en ligne gratuits (textes et vidéos)",
+        "domain": "leptidigital.fr"
+      },
+      {
+        "url": "https://bordio.com/blog/best-translation-software/",
+        "title": "11 Best Translation Software Platforms in 2025 - Bordio",
+        "domain": "bordio.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-real-time-translation-apps/",
+        "title": "10 Best Real-time Language Translation Apps for Effortless Communication",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://digitaltendances.com/tutoriels/applications-traduction-gratuite-ia-temps-reel/",
+        "title": "6 Applications de Traduction Gratuite 2026 : IA et Temps Réel",
+        "domain": "digitaltendances.com"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-real-time-translation-software",
+        "title": "Ultimate Guide – The Best Real Time Translation Software of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://www.g2.com/categories/machine-translation",
+        "title": "Best Machine Translation Software: User Reviews from January 2026 - G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://www.grainesdeblogueuses.fr/meilleure-application-de-traduction-instantanee-comparatif-2025/",
+        "title": "Meilleure application de traduction instantanée : comparatif 2025",
+        "domain": "grainesdeblogueuses.fr"
+      }
+    ],
+    "total_cited": 3,
+    "total_additional": 20,
+    "total_all": 23
+  },
+  "response_stats": {
+    "total_length": 1993,
+    "citation_count": 6,
+    "chars_with_citations": 137
+  }
+}

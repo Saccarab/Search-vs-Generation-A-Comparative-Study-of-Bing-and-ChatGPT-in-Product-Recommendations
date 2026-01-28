@@ -1,0 +1,349 @@
+{
+  "run_id": "P054_r1",
+  "account_type": "enterprise",
+  "prompt": "What is the best instant translator for conferences?",
+  "metadata": {
+    "hidden_queries": [
+      "best instant translator for conferences real-time translation devices or apps",
+      "conference simultaneous interpretation solutions instant translator devices and software"
+    ],
+    "sonic_classification": {
+      "latency_ms": 3.7395181134343147,
+      "simple_search_prob": 0.9726379302404421,
+      "complex_search_prob": 0.011682224663677292,
+      "no_search_prob": 0.015679845095880614,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best instant translator for conferences real-time translation devices or apps"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 557,
+        "end_idx": 577
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/conference-translation",
+      "url_position": 534,
+      "claim_text": "Here’s a straight, skeptical comparison of the best instant translators for conferences — software and hardware — based on real-world effectiveness, language support, and speed: 1) AI-Powered Conference Translation Platforms (Most scalable for large meetings) Good if you need real-time subtitles/audio for many participants. Wordly (AI real-time) Live translation of speech into dozens of languages. Works with in-person, hybrid, and virtual events. Attendees can choose language on their device without extra hardware. Wordly",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 829,
+        "end_idx": 849
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.interprefy.com/solutions/use-cases/in-person-hybrid-events",
+      "url_position": 824,
+      "claim_text": "Pros: scales to large audiences, no interpreters needed Cons: accuracy can lag vs human interpreters Interprefy (RSI + AI + human) Cloud platform combining AI with remote professional interpreters. Made for global conferences. Interprefy",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1061,
+        "end_idx": 1072
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://livevoice.io/en/simultaneous-interpretation",
+      "url_position": 1102,
+      "claim_text": "Pros: higher accuracy, supports many languages Cons: costs more LiveVoice (simultaneous interpretation streaming) Turns phones/computers into interpretation endpoints. No extra hardware. LiveVoice.io",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1391,
+        "end_idx": 1410
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+      "url_position": 1445,
+      "claim_text": "Pros: simple setup Cons: less refined than full conference solutions 2) Built-In Meeting Platform Tools (Quick & cheap) These aren’t “conference translators” per se, but real-time language help: Zoom Live Interpretation: built into Zoom, attendees pick language audio channel. Tactiq",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1500,
+        "end_idx": 1519
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+      "url_position": 1604,
+      "claim_text": "Microsoft Teams + Extensions: integrates AI or professional interpreter plugins. Tactiq",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1841,
+        "end_idx": 1859
+      },
+      "citation_token": "citeturn0news25",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+      "url_position": 1979,
+      "claim_text": "Pros: no extra app/device Cons: limited languages, better for meetings than large events 3) Mobile Apps (Solo use or small groups) For small breakout sessions or individuals, not full conference audiences. Google Translate (Live Translate): live voice feed to headphones, ~70+ languages. Tom's Guide",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1939,
+        "end_idx": 1944
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://belikenative.com/top-5-tools-for-real-time-meeting-translation/",
+      "url_position": 2202,
+      "claim_text": "Microsoft Translator: speech and text translation, some meeting support. BeLikeNative",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 2241,
+        "end_idx": 2259
+      },
+      "citation_token": "citeturn0news36",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wired.com/review/timekettle-t1-handheld-translator",
+          "title": "Review: Timekettle T1 Handheld Translator",
+          "snippet": "The Timekettle T1 is a handheld language translator that stands out in a crowded field by offering convenient real-time translation through an intuitive design. It features a compact build with a 4-inch touchscreen, physical buttons, and an Android-like interface. The highlight is its “One-Click Translation” mode, which uses two color-coded buttons for seamless bilingual conversations. Alternatively, the Chat app allows hands-free translation through dual microphones, displaying each speaker’s language on opposite sides of the screen.\n\nIt supports 40 languages, multiple dialects, and 93+ accents, and performs reliably both online and offline, thanks to its AI-powered processor and downloadable language packs. However, offline functionality is limited to 31 language pairs, and not all translation combinations are available without a connection. The device includes a global eSIM with free cellular service for two years, after which subscription fees apply.\n\nDrawbacks include a low-resolution screen and camera, limiting its photo-translation capabilities. Connectivity may vary by location, and the battery life supports several days of light use or one full day of heavy use. Despite minor flaws, the T1 offers a user-friendly translation experience, especially useful for travelers who prefer a dedicated device over smartphone apps.",
+          "domain": "www.wired.com",
+          "ref_type": "news",
+          "ref_index": 36,
+          "turn_index": 0,
+          "pub_date": 1752325200,
+          "ref_key": "0_news_36"
+        }
+      ],
+      "inline_url": "https://www.wired.com/review/timekettle-t1-handheld-translator",
+      "url_position": 2539,
+      "claim_text": "Pros: free/cheap, mobile Cons: not tuned for simultaneous multi-listener events 4) Dedicated Devices (Handheld) Useful for small groups or travel, not large simultaneous feeds. Devices like Timekettle T1 offer talk-back translation between two people. WIRED",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 2567,
+        "end_idx": 2586
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://lexiconusa.com/Simultaneous.html?gad_source=1",
+      "url_position": 2901,
+      "claim_text": "Pros: offline options, easy UI Cons: not scalable for conference audiences 5) Traditional Human Interpreters + Systems Still the gold standard for accuracy: Professional simultaneous interpreters with audio broadcast gear (headsets/receivers) deliver real-time speech by experts. Lexicon USA",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.wordly.ai/conference-translation",
+        "title": "Conference Translation | Powered by Wordly AI",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://www.interprefy.com/solutions/use-cases/in-person-hybrid-events",
+        "title": "Multilingual AI translation and captions for in-person ... - Interprefy",
+        "domain": "Interprefy"
+      },
+      {
+        "url": "https://livevoice.io/en/simultaneous-interpretation",
+        "title": "LiveVoice: Live Audio for Simultaneous Interpretation - On site and",
+        "domain": "LiveVoice.io"
+      },
+      {
+        "url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+        "title": "Top Tools for Live Meeting Translation (2025) - tactiq.io",
+        "domain": "Tactiq"
+      },
+      {
+        "url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+        "title": "Google Translate is bringing real-time translations powered by Gemini to your headphones",
+        "domain": "Tom's Guide"
+      },
+      {
+        "url": "https://belikenative.com/top-5-tools-for-real-time-meeting-translation/",
+        "title": "Meeting Translation: 5 Best AI Tools for Real-Time Translation",
+        "domain": "BeLikeNative"
+      },
+      {
+        "url": "https://www.wired.com/review/timekettle-t1-handheld-translator",
+        "title": "Review: Timekettle T1 Handheld Translator",
+        "domain": "WIRED"
+      },
+      {
+        "url": "https://lexiconusa.com/Simultaneous.html?gad_source=1",
+        "title": "Simultaneous Translation Services – Nationwide & Remote Solutions by ...",
+        "domain": "Lexicon USA"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://kevinscolaro.com/top-simultaneous-translation-interpretation-system",
+        "title": "7 Top Simultaneous Interpretation Systems and Translation Equipment ...",
+        "domain": "kevinscolaro.com"
+      },
+      {
+        "url": "https://www.travelandleisure.com/digital-translators-8785743",
+        "title": "The 4 Best Digital Translators, Tested and Reviewed",
+        "domain": "travelandleisure.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-real-time-translators-for-meetings",
+        "title": "5 Best Real-Time Translators for Meetings - maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://translingo.cc/blog/best-ai-translation-tools-for-conferences-and-events-in-2025",
+        "title": "Best AI Translation Tools for Conferences and Events in 2025",
+        "domain": "translingo.cc"
+      },
+      {
+        "url": "https://www.brombergtranslations.com/choosing-the-right-solution-for-simultaneous-interpreting-a-guide-to-the-latest-technology-and-equipment-in-the-field/",
+        "title": "Choosing the Best Simultaneous Interpreting Solutions for Your ...",
+        "domain": "brombergtranslations.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-real-time-translation-apps/",
+        "title": "10 Best Real-time Language Translation Apps for Effortless Communication",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://maestra.ai/tools/real-time-translator/live-conference-translation",
+        "title": "Live Conference Translation - Instant Interpretation",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.stenomatic.ai/post/best-simultaneous-translation-app",
+        "title": "The 6 Best Simultaneous Translation Apps for Conferences",
+        "domain": "stenomatic.ai"
+      },
+      {
+        "url": "https://topbusinesssoftware.com/categories/remote-simultaneous-interpreting/",
+        "title": "The Top 25 Remote Simultaneous Interpreting Platforms in 2026",
+        "domain": "topbusinesssoftware.com"
+      },
+      {
+        "url": "https://www.abbn.com/simultaneous-translation-equipment/",
+        "title": "Simultaneous Translation Equipment | ABBN",
+        "domain": "abbn.com"
+      },
+      {
+        "url": "https://www.gonsin.com/products/simultaneous-interpretation-system/",
+        "title": "Gonsin Simultaneous Interpretation Equipment/System/Device, Translation ...",
+        "domain": "gonsin.com"
+      },
+      {
+        "url": "https://www.remote-interpretation.com/",
+        "title": "Remote Simultaneous Interpretation - Find the right solution",
+        "domain": "remote-interpretation.com"
+      },
+      {
+        "url": "https://www.listentech.com/portable-interpretation-systems/",
+        "title": "Interpretation Systems - Listen Technologies",
+        "domain": "listentech.com"
+      },
+      {
+        "url": "https://www.lexiconusa.com/",
+        "title": "Nationwide Simultaneous Interpretation Services by LexiconUSA",
+        "domain": "lexiconusa.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 17,
+    "total_all": 25
+  },
+  "response_stats": {
+    "total_length": 3639,
+    "citation_count": 9,
+    "chars_with_citations": 149
+  }
+}

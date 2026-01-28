@@ -1,0 +1,292 @@
+{
+  "run_id": "P007_r1",
+  "account_type": "enterprise",
+  "prompt": "Is there a real time audio to text translation?",
+  "metadata": {
+    "hidden_queries": [
+      "real time audio to text translation technology",
+      "real time speech to text translation solutions live audio transcription translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 19.251313991844654,
+      "simple_search_prob": 0.9665236529587535,
+      "complex_search_prob": 0.0013132281577612748,
+      "no_search_prob": 0.03216311888348519,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "real time audio to text translation technology"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 232,
+        "end_idx": 238
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+      "url_position": 246,
+      "claim_text": "Yes — real-time audio → text (and even translation) exists right now. What’s possible now Instant speech-to-text: Many services convert live audio into text on the fly with low latency, showing words as people speak. Microsoft Learn+2Maestra+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 419,
+        "end_idx": 451
+      },
+      "citation_token": "citeturn0search3turn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://livetrans.pro/",
+      "url_position": 482,
+      "claim_text": "Real-time translation: Some tools do speech-to-text plus translation, turning spoken language into text in another language instantly. livetrans.pro+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 542,
+        "end_idx": 572
+      },
+      "citation_token": "citeturn0news18turn0news26",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_18"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 605,
+      "claim_text": "Hardware options: New earbuds and devices can translate live conversation in real time. SFGATE+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 688,
+        "end_idx": 707
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/transcribe/",
+      "url_position": 822,
+      "claim_text": "Examples AI transcription apps/web tools show live text as you speak and can handle multiple languages. Maestra",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 846,
+        "end_idx": 878
+      },
+      "citation_token": "citeturn0search0turn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+          "title": "Speech to Text Overview - Speech Service - Foundry Tools",
+          "snippet": "Azure Speech in Foundry Tools service offers advanced speech to text capabilities. This feature supports both real-time and batch transcription, providing versatile solutions for converting audio streams into text.",
+          "domain": "learn.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1768608000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+      "url_position": 1009,
+      "claim_text": "APIs and platforms (Google Cloud, Microsoft Azure, AWS) stream audio and output real-time text for apps, meetings, captions, etc. Microsoft Learn+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1001,
+        "end_idx": 1033
+      },
+      "citation_token": "citeturn0search3turn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://livetrans.pro/",
+      "url_position": 1224,
+      "claim_text": "Live translation services can convert speech to text in another language instantly for meetings or conversations. livetrans.pro+1",
+      "url_index": 5
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+        "title": "Speech to Text Overview - Speech Service - Foundry Tools",
+        "domain": "Microsoft Learn"
+      },
+      {
+        "url": "https://livetrans.pro/",
+        "title": "LiveTrans - AI-Powered Real-Time Voice Transcription & Live Translation ...",
+        "domain": "livetrans.pro"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      },
+      {
+        "url": "https://live.maestra.ai/transcribe/",
+        "title": "Live Transcribe | Real Time Speech to Text Transcription",
+        "domain": "Maestra"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://research.google/blog/real-time-speech-to-speech-translation/",
+        "title": "Real-time speech-to-speech translation - Google Research",
+        "domain": "research.google"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-translation",
+        "title": "Speech translation overview - Speech service - Foundry Tools",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://tayloramarel.com/2025/03/building-real-time-speech-to-text-translation-systems-a-comprehensive-guide/",
+        "title": "Building Real-Time Speech-to-Text Translation Systems: A Comprehensive ...",
+        "domain": "tayloramarel.com"
+      },
+      {
+        "url": "https://galileo.ai/blog/best-real-time-speech-to-text-tools",
+        "title": "Top Real-Time Speech-to-Text Tools in 2024 | Galileo",
+        "domain": "galileo.ai"
+      },
+      {
+        "url": "https://cloud.google.com/speech-to-text",
+        "title": "Speech-to-Text AI: speech recognition and transcription",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://aws.amazon.com/transcribe/",
+        "title": "Speech To Text - Amazon Transcribe - AWS",
+        "domain": "amazon.com"
+      },
+      {
+        "url": "https://www.vocalstack.com/",
+        "title": "VocalStack",
+        "domain": "vocalstack.com"
+      },
+      {
+        "url": "https://ailivetranslate.net/en",
+        "title": "LiveTranslate - Real-time Speech Translation",
+        "domain": "ailivetranslate.net"
+      },
+      {
+        "url": "https://www.agora.io/en/products/real-time-translation/",
+        "title": "Real-Time Translation",
+        "domain": "agora.io"
+      },
+      {
+        "url": "https://www.agora.io/en/products/speech-to-text/",
+        "title": "Real-Time Speech to Text API for Live Transcription | Agora",
+        "domain": "agora.io"
+      },
+      {
+        "url": "https://www.translatebolt.com/",
+        "title": "TranslateBolt - AI-Powered Real-Time Speech to Text Transcription",
+        "domain": "translatebolt.com"
+      },
+      {
+        "url": "https://www.speechmatics.com/product/real-time",
+        "title": "Real-Time Speech-to-Text | Speechmatics",
+        "domain": "speechmatics.com"
+      },
+      {
+        "url": "https://screenapp.io/features/online-live-caption-tool",
+        "title": "Live Transcribe - Free Live Audio to Text Converter - ScreenApp",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://accuratescribe.ai/real-time-translation-tool",
+        "title": "Real-Time Translation Tool - Audio to Text Converter",
+        "domain": "accuratescribe.ai"
+      },
+      {
+        "url": "https://boostlingo.com/solutions/multilingual-events/live-translation/",
+        "title": "AI Live Speech Translation & Captioning Services | Boostlingo",
+        "domain": "boostlingo.com"
+      }
+    ],
+    "total_cited": 4,
+    "total_additional": 15,
+    "total_all": 19
+  },
+  "response_stats": {
+    "total_length": 1593,
+    "citation_count": 6,
+    "chars_with_citations": 151
+  }
+}

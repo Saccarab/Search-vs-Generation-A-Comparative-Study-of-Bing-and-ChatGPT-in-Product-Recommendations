@@ -1,0 +1,475 @@
+{
+  "run_id": "P007_r2",
+  "account_type": "personal",
+  "prompt": "Is there a real time audio to text translation?",
+  "metadata": {
+    "hidden_queries": [
+      "real time audio to text translation services",
+      "实时 音频 转 文字 翻译 服务 real time audio to text translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 18.083543982356787,
+      "simple_search_prob": 0.9518268728606659,
+      "complex_search_prob": 0.0016583782106195579,
+      "no_search_prob": 0.046514748928714524,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "real time audio to text translation services"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 260,
+        "end_idx": 305
+      },
+      "citation_token": "citeturn0search0turn0search1turn0search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://speechlogger.com/",
+          "title": "Speechlogger - Real Time Speech to Text",
+          "snippet": "Enhance any meeting, speech or event, in-person or online, with automatic live captioning & translations. · About Speechlogger Live Captions · Features · Pricing.Read more",
+          "domain": "speechlogger.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.wordly.ai/real-time-translation?utm_source=chatgpt.com",
+          "title": "Real-Time Translation Solutions",
+          "snippet": "Wordly provides real-time translation of speakers into audio and captions for dozens of languages at in-person and virtual meetings and events.Read more",
+          "domain": "wordly.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://live.maestra.ai/zh/?utm_source=chatgpt.com",
+          "title": "实时语音翻译| 直播对话即时翻译器",
+          "snippet": "Maestra 聆听您的声音，用准确的字幕实时转录，并即时翻译成125 多种语言。无论是双语对话还是国际会议，Maestra 都能实时保持翻译。Read more",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        }
+      ],
+      "inline_url": "https://speechlogger.com/",
+      "url_position": 286,
+      "claim_text": "Yes — there are real-time audio-to-text translation tools that listen to spoken language, convert it to text instantly, and often translate that text into another language right away. These are used for meetings, conversations, lectures, live events, etc. speechlogger.com+2wordly.ai+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 638,
+        "end_idx": 683
+      },
+      "citation_token": "citeturn0search0turn0search1turn0search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://speechlogger.com/",
+          "title": "Speechlogger - Real Time Speech to Text",
+          "snippet": "Enhance any meeting, speech or event, in-person or online, with automatic live captioning & translations. · About Speechlogger Live Captions · Features · Pricing.Read more",
+          "domain": "speechlogger.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.wordly.ai/real-time-translation?utm_source=chatgpt.com",
+          "title": "Real-Time Translation Solutions",
+          "snippet": "Wordly provides real-time translation of speakers into audio and captions for dozens of languages at in-person and virtual meetings and events.Read more",
+          "domain": "wordly.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://live.maestra.ai/zh/?utm_source=chatgpt.com",
+          "title": "实时语音翻译| 直播对话即时翻译器",
+          "snippet": "Maestra 聆听您的声音，用准确的字幕实时转录，并即时翻译成125 多种语言。无论是双语对话还是国际会议，Maestra 都能实时保持翻译。Read more",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        }
+      ],
+      "inline_url": "https://speechlogger.com/",
+      "url_position": 667,
+      "claim_text": "Examples / types of tools: Live speech-to-text + translation apps/web tools Services that transcribe what you say into text as you speak and can translate into other languages immediately — e.g., Speechlogger for live captioning, Wordly for multi-language meeting captions, Maestra for live transcription + translation. speechlogger.com+2wordly.ai+2",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 806,
+        "end_idx": 840
+      },
+      "citation_token": "citeturn0search24turn0search22",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.android.com/accessibility/live-transcribe/",
+          "title": "Live Transcribe | Speech to Text App - Android",
+          "snippet": "Use Live Transcribe to get instant speech to text captions in over 70 languages and dialects, right on your Android device.",
+          "domain": "www.android.com",
+          "ref_type": "search",
+          "ref_index": 24,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_24"
+        },
+        {
+          "url": "https://apps.apple.com/us/app/notta-ai%E8%AF%AD%E9%9F%B3%E8%BD%AC%E5%86%99%E5%B7%A5%E5%85%B7-%E5%AE%9E%E6%97%B6%E5%BD%95%E9%9F%B3%E8%BD%AC%E6%96%87%E5%AD%97-%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5%E8%BD%AC%E5%BD%95/id1480649572?l=zh-Hans-CN&utm_source=chatgpt.com",
+          "title": "Notta-AI语音转写工具，实时录音转文字，文件导入转录App",
+          "snippet": "Notta是一款搭载了大语言模型的AI效率工具，不仅支持实时转写、音视频转写等，还具备AI生成总结，真正提升工作、学习效率。 【实时转写】 无论是课堂、开会、听演讲、看 ...",
+          "domain": "apple.com",
+          "ref_type": "search",
+          "ref_index": 22,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_22"
+        }
+      ],
+      "inline_url": "https://www.android.com/accessibility/live-transcribe/",
+      "url_position": 824,
+      "claim_text": "Mobile apps for instant speech-to-text on phones (Android’s Live Transcribe, Notta, V2T) that show text as you speak. Android+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1001,
+        "end_idx": 1035
+      },
+      "citation_token": "citeturn0search17turn0search23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/",
+          "title": "JotMe - Live Translator & AI Interpreter",
+          "snippet": "JotMe is the most popular live AI translator for meetings. Real-time contextual translation, multilingual transcription, and AI note taking in any language.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_17"
+        },
+        {
+          "url": "https://www.wordly.ai/?utm_source=chatgpt.com",
+          "title": "AI Translation & Captions for Meetings and Events | Wordly",
+          "snippet": "Wordly provides real-time AI translation, captions, transcripts, and summaries for meetings and events, making them more accessible, inclusive, ...",
+          "domain": "wordly.ai",
+          "ref_type": "search",
+          "ref_index": 23,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_23"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/",
+      "url_position": 1047,
+      "claim_text": "Communication/meeting solutions Tools like JotMe or Wordly plug into online meetings (Zoom/Teams) to provide real-time transcript + translated captions. jotme.io+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1187,
+        "end_idx": 1206
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho?hl=zh-CN",
+      "url_position": 1234,
+      "claim_text": "Browser extensions Extensions like ViiTor or Speech Translator convert audio from videos/meetings to live text and can translate it on the fly. Chrome Web Store",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1383,
+        "end_idx": 1402
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://cloud.google.com/speech-to-text?hl=zh-CN",
+      "url_position": 1529,
+      "claim_text": "APIs/Platform features Developer APIs such as Google Cloud Speech-to-Text (can be built into apps to do real-time transcription) or services that deliver live captions. Google Cloud",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1572,
+        "end_idx": 1592
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/",
+      "url_position": 1746,
+      "claim_text": "Note: Some tools do only transcription (speech → text in the same language), while others add translation (speech → text in another language) in real time. Otter.ai",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://speechlogger.com/",
+        "title": "Speechlogger - Real Time Speech to Text",
+        "domain": "speechlogger.com"
+      },
+      {
+        "url": "https://www.android.com/accessibility/live-transcribe/",
+        "title": "Live Transcribe | Speech to Text App - Android",
+        "domain": "Android"
+      },
+      {
+        "url": "https://www.jotme.io/",
+        "title": "JotMe - Live Translator & AI Interpreter",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho?hl=zh-CN",
+        "title": "ViiTor实时翻译- AI翻译&实时双语字幕&免费- Chrome 应用商店",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://cloud.google.com/speech-to-text?hl=zh-CN",
+        "title": "Speech-to-Text API：语音识别和转写",
+        "domain": "Google Cloud"
+      },
+      {
+        "url": "https://otter.ai/",
+        "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+        "domain": "Otter.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.wordly.ai/real-time-translation",
+        "title": "Real-Time Translation Solutions",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=zh&id=com.google.audio.hearing.visualization.accessibility.scribe",
+        "title": "实时转写和声音通知- Google Play 上的应用",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn?hl=zh-CN",
+        "title": "Speech Translator - Chrome 应用商店",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://translate.google.com/about/",
+        "title": "A Personal Interpreter on Your Phone or Computer",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/traduttore_video_tradurre_video_online/285433175728?hl=zh",
+        "title": "视频翻译器- 在线翻译视频和语音",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=zh&id=com.fftools.voicetranslator",
+        "title": "实时语音翻译(Live Voice Translator) - Google Play 上的应用",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/live-transcribe-speech-to-text/id6464112913?l=zh-Hans-CN",
+        "title": "Live transcribe speech to text - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/%E8%BD%AC%E5%BD%95%E8%AF%AD%E9%9F%B3%E6%96%87%E6%9C%AC-%E8%AF%AD%E9%9F%B3%E5%88%B0%E6%96%87%E6%9C%AC/id1625460169?l=zh-Hans-CN",
+        "title": "转录语音文本，语音到文本 - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E7%BF%BB%E8%AF%91/id1312256621?l=zh-Hans-CN",
+        "title": "实时语音翻译 - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/notta-ai%E8%AF%AD%E9%9F%B3%E8%BD%AC%E5%86%99%E5%B7%A5%E5%85%B7-%E5%AE%9E%E6%97%B6%E5%BD%95%E9%9F%B3%E8%BD%AC%E6%96%87%E5%AD%97-%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5%E8%BD%AC%E5%BD%95/id1480649572?l=zh-Hans-CN",
+        "title": "Notta-AI语音转写工具，实时录音转文字，文件导入转录App",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/lectmate-%E6%9C%89%E9%81%93%E7%95%99%E5%AD%A6%E5%90%AC%E8%AF%BE%E5%AE%9D/id6459829488",
+        "title": "LectMate: 有道留学听课宝 - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://soniox.com/",
+        "title": "Soniox | Speech-to-Text AI",
+        "domain": "soniox.com"
+      },
+      {
+        "url": "https://www.palabra.ai/",
+        "title": "Palabra.ai: Live Voice Translator & Real-Time Speech ...",
+        "domain": "palabra.ai"
+      },
+      {
+        "url": "https://live.maestra.ai/zh/",
+        "title": "实时语音翻译| 直播对话即时翻译器",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://maestra.ai/zh/tools/audio-to-text",
+        "title": "音频转文字转换器",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://monica.im/zh_CN/tools/ai-audio-to-text",
+        "title": "免费音频转文本",
+        "domain": "monica.im"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "speechnotes.co"
+      },
+      {
+        "url": "https://www.vmeg.ai/zh/tools/audio-to-text/",
+        "title": "免费音频转文字工具- AI智能语音转写",
+        "domain": "vmeg.ai"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/real-time-translation/",
+        "title": "Real-time Translation Tool | Transync AI",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.gladia.io/",
+        "title": "Gladia | Audio Transcription API",
+        "domain": "gladia.io"
+      },
+      {
+        "url": "https://research.google/blog/real-time-speech-to-speech-translation/",
+        "title": "Real-time speech-to-speech translation",
+        "domain": "research.google"
+      },
+      {
+        "url": "https://apps.microsoft.com/related/9nz4tkwwf4pq?gl=CN&hl=zh-CN",
+        "title": "Windows 中替代语音翻译- 语音转文字的方法",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://livevoice.io/en/ai-voice-translation",
+        "title": "AI Voice Translation",
+        "domain": "livevoice.io"
+      },
+      {
+        "url": "https://github.com/chidiwilliams/buzz",
+        "title": "chidiwilliams/buzz",
+        "domain": "github.com"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 31,
+    "total_all": 37
+  },
+  "response_stats": {
+    "total_length": 1925,
+    "citation_count": 7,
+    "chars_with_citations": 216
+  }
+}

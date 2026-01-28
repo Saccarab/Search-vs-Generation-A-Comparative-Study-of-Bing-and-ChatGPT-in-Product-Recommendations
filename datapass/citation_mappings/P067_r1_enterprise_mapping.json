@@ -1,0 +1,86 @@
+{
+  "run_id": "P067_r1",
+  "account_type": "enterprise",
+  "prompt": "How can I add a live translation service for official meetings?",
+  "metadata": {
+    "hidden_queries": [
+      "Zoom live interpretation feature simultaneous interpretation how it works",
+      "Microsoft Teams live translated captions supported languages meetings 2025 2026",
+      "KUDO remote simultaneous interpretation platform meetings government",
+      "Interprefy remote simultaneous interpretation platform meetings"
+    ],
+    "sonic_classification": null,
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 665,
+        "end_idx": 666
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0064768",
+      "url_position": 643,
+      "claim_text": "To add “live translation” to official meetings, first decide what you actually need—because captions and interpretation solve different problems. 1) Pick the right service type Simultaneous interpretation (human): participants hear the meeting in their language (best for formal/official proceedings, nuance, legal risk). Live translated captions (AI): participants read translated subtitles; cheaper, but higher error risk (names, numbers, legal phrasing). 2) Choose how it will run (virtual / hybrid / in-room) If you use Zoom: you can enable Zoom’s built-in Language Interpretation and assign interpreters to language channels. Zoom+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 886,
+        "end_idx": 887
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.microsoft.com/en-us/office/use-live-captions-in-microsoft-teams-meetings-4be2d304-f675-4b57-8347-cbd000a21260",
+      "url_position": 913,
+      "claim_text": "If you use Microsoft Teams: Teams supports live captions and translated captions (licensing can matter), and also has an “Interpreter” capability for multilingual meetings. Microsoft Support+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1061,
+        "end_idx": 1062
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.interprefy.com/solutions/remote-simultaneous-interpretation",
+      "url_position": 1203,
+      "claim_text": "If you need platform-agnostic or higher control: use an RSI provider that plugs into common meeting platforms (e.g., Interprefy, KUDO). KUDO+3Interprefy+3KUDO+3",
+      "url_index": 2
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0064768",
+        "title": "support.zoom.com",
+        "domain": "support.zoom.com"
+      },
+      {
+        "url": "https://support.microsoft.com/en-us/office/use-live-captions-in-microsoft-teams-meetings-4be2d304-f675-4b57-8347-cbd000a21260",
+        "title": "support.microsoft.com",
+        "domain": "support.microsoft.com"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "kudo.ai",
+        "domain": "kudo.ai"
+      }
+    ],
+    "additional": [],
+    "total_cited": 3,
+    "total_additional": 0,
+    "total_all": 3
+  },
+  "response_stats": {
+    "total_length": 2486,
+    "citation_count": 3,
+    "chars_with_citations": 3
+  }
+}

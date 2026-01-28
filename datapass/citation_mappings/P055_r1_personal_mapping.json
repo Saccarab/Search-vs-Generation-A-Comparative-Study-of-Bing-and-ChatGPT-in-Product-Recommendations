@@ -1,0 +1,588 @@
+{
+  "run_id": "P055_r1",
+  "account_type": "personal",
+  "prompt": "Welche Transkriptionssoftware ist die beste?",
+  "metadata": {
+    "hidden_queries": [
+      "Transkriptionssoftware beste Transkriptionssoftware Vergleich",
+      "Best transcription software 2026 features pricing accuracy"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.275386972352862,
+      "simple_search_prob": 0.9461441822954619,
+      "complex_search_prob": 0.029733424652848502,
+      "no_search_prob": 0.024122393051689565,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Transkriptionssoftware beste Transkriptionssoftware Vergleich"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 106,
+        "end_idx": 165
+      },
+      "citation_token": "citeturn0search0turn0search2turn0search8turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+          "title": "Vergleich: Die beste Transkriptionssoftware",
+          "snippet": "Sep 8, 2025 — Transkriptionssoftware im Vergleich · Trint: KI-gestützte Transkription mit Kollaboration · Otter.ai: Der Meeting-Helfer · Amberscript: DSGVO- ...Read more",
+          "domain": "www.heise.de",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://reduct.video/blog/transcription-software-for-video/",
+          "title": "8 Best Audio and Video Transcription Software in 2026",
+          "snippet": "A practical comparison of the best audio and video transcription software in 2026. 1. Reduct.Video 2. Sonix 3. Descript 4. Vook 5. Marvin 6. Happy Scribe 7.",
+          "domain": "reduct.video",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        }
+      ],
+      "inline_url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+      "url_position": 131,
+      "claim_text": "Hier sind aktuell sehr empfehlene Transkriptionssoftware‑Optionen (für 2025 / 2026) – je nach Bedarf: X-Doc+3heise online+3Sonix+3",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 297,
+        "end_idx": 316
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/de/beste-transkriptionsanwendungen-fur-sprache-zu-text/",
+      "url_position": 349,
+      "claim_text": "Top‑Allrounder (KI‑basiert) Sonix – sehr hohe Genauigkeit, Mehrsprachigkeit, gute Übersetzungs‑ und Exportfunktionen. Sonix",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 417,
+        "end_idx": 418
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+      "url_position": 542,
+      "claim_text": "Otter.ai – stark bei Meetings/Notizen, bietet Echtzeit‑Transkription und Zusammenfassungen. heise online+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 531,
+        "end_idx": 550
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://reduct.video/blog/transcription-software-for-video/",
+          "title": "8 Best Audio and Video Transcription Software in 2026",
+          "snippet": "A practical comparison of the best audio and video transcription software in 2026. 1. Reduct.Video 2. Sonix 3. Descript 4. Vook 5. Marvin 6. Happy Scribe 7.",
+          "domain": "reduct.video",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        }
+      ],
+      "inline_url": "https://reduct.video/blog/transcription-software-for-video/",
+      "url_position": 720,
+      "claim_text": "Descript – kombiniert Transkription mit einfachem Audio‑/Video‑Editing. Reduct Video",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 602,
+        "end_idx": 622
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/de/the-best-automatic-transcription-software",
+      "url_position": 832,
+      "claim_text": "Trint – etabliertes Tool mit gutem Editor. X-Doc",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 722,
+        "end_idx": 741
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://reduct.video/blog/transcription-software-for-video/",
+          "title": "8 Best Audio and Video Transcription Software in 2026",
+          "snippet": "A practical comparison of the best audio and video transcription software in 2026. 1. Reduct.Video 2. Sonix 3. Descript 4. Vook 5. Marvin 6. Happy Scribe 7.",
+          "domain": "reduct.video",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        }
+      ],
+      "inline_url": "https://reduct.video/blog/transcription-software-for-video/",
+      "url_position": 1004,
+      "claim_text": "Weitere solide Optionen Reduct.Video – top für Video‑Transkription + Team‑Features. Reduct Video",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 805,
+        "end_idx": 825
+      },
+      "citation_token": "citeturn0search29",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.omt.de/online-marketing-tools/transkriptionssoftware/",
+      "url_position": 1126,
+      "claim_text": "Happy Scribe – gut für Untertitel und Multisprachiges. OMT",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 905,
+        "end_idx": 924
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.avoma.com/blog/best-ai-transcription-software-tools",
+      "url_position": 1272,
+      "claim_text": "Fireflies.ai / Avoma – Meeting‑Fokus mit hilfreichen Zusatzfunktionen. Avoma",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1112,
+        "end_idx": 1146
+      },
+      "citation_token": "citeturn0search24turn0search37",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.happyscribe.com/blog/best-human-transcription-services?utm_source=chatgpt.com",
+          "title": "6 Best Human Transcription Services in 2026",
+          "snippet": "Oct 31, 2025 — Discover the top 6 human transcription services that offer high accuracy, data security, and expert-reviewed transcripts across industries.",
+          "domain": "happyscribe.com",
+          "ref_type": "search",
+          "ref_index": 37,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_37"
+        }
+      ],
+      "inline_url": "https://witandwire.com/best-transcription-software-services/",
+      "url_position": 1525,
+      "claim_text": "Für höchste Genauigkeit / professionelle Texte Rev / TranscribeMe / GoTranscript – menschliche oder gemischte Transkription, oft näher an 99 % Genauigkeit (höhere Kosten). Wit & Wire+1",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1261,
+        "end_idx": 1281
+      },
+      "citation_token": "citeturn0search30",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.notta.ai/de/blog/best-free-transcription-software",
+      "url_position": 1695,
+      "claim_text": "Kostenlose / günstige Optionen Notta – hoher kostenloser Genauigkeitswert bei Basis‑Transkription. Notta",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1370,
+        "end_idx": 1388
+      },
+      "citation_token": "citeturn0news44",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.t3.com/tech/ai/plaud-desktop-brings-the-powerful-ai-transcribing-tool-to-your-pc-or-mac-and-its-free",
+          "title": "Plaud Desktop brings its powerful AI transcription tool to your PC or Mac - and it's free",
+          "snippet": "Plaud has released Plaud Desktop, a free AI transcription app for existing Plaud members, designed for PC and Mac users. It allows users to record, transcribe, and summarize meetings automatically across major video conferencing platforms like Zoom, Teams, Google Meet, and Slack. A key feature is its bot-free system that detects meeting start times and supports interactive search in over 112 languages. Transcripts, audio recordings, and summaries are stored in the user’s Plaud account with enhanced functionality, such as manual note adding, audio highlighting, and screenshot capture. This integration brings Plaud’s powerful AI from mobile devices to the desktop environment.\n\nAlongside this, Plaud also launched the NotePin S, an upgraded wearable recording device. It offers increased battery life (up to 20 hours of recording and 40 days standby), improved audio quality with dual microphones, and 64GB storage. It’s lightweight, comes in three colors, supports multiple attachments, and is compatible with Apple Find My. The recordings sync securely via Bluetooth or WiFi and remain encrypted. The NotePin S retails for $179 (£133) and is available now.",
+          "domain": "www.t3.com",
+          "ref_type": "news",
+          "ref_index": 44,
+          "turn_index": 0,
+          "pub_date": 1767535200,
+          "ref_key": "0_news_44"
+        }
+      ],
+      "inline_url": "https://www.t3.com/tech/ai/plaud-desktop-brings-the-powerful-ai-transcribing-tool-to-your-pc-or-mac-and-its-free",
+      "url_position": 1843,
+      "claim_text": "Plaud Desktop – kostenloses Tool für Desktop‑Transkription & Zusammenfassungen. T3",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1470,
+        "end_idx": 1489
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://witandwire.com/best-transcription-software-services/",
+      "url_position": 1525,
+      "claim_text": "Für höchste Genauigkeit / professionelle Texte Rev / TranscribeMe / GoTranscript – menschliche oder gemischte Transkription, oft näher an 99 % Genauigkeit (höhere Kosten). Wit & Wire+1",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1539,
+        "end_idx": 1558
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+          "title": "Vergleich: Die beste Transkriptionssoftware",
+          "snippet": "Sep 8, 2025 — Transkriptionssoftware im Vergleich · Trint: KI-gestützte Transkription mit Kollaboration · Otter.ai: Der Meeting-Helfer · Amberscript: DSGVO- ...Read more",
+          "domain": "www.heise.de",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+      "url_position": 2174,
+      "claim_text": "Beste für Meetings: Otter.ai, Fireflies. heise online",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 1598,
+        "end_idx": 1617
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://reduct.video/blog/transcription-software-for-video/",
+          "title": "8 Best Audio and Video Transcription Software in 2026",
+          "snippet": "A practical comparison of the best audio and video transcription software in 2026. 1. Reduct.Video 2. Sonix 3. Descript 4. Vook 5. Marvin 6. Happy Scribe 7.",
+          "domain": "reduct.video",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        }
+      ],
+      "inline_url": "https://reduct.video/blog/transcription-software-for-video/",
+      "url_position": 2311,
+      "claim_text": "Beste für Video: Reduct.Video. Reduct Video",
+      "url_index": 13
+    },
+    {
+      "token_position": {
+        "start_idx": 1673,
+        "end_idx": 1693
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/de/beste-transkriptionsanwendungen-fur-sprache-zu-text/",
+      "url_position": 2034,
+      "claim_text": "Kurz zusammengefasst: Beste Allround‑KI: Sonix, Otter.ai, Descript. Sonix",
+      "url_index": 11
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+        "title": "Vergleich: Die beste Transkriptionssoftware",
+        "domain": "heise online"
+      },
+      {
+        "url": "https://sonix.ai/resources/de/beste-transkriptionsanwendungen-fur-sprache-zu-text/",
+        "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://reduct.video/blog/transcription-software-for-video/",
+        "title": "8 Best Audio and Video Transcription Software in 2026",
+        "domain": "Reduct Video"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/de/the-best-automatic-transcription-software",
+        "title": "Die beste automatische Transkriptionssoftware von 2026",
+        "domain": "X-Doc"
+      },
+      {
+        "url": "https://www.omt.de/online-marketing-tools/transkriptionssoftware/",
+        "title": "Transkriptionssoftware - Anbieter im Vergleich - OMT.de",
+        "domain": "OMT"
+      },
+      {
+        "url": "https://www.avoma.com/blog/best-ai-transcription-software-tools",
+        "title": "9 Best AI Transcription Software Tools in 2026",
+        "domain": "Avoma"
+      },
+      {
+        "url": "https://witandwire.com/best-transcription-software-services/",
+        "title": "10 best transcription softwares and services in 2026 ...",
+        "domain": "Wit & Wire"
+      },
+      {
+        "url": "https://www.notta.ai/de/blog/best-free-transcription-software",
+        "title": "10 Beste kostenlose Transkriptionssoftware für schnelle ...",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://www.t3.com/tech/ai/plaud-desktop-brings-the-powerful-ai-transcribing-tool-to-your-pc-or-mac-and-its-free",
+        "title": "Plaud Desktop brings its powerful AI transcription tool to your PC or Mac - and it's free",
+        "domain": "T3"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://zapier.com/blog/best-transcription-apps/",
+        "title": "The best transcription software in 2025",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://jens.marketing/transkriptionssoftware/",
+        "title": "15 Transkriptionssoftwares im Vergleich (2025)",
+        "domain": "jens.marketing"
+      },
+      {
+        "url": "https://www.scribbr.at/methodik-at/transkriptionssoftware/",
+        "title": "Verschiedene Transkriptionssoftwares im Vergleich - Scribbr",
+        "domain": "scribbr.at"
+      },
+      {
+        "url": "https://www.sally.io/de/blog/software-zum-transkribieren-die-7-besten-loesugen",
+        "title": "Software zum Transkribieren: Die 7 besten Lösungen 2026",
+        "domain": "sally.io"
+      },
+      {
+        "url": "https://www.sally.io/de/blog/die-7-besten-transkriptions-tools-2026",
+        "title": "Die 7 besten Transkriptionstools 2026 ▶ DSGVO, KI & Co.",
+        "domain": "sally.io"
+      },
+      {
+        "url": "https://sonix.ai/resources/de/beste-transkriptionssoftware-fur-interviews/",
+        "title": "11 beste Transkriptionssoftware für Interviews im Jahr 2025",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-speech-to-text-software/",
+        "title": "13 Best Speech-to-Text Software for Accurate Transcription ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-multilingual-transcription-software/",
+        "title": "12 Best Multilingual Transcription Software Options in 2026",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://sonix.ai/resources/de/beste-sprach-zu-text-software/",
+        "title": "13 Best Speech-to-Text Software for Accurate Transcription ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://www.g2.com/categories/transcription",
+        "title": "Best Transcription Software: User Reviews from January ...",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://www.g2.com/de/categories/transcription",
+        "title": "Beste Transkriptionssoftware: Nutzerbewertungen von ...",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://voicetonotes.ai/blog/speech-to-text-apps/",
+        "title": "Best Speech to Text Apps in 2026 (Ranked & Reviewed)",
+        "domain": "voicetonotes.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-upload-audio-for-transcription-tools",
+        "title": "The Best Upload Audio for Transcription Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-audio-transcription-software",
+        "title": "The Best Audio Transcription Software of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://caption-ed.com/the-best-transcription-software-in-2025/",
+        "title": "The Best Transcription Software in 2025 [8+ Tools Reviewed]",
+        "domain": "caption-ed.com"
+      },
+      {
+        "url": "https://www.dictaai.com/blog/the-best-ai-transcription-software-of-2025-top-picks-for-accuracy-speed-and-efficiency",
+        "title": "The Best AI Transcription Software of 2025: Top Picks for ...",
+        "domain": "dictaai.com"
+      },
+      {
+        "url": "https://www.scribbr.de/methodik/transkriptionssoftware/",
+        "title": "Verschiedene Transkriptionssoftwares im Vergleich - Scribbr",
+        "domain": "scribbr.de"
+      },
+      {
+        "url": "https://reverieinc.com/blog/speech-text-api-comparison/",
+        "title": "8 Best Speech-to-Text APIs in 2026: A Complete Comparison ...",
+        "domain": "reverieinc.com"
+      },
+      {
+        "url": "https://www.transcribeme.com/",
+        "title": "TranscribeMe: Fast & Accurate Human Transcription Services",
+        "domain": "transcribeme.com"
+      },
+      {
+        "url": "https://clickup.com/de/blog/494323/audio-zu-text-konverter",
+        "title": "die 10 besten Audio-zu-Text-Konverter für schnelle und ...",
+        "domain": "clickup.com"
+      },
+      {
+        "url": "https://www.pcwelt.de/article/3037672/audio-in-text-umwandeln-die-besten-ki-tools-im-vergleich.html",
+        "title": "Audio in Text umwandeln: Die besten KI-Tools im Vergleich",
+        "domain": "pcwelt.de"
+      },
+      {
+        "url": "https://www.rev.com/resources/top-transcription-companies",
+        "title": "Top Transcription Companies of 2026",
+        "domain": "rev.com"
+      },
+      {
+        "url": "https://www.gradually.ai/ki-transskriptionssoftwares/",
+        "title": "Die 8 besten KI-Transkriptionssoftwares (auch kostenlos)",
+        "domain": "gradually.ai"
+      },
+      {
+        "url": "https://www.capterra.at/directory/31836/transcription/software",
+        "title": "Transkriptionssoftware Preisvergleich & Top Anbieter",
+        "domain": "capterra.at"
+      },
+      {
+        "url": "https://www.taption.com/blog/en/ai-transcribing-tool-review-en?srsltid=AfmBOooRXlGtrkDr0g9ov4FE4nQqABfr_ydDxNpdvFMwjUdF0yEZDD8E",
+        "title": "Top 5 AI Transcription Tools for 2026 (Ranked & Reviewed)",
+        "domain": "taption.com"
+      },
+      {
+        "url": "https://www.sembly.ai/blog/best-transcription-software-top-free-and-paid-tools/",
+        "title": "Best Transcription Software 2026: Top Free & Paid",
+        "domain": "sembly.ai"
+      },
+      {
+        "url": "https://www.ki-company.ai/blog-beitraege/die-3-besten-ki-transkriptionstools-effiziente-loesungen-fur-praezise-transkriptionen",
+        "title": "Die 3 besten KI-Transkriptionstools | Effiziente Lösungen",
+        "domain": "ki-company.ai"
+      },
+      {
+        "url": "https://www.reddit.com/r/ProductivityApps/comments/1pm7isa/5_transcription_tools_ive_used_in_2025/",
+        "title": "5 transcription tools I've used in 2025 : r/ProductivityApps",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://reduct.video/blog/human-transcription-services/",
+        "title": "5 Best Human Transcription Services in 2026",
+        "domain": "reduct.video"
+      },
+      {
+        "url": "https://www.happyscribe.com/blog/best-human-transcription-services",
+        "title": "6 Best Human Transcription Services in 2026",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://www.happyscribe.com/blog/best-free-transcription-software",
+        "title": "Best Free Transcription Software for 2026: Speech to Text ...",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://meetgeek.ai/de/blog/best-free-transcription-software",
+        "title": "Die 4 besten kostenlosen Transkriptionssoftware für 2026",
+        "domain": "meetgeek.ai"
+      },
+      {
+        "url": "https://www.rtl.de/vergleiche/software/transkriptionssoftware-test/",
+        "title": "Die besten Transkriptionssoftwares im Test | rtl.de Vergleich",
+        "domain": "rtl.de"
+      },
+      {
+        "url": "https://www.heidihealth.com/en-ca/blog/best-medical-transcription-software",
+        "title": "Best Medical Transcription Software 2026 [Updated]",
+        "domain": "heidihealth.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 34,
+    "total_all": 43
+  },
+  "response_stats": {
+    "total_length": 2589,
+    "citation_count": 15,
+    "chars_with_citations": 325
+  }
+}

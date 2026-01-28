@@ -1,0 +1,302 @@
+{
+  "run_id": "P079_r1",
+  "account_type": "enterprise",
+  "prompt": "What are the top 3 speech-to-text transcription tools available in the market now?",
+  "metadata": {
+    "hidden_queries": [
+      "top speech to text transcription tools 2025",
+      "best speech to text transcription software comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 18.583063036203384,
+      "simple_search_prob": 0.9922775753327467,
+      "complex_search_prob": 0.00335939471680492,
+      "no_search_prob": 0.004363029950448338,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 311,
+        "end_idx": 330
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://usefulai.com/tools/ai-transcription",
+          "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+          "snippet": "By Alex • Updated Nov 2, 2024 AI transcription tools convert spoken words into written text with incredible speed, saving you countless hours of tedious manual transcription work. After rigorously testing 17 different options on the market, I’ve narrowed it down to the top 9 tools you should consider for 2025.",
+          "domain": "usefulai.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1730505600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://usefulai.com/tools/ai-transcription",
+      "url_position": 312,
+      "claim_text": "Here are the top 3 speech-to-text transcription tools widely recognized in the market right now (based on accuracy, features, and adoption): Otter.ai – Strong for live meeting transcription, speaker identification, searchable transcripts, and summaries. Popular in business and education workflows. Useful AI+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 512,
+        "end_idx": 531
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.hypescribe.com/blog/top-speech-to-text-software",
+      "url_position": 530,
+      "claim_text": "Google Cloud / Google Speech-to-Text – Enterprise-grade ASR with excellent language support, real-time and batch processing, and integration into apps via API. HypeScribe",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 713,
+        "end_idx": 747
+      },
+      "citation_token": "citeturn0search16turn0search30",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voicetype.com/blog/best-ai-transcription-software",
+          "title": "12 Best AI Transcription Software of 2025: In-Depth Reviews",
+          "snippet": "Deepgram positions itself as a developer-first speech-to-text platform, offering some of the best AI transcription software for those who need to build custom solutions.",
+          "domain": "voicetype.com",
+          "ref_type": "search",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": 1758412800,
+          "ref_key": "0_search_16"
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Whisper_%28syst%C3%A8me_de_reconnaissance_vocale%29",
+          "title": "Whisper (système de reconnaissance vocale)",
+          "snippet": "",
+          "domain": "fr.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 30,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_30"
+        }
+      ],
+      "inline_url": "https://voicetype.com/blog/best-ai-transcription-software",
+      "url_position": 778,
+      "claim_text": "Deepgram (or similar advanced ASR like Whisper API) – Developer-focused, high-accuracy speech recognition with real-time streaming and API flexibility for custom use cases. VoiceType+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 938,
+        "end_idx": 944
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.techradar.com/news/best-speech-to-text-app",
+      "url_position": 1023,
+      "claim_text": "Notes/alternatives to consider: Speechmatics (multilingual, accent-flexible) and Dragon Professional/Nuance (business dictation) also rank highly in some 2025–2026 reviews. TechRadar",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1046,
+        "end_idx": 1078
+      },
+      "citation_token": "citeturn0search0turn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://usefulai.com/tools/ai-transcription",
+          "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+          "snippet": "By Alex • Updated Nov 2, 2024 AI transcription tools convert spoken words into written text with incredible speed, saving you countless hours of tedious manual transcription work. After rigorously testing 17 different options on the market, I’ve narrowed it down to the top 9 tools you should consider for 2025.",
+          "domain": "usefulai.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1730505600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://usefulai.com/tools/ai-transcription",
+      "url_position": 1169,
+      "claim_text": "Rev.ai and IBM Watson Speech to Text are strong for enterprise integration. Useful AI+1",
+      "url_index": 4
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://usefulai.com/tools/ai-transcription",
+        "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+        "domain": "Useful AI"
+      },
+      {
+        "url": "https://www.hypescribe.com/blog/top-speech-to-text-software",
+        "title": "The Best Speech to Text Software Options for 2025",
+        "domain": "HypeScribe"
+      },
+      {
+        "url": "https://voicetype.com/blog/best-ai-transcription-software",
+        "title": "12 Best AI Transcription Software of 2025: In-Depth Reviews",
+        "domain": "VoiceType"
+      },
+      {
+        "url": "https://www.techradar.com/news/best-speech-to-text-app",
+        "title": "Best speech-to-text app of 2025",
+        "domain": "TechRadar"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.softwaretestinghelp.com/best-transcription-software/",
+        "title": "Top 15 Best Transcription Software in 2026 (Audio/Video to Text)",
+        "domain": "softwaretestinghelp.com"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-speech-to-text-software/",
+        "title": "13 Best Speech-to-Text Software for Accurate Transcription in 2026",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://zapier.com/blog/best-text-dictation-software/",
+        "title": "The 9 best dictation and speech-to-text software in 2026 - Zapier",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://voicetype.com/blog/best-speech-to-text-program",
+        "title": "12 Best Speech to Text Program Options for 2025 | VoiceType",
+        "domain": "voicetype.com"
+      },
+      {
+        "url": "https://www.analyticsinsight.net/tech-news/the-ultimate-guide-to-the-top-speech-to-text-websites-in-2025",
+        "title": "The Ultimate Guide to the Top Speech to Text Websites in 2025",
+        "domain": "analyticsinsight.net"
+      },
+      {
+        "url": "https://www.bestdevops.com/top-10-speech-to-text-systems-tools-in-2025-features-pros-cons-comparison/",
+        "title": "Top 10 Speech-to-Text Systems Tools in 2025: Features, Pros, Cons ...",
+        "domain": "bestdevops.com"
+      },
+      {
+        "url": "https://www.devopsschool.com/blog/top-10-speech-to-text-tools-in-2025-features-pros-cons-comparison/",
+        "title": "Top 10 Speech-to-Text Tools in 2025: Features, Pros, Cons & Comparison",
+        "domain": "devopsschool.com"
+      },
+      {
+        "url": "https://geekflare.com/best/best-transcription-software/",
+        "title": "17 Best Transcription Software for Audio to Text in 2025",
+        "domain": "geekflare.com"
+      },
+      {
+        "url": "https://www.techbloat.com/17-best-transcription-software-for-audio-to-text-in-2025.html",
+        "title": "17 Best Transcription Software for Audio to Text in 2025",
+        "domain": "techbloat.com"
+      },
+      {
+        "url": "https://www.digitalocean.com/resources/articles/ai-transcription-tools",
+        "title": "10 AI Transcription Tools to Convert Speech to Text in 2025",
+        "domain": "digitalocean.com"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-speech-to-text-tools",
+        "title": "Best Speech to Text Tools for 2025: Top 7 Compared",
+        "domain": "descript.com"
+      },
+      {
+        "url": "https://www.lindy.ai/blog/best-speech-to-text-software",
+        "title": "I Tried 25+ Best Speech-to-Text Software: Here Are My Top 12 Picks - Lindy",
+        "domain": "lindy.ai"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/10-best-speech-to-text-software",
+        "title": "10 Best Speech-to-Text Software [Updated August 2025] | Jamie",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://www.softwareworld.co/transcription-software/comparison/",
+        "title": "Top 10 Transcription Software Comparison 2026 | SoftwareWorld",
+        "domain": "softwareworld.co"
+      },
+      {
+        "url": "https://www.claap.io/blog/transcription-tools",
+        "title": "From Speech to Text: 8 Best Transcription Tools in 2025 - Claap",
+        "domain": "claap.io"
+      }
+    ],
+    "total_cited": 4,
+    "total_additional": 15,
+    "total_all": 19
+  },
+  "response_stats": {
+    "total_length": 1321,
+    "citation_count": 5,
+    "chars_with_citations": 110
+  }
+}

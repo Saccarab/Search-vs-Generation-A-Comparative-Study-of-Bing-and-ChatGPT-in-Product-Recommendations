@@ -1,0 +1,344 @@
+{
+  "run_id": "P070_r3",
+  "account_type": "enterprise",
+  "prompt": "What are the best free audio to text transcription tools?",
+  "metadata": {
+    "hidden_queries": [
+      "best free audio to text transcription tools",
+      "free automatic speech to text transcription software comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 9.29730711504817,
+      "simple_search_prob": 0.984817184534419,
+      "complex_search_prob": 0.001708229901258869,
+      "no_search_prob": 0.01347458556432211,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best free audio to text transcription tools"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 320,
+        "end_idx": 351
+      },
+      "citation_token": "citeturn0search1turn0news26",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voicetype.com/blog/best-free-transcription-software",
+          "title": "12 Best Free Transcription Software Options for 2025",
+          "snippet": "Whether you're a journalist on a deadline, a researcher analyzing hours of audio, or a professional looking to streamline your workflow, the right tool can be a game-changer. But with countless options available, how do you find the best free transcription software that delivers accuracy without compromising your privacy or budget?",
+          "domain": "voicetype.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1757721600,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://voicetype.com/blog/best-free-transcription-software",
+      "url_position": 324,
+      "claim_text": "Here are the most useful free tools for converting audio to text (good accuracy, minimal cost, practical limits noted): 1. Otter.ai (Web/App) – Popular free option for meetings/interviews; supports live and uploaded audio transcription with speaker labeling. Basic plan gives monthly minutes and upload limits. VoiceType+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 510,
+        "end_idx": 529
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.lemonfox.ai/blog/free-speech-to-text-software",
+      "url_position": 549,
+      "claim_text": "2. Google Docs – Voice Typing (Web) – Free built-in dictation in Google Docs; works in real time via mic. No file upload, but excellent for live speech. Lemonfox",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 666,
+        "end_idx": 685
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.lemonfox.ai/blog/free-speech-to-text-software",
+      "url_position": 750,
+      "claim_text": "3. Windows Voice Typing (Windows) – System-wide speech-to-text for any text field; no additional software needed on Windows 11/10. Lemonfox",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 830,
+        "end_idx": 849
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.lemonfox.ai/blog/free-speech-to-text-software",
+      "url_position": 959,
+      "claim_text": "4. Apple Dictation (Apple Devices) – Built into iPhone/iPad/Mac keyboards; free and works across apps. Great for quick note transcription. Lemonfox",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1010,
+        "end_idx": 1043
+      },
+      "citation_token": "citeturn0search4turn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.descript.com/blog/article/best-free-audio-to-text-converters",
+      "url_position": 1186,
+      "claim_text": "5. Descript (Free Tier) – AI-powered audio/video transcription with editing; free plan gives limited monthly minutes. Good if you also want basic editing. Descript+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1179,
+        "end_idx": 1199
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://audiototext.com/",
+          "title": "Free Audio to Text Converter - Transcribe Audio Online | AudioToText.com",
+          "snippet": "Convert audio to text online instantly with our 100% free AI transcription tool. Upload MP3, WAV, or any audio file and get accurate speech-to-text transcripts in minutes.",
+          "domain": "audiototext.com",
+          "ref_type": "search",
+          "ref_index": 12,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_12"
+        }
+      ],
+      "inline_url": "https://audiototext.com/",
+      "url_position": 1404,
+      "claim_text": "6. AudioToText.com (Web) – Straight online upload and instant transcription without signup. Simple and free for basic file needs. AudioToText",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1323,
+        "end_idx": 1343
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://tactiq.io/learn/free-transcription-software",
+      "url_position": 1557,
+      "claim_text": "7. Tactiq (Web) – Browser-based transcription tied to meetings (Zoom/Teams/Google Meet) with free monthly allowances. Tactiq",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1490,
+        "end_idx": 1510
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://notegpt.io/blog/best-free-audio-transcript-tools-2025",
+      "url_position": 1761,
+      "claim_text": "8. NoteGPT / Other AI Browser Tools – Emerging web tools that upload audio and generate transcripts (some free tiers, check current limits). NoteGPT",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1660,
+        "end_idx": 1678
+      },
+      "citation_token": "citeturn0news23",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.tomsguide.com/ai/google-gemini/transcribe-audio-with-google-gemini-for-free-heres-how-to-do-it",
+      "url_position": 1982,
+      "claim_text": "9. Google Gemini (Free Upload Feature) – Upload audio (short files) to generate a transcript via AI assistant for free. Limited to brief clips. Tom's Guide",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 2128,
+        "end_idx": 2134
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/blog/best-free-audio-to-text-converter",
+      "url_position": 2517,
+      "claim_text": "Quick picks by need: Meeting/Interview transcription: Otter.ai or Tactiq Real-time dictation: Google Docs Voice Typing, Windows or Apple built-ins Simple file upload: AudioToText.com or Gemini uploads Creators/editing workflows: Descript (free tier) Notes/limits: Free tiers often cap minutes or file size. Accuracy varies with audio quality and accents — expect some cleanup after automatic transcription. screenapp.io",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://voicetype.com/blog/best-free-transcription-software",
+        "title": "12 Best Free Transcription Software Options for 2025",
+        "domain": "VoiceType"
+      },
+      {
+        "url": "https://www.lemonfox.ai/blog/free-speech-to-text-software",
+        "title": "12 Best Free Speech to Text Software Options in 2025",
+        "domain": "Lemonfox"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-free-audio-to-text-converters",
+        "title": "6 Best Free Audio-to-Text Converters in 2025 - Descript",
+        "domain": "Descript"
+      },
+      {
+        "url": "https://audiototext.com/",
+        "title": "Free Audio to Text Converter - Transcribe Audio Online | AudioToText.com",
+        "domain": "AudioToText"
+      },
+      {
+        "url": "https://tactiq.io/learn/free-transcription-software",
+        "title": "Free Transcription Software: 7 Tools Tested & Reviewed",
+        "domain": "Tactiq"
+      },
+      {
+        "url": "https://notegpt.io/blog/best-free-audio-transcript-tools-2025",
+        "title": "Top 9 Free Audio Transcript Tools to Use in 2025 - notegpt.io",
+        "domain": "NoteGPT"
+      },
+      {
+        "url": "https://www.tomsguide.com/ai/google-gemini/transcribe-audio-with-google-gemini-for-free-heres-how-to-do-it",
+        "title": "Transcribe audio with Google Gemini for free - here's how to do it",
+        "domain": "Tom's Guide"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-free-audio-to-text-converter",
+        "title": "The Best Free Audio to Text Converters (2025 Tested)",
+        "domain": "screenapp.io"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://technicalwall.com/software-reviews/best-audio-to-text-converter/",
+        "title": "9 Best Audio to Text Converter of 2026 (Free and Paid)",
+        "domain": "technicalwall.com"
+      },
+      {
+        "url": "https://www.softwaretestinghelp.com/best-transcription-software/",
+        "title": "Top 15 Best Transcription Software in 2026 (Audio/Video to Text)",
+        "domain": "softwaretestinghelp.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+        "title": "10 Best Free AI Transcription Tools for Fast & Accurate Transcripts",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-free-speech-to-text-app",
+        "title": "6 Best Free Speech-to-Text Apps for Creators in 2025 - Descript",
+        "domain": "descript.com"
+      },
+      {
+        "url": "https://transcript.lol/blog/audio-transcription-software-free",
+        "title": "Top 12 Audio Transcription Software Free Options for 2025",
+        "domain": "transcript.lol"
+      },
+      {
+        "url": "https://geekflare.com/best/best-transcription-software/",
+        "title": "17 Best Transcription Software for Audio to Text in 2025 - Geekflare",
+        "domain": "geekflare.com"
+      },
+      {
+        "url": "https://voicenotes.com/blog/free-transcription-software",
+        "title": "10 Best Free Transcription Software Tools for 2024",
+        "domain": "voicenotes.com"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/free-transcription-software",
+        "title": "Best Free Transcription Software: 6 Tools Tested and Reviewed [2026]",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://sourceforge.net/software/transcription/free-version/",
+        "title": "Best Free Transcription Software of 2026 - Reviews & Comparison",
+        "domain": "sourceforge.net"
+      },
+      {
+        "url": "https://www.g2.com/categories/transcription/free",
+        "title": "Best 79 Free Transcription Software Picks in 2026 | G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://whisperbot.ai/blog/best-free-audio-to-text-converter",
+        "title": "The 12 Best Free Audio to Text Converter Tools in 2025",
+        "domain": "whisperbot.ai"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 11,
+    "total_all": 19
+  },
+  "response_stats": {
+    "total_length": 2580,
+    "citation_count": 10,
+    "chars_with_citations": 205
+  }
+}

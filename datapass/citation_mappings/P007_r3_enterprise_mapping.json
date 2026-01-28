@@ -1,0 +1,371 @@
+{
+  "run_id": "P007_r3",
+  "account_type": "enterprise",
+  "prompt": "Is there a real time audio to text translation?",
+  "metadata": {
+    "hidden_queries": [
+      "real time audio to text translation technology",
+      "实时音频转文字 翻译 real time audio to text translate"
+    ],
+    "sonic_classification": {
+      "latency_ms": 94.49044894427061,
+      "simple_search_prob": 0.9665236529587535,
+      "complex_search_prob": 0.0013132281577612748,
+      "no_search_prob": 0.03216311888348519,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "real time audio to text translation technology"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 344,
+        "end_idx": 376
+      },
+      "citation_token": "citeturn0search0turn0search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+          "title": "Speech to Text Overview - Speech Service - Foundry Tools",
+          "snippet": "Learn about speech to text benefits and capabilities, including real-time, fast, and batch transcription options for your applications.",
+          "domain": "learn.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1768608000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+      "url_position": 350,
+      "claim_text": "Yes — real-time audio-to-text (speech-to-text) and even real-time translation already exist and are widely used. Here’s what’s real and available now: 1) Real-time speech-to-text (live transcription) Tools and APIs can listen to live audio (mic, meeting, call, streaming) and convert speech to text instantly with minimal delay. Microsoft Learn+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 511,
+        "end_idx": 543
+      },
+      "citation_token": "citeturn0search0turn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+          "title": "Speech to Text Overview - Speech Service - Foundry Tools",
+          "snippet": "Learn about speech to text benefits and capabilities, including real-time, fast, and batch transcription options for your applications.",
+          "domain": "learn.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1768608000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+      "url_position": 583,
+      "claim_text": "Examples include cloud services (Google Cloud Speech-to-Text, AWS Transcribe, Azure Speech) and web apps that show captions live. Microsoft Learn+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 623,
+        "end_idx": 643
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/transcribe/",
+      "url_position": 751,
+      "claim_text": "Some free web tools also do live transcription and support many languages. Maestra",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 845,
+        "end_idx": 879
+      },
+      "citation_token": "citeturn0search11turn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://live.maestra.ai/zh/",
+          "title": "实时语音翻译 | 直播对话即时翻译器",
+          "snippet": "Maestra 聆听您的声音，用准确的字幕实时转录，并即时翻译成 125 多种语言。无论是双语对话还是国际会议，Maestra 都能实时保持翻译。",
+          "domain": "live.maestra.ai",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_11"
+        }
+      ],
+      "inline_url": "https://live.maestra.ai/zh/",
+      "url_position": 987,
+      "claim_text": "**2) Real-time speech-to-text **with translation There are services that listen, turn speech into text, and translate it on the fly into another language or provide translated captions. Maestra+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1003,
+        "end_idx": 1021
+      },
+      "citation_token": "citeturn0news23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 23,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_23"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 1144,
+      "claim_text": "This includes online apps, APIs, and devices (e.g., earbuds that translate speech in real time across many languages). SFGATE",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1213,
+        "end_idx": 1232
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://research.google/blog/real-time-speech-to-speech-translation/",
+      "url_position": 1438,
+      "claim_text": "How it works (general) Speech Recognition (ASR): audio → text. Translation (if needed): text → translated text. (Optional) Text-to-speech: translated text → spoken audio. Google Research",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1527,
+        "end_idx": 1545
+      },
+      "citation_token": "citeturn0news25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.theverge.com/news/843483/google-translate-live-speech-translations-headphones",
+          "title": "Google Translate brings real-time speech translations to any headphones",
+          "snippet": "Google Translate has introduced a major update allowing live speech translations on all headphones, not just Google's Pixel Buds. Available in beta starting today, the feature supports over 70 languages and requires only a compatible Android phone with the Translate app—unlike Apple’s version, which is limited to AirPods. This expansion marks a shift towards broader accessibility for real-time translation.\n\nAdditionally, Google Translate is improving text translations with the help of its Gemini AI, which enhances the accuracy of idioms and slang, offering more natural interpretations of phrases like “stealing my thunder.” The update also expands the Practice feature—similar to Duolingo—to 20 more countries and supports more languages. This interactive learning tool provides personalized sessions that adapt to users’ language levels.\n\nThe live translation update is rolling out on Android in the US, Mexico, and India, with an iOS version expected next year. Enhanced text translations are also now available on both Android and iOS, as well as the web. The Practice feature remains in beta and may be limited to some users.",
+          "domain": "www.theverge.com",
+          "ref_type": "news",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": 1765563074,
+          "ref_key": "0_news_25"
+        }
+      ],
+      "inline_url": "https://www.theverge.com/news/843483/google-translate-live-speech-translations-headphones",
+      "url_position": 1800,
+      "claim_text": "What you can use today Smartphone apps that show captions live or translate speech into text/other languages. Cloud APIs for developers to build real-time transcription and translation into apps. Physical devices (smart earbuds) offering live translation during conversations. The Verge",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+        "title": "Speech to Text Overview - Speech Service - Foundry Tools",
+        "domain": "Microsoft Learn"
+      },
+      {
+        "url": "https://live.maestra.ai/transcribe/",
+        "title": "Live Transcribe | Real Time Speech to Text Transcription",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://live.maestra.ai/zh/",
+        "title": "实时语音翻译 | 直播对话即时翻译器",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      },
+      {
+        "url": "https://research.google/blog/real-time-speech-to-speech-translation/",
+        "title": "Real-time speech-to-speech translation - Google Research",
+        "domain": "Google Research"
+      },
+      {
+        "url": "https://www.theverge.com/news/843483/google-translate-live-speech-translations-headphones",
+        "title": "Google Translate brings real-time speech translations to any headphones",
+        "domain": "The Verge"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-translation",
+        "title": "Speech translation overview - Speech service - Foundry Tools",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://tayloramarel.com/2025/03/building-real-time-speech-to-text-translation-systems-a-comprehensive-guide/",
+        "title": "Building Real-Time Speech-to-Text Translation Systems: A Comprehensive ...",
+        "domain": "tayloramarel.com"
+      },
+      {
+        "url": "https://galileo.ai/blog/best-real-time-speech-to-text-tools",
+        "title": "Top Real-Time Speech-to-Text Tools in 2024 | Galileo",
+        "domain": "galileo.ai"
+      },
+      {
+        "url": "https://screenapp.io/zh/features/transcribe-live-audio-to-text",
+        "title": "实时语音转文本转换器 - 实时转录工具",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://screenapp.io/features/online-live-caption-tool",
+        "title": "Live Transcribe - Free Live Audio to Text Converter - ScreenApp",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.iflyrec.com/",
+        "title": "讯飞听见-免费在线录音转文字-语音转文字-录音整理-语音翻译软件",
+        "domain": "iflyrec.com"
+      },
+      {
+        "url": "https://cloud.google.com/speech-to-text",
+        "title": "Speech-to-Text AI: speech recognition and transcription",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=zh&id=translate.voice.translator.speech.language",
+        "title": "Trans: 实时语音翻译 & AI语音转录 & 音频翻译 - Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://soundwise.ai/zh-CN/audio-to-text",
+        "title": "永久免费且无限制的音频转文本服务 | SoundWise.ai",
+        "domain": "soundwise.ai"
+      },
+      {
+        "url": "https://aws.amazon.com/transcribe/",
+        "title": "Speech To Text - Amazon Transcribe - AWS",
+        "domain": "amazon.com"
+      },
+      {
+        "url": "https://voicetotext.org/audio-translator/",
+        "title": "AI Audio Translator - Voice to text",
+        "domain": "voicetotext.org"
+      },
+      {
+        "url": "https://www.xfyun.cn/services/rtasr",
+        "title": "实时语音转写_实时语音识别服务-语音转文字-讯飞开放平台",
+        "domain": "xfyun.cn"
+      },
+      {
+        "url": "https://www.agora.io/en/products/speech-to-text/",
+        "title": "Real-Time Speech to Text API for Live Transcription | Agora",
+        "domain": "agora.io"
+      },
+      {
+        "url": "https://ailivetranslate.net/en",
+        "title": "LiveTranslate - Real-time Speech Translation",
+        "domain": "ailivetranslate.net"
+      },
+      {
+        "url": "https://ai.baidu.com/tech/mt/realtime_speech_trans",
+        "title": "实时语音翻译_语音翻译百度AI开放平台",
+        "domain": "baidu.com"
+      },
+      {
+        "url": "https://www.speechmatics.com/product/real-time",
+        "title": "Real-Time Speech-to-Text | Speechmatics",
+        "domain": "speechmatics.com"
+      },
+      {
+        "url": "https://products.aspose.ai/total/voice-translator",
+        "title": "Free AI Voice Translator | Online Audio Translation",
+        "domain": "aspose.ai"
+      },
+      {
+        "url": "https://www.notta.ai/en/translate-audio",
+        "title": "Online Audio Translator | Translate Voice to Text - Notta",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://accuratescribe.ai/real-time-translation-tool",
+        "title": "Real-Time Translation Tool - Audio to Text Converter",
+        "domain": "accuratescribe.ai"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 19,
+    "total_all": 25
+  },
+  "response_stats": {
+    "total_length": 2041,
+    "citation_count": 7,
+    "chars_with_citations": 173
+  }
+}

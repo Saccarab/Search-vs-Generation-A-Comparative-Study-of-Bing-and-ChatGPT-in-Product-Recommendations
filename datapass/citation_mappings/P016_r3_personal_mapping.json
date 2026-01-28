@@ -1,0 +1,80 @@
+{
+  "run_id": "P016_r3",
+  "account_type": "personal",
+  "prompt": "I need live transcribing while using online streaming or watching videos.",
+  "metadata": {
+    "hidden_queries": [],
+    "sonic_classification": null,
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 192,
+        "end_idx": 200
+      },
+      "citation_token": "entity",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 469,
+        "end_idx": 504
+      },
+      "citation_token": "entity[\"company\",\"YouTube\",\"video",
+      "type": "entity",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 588,
+        "end_idx": 595
+      },
+      "citation_token": "entity",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 787,
+        "end_idx": 830
+      },
+      "citation_token": "entity[\"software\",\"Microsoft PowerToys\",\"",
+      "type": "entity",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 957,
+        "end_idx": 986
+      },
+      "citation_token": "entity[\"software\",\"Otter.ai",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 1147,
+        "end_idx": 1197
+      },
+      "citation_token": "entity[\"company\",\"Google\",\"technology company\"]",
+      "type": "entity",
+      "sources": []
+    }
+  ],
+  "source_summary": {
+    "cited": [],
+    "additional": [],
+    "total_cited": 0,
+    "total_additional": 0,
+    "total_all": 0
+  },
+  "response_stats": {
+    "total_length": 1267,
+    "citation_count": 6,
+    "chars_with_citations": 172
+  }
+}

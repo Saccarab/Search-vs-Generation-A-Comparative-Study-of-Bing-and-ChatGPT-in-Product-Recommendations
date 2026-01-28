@@ -1,0 +1,335 @@
+{
+  "run_id": "P077_r2",
+  "account_type": "personal",
+  "prompt": "Can you recommend a video translator app to help me understand content in a foreign language in English?",
+  "metadata": {
+    "hidden_queries": [
+      "video translator apps to translate video content to English best apps",
+      "apps that can translate foreign language video content to English"
+    ],
+    "sonic_classification": {
+      "latency_ms": 31.119381077587605,
+      "simple_search_prob": 0.9912644352204038,
+      "complex_search_prob": 0.007276223121428368,
+      "no_search_prob": 0.0014593416581678816,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "video translator apps to translate video content to English best apps"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 264,
+        "end_idx": 283
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/lingvotube-video-translator/id1632282523",
+          "title": "Lingvotube: Video translator - App Store",
+          "snippet": "Lingvotube allows you to Translate subtitles for videos and video cc (closed captions) to all languages to auto-generate real voiceovers.Read more",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/lingvotube-video-translator/id1632282523",
+      "url_position": 261,
+      "claim_text": "Here are some video translator apps/services that can help you understand foreign‑language video content in English: Mobile & simple tools Lingvotube – translates video subtitles and CC into English (and many languages) and can generate voiceovers. App Store",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 459,
+        "end_idx": 478
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://translate.google.com/about/",
+      "url_position": 519,
+      "claim_text": "Google Translate (camera/speech) – not a dedicated video translator but you can use it to translate spoken audio or subtitles in real time with your phone mic/screen. Google Translate",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 569,
+        "end_idx": 589
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://immersivetranslate.com/en/blog/6-best-video-translation-apps-for-computers-and-phones/",
+      "url_position": 659,
+      "claim_text": "Immersive Translate – flexible translator for videos on iOS/Android and browser. Immersive Translate",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 715,
+        "end_idx": 734
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.veed.io/tools/video-translator",
+          "title": "Instant Video Translator - Translate with AI",
+          "snippet": "Instantly translate videos into 29 languages (voiced) and 125+ languages for subtitles with the AI video translator. 99.9% accuracy.",
+          "domain": "www.veed.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.veed.io/tools/video-translator",
+      "url_position": 878,
+      "claim_text": "AI translation & dubbing tools VEED.IO / VEED video translator – online editor + auto subtitles & translations. VEED.IO",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 822,
+        "end_idx": 841
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.canva.com/features/ai-video-translator/",
+      "url_position": 1013,
+      "claim_text": "Canva AI Video Translator – adds dubbed audio and translated subtitles via AI. canva.com",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 922,
+        "end_idx": 923
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.heygen.com/translate",
+      "url_position": 1147,
+      "claim_text": "HeyGen – AI translator that can produce dubbed audio in many languages. HeyGen",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1033,
+        "end_idx": 1053
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.rask.ai/",
+      "url_position": 1271,
+      "claim_text": "Rask AI – translates and transcribes long videos with subtitles in 130+ languages. Rask",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1141,
+        "end_idx": 1161
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/translate-video",
+      "url_position": 1390,
+      "claim_text": "Happy Scribe – translates first ~10 minutes free with subtitle export options. happyscribe.com",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1257,
+        "end_idx": 1277
+      },
+      "citation_token": "citeturn0search35",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Vidby",
+      "url_position": 1541,
+      "claim_text": "Vidby – AI‑based video translation service (web/desktop) that supports many languages. en.wikipedia.org",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1461,
+        "end_idx": 1480
+      },
+      "citation_token": "citeturn0search7",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.notta.ai/en/blog/best-video-translator-apps?utm_source=chatgpt.com",
+          "title": "7 Best AI Video Translator Apps of 2025 [Tested]",
+          "snippet": "Jun 20, 2024 — Here is a comprehensive list of best video translators. 1. Notta Showcase 2. HeyGen video translator 3. Google Translate 4. Vizard 5.",
+          "domain": "notta.ai",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+      "url_position": 1755,
+      "claim_text": "Notes Some tools are mobile apps, others are web/desktop services. Quality varies by language and content type; AI dubbing usually costs more than basic subtitles. notta.ai",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://apps.apple.com/us/app/lingvotube-video-translator/id1632282523",
+        "title": "Lingvotube: Video translator - App Store",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://translate.google.com/about/",
+        "title": "A Personal Interpreter on Your Phone or Computer",
+        "domain": "Google Translate"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/blog/6-best-video-translation-apps-for-computers-and-phones/",
+        "title": "6 Best Video Translation Apps for Computers and Phones",
+        "domain": "Immersive Translate"
+      },
+      {
+        "url": "https://www.veed.io/tools/video-translator",
+        "title": "Instant Video Translator - Translate with AI",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-video-translator/",
+        "title": "AI Video Translator: Translate a video with AI",
+        "domain": "canva.com"
+      },
+      {
+        "url": "https://www.heygen.com/translate",
+        "title": "AI Video Translator – Translate Videos into 175+ Languages",
+        "domain": "HeyGen"
+      },
+      {
+        "url": "https://www.rask.ai/",
+        "title": "Leading AI video localization & dubbing tool",
+        "domain": "Rask"
+      },
+      {
+        "url": "https://www.happyscribe.com/translate-video",
+        "title": "AI Video Translator",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Vidby",
+        "title": "Vidby",
+        "domain": "en.wikipedia.org"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+        "title": "7 Best AI Video Translator Apps of 2025 [Tested]",
+        "domain": "notta.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.subtit.player",
+        "title": "Translation video to English - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.mmt.translingua",
+        "title": "Translate subtitles for videos - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/video_translator_translate_video_voice_o/285433175728",
+        "title": "Translate Video & Voice online",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/languagelearning/comments/ylcm3e/are_there_free_apps_that_can_translate_audios/",
+        "title": "Are there free apps that can translate audios from videos ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=3elkUPlmJHU",
+        "title": "Translate Videos into Any Language with the Same Voice",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.camb.ai/blog-post/free-ai-video-translators-best-options-and-features",
+        "title": "Best Free AI Video Translators & Dubbing Tools",
+        "domain": "camb.ai"
+      },
+      {
+        "url": "https://www.synthesia.io/post/best-video-translator-apps",
+        "title": "The 6 Best AI Video Translator Apps of 2025 (Compared)",
+        "domain": "synthesia.io"
+      },
+      {
+        "url": "https://www.adobe.com/products/firefly/features/translate-video.html",
+        "title": "Translate Video with AI - Adobe Firefly",
+        "domain": "adobe.com"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 8,
+    "total_all": 18
+  },
+  "response_stats": {
+    "total_length": 1910,
+    "citation_count": 10,
+    "chars_with_citations": 176
+  }
+}

@@ -1,0 +1,436 @@
+{
+  "run_id": "P068_r2",
+  "account_type": "personal",
+  "prompt": "Can you recommend an app or extension that provides live audio translation like Google Translate?",
+  "metadata": {
+    "hidden_queries": [
+      "apps or extensions that provide live audio translation like Google Translate",
+      "best live audio translation apps real time speech translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 29.521102085709572,
+      "simple_search_prob": 0.9888998150419657,
+      "complex_search_prob": 0.00870631925080638,
+      "no_search_prob": 0.0023938657072279518,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "apps or extensions that provide live audio translation like Google Translate"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 277,
+        "end_idx": 310
+      },
+      "citation_token": "citeturn0search4turn0search13",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820?utm_source=chatgpt.com",
+          "title": "iTranslate Voice - App Store - Apple",
+          "snippet": "Instantly speak over 40 languages with the all-new iTranslate Voice! Already trusted by Millions, the completely re-designed iTranslate Voice guarantees a ...Read more",
+          "domain": "apple.com",
+          "ref_type": "search",
+          "ref_index": 13,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_13"
+        }
+      ],
+      "inline_url": "https://itranslate.com/",
+      "url_position": 277,
+      "claim_text": "Here are some apps and extensions that offer live audio translation (speech‑to‑speech or real‑time) similar to or beyond Google Translate: 📱 Mobile Apps (Android & iOS) iTranslate & iTranslate Voice – supports voice‑to‑voice translation in dozens of languages. iTranslate+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 423,
+        "end_idx": 443
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.microsoft.com/en-us/translator/",
+          "title": "Microsoft Translator",
+          "snippet": "Translate real-time conversations, menus and street signs while offline, websites, documents, and more using the Translator apps.Read more",
+          "domain": "www.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 20,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_20"
+        }
+      ],
+      "inline_url": "https://www.microsoft.com/en-us/translator/",
+      "url_position": 418,
+      "claim_text": "Microsoft Translator – live conversation translation with voice and text support, plus offline options. Microsoft",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 518,
+        "end_idx": 537
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.translate.talkingtranslator",
+      "url_position": 543,
+      "claim_text": "Talking Translator – instant voice translation in 100+ languages. Google Play",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 609,
+        "end_idx": 627
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+          "title": "Instant Voice Translate - Apps on Google Play",
+          "snippet": "\"Instant Voice Translate\" is a free and user-friendly language translation app powered by cutting-edge AI technology.Read more",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+      "url_position": 710,
+      "claim_text": "Instant Voice Translate – simple real‑time speech translation. Google Play+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 727,
+        "end_idx": 747
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/transly-live-translator/id6743425444",
+          "title": "Transly - Live Translator - App Store - Apple",
+          "snippet": "Apr 25, 2025 — Transly offers real-time interpretation and pro translation,precise audio recognition,low delay,and multi-language support for students ...",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 19,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_19"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/transly-live-translator/id6743425444",
+      "url_position": 877,
+      "claim_text": "Transly – Live Translator – live interpretation and multi‑language support. App Store",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 864,
+        "end_idx": 884
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 1063,
+      "claim_text": "Maestra Live Translate – real‑time audio translation with spoken output in 125+ languages (browser or app). Maestra",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1047,
+        "end_idx": 1048
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+      "url_position": 1258,
+      "claim_text": "🖥️ Browser Extension Speech Translator (Chrome extension) – real‑time speech recognition + translation for audio/video/livestreams in your browser. Chrome Web Store",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1277,
+        "end_idx": 1310
+      },
+      "citation_token": "citeturn0search0turn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wordly.ai/live-translation",
+          "title": "Live Translation – Real-Time AI Audio & Caption Translations",
+          "snippet": "Wordly uses AI to provide live translation, captions, transcripts, and summaries. Instantly convert live speech into dozens of languages—ideal for in-person, ...",
+          "domain": "www.wordly.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.wordly.ai/translation-app?utm_source=chatgpt.com",
+          "title": "Translation App – Real‑Time AI Voice & Text ...",
+          "snippet": "Experience the Wordly Translation App for real-time AI voice & text translation in meetings, webinars, and multilingual events.",
+          "domain": "wordly.ai",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://www.wordly.ai/live-translation",
+      "url_position": 1563,
+      "claim_text": "🧠 Event/Meeting Translation Tools (more advanced) (Better for group or professional settings, not just casual conversation) Wordly – live translation with audio and captions for meetings/events. wordly.ai+1",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1391,
+        "end_idx": 1411
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://kudo.ai/",
+          "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+          "snippet": "The #1 solution for human and AI-powered live speech translation on any platform—remote, hybrid, or in-person. Get our platform or app.",
+          "domain": "kudo.ai",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://kudo.ai/",
+      "url_position": 1682,
+      "claim_text": "KUDO – live speech translation with AI and optional human interpreters. KUDO",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1483,
+        "end_idx": 1503
+      },
+      "citation_token": "citeturn0search27",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.interprefy.com/",
+      "url_position": 1780,
+      "claim_text": "Interprefy – enterprise‑grade live translation and captioning. interprefy.com",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://itranslate.com/",
+        "title": "iTranslate: The Leading Translation and Dictionary App",
+        "domain": "iTranslate"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/translator/",
+        "title": "Microsoft Translator",
+        "domain": "Microsoft"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.translate.talkingtranslator",
+        "title": "Talking Translator - Languages - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/transly-live-translator/id6743425444",
+        "title": "Transly - Live Translator - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://www.wordly.ai/live-translation",
+        "title": "Live Translation – Real-Time AI Audio & Caption Translations",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "KUDO"
+      },
+      {
+        "url": "https://www.interprefy.com/",
+        "title": "Interprefy: Interpretation, AI Speech Translation & Captions Tech",
+        "domain": "interprefy.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.reddit.com/r/ChatGPTPro/comments/15z93kb/are_there_any_handsfree_realtime_voice/",
+        "title": "Are there any Hands-Free, Realtime, Voice Translation ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-voice-translator-app",
+        "title": "Top 10+ Voice Translator Apps",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.atanet.org/client-assistance/blog-best-translation-apps-a-translator-puts-four-to-the-test/",
+        "title": "Best Translation Apps: A Translator Puts Four to the Test",
+        "domain": "atanet.org"
+      },
+      {
+        "url": "https://www.transyncai.com/blog/free-translator-app/",
+        "title": "Best Free Translator App 2025",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/instant-voice-translate/id1298384039",
+        "title": "Instant Voice Translate - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-translator/id288113403",
+        "title": "iTranslate Translator - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+        "title": "iTranslate Voice - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://globallink.transperfect.com/blog/top-10-google-translate-alternatives-amp-competitors",
+        "title": "Top 10 Google Translate Alternatives and Competitors",
+        "domain": "transperfect.com"
+      },
+      {
+        "url": "https://translatepress.com/best-app-for-language-translation-iphone-android/",
+        "title": "The Best Language Translation App for iPhone & Android",
+        "domain": "translatepress.com"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/translation-app",
+        "title": "Translation App – Real‑Time AI Voice & Text ...",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/real-time-translation",
+        "title": "Real-Time Translation Solutions",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.g2.com/products/google-translate/competitors/alternatives",
+        "title": "Top 10 Google Translate Alternatives & Competitors in 2026",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+        "title": "Top Tools for Live Meeting Translation (2025)",
+        "domain": "tactiq.io"
+      },
+      {
+        "url": "https://translate.google.com/about/",
+        "title": "A Personal Interpreter on Your Phone or Computer",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.resolution.de/post/app-for-language-translation/",
+        "title": "The Top 12 Best App for Language Translation in 2025",
+        "domain": "resolution.de"
+      },
+      {
+        "url": "https://ezdubs.ai/",
+        "title": "EzDubs: Best Phone Call Translator App for iOS and Android",
+        "domain": "ezdubs.ai"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 18,
+    "total_all": 28
+  },
+  "response_stats": {
+    "total_length": 2107,
+    "citation_count": 10,
+    "chars_with_citations": 204
+  }
+}

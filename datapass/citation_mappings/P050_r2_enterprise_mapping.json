@@ -1,0 +1,311 @@
+{
+  "run_id": "P050_r2",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend a free app for live time translation during a call with French speakers?",
+  "metadata": {
+    "hidden_queries": [
+      "free app real-time translation during a call with French speakers",
+      "app that translates live phone calls for free French translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 21.324370987713337,
+      "simple_search_prob": 0.9957882155695995,
+      "complex_search_prob": 0.0026889939070882706,
+      "no_search_prob": 0.0015227905233122186,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free app real-time translation during a call with French speakers"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 588,
+        "end_idx": 606
+      },
+      "citation_token": "citeturn0news35",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+      "url_position": 574,
+      "claim_text": "Here are some free or freemium apps you can use to translate in real time during calls or conversation with French speakers. Note that fully free real-time phone call translation is rare; many offer free tiers with limitations: 📱 Apps / Tools 1. Google Translate (Live Conversation + headphones) Has a Live Translate feature that listens in real time and translates speech between languages. Works in conversation mode and, with earbuds, can give spoken translation. Not traditional call integration, but useful for two-way voice translation during chats. Tom's Guide",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 843,
+        "end_idx": 862
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://talkpersona.com/translator",
+          "title": "TalkPersona - Free real-time voice translator",
+          "snippet": "In addition to the AI video chatbot, TalkPersona also offers a free Instant Voice Translator for Real-Time Multilingual Conversations. It enables seamless real-time cross-language conversations. Always listens and instantly translates between your language and foreign languages, with optional audio playback. Perfect for travel, business, and cross-language communication.",
+          "domain": "talkpersona.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://talkpersona.com/translator",
+      "url_position": 948,
+      "claim_text": "2. TalkPersona – Instant Voice Translator Free real-time voice translator that listens and instantly translates between languages, including French. Good for real-time spoken conversion (not native phone call integration). TalkPersona",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1105,
+        "end_idx": 1125
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://live.maestra.ai/",
+          "title": "Live Translate | Real-Time Online Voice Translator",
+          "snippet": "Real-time audio translation with AI voice cloning. Fast, accurate, and low-latency—available in 125+ languages with integrations and sharing. Try it free today.",
+          "domain": "live.maestra.ai",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 1222,
+      "claim_text": "3. Web browser real-time translators (e.g., Maestra) Browser-based tool that listens and translates speech in real time. Works for live conversations if you hold phone mic near speaker or share audio. Free to try in browser. Maestra",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1422,
+        "end_idx": 1441
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/us/app/ai-phone-call-voice-translator/id6465173251",
+      "url_position": 1540,
+      "claim_text": "4. AI Phone: Call & Voice Translator (iOS/Android) Offers real-time translation of calls and voice/video calls in many languages including French. Free to download and use with limitations; premium unlocks full features. Not 100% free long-term, but a solid free tier to test. App Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1850,
+        "end_idx": 1880
+      },
+      "citation_token": "citeturn0news32turn0news34",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.the-sun.com/tech/11097366/samsung-free-phone-upgrade-one-ui-ten-features/",
+          "title": "Samsung reveals TEN mega features coming to four devices as part of free upgrade including text message game-changer",
+          "snippet": "Samsung is rolling out a major free upgrade, One UI 6.1, to four more device lines starting in May 2024. Originally launched with the Galaxy S23 series and already available for Galaxy Z Flip 5 and Z Fold 5, the update is now coming to Galaxy S22, Galaxy Z Flip 4, Galaxy Z Fold 4, and the Galaxy Tab S8 series. One UI 6.1 introduces ten new AI-powered features designed to enhance usability and productivity. Key upgrades include:\n\n- **Browsing Assist**, which summarizes web pages using AI,\n- **Chat Assist**, offering real-time message translation in 13+ languages,\n- **Circle to Search**, allowing users to visually search by circling items on the screen,\n- **AI-generated wallpaper** for customized designs,\n- **Edit suggestion** to adjust tone and grammar in messages,\n- **Generative Edit** for enhanced photo object removal,\n- **Interpreter** for live, in-person translation,\n- **Live Translate** for real-time call translations,\n- **Note Assist** to auto-summarize Samsung Notes,\n- **Transcript Assist** to transcribe recorded speech.\n\nThese innovations aim to bring advanced Galaxy AI functionality—first seen in the Galaxy S24—to older devices, expanding access to powerful tools across the Samsung ecosystem.",
+          "domain": "www.the-sun.com",
+          "ref_type": "news",
+          "ref_index": 32,
+          "turn_index": 0,
+          "pub_date": 1713194956,
+          "ref_key": "0_news_32"
+        }
+      ],
+      "inline_url": "https://www.the-sun.com/tech/11097366/samsung-free-phone-upgrade-one-ui-ten-features/",
+      "url_position": 2017,
+      "claim_text": "⚠️ Notes on phone call translation Fully free automatic translation during regular phone calls is uncommon without some paid limits or subscriptions. Many apps will require both participants to use the same tool or use speakerphone + separate translator. Built-in phone OS features (Android Live Translate or upcoming iOS live translation) can also help but depend on device and region. The Sun+1",
+      "url_index": 4
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+        "title": "Google Translate is bringing real-time translations powered by Gemini to your headphones",
+        "domain": "Tom's Guide"
+      },
+      {
+        "url": "https://talkpersona.com/translator",
+        "title": "TalkPersona - Free real-time voice translator",
+        "domain": "TalkPersona"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/ai-phone-call-voice-translator/id6465173251",
+        "title": "AI Phone:Call&Voice Translator - App Store",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://www.the-sun.com/tech/11097366/samsung-free-phone-upgrade-one-ui-ten-features/",
+        "title": "Samsung reveals TEN mega features coming to four devices as part of free upgrade including text message game-changer",
+        "domain": "The Sun"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en&id=com.aiphone.secondphonenumber",
+        "title": "AI Phone:Call&Voice Translator - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-real-time-translators-for-meetings",
+        "title": "5 Best Real-Time Translators for Meetings - maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-ai-voice-translators-for-multilingual-calls/",
+        "title": "6 Best Voice Translator Apps for Multilingual Calls in 2025 - AI Phone",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/top-french-accent-translator-apps-for-real-conversations/",
+        "title": "Top French Accent Translator Apps For Real Conversations",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/top-phone-call-translators/",
+        "title": "Top 6 Phone Call Translator Apps for Multilingual Calls in 2025",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/top-phone-call-translators-for-real-time-use",
+        "title": "Using the Top Real time Phone Call Translation for Your Communication",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-real-time-translation-apps/",
+        "title": "10 Best Real-time Language Translation Apps for Effortless Communication",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://ezdubs.ai/phone-call-translator",
+        "title": "Live Phone Call Translator App | EzDubs",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://ezdubs.ai/languages/french",
+        "title": "Real-Time French Translation App for Phone Calls, Text & Voice ...",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://whisperr.co/",
+        "title": "Whisperr - AI Voice Translator | Real-time Translation in 40+ Languages",
+        "domain": "whisperr.co"
+      },
+      {
+        "url": "https://www.telelingo.io/",
+        "title": "Telelingo - Real-Time Phone Call Translator",
+        "domain": "telelingo.io"
+      },
+      {
+        "url": "https://vidby.com/vidby-call-translator",
+        "title": "Video Call Translation - Live translate with Vidby",
+        "domain": "vidby.com"
+      },
+      {
+        "url": "https://vacapo.cc/en/vacapo-translate/",
+        "title": "Automated voice call translator - vacapo® translate",
+        "domain": "vacapo.cc"
+      },
+      {
+        "url": "https://screenapp.io/features/audio-translator",
+        "title": "Voice Translator - Free Voice Translate to English Online",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/babelphone-call-translator-ai/id6612018116",
+        "title": "BabelPhone Call Translator AI on the App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/real-time-translation/",
+        "title": "Real-time Translation Tool | Transync AI",
+        "domain": "transyncai.com"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 18,
+    "total_all": 23
+  },
+  "response_stats": {
+    "total_length": 2265,
+    "citation_count": 5,
+    "chars_with_citations": 106
+  }
+}

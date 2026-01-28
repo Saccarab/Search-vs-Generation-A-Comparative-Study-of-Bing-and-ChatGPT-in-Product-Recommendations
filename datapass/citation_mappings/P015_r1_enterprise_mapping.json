@@ -1,0 +1,371 @@
+{
+  "run_id": "P015_r1",
+  "account_type": "enterprise",
+  "prompt": "Can you provide a tool for voice translation?",
+  "metadata": {
+    "hidden_queries": [
+      "tool for voice translation apps or devices",
+      "best voice translation tools voice-to-voice translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.402027983218431,
+      "simple_search_prob": 0.9443782168376036,
+      "complex_search_prob": 0.00352684715729283,
+      "no_search_prob": 0.05209493600510358,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "tool for voice translation apps or devices"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 157,
+        "end_idx": 189
+      },
+      "citation_token": "citeturn0search0turn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://murf.ai/blog/best-voice-translation-apps",
+          "title": "10 Best Voice Translation Apps for Global Communication 2026",
+          "snippet": "Best Voice Translation Apps of 2026 The best voice translation apps of 2026 offer real-time, AI-powered translations for seamless global communication. From live conversations to video subtitles, these tools provide accuracy, convenience, and multilingual support across various devices.",
+          "domain": "murf.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1766102400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://murf.ai/blog/best-voice-translation-apps",
+      "url_position": 163,
+      "claim_text": "Yes — there are several reliable voice translation tools (apps and devices) that let you speak in one language and get live translated output in another.Murf AI+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 351,
+        "end_idx": 370
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://murf.ai/blog/best-voice-translation-apps",
+          "title": "10 Best Voice Translation Apps for Global Communication 2026",
+          "snippet": "Best Voice Translation Apps of 2026 The best voice translation apps of 2026 offer real-time, AI-powered translations for seamless global communication. From live conversations to video subtitles, these tools provide accuracy, convenience, and multilingual support across various devices.",
+          "domain": "murf.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1766102400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://murf.ai/blog/best-voice-translation-apps",
+      "url_position": 375,
+      "claim_text": "📱 Smartphone Apps (Voice-to-Voice) Google Translate – real-time voice conversation mode, supports ~130+ languages, free, works offline with downloads.Murf AI",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 472,
+        "end_idx": 491
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://murf.ai/blog/best-voice-translation-apps",
+          "title": "10 Best Voice Translation Apps for Global Communication 2026",
+          "snippet": "Best Voice Translation Apps of 2026 The best voice translation apps of 2026 offer real-time, AI-powered translations for seamless global communication. From live conversations to video subtitles, these tools provide accuracy, convenience, and multilingual support across various devices.",
+          "domain": "murf.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1766102400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://murf.ai/blog/best-voice-translation-apps",
+      "url_position": 528,
+      "claim_text": "Microsoft Translator – live conversation support, group chat translation, multiple languages.Murf AI",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 593,
+        "end_idx": 599
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/blog/best-voice-translation-apps",
+      "url_position": 683,
+      "claim_text": "iTranslate / iTranslate Voice – natural voice output, offline language packs available (Pro).Murf AI+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 697,
+        "end_idx": 716
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-speech-translator-apps",
+      "url_position": 808,
+      "claim_text": "Papago – strong for Korean/Japanese/Chinese voice translation.Maestra AI",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 811,
+        "end_idx": 830
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-speech-translator-apps",
+      "url_position": 961,
+      "claim_text": "Maestra – AI voice translator with broad language support and conversational sessions.Maestra AI",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 913,
+        "end_idx": 932
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-speech-translator-apps",
+      "url_position": 1102,
+      "claim_text": "Vocre / Yandex Translate – useful for travel and specific language groups.Maestra AI",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1067,
+        "end_idx": 1085
+      },
+      "citation_token": "citeturn0news16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_16"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 1290,
+      "claim_text": "🎧 Dedicated Devices / Wearables Translation earbuds (e.g., live-translate models translating 50+ languages while you talk).SFGATE",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1204,
+        "end_idx": 1223
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.igeeksblog.com/best-language-translator-devices/",
+      "url_position": 1515,
+      "claim_text": "Standalone handheld translators – devices that translate voice in real time without a phone (varies by brand).iGeeksBlog",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1379,
+        "end_idx": 1397
+      },
+      "citation_token": "citeturn0news25",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.theverge.com/news/843483/google-translate-live-speech-translations-headphones?utm_source=chatgpt.com",
+          "title": "Google Translate brings real-time speech translations to any headphones",
+          "snippet": "Google Translate has introduced a major update allowing live speech translations on all headphones, not just Google's Pixel Buds. Available in beta starting today, the feature supports over 70 languages and requires only a compatible Android phone with the Translate app—unlike Apple’s version, which is limited to AirPods. This expansion marks a shift towards broader accessibility for real-time translation.\n\nAdditionally, Google Translate is improving text translations with the help of its Gemini AI, which enhances the accuracy of idioms and slang, offering more natural interpretations of phrases like “stealing my thunder.” The update also expands the Practice feature—similar to Duolingo—to 20 more countries and supports more languages. This interactive learning tool provides personalized sessions that adapt to users’ language levels.\n\nThe live translation update is rolling out on Android in the US, Mexico, and India, with an iOS version expected next year. Enhanced text translations are also now available on both Android and iOS, as well as the web. The Practice feature remains in beta and may be limited to some users.",
+          "domain": "theverge.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.theverge.com/news/843483/google-translate-live-speech-translations-headphones",
+      "url_position": 1744,
+      "claim_text": "🧠 Integrated Features Some platforms (e.g., social apps or headphones) are adding built-in voice translation features that work without separate apps.theverge.com",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://murf.ai/blog/best-voice-translation-apps",
+        "title": "10 Best Voice Translation Apps for Global Communication 2026",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-speech-translator-apps",
+        "title": "10 Best Speech Translator Apps for Live Voice Translation",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      },
+      {
+        "url": "https://www.igeeksblog.com/best-language-translator-devices/",
+        "title": "Best Language Translator Devices in 2026: Top Picks for Travel and ...",
+        "domain": "iGeeksBlog"
+      },
+      {
+        "url": "https://www.theverge.com/news/843483/google-translate-live-speech-translations-headphones",
+        "title": "Google Translate brings real-time speech translations to any headphones",
+        "domain": "theverge.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://booktranslator.ai/blog/best-audio-translation-app",
+        "title": "The 12 Best Audio Translation App Options for 2025: A Deep Dive",
+        "domain": "booktranslator.ai"
+      },
+      {
+        "url": "https://www.travelandleisure.com/digital-translators-8785743",
+        "title": "The 4 Best Digital Translators, Tested and Reviewed",
+        "domain": "travelandleisure.com"
+      },
+      {
+        "url": "https://blog.openl.io/best-speech-translator/",
+        "title": "6 Best Speech Translators in 2025 - OpenL Blog",
+        "domain": "openl.io"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.jotme.io/blog/audio-translation",
+        "title": "23 best voice translator for your PC, Android, and iPhone",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://voiceping.net/en/blog/guide-voice-translation-apps/",
+        "title": "Real-time AI Voice Translator App BEST 27 | FREE, PC, Android, iPhone",
+        "domain": "voiceping.net"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/top-voice-to-voice-translation-apps/",
+        "title": "Top 10 Voice-to-Voice Translation Apps for iPhone and Android",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.stenomatic.ai/post/best-voice-translator-apps",
+        "title": "The Best Voice Translator Apps in 2025 (The Expert's Guide)",
+        "domain": "stenomatic.ai"
+      },
+      {
+        "url": "https://www.vmeg.ai/blog/best-voice-translator/",
+        "title": "10 Best Voice Translator Tools - AI-Powered Solutions",
+        "domain": "vmeg.ai"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/best-ai-voice-translator-apps",
+        "title": "6 Best AI Voice Translator Apps in 2025 [with Download Link]",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://www.transyncai.com/blog-best-voice-translator-app/",
+        "title": "5 Best Voice Translator Apps in 2025 (Why Transync AI Leads)",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/voice-translator-app",
+        "title": "Top 6 Voice Translator Apps Powered by AI in 2025 - Notta",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://declom.com/ai-voice-translator",
+        "title": "35 Best AI Voice Translator Tools in 2026 - DeClom",
+        "domain": "declom.com"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 13,
+    "total_all": 18
+  },
+  "response_stats": {
+    "total_length": 1940,
+    "citation_count": 10,
+    "chars_with_citations": 188
+  }
+}

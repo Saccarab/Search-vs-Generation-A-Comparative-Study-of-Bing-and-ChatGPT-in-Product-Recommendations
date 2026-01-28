@@ -1,0 +1,468 @@
+{
+  "run_id": "P003_r1",
+  "account_type": "personal",
+  "prompt": "Is there a transcription software available for a one-time payment instead of a subscription?",
+  "metadata": {
+    "hidden_queries": [
+      "transcription software one time purchase transcription software no subscription",
+      "transcription software perpetual license one-time payment transcription app"
+    ],
+    "sonic_classification": {
+      "latency_ms": 18.557204981334507,
+      "simple_search_prob": 0.9921158406509808,
+      "complex_search_prob": 0.0015082787486047076,
+      "no_search_prob": 0.006375880600414496,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "transcription software one time purchase transcription software no subscription"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 333,
+        "end_idx": 352
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.inqscribe.com/",
+          "title": "InqScribe",
+          "snippet": "AI transcription, no subscription, no usage limits. Starts immediately, runs on your computer, and is never used to train AI models. Media-savvy text editor.Read more",
+          "domain": "www.inqscribe.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.inqscribe.com/",
+      "url_position": 325,
+      "claim_text": "Yes — there are transcription tools you can buy with a one-time payment or lifetime license instead of a recurring subscription. Here are a few options: ✅ One-time Purchase / Lifetime License Software you own forever (no monthly fee): InqScribe – Desktop transcription with AI support, no subscription required. InqScribe",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 447,
+        "end_idx": 466
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://whispernotes.app/",
+      "url_position": 455,
+      "claim_text": "Whisper Notes – iOS/macOS app with offline transcription for a one-time fee (~$4.99). Whisper Notes",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 555,
+        "end_idx": 588
+      },
+      "citation_token": "citeturn0search1turn0search26",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=PG&hl=en-US",
+          "title": "Transcribe Audio to Text - WizWhisp",
+          "snippet": "Dec 29, 2025 — Free to start, Pro one-time purchase (no subscription). ⏱️ Handles long recordings with ease Transcribe multi-hour interviews, long lectures, or ...Read more",
+          "domain": "apps.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=US&hl=en-US&utm_source=chatgpt.com",
+          "title": "Transcribe Audio to Text - WizWhisp",
+          "snippet": "Dec 29, 2025 — Free to start, Pro one-time purchase (no subscription). ⏱️ Handles long recordings with ease Transcribe multi-hour interviews, long lectures, or ...Read more",
+          "domain": "microsoft.com",
+          "ref_type": "search",
+          "ref_index": 26,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_26"
+        }
+      ],
+      "inline_url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=PG&hl=en-US",
+      "url_position": 578,
+      "claim_text": "WizWhisp (Pro) – Transcription app with a one-time purchase upgrade option. Microsoft Store+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 734,
+        "end_idx": 753
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://meetgeek.ai/blog/speech-to-text-app",
+      "url_position": 785,
+      "claim_text": "Dragon Professional (Nuance) – Classic dictation/transcription tool that offers a one-time purchase license for its desktop version. MeetGeek",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 872,
+        "end_idx": 905
+      },
+      "citation_token": "citeturn0search3turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.dealfuel.com/seller/voicetapp-speech-to-text-transcription-lifetime-access/?utm_source=chatgpt.com",
+          "title": "Voicetapp - Speech-to-Text Transcription | Lifetime Access",
+          "snippet": "Transcribe any audio or video to text with up to 99%, with real-time transcription. Unlimited use cases, lifetime access, try it out now!",
+          "domain": "dealfuel.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://bestlifetimedeals.com/shop/megatranscript-ai-powered-automated-transcription-lifetime-deal/",
+      "url_position": 964,
+      "claim_text": "MegaTranscript / Voicetapp – Tools sold as lifetime deals (often through deal sites) giving long-term access. Best Lifetime Deals+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 979,
+        "end_idx": 999
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://deepgram.com/ai-apps/vid2txt",
+          "title": "Easiest Video & Audio Transcription App - vid2txt",
+          "snippet": "Jul 25, 2025 — Vid2txt is affordably priced at just $10 for unlimited use with no subscriptions. It's a one-time payment that unlocks the software for life. A ...Read more",
+          "domain": "deepgram.com",
+          "ref_type": "search",
+          "ref_index": 19,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_19"
+        }
+      ],
+      "inline_url": "https://deepgram.com/ai-apps/vid2txt",
+      "url_position": 1141,
+      "claim_text": "Vid2txt – One-time payment for unlimited use transcription tool. Deepgram",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1079,
+        "end_idx": 1099
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.360converter.com/purchase-offline-transcriber",
+          "title": "Purchase 360Converter Offline Transcriber",
+          "snippet": "360Converter Offline Transcriber to convert audio and video to text without an internet connection. All licenses include free updates during the license period.Read more",
+          "domain": "www.360converter.com",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_15"
+        }
+      ],
+      "inline_url": "https://www.360converter.com/purchase-offline-transcriber",
+      "url_position": 1269,
+      "claim_text": "360Converter Offline Transcriber – Offline tool with license purchase. 360converter.com",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1252,
+        "end_idx": 1285
+      },
+      "citation_token": "citeturn0search3turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.dealfuel.com/seller/voicetapp-speech-to-text-transcription-lifetime-access/?utm_source=chatgpt.com",
+          "title": "Voicetapp - Speech-to-Text Transcription | Lifetime Access",
+          "snippet": "Transcribe any audio or video to text with up to 99%, with real-time transcription. Unlimited use cases, lifetime access, try it out now!",
+          "domain": "dealfuel.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://bestlifetimedeals.com/shop/megatranscript-ai-powered-automated-transcription-lifetime-deal/",
+      "url_position": 1496,
+      "claim_text": "⚠️ Notes Some lifetime deals (like Voicetapp or MegaTranscript) may be offered through third-party deal platforms — check terms before buying. Best Lifetime Deals+1",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1391,
+        "end_idx": 1410
+      },
+      "citation_token": "citeturn0search5",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://meetgeek.ai/blog/speech-to-text-app?utm_source=chatgpt.com",
+          "title": "Find the Best Speech to Text App for Work in 2026 (Free & ...",
+          "snippet": "Apr 7, 2025 — Dragon Professional v16: $699 (one-time purchase); Dragon Legal v16: $799 (one-time purchase); Dragon Anywhere (Mobile): $15/month or $150 ...Read more",
+          "domain": "MeetGeek",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://meetgeek.ai/blog/speech-to-text-app",
+      "url_position": 1709,
+      "claim_text": "Classic perpetual licenses (like Dragon) tend to be pricier upfront but don’t require subscriptions. MeetGeek",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.inqscribe.com/",
+        "title": "InqScribe",
+        "domain": "InqScribe"
+      },
+      {
+        "url": "https://whispernotes.app/",
+        "title": "Whisper Notes - Offline Whisper Transcription App | $4.99 for ...",
+        "domain": "Whisper Notes"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=PG&hl=en-US",
+        "title": "Transcribe Audio to Text - WizWhisp",
+        "domain": "Microsoft Store"
+      },
+      {
+        "url": "https://meetgeek.ai/blog/speech-to-text-app",
+        "title": "Find the Best Speech to Text App for Work in 2026 (Free & ...",
+        "domain": "MeetGeek"
+      },
+      {
+        "url": "https://bestlifetimedeals.com/shop/megatranscript-ai-powered-automated-transcription-lifetime-deal/",
+        "title": "MegaTranscript AI-Powered Automated Transcription ...",
+        "domain": "Best Lifetime Deals"
+      },
+      {
+        "url": "https://deepgram.com/ai-apps/vid2txt",
+        "title": "Easiest Video & Audio Transcription App - vid2txt",
+        "domain": "Deepgram"
+      },
+      {
+        "url": "https://www.360converter.com/purchase-offline-transcriber",
+        "title": "Purchase 360Converter Offline Transcriber",
+        "domain": "360converter.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.notta.ai/en/blog/best-10-transcription-apps-dont-buy-before-reading",
+        "title": "Best 10 Transcription Apps: Dont Buy Before Reading",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-10-transcription-apps-review",
+        "title": "Best 10 Transcription Apps: Complete Review & Comparison",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/free-transcription-software",
+        "title": "Best Free Transcription Software: 6 Tools Tested ... - Jamie AI",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://speakwrite.com/blog/meeting-transcription-service/",
+        "title": "Best Meeting Transcription Apps, Software, & Services (2025)",
+        "domain": "speakwrite.com"
+      },
+      {
+        "url": "https://speakwrite.com/blog/best-audio-to-text-transcription-app/",
+        "title": "Best Audio-To-Text Transcription App of 2024",
+        "domain": "speakwrite.com"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=DE&hl=de-DE",
+        "title": "Transcribe Audio to Text - WizWhisp",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=US&hl=en-US",
+        "title": "Transcribe Audio to Text - WizWhisp",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/podcasting/comments/13pg3a1/im_looking_for_a_transcribe_audio_to_text/",
+        "title": "I'm looking for a Transcribe Audio to Text Recorder one ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/podcasting/comments/1lra87u/are_there_any_recommendations_for_fast_and_free/",
+        "title": "Are there any recommendations for fast and free ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.dealfuel.com/seller/voicetapp-speech-to-text-transcription-lifetime-access/",
+        "title": "Voicetapp - Speech-to-Text Transcription | Lifetime Access",
+        "domain": "dealfuel.com"
+      },
+      {
+        "url": "https://www.nearity.co/blog/free-audio-to-text-converter?srsltid=AfmBOopu1zGkYIlAyQhrSjI3ElEiHAU41UHF9rRyviz6b_75YYn9iq7g",
+        "title": "The Best Free Transcription Service Options",
+        "domain": "nearity.co"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+        "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://breev.ai/en/audio-transcription",
+        "title": "Transcribe audio without registration - Breev",
+        "domain": "breev.ai"
+      },
+      {
+        "url": "https://zapier.com/blog/best-transcription-apps/",
+        "title": "The best transcription software in 2025",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://www.honeybear.ai/blog/best-free-transcription-software",
+        "title": "Find the Best Free Transcription Software to Turn Audio ...",
+        "domain": "honeybear.ai"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=jfp8SidpbB8",
+        "title": "5 Free Apps to Automatically Transcribe Audio or Video to ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://scriptme.io/free-unlimited-transcription/",
+        "title": "ScriptMe Lite | Transcribe Free & Unlimited For Ever!",
+        "domain": "scriptme.io"
+      },
+      {
+        "url": "https://meetgeek.ai/blog/best-free-transcription-software",
+        "title": "4 Best Free Transcription Software For 2026",
+        "domain": "meetgeek.ai"
+      },
+      {
+        "url": "https://otranscribe.com/",
+        "title": "oTranscribe",
+        "domain": "otranscribe.com"
+      },
+      {
+        "url": "https://reduct.video/blog/transcription-software-for-video/",
+        "title": "8 Best Audio and Video Transcription Software in 2026",
+        "domain": "reduct.video"
+      },
+      {
+        "url": "https://otter.ai/",
+        "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://www.whispertranscribe.com/",
+        "title": "WhisperTranscribe - Transcribe your audio with Whisper AI",
+        "domain": "whispertranscribe.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/transcribe-speech-to-text/id1241342461",
+        "title": "Transcribe - Speech to Text - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://transcribe.com/",
+        "title": "Speech to Text Transcription | Transcribe App & Web Editor",
+        "domain": "transcribe.com"
+      },
+      {
+        "url": "https://hyprnote.com/blog/free-transcription-software/",
+        "title": "Best Free Transcription Software in 2025",
+        "domain": "hyprnote.com"
+      },
+      {
+        "url": "https://ligresoftware.com/2023/05/23/top-10-free-automatic-transcription-software-platforms/",
+        "title": "Top 10 Free Automatic Transcription Software Platforms",
+        "domain": "ligresoftware.com"
+      },
+      {
+        "url": "https://lumivero.com/products/nvivo-transcription/",
+        "title": "NVivo Transcription: Fast Transcription Software",
+        "domain": "lumivero.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 28,
+    "total_all": 35
+  },
+  "response_stats": {
+    "total_length": 1838,
+    "citation_count": 9,
+    "chars_with_citations": 215
+  }
+}

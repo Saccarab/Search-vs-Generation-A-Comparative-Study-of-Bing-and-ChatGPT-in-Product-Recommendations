@@ -1,0 +1,89 @@
+{
+  "run_id": "P016_r2",
+  "account_type": "personal",
+  "prompt": "I need live transcribing while using online streaming or watching videos.",
+  "metadata": {
+    "hidden_queries": [],
+    "sonic_classification": null,
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 187,
+        "end_idx": 235
+      },
+      "citation_token": "entity[\"software\",\"Google Chrome\",\"web browser",
+      "type": "entity",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 457,
+        "end_idx": 465
+      },
+      "citation_token": "entity",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 645,
+        "end_idx": 702
+      },
+      "citation_token": "entity[\"software\",\"Otter.ai\",\"transcription software\"]",
+      "type": "entity",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 812,
+        "end_idx": 843
+      },
+      "citation_token": "entity[\"software\",\"MacWhisper",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 999,
+        "end_idx": 1006
+      },
+      "citation_token": "entity",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 1182,
+        "end_idx": 1222
+      },
+      "citation_token": "entity[\"software\",\"Apple Live Captions",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 1369,
+        "end_idx": 1424
+      },
+      "citation_token": "entity[\"software\",\"OBS Studio\",\"streaming software\"]",
+      "type": "entity",
+      "sources": []
+    }
+  ],
+  "source_summary": {
+    "cited": [],
+    "additional": [],
+    "total_cited": 0,
+    "total_additional": 0,
+    "total_all": 0
+  },
+  "response_stats": {
+    "total_length": 1398,
+    "citation_count": 7,
+    "chars_with_citations": 246
+  }
+}

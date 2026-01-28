@@ -1,0 +1,284 @@
+{
+  "run_id": "P024_r3",
+  "account_type": "enterprise",
+  "prompt": "Give me the best speech to text solutions.",
+  "metadata": {
+    "hidden_queries": [
+      "best speech to text solutions 2026 speech recognition software",
+      "top speech to text APIs and apps comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 23.17701606079936,
+      "simple_search_prob": 0.9389751906315924,
+      "complex_search_prob": 0.004938420045705915,
+      "no_search_prob": 0.05608638932270168,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 381,
+        "end_idx": 413
+      },
+      "citation_token": "citeturn0search0turn0search3",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://reverieinc.com/blog/speech-text-api-comparison/",
+          "title": "8 Best Speech-to-Text APIs in 2026: A Complete Comparison Guide",
+          "snippet": "Looking for the best Speech-to-Text API? Compare accuracy, Indian language support, deployment options, and core features to find the right STT solution.",
+          "domain": "reverieinc.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1766534400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://reverieinc.com/blog/speech-text-api-comparison/",
+      "url_position": 127,
+      "claim_text": "Here are top speech-to-text solutions you should consider — broken down by use case (developer APIs, desktop/web appsReverie+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 510,
+        "end_idx": 529
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.geeky-gadgets.com/free-speech-to-text-api/",
+      "url_position": 494,
+      "claim_text": "Geeky Gadgets",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 629,
+        "end_idx": 649
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.speakmac.app/blog/best-speech-to-text-software-2026",
+      "url_position": 622,
+      "claim_text": "speakmac.app",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 731,
+        "end_idx": 741
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.speakmac.app/blog/best-speech-to-text-software-2026",
+      "url_position": 700,
+      "claim_text": "speakmac.app",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 885,
+        "end_idx": 904
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.speakmac.app/blog/best-speech-to-text-software-2026",
+          "title": "Best Speech-to-Text Tools 2026: Whisper, Deepgram & SpeakMac",
+          "snippet": "Compare the best speech-to-text software in 2026. Deepgram, Whisper, MacWhisper, Superwhisper & SpeakMac explained for real-time dictation and productivity.",
+          "domain": "www.speakmac.app",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1769126400,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.speakmac.app/blog/best-speech-to-text-software-2026",
+      "url_position": 415,
+      "claim_text": "speakmac.app",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 982,
+        "end_idx": 1002
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.meetjamie.ai/blog/10-best-speech-to-text-software",
+      "url_position": 844,
+      "claim_text": "meetjamie.ai",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1338,
+        "end_idx": 1357
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.techradar.com/news/best-speech-to-text-app",
+      "url_position": 775,
+      "claim_text": "TechRadar",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1442,
+        "end_idx": 1447
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/blog/top-speech-to-text-softwares",
+      "url_position": 558,
+      "claim_text": "Murf AI",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1533,
+        "end_idx": 1552
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.speakmac.app/blog/best-speech-to-text-software-2026",
+          "title": "Best Speech-to-Text Tools 2026: Whisper, Deepgram & SpeakMac",
+          "snippet": "Compare the best speech-to-text software in 2026. Deepgram, Whisper, MacWhisper, Superwhisper & SpeakMac explained for real-time dictation and productivity.",
+          "domain": "www.speakmac.app",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1769126400,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.speakmac.app/blog/best-speech-to-text-software-2026",
+      "url_position": 337,
+      "claim_text": "speakmac.app",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1656,
+        "end_idx": 1674
+      },
+      "citation_token": "citeturn0news31",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/news/best-speech-to-text-app",
+          "title": "Best speech-to-text app of 2025",
+          "snippet": "This comprehensive 2025 TechRadar guide ranks the top speech-to-text apps and services designed to simplify converting spoken language into written text across mobile, desktop, and cloud platforms. Speech-to-text tools have moved from niche uses to broader applications in business, education, and everyday productivity. As voice recognition accuracy has greatly improved, many platforms now boast around 99% transcription accuracy.\n\nKey offerings include:\n\n- **Speechmatics**, praised for its multilingual, accent-flexible AI-driven transcription tools.\n- **Dragon Professional**, ideal for business use with high accuracy and productivity tools.\n- **Otter**, optimized for mobile and collaborative note-taking during meetings.\n- **Verbit**, tailored for enterprise and education with hybrid AI and human transcription.\n- **Braina Pro**, a PC-based voice assistant offering versatile command and dictation support.\n- **Microsoft Azure Speech to Text** and **IBM Watson**, both cloud-native enterprise solutions offering real-time and batch transcription with customizable language models.\n- **Dragon Anywhere**, a mobile app delivering professional-grade dictation in the cloud.\n- **Amazon Transcribe**, optimized for business use with live and batch processing.\n\nTop free options include Google Gboard, Just Press Record, Speechnotes, and built-in features like Windows Speech Recognition. Additional apps like iTranslate, Voice Notes, and SpeechTexter highlight specialized capabilities for translation, note organization, and social media use. The guide concludes with advising selection based on user needs and testing methodology.",
+          "domain": "www.techradar.com",
+          "ref_type": "news",
+          "ref_index": 31,
+          "turn_index": 0,
+          "pub_date": 1764936431,
+          "ref_key": "0_news_31"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/news/best-speech-to-text-app",
+      "url_position": 775,
+      "claim_text": "TechRadar",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1791,
+        "end_idx": 1811
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 192,
+      "claim_text": "Gartner",
+      "url_index": 1
+    }
+  ],
+  "source_summary": {
+    "cited": [],
+    "additional": [],
+    "total_cited": 0,
+    "total_additional": 0,
+    "total_all": 0
+  },
+  "response_stats": {
+    "total_length": 909,
+    "citation_count": 11,
+    "chars_with_citations": 201
+  }
+}

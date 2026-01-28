@@ -1,0 +1,339 @@
+{
+  "run_id": "P011_r1",
+  "account_type": "personal",
+  "prompt": "How can I quickly and for free convert text to speech?",
+  "metadata": {
+    "hidden_queries": [
+      "free text to speech online tools convert text to speech free quickly",
+      "how to use built in free text to speech on devices or free TTS services"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.016679065302014,
+      "simple_search_prob": 0.8653065066156548,
+      "complex_search_prob": 0.0016046101688113313,
+      "no_search_prob": 0.1330888832155339,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free text to speech online tools convert text to speech free quickly"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 139,
+        "end_idx": 158
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://luvvoice.com/",
+          "title": "Luvvoice: Free Convert Text to Speech Online, No Word Limit",
+          "snippet": "Luvvoice is a free online text-to-speech (TTS) tool that turns your text into natural-sounding speech. We offer a wide range of AI Voices.",
+          "domain": "luvvoice.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://luvvoice.com/",
+      "url_position": 141,
+      "claim_text": "Here are quick, free ways to convert text to speech: Online tools (no install) Luvvoice: paste text and get speech instantly. luvvoice.com",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 231,
+        "end_idx": 250
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.naturalreaders.com/online/",
+          "title": "Free Text to Speech Online with Realistic AI Voices",
+          "snippet": "Convert text into ultra-realistic audio. Have any text read aloud with AI Voices. AI text reader for pdfs, books, documents, and webpages.",
+          "domain": "www.naturalreaders.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.naturalreaders.com/online/",
+      "url_position": 244,
+      "claim_text": "Natural Readers (web): free realistic voices for text and docs. NaturalReader",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 298,
+        "end_idx": 317
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ttsmaker.com/",
+      "url_position": 334,
+      "claim_text": "TTSMaker: 600+ voices, many languages. TTSMaker",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 370,
+        "end_idx": 389
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://freetts.com/",
+      "url_position": 415,
+      "claim_text": "FreeTTS.com: free online TTS and downloads. freetts.com",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 453,
+        "end_idx": 472
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ttsreader.com/",
+      "url_position": 519,
+      "claim_text": "TTSReader: free simple online reader, no login needed. TTSReader Text To Speech",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 524,
+        "end_idx": 544
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.text2speech.org/",
+      "url_position": 604,
+      "claim_text": "Text2Speech.org: basic free text-to-audio. text2speech.org",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 647,
+        "end_idx": 667
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.google.com/accessibility/android/answer/7349565?hl=en",
+      "url_position": 738,
+      "claim_text": "Device-built options (free & fast) Android: “Select to Speak” reads selected text aloud. Google Help",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 832,
+        "end_idx": 852
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.microsoft.com/en-us/office/use-the-speak-text-to-speech-feature-to-read-text-aloud-459e7704-a76d-4fe2-ab48-189d6b83333c",
+      "url_position": 978,
+      "claim_text": "Windows/Mac: built-in speech features (e.g., “Read Aloud” in browsers or OS accessibility). Office apps: Microsoft Word/Outlook have Speak feature. Microsoft Support",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 929,
+        "end_idx": 949
+      },
+      "citation_token": "citeturn0search16",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.canva.com/features/text-to-speech/?utm_source=chatgpt.com",
+          "title": "Turn Text to Speech in Seconds",
+          "snippet": "Enter your text in the box indicated. Select a language and voice, then adjust its volume, speed, and pitch. Click Create audio to generate your audio file.",
+          "domain": "canva.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.canva.com/features/text-to-speech/",
+      "url_position": 1191,
+      "claim_text": "Bonus Canva: free text-to-speech audio creation inside editor. canva.com",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://luvvoice.com/",
+        "title": "Luvvoice: Free Convert Text to Speech Online, No Word Limit",
+        "domain": "luvvoice.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech Online with Realistic AI Voices",
+        "domain": "NaturalReader"
+      },
+      {
+        "url": "https://ttsmaker.com/",
+        "title": "TTSMaker: Free Text to Speech Online",
+        "domain": "TTSMaker"
+      },
+      {
+        "url": "https://freetts.com/",
+        "title": "FreeTTS: Free Online Text to Speech, Audio Converter, and ...",
+        "domain": "freetts.com"
+      },
+      {
+        "url": "https://ttsreader.com/",
+        "title": "TTSReader | Text To Speech Reader Online. Accurate & Free",
+        "domain": "TTSReader Text To Speech"
+      },
+      {
+        "url": "https://www.text2speech.org/",
+        "title": "Text 2 Speech",
+        "domain": "text2speech.org"
+      },
+      {
+        "url": "https://support.google.com/accessibility/android/answer/7349565?hl=en",
+        "title": "Use Select to Speak - Android Accessibility Help",
+        "domain": "Google Help"
+      },
+      {
+        "url": "https://support.microsoft.com/en-us/office/use-the-speak-text-to-speech-feature-to-read-text-aloud-459e7704-a76d-4fe2-ab48-189d6b83333c",
+        "title": "Use the Speak text-to-speech feature to read text aloud",
+        "domain": "Microsoft Support"
+      },
+      {
+        "url": "https://www.canva.com/features/text-to-speech/",
+        "title": "Turn Text to Speech in Seconds",
+        "domain": "canva.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://speechify.com/?srsltid=AfmBOoqFbCcFAu1Nwd5iA-CExagxUNZVFzbqFGfhjCu8r3YNWWAdvw19",
+        "title": "Speechify: Free Text to Speech & Voice AI Assistant | 500,000 ...",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://speechify.com/text-to-speech-online/?srsltid=AfmBOorOW62uk4kibKEpAXFkStSnn5lsrJ6hjOH9S21cfFBb3UQnnK9M",
+        "title": "Free Text to Speech with Humanlike AI Voices",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://notegpt.io/text-to-speech",
+        "title": "Free AI Text to Speech Online with Natural, Realistic Voices",
+        "domain": "notegpt.io"
+      },
+      {
+        "url": "https://www.text-to-speech.online/",
+        "title": "Free Text to Speech Online Converter Tools",
+        "domain": "text-to-speech.online"
+      },
+      {
+        "url": "https://www.naturalreaders.com/webapp.html",
+        "title": "Free Text to Speech Online",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://elevenlabs.io/text-to-speech",
+        "title": "Free Text To Speech Online with Lifelike AI Voices",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://www.reddit.com/r/TextToSpeech/comments/1engt02/looking_for_simple_unlimited_free_tts_site/",
+        "title": "Looking for simple, unlimited, free TTS site : r/TextToSpeech",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.datacamp.com/blog/best-open-source-text-to-speech-tts-engines",
+        "title": "9 Best Open Source Text-to-Speech (TTS) Engines",
+        "domain": "datacamp.com"
+      },
+      {
+        "url": "https://evernote.com/ai-text-to-voice",
+        "title": "AI Text to Voice",
+        "domain": "evernote.com"
+      },
+      {
+        "url": "https://www.facebook.com/groups/assistive.technology.group/posts/7175993905789012/",
+        "title": "What are some free text-to-speech apps or software ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+        "title": "Best free text-to-speech software of 2025",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://modal.com/blog/open-source-tts",
+        "title": "The Top Open-Source Text to Speech (TTS) Models",
+        "domain": "modal.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 12,
+    "total_all": 21
+  },
+  "response_stats": {
+    "total_length": 1292,
+    "citation_count": 9,
+    "chars_with_citations": 175
+  }
+}

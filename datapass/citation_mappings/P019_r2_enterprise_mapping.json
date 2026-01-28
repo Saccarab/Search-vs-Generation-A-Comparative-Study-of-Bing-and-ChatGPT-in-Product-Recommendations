@@ -1,0 +1,300 @@
+{
+  "run_id": "P019_r2",
+  "account_type": "enterprise",
+  "prompt": "Quel est le meilleur logiciel de traduction instantané ?",
+  "metadata": {
+    "hidden_queries": [
+      "meilleur logiciel de traduction instantané",
+      "best instant translation software comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 17.33044907450676,
+      "simple_search_prob": 0.955598578049462,
+      "complex_search_prob": 0.001637031154418559,
+      "no_search_prob": 0.04276439079611942,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "meilleur logiciel de traduction instantané"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 371,
+        "end_idx": 381
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/fr/blog/best-real-time-translators",
+      "url_position": 364,
+      "claim_text": "Voici un jugement critique et direct sur les meilleurs logiciels/applications de traduction instantanée aujourd’hui : 1) Google Translate — le choix le plus polyvalent Traduction texte, audio en temps réel et photo (caméra). Très grand nombre de langues supportées (> 130). Fonction conversation en direct et possibilité offline avec packs langue. ScreenApp+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 513,
+        "end_idx": 532
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://digitaltendances.com/tutoriels/applications-traduction-gratuite-ia-temps-reel/",
+          "title": "6 Applications de Traduction Gratuite 2026 : IA et Temps Réel",
+          "snippet": "Les applications de traduction ont révolutionné notre façon d’interagir avec le monde, et 2026 marque une nouvelle ère avec l’intégration massive de l’intelligence artificielle et des fonctionnalités de traduction en temps réel.",
+          "domain": "digitaltendances.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://digitaltendances.com/tutoriels/applications-traduction-gratuite-ia-temps-reel/",
+      "url_position": 548,
+      "claim_text": "↳ Pourquoi sceptique ? la qualité peut baisser pour des phrases complexes ou contexte culturel profond. digitaltendances.com",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 719,
+        "end_idx": 739
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://promova.com/blog/the-best-online-translators",
+      "url_position": 823,
+      "claim_text": "2) DeepL — meilleure précision, surtout pour textes complexes Souvent plus fluide et naturel que la plupart des autres outils. Particulièrement fort pour langues européennes. Promova",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 953,
+        "end_idx": 963
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://digitaltendances.com/tutoriels/applications-traduction-gratuite-ia-temps-reel/",
+      "url_position": 1101,
+      "claim_text": "↳ Limite : couverture linguistique plus restreinte que Google Translate. 3) Microsoft Translator Traduction vocal et texte avec mode conversation. Gratuit, fiable pour usage quotidien et pro léger. digitaltendances.com",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1175,
+        "end_idx": 1181
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/fr/blog/meilleures-applications-de-traduction",
+      "url_position": 1392,
+      "claim_text": "↳ Sceptique : moins complet que Google pour toutes les langues rares. 4) iTranslate Bon support voix et hors ligne. Version gratuite existe mais fonctionnalités clés derrière abonnement. Maestra AI",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1385,
+        "end_idx": 1396
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://cybernews.com/reviews/best-instant-language-translator/",
+      "url_position": 1650,
+      "claim_text": "↳ Problème : frais si tu veux qualité pro. 5) Apps spécialisées ou hardware (Timekettle, Pocketalk…) Traduction instantanée conversationnelle avec écouteurs ou appareils dédiés. Cybernews",
+      "url_index": 5
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://screenapp.io/fr/blog/best-real-time-translators",
+        "title": "10 meilleurs traducteurs en temps réel de 2026 - screenapp.io",
+        "domain": "ScreenApp"
+      },
+      {
+        "url": "https://digitaltendances.com/tutoriels/applications-traduction-gratuite-ia-temps-reel/",
+        "title": "6 Applications de Traduction Gratuite 2026 : IA et Temps Réel",
+        "domain": "digitaltendances.com"
+      },
+      {
+        "url": "https://promova.com/blog/the-best-online-translators",
+        "title": "10 Best Translators Online in 2025 | Promova Blog",
+        "domain": "Promova"
+      },
+      {
+        "url": "https://maestra.ai/fr/blog/meilleures-applications-de-traduction",
+        "title": "Meilleures applications de traduction en 2025 : un guide complet",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://cybernews.com/reviews/best-instant-language-translator/",
+        "title": "Best Instant Language Translator in 2026 - Cybernews",
+        "domain": "Cybernews"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.gridly.com/blog/best-ai-translation-software-explore-these-9-solutions/",
+        "title": "Best AI translation software for 2026: 10 leading solutions ... - Gridly",
+        "domain": "gridly.com"
+      },
+      {
+        "url": "https://www.techradar.com/best/best-translation-software",
+        "title": "Best translation software of 2025 - TechRadar",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://fr.vidnoz.com/intelligence-artificielle/application-traduction-instantanee.html",
+        "title": "Les 6 meilleures applications de traduction instantanée 2025",
+        "domain": "vidnoz.com"
+      },
+      {
+        "url": "https://www.lafabriquedunet.fr/logiciels/productivite/traduction/",
+        "title": "Top 10 des logiciels de Traduction en 2026 - La Fabrique du Net",
+        "domain": "lafabriquedunet.fr"
+      },
+      {
+        "url": "https://www.allaboutai.com/best-ai-tools/productivity/translation/",
+        "title": "10 Best AI Tools for Translation in 2026 | [Accuracy Tested]",
+        "domain": "allaboutai.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.slouppi.net/meilleure-application-de-traduction-simultanee-comparatif-2025-des-outils-efficaces-et-performants/",
+        "title": "Meilleure application de traduction simultanée : comparatif 2025 des ...",
+        "domain": "slouppi.net"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://taia.io/resources/blog/best-translation-software",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools by Features ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-translation-software",
+        "title": "8 Best Translation Software to Use in 2025 (Free & Paid)",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.smartcat.com/blog/top-translation-software-tools/",
+        "title": "Translation Software: Compare Top Tools for 2025 - Smartcat",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://mlforeveryone.com/best-ai-translators-for-2025-google-translate-vs-deepl-vs-microsoft-translator/",
+        "title": "Best AI Translators for 2025: Google Translate vs DeepL vs Microsoft ...",
+        "domain": "mlforeveryone.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/fr/applications-de-traduction-en-temps-reel/",
+        "title": "10 Meilleures Applications de Traduction en Temps Réel",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://bordio.com/blog/best-translation-software/",
+        "title": "11 Best Translation Software Platforms in 2025 - Bordio",
+        "domain": "bordio.com"
+      },
+      {
+        "url": "https://www.anpaa-bretagne.fr/traducteur-instantane-gratuit-comparatif-et-avis-2025/",
+        "title": "Traducteur instantané gratuit : comparatif et avis 2025",
+        "domain": "anpaa-bretagne.fr"
+      },
+      {
+        "url": "https://www.grainesdeblogueuses.fr/meilleure-application-de-traduction-instantanee-comparatif-2025/",
+        "title": "Meilleure application de traduction instantanée : comparatif 2025",
+        "domain": "grainesdeblogueuses.fr"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/fr/the-best-simultaneous-translation-software",
+        "title": "Guide Ultime – Les Meilleurs Logiciels de Traduction Simultanée de 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://www.appvizer.fr/services/traduction",
+        "title": "Les 30 Meilleurs Logiciels de Traduction en 2026 | Appvizer",
+        "domain": "appvizer.fr"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 18,
+    "total_all": 23
+  },
+  "response_stats": {
+    "total_length": 2188,
+    "citation_count": 6,
+    "chars_with_citations": 76
+  }
+}

@@ -1,0 +1,424 @@
+{
+  "run_id": "P020_r2",
+  "account_type": "personal",
+  "prompt": "Request a tool to translate foreign audio to English in real-time during video playback.",
+  "metadata": {
+    "hidden_queries": [
+      "tool to translate foreign audio to English in real-time during video playback",
+      "real time audio translation for video playback software"
+    ],
+    "sonic_classification": {
+      "latency_ms": 14.165836037136614,
+      "simple_search_prob": 0.6556245176950903,
+      "complex_search_prob": 0.29697658766067847,
+      "no_search_prob": 0.04739889464423119,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "tool to translate foreign audio to English in real-time during video playback"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 128,
+        "end_idx": 164
+      },
+      "citation_token": "citeturn0search0turn0search7turn",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+          "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+          "snippet": "Your ultimate Chrome extension for AI-powered real-time translation and transcription of any video, audio, conversation, and podcast.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+      "url_position": 161,
+      "claim_text": "Here are concise real-time tools and solutions that can translate foreign audio to English during video playback or “live”: Chrome Web Store+2Chrome Web Store+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 353,
+        "end_idx": 372
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+          "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+          "snippet": "Your ultimate Chrome extension for AI-powered real-time translation and transcription of any video, audio, conversation, and podcast.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+      "url_position": 450,
+      "claim_text": "1. Browser Extensions (quick setup) Byrdhouse AI (Chrome) – real-time translation and transcription for video/audio in 100+ languages (works on YouTube, Twitch, etc.). Chrome Web Store",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 486,
+        "end_idx": 505
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+      "url_position": 675,
+      "claim_text": "Speech Translator (Chrome) – converts spoken audio from videos or livestreams into translated text live. Chrome Web Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 688,
+        "end_idx": 706
+      },
+      "citation_token": "citeturn0news44",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.theverge.com/2024/12/19/24324932/microsoft-live-translation-intel-amd-copilot-plus-pcs",
+      "url_position": 952,
+      "claim_text": "2. Built-In & System-Level Tools Windows Live Translation (Copilot Plus PCs) – can display live translated captions for any audio played on the device (including videos). The Verge",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 808,
+        "end_idx": 827
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.microsoft.com/detail/9ph1r9djg47s?gl=US&hl=en-US",
+      "url_position": 1165,
+      "claim_text": "Live Subtitles (Microsoft Store) – real-time captioning + translation of video/audio playback. Microsoft Store",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1007,
+        "end_idx": 1027
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://live.maestra.ai/",
+          "title": "Live Translate | Real-Time Online Voice Translator",
+          "snippet": "Real-time audio translation with AI voice cloning. Fast, accurate, and low-latency—available in 125+ languages with integrations and sharing.",
+          "domain": "live.maestra.ai",
+          "ref_type": "search",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_16"
+        }
+      ],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 1407,
+      "claim_text": "3. Dedicated Real-Time Translators (browser/web) Maestra (browser) – live audio translation with auto captions in 125+ languages; can be used alongside video playback. Maestra",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1257,
+        "end_idx": 1275
+      },
+      "citation_token": "citeturn0news46",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+          "title": "Google Translate is bringing real-time translations powered by Gemini to your headphones",
+          "snippet": "Google has announced a major update to Google Translate that brings real-time translation powered by its AI model, Gemini, to any pair of headphones with a microphone. Previously limited to Google's Pixel Buds, this capability is now available in beta to users with the Google Translate app in the U.S., Mexico, and India. By tapping the \"Live translate\" button with headphones paired, users can access live, one-way voice translations supporting over 70 languages. This allows users to engage in conversations, listen to lectures, or watch shows in foreign languages with real-time translation delivered through their headphones.\n\nThe update also enhances text translations by leveraging AI to better understand tone, emphasis, idioms, and slang, improving naturalness and accuracy. Currently launched with support for nearly 20 languages, these improvements aim to make translation more intuitive and effective. Additionally, a new tracking feature has been introduced to monitor language learning streaks, similar to Duolingo, encouraging consistent practice. Expansion to iOS and more countries is expected in 2026.",
+          "domain": "www.tomsguide.com",
+          "ref_type": "news",
+          "ref_index": 46,
+          "turn_index": 0,
+          "pub_date": 1765651995,
+          "ref_key": "0_news_46"
+        }
+      ],
+      "inline_url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+      "url_position": 1666,
+      "claim_text": "4. External Devices & Headphone Support Google Translate “Live Translate” w/ headphones – listens and translates spoken audio to English through headphones in real time (useful while watching foreign-language videos). Tom's Guide",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1466,
+        "end_idx": 1485
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.reddit.com/r/kpophelp/comments/16n5myb/are_there_any_apps_that_translate_videos_playing/",
+      "url_position": 1990,
+      "claim_text": "5. Workarounds Some use Google Translate’s live mic feature with system audio to capture and translate audio playing on your computer (not perfect but feedback says it can work). Reddit",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1759,
+        "end_idx": 1777
+      },
+      "citation_token": "citeturn0news45",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation",
+          "title": "VLC player demos real-time AI subtitling for videos",
+          "snippet": "At CES 2025, the open-source VLC media player showcased a new AI-powered feature that enables real-time subtitling and translation of videos directly on users' devices. Presented by VideoLAN President Jean-Baptiste Kempf, the demo highlighted the use of open-source AI models to generate and translate subtitles into over 100 languages completely offline, ensuring privacy and eliminating the need for cloud services. This feature is built directly into the VLC app, distinguishing it from earlier plug-ins that relied on platforms like OpenAI's Whisper. While the full rollout date hasn't been disclosed, the advancement demonstrates a significant leap in local AI integration for media playback. Additionally, VideoLAN announced that VLC has surpassed 6 billion downloads and continues to grow in active users despite the rise of streaming services.",
+          "domain": "www.theverge.com",
+          "ref_type": "news",
+          "ref_index": 45,
+          "turn_index": 0,
+          "pub_date": 1736431670,
+          "ref_key": "0_news_45"
+        },
+        {
+          "url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation?utm_source=chatgpt.com",
+          "title": "VLC player demos real-time AI subtitling for videos",
+          "snippet": "At CES 2025, the open-source VLC media player showcased a new AI-powered feature that enables real-time subtitling and translation of videos directly on users' devices. Presented by VideoLAN President Jean-Baptiste Kempf, the demo highlighted the use of open-source AI models to generate and translate subtitles into over 100 languages completely offline, ensuring privacy and eliminating the need for cloud services. This feature is built directly into the VLC app, distinguishing it from earlier plug-ins that relied on platforms like OpenAI's Whisper. While the full rollout date hasn't been disclosed, the advancement demonstrates a significant leap in local AI integration for media playback. Additionally, VideoLAN announced that VLC has surpassed 6 billion downloads and continues to grow in active users despite the rise of streaming services.",
+          "domain": "The Verge",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation",
+      "url_position": 2370,
+      "claim_text": "Note: Many tools focus on captions/overlay text rather than directly replacing audio; fully dubbed real-time translation during video playback (audio output) is still developing, and some features may be in beta or require specific hardware/software configurations. The Verge",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+        "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://www.theverge.com/2024/12/19/24324932/microsoft-live-translation-intel-amd-copilot-plus-pcs",
+        "title": "Microsoft is testing live translation on Intel and AMD Copilot Plus PCs",
+        "domain": "The Verge"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9ph1r9djg47s?gl=US&hl=en-US",
+        "title": "Live Subtitles – Bilingual Captions & Speech Translator",
+        "domain": "Microsoft Store"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+        "title": "Google Translate is bringing real-time translations powered by Gemini to your headphones",
+        "domain": "Tom's Guide"
+      },
+      {
+        "url": "https://www.reddit.com/r/kpophelp/comments/16n5myb/are_there_any_apps_that_translate_videos_playing/",
+        "title": "Are there any apps that translate videos playing on your computer?",
+        "domain": "Reddit"
+      },
+      {
+        "url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation",
+        "title": "VLC player demos real-time AI subtitling for videos",
+        "domain": "The Verge"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.synthesia.io/post/best-video-translator-apps",
+        "title": "The 6 Best AI Video Translator Apps of 2025 (Compared) - Synthesia",
+        "domain": "synthesia.io"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/video_translator_translate_video_voice_o/285433175728",
+        "title": "Translate Video & Voice online - Google Workspace Marketplace",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp?hl=en-US",
+        "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://cloud.google.com/translate",
+        "title": "Cloud Translation",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/real-time-translation",
+        "title": "Real-Time Translation Solutions",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/live-translation",
+        "title": "Live Translation – Real-Time AI Audio & Caption ...",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "Wordly: AI Translation & Captions for Meetings and Events",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://clideo.com/video-translator",
+        "title": "Online Video Translator",
+        "domain": "clideo.com"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+        "title": "7 Best AI Video Translator Apps of 2025 [Tested]",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://www.heygen.com/translate",
+        "title": "AI Video Translator – Translate Videos into 175+ Languages",
+        "domain": "heygen.com"
+      },
+      {
+        "url": "https://www.clevercast.com/",
+        "title": "Clevercast: Multilingual Live Streaming Made Easy",
+        "domain": "clevercast.com"
+      },
+      {
+        "url": "https://maestra.ai/tools/video-translator",
+        "title": "AI Video Translator with Voice Cloning & Lip Sync | Free Trial",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://maestra.ai/",
+        "title": "AI Media Translation, Subtitles & Dubbing Platform | Maestra",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video ...",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://www.rask.ai/",
+        "title": "Leading AI video localization & dubbing tool",
+        "domain": "rask.ai"
+      },
+      {
+        "url": "https://www.reddit.com/r/AskTechnology/comments/1gnqt7n/are_there_any_video_chatting_apps_with_an/",
+        "title": "Are there any video chatting apps with an auto-translator?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/ChatGPTPro/comments/15z93kb/are_there_any_handsfree_realtime_voice/",
+        "title": "Are there any Hands-Free, Realtime, Voice Translation ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://taloai.com/",
+        "title": "Talo - Real-Time AI Translator for Video Calls",
+        "domain": "taloai.com"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/real-time-translation/",
+        "title": "Real-time Translation Tool",
+        "domain": "transyncai.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 23,
+    "total_all": 31
+  },
+  "response_stats": {
+    "total_length": 2463,
+    "citation_count": 9,
+    "chars_with_citations": 186
+  }
+}

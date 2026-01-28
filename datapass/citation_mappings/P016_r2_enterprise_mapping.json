@@ -1,0 +1,331 @@
+{
+  "run_id": "P016_r2",
+  "account_type": "enterprise",
+  "prompt": "I need live transcribing while using online streaming or watching videos.",
+  "metadata": {
+    "hidden_queries": [
+      "live transcribing speech from videos/streaming real time apps or tools",
+      "实时视频转录 直播 字幕 software live transcription for streaming"
+    ],
+    "sonic_classification": {
+      "latency_ms": 11.835590936243534,
+      "simple_search_prob": 0.7918599595886441,
+      "complex_search_prob": 0.034443470159125425,
+      "no_search_prob": 0.1736965702522305,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "live transcribing speech from videos/streaming real time apps or tools"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 283,
+        "end_idx": 303
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/transcribe/",
+      "url_position": 278,
+      "claim_text": "Here are live-transcription options you can use while watching streaming videos or online content: Quick & Easy (no heavy setup) Live Transcribe (web/app) – real-time audio-to-text transcription you can run in a browser or app. Can capture speech as you play content. Maestra",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 441,
+        "end_idx": 442
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/zh/tools/live-transcription",
+      "url_position": 459,
+      "claim_text": "Maestra Live / Chrome extension – shows live captions for any audio in browser tabs (works for YouTube/streaming, 125+ languages). Maestra AI",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 520,
+        "end_idx": 539
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechlogger.com/",
+      "url_position": 579,
+      "claim_text": "Speechlogger – real-time speech-to-text online tool. speechlogger.com",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 663,
+        "end_idx": 682
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.microsoft.com/detail/9ph1r9djg47s?gl=US&hl=zh-cn",
+          "title": "Live Subtitles - 实时双语字幕 - Windows官方下载 | 微软应用商店 | Microsoft Store",
+          "snippet": "Live Subtitles —— 为任何音频提供实时字幕与翻译的专业工具 Live Subtitles 可自动将设备播放的声音转换为文字，并实时生成双字幕（原文 + 翻译）。无论您在观看视频、上网课、参加会议、刷短视频还是收听播客，字幕都会以可移动的悬浮窗口呈现，覆盖所有应用。 核心优势：无需麦克风，直接读取 ...",
+          "domain": "apps.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 3,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_3"
+        }
+      ],
+      "inline_url": "https://apps.microsoft.com/detail/9ph1r9djg47s?gl=US&hl=zh-cn",
+      "url_position": 737,
+      "claim_text": "Built-in or OS/Device Level Windows “Live Subtitles” app – overlays live captions for any audio on your device. Microsoft Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 811,
+        "end_idx": 829
+      },
+      "citation_token": "citeturn0news28",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wired.com/story/android-pixel-december-2024-software-updates",
+      "url_position": 930,
+      "claim_text": "Android Live Caption (system feature) – auto captions any media on phone, works across apps (if your device supports it). WIRED",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 981,
+        "end_idx": 1015
+      },
+      "citation_token": "citeturn0search21turn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.notta.ai/en/real-time-transcription",
+      "url_position": 1155,
+      "claim_text": "Professional / Streaming Integrations Notta / SpeakAI – real-time transcription with speaker ID, shareable text, good for meetings/streams. Notta+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1097,
+        "end_idx": 1107
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.syncwords.com/",
+      "url_position": 1295,
+      "claim_text": "SyncWords – live captions + translations for broadcast events and streams. syncwords.com",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1296,
+        "end_idx": 1316
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://blog.csdn.net/gitblog_00154/article/details/153758783",
+      "url_position": 1503,
+      "claim_text": "For Live Streamers / OBS OBS plugins or AI services (e.g., Whisper integration) – transcribe audio from your stream to subtitles automatically if you’re broadcasting. CSDN Blog",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://live.maestra.ai/transcribe/",
+        "title": "Live Transcribe | Real Time Speech to Text Transcription",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://maestra.ai/zh/tools/live-transcription",
+        "title": "免费实时转录 - 实时转录音频",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://speechlogger.com/",
+        "title": "Speechlogger - Real Time Speech to Text",
+        "domain": "speechlogger.com"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9ph1r9djg47s?gl=US&hl=zh-cn",
+        "title": "Live Subtitles - 实时双语字幕 - Windows官方下载 | 微软应用商店 | Microsoft Store",
+        "domain": "Microsoft Store"
+      },
+      {
+        "url": "https://www.wired.com/story/android-pixel-december-2024-software-updates",
+        "title": "Android Is Now Using AI to Upgrade Your Phone's Closed Captions",
+        "domain": "WIRED"
+      },
+      {
+        "url": "https://www.notta.ai/en/real-time-transcription",
+        "title": "Real-time Transcription Software - Notta",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://www.syncwords.com/",
+        "title": "Live AI Captions, Subtitles & Voice Dubbing | SyncWords",
+        "domain": "syncwords.com"
+      },
+      {
+        "url": "https://blog.csdn.net/gitblog_00154/article/details/153758783",
+        "title": "如何快速实现OBS直播实时字幕？免费开源插件完整指南-CSDN博客",
+        "domain": "CSDN Blog"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://help.aliyun.com/zh/live/user-guide/real-time-subtitles-beta",
+        "title": "配置与使用直播实时字幕-视频直播-阿里云",
+        "domain": "aliyun.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/live-transcription-apps",
+        "title": "7 Best Live Transcription Apps - maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.toolify.ai/tw/ai-news-tw/ez-live-caption%E7%B0%A1%E5%8C%96%E7%9B%B4%E6%92%AD%E5%AD%97%E5%B9%95%E8%BD%89%E9%8C%84%E7%BF%BB%E8%AD%AF%E5%85%A8%E6%96%B9%E4%BD%8D%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88-3673507",
+        "title": "EZ Live Caption：簡化直播字幕，轉錄翻譯全方位解決方案",
+        "domain": "toolify.ai"
+      },
+      {
+        "url": "https://www.digitalocean.com/resources/articles/ai-transcription-tools",
+        "title": "10 AI Transcription Tools to Convert Speech to Text in 2025",
+        "domain": "digitalocean.com"
+      },
+      {
+        "url": "https://vomo.ai/zh/%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%B8%BA%E7%9B%B4%E6%92%AD%E6%B5%81%E6%B7%BB%E5%8A%A0%E5%AD%97%E5%B9%95%E5%92%8C%E6%8D%95%E6%8D%89%E5%85%B3%E9%94%AE%E4%BF%A1%E6%81%AF",
+        "title": "直播流转录：如何添加字幕和捕捉关键信息 - Vomo",
+        "domain": "vomo.ai"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-transcription",
+        "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+        "domain": "usefulai.com"
+      },
+      {
+        "url": "https://ossrs.net/lts/zh-cn/blog/live-streams-transcription",
+        "title": "Oryx - 直播流AI自动字幕 - SRS",
+        "domain": "ossrs.net"
+      },
+      {
+        "url": "https://screenapp.io/features/online-live-caption-tool",
+        "title": "Live Transcribe - Free Live Audio to Text Converter - ScreenApp",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://screenapp.io/features/transcribe-live-audio-to-text",
+        "title": "Live Audio to Text Converter - Real-Time Transcription Tool",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://transcribe.com/services/live-transcription",
+        "title": "Live Transcription Service | Transcribe App & Web Editor",
+        "domain": "transcribe.com"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "speechnotes.co"
+      },
+      {
+        "url": "https://accuratescribe.ai/zh-CN/real-time-closed-captioning",
+        "title": "实时字幕 - AI直播字幕工具",
+        "domain": "accuratescribe.ai"
+      },
+      {
+        "url": "https://www.livetranscribe.app/",
+        "title": "Live Transcribe - Caption speech in real time",
+        "domain": "livetranscribe.app"
+      },
+      {
+        "url": "https://speakai.co/live-transcription/",
+        "title": "Live Transcription - Try Speak Free!",
+        "domain": "speakai.co"
+      },
+      {
+        "url": "https://vidtoon.com/streamr/",
+        "title": "Automatic AI Video Transcription - 99% Accurate Transcripts - Streamr",
+        "domain": "vidtoon.com"
+      },
+      {
+        "url": "https://cn.jollytoday.com/subtitle-generator/generate-subtitles-for-livestream-video/",
+        "title": "为直播视频生成精准字幕：AI 识别，免费翻译",
+        "domain": "jollytoday.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 16,
+    "total_all": 24
+  },
+  "response_stats": {
+    "total_length": 1947,
+    "citation_count": 8,
+    "chars_with_citations": 141
+  }
+}

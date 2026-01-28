@@ -1,0 +1,94 @@
+{
+  "run_id": "P067_r3",
+  "account_type": "enterprise",
+  "prompt": "How can I add a live translation service for official meetings?",
+  "metadata": {
+    "hidden_queries": [],
+    "sonic_classification": null,
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 660,
+        "end_idx": 661
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0059081",
+      "url_position": 635,
+      "claim_text": "You can add “live translation” to official meetings in two main ways. Pick based on how formal/accurate you need it to be. 1) Decide what “live translation” means for you Translated captions (AI text on screen): fast, cheaper, OK for internal meetings, not perfect for legal nuance. Simultaneous interpretation (human audio channels): best for official proceedings, hearings, negotiations. Hybrid (human interpreters + AI captions): common: interpreters for the floor + AI captions for accessibility. 2) If you use Zoom / Teams / Webex, start with built-ins Zoom: enable Translated Captions (real-time caption translation). Zoom",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 843,
+        "end_idx": 844
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.microsoft.com/en-us/office/use-live-captions-in-microsoft-teams-meetings-4be2d304-f675-4b57-8347-cbd000a21260",
+      "url_position": 885,
+      "claim_text": "Microsoft Teams: use live translated captions / multilingual meeting features (licensing may be required, often Teams Premium or Microsoft 365 Copilot). Microsoft Support+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 971,
+        "end_idx": 972
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://help.webex.com/en-us/article/nqzpeei/Show-real-time-translation-and-transcription-in-Meetings-and-Webinars",
+      "url_position": 1118,
+      "claim_text": "Webex: host can enable real-time translation and transcription for meetings/webinars. Webex Help Center",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1316,
+        "end_idx": 1317
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://kudo.ai/",
+      "url_position": 1549,
+      "claim_text": "This is the quickest path if captions-only is acceptable. 3) If you need “official-grade” interpretation, add a language-access platform Use a platform that can run professional interpreters, handle virtual/hybrid/in-room, and provide multiple language audio channels, plus optional captions (e.g., KUDO). KUDO",
+      "url_index": 3
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0059081",
+        "title": "support.zoom.com",
+        "domain": "support.zoom.com"
+      },
+      {
+        "url": "https://support.microsoft.com/en-us/office/multilingual-speech-recognition-in-microsoft-teams-650cb6d2-8a33-40e7-840d-36bb90216aa4",
+        "title": "support.microsoft.com",
+        "domain": "support.microsoft.com"
+      },
+      {
+        "url": "https://help.webex.com/en-us/article/nqzpeei/Show-real-time-translation-and-transcription-in-Meetings-and-Webinars",
+        "title": "help.webex.com",
+        "domain": "help.webex.com"
+      }
+    ],
+    "additional": [],
+    "total_cited": 3,
+    "total_additional": 0,
+    "total_all": 3
+  },
+  "response_stats": {
+    "total_length": 2859,
+    "citation_count": 4,
+    "chars_with_citations": 4
+  }
+}

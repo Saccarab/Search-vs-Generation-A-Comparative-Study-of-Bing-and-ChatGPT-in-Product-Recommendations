@@ -1,0 +1,365 @@
+{
+  "run_id": "P076_r3",
+  "account_type": "enterprise",
+  "prompt": "What is the best free AI video translator?",
+  "metadata": {
+    "hidden_queries": [
+      "best free AI video translator tools",
+      "free AI video translator software translate videos free"
+    ],
+    "sonic_classification": {
+      "latency_ms": 15.311615075916052,
+      "simple_search_prob": 0.9731116982073271,
+      "complex_search_prob": 0.003044871133814628,
+      "no_search_prob": 0.023843430658858248,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best free AI video translator tools"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 286,
+        "end_idx": 305
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://aivideotranslator.ai/",
+      "url_position": 293,
+      "claim_text": "Here are some of the best free AI video translator options (good accuracy and minimal cost): 1) Web-based free translators (no install) AI Video Translator (aivideotranslator.ai) – instant free translation with lip sync support; no sign-up required, about 30+ languages. AI Video Translator",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 425,
+        "end_idx": 444
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://wayin.ai/tools/video-translator/",
+      "url_position": 444,
+      "claim_text": "WayinVideo (Wayin.ai) – free tool to auto-transcribe + translate into 100+ languages with subtitle output. WayinVideo",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 553,
+        "end_idx": 572
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://screenapp.io/translator",
+          "title": "AI Translators - Free Video & Audio Translation Tools | ScreenApp",
+          "snippet": "Free AI translators for videos, audio files, and podcasts. Translate content to 50+ languages instantly. Video dubbing and localization tools.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        }
+      ],
+      "inline_url": "https://screenapp.io/translator",
+      "url_position": 594,
+      "claim_text": "ScreenApp free AI translator – translate videos and audio to 50+ languages without credit card. ScreenApp",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 684,
+        "end_idx": 703
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://airmore.ai/video-translation",
+          "title": "Free Online Video Translation With AI",
+          "snippet": "Best AI Video Translatior to translate video into 10+ languages with natural voices. Match the video voice and keep background audio.",
+          "domain": "airmore.ai",
+          "ref_type": "search",
+          "ref_index": 7,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_7"
+        }
+      ],
+      "inline_url": "https://airmore.ai/video-translation",
+      "url_position": 743,
+      "claim_text": "AirMore AI video translator – free online translation (10+ languages) including natural voice options. AirMore AI",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 822,
+        "end_idx": 842
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://videotranslator.blipcut.com/",
+      "url_position": 910,
+      "claim_text": "BlipCut AI Video Translator – free with lip sync, voice cloning, and multi-speaker support in many languages. Video Translator",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 948,
+        "end_idx": 954
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vidnoz.com/video-translate.html",
+      "url_position": 1050,
+      "claim_text": "Vidnoz AI video translator – translates to 140+ languages free, with AI dubbing & subtitles. Vidnoz",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1085,
+        "end_idx": 1105
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/tools/video-translator",
+      "url_position": 1211,
+      "claim_text": "2) Tools with generous free tiers Murf AI – free translation for up to ~100 min of video; 40+ languages. Murf AI",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1328,
+        "end_idx": 1346
+      },
+      "citation_token": "citeturn0news27",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/ai-platforms-assistants/metas-ai-translation-remakes-reels-in-your-language",
+          "title": "Meta's AI translation remakes Reels in your language",
+          "snippet": "Meta has introduced a new AI-powered feature that automatically translates, dubs, and lip-syncs Reels on Facebook and Instagram into different languages, currently supporting English, Spanish, Hindi, and Portuguese. This enhancement allows users to experience videos as if they were originally created in their native language, complete with voice cloning that mimics the original speaker’s tone and cadence, and optional lip-syncing for added realism. While this service isn't available for all users, Facebook creators with over 1,000 followers and all public Instagram accounts in supported countries can access the feature for free.\n\nClearly labeled with a \"Translated with Meta AI\" tag, viewers have the option to disable translations or keep the original audio. This move builds on Meta’s history of multilingual content tools like auto-captions and subtitled Stories. However, it marks the company’s first use of AI for voice cloning and lip-syncing, giving Meta a potential advantage over competitors like YouTube and TikTok, who offer translation overlays and captions but not real-time dubbing with voice sync. The innovation aims to make short-form content more globally accessible and culturally inclusive.",
+          "domain": "www.techradar.com",
+          "ref_type": "news",
+          "ref_index": 27,
+          "turn_index": 0,
+          "pub_date": 1760061600,
+          "ref_key": "0_news_27"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/ai-platforms-assistants/metas-ai-translation-remakes-reels-in-your-language",
+      "url_position": 1472,
+      "claim_text": "(These often require sign-up and may have time limits.) 3) Platform-specific free options Meta AI for Reels – auto-translates and dubs Instagram/Facebook Reels into supported languages for free if eligible. TechRadar",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1681,
+        "end_idx": 1700
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://usefulai.com/tools/ai-video-translators",
+          "title": "7 Best AI Video Translators in 2025",
+          "snippet": "7 Best AI Video Translators in 2025 By Alex • Updated Mar 12, 2025 AI Video Translators allow you to effortlessly translate videos to a different language, truly opening up possibilities to reach a wider audience. After comprehensive testing of 21 options, we are excited to present the top 7 AI Video Translators.",
+          "domain": "usefulai.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1741737600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://usefulai.com/tools/ai-video-translators",
+      "url_position": 1913,
+      "claim_text": "Skeptical take: The free translations usually rely on automatic subtitle generation and machine translation. Accuracy varies with audio quality, accents, and language pair; output often needs manual correction for professional use. Paid tiers usually offer better voice quality, longer videos, and true voice-cloned dubbing. Useful AI",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://aivideotranslator.ai/",
+        "title": "AI Video Translator – Free Video Translation Tool (No Sign-Up)",
+        "domain": "AI Video Translator"
+      },
+      {
+        "url": "https://wayin.ai/tools/video-translator/",
+        "title": "Free AI Video Translator - Translate 100+ Languages Instantly - WayinVideo",
+        "domain": "WayinVideo"
+      },
+      {
+        "url": "https://screenapp.io/translator",
+        "title": "AI Translators - Free Video & Audio Translation Tools | ScreenApp",
+        "domain": "ScreenApp"
+      },
+      {
+        "url": "https://airmore.ai/video-translation",
+        "title": "Free Online Video Translation With AI",
+        "domain": "AirMore AI"
+      },
+      {
+        "url": "https://videotranslator.blipcut.com/",
+        "title": "Free AI Video Translator: Translate Videos to 140+ Languages",
+        "domain": "Video Translator"
+      },
+      {
+        "url": "https://www.vidnoz.com/video-translate.html",
+        "title": "AI Video Translator Free - Vidnoz",
+        "domain": "Vidnoz"
+      },
+      {
+        "url": "https://murf.ai/tools/video-translator",
+        "title": "Free AI Video Translator: Translate Videos Online in 40+ Languages",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://www.techradar.com/ai-platforms-assistants/metas-ai-translation-remakes-reels-in-your-language",
+        "title": "Meta's AI translation remakes Reels in your language",
+        "domain": "TechRadar"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-video-translators",
+        "title": "7 Best AI Video Translators in 2025",
+        "domain": "Useful AI"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.mobileappdaily.com/products/best-ai-video-translators",
+        "title": "11 Best AI Video Translators For 2026: Tested & Ranked",
+        "domain": "mobileappdaily.com"
+      },
+      {
+        "url": "https://www.sitebard.com/ai-video-translator-online/",
+        "title": "Top 6 AI Video Translator Tools in 2026 [Free & Paid]",
+        "domain": "sitebard.com"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-ai-video-translator",
+        "title": "8 Best AI Video Translators of 2025 (For Multilingual Transcription ...",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://geekflare.com/best/best-ai-video-translators/",
+        "title": "Best AI Video Translator for 2025 - Geekflare",
+        "domain": "geekflare.com"
+      },
+      {
+        "url": "https://www.unite.ai/best-ai-video-translation-tools/",
+        "title": "10 Best AI Video Translation Tools (January 2026) - Unite.AI",
+        "domain": "unite.ai"
+      },
+      {
+        "url": "https://zeemo.ai/tools/video-translator",
+        "title": "Free Online Video Translator With High Accuracy - Zeemo AI",
+        "domain": "zeemo.ai"
+      },
+      {
+        "url": "https://maestra.ai/tools/video-translator",
+        "title": "AI Video Translator with Voice Cloning & Lip Sync | Free Trial",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://gaga.art/blog/ai-video-translator/",
+        "title": "5 Best AI Video Translator Tools in 2026 - gaga.art",
+        "domain": "gaga.art"
+      },
+      {
+        "url": "https://wavel.ai/solutions/ai-video-translator",
+        "title": "Free Instant AI Video Translator with Accurate Lip Sync",
+        "domain": "wavel.ai"
+      },
+      {
+        "url": "https://www.camb.ai/blog-post/free-ai-video-translators-best-options-and-features",
+        "title": "Best Free AI Video Translators & Dubbing Tools | CAMB.AI",
+        "domain": "camb.ai"
+      },
+      {
+        "url": "https://akool.com/ai-tools/ai-video-translator",
+        "title": "Free AI Video Translator for Creators and Agencies",
+        "domain": "akool.com"
+      },
+      {
+        "url": "https://www.d-id.com/blog/best-ai-video-translators/",
+        "title": "10 Best AI Video Translators of 2024 [Free & Paid Tools Reviewed]",
+        "domain": "d-id.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 12,
+    "total_all": 21
+  },
+  "response_stats": {
+    "total_length": 2269,
+    "citation_count": 9,
+    "chars_with_citations": 159
+  }
+}

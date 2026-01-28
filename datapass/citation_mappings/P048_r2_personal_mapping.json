@@ -1,0 +1,321 @@
+{
+  "run_id": "P048_r2",
+  "account_type": "personal",
+  "prompt": "Can I add a live translation app to calls?",
+  "metadata": {
+    "hidden_queries": [
+      "add live translation app to phone calls can you translate calls live",
+      "can I add live translation to voice calls smartphone live translation calls"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.300650959834456,
+      "simple_search_prob": 0.9161788027753048,
+      "complex_search_prob": 0.003485699904396487,
+      "no_search_prob": 0.08033549732029868,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 407,
+        "end_idx": 417
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.apple.com/guide/iphone/translate-messages-calls-and-conversations-iph22b72984d/ios",
+      "url_position": 408,
+      "claim_text": "Yes — you can add live translation to calls, but how depends on your phone and tools: 1) Built-in phone features (no extra app): iPhone (iOS 26 and later): Apple offers Live Translation during regular phone calls (and FaceTime), showing and speaking translated dialogue in your chosen language. It works right in the Phone app. Availability depends on device model and languages supported. Apple Support+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 614,
+        "end_idx": 646
+      },
+      "citation_token": "citeturn0search1turn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://support.google.com/pixelphone/answer/16477051?hl=en",
+          "title": "Use Voice Translate - Pixel Phone Help",
+          "snippet": "Voice Translate translates your voice into the selected language and mimics your natural voice and tone in real time. You can use it for situations like ...",
+          "domain": "support.google.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://support.google.com/pixelphone/thread/366550262/is-live-call-translation-only-available-in-pixel-10?hl=en&utm_source=chatgpt.com",
+          "title": "Is Live call translation only available in Pixel 10?",
+          "snippet": "Aug 20, 2025 — I have found instructions about live caption translation but no real time voice translation. I have used the live translation in-person but ...Read more",
+          "domain": "google.com",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://support.google.com/pixelphone/answer/16477051?hl=en",
+      "url_position": 687,
+      "claim_text": "Google Pixel (Pixel 10+): Pixel phones have Voice Translate/Live Translate for phone calls that translates speech live and can reproduce it in the other language. Google Help+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 831,
+        "end_idx": 864
+      },
+      "citation_token": "citeturn0search4turn0search48",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.samsung.com/us/support/answer/ANS10000935/",
+          "title": "Use Live Translate on Galaxy phones and tablets",
+          "snippet": "This AI feature automatically translates voice calls, face to face conversations, and text messages into your preferred languages.",
+          "domain": "www.samsung.com",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_4"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Galaxy_AI",
+          "title": "Galaxy AI",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 48,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_48"
+        }
+      ],
+      "inline_url": "https://www.samsung.com/us/support/answer/ANS10000935/",
+      "url_position": 937,
+      "claim_text": "Samsung Galaxy (with One UI & Galaxy AI): Some Galaxy phones include Live Translate in the Phone app (under Call Assist), translating spoken languages two ways during calls. Samsung br+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1171,
+        "end_idx": 1177
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ezdubs.ai/phone-call-translator",
+      "url_position": 1304,
+      "claim_text": "2) Third-party translation apps: There are apps that translate phone calls in real-time or near real-time. Examples include dedicated call translator services (like EzDubs, AI Phone Translator, Lingvanex/“Phone Call Translator”), which handle calls through the app and translate speech as you talk. EzDubs+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1455,
+        "end_idx": 1475
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=en-GB",
+      "url_position": 1599,
+      "claim_text": "3) Workarounds: If built-in or app-integrated translation isn’t available on your device, you can use a second device running Google Translate or similar apps to listen and translate live speech during a call, though that’s less seamless. Google Help",
+      "url_index": 4
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://support.apple.com/guide/iphone/translate-messages-calls-and-conversations-iph22b72984d/ios",
+        "title": "Translate messages, calls, and conversations on iPhone",
+        "domain": "Apple Support"
+      },
+      {
+        "url": "https://support.google.com/pixelphone/answer/16477051?hl=en",
+        "title": "Use Voice Translate - Pixel Phone Help",
+        "domain": "Google Help"
+      },
+      {
+        "url": "https://www.samsung.com/us/support/answer/ANS10000935/",
+        "title": "Use Live Translate on Galaxy phones and tablets",
+        "domain": "Samsung br"
+      },
+      {
+        "url": "https://ezdubs.ai/phone-call-translator",
+        "title": "Live Phone Call Translator App",
+        "domain": "EzDubs"
+      },
+      {
+        "url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=en-GB",
+        "title": "Hear live speech-to-speech translations with Live Translate",
+        "domain": "Google Help"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.samsung.com/latin_en/support/mobile-devices/how-to-use-live-translate-for-phone-calls-on-the-galaxy-s24/",
+        "title": "How to use Live translate for phone calls with Galaxy AI",
+        "domain": "samsung.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=i8yttpGMBxI",
+        "title": "Translate Phone Calls As You're Talking (iOS 26)",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=ScXxnegsSW0",
+        "title": "AI Phone Call Translator App: Translate Phone Calls in Real ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=2MineY-zyYI",
+        "title": "How to use Live Translation on iPhone and with your AirPods ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=ISFBoNGoIdY",
+        "title": "How To Turn On Live Translate During Call In Android ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=fujNyjdWGac",
+        "title": "It's HERE: Real-time Translation Phone App - AI Phone Review",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://store.google.com/intl/en/ideas/articles/pixel-live-translate/",
+        "title": "Translate the world in real time, now with your voice.",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/pixelphone/thread/366550262/is-live-call-translation-only-available-in-pixel-10?hl=en",
+        "title": "Is Live call translation only available in Pixel 10?",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=en",
+        "title": "Hear live speech to speech translations with Live translate",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/translate/thread/1749655/how-do-i-google-translate-during-a-phone-call?hl=en",
+        "title": "How do I \"google translate\" during a phone call?",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/GooglePixel/comments/17a3buu/live_translate_interpreter_mode_in_a_phone_call/",
+        "title": "Live Translate + Interpreter Mode in a phone call?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/GooglePixel/comments/1n8xzam/live_translate_feature_on_phone_calls/",
+        "title": "Live Translate Feature on Phone Calls : r/GooglePixel",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.justanswer.com/cell-phones/mewqz-app-translate.html",
+        "title": "Is there an app or other way to translate each other on a ...",
+        "domain": "justanswer.com"
+      },
+      {
+        "url": "https://ezdubs.ai/",
+        "title": "EzDubs: Best Phone Call Translator App for iOS and Android",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://vacapo.cc/en/vacapo-translate/",
+        "title": "Automated voice call translator",
+        "domain": "vacapo.cc"
+      },
+      {
+        "url": "https://blog.google/products-and-platforms/products/search/gemini-capabilities-translation-upgrades/",
+        "title": "Bringing state-of-the-art Gemini translation capabilities to ...",
+        "domain": "blog.google"
+      },
+      {
+        "url": "https://blog.google/products/translate/language-learning-live-translate/",
+        "title": "Google Translate adds live translation and language learning",
+        "domain": "blog.google"
+      },
+      {
+        "url": "https://support.apple.com/en-us/123720",
+        "title": "Use Live Translation on iPhone",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/top-6-phone-call-translators",
+        "title": "Top 6 Phone Call Translators You Should Try",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://www.macworld.com/article/2816543/everyone-will-want-to-try-apples-live-translation-this-fall-heres-where-to-find-it.html",
+        "title": "Live translation in iOS 26: How it works and where to find it",
+        "domain": "macworld.com"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 20,
+    "total_all": 25
+  },
+  "response_stats": {
+    "total_length": 1883,
+    "citation_count": 5,
+    "chars_with_citations": 101
+  }
+}

@@ -1,0 +1,357 @@
+{
+  "run_id": "P063_r2",
+  "account_type": "enterprise",
+  "prompt": "What is the best machine translation tool for live translation that saves context?",
+  "metadata": {
+    "hidden_queries": [
+      "best machine translation tool for live translation that saves context",
+      "实时翻译工具 保持上下文 machine translation tool live translation context saving"
+    ],
+    "sonic_classification": {
+      "latency_ms": 2.6203490560874343,
+      "simple_search_prob": 0.9548307438541255,
+      "complex_search_prob": 0.03738313118585369,
+      "no_search_prob": 0.007786124960020839,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best machine translation tool for live translation that saves context"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 580,
+        "end_idx": 612
+      },
+      "citation_token": "citeturn0search4turn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/tools/real-time-translator",
+          "title": "Real Time Translator - AI Live Translation",
+          "snippet": "Maestra’s AI-powered real-time translator makes live speech translation seamless and accessible. Whether you’re hosting a global webinar or a team meeting, Maestra provides simultaneous interpretation through captions, no need for expensive equipment or interpreters.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://maestra.ai/blogs/best-live-translation-apps",
+      "url_position": 572,
+      "claim_text": "For live machine translation that actually saves and uses context (not just word-by-word dictionary output), the field splits into two rough categories: 1) Live translation with contextual understanding & session memory (best for meetings, events, streams) These tools handle streaming audio, maintain context across turns, and often save transcripts/translation history: Maestra AI – real-time speech translation, live captions, stores transcripts and context for later review. Works in meetings, webinars, live streams, exportable subtitles/transcripts. Maestra AI+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 766,
+        "end_idx": 798
+      },
+      "citation_token": "citeturn0search0turn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.jotme.io/zh-cn/blog/best-chinese-to-english-live-translation",
+          "title": "最佳中英实时翻译工具：五大精选",
+          "snippet": "‍ 我们如何选择最佳的中文到英语实时翻译软件？ 在研究最好的中文实时翻译软件时，我们最关心的是准确性。与英语和其他欧洲语言相比，中文更具挑战性。没有时态、复数或冠词，单词之间不使用空格。此外，人们使用许多成语和带有文化色彩的短语，这些短语无法按字面意思翻译。 最具挑战 ...",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": 1755820800,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 783,
+      "claim_text": "JotMe – real-time multilingual translation integrated with meetings (Zoom/Meet/Teams), keeps meeting context, summaries, and notes post-session. jotme.io+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 951,
+        "end_idx": 984
+      },
+      "citation_token": "citeturn0search0turn0search23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 989,
+      "claim_text": "Wordly AI – live captions and translation for events with multi-language output; less about post-session memory but strong contextual captions. jotme.io+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1134,
+        "end_idx": 1154
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://polypal.ai/",
+      "url_position": 1189,
+      "claim_text": "PolyPal (by Timekettle) – real-time subtitles and translation with low latency; good for live sessions though tools vary on storing history. Polypal",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1529,
+        "end_idx": 1540
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+      "url_position": 1580,
+      "claim_text": "2) General AI/MT forms with contextual quality (less focus on live sessions) Good for chunked live text or chat, but not full meeting context tracking: Google Translate (Conversation/Live) – now adding real-time translation powered by Gemini to headphones and apps; good for quick live conversation but doesn’t save structured context/history long-term. Tom's Guide",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1696,
+        "end_idx": 1716
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://contentmavericks.com/best-machine-translation-software/",
+          "title": "7 Best Machine Translation Software 2026 (50 Top MT Programs)",
+          "snippet": "Microsoft Azure Translator is a cloud-based neural machine translation software that renders scalable, multilingual translations to websites, applications, tools and software.",
+          "domain": "contentmavericks.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": 1767052800,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://contentmavericks.com/best-machine-translation-software/",
+      "url_position": 1875,
+      "claim_text": "Microsoft Translator / Azure Translator – live speech translation APIs, contextual quality, but you’d need to build your own storage layer. Content Mavericks",
+      "url_index": 5
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://maestra.ai/blogs/best-live-translation-apps",
+        "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://polypal.ai/",
+        "title": "PolyPal - AI Live Translation & Real-time Subtitles by Timekettle",
+        "domain": "Polypal"
+      },
+      {
+        "url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+        "title": "Google Translate is bringing real-time translations powered by Gemini to your headphones",
+        "domain": "Tom's Guide"
+      },
+      {
+        "url": "https://contentmavericks.com/best-machine-translation-software/",
+        "title": "7 Best Machine Translation Software 2026 (50 Top MT Programs)",
+        "domain": "Content Mavericks"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.toptut.com/best-machine-ai-translation-tools/",
+        "title": "The 15 Best Machine (AI) Translation Tools to Use in 2026",
+        "domain": "toptut.com"
+      },
+      {
+        "url": "https://summaryai.app/blog/the-best-translation-app-complete-guide/",
+        "title": "Best Translation App 2025: Complete AI Guide | Summary AI",
+        "domain": "summaryai.app"
+      },
+      {
+        "url": "https://www.jotme.io/zh-cn/blog/best-chinese-to-english-live-translation",
+        "title": "最佳中英实时翻译工具：五大精选",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://crowdin.com/blog/best-machine-translation-software",
+        "title": "The List of Best Machine Translation Software Out There",
+        "domain": "crowdin.com"
+      },
+      {
+        "url": "https://www.allaboutai.com/best-ai-tools/productivity/translation/",
+        "title": "10 Best AI Tools for Translation in 2026 | [Accuracy Tested]",
+        "domain": "allaboutai.com"
+      },
+      {
+        "url": "https://www.machinetranslation.com/blog/best-machine-translation-software",
+        "title": "The 10 Best Machine Translation Software in 2025",
+        "domain": "machinetranslation.com"
+      },
+      {
+        "url": "https://taia.io/resources/blog/best-translation-software",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools by Features ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://www.tomedes.com/translator-hub/best-machine-ai-translation-software",
+        "title": "10 Best AI Translation Software & Tools for 2025 - Tomedes",
+        "domain": "tomedes.com"
+      },
+      {
+        "url": "https://blog.mzh.ren/zh/posts/2025/03/live-captions-translator/",
+        "title": "看片神器：实时字幕翻译 Live Captions Translator（附下载） – 码农真经的博客",
+        "domain": "mzh.ren"
+      },
+      {
+        "url": "https://www.g2.com/articles/machine-translation-tools",
+        "title": "10 Best Machine Translation Tools to Consider in 2024 - G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://translate.google.com/",
+        "title": "Translation",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://fanyi.youdao.com/",
+        "title": "有道翻译_文本、文档、网页、在线即时翻译",
+        "domain": "youdao.com"
+      },
+      {
+        "url": "https://maestra.ai/tools/real-time-translator",
+        "title": "Real Time Translator - AI Live Translation",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://live.maestra.ai/zh/",
+        "title": "实时语音翻译 | 直播对话即时翻译器 - live.maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://cloud.tencent.com/product/tmt",
+        "title": "机器翻译_智能翻译_自动翻译-腾讯云",
+        "domain": "tencent.com"
+      },
+      {
+        "url": "https://translate.alibaba.com/",
+        "title": "阿里翻译-多领域多语种在线机器翻译",
+        "domain": "alibaba.com"
+      },
+      {
+        "url": "https://www.agora.io/en/products/real-time-translation/",
+        "title": "Real-Time Translation",
+        "domain": "agora.io"
+      },
+      {
+        "url": "https://talkao.com/real-time-translator/",
+        "title": "Real time translator - free live translator - TALKAO",
+        "domain": "talkao.com"
+      },
+      {
+        "url": "https://ehlion.com/magazine/translation-software/",
+        "title": "The 5 Best Machine Translation Tools in 2025 - EHLION",
+        "domain": "ehlion.com"
+      },
+      {
+        "url": "https://www.wordly.ai/live-translation",
+        "title": "Live Translation – Real-Time AI Audio & Caption Translations",
+        "domain": "wordly.ai"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 20,
+    "total_all": 25
+  },
+  "response_stats": {
+    "total_length": 2360,
+    "citation_count": 6,
+    "chars_with_citations": 148
+  }
+}

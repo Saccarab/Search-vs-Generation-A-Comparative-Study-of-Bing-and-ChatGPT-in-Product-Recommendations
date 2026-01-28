@@ -1,0 +1,660 @@
+{
+  "run_id": "P035_r1",
+  "account_type": "personal",
+  "prompt": "Can you list translation services with live interpreters and their 2-day pricing?",
+  "metadata": {
+    "hidden_queries": [
+      "translation services with live interpreters 2-day pricing live interpreter translation services cost pricing",
+      "translation services offering live interpreters pricing for short sessions or 2 day conferences interpreter services pricing translation live interpreters",
+      "LanguageLine Solutions interpreting pricing and plans or packages live interpreters LanguageLine Solutions pricing",
+      "Boostlingo live interpreter services pricing and plans for interpreting services"
+    ],
+    "sonic_classification": {
+      "latency_ms": 2.604221925139427,
+      "simple_search_prob": 0.9262413190060105,
+      "complex_search_prob": 0.06882449574632779,
+      "no_search_prob": 0.004934185247661732,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "translation services with live interpreters 2-day pricing live interpreter translation services cost pricing"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 353,
+        "end_idx": 428
+      },
+      "citation_token": "entity[\"local_business\",\"LanguageLine Solutions\",1,{\"location\":[\"USA\"]}]",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.languageline.com/interpreting",
+      "url_position": 481,
+      "claim_text": "Here’s a concise list of translation/interpreting services that offer live interpreters along with typical pricing structures you can expect for a 2-day (conference/extended) engagement or short-term use. Specific 2-day flat rates often require custom quotes, but I’ve included common rate ranges you can use to estimate costs: 1) LanguageLine Solutions 2.9•Translation service•Open What: Live interpreters (phone, video remote, on-site, 240+ languages). LanguageLine Solutions",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 431,
+        "end_idx": 526
+      },
+      "citation_token": "entity_metadata[\"local_business\",\"one-line\",\"LanguageLine Solutions\",1,{\"location\":[\"USA\"]}]",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.languageline.com/interpreting/self-service",
+      "url_position": 677,
+      "claim_text": "Pricing (estimates): On-demand pay-as-you-go: $3.95/min audio / $4.95/min video – for individual calls (≈ ~$237–$297/hr video) LanguageLine Solutions",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 604,
+        "end_idx": 623
+      },
+      "citation_token": "citeturn1search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.languageline.com/interpreting",
+          "title": "Interpreting Services",
+          "snippet": "LanguageLine offers 24/7 on-site & on-demand interpreting services in 240+ languages, including sign language, to break down language barriers.",
+          "domain": "www.languageline.com",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_8"
+        }
+      ],
+      "inline_url": "https://www.languageline.com/interpreting/self-service",
+      "url_position": 677,
+      "claim_text": "Pricing (estimates): On-demand pay-as-you-go: $3.95/min audio / $4.95/min video – for individual calls (≈ ~$237–$297/hr video) LanguageLine Solutions",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 764,
+        "end_idx": 783
+      },
+      "citation_token": "citeturn1search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.languageline.com/interpreting/self-service",
+          "title": "Pay as You Go Interpreting Services",
+          "snippet": "Rates are $3.95/min for audio interpretation and $4.95/min for video interpretation—only for the minutes used. Charges are automatically applied to your credit ...Read more",
+          "domain": "www.languageline.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_0"
+        }
+      ],
+      "inline_url": "https://www.languageline.com/interpreting/self-service",
+      "url_position": 677,
+      "claim_text": "Pricing (estimates): On-demand pay-as-you-go: $3.95/min audio / $4.95/min video – for individual calls (≈ ~$237–$297/hr video) LanguageLine Solutions",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 959,
+        "end_idx": 978
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/blog/translator-cost",
+      "url_position": 901,
+      "claim_text": "In-person scheduled interpreting: Typically booked by hour or day — agencies often charge $500–$1,500+ per interpreter per day for events (industry averages). Wordly",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1352,
+        "end_idx": 1371
+      },
+      "citation_token": "citeturn1search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://boostlingo.com/resources/pricing/",
+          "title": "Get Pricing | Interpreter Services",
+          "snippet": "Learn more about Boostlingo pricing. Access remote interpreting, management software, and more. Get your quote today!",
+          "domain": "boostlingo.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_1"
+        }
+      ],
+      "inline_url": "https://boostlingo.com/resources/pricing/",
+      "url_position": 1284,
+      "claim_text": "Estimate for 2 days: 1 interpreter: $1,000–$3,000+ Multiple languages/scopes: $2,000–$6,000+ (Exact flat 2-day packages are custom quotes via sales/consultation.) 2) Boostlingo (Interpretation & interpreter network platform) What: Live interpreters on demand / scheduled, remote (phone/video); subscription-based access. Boostlingo",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1496,
+        "end_idx": 1515
+      },
+      "citation_token": "citeturn1search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://boostlingo.com/resources/pricing/",
+          "title": "Get Pricing | Interpreter Services",
+          "snippet": "Learn more about Boostlingo pricing. Access remote interpreting, management software, and more. Get your quote today!",
+          "domain": "boostlingo.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_1"
+        }
+      ],
+      "inline_url": "https://boostlingo.com/resources/pricing/",
+      "url_position": 1454,
+      "claim_text": "Pricing (estimates): Subscription model: Monthly fees with interpreter access; rates vary (not publicly listed). Boostlingo",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1590,
+        "end_idx": 1610
+      },
+      "citation_token": "citeturn1search11",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://boostlingo.com/solutions/interpreter-services/on-demand/",
+          "title": "On-Demand Interpretation | Phone & Video Services",
+          "snippet": "Affordable Pricing. Save 20% on phone and video interpreting services with Boostlingo without sacrificing quality.",
+          "domain": "boostlingo.com",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_11"
+        }
+      ],
+      "inline_url": "https://boostlingo.com/solutions/interpreter-services/on-demand/",
+      "url_position": 1576,
+      "claim_text": "On-demand service savings: ~20% savings vs typical pay-as-you-go. Boostlingo",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 2153,
+        "end_idx": 2172
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.interprefy.com/pricing",
+      "url_position": 2165,
+      "claim_text": "Estimate for events (2 days): Custom quote required, but platform users typically budget per interpreter per day similar to industry (e.g., ~$500–$1,500/day). 3) Interpreter Agencies with Event/Conference Services (General industry providers — pricing often custom per event) These providers don’t publish fixed 2-day price sheets online, but standard industry pricing applies: Interprefy (remote simultaneous interpretation): Custom pricing; interpreters billed based on event duration, languages, setup. Interprefy",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 2261,
+        "end_idx": 2280
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.tarjimly.org/",
+      "url_position": 2288,
+      "claim_text": "Tarjimly (remote live interpretation): Pricing on request; tailored quotes. Tarjimly",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 2429,
+        "end_idx": 2448
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/blog/translator-cost",
+      "url_position": 2455,
+      "claim_text": "Conference interpreters from agencies (general): Typical rates: $500–$1,500+/day per interpreter for simultaneous interpretation. Wordly",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 2510,
+        "end_idx": 2516
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.stenomatic.ai/post/simultaneous-interpretation-rates-per-hour",
+      "url_position": 2567,
+      "claim_text": "Highly specialized languages/industries may cost more. Stenomatic",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 2852,
+        "end_idx": 2871
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/blog/translator-cost",
+      "url_position": 2937,
+      "claim_text": "Estimate for 2 days: 2 interpreters (simultaneous): ~$2,000 – $6,000+ Equipment/booths not included (if needed) Pricing Ranges You Can Use for Budgeting (These are typical interpreter cost ranges — not tied to one provider) Hourly live interpreter: ~$80 – $250/hr per interpreter. Wordly",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 2932,
+        "end_idx": 2951
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/blog/translator-cost",
+      "url_position": 3042,
+      "claim_text": "Full day live interpreter: ~$500 – $1,500+ per day. Wordly",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 3055,
+        "end_idx": 3075
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://lionpeopleglobal.com/consecutive-vs-simultaneous-interpreting/",
+      "url_position": 3202,
+      "claim_text": "Simultaneous conference interpreters: ~$750 – $1,200/day (often with a 2-interpreter minimum). Lion People Global",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 3165,
+        "end_idx": 3175
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.interpreters.com/pricing/video-remote-interpretation/",
+      "url_position": 3370,
+      "claim_text": "Video remote interpreting: ~$2 – $5+/minute (~$120–$300/hr) if billed by minute. Interpreters",
+      "url_index": 13
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.languageline.com/interpreting",
+        "title": "Interpreting Services",
+        "domain": "LanguageLine Solutions"
+      },
+      {
+        "url": "https://www.languageline.com/interpreting/self-service",
+        "title": "Pay as You Go Interpreting Services",
+        "domain": "LanguageLine Solutions"
+      },
+      {
+        "url": "https://www.wordly.ai/blog/translator-cost",
+        "title": "Translation Cost vs Translator Cost: What You Need to Know",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://boostlingo.com/resources/pricing/",
+        "title": "Get Pricing | Interpreter Services",
+        "domain": "Boostlingo"
+      },
+      {
+        "url": "https://boostlingo.com/solutions/interpreter-services/on-demand/",
+        "title": "On-Demand Interpretation | Phone & Video Services",
+        "domain": "Boostlingo"
+      },
+      {
+        "url": "https://www.interprefy.com/pricing",
+        "title": "Flexible Pricing Tailored to Your Needs",
+        "domain": "Interprefy"
+      },
+      {
+        "url": "https://www.tarjimly.org/",
+        "title": "Fast, affordable and purpose-driven language services",
+        "domain": "Tarjimly"
+      },
+      {
+        "url": "https://www.stenomatic.ai/post/simultaneous-interpretation-rates-per-hour",
+        "title": "Simultaneous Interpretation Rates Per Hour",
+        "domain": "Stenomatic"
+      },
+      {
+        "url": "https://lionpeopleglobal.com/consecutive-vs-simultaneous-interpreting/",
+        "title": "Consecutive Vs Simultaneous Interpreting: A Guide",
+        "domain": "Lion People Global"
+      },
+      {
+        "url": "https://www.interpreters.com/pricing/video-remote-interpretation/",
+        "title": "Video Remote Interpreting Rates | On-Demand-Interpreting Pricing",
+        "domain": "Interpreters"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://360smartlingo.com/2024/10/understanding-the-costs-of-simultaneous-interpretation-services/",
+        "title": "Understanding the Costs of Simultaneous Interpretation Services",
+        "domain": "360smartlingo.com"
+      },
+      {
+        "url": "https://www.transyncai.com/blog/interpret-in-spanish-transync-ai/",
+        "title": "Interpret in Spanish: Real-Time Translation for Events",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://sonshineinterpreting.com/new-blog/cost",
+        "title": "What is the Cost of a Professional Interpreter",
+        "domain": "sonshineinterpreting.com"
+      },
+      {
+        "url": "https://capitallinguists.com/miami/",
+        "title": "Miami Conference & Client Meeting Interpreters",
+        "domain": "capitallinguists.com"
+      },
+      {
+        "url": "https://boostlingo.com/blog/boostlingo-vs-cyracom/",
+        "title": "Boostlingo vs CyraCom | On-Demand Interpreting ...",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://boostlingo.com/",
+        "title": "Boostlingo: Language Interpreter & AI Translation Services",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://boostlingo.com/demo/",
+        "title": "Request a Demo | Interpretation Services Pricing",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://boostlingo.com/blog/boostlingo-vs-languageline-solutions/",
+        "title": "Boostlingo vs. LanguageLine Solutions",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://boostlingo.com/blog/subscription-vs-pay-as-you-go/",
+        "title": "Subscription vs. Pay-as-You-Go: What's Right for You?",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://boostlingo.com/blog/boostlingo-vs-propio/",
+        "title": "Boostlingo vs. Propio: On-Demand Interpreting Comparison",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://www.languageline.com/personal-interpreter",
+        "title": "Pay Per Minute Interpreter",
+        "domain": "languageline.com"
+      },
+      {
+        "url": "https://www.languageline.com/interpreting/on-demand",
+        "title": "On-Demand Interpreting Services - LanguageLine Solutions",
+        "domain": "languageline.com"
+      },
+      {
+        "url": "https://www.languageline.com/",
+        "title": "LanguageLine Solutions: Language Translation & Interpreting ...",
+        "domain": "languageline.com"
+      },
+      {
+        "url": "https://www.languageline.com/interpreting/onsite",
+        "title": "In Person Interpreting Services",
+        "domain": "languageline.com"
+      },
+      {
+        "url": "https://www.languageline.com/blog/school-interpretation",
+        "title": "School Interpreters: LanguageLine for Educators Available ...",
+        "domain": "languageline.com"
+      },
+      {
+        "url": "https://smallbusiness.costhelper.com/interpreters.html",
+        "title": "How Much Does an Interpreter Cost?",
+        "domain": "costhelper.com"
+      },
+      {
+        "url": "https://www.interpreters.com/pricing/interpretation/sign-language/",
+        "title": "Sign Language Rates | ASL Interpreters, 2-hour minimum, ...",
+        "domain": "interpreters.com"
+      },
+      {
+        "url": "https://www.interpreters.com/pricing/interpretation/telephone/",
+        "title": "Telephone Interpretation Rates",
+        "domain": "interpreters.com"
+      },
+      {
+        "url": "https://www.interpreters.com/",
+        "title": "Professional Translation & Interpretation Services - 200+ ...",
+        "domain": "interpreters.com"
+      },
+      {
+        "url": "https://www.interpreters.com/industries/event-interpretation-services/",
+        "title": "Conference Interpreter - Event Translation Service & More",
+        "domain": "interpreters.com"
+      },
+      {
+        "url": "https://www.hopetranslator.com/en/resources/how-much-does-live-translation-cost",
+        "title": "How Much Does Live Translation Cost? Complete Pricing ...",
+        "domain": "hopetranslator.com"
+      },
+      {
+        "url": "https://www.getapp.com/website-ecommerce-software/a/boostlingo/",
+        "title": "Boostlingo 2026 Pricing, Features, Reviews & Alternatives",
+        "domain": "getapp.com"
+      },
+      {
+        "url": "https://translayte.com/blog/how-much-does-a-translator-cost-in-2025",
+        "title": "How much does a Translator cost in 2025? [Complete Guide]",
+        "domain": "translayte.com"
+      },
+      {
+        "url": "https://ldh.la.gov/assets/cphe/resources/LanguageLine.Services.Contract.Overview.pdf",
+        "title": "Omnia Partners Contract # R210605 LanguageLine® ...",
+        "domain": "la.gov"
+      },
+      {
+        "url": "https://www.freelandinterpreting.com/blog/blog-post-title-one-xzsh4",
+        "title": "Interpreter Hourly Rates in the US (2025) - Freeland",
+        "domain": "freelandinterpreting.com"
+      },
+      {
+        "url": "https://bttranslations.com/interpreting-rates/",
+        "title": "Interpreting Rates",
+        "domain": "bttranslations.com"
+      },
+      {
+        "url": "https://softwarefinder.com/content-management-software/boostlingo",
+        "title": "Boostlingo: Pricing, Free Demo & Features",
+        "domain": "softwarefinder.com"
+      },
+      {
+        "url": "https://humanservices.arkansas.gov/wp-content/uploads/710-21-0024-Language-Line-Services-Price-Sheet.pdf",
+        "title": "LanguageLine - Solutions",
+        "domain": "arkansas.gov"
+      },
+      {
+        "url": "https://www.consumeraffairs.com/business/languageline.html",
+        "title": "LanguageLine Solutions Reviews: Written By Customers",
+        "domain": "consumeraffairs.com"
+      },
+      {
+        "url": "https://languagers.com/what-is-the-average-cost-of-a-spanish-interpreter/",
+        "title": "What is the Average Cost of a Spanish Interpreter?",
+        "domain": "languagers.com"
+      },
+      {
+        "url": "https://languagers.com/how-much-does-video-remote-conference-interpreting-services-cost/",
+        "title": "How Much Does Video Remote Conference Interpreting ...",
+        "domain": "languagers.com"
+      },
+      {
+        "url": "https://www.softwareadvice.com/product/482786-Boostlingo/",
+        "title": "Boostlingo 2026: Benefits, Features & Pricing",
+        "domain": "softwareadvice.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/TranslationStudies/comments/1g3znew/how_much_should_i_charge_my_american_clients/",
+        "title": "How much should I charge my American clients?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/interpreting-service-cost",
+        "title": "How Much Does an Interpreting Service Cost?",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://tintranslation.com/conference-interpreting/",
+        "title": "Conference Interpreting – TIN",
+        "domain": "tintranslation.com"
+      },
+      {
+        "url": "https://jrlanguage.com/blog/interpretation-services-rates-a-complete-guide/",
+        "title": "Interpretation Services Rates – A complete guide",
+        "domain": "jrlanguage.com"
+      },
+      {
+        "url": "https://sllc.umd.edu/fields/spanish/translation-interpretation-services",
+        "title": "Spanish Translation and Interpretation Services",
+        "domain": "umd.edu"
+      },
+      {
+        "url": "https://altalang.com/interpretation-services/",
+        "title": "Interpreting Services | ALTA Language Services",
+        "domain": "altalang.com"
+      },
+      {
+        "url": "https://www.interprefy.com/resources/blog/how-much-does-remote-simultaneous-interpretation-rsi-cost",
+        "title": "Simultaneous interpretation cost comparison: in-person vs ...",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://www.interprefy.com/solutions/remote-simultaneous-interpretation",
+        "title": "Enterprise-Grade Remote Simultaneous Interpretation",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://certifiedlanguages.com/video-remote-interpreting-services/",
+        "title": "Video Remote Interpreting (VRI) Services | 230+ Languages - CLI",
+        "domain": "certifiedlanguages.com"
+      },
+      {
+        "url": "https://blog.ablio.com/how-much-does-an-interpreting-service-cost-2/",
+        "title": "How much does an Interpreting Service Cost?",
+        "domain": "ablio.com"
+      },
+      {
+        "url": "https://www.atltranslate.com/blog/how-much-cost-hire-translator",
+        "title": "How Much Does It Cost to Hire a Translator in 2025?",
+        "domain": "atltranslate.com"
+      },
+      {
+        "url": "https://www.lighthouseonline.com/conference-interpreting/",
+        "title": "Conference Interpreting Services",
+        "domain": "lighthouseonline.com"
+      },
+      {
+        "url": "https://www.lingualinx.com/blog/how-much-does-simultaneous-interpretation-cost",
+        "title": "How Much Does Simultaneous Interpretation Cost? A ...",
+        "domain": "lingualinx.com"
+      },
+      {
+        "url": "https://ideatranslations.com/wp-content/uploads/2025/03/Rate-Table25.pdf",
+        "title": "RATE TABLE",
+        "domain": "ideatranslations.com"
+      },
+      {
+        "url": "https://www.interpretcloud.com/benefits-pricing/",
+        "title": "Benefits and Pricing | InterpretCloud",
+        "domain": "interpretcloud.com"
+      },
+      {
+        "url": "https://www.languageconnections.com/Conference-Interpreting-Solutions",
+        "title": "Conference Interpreting Solutions",
+        "domain": "languageconnections.com"
+      },
+      {
+        "url": "https://dayinterpreting.com/pricing",
+        "title": "Phone Interpreter Services - Real Time Multilingual ...",
+        "domain": "dayinterpreting.com"
+      },
+      {
+        "url": "https://blogs.extension.wisc.edu/languageaccess/2022/03/08/translation-interpretation-budgeting-standards-for-projects-and-programs/",
+        "title": "TRANSLATION & INTERPRETATION BUDGETING ...",
+        "domain": "wisc.edu"
+      },
+      {
+        "url": "https://atlasls.com/conference-interpretation-services/",
+        "title": "Conference Interpretation Services",
+        "domain": "atlasls.com"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 51,
+    "total_all": 61
+  },
+  "response_stats": {
+    "total_length": 3983,
+    "citation_count": 16,
+    "chars_with_citations": 416
+  }
+}

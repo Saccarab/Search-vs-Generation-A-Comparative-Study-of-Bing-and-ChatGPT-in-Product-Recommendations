@@ -1,0 +1,463 @@
+{
+  "run_id": "P051_r2",
+  "account_type": "enterprise",
+  "prompt": "What are some good real-time translation software options?",
+  "metadata": {
+    "hidden_queries": [
+      "real-time translation software options",
+      "best real time translation apps and software"
+    ],
+    "sonic_classification": {
+      "latency_ms": 14.954046811908484,
+      "simple_search_prob": 0.9953463589946653,
+      "complex_search_prob": 0.0003253247516638185,
+      "no_search_prob": 0.004328316253670901,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "real-time translation software options"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 166,
+        "end_idx": 177
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 188,
+      "claim_text": "Here are reliable real-time translation software options across use cases (travel, meetings, calls, events). They vary in accuracy, platforms supported, and features:jotme.io+2ScreenApp+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 415,
+        "end_idx": 434
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 442,
+      "claim_text": "General-purpose / consumer Google Translate (Conversation Mode) – Free, broad language support (100+), speech & text translation, camera/voice real-time features. Works on iOS/Android and web.ScreenApp",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 574,
+        "end_idx": 593
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://topdealsnet.com/blog/best-real-time-translation-apps",
+      "url_position": 645,
+      "claim_text": "Microsoft Translator – Free real-time voice/text translation, multi-device conversation support, works offline with language packs.topdealsnet.com",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 685,
+        "end_idx": 695
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://topdealsnet.com/blog/best-real-time-translation-apps",
+      "url_position": 808,
+      "claim_text": "iTranslate – Voice-to-voice translation, offline packs, simple UI; good for travel.topdealsnet.com",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 807,
+        "end_idx": 827
+      },
+      "citation_token": "citeturn0search29",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Naver_Papago",
+          "title": "Naver Papago",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 29,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_29"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Naver_Papago",
+      "url_position": 976,
+      "claim_text": "Naver Papago – Strong for Asian languages (Korean, Japanese, Chinese), voice/text translation.Wikipedia",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 952,
+        "end_idx": 971
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1143,
+      "claim_text": "Meeting / event focused JotMe – Real-time translation + live transcription for Zoom, Teams, Google Meet, Webex.jotme.io",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1044,
+        "end_idx": 1063
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1267,
+      "claim_text": "Wordly AI – Live translation and captions for webinars/webcasts.jotme.io",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1171,
+        "end_idx": 1189
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1426,
+      "claim_text": "Interprefy / KUDO AI – Enterprise solutions combining AI and human interpretation for large events.jotme.io",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1299,
+        "end_idx": 1318
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1586,
+      "claim_text": "DeepL Voice – High-quality translation accuracy with voice output (more limited real-time features).jotme.io",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1475,
+        "end_idx": 1494
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1790,
+      "claim_text": "Hardware-linked / specialized Timekettle – Voice-to-voice translation focused on in-person conversations (often paired with dedicated earbuds).jotme.io",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1638,
+        "end_idx": 1656
+      },
+      "citation_token": "citeturn0news16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_16"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 1983,
+      "claim_text": "Translator earbuds / devices – e.g., products like MyManu Orb that translate live audio through wearable devices (hardware + software).SFGATE",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1786,
+        "end_idx": 1805
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 2220,
+      "claim_text": "Quick pointers before choosing Free mobile apps (Google, Microsoft, Papago) are solid for travel and casual conversations.ScreenApp",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1944,
+        "end_idx": 1963
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 2419,
+      "claim_text": "Business/meeting tools (JotMe, Wordly, Interprefy) support larger groups, live captions, and integrations with conferencing platforms.jotme.io",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 2069,
+        "end_idx": 2088
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://topdealsnet.com/blog/best-real-time-translation-apps",
+      "url_position": 2587,
+      "claim_text": "Offline needs lean toward apps with downloadable language packs (Microsoft, some versions of Google).topdealsnet.com",
+      "url_index": 13
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+        "domain": "ScreenApp"
+      },
+      {
+        "url": "https://topdealsnet.com/blog/best-real-time-translation-apps",
+        "title": "5 Best Real-time Translation Apps in 2026 - topdealsnet.com",
+        "domain": "topdealsnet.com"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Naver_Papago",
+        "title": "Naver Papago",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://maestra.ai/blogs/best-live-translation-apps",
+        "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.techradar.com/best/best-translation-software",
+        "title": "Best translation software of 2025 - TechRadar",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://taia.io/resources/blog/best-translation-software",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools by Features ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-translation-software",
+        "title": "8 Best Translation Software to Use in 2025 (Free & Paid)",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://bordio.com/blog/best-translation-software/",
+        "title": "11 Best Translation Software Platforms in 2025 - Bordio",
+        "domain": "bordio.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-real-time-translation-apps/",
+        "title": "10 Best Real-time Language Translation Apps for Effortless Communication",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.fluentu.com/blog/learn/best-translation-apps/",
+        "title": "11 Best Translation Apps of 2024 | FluentU",
+        "domain": "fluentu.com"
+      },
+      {
+        "url": "https://www.unite.ai/best-ai-translation-software-tools/",
+        "title": "10 Best AI Translation Software & Tools (January 2026)",
+        "domain": "unite.ai"
+      },
+      {
+        "url": "https://www.strikingly.com/blog/posts/top-7-real-time-translation-tools-you-need-in-2025",
+        "title": "Top 7 Real-Time Translation Tools You Need in 2025 - En...",
+        "domain": "strikingly.com"
+      },
+      {
+        "url": "https://www.3ptechies.com/software-translator-programs.html",
+        "title": "6 Best Software Translator Programs of 2026 - 3ptechies.com",
+        "domain": "3ptechies.com"
+      },
+      {
+        "url": "https://www.naargmedia.com/real-time-translation-tools/",
+        "title": "10 Game-Changing Real-Time Translation Tools in 2025",
+        "domain": "naargmedia.com"
+      },
+      {
+        "url": "https://appmus.com/feature/real-time-translation",
+        "title": "Best Software with Real-time translation Functionality (2025)",
+        "domain": "appmus.com"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 13,
+    "total_all": 18
+  },
+  "response_stats": {
+    "total_length": 2773,
+    "citation_count": 14,
+    "chars_with_citations": 248
+  }
+}

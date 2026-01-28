@@ -1,0 +1,385 @@
+{
+  "run_id": "P016_r1",
+  "account_type": "enterprise",
+  "prompt": "I need live transcribing while using online streaming or watching videos.",
+  "metadata": {
+    "hidden_queries": [
+      "live transcription while watching online streaming videos real time captioning tools Otter Live Captions YouTube etc",
+      "best real-time transcription for streaming video on Windows Mac Android iPhone"
+    ],
+    "sonic_classification": {
+      "latency_ms": 0.8600790752097964,
+      "simple_search_prob": 0.7918599595886441,
+      "complex_search_prob": 0.034443470159125425,
+      "no_search_prob": 0.1736965702522305,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "live transcription while watching online streaming videos real time captioning tools Otter Live Captions YouTube etc"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 341,
+        "end_idx": 359
+      },
+      "citation_token": "citeturn0news31",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wired.com/story/smartphone-features-deaf-hard-of-hearing",
+          "title": "How to Use Your Smartphone to Cope With Hearing Loss",
+          "snippet": "This comprehensive guide from WIRED explains how smartphones can assist individuals with hearing loss through a range of built-in and downloadable features on iPhone and Android devices. With hearing loss affecting 13% of U.S. adults and expected to affect one in four people globally by 2050, tools to aid communication and hearing awareness are increasingly vital. The article details features such as Apple’s Live Captions (currently in beta), Google’s Live Caption and Live Transcribe, sound recognition tools for detecting alarms and doorbells, and audio tuning through headphones or hearing aids. It highlights accessibility tools like Conversation Mode on Pixel devices and Real-Time Text (RTT) or Teletype (TTY) for voice calls. Apple’s Sound Recognition can detect specific custom sounds, and both platforms offer customization for noise filtering and amplification. The guide also advises on hearing loss prevention and explains why some tools are native only to Pixel devices. Overall, the article provides practical, up-to-date resources for integrating hearing assistance tools into everyday smartphone use.",
+          "domain": "www.wired.com",
+          "ref_type": "news",
+          "ref_index": 31,
+          "turn_index": 0,
+          "pub_date": 1718200800,
+          "ref_key": "0_news_31"
+        }
+      ],
+      "inline_url": "https://www.wired.com/story/smartphone-features-deaf-hard-of-hearing",
+      "url_position": 328,
+      "claim_text": "Here are ways to get live transcription/captions while watching online videos or streaming — options work on desktop and phones: 1) Built-in live captions Android & Chrome: Live Caption (system feature) auto-generates captions for any audio playing on the device/browser, including streaming videos — works offline too. WIRED",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 474,
+        "end_idx": 492
+      },
+      "citation_token": "citeturn0news30",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.lifewire.com/iphone-transcribe-voice-memos-8692606",
+          "title": "How to Use an iPhone to Transcribe Voice Memos and Lectures",
+          "snippet": "This article provides a comprehensive guide on using various iPhone tools and apps to transcribe voice memos and lectures. It introduces four main methods: Evernote, Rev Voice Recorder, Aiko, and Apple’s built-in Live Captions.\n\nEvernote allows both real-time recording and transcription of audio files (except M4A format) with a simple button click. The free version supports file sizes up to 25MB, while the Personal version allows up to 200MB. \n\nRev Voice Recorder, a premium app, offers transcription services via human or AI and supports Zoom integration. Users can transcribe both new and existing recordings, though credits are needed for full access.\n\nAiko is a free, simple app that can transcribe live and pre-recorded voice memos but may crash when used in the background. It allows easy saving and sharing of transcriptions.\n\nLastly, iOS 16 and later versions feature Live Captions, a native, real-time transcription tool available through Accessibility settings, supporting English (US/Canada).\n\nThese solutions offer users flexibility depending on their transcription needs and app preferences.",
+          "domain": "www.lifewire.com",
+          "ref_type": "news",
+          "ref_index": 30,
+          "turn_index": 0,
+          "pub_date": 1726262736,
+          "ref_key": "0_news_30"
+        }
+      ],
+      "inline_url": "https://www.lifewire.com/iphone-transcribe-voice-memos-8692606",
+      "url_position": 513,
+      "claim_text": "iPhone / iPad / Mac: Live Captions in Accessibility shows real-time speech text over any audio playing. Lifewire",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 706,
+        "end_idx": 725
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/tools/web-captioner",
+          "title": "Live Caption for Free | Maestra",
+          "snippet": "Particularly live streams can benefit from Maestra’s free live captioning tool by connecting their OBS or vMix accounts to instantly caption their content. With over 125 languages supported, users can target any language they want and create translated captions in real time to reach audiences otherwise unreachable by using the free web captioner.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        }
+      ],
+      "inline_url": "https://maestra.ai/tools/web-captioner",
+      "url_position": 789,
+      "claim_text": "2) Browser extensions / web tools Maestra Live Caption / web captioner: real-time speech-to-text overlay on video/audio in your browser (Chrome). Works across platforms and supports many languages. Maestra AI",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1082,
+        "end_idx": 1101
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://otter.ai/transcription",
+          "title": "Transcribe all conversations | Otter.ai",
+          "snippet": "Transcribe live meetings and conversations. Transcribe virtual meetings on Zoom, Google Meet, and Microsoft Teams. Transcribe audio and video files. Transcribe YouTube videos. Transcribe Dropbox files.",
+          "domain": "otter.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://otter.ai/transcription",
+      "url_position": 1176,
+      "claim_text": "Google Chrome Live Caption (built-in): similar idea — toggle in Chrome settings to see captions for online videos. 3) Standalone apps for real-time transcription These listen to the audio (via mic or internal routing) and show live transcripts: Otter.ai: live transcription on mobile/desktop; good accuracy, shows text in real time. Otter.ai",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1223,
+        "end_idx": 1242
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/features/online-live-caption-tool",
+      "url_position": 1333,
+      "claim_text": "Live Transcribe / Live Transcribe web tools: free real-time speech-to-text; useful for videos and conversations. ScreenApp",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1353,
+        "end_idx": 1373
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://sendshort.ai/guides/transcription-apps/",
+          "title": "TOP 15 Transcription Apps in 2026 (Free & Paid)",
+          "snippet": "Why we picked it: It excels in real-time transcription for meetings and collaborative settings. Use cases: Business meetings, lecture notes, interviews. Top 3 features: Speaker recognition, live transcription, cloud storage. Platforms: Web, iOS, Android Reviews: Many like its live transcription accuracy but criticize the cost of advanced features.",
+          "domain": "sendshort.ai",
+          "ref_type": "search",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": 1768089600,
+          "ref_key": "0_search_16"
+        }
+      ],
+      "inline_url": "https://sendshort.ai/guides/transcription-apps/",
+      "url_position": 1503,
+      "claim_text": "Other mobile apps: Notta, Transcript.LOL, etc., offer real-time live captioning (varies by platform). SendShort",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1971,
+        "end_idx": 1991
+      },
+      "citation_token": "citeturn0search17",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://otter.ai/blog/how-to-transcribe-any-video-meetings-with-otter-ai",
+          "title": "How to transcribe any video meeting with Otter.ai",
+          "snippet": "Follow these 4 easy steps to transcribe a video meeting live with Otter.ai: 1. Put your video meeting on speaker mode (i.e. no headphones). 2. Record with running in a web browser window on the same computer where you host your video meeting, or the Otter mobile app for or placed between you and your computer's speaker. 3. Check Otter's live transcription to make sure that your device's ...",
+          "domain": "otter.ai",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": 1587772800,
+          "ref_key": "0_search_17"
+        },
+        {
+          "url": "https://otter.ai/blog/how-to-transcribe-any-video-meetings-with-otter-ai?utm_source=chatgpt.com",
+          "title": "How to transcribe any video meeting with Otter.ai",
+          "snippet": "Follow these 4 easy steps to transcribe a video meeting live with Otter.ai: 1. Put your video meeting on speaker mode (i.e. no headphones). 2. Record with running in a web browser window on the same computer where you host your video meeting, or the Otter mobile app for or placed between you and your computer's speaker. 3. Check Otter's live transcription to make sure that your device's ...",
+          "domain": "Otter.ai",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://otter.ai/blog/how-to-transcribe-any-video-meetings-with-otter-ai",
+      "url_position": 2127,
+      "claim_text": "4) Platform-specific captions YouTube / YouTube Live: many streams have auto-captions you can turn on inside the player itself (if enabled by creator). Zoom / Teams / streaming services: some have built-in live captions for meetings/watch parties. How they work (practical) For browser/Chrome features, just enable live captions in settings and play the video — text appears automatically. For apps like Otter or Live Transcribe, allow mic access; play the video loud enough or use internal audio routing so the tool can pick up sound and convert it to text. Otter.ai",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.wired.com/story/smartphone-features-deaf-hard-of-hearing",
+        "title": "How to Use Your Smartphone to Cope With Hearing Loss",
+        "domain": "WIRED"
+      },
+      {
+        "url": "https://www.lifewire.com/iphone-transcribe-voice-memos-8692606",
+        "title": "How to Use an iPhone to Transcribe Voice Memos and Lectures",
+        "domain": "Lifewire"
+      },
+      {
+        "url": "https://maestra.ai/tools/web-captioner",
+        "title": "Live Caption for Free | Maestra",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://otter.ai/transcription",
+        "title": "Transcribe all conversations | Otter.ai",
+        "domain": "Otter.ai"
+      },
+      {
+        "url": "https://screenapp.io/features/online-live-caption-tool",
+        "title": "Live Transcribe - Free Live Audio to Text Converter - ScreenApp",
+        "domain": "ScreenApp"
+      },
+      {
+        "url": "https://sendshort.ai/guides/transcription-apps/",
+        "title": "TOP 15 Transcription Apps in 2026 (Free & Paid)",
+        "domain": "SendShort"
+      },
+      {
+        "url": "https://otter.ai/blog/how-to-transcribe-any-video-meetings-with-otter-ai",
+        "title": "How to transcribe any video meeting with Otter.ai",
+        "domain": "Otter.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.softwaretestinghelp.com/best-transcription-software/",
+        "title": "Top 15 Best Transcription Software in 2026 (Audio/Video to Text)",
+        "domain": "softwaretestinghelp.com"
+      },
+      {
+        "url": "https://riverside.com/blog/best-audio-video-transcription-apps",
+        "title": "8 Best Audio & Video Transcription Apps for 2026 (iOS & Android)",
+        "domain": "riverside.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-real-time-captioning-services",
+        "title": "10 Best Real-Time Captioning Services for Every Use Case",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://maestra.ai/blogs/live-transcription-apps",
+        "title": "7 Best Live Transcription Apps - maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://transkriptor.com/best-video-to-text-software/",
+        "title": "10 Best Video to Text Software Tools for 2025 - Transkriptor!",
+        "domain": "transkriptor.com"
+      },
+      {
+        "url": "https://otter.ai/blog/best-way-to-transcribe-video-to-text",
+        "title": "How to Transcribe a Video: Fast and Easy Methods for Any ... - Otter.ai",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://zapier.com/blog/best-transcription-apps/",
+        "title": "The best transcription software in 2025 - Zapier",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://vomo.ai/blog/transcription-for-live-streams-how-to-add-captions-and-capture-key-insights",
+        "title": "Transcription for Live Streams: How to Add Captions and Capture Key ...",
+        "domain": "vomo.ai"
+      },
+      {
+        "url": "https://www.dacast.com/blog/video-transcription-software/",
+        "title": "The 12 Best Video Transcription Software in 2025 - Dacast",
+        "domain": "dacast.com"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-video-transcription-software",
+        "title": "Best Free Video Transcription Software 2025 - Top 10 Tools Reviewed",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-transcription",
+        "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+        "domain": "usefulai.com"
+      },
+      {
+        "url": "https://otter.ai/blog/how-to-transcribe-any-videos-with-otter-ai",
+        "title": "How to transcribe any video with Otter.ai",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://voice-ping.com/blog/en-transcription-apps/",
+        "title": "14 Best Automatic Video & Audio Transcription Apps & Tools [Free ...",
+        "domain": "voice-ping.com"
+      },
+      {
+        "url": "https://maestra.ai/tools/live-transcribe",
+        "title": "Live Transcribe for Free - Transcribe Audio in Real Time",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://help.otter.ai/hc/en-us/articles/10474062838295-How-to-use-Otter-Live-Notes",
+        "title": "How to use Otter Live Notes – Help Center",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://otter.ai/video-to-text",
+        "title": "Convert Video to Text: Free, Instant AI Transcription",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://www.toolify.ai/ai-news/experience-realtime-transcription-with-otter-ai-live-captions-494552",
+        "title": "Experience Real-Time Transcription with Otter AI Live Captions",
+        "domain": "toolify.ai"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 17,
+    "total_all": 24
+  },
+  "response_stats": {
+    "total_length": 2370,
+    "citation_count": 7,
+    "chars_with_citations": 133
+  }
+}

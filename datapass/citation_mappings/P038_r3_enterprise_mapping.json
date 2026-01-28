@@ -1,0 +1,425 @@
+{
+  "run_id": "P038_r3",
+  "account_type": "enterprise",
+  "prompt": "Anlık ses çevirisi yapan programlar nelerdir?",
+  "metadata": {
+    "hidden_queries": [
+      "Anlık ses çevirisi yapan programlar hangileri gerçek zamanlı ses çeviri yazılım",
+      "Real-time speech translation software applications live voice translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 4.655563971027732,
+      "simple_search_prob": 0.9109981316669894,
+      "complex_search_prob": 0.0023440388481006627,
+      "no_search_prob": 0.08665782948490994,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Anlık ses çevirisi yapan programlar hangileri gerçek zamanlı ses çeviri yazılım"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 266,
+        "end_idx": 285
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-speech-translator-apps",
+      "url_position": 264,
+      "claim_text": "Aşağıda anlık (gerçek zamanlı) ses çevirisi yapan program ve uygulama örnekleri var (mobil, web ve profesyonel çözümler): Kullanıcı/taşınabilir odaklı: Google Translate (Konuşma modu) – iki dil arasında gerçek zamanlı ses çevirisi yapar, ücretsizdir. Maestra AI",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 367,
+        "end_idx": 384
+      },
+      "citation_token": "citeturn0search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-speech-translator-apps",
+      "url_position": 404,
+      "claim_text": "Microsoft Translator – canlı konuşmayı çevirir, grup çevirisi destekler. Maestra AI",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 496,
+        "end_idx": 515
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-speech-translator-apps",
+      "url_position": 572,
+      "claim_text": "iTranslate Voice – mobil canlı ses çevirisi; daha doğal ses desteği ve offline seçenekler (ücretli). Maestra AI",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 613,
+        "end_idx": 632
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-speech-translator-apps",
+      "url_position": 728,
+      "claim_text": "Papago / Reverso / Yandex Translate – mobilde canlı ses çevirisi sağlayan alternatifler. Maestra AI",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 730,
+        "end_idx": 749
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://talkpersona.com/translator",
+      "url_position": 885,
+      "claim_text": "TalkPersona Instant Voice Translator – web tabanlı ücretsiz gerçek zamanlı ses çevirisi. TalkPersona",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 856,
+        "end_idx": 889
+      },
+      "citation_token": "citeturn0search1turn0search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/blogs/best-live-translation-apps",
+          "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+          "snippet": "A lightweight real time translation app or live translation app is usually enough for short, voice-to-voice use. Voice-first interaction If speaking naturally matters most, the best real time translator is the one with the least delay and the clearest audio.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": 1769040000,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://maestra.ai/blogs/best-live-translation-apps",
+      "url_position": 1252,
+      "claim_text": "Wordly AI – canlı çeviri + altyazı (webinar/konferans). Maestra AI",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 970,
+        "end_idx": 990
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-speech-translator-apps",
+      "url_position": 1032,
+      "claim_text": "Toplantı / profesyonel odaklı: Maestra AI – canlı konuşma çevirisi, toplantı/etkinlik desteği. Maestra AI+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1055,
+        "end_idx": 1075
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/blogs/best-live-translation-apps",
+          "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+          "snippet": "A lightweight real time translation app or live translation app is usually enough for short, voice-to-voice use. Voice-first interaction If speaking naturally matters most, the best real time translator is the one with the least delay and the clearest audio.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": 1769040000,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://maestra.ai/blogs/best-live-translation-apps",
+      "url_position": 1252,
+      "claim_text": "Wordly AI – canlı çeviri + altyazı (webinar/konferans). Maestra AI",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1155,
+        "end_idx": 1174
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://kudo.ai/",
+      "url_position": 1165,
+      "claim_text": "KUDO – AI + insan interpreter seçenekli canlı konuşma çeviri platformu. KUDO",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1238,
+        "end_idx": 1257
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://livetrans.pro/",
+      "url_position": 1388,
+      "claim_text": "LiveTrans – AI destekli gerçek zamanlı ses tanıma & çeviri (masaüstü). LiveTrans",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1325,
+        "end_idx": 1344
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://livevoice.io/en/ai-voice-translation",
+      "url_position": 1482,
+      "claim_text": "LiveVoice.io – canlı ses çevirisi API/uygulama odaklı. LiveVoice.io",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1441,
+        "end_idx": 1461
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://tr.smartcat.com/audio-translator/real-time-audio-translation/",
+      "url_position": 1605,
+      "claim_text": "Smartcat AI Ses Çeviri – ekip/kurumsal canlı ses çevirisi. tr.smartcat.com",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1594,
+        "end_idx": 1612
+      },
+      "citation_token": "citeturn0news38",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.androidcentral.com/phones/google-pixel/pixel-10s-voice-translate-goes-live-in-this-unexpected-market",
+          "title": "Pixel 10's AI-powered voice translate feature launches first in the Netherlands, offering real-time, on-device call translation while Germany waits",
+          "snippet": "Google has started rolling out its new AI-powered Voice Translate feature for Pixel 10 users, with the Netherlands being the first country to receive it. This real-time voice translation capability, powered by the Tensor G5 chip, enables seamless two-way communication during phone calls by translating speech into the recipient’s language and reproducing it in the caller’s voice. The feature works entirely on-device, which ensures speed, security, and privacy by removing the need for cloud processing or internet access.\n\nUsers can activate Voice Translate by selecting their preferred languages, downloading relevant language packs, and tapping the \"Call Assist\" button during calls. Although the feature lists German among its supported languages, Pixel 10 users in Germany have reported that it has not yet appeared for them, likely due to a phased rollout strategy by Google. The supported languages include German, French, Hindi, Indonesian, Italian, Japanese, Portuguese, Russian, Spanish, and Swedish. The launch highlights Google's continued push to integrate advanced AI capabilities into its devices while addressing privacy and regulatory concerns.",
+          "domain": "www.androidcentral.com",
+          "ref_type": "news",
+          "ref_index": 38,
+          "turn_index": 0,
+          "pub_date": 1761565285,
+          "ref_key": "0_news_38"
+        }
+      ],
+      "inline_url": "https://www.androidcentral.com/phones/google-pixel/pixel-10s-voice-translate-goes-live-in-this-unexpected-market",
+      "url_position": 1969,
+      "claim_text": "Cihaz/özellik tabanlı: Bazı akıllı telefonlar (ör. Pixel) yerleşik AI gerçek zamanlı arama çevirisi özellikleri sunuyor. Android Central",
+      "url_index": 12
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://maestra.ai/blogs/best-speech-translator-apps",
+        "title": "10 Best Speech Translator Apps for Live Voice Translation",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://talkpersona.com/translator",
+        "title": "TalkPersona - Free real-time voice translator",
+        "domain": "TalkPersona"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "KUDO"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-live-translation-apps",
+        "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://livetrans.pro/",
+        "title": "LiveTrans - AI-Powered Real-Time Voice Transcription & Live Translation ...",
+        "domain": "LiveTrans"
+      },
+      {
+        "url": "https://livevoice.io/en/ai-voice-translation",
+        "title": "LiveVoice: AI Voice Translation",
+        "domain": "LiveVoice.io"
+      },
+      {
+        "url": "https://tr.smartcat.com/audio-translator/real-time-audio-translation/",
+        "title": "Gerçek Zamanlı Küresel İletişim için AI Ses Çeviri Platformu",
+        "domain": "tr.smartcat.com"
+      },
+      {
+        "url": "https://www.agora.io/en/products/real-time-translation/",
+        "title": "Real-Time Translation - agora.io",
+        "domain": "Agora"
+      },
+      {
+        "url": "https://www.androidcentral.com/phones/google-pixel/pixel-10s-voice-translate-goes-live-in-this-unexpected-market",
+        "title": "Pixel 10's AI-powered voice translate feature launches first in the Netherlands, offering real-time, on-device call translation while Germany waits",
+        "domain": "Android Central"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://blog.openl.io/best-speech-translator/",
+        "title": "6 Best Speech Translators in 2025 - OpenL Blog",
+        "domain": "openl.io"
+      },
+      {
+        "url": "https://netkurdu.net/konusurken-en-iyi-anlik-sesli-ceviri-yapan-uygulamalar.html/",
+        "title": "Konuşurken En İyi Anlık Sesli Çeviri Yapan Uygulamalar 2026",
+        "domain": "netkurdu.net"
+      },
+      {
+        "url": "https://screenapp.io/tr/blog/voice-translator-apps",
+        "title": "2025'te En İyi 7 Yapay Zeka Sesli Çeviri Uygulaması",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://voiceping.net/en/blog/guide-voice-translation-apps/",
+        "title": "Real-time AI Voice Translator App BEST 27 | FREE, PC, Android, iPhone",
+        "domain": "voiceping.net"
+      },
+      {
+        "url": "https://www.forbes.com.tr/teknoloji/deepl-voice-duyuruldu-ses-ve-videolardan-gercek-zamanli-ceviri",
+        "title": "DeepL Voice duyuruldu: Ses ve videolardan gerçek zamanlı çeviri",
+        "domain": "forbes.com.tr"
+      },
+      {
+        "url": "https://www.techmedya.com/sesli-ceviri-uygulamasi/",
+        "title": "En İyi 7 Sesli Çeviri Uygulaması - Techmedya",
+        "domain": "techmedya.com"
+      },
+      {
+        "url": "https://www.techmedya.com/sesli-ceviri-programi/",
+        "title": "En İyi 3 Sesli Çeviri Programı | Techmedya",
+        "domain": "techmedya.com"
+      },
+      {
+        "url": "https://www.alem.com.tr/yasam/konusurken-anlik-ceviri-yapan-en-iyi-uygulamalar-1079308",
+        "title": "Konuşurken Anlık Çeviri Yapan En İyi Uygulamalar | Alem",
+        "domain": "alem.com.tr"
+      },
+      {
+        "url": "https://www.transyncai.com/tr/blog-best-audio-translation-app/",
+        "title": "2025'in En İyi Ses Çeviri Uygulaması | Gerçek Zamanlı Yapay Zeka Ses ...",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9nz4tkwwf4pq?gl=TR&hl=tr-TR",
+        "title": "sesli çeviri - Windows’ta ücretsiz indir ve yükle | Microsoft Store",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://inglatech.com/tr/en-iyi-gercek-zamanli-ses-ceviri-uygulamalari/",
+        "title": "En iyi gerçek zamanlı ses çeviri uygulamaları - Inglatech",
+        "domain": "inglatech.com"
+      },
+      {
+        "url": "https://speakshift.ai/",
+        "title": "SpeakShift – Real-Time AI Language Translation",
+        "domain": "speakshift.ai"
+      },
+      {
+        "url": "https://doculator.org/tr/voice-translator",
+        "title": "Ses Çevirmeni - Gerçek Zamanlı Dil Çevirisi",
+        "domain": "doculator.org"
+      },
+      {
+        "url": "https://tr.androidayuda.com/uygulamalar%C4%B1/listeleri/Android-i%C3%A7in-en-iyi-an%C4%B1nda-ses-%C3%A7evirmenleri/",
+        "title": "Android için en iyi anında ses çevirmenleri",
+        "domain": "androidayuda.com"
+      },
+      {
+        "url": "https://livevoice.io/en/simultaneous-interpretation",
+        "title": "Live Audio for Simultaneous Interpretation - On site and Remote",
+        "domain": "livevoice.io"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 16,
+    "total_all": 25
+  },
+  "response_stats": {
+    "total_length": 2311,
+    "citation_count": 13,
+    "chars_with_citations": 261
+  }
+}

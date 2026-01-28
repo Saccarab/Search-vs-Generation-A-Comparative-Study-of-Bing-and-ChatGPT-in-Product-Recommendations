@@ -1,0 +1,374 @@
+{
+  "run_id": "P078_r1",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend tools for live translation on video calls?",
+  "metadata": {
+    "hidden_queries": [
+      "tools for live translation on video calls",
+      "best live translation tools for video conferencing Skype Zoom Teams translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 16.642275033518672,
+      "simple_search_prob": 0.9964369455646818,
+      "complex_search_prob": 0.001544224873353432,
+      "no_search_prob": 0.002018829561964804,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "tools for live translation on video calls"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 381,
+        "end_idx": 400
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+      "url_position": 375,
+      "claim_text": "Here are solid tools you can use for live translation during video calls, ranging from built-in conferencing features to dedicated AI services: 1) Built-in platform features Zoom Language Interpretation – lets hosts assign interpreters so participants can choose audio channels in different languages. Works well for structured meetings with planned interpretation. Tactiq",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 546,
+        "end_idx": 565
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 590,
+      "claim_text": "2) Dedicated live translation & captions Wordly – AI real-time translation and live captions across Zoom, Teams, Webex, and webinars. jotme.io",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 700,
+        "end_idx": 719
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.transyncai.com/tools/live-meeting-translation/",
+      "url_position": 772,
+      "claim_text": "Transync AI – overlays live translated subtitles and spoken translation for Zoom, Teams, Google Meet without native plug-ins. 同言翻译",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 836,
+        "end_idx": 855
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-real-time-translators-for-meetings",
+      "url_position": 953,
+      "claim_text": "Maestra AI – real-time speech translation with multilingual captions for meetings, supports many languages. Maestra AI",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 950,
+        "end_idx": 970
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://taloai.com/",
+      "url_position": 1112,
+      "claim_text": "Talo – real-time AI translator for video calls (voice/text) across Zoom, Meet, Teams. Talo",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1057,
+        "end_idx": 1077
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://vidby.com/vidby-call-translator",
+      "url_position": 1219,
+      "claim_text": "Vidby – automatic translation for video calls and streams in ~150+ languages. Vidby",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1226,
+        "end_idx": 1245
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1409,
+      "claim_text": "3) Meeting assistants with translation/captions JotMe – live AI translation + transcription during meetings with broad language support. jotme.io",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1394,
+        "end_idx": 1413
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+      "url_position": 1607,
+      "claim_text": "Tactiq (with translation workflow) – captures live transcript and translates it (better for post-call translation than real-time captions). Tactiq",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1585,
+        "end_idx": 1604
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+      "url_position": 1856,
+      "claim_text": "4) Extensions & add-ons Chrome real-time translation extensions (e.g., Byrdhouse AI) can add live captions/translation on browser-based calls like Google Meet. Chrome Web Store",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1808,
+        "end_idx": 1841
+      },
+      "citation_token": "citeturn0search6turn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.aiphone.ai/blog/best-apps-for-real-time-video-call-translation-on-whatsapp/",
+      "url_position": 2162,
+      "claim_text": "5) Mobile apps (for specific platforms) Third-party mobile apps like EzDubs/AI Phone focus on real-time translation on WhatsApp and similar platforms (works outside traditional conferencing). Aiphone+1",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 2087,
+        "end_idx": 2106
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+          "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+          "snippet": "Tool 3: Interprefy Interprefy is a cloud-based tool that offers live multilingual interpretation for video calls. It supports over 100 languages by using human interpreters to guarantee accuracy. The tool can integrate with popular video conferencing platforms like Zoom, Teams, and Webex, making it versatile for different user needs. Cloud-Based Live Multilingual Interpretation While exploring ...",
+          "domain": "www.forasoft.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1751846400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+      "url_position": 2498,
+      "claim_text": "What to consider Accuracy vs speed & cost: human interpreter options (Zoom interpretation or services like Interprefy in enterprise plans) are more accurate but expensive. AI tools are faster and cheaper but vary in latency/accuracy. Fora Soft",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+        "title": "Top Tools for Live Meeting Translation (2025) - tactiq.io",
+        "domain": "Tactiq"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/live-meeting-translation/",
+        "title": "AI Live Meeting Translation for Zoom, Teams, and Google Meet",
+        "domain": "同言翻译"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-real-time-translators-for-meetings",
+        "title": "5 Best Real-Time Translators for Meetings - maestra.ai",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://taloai.com/",
+        "title": "Talo - Real-Time AI Translator for Video Calls",
+        "domain": "Talo"
+      },
+      {
+        "url": "https://vidby.com/vidby-call-translator",
+        "title": "Video Call Translation - Live translate with Vidby",
+        "domain": "Vidby"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+        "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-apps-for-real-time-video-call-translation-on-whatsapp/",
+        "title": "Best Apps for Real-Time Video Call Translation on WhatsApp",
+        "domain": "Aiphone"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "Fora Soft"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.forasoft.com/blog/article/live-translate-video-call",
+        "title": "Live Translate Video Call: 9 Expert Tips to Boost Translation Accuracy ...",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://www.deeptrue.org/en/blog/video-meeting-translation-platforms-zoom-google-meet-teams-webex-deeptrue",
+        "title": "5 Solutions for Real-Time Translation in Video Meetings",
+        "domain": "deeptrue.org"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/edge/features/real-time-video-translation",
+        "title": "Real-time video translation | Microsoft Edge",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://maestra.ai/tools/real-time-translator/live-meeting-translation",
+        "title": "Live Meeting Translation - Instant Meeting Interpretation",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://maestra.ai/tools/real-time-translator/live-conference-translation",
+        "title": "Live Conference Translation - Instant Interpretation",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://belikenative.com/top-5-tools-for-real-time-meeting-translation/",
+        "title": "Meeting Translation: 5 Best AI Tools for Real-Time Translation",
+        "domain": "belikenative.com"
+      },
+      {
+        "url": "https://www.stenomatic.ai/post/best-simultaneous-translation-app",
+        "title": "The 6 Best Simultaneous Translation Apps for Conferences",
+        "domain": "stenomatic.ai"
+      },
+      {
+        "url": "https://ezdubs.ai/meetings-translator",
+        "title": "Real-Time Translation for Meetings & Team Messaging| EzDubs",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://www.ezdubs.ai/video-call-translator",
+        "title": "Live Video Call Translation App | EzDubs",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-video-conference-translation-tools",
+        "title": "Ultimate Guide – The Best Video Conference Translation Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-language-translation-softwares-for-business-calls-and-meetings/",
+        "title": "Best Language Translation Software For Business Calls And Meetings",
+        "domain": "aiphone.ai"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 11,
+    "total_all": 20
+  },
+  "response_stats": {
+    "total_length": 2866,
+    "citation_count": 11,
+    "chars_with_citations": 225
+  }
+}

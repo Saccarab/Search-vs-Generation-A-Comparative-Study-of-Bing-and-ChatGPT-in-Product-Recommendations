@@ -1,0 +1,375 @@
+{
+  "run_id": "P039_r3",
+  "account_type": "enterprise",
+  "prompt": "What are some free transcription AI tools available?",
+  "metadata": {
+    "hidden_queries": [
+      "free transcription AI tools",
+      "best free automatic transcription services AI"
+    ],
+    "sonic_classification": {
+      "latency_ms": 14.149620954412967,
+      "simple_search_prob": 0.9941770843300326,
+      "complex_search_prob": 0.000366286095273324,
+      "no_search_prob": 0.005456629574694075,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free transcription AI tools"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 235,
+        "end_idx": 268
+      },
+      "citation_token": "citeturn0search0turn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://tech.co/news/best-free-ai-transcribers",
+          "title": "7 Best Free AI Transcription Tools For 2024: Transcribe in Seconds",
+          "snippet": "7 Best Free AI Transcription Tools For 2024: Ranked & Reviewed You don't need to pay a premium for a quality transcription service. Here's a roundup of our favorite free platforms.",
+          "domain": "tech.co",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1702598400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://tech.co/news/best-free-ai-transcribers",
+      "url_position": 232,
+      "claim_text": "Here are some free or freemium AI transcription tools you can use to convert speech to text: Widely used / general-purpose Otter.ai – real-time and uploaded audio transcription with speaker labels (free tier available). Tech.co+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 380,
+        "end_idx": 399
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://turboscribe.ai/u/tools/free-ai-transcription-tool",
+      "url_position": 397,
+      "claim_text": "TurboScribe – browser-based tool powered by Whisper, supporting 100+ languages and quick file uploads. TurboScribe",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 516,
+        "end_idx": 536
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://deepgram.com/free-transcription",
+      "url_position": 575,
+      "claim_text": "Deepgram (free tool) – free online speech-to-text for audio and YouTube links, quick transcript generation. Deepgram",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 629,
+        "end_idx": 649
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://tactiq.io/learn/best-free-ai-transcription-tools",
+          "title": "Best Free AI Transcription Tools - tactiq.io",
+          "snippet": "Discover the top free AI transcription tools to transcribe audio. Learn how these tools handle audio and video files, offering accurate transcripts.",
+          "domain": "tactiq.io",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": 1735603200,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://tactiq.io/learn/best-free-ai-transcription-tools",
+      "url_position": 709,
+      "claim_text": "Restream (free transcription) – simple audio/video file transcription for creators. Tactiq",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 775,
+        "end_idx": 794
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://tactiq.io/learn/free-automatic-transcription-tools",
+      "url_position": 889,
+      "claim_text": "Real-time / meeting focused Tactiq – captures transcripts from Zoom/Teams/Meet in browser; free tier available. Tactiq",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 893,
+        "end_idx": 911
+      },
+      "citation_token": "citeturn0news25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.tomsguide.com/ai/google-gemini/transcribe-audio-with-google-gemini-for-free-heres-how-to-do-it",
+          "title": "Transcribe audio with Google Gemini for free - here's how to do it",
+          "snippet": "Google Gemini now offers a free tool for transcribing audio files up to 10 minutes long. Users can upload up to 10 audio files at once, provided their combined length doesn't exceed the time limit. Compatible formats include MP3, AAC, and WAV. To begin, users can access Gemini via its website or app, select the upload option, and choose their desired audio file. Once uploaded, a prompt like \"transcribe this speech\" initiates the process. If an error occurs, retrying usually resolves the issue. Transcriptions are generated quickly, though they may include filler words (e.g., \"uhms\" and \"ahs\"). Users can instruct Gemini to clean the transcript by prompting it to remove such filler words. Additionally, Gemini can help summarize the audio or extract key points, making it a versatile tool for various transcription needs.",
+          "domain": "www.tomsguide.com",
+          "ref_type": "news",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": 1761544800,
+          "ref_key": "0_news_25"
+        }
+      ],
+      "inline_url": "https://www.tomsguide.com/ai/google-gemini/transcribe-audio-with-google-gemini-for-free-heres-how-to-do-it",
+      "url_position": 1053,
+      "claim_text": "Google Gemini (free feature) – lets you upload short audio clips for basic transcription. Tom's Guide",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1029,
+        "end_idx": 1030
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+      "url_position": 1279,
+      "claim_text": "Alternate free options Google Voice Typing (in Google Docs) – free speech-to-text dictation in browser. Maestra AI",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1127,
+        "end_idx": 1146
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+      "url_position": 1421,
+      "claim_text": "Live Transcribe (Android) – accessibility-focused live transcription. Maestra AI",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1227,
+        "end_idx": 1247
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.voicecrafters.com/free-ai-transcription-tool/",
+      "url_position": 1572,
+      "claim_text": "Voice Crafters free tool – free browser AI transcription up to ~30 min. voicecrafters.com",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1476,
+        "end_idx": 1495
+      },
+      "citation_token": "citeturn0search0",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://tech.co/news/best-free-ai-transcribers",
+          "title": "7 Best Free AI Transcription Tools For 2024: Transcribe in Seconds",
+          "snippet": "7 Best Free AI Transcription Tools For 2024: Ranked & Reviewed You don't need to pay a premium for a quality transcription service. Here's a roundup of our favorite free platforms.",
+          "domain": "tech.co",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1702598400,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://tech.co/news/best-free-ai-transcribers?utm_source=chatgpt.com",
+          "title": "7 Best Free AI Transcription Tools For 2024: Transcribe in Seconds",
+          "snippet": "7 Best Free AI Transcription Tools For 2024: Ranked & Reviewed You don't need to pay a premium for a quality transcription service. Here's a roundup of our favorite free platforms.",
+          "domain": "Tech.co",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://tech.co/news/best-free-ai-transcribers",
+      "url_position": 1848,
+      "claim_text": "Note: Free plans typically have limits (minutes/month, features, export formats) compared to paid tiers. Choose based on whether you need real-time, file uploads, multiple languages, or meeting integration. Tech.co",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://tech.co/news/best-free-ai-transcribers",
+        "title": "7 Best Free AI Transcription Tools For 2024: Transcribe in Seconds",
+        "domain": "Tech.co"
+      },
+      {
+        "url": "https://turboscribe.ai/u/tools/free-ai-transcription-tool",
+        "title": "Free AI Transcription | TurboScribe",
+        "domain": "TurboScribe"
+      },
+      {
+        "url": "https://deepgram.com/free-transcription",
+        "title": "Free Transcription Tool - Deepgram",
+        "domain": "Deepgram"
+      },
+      {
+        "url": "https://tactiq.io/learn/best-free-ai-transcription-tools",
+        "title": "Best Free AI Transcription Tools - tactiq.io",
+        "domain": "Tactiq"
+      },
+      {
+        "url": "https://tactiq.io/learn/free-automatic-transcription-tools",
+        "title": "Top 5 Free Automatic Transcription Tools to Use in 2025",
+        "domain": "Tactiq"
+      },
+      {
+        "url": "https://www.tomsguide.com/ai/google-gemini/transcribe-audio-with-google-gemini-for-free-heres-how-to-do-it",
+        "title": "Transcribe audio with Google Gemini for free - here's how to do it",
+        "domain": "Tom's Guide"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-free-ai-transcription-tools",
+        "title": "10 Best Free AI Transcription Tools for Fast & Accurate Transcripts",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.voicecrafters.com/free-ai-transcription-tool/",
+        "title": "Free AI Transcription Tool - Voice Crafters",
+        "domain": "voicecrafters.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://tripleareview.com/best-ai-transcription/",
+        "title": "Best AI Transcription: Top 8 Free Tools You Need To Know",
+        "domain": "tripleareview.com"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-ai-tools-for-transcription/",
+        "title": "12 Best AI Tools For Transcription in 2026 [Complete Guide]",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://meetgeek.ai/blog/best-free-transcription-software",
+        "title": "4 Best Free Transcription Software For 2026 | Personally Tested",
+        "domain": "meetgeek.ai"
+      },
+      {
+        "url": "https://industrywired.com/artificial-intelligence/10-free-ai-transcription-tools-for-any-industry-9370968",
+        "title": "10 Free AI Transcription Tools for Any Industry",
+        "domain": "industrywired.com"
+      },
+      {
+        "url": "https://otter.ai/blog/best-automatic-transcription-tools",
+        "title": "8 Best Automatic Transcription Tools for 2025 - Otter.ai",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://krisp.ai/blog/free-ai-transcription/",
+        "title": "Top 7 Free AI Transcription Tools in 2024 | Users' Picks - Krisp",
+        "domain": "krisp.ai"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-transcription",
+        "title": "9 Best AI Transcription Tools for 2025",
+        "domain": "usefulai.com"
+      },
+      {
+        "url": "https://riverside.com/transcription",
+        "title": "Free Audio & Video Transcriptions with 99% Accuracy | AI-Powered",
+        "domain": "riverside.com"
+      },
+      {
+        "url": "https://www.theinsaneapp.com/tools/top-ai-transcription-tools/",
+        "title": "10 AI Transcription Tools That Are Smarter Than Typing (And Still Free)",
+        "domain": "theinsaneapp.com"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/free-transcription-software",
+        "title": "Best Free Transcription Software: 6 Tools Tested and Reviewed [2026]",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://otter.ai/free-ai-transcription",
+        "title": "AI Transcription Free: Fast, Easy, Accurate Transcription",
+        "domain": "otter.ai"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 11,
+    "total_all": 19
+  },
+  "response_stats": {
+    "total_length": 1898,
+    "citation_count": 10,
+    "chars_with_citations": 188
+  }
+}

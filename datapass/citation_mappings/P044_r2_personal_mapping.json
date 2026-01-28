@@ -1,0 +1,475 @@
+{
+  "run_id": "P044_r2",
+  "account_type": "personal",
+  "prompt": "Are there live translation software options for video chats like Zoom or Teams?",
+  "metadata": {
+    "hidden_queries": [
+      "live translation software for video chats Zoom Teams live translation",
+      "software options that provide live translation/subtitles in video conferencing"
+    ],
+    "sonic_classification": {
+      "latency_ms": 0.05795806646347046,
+      "simple_search_prob": 0.9927327565990367,
+      "complex_search_prob": 0.00037468116794248536,
+      "no_search_prob": 0.0068925622330208115,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "live translation software for video chats Zoom Teams live translation"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 407,
+        "end_idx": 440
+      },
+      "citation_token": "citeturn0search2turn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0059081&utm_source=chatgpt.com",
+          "title": "Enabling and configuring translated captions",
+          "snippet": "Zoom translated captions enable users to have the speech in a meeting or webinar automatically translated in real-time to captions in another language.",
+          "domain": "zoom.com",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://www.zoom.com/en/products/ai-assistant/features/accessibility/",
+      "url_position": 394,
+      "claim_text": "Yes — there are several live translation software options you can use with video chats like Zoom and Microsoft Teams (and others). Some are built-in features, others are third-party tools that work alongside those platforms: 🧠 Built-In / Platform Features Zoom Live Translation & Captions – Zoom’s AI can generate real-time translated captions during meetings in dozens of languages. Zoom+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 636,
+        "end_idx": 655
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.microsoft.com/en-us/office/use-language-interpretation-in-microsoft-teams-meetings-b9fdde0f-1896-48ba-8540-efc99f5f4b2e",
+      "url_position": 668,
+      "claim_text": "Microsoft Teams Language Interpretation – Teams supports real-time interpretation by professional interpreters; translation into another language happens live as the meeting goes on. Microsoft Support",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 895,
+        "end_idx": 912
+      },
+      "citation_token": "citeturn0search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/",
+      "url_position": 1045,
+      "claim_text": "⚙️ Third-Party Tools (AI / Integration) These work with Zoom, Teams, Google Meet, etc., to provide live translation (captions and sometimes spoken audio): Wordly – real-time AI translation and captions for meetings and events. Wordly+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1038,
+        "end_idx": 1071
+      },
+      "citation_token": "citeturn0search5turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.interprefy.com/solutions/use-cases/online-meetings?utm_source=chatgpt.com",
+          "title": "Real-time translations and captions for online meetings",
+          "snippet": "Translate your Zoom, Teams and more meetings in real-time with professional live interpretation, AI speech translation and multilingual captions.",
+          "domain": "interprefy.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://www.interprefy.com/",
+      "url_position": 1185,
+      "claim_text": "Interprefy – enterprise solution with live AI speech translation, captions, and interpreter support. Interprefy+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1169,
+        "end_idx": 1201
+      },
+      "citation_token": "citeturn0search3turn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://taloai.com/",
+      "url_position": 1312,
+      "claim_text": "Talo (now part of Palabra.ai) – real-time translation for video calls in many languages. Talo+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1281,
+        "end_idx": 1301
+      },
+      "citation_token": "citeturn0search32",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://kudo.ai/",
+          "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+          "snippet": "At KUDO, we exclusively specialize in continuous, real-time speech translation powered by both professional human interpreters and AI. This means you can speak ...Read more",
+          "domain": "kudo.ai",
+          "ref_type": "search",
+          "ref_index": 32,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_32"
+        }
+      ],
+      "inline_url": "https://kudo.ai/",
+      "url_position": 1411,
+      "claim_text": "KUDO – live speech translation + captions (AI and human interpreters). KUDO",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1395,
+        "end_idx": 1415
+      },
+      "citation_token": "citeturn0search33",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.transyncai.com/tools/live-meeting-translation/",
+          "title": "AI Live Meeting Translation for Zoom, Teams, and Google ...",
+          "snippet": "Transync AI delivers powerful live meeting translation for Zoom, Microsoft Teams, and Google Meet. Experience real-time subtitles and voice translation that ...Read more",
+          "domain": "www.transyncai.com",
+          "ref_type": "search",
+          "ref_index": 33,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_33"
+        }
+      ],
+      "inline_url": "https://www.transyncai.com/tools/live-meeting-translation/",
+      "url_position": 1521,
+      "claim_text": "Transync AI – platform-agnostic live translation (text + voice) for Zoom/Teams/Meet. 同言翻译",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1493,
+        "end_idx": 1512
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.palabra.ai/",
+      "url_position": 1660,
+      "claim_text": "Palabra.ai – real-time voice translation across meetings and events. Palabra",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1650,
+        "end_idx": 1670
+      },
+      "citation_token": "citeturn0search36",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/felo-subtitles-chatgpt-li/ponokiofkijoolhebggofhhibnafebna?hl=en",
+          "title": "Felo Subtitles: ChatGPT Live Translation - Chrome Web Store",
+          "snippet": "Felo real-time captions for Meeting &YouTube Live. Transcribe and translate Zoom& Google Meet& MSTeams& YouTube& Using ChatGPT.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 36,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_36"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/felo-subtitles-chatgpt-li/ponokiofkijoolhebggofhhibnafebna?hl=en",
+      "url_position": 1832,
+      "claim_text": "🧩 Browser Extensions & Add-Ons Felo Subtitles – Chrome extension that adds real-time translated captions (Zoom, Teams, Meet). Chrome Web Store",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1778,
+        "end_idx": 1798
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp?hl=en-US",
+      "url_position": 2057,
+      "claim_text": "Other extensions in the Chrome Web Store can offer live translation/transcription for video calls. Chrome Web Store",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.zoom.com/en/products/ai-assistant/features/accessibility/",
+        "title": "Zoom Transcription: Translate & Transcribe In Real Time",
+        "domain": "Zoom"
+      },
+      {
+        "url": "https://support.microsoft.com/en-us/office/use-language-interpretation-in-microsoft-teams-meetings-b9fdde0f-1896-48ba-8540-efc99f5f4b2e",
+        "title": "Use language interpretation in Microsoft Teams meetings",
+        "domain": "Microsoft Support"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://www.interprefy.com/",
+        "title": "Interprefy: Interpretation, AI Speech Translation & Captions Tech",
+        "domain": "Interprefy"
+      },
+      {
+        "url": "https://taloai.com/",
+        "title": "Talo - Real-Time AI Translator for Video Calls",
+        "domain": "Talo"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "KUDO"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/live-meeting-translation/",
+        "title": "AI Live Meeting Translation for Zoom, Teams, and Google ...",
+        "domain": "同言翻译"
+      },
+      {
+        "url": "https://www.palabra.ai/",
+        "title": "Palabra.ai: Live Voice Translator & Real-Time Speech Translation",
+        "domain": "Palabra"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/felo-subtitles-chatgpt-li/ponokiofkijoolhebggofhhibnafebna?hl=en",
+        "title": "Felo Subtitles: ChatGPT Live Translation - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp?hl=en-US",
+        "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.youtube.com/watch?v=xkH2aQwmBCI&vl=en-US",
+        "title": "Real-Time SPEECH to SPEECH Translator for Microsoft Teams ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation-for-teams",
+        "title": "5 Best Live Translation Tools for Microsoft Teams [Tried ...",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-zoom-translation",
+        "title": "Top 6 AI Live Translation Tools for Zoom Meetings",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.reddit.com/r/AskTechnology/comments/1gnqt7n/are_there_any_video_chatting_apps_with_an/",
+        "title": "Are there any video chatting apps with an auto-translator?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/TranslationStudies/comments/1bhce7m/live_translation_apps_for_meetings/",
+        "title": "Live translation apps for meetings : r/TranslationStudies",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/MicrosoftTeams/comments/1kghjoa/what_app_do_you_use_for_live_speech_translation/",
+        "title": "what app do you use for live speech translation on MS ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/translator/education/",
+        "title": "Microsoft Translator for Education",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.interprefy.com/solutions/use-cases/online-meetings",
+        "title": "Real-time translations and captions for online meetings",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://www.interprefy.com/resources/blog/live-translation-options-for-ms-teams-2025-interpretation-and-ai-captions",
+        "title": "Live Translation Options for MS Teams in 2025",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://www.interprefy.com/solutions/integrations/zoom",
+        "title": "Interpretation & Live Translation for Zoom Meetings",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://www.stenomatic.ai/",
+        "title": "AI Live Translation Platform for Conferences and Calls ...",
+        "domain": "stenomatic.ai"
+      },
+      {
+        "url": "https://marketplace.zoom.us/apps/wqXHyNXhRQy0V5CeVTGScw",
+        "title": "Wordly Translation and Captions",
+        "domain": "zoom.us"
+      },
+      {
+        "url": "https://kudo.ai/blog/mind-blowing-real-time-translation-devices/",
+        "title": "5 Real-Time AI Translation Devices That Will Blow Your Mind",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://kudo.ai/solutions/live-speech-translation-online-meeting-platform/",
+        "title": "Live speech translation for online meeting platforms",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in ...",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://www.eventcat.com/en",
+        "title": "EventCAT | Real-Time Translation, Interpretation, Subtitles ...",
+        "domain": "eventcat.com"
+      },
+      {
+        "url": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0059081",
+        "title": "Enabling and configuring translated captions",
+        "domain": "zoom.com"
+      },
+      {
+        "url": "https://www.clevercast.com/",
+        "title": "Clevercast: Multilingual Live Streaming Made Easy",
+        "domain": "clevercast.com"
+      },
+      {
+        "url": "https://meryl.net/best-automatic-captioning-tool-for-video-calls/",
+        "title": "Which Is the Best Automatic Captioning Tool for Video Calls?",
+        "domain": "meryl.net"
+      },
+      {
+        "url": "https://www.transyncai.com/blog-zoom-teams-translator/",
+        "title": "The Best Zoom Teams Translator: Real-Time AI Meeting ...",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.transyncai.com/blog/blog-zoom-teams-translator/",
+        "title": "The Best Zoom Teams Translator: Real-Time AI Meeting ...",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.transyncai.com/blog-zoom-translation-real-time-guide/",
+        "title": "Zoom Translation Made Easy – 3 Powerful Tips (2025)",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.deepl.com/en/products/voice/deepl-voice-for-meetings",
+        "title": "DeepL Voice for Meetings",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://www.g2.com/discussions/what-platform-provides-multi-language-live-translation-for-meetings",
+        "title": "What platform provides multi-language live translation for ...",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://help.webex.com/en-us/article/nqzpeei/show-real-time-translation-and-transcription-in-meetings-and-webinars",
+        "title": "Show real-time translation and transcription in meetings ...",
+        "domain": "webex.com"
+      },
+      {
+        "url": "https://www.wordly.ai/zoom-translation",
+        "title": "Zoom Translation",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://boostlingo.com/blog/best-ai-tools-for-translation-at-events/",
+        "title": "Best AI Tools for Live Translation at Events",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://www.linkedin.com/pulse/3-best-software-solutions-real-time-meeting-translation-h5fwe",
+        "title": "3 Best Software Solutions for Real-Time Meeting Translation",
+        "domain": "linkedin.com"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 30,
+    "total_all": 40
+  },
+  "response_stats": {
+    "total_length": 2398,
+    "citation_count": 10,
+    "chars_with_citations": 233
+  }
+}

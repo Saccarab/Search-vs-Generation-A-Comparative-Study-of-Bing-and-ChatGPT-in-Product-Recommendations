@@ -1,0 +1,404 @@
+{
+  "run_id": "P020_r2",
+  "account_type": "enterprise",
+  "prompt": "Request a tool to translate foreign audio to English in real-time during video playback.",
+  "metadata": {
+    "hidden_queries": [
+      "tool to translate foreign audio to English in real-time during video playback",
+      "software real time audio translation for video, foreign language to English"
+    ],
+    "sonic_classification": {
+      "latency_ms": 2.786030061542988,
+      "simple_search_prob": 0.6318013645670365,
+      "complex_search_prob": 0.3056106792616005,
+      "no_search_prob": 0.06258795617136298,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "tool to translate foreign audio to English in real-time during video playback"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 327,
+        "end_idx": 346
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+          "title": "Live Translation: Real-Time Video & Audio Translator",
+          "snippet": "AI-powered real-time translation tool for videos, live streams, and meetings, supporting 50+ languages.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+      "url_position": 331,
+      "claim_text": "Here are practical tools that can translate foreign audio to English in (near) real-time during video playback: Browser / Live playback Live Translation (Chrome extension): real-time video & audio translation for YouTube, live streams, meetings, etc., into English (supports 50+ languages) right in the browser. Chrome Web Store",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 488,
+        "end_idx": 494
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+      "url_position": 586,
+      "claim_text": "Real-Time Video & Audio Translation (Chrome): similar AI extension that can handle live video/audio and translate into many languages. Chrome Web Store",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 659,
+        "end_idx": 678
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.microsoft.com/en-us/edge/features/real-time-video-translation",
+      "url_position": 844,
+      "claim_text": "Microsoft Edge real-time video translation: built-in feature in Edge that can translate audio to English on some videos (YouTube etc.) on hover. Microsoft",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 863,
+        "end_idx": 883
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://livetrans.pro/",
+      "url_position": 1105,
+      "claim_text": "Standalone / app-like tools LiveTrans: desktop software that captures audio and provides real-time speech transcription/translation into English for live content or videos. LiveTrans",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1010,
+        "end_idx": 1030
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 1259,
+      "claim_text": "Maestra / real-time translator: online AI voice translator for live speech to text (can be paired with video playback). Maestra",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1155,
+        "end_idx": 1174
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://talkpersona.com/translator",
+      "url_position": 1417,
+      "claim_text": "TalkPersona (voice translator): listens and translates speech in real time — useful if you route video audio into it. TalkPersona",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1354,
+        "end_idx": 1373
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://anytranscribe.com/core-tools/audio-video-translator/",
+          "title": "Audio/Video Translator (Free Online & No Login)",
+          "snippet": "Translate your audio & video files or speech recording to any language with our free, easy-to-use online translator! No login or registration is needed.",
+          "domain": "anytranscribe.com",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": 1742444383,
+          "ref_key": "0_search_4"
+        }
+      ],
+      "inline_url": "https://anytranscribe.com/core-tools/audio-video-translator/",
+      "url_position": 1639,
+      "claim_text": "File-based options (not truly live, but fast) AnyTranscribe (audio/video translator): upload video to get fast transcription and translation to English with subtitles. Any Transcribe",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1475,
+        "end_idx": 1494
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.veed.io/tools/audio-translator/listen-and-translate",
+      "url_position": 1806,
+      "claim_text": "VEED.io audio-translation: AI tool to translate audio from video files and generate subtitles. VEED.IO",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1669,
+        "end_idx": 1687
+      },
+      "citation_token": "citeturn0news19",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 19,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_19"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 2044,
+      "claim_text": "Hardware option AI translation earbuds (e.g., Mymanu Orb): translate conversations and audio in real time through the earbuds — could work for playback audio too. SFGATE",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1784,
+        "end_idx": 1803
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+          "title": "Live Translation: Real-Time Video & Audio Translator",
+          "snippet": "AI-powered real-time translation tool for videos, live streams, and meetings, supporting 50+ languages.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+      "url_position": 2255,
+      "claim_text": "Notes / limitations Browser extensions often work only on web players (YouTube, Twitch). Chrome Web Store",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1881,
+        "end_idx": 1900
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.microsoft.com/en-us/edge/features/real-time-video-translation",
+      "url_position": 2443,
+      "claim_text": "Built-in browser features (Edge) have limited language coverage currently. Microsoft",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 2077,
+        "end_idx": 2095
+      },
+      "citation_token": "citeturn0news25",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 2044,
+      "claim_text": "Hardware option AI translation earbuds (e.g., Mymanu Orb): translate conversations and audio in real time through the earbuds — could work for playback audio too. SFGATE",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+        "title": "Live Translation: Real-Time Video & Audio Translator",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+        "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/edge/features/real-time-video-translation",
+        "title": "Real-time video translation | Microsoft Edge",
+        "domain": "Microsoft"
+      },
+      {
+        "url": "https://livetrans.pro/",
+        "title": "LiveTrans - AI-Powered Real-Time Voice Transcription & Live Translation ...",
+        "domain": "LiveTrans"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://talkpersona.com/translator",
+        "title": "TalkPersona - Free real-time voice translator",
+        "domain": "TalkPersona"
+      },
+      {
+        "url": "https://anytranscribe.com/core-tools/audio-video-translator/",
+        "title": "Audio/Video Translator (Free Online & No Login)",
+        "domain": "Any Transcribe"
+      },
+      {
+        "url": "https://www.veed.io/tools/audio-translator/listen-and-translate",
+        "title": "Listen and Translate - AI Audio Translator - VEED.IO",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      },
+      {
+        "url": "https://www.theverge.com/2024/12/19/24324932/microsoft-live-translation-intel-amd-copilot-plus-pcs",
+        "title": "Microsoft is testing live translation on Intel and AMD Copilot Plus PCs",
+        "domain": "The Verge"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-video-translators",
+        "title": "7 Best AI Video Translators in 2025",
+        "domain": "usefulai.com"
+      },
+      {
+        "url": "https://screenapp.io/features/audio-translator",
+        "title": "Voice Translator - Free Voice Translate to English Online",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://reccloud.com/live-video-translator",
+        "title": "Accurate Live Video Translator | RecCloud",
+        "domain": "reccloud.com"
+      },
+      {
+        "url": "https://www.smartcat.com/live-video-translation/",
+        "title": "AI Video Translator: RealTime Subtitles & Dubbing | Smartcat",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://maestra.ai/tools/real-time-translator",
+        "title": "Real Time Translator - AI Live Translation",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://lipsync.video/video-translate",
+        "title": "Free AI Video Translate Tool – No Signup Needed",
+        "domain": "lipsync.video"
+      },
+      {
+        "url": "https://akool.com/apps/video-translation",
+        "title": "Best Free AI Video Translation | Best Lip Sync AI | AKOOL",
+        "domain": "akool.com"
+      },
+      {
+        "url": "https://flixier.com/tools/translate-your-video-online",
+        "title": "AI Video Translator | AI Dubbing & Subtitles in 130+ Languages",
+        "domain": "flixier.com"
+      },
+      {
+        "url": "https://wavel.ai/solutions/ai-video-translator/english-translation",
+        "title": "Translate English Audio Video For Free Online - Wavel",
+        "domain": "wavel.ai"
+      },
+      {
+        "url": "https://livevoice.io/en/ai-voice-translation",
+        "title": "LiveVoice: AI Voice Translation",
+        "domain": "livevoice.io"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 11,
+    "total_all": 21
+  },
+  "response_stats": {
+    "total_length": 2965,
+    "citation_count": 12,
+    "chars_with_citations": 215
+  }
+}

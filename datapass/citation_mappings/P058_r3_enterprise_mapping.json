@@ -1,0 +1,382 @@
+{
+  "run_id": "P058_r3",
+  "account_type": "enterprise",
+  "prompt": "What is the best software for Parsian/Farsi audio-to-text transcription?",
+  "metadata": {
+    "hidden_queries": [
+      "best Farsi/Farsi (Persian) audio to text transcription software",
+      "نرم افزار تشخیص گفتار فارسی تبدیل صدا به متن بهترین"
+    ],
+    "sonic_classification": {
+      "latency_ms": 3.6684368969872594,
+      "simple_search_prob": 0.9817184527134152,
+      "complex_search_prob": 0.01202529467232118,
+      "no_search_prob": 0.00625625261426364,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 386,
+        "end_idx": 405
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://elevenlabs.io/speech-to-text/persian",
+      "url_position": 381,
+      "claim_text": "Here are the best current options for Persian/Farsi (Parsian) audio-to-text transcription, ranked by accuracy, language support, and ease of use: High-accuracy, modern AI services ElevenLabs Scribe (Persian Speech-to-Text) – state-of-the-art ASR with very low error rates in Persian and features like timestamps and speaker labeling; strong for podcasts and meetings. ElevenLabs",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 504,
+        "end_idx": 524
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/en/online-persian-transcription-software",
+      "url_position": 524,
+      "claim_text": "Sonix – AI transcription with good Persian support, easy editing, and 30 min free trial. Sonix",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 644,
+        "end_idx": 664
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/transcribe-persian",
+      "url_position": 707,
+      "claim_text": "Happy Scribe (Persian) – AI-based online transcription with optional human review (paid) for higher fidelity. HappyScribe",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 817,
+        "end_idx": 836
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/tools/audio-to-text/transcribe-persian",
+          "title": "Transcribe Persian Audio to Text - Live Transcribe Persian Online",
+          "snippet": "After you transcribe Persian audio to text, you can create chapters, quizzes, extract keywords, summarize the transcript and more on the transcript editor. With an intuitive interface, editing transcripts is simple and time-efficient with easy transcript follow-along and speaker tags, alongside quality of life text editing solutions.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://maestra.ai/tools/audio-to-text/transcribe-persian",
+      "url_position": 910,
+      "claim_text": "Easy online tools (no install, fast) 4. Maestra (Live Transcribe Persian) – simple web upload/transcribe, supports cloud export and editing. Maestra AI",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 933,
+        "end_idx": 952
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.notta.ai/fa/audio-to-text",
+          "title": "تبدیل صدا به متن - تبدیل سریع هوش مصنوعی",
+          "snippet": "نصب نرم‌افزار لازم نیست - ابزار ما برای تبدیل صدا به متن کاملاً آنلاین موجود است. بعد از اینکه صدای شما به طور خودکار ترجمه شود، می‌توانید ترجمه خود را به عنوان یک فایل SRT، WORD یا TXT دانلود کنید.",
+          "domain": "www.notta.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.notta.ai/fa/audio-to-text",
+      "url_position": 1067,
+      "claim_text": "5. Notta – online Persian transcription with export to TXT/SRT/Word, multilingual output. Notta",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1050,
+        "end_idx": 1069
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://prismascribe.ai/transcribe/persian",
+      "url_position": 1212,
+      "claim_text": "6. PrismaScribe – AI-driven Persian transcripts with speaker detection and export formats. PrismaScribe",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1169,
+        "end_idx": 1188
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vmeg.ai/tools/audio-to-text/persian-transcription/",
+      "url_position": 1359,
+      "claim_text": "7. VMEG AI – quick online Persian transcription with timestamps & multi-speaker recognition. VMEG AI",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1295,
+        "end_idx": 1315
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.kapwing.com/tools/audio-to-text/persian",
+      "url_position": 1533,
+      "claim_text": "8. Kapwing Persian Audio-to-Text – free web tool, decent accuracy, integrates into video workflows. Kapwing",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1390,
+        "end_idx": 1410
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://transcribetotext.ai/transcription/persian-speech-to-text",
+      "url_position": 1675,
+      "claim_text": "9. TranscribeToText Persian – lightweight, fast online Persian ASR. Transcribe to Text",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1491,
+        "end_idx": 1511
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://vomo.ai/tools/persian-to-text",
+      "url_position": 1822,
+      "claim_text": "10. Vomo AI Persian – simple, accurate Persian audio upload-to-text tool. Vomo",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1666,
+        "end_idx": 1685
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://airoot.ir/blog/convert-voice-to-text-with-ai/",
+      "url_position": 2013,
+      "claim_text": "Free/basic alternatives SpeechTexter / Dictation.io – general speech-to-text web tools with Persian support (less accurate for noisy files). AI Root",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://elevenlabs.io/speech-to-text/persian",
+        "title": "Free Persian Speech to Text | Transcribe Persian Voice and Audio to Text",
+        "domain": "ElevenLabs"
+      },
+      {
+        "url": "https://sonix.ai/en/online-persian-transcription-software",
+        "title": "Best online Persian transcription software | Sonix",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://www.happyscribe.com/transcribe-persian",
+        "title": "Persian Transcription Services Online - Happy Scribe",
+        "domain": "HappyScribe"
+      },
+      {
+        "url": "https://maestra.ai/tools/audio-to-text/transcribe-persian",
+        "title": "Transcribe Persian Audio to Text - Live Transcribe Persian Online",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.notta.ai/fa/audio-to-text",
+        "title": "تبدیل صدا به متن - تبدیل سریع هوش مصنوعی",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://prismascribe.ai/transcribe/persian",
+        "title": "Transcribe Persian Audio to Text Online - prismascribe.ai",
+        "domain": "PrismaScribe"
+      },
+      {
+        "url": "https://www.vmeg.ai/tools/audio-to-text/persian-transcription/",
+        "title": "Free Persian Transcription – Convert Persian Audio to Text Online",
+        "domain": "VMEG AI"
+      },
+      {
+        "url": "https://www.kapwing.com/tools/audio-to-text/persian",
+        "title": "Persian Audio to Text Converter — Free + Online - Kapwing",
+        "domain": "Kapwing"
+      },
+      {
+        "url": "https://transcribetotext.ai/transcription/persian-speech-to-text",
+        "title": "Persian Audio to Text – Free AI Speech Transcription",
+        "domain": "Transcribe to Text"
+      },
+      {
+        "url": "https://vomo.ai/tools/persian-to-text",
+        "title": "Transcribe Persian to Text Online - Free & Accurate | VOMO AI",
+        "domain": "Vomo"
+      },
+      {
+        "url": "https://airoot.ir/blog/convert-voice-to-text-with-ai/",
+        "title": "تبدیل صدا به متن با هوش مصنوعی به صورت رایگان (فارسی و انگلیسی)",
+        "domain": "AI Root"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://fapremium.ir/blog/%D8%A8%D9%87%D8%AA%D8%B1%DB%8C%D9%86-%D8%A7%D8%A8%D8%B2%D8%A7%D8%B1%D9%87%D8%A7%DB%8C-%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B5%D8%AF%D8%A7-%D8%A8%D9%87-%D9%85%D8%AA%D9%86-%D8%AF%D8%B1-%D8%B3%D8%A7%D9%84/",
+        "title": "بهترین ابزارهای تبدیل صدا به متن در سال 2025 - پرمیوم فارسی",
+        "domain": "fapremium.ir"
+      },
+      {
+        "url": "https://najvafact.com/10235/best-free-speech-to-text-app-bot-software/",
+        "title": "برنامه های تبدیل صدا به متن: با 8 نرم افزار مبدل گفتار به نوشتار آشنا ...",
+        "domain": "najvafact.com"
+      },
+      {
+        "url": "https://www.notta.ai/en/transcribe-persian",
+        "title": "Transcribe Persian Audio to Text - Notta",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://www.notta.ai/fa/tools/audio-to-text-converter",
+        "title": "تبدیل صوت به متن رونویسی رایگان ... - Notta",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://mobo.news/best-speech-to-text-apps/",
+        "title": "بهترین هوش مصنوعی تبدیل صدا به متن؛ تبدیل ویس فارسی به متن",
+        "domain": "mobo.news"
+      },
+      {
+        "url": "https://turboscribe.ai/fa/u/tools/convert-persian-audio-to-text",
+        "title": "تبدیل صوت فارسی به متن | TurboScribe",
+        "domain": "turboscribe.ai"
+      },
+      {
+        "url": "https://turboscribe.ai/uw/tools/convert-persian-audio-to-text",
+        "title": "Convert Persian Audio to Text - TurboScribe",
+        "domain": "turboscribe.ai"
+      },
+      {
+        "url": "https://gglot.com/fa/audio-to-text-converter/",
+        "title": "مبدل صدا به متن - تشخیص گفتار با هوش مصنوعی",
+        "domain": "gglot.com"
+      },
+      {
+        "url": "https://webroyal.ir/%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B5%D8%AF%D8%A7-%D8%A8%D9%87-%D9%85%D8%AA%D9%86/",
+        "title": "بهترین هوش مصنوعی تبدیل صدا به متن + معرفی ابزارها ۲۰۲۴",
+        "domain": "webroyal.ir"
+      },
+      {
+        "url": "https://monica.im/fa/tools/ai-audio-to-text",
+        "title": "صوت به متن - ابزار رایگان تبدیل گفتار به متن",
+        "domain": "monica.im"
+      },
+      {
+        "url": "https://arga-mag.com/1161224/%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%DA%AF%D9%81%D8%AA%D8%A7%D8%B1-%D8%A8%D9%87-%D9%86%D9%88%D8%B4%D8%AA%D8%A7%D8%B1",
+        "title": "معرفی ۵ نرم افزار کاربردی برای تبدیل گفتار به نوشتار",
+        "domain": "arga-mag.com"
+      },
+      {
+        "url": "https://www.amberscript.com/en/transcribe-farsi/",
+        "title": "Transcribe Farsi Audio to Text - Transcription Service",
+        "domain": "amberscript.com"
+      },
+      {
+        "url": "https://talkbot.ir/free-speech-to-text-unlimited",
+        "title": "تبدیل صدا به متن آنلاین و رایگان | تایپ گفتاری",
+        "domain": "talkbot.ir"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 13,
+    "total_all": 24
+  },
+  "response_stats": {
+    "total_length": 2573,
+    "citation_count": 11,
+    "chars_with_citations": 214
+  }
+}

@@ -1,0 +1,421 @@
+{
+  "run_id": "P034_r1",
+  "account_type": "enterprise",
+  "prompt": "Is there a Windows application for live translation during calls in Google Meet or other meetings?",
+  "metadata": {
+    "hidden_queries": [
+      "Windows application live translation during calls Google Meet or other meetings",
+      "实时翻译 应用 Windows during video calls meet translation software Windows"
+    ],
+    "sonic_classification": {
+      "latency_ms": 9.779145941138268,
+      "simple_search_prob": 0.9878972835176518,
+      "complex_search_prob": 0.0016458974513634801,
+      "no_search_prob": 0.010456819030984695,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Windows application live translation during calls Google Meet or other meetings"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 245,
+        "end_idx": 277
+      },
+      "citation_token": "citeturn0search0turn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+          "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+          "snippet": "Breaking language barriers in video calls has become easier than ever, thanks to modern translation technology. Whether you're running international meetings or connecting with friends abroad, there's now a rich selection of tools that can translate conversations in real time.",
+          "domain": "www.forasoft.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1751846400,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+          "title": "Top Tools for Live Meeting Translation (2025) - tactiq.io",
+          "snippet": "Export everything to Notion, Google Docs, or other tools your team uses It’s especially helpful for multilingual meetings where you want clarity during the call and clean documentation afterward. You don’t need to switch platforms or hire a translator; just start the meeting and let Tactiq do the rest.",
+          "domain": "tactiq.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1744761600,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+      "url_position": 253,
+      "claim_text": "Yes — there are Windows-compatible apps/tools that can provide real-time translation during calls in Google Meet and other meeting platforms. Options vary in how deeply they integrate and whether they translate subtitles only or also voice. Fora Soft+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 586,
+        "end_idx": 618
+      },
+      "citation_token": "citeturn0search14turn0news25",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.interprefy.com/resources/blog/how-to-enhance-new-live-translation-options-for-google-meets",
+      "url_position": 639,
+      "claim_text": "🧠 Built-In / Native Options Google Meet (built-in captions & translation): Meet can auto-generate captions and, if you’re on an eligible Workspace plan, translate those captions into another language in real time (text only). Voice translation is limited and tied to Google’s AI-Pro features. Interprefy+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 982,
+        "end_idx": 1016
+      },
+      "citation_token": "citeturn0search11turn0search12",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.transyncai.com/",
+          "title": "Transync AI – Real-Time AI Translation",
+          "snippet": "Transync AI voice translator integrates seamlessly with Zoom, Microsoft Teams, Google Meet, and other major platforms. By sharing system audio, it delivers real-time voice translation so every participant can understand instantly.",
+          "domain": "www.transyncai.com",
+          "ref_type": "search",
+          "ref_index": 12,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_12"
+        }
+      ],
+      "inline_url": "https://www.transyncai.com/tools/live-meeting-translation/",
+      "url_position": 1102,
+      "claim_text": "🛠 Third-Party Windows Apps / Tools These run on Windows and link into meeting audio (system audio or virtual audio driver) for real-time translation: Transync AI – Dedicated Windows app that captures system audio and provides real-time voice translation and subtitles for Zoom, Teams, Google Meet, etc. Supports many languages and voice playback. 同言翻译+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1271,
+        "end_idx": 1291
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ztalk.ai/",
+      "url_position": 1412,
+      "claim_text": "Works as a separate translator overlay rather than native in-call integration. Ztalk.ai – Real-time speech translation tool with a virtual audio driver you select as the mic/speaker device in meetings to translate live between languages. ztalk.ai",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1409,
+        "end_idx": 1429
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://taloai.com/",
+      "url_position": 1543,
+      "claim_text": "Talo AI – AI interpreter that claims real-time voice translation for video calls across major platforms. Talo",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1559,
+        "end_idx": 1578
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://huntscreens.com/zh/products/polypal-live-translator",
+      "url_position": 1699,
+      "claim_text": "PolyPal Live Translator – AI-powered translator/subtitle generator for meetings and live events (Windows client exists). HuntScreens",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1734,
+        "end_idx": 1753
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.microsoft.com/detail/xpdnqchb387bjt",
+      "url_position": 1925,
+      "claim_text": "“Our Translator” (Microsoft Store app) – basic real-time voice translation tool on Windows (could be used during calls but not deeply integrated). Microsoft Store",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1916,
+        "end_idx": 1927
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ezdubs.ai/google-meet-extension",
+      "url_position": 2141,
+      "claim_text": "🧩 Browser Extensions Not Windows apps per se but useful: EzDubs (Google Meet extension) – Live voice translation + transcripts within Meet via Chrome. ezdubs.ai",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 2035,
+        "end_idx": 2055
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/meeting-translator-englis/jiamlhjammgddilodbjgnmhapphpmhah",
+          "title": "Meeting Translator - English to Multilingual - Chrome Web Store",
+          "snippet": "Meeting Translator seamlessly bridges this gap by providing real-time English-to-multilingual translations during your Google Meet and Microsoft Teams calls. As someone who's witnessed the frustration of international colleagues struggling to keep pace with fast-moving discussions, I can attest to how transformative this solution truly is.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": 1744243200,
+          "ref_key": "0_search_16"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/meeting-translator-englis/jiamlhjammgddilodbjgnmhapphpmhah",
+      "url_position": 2292,
+      "claim_text": "Meeting Translator (Chrome extension) – Real-time translation for Meet & Teams in browser. Chrome Web Store",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 2297,
+        "end_idx": 2316
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+          "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+          "snippet": "Breaking language barriers in video calls has become easier than ever, thanks to modern translation technology. Whether you're running international meetings or connecting with friends abroad, there's now a rich selection of tools that can translate conversations in real time.",
+          "domain": "www.forasoft.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1751846400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+      "url_position": 2632,
+      "claim_text": "⚠️ Notes / Limitations Most third-party tools work by capturing system or mic audio and translating externally — they don’t embed native audio channels into the meeting like built-in simultaneous interpretation in Zoom/Teams. Fora Soft",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 2840,
+        "end_idx": 2859
+      },
+      "citation_token": "citeturn0search1",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+          "title": "Top Tools for Live Meeting Translation (2025) - tactiq.io",
+          "snippet": "Export everything to Notion, Google Docs, or other tools your team uses It’s especially helpful for multilingual meetings where you want clarity during the call and clean documentation afterward. You don’t need to switch platforms or hire a translator; just start the meeting and let Tactiq do the rest.",
+          "domain": "tactiq.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1744761600,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025?utm_source=chatgpt.com",
+          "title": "Top Tools for Live Meeting Translation (2025) - tactiq.io",
+          "snippet": "Export everything to Notion, Google Docs, or other tools your team uses It’s especially helpful for multilingual meetings where you want clarity during the call and clean documentation afterward. You don’t need to switch platforms or hire a translator; just start the meeting and let Tactiq do the rest.",
+          "domain": "Tactiq",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+      "url_position": 3223,
+      "claim_text": "Accuracy and latency vary by language pair and network conditions. Some are paid or require subscriptions for full functionality. If you want true integrated simultaneous interpretation where meeting participants hear translated audio directly, Zoom’s built-in interpretation or Teams’ upcoming AI interpreter might be closer to that experience, but for Windows applications that translate in real time during Meet/Zoom/Teams calls, Transync AI and tools like Ztalk or Talo are the most practical today. Tactiq",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "Fora Soft"
+      },
+      {
+        "url": "https://www.interprefy.com/resources/blog/how-to-enhance-new-live-translation-options-for-google-meets",
+        "title": "Live Translation Options for Google Meet in 2025: New Feature and More",
+        "domain": "Interprefy"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/live-meeting-translation/",
+        "title": "AI Live Meeting Translation for Zoom, Teams, and Google Meet",
+        "domain": "同言翻译"
+      },
+      {
+        "url": "https://ztalk.ai/",
+        "title": "Ztalk.ai - Real-time Voice Translation",
+        "domain": "ztalk.ai"
+      },
+      {
+        "url": "https://taloai.com/",
+        "title": "Talo - Real-Time AI Translator for Video Calls",
+        "domain": "Talo"
+      },
+      {
+        "url": "https://huntscreens.com/zh/products/polypal-live-translator",
+        "title": "PolyPal：实时AI翻译和字幕",
+        "domain": "HuntScreens"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/xpdnqchb387bjt",
+        "title": "我们的翻译官-实时语音翻译软件 - Download and install on Windows | Microsoft Store",
+        "domain": "Microsoft Store"
+      },
+      {
+        "url": "https://ezdubs.ai/google-meet-extension",
+        "title": "Voice Translation for Google Meet in Real-Time | EzDubs",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/meeting-translator-englis/jiamlhjammgddilodbjgnmhapphpmhah",
+        "title": "Meeting Translator - English to Multilingual - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+        "title": "Top Tools for Live Meeting Translation (2025) - tactiq.io",
+        "domain": "Tactiq"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://maestra.ai/blogs/best-real-time-translators-for-meetings",
+        "title": "5 Best Real-Time Translators for Meetings - maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.enterprisetimes.co.uk/2025/09/26/live-meeting-translation-in-zoom-microsoft-teams-or-google-meet/",
+        "title": "Live Meeting Translation in Zoom, Microsoft Teams or Google Meet",
+        "domain": "enterprisetimes.co.uk"
+      },
+      {
+        "url": "https://www.transyncai.com/blog/blog-windows-live-translator/",
+        "title": "Windows Live Translator: The Best Real-Time Translation Software for PC",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://ai505.com/real-time-speech-translation-in-google-meet/",
+        "title": "Real-time Speech Translation in Google Meet: A Game-Changer for Global ...",
+        "domain": "ai505.com"
+      },
+      {
+        "url": "https://zhuanlan.zhihu.com/p/11915068598",
+        "title": "视频会议实时翻译神器：支持Zoom、Google Meet、Teams",
+        "domain": "zhihu.com"
+      },
+      {
+        "url": "https://transgull.com/zh-CN/online-meeting-translation",
+        "title": "适用于 Zoom、Teams 和 Google Meet 等在线会议的实时同声传译软件 | 翻译鸥",
+        "domain": "transgull.com"
+      },
+      {
+        "url": "https://www.transyncai.com/",
+        "title": "Transync AI – Real-Time AI Translation",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://belikenative.com/top-5-tools-for-real-time-meeting-translation/",
+        "title": "Meeting Translation: 5 Best AI Tools for Real-Time Translation",
+        "domain": "belikenative.com"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/xpfccqp8jx3kb5?gl=CN&hl=zh-CN",
+        "title": "随手翻译 - Windows官方下载 | 微软应用商店 | Microsoft Store",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://vidby.com/vidby-call-translator",
+        "title": "Video Call Translation - Live translate with Vidby",
+        "domain": "vidby.com"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 11,
+    "total_all": 21
+  },
+  "response_stats": {
+    "total_length": 3294,
+    "citation_count": 11,
+    "chars_with_citations": 245
+  }
+}

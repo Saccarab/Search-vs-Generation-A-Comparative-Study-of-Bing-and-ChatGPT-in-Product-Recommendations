@@ -1,0 +1,401 @@
+{
+  "run_id": "P012_r1",
+  "account_type": "enterprise",
+  "prompt": "What is the best platform to convert video voice into another language?",
+  "metadata": {
+    "hidden_queries": [
+      "best platforms to convert video voice into another language voiceover/translation",
+      "video voice translation tools text to speech voice dubbing tools"
+    ],
+    "sonic_classification": {
+      "latency_ms": 5.431699566543102,
+      "simple_search_prob": 0.9816536117819208,
+      "complex_search_prob": 0.010770799831959617,
+      "no_search_prob": 0.007575588386119596,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best platforms to convert video voice into another language voiceover/translation"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 269,
+        "end_idx": 288
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vozo.ai/video-translate",
+      "url_position": 257,
+      "claim_text": "Here are the most effective platforms for converting video voice into another language (automatic dubbing/AI translation): Top overall tools Vozo.ai – Fast translation to 110+ languages, studio-quality dubbing with voice cloning and editable output. Vozo",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 417,
+        "end_idx": 437
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://videodubber.ai/",
+          "title": "VideoDubber: AI Video Translation & Voice Dubbing - Try Free",
+          "snippet": "Free Video Translation & Voice Dubbing in preferred accent and voice. Scale audience across 150+ languages with voice cloning. Easy & Accurate!",
+          "domain": "videodubber.ai",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://videodubber.ai/",
+      "url_position": 424,
+      "claim_text": "VideoDubber.ai – Supports 150+ languages, voice cloning and subtitle sync, good balance of quality and ease of use. VideoDubber",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 568,
+        "end_idx": 601
+      },
+      "citation_token": "citeturn0search7turn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.veed.io/tools/video-translator",
+          "title": "Instant Video Translator - Translate with AI - VEED.IO",
+          "snippet": "Instantly translate videos into 29 languages (voiced) and 125+ languages for subtitles with the AI video translator. 99.9% accuracy. Replace audio with a translated voiceover.",
+          "domain": "www.veed.io",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://www.veed.io/tools/video-translator",
+      "url_position": 1516,
+      "claim_text": "Subtitles – Auto-generated editable subtitles are standard. VEED.IO",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 709,
+        "end_idx": 729
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://wavel.ai/",
+      "url_position": 730,
+      "claim_text": "Wavel.ai – Strong for realistic multilingual voice dubbing and voice cloning directly from videos. Wavel",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 810,
+        "end_idx": 828
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dubverse.ai/video-translator/",
+      "url_position": 835,
+      "claim_text": "Dubverse.ai – AI-powered translator + TTS voice generation + subtitles. Dubverse.ai",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 945,
+        "end_idx": 964
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://lipsync.video/video-dubbing",
+      "url_position": 987,
+      "claim_text": "Free or lighter options Lipsync.video – Free option for quick dubbing and lip-sync in ~36+ languages. LipSync",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1051,
+        "end_idx": 1070
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.canva.com/features/ai-dubbing/",
+      "url_position": 1110,
+      "claim_text": "Canva AI Dubbing – Built into Canva for simple dubbing in multiple languages. Canva",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1193,
+        "end_idx": 1227
+      },
+      "citation_token": "citeturn0search10turn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://videodubber.ai/",
+          "title": "VideoDubber: AI Video Translation & Voice Dubbing - Try Free",
+          "snippet": "Free Video Translation & Voice Dubbing in preferred accent and voice. Scale audience across 150+ languages with voice cloning. Easy & Accurate!",
+          "domain": "videodubber.ai",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://videodubber.ai/",
+      "url_position": 1280,
+      "claim_text": "Features to consider Voice cloning – Some platforms mimic the original speaker’s voice (VideoDubber, Wavel). VideoDubber+1",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1331,
+        "end_idx": 1363
+      },
+      "citation_token": "citeturn0search2turn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vozo.ai/video-translate",
+      "url_position": 1409,
+      "claim_text": "Lip-sync – Better visual alignment of dubbed audio with mouth movements (Vozo, Lipsync.video). Vozo+1",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1432,
+        "end_idx": 1452
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.veed.io/tools/video-translator",
+          "title": "Instant Video Translator - Translate with AI - VEED.IO",
+          "snippet": "Instantly translate videos into 29 languages (voiced) and 125+ languages for subtitles with the AI video translator. 99.9% accuracy. Replace audio with a translated voiceover.",
+          "domain": "www.veed.io",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://www.veed.io/tools/video-translator",
+      "url_position": 1516,
+      "claim_text": "Subtitles – Auto-generated editable subtitles are standard. VEED.IO",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1578,
+        "end_idx": 1596
+      },
+      "citation_token": "citeturn0news24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.theverge.com/news/761665/meta-ai-translation-facebook-instagram-reels",
+      "url_position": 1691,
+      "claim_text": "Also rising Instagram/Facebook AI translation auto-dubs Reels for creators (limited languages and platform-specific). The Verge",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.vozo.ai/video-translate",
+        "title": "AI Video Translator | Translate Free to 110+ Languages - Vozo",
+        "domain": "Vozo"
+      },
+      {
+        "url": "https://videodubber.ai/",
+        "title": "VideoDubber: AI Video Translation & Voice Dubbing - Try Free",
+        "domain": "VideoDubber"
+      },
+      {
+        "url": "https://www.veed.io/tools/voice-dubber",
+        "title": "Online Voice Dubber - Convert Text to Voice - VEED.IO",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://wavel.ai/",
+        "title": "Wavel - Create & Dub Videos Instantly with AI – Fast, Easy, Scalable",
+        "domain": "Wavel"
+      },
+      {
+        "url": "https://dubverse.ai/video-translator/",
+        "title": "AI Video Translator & Video Translation | Dubverse",
+        "domain": "Dubverse.ai"
+      },
+      {
+        "url": "https://lipsync.video/video-dubbing",
+        "title": "Free AI Video Dubbing & Translator with Lipsync.video",
+        "domain": "LipSync"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-dubbing/",
+        "title": "AI Dubbing: Dub videos into any language for free | Canva",
+        "domain": "Canva"
+      },
+      {
+        "url": "https://www.veed.io/tools/video-translator",
+        "title": "Instant Video Translator - Translate with AI - VEED.IO",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://www.theverge.com/news/761665/meta-ai-translation-facebook-instagram-reels",
+        "title": "Meta's AI translation tool can dub your Instagram videos",
+        "domain": "The Verge"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://vimeo.com/blog/post/tools-for-video-dubbing",
+        "title": "7 Top Online Tools for Dubbing Videos with AI Translations",
+        "domain": "vimeo.com"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-video-translators",
+        "title": "7 Best AI Video Translators in 2025",
+        "domain": "usefulai.com"
+      },
+      {
+        "url": "https://www.unite.ai/best-ai-video-translation-tools/",
+        "title": "10 Best AI Video Translation Tools (January 2026) - Unite.AI",
+        "domain": "unite.ai"
+      },
+      {
+        "url": "https://www.transmonkey.ai/video-dubbing",
+        "title": "AI Video Dubbing & Video Translation Tool | Transmonkey",
+        "domain": "transmonkey.ai"
+      },
+      {
+        "url": "https://lipsync.video/video-translate",
+        "title": "Free AI Video Translate Tool – No Signup Needed",
+        "domain": "lipsync.video"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-video-translator/",
+        "title": "AI Video Translator: Translate a video with AI | Canva",
+        "domain": "canva.com"
+      },
+      {
+        "url": "https://dubverse.ai/",
+        "title": "Dubverse: AI Video Dubbing, AI Text to Speech, AI Subtitles",
+        "domain": "dubverse.ai"
+      },
+      {
+        "url": "https://akool.com/apps/video-translation",
+        "title": "Best Free AI Video Translation | Best Lip Sync AI | AKOOL",
+        "domain": "akool.com"
+      },
+      {
+        "url": "https://flixier.com/tools/translate-your-video-online",
+        "title": "AI Video Translator | AI Dubbing & Subtitles in 130+ Languages",
+        "domain": "flixier.com"
+      },
+      {
+        "url": "https://dubbix.com/",
+        "title": "Dubbix | AI-Powered Video Dubbing & Speech Translation",
+        "domain": "dubbix.com"
+      },
+      {
+        "url": "https://speeek.io/en",
+        "title": "Speeek: AI Video Translation & Dubbing Tool",
+        "domain": "speeek.io"
+      },
+      {
+        "url": "https://www.vmaker.com/tools/ai-video-dubbing",
+        "title": "Free AI Video Dubbing - AI Video Translator with Lip Sync",
+        "domain": "vmaker.com"
+      },
+      {
+        "url": "https://wavel.ai/solutions/ai-video-translator/ai-video-voice-translator",
+        "title": "AI Video Voice Translator | Multilingual Voiceovers in One Click",
+        "domain": "wavel.ai"
+      },
+      {
+        "url": "https://www.aistudios.com/features/ai-dubbing",
+        "title": "Free AI Dubbing & Video Translator | 150+ Languages – AI Studios",
+        "domain": "aistudios.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 14,
+    "total_all": 23
+  },
+  "response_stats": {
+    "total_length": 1931,
+    "citation_count": 11,
+    "chars_with_citations": 252
+  }
+}

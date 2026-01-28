@@ -1,0 +1,371 @@
+{
+  "run_id": "P030_r3",
+  "account_type": "enterprise",
+  "prompt": "Whats a good voiceover AI that allows me to change the voice of generated speech?",
+  "metadata": {
+    "hidden_queries": [
+      "voiceover AI that allows changing voice of generated speech AI text to speech voice changer best options",
+      "AI voice generator services with custom voices or voice styles"
+    ],
+    "sonic_classification": {
+      "latency_ms": 9.22163762152195,
+      "simple_search_prob": 0.9811726292532751,
+      "complex_search_prob": 0.0044157682220666225,
+      "no_search_prob": 0.014411602524658292,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 326,
+        "end_idx": 345
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://musely.ai/tools/voiceover-ai",
+          "title": "Free AI Voiceover Generator | Create Realistic Voices | Musely.ai",
+          "snippet": "Generate professional, human-like voiceovers with Musely's AI Voiceover Generator. Transform text to speech with emotions, custom voices & effects. Try it free!",
+          "domain": "musely.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://musely.ai/tools/voiceover-ai",
+      "url_position": 316,
+      "claim_text": "Here are good AI voiceover tools that let you change or customize voices — focused on flexibility in generated speech: Strong options for voice customization / switching voices Musely AI – lets you generate AI voiceovers with emotional control, pitch/speed tweaks, and effects. You can create custom tones. Musely",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 483,
+        "end_idx": 484
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechify.com/ai-voice-generator/",
+      "url_position": 495,
+      "claim_text": "Speechify Studio – huge library (1,000+ voices), accents, and voice cloning from a short sample. You can adjust pitch/tone/pace. Speechify",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 613,
+        "end_idx": 632
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://typecast.ai/",
+      "url_position": 651,
+      "claim_text": "Typecast AI – 600+ voices, avatars, text-to-speech, voice cloning & stylistic control for characters. Typecast",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 724,
+        "end_idx": 743
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://lovo.ai/",
+          "title": "LOVO: Free AI Voice Generator & Text to Speech",
+          "snippet": "Award-winning AI Voice Generator and text to speech software with 500+ voices in 100 languages. Realistic AI Voices with Online Video Editor. Clone your own voice.",
+          "domain": "lovo.ai",
+          "ref_type": "search",
+          "ref_index": 7,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_7"
+        }
+      ],
+      "inline_url": "https://lovo.ai/",
+      "url_position": 763,
+      "claim_text": "LOVO AI – 500+ voices in many languages plus voice cloning and expressive options. LOVO",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 860,
+        "end_idx": 879
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://artlist.io/ai/voice-generator",
+      "url_position": 902,
+      "claim_text": "Artlist AI Voice Generator – lets you pick from multiple voice models and even clone voices with an upload. artlist.io",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 960,
+        "end_idx": 980
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://magichour.ai/products/ai-voice-generator",
+      "url_position": 1029,
+      "claim_text": "Magic Hour – 1,000+ preset voices with voice cloning and speed control. Magic Hour AI",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1124,
+        "end_idx": 1125
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.canva.com/features/ai-voice-generator/",
+      "url_position": 1218,
+      "claim_text": "Simpler / lighter ones (less deep customization) Canva AI Voice – straightforward TTS with a variety of natural voices for video. Canva",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1227,
+        "end_idx": 1247
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://synthesys.io/ai-voice-generator/",
+      "url_position": 1356,
+      "claim_text": "Synthesys.io – ~300+ voices in 140+ languages, easy voiceover generation. Synthesys",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1350,
+        "end_idx": 1396
+      },
+      "citation_token": "citeturn0search4turn0search5turn0search19",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://airmore.ai/text-to-speech",
+          "title": "Free Online Text to Speech with Realistic AI Voices",
+          "snippet": "Free Online ai voice generator. Turn any text into speech in seconds. No sign-up required. Used by 50M+ users & 500k+ 5-star reviews. Perfect for PDFs, books, docs – anything.",
+          "domain": "airmore.ai",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_4"
+        }
+      ],
+      "inline_url": "https://airmore.ai/text-to-speech",
+      "url_position": 1518,
+      "claim_text": "AirMore / Galaxy.ai / Cutout.pro – basic free text-to-speech generators with multiple voices. AirMore AI+2Galaxy.ai+2",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1500,
+        "end_idx": 1520
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voice.ai/",
+      "url_position": 1655,
+      "claim_text": "Special case: voice changers Voice.ai – more focused on real-time voice changing and TTS. Voice.ai",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://musely.ai/tools/voiceover-ai",
+        "title": "Free AI Voiceover Generator | Create Realistic Voices | Musely.ai",
+        "domain": "Musely"
+      },
+      {
+        "url": "https://speechify.com/ai-voice-generator/",
+        "title": "Free AI Voice Generator! Create AI voices without signing up",
+        "domain": "Speechify"
+      },
+      {
+        "url": "https://typecast.ai/",
+        "title": "AI Voice Generator & Text-to-Speech | Voiceover Tool",
+        "domain": "Typecast"
+      },
+      {
+        "url": "https://lovo.ai/",
+        "title": "LOVO: Free AI Voice Generator & Text to Speech",
+        "domain": "LOVO"
+      },
+      {
+        "url": "https://artlist.io/ai/voice-generator",
+        "title": "AI Voice Generator: Best Voice Generator Models at Artlist",
+        "domain": "artlist.io"
+      },
+      {
+        "url": "https://magichour.ai/products/ai-voice-generator",
+        "title": "AI Voice Generator - Text to Speech Voiceovers Free | Magic Hour",
+        "domain": "Magic Hour AI"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-voice-generator/",
+        "title": "AI Voice Generator: Text to Speech Online | Canva",
+        "domain": "Canva"
+      },
+      {
+        "url": "https://synthesys.io/ai-voice-generator/",
+        "title": "Free AI Voice Generator: Online Text to Speech App for Voiceovers ...",
+        "domain": "Synthesys"
+      },
+      {
+        "url": "https://airmore.ai/text-to-speech",
+        "title": "Free Online Text to Speech with Realistic AI Voices",
+        "domain": "AirMore AI"
+      },
+      {
+        "url": "https://voice.ai/",
+        "title": "Free AI Voice Changer & Voice Agent Platform - Voice.ai",
+        "domain": "Voice.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://musely.ai/tools/create-my-own-ai-voice",
+        "title": "Free AI Voice Generator & Voice Cloner | Musely AI",
+        "domain": "musely.ai"
+      },
+      {
+        "url": "https://audio.galaxy.ai/ai-voice-generator",
+        "title": "Free AI Voice Generator (No Login Required) | Galaxy.ai",
+        "domain": "galaxy.ai"
+      },
+      {
+        "url": "https://speechify.com/voice-changer/",
+        "title": "The Best AI Voice Changer | Speechify",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://clipchamp.com/en/features/ai-voice-over-generator/",
+        "title": "AI voiceover generator | Text to speech for video - Clipchamp",
+        "domain": "clipchamp.com"
+      },
+      {
+        "url": "https://quillbot.com/tools/text-to-speech",
+        "title": "Text to Speech AI: Convert Text to Voice Instantly - QuillBot AI",
+        "domain": "quillbot.com"
+      },
+      {
+        "url": "https://elevenlabs.io/voice-design",
+        "title": "AI Voice Design - Generate Unique Voices from Text Prompts",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://murf.ai/",
+        "title": "Free AI Voice Generator & Text to Speech Online | Murf AI",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://www.heygen.com/tool/ai-voice-generator",
+        "title": "Free AI Voice Over Generator - HeyGen",
+        "domain": "heygen.com"
+      },
+      {
+        "url": "https://arting.ai/ai-voice/voice-generator",
+        "title": "Free AI Voice Generator - Arting",
+        "domain": "arting.ai"
+      },
+      {
+        "url": "https://www.revocalize.ai/ai-voice-generator",
+        "title": "AI Voice Generator: Voice Cloning & Realistic Text to Speech",
+        "domain": "revocalize.ai"
+      },
+      {
+        "url": "https://www.cutout.pro/text-to-speech",
+        "title": "AI Text to Speech - Online TTS Voice Synthesis Tool | Cutout.pro",
+        "domain": "cutout.pro"
+      },
+      {
+        "url": "https://www.adobe.com/products/firefly/features/text-to-speech.html",
+        "title": "Text to Speech Online | AI voice generator - Adobe",
+        "domain": "adobe.com"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 12,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 1948,
+    "citation_count": 10,
+    "chars_with_citations": 184
+  }
+}

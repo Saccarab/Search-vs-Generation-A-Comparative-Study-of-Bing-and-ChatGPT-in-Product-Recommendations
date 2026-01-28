@@ -1,0 +1,483 @@
+{
+  "run_id": "P053_r1",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend the best free AI text-to-speech software with celebrity voices for IoT applications?",
+  "metadata": {
+    "hidden_queries": [
+      "free AI text to speech software with celebrity voices for IoT applications",
+      "best free TTS celebrity voices API IoT text to speech celebrity voices freeware",
+      "Uberduck FakeYou free celebrity TTS API for developers IoT",
+      "are free celebrity TTS voices allowed in applications and their limitations"
+    ],
+    "sonic_classification": {
+      "latency_ms": 4.59064100869,
+      "simple_search_prob": 0.7357614498580519,
+      "complex_search_prob": 0.2591425705787096,
+      "no_search_prob": 0.005095979563238484,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free AI text to speech software with celebrity voices for IoT applications"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 218,
+        "end_idx": 251
+      },
+      "citation_token": "citeturn0search1turn1search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://smallest.ai/blog/5-best-ai-text-to-speech-tools-for-celebrity-voices",
+          "title": "5 Best AI Text-to-Speech Tools for Celebrity Voices",
+          "snippet": "Celebrity Voice Quality High-quality celebrity voice synthesis is the key differentiator. Choose platforms that offer natural-sounding voices, accurate impersonations, and customization options to tweak voice characteristics like tone, speed, and volume. Text-to-Speech (TTS) technology has evolved far beyond its initial role as an accessibility ...",
+          "domain": "smallest.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1766707200,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://fakeyou.com/tts/",
+          "title": "FakeYou. Deep Fake Text to Speech. | FakeYou",
+          "snippet": "What is FakeYou's Text to Speech? FakeYou's Text to Speech is a community-powered AI platform that lets you convert text into speech using over 3,500 character voices.",
+          "domain": "fakeyou.com",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_18"
+        }
+      ],
+      "inline_url": "https://smallest.ai/blog/5-best-ai-text-to-speech-tools-for-celebrity-voices",
+      "url_position": 230,
+      "claim_text": "Here are the **best free or freemium AI text-to-speech (TTS) options that include celebrity or character-style voices you might plug into IoT applications — with a skeptical eye on practical use, quality, and limits:Smallest.ai+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 679,
+        "end_idx": 698
+      },
+      "citation_token": "citeturn1search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://docs.uberduck.ai/getting-started/overview",
+          "title": "Uberduck API Overview",
+          "snippet": "Welcome to the Uberduck API documentation. Our API provides a unified interface to access a wide range of AI models for speech synthesis, voice cloning, and music generation. This document outlines the core concepts, endpoints, and usage patterns.",
+          "domain": "docs.uberduck.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_0"
+        }
+      ],
+      "inline_url": "https://docs.uberduck.ai/getting-started/overview",
+      "url_position": 738,
+      "claim_text": "🧠 Developer-Friendly / Integrable (API-ready) 1. Uberduck API (freemium) Offers broad TTS + voice cloning capability, including celebrity/character-style voices via API (usable in IoT workflows). Free tier can work for testing and low-volume use; integration requires an API key and adherence to quota/terms. Not truly “official celebrity voices,” more AI-generated impersonations or character-like voices.docs.uberduck.ai",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 984,
+        "end_idx": 1003
+      },
+      "citation_token": "citeturn1search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://docs.fakeyou.com/",
+      "url_position": 1079,
+      "claim_text": "2. FakeYou (community-powered TTS) Free community catalog with thousands of voices, including many celebrity or character styles. Has an API you can code against, but quality & legal licensing vary widely. Best for prototypes, not robust commercial IoT voice services.docs.fakeyou.com",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1203,
+        "end_idx": 1222
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://rapidapi.com/thefishstick/api/ai-voice-text-to-speech-with-celebrities",
+      "url_position": 1302,
+      "claim_text": "3. Rapid-Hosted Celebrity TTS API (via RapidAPI) Some free access available through RapidAPI marketplace. Voices mimic popular personas. Check quotas and licensing before deployment.RapidAPI",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1411,
+        "end_idx": 1430
+      },
+      "citation_token": "citeturn1search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.camb.ai/blog-post/how-to-use-free-text-to-speech-apis",
+          "title": "Free TTS for Commercial Use: Best Practices & Pitfalls",
+          "snippet": "Use free TTS commercial use tools smartly in your content. Get tips for quality, legality, and scaling with APIs in your projects.",
+          "domain": "www.camb.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_1"
+        }
+      ],
+      "inline_url": "https://www.camb.ai/blog-post/how-to-use-free-text-to-speech-apis",
+      "url_position": 1573,
+      "claim_text": "Note on “free”: Most truly free options have limits — usage caps, non-commercial terms, or low-quality output. Commercial/IoT deployment likely needs paid tiers or proper licensing.Camb.ai",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1785,
+        "end_idx": 1786
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voidmagic.ai/ai-celebrity-voice-generator",
+      "url_position": 2004,
+      "claim_text": "🧪 Simple Web-Based Generators (Not Ideal for Production) These tools are easy to try for demos, but don’t offer scalable API integration out of the box: 4. VoidMagic / ParrotAI / SeaArt AI / Media.io TTS Online celebrity voice generators that turn text into styled audio. Good for quick tests, but not structured for IoT API calls.voidmagic.ai+2Parrot AI+2",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 2042,
+        "end_idx": 2062
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.capcut.com/tools/ai-celebrity-voice-generator",
+      "url_position": 2262,
+      "claim_text": "5. CapCut’s TTS (sound-alike voices) Free celebrity-inspired voice generation inside a multimedia editor. Not designed for programmatic IoT service use; voices are sound-alikes, not real licenses.CapCut",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 2298,
+        "end_idx": 2317
+      },
+      "citation_token": "citeturn1search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.camb.ai/blog-post/how-to-use-free-text-to-speech-apis",
+          "title": "Free TTS for Commercial Use: Best Practices & Pitfalls",
+          "snippet": "Use free TTS commercial use tools smartly in your content. Get tips for quality, legality, and scaling with APIs in your projects.",
+          "domain": "www.camb.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_1"
+        }
+      ],
+      "inline_url": "https://www.camb.ai/blog-post/how-to-use-free-text-to-speech-apis",
+      "url_position": 2549,
+      "claim_text": "⚠️ Practical Caveats Before You Build • Quality & licensing matter. “Celebrity voice” often means AI impersonations or character voices — not legally licensed voices. Many free tools aren’t cleared for commercial use.Camb.ai",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 2626,
+        "end_idx": 2643
+      },
+      "citation_token": "citeturn1search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechify.com/blog/ai-voices-commercial-rights/",
+      "url_position": 2929,
+      "claim_text": "• API stability and quotas vary. Free plans often throttle or limit character counts. For IoT, you may need to implement caching and fallback TTS voices. • Ethical/legal risk. Using celebrity-like voices in a product can trigger rights issues — check terms and consent for commercial IoT devices.speechify.com",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://smallest.ai/blog/5-best-ai-text-to-speech-tools-for-celebrity-voices",
+        "title": "5 Best AI Text-to-Speech Tools for Celebrity Voices",
+        "domain": "Smallest.ai"
+      },
+      {
+        "url": "https://docs.uberduck.ai/getting-started/overview",
+        "title": "Uberduck API Overview",
+        "domain": "docs.uberduck.ai"
+      },
+      {
+        "url": "https://docs.fakeyou.com/",
+        "title": "FakeYou API Docs",
+        "domain": "docs.fakeyou.com"
+      },
+      {
+        "url": "https://rapidapi.com/thefishstick/api/ai-voice-text-to-speech-with-celebrities",
+        "title": "AI Voice (Text to Speech) with Celebrities - Rapid",
+        "domain": "RapidAPI"
+      },
+      {
+        "url": "https://www.camb.ai/blog-post/how-to-use-free-text-to-speech-apis",
+        "title": "Free TTS for Commercial Use: Best Practices & Pitfalls",
+        "domain": "Camb.ai"
+      },
+      {
+        "url": "https://voidmagic.ai/ai-celebrity-voice-generator",
+        "title": "Free Online AI Celebrity Voice Generator - Create Famous Voices Instantly",
+        "domain": "voidmagic.ai"
+      },
+      {
+        "url": "https://www.capcut.com/tools/ai-celebrity-voice-generator",
+        "title": "Free AI Celebrity Voice Generator - CapCut",
+        "domain": "CapCut"
+      },
+      {
+        "url": "https://speechify.com/blog/ai-voices-commercial-rights/",
+        "title": "Complete guide to AI voices with commercial rights - Speechify",
+        "domain": "speechify.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://multimedia.easeus.com/tts-article/celebrity-ai-voice-generator-free.html",
+        "title": "Top 7 Celebrity AI Voice Generators Free [2026 TTS]",
+        "domain": "easeus.com"
+      },
+      {
+        "url": "https://speaktor.com/celebrity-voice-generator/",
+        "title": "Celebrity Voice Generator: Risks, Regulations & Responsible Alternatives",
+        "domain": "speaktor.com"
+      },
+      {
+        "url": "https://apidog.com/blog/free-text-to-speech-apis/",
+        "title": "Free Text to Speech APIs: 10 Best TTS APIs for Developers",
+        "domain": "apidog.com"
+      },
+      {
+        "url": "https://voice.ai/hub/tts/text-to-speech-api/",
+        "title": "21 Best Text To Speech API Tools for Realistic Voice Generation",
+        "domain": "voice.ai"
+      },
+      {
+        "url": "https://texttospeech.live/blog/text-to-speech-celebrity-voices-free",
+        "title": "text to speech celebrity voices free",
+        "domain": "texttospeech.live"
+      },
+      {
+        "url": "https://speechify.com/blog/celebrity-voices-with-text-to-speech/",
+        "title": "The best celebrity text to speech voice generators | Speechify",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://www.voicestars.co/blog/celebrity-text-to-speech",
+        "title": "How to Use Celebrity Text to Speech Tools for Creative Projects",
+        "domain": "voicestars.co"
+      },
+      {
+        "url": "https://designsvalley.com/free-celebrity-voice-generators/",
+        "title": "Top 10 Best Free Celebrity Voice Generators ... - Designs Valley",
+        "domain": "designsvalley.com"
+      },
+      {
+        "url": "https://creati.ai/ai-tools/uberduck/",
+        "title": "Uberduck.ai - Advanced AI Text-to-Speech and Voice Cloning - Creati.ai",
+        "domain": "creati.ai"
+      },
+      {
+        "url": "https://speechify.com/blog/text-to-speech-no-copyright/",
+        "title": "Text to Speech No Copyright - A Comprehensive Guide",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://www.tryparrotai.com/ai-voice-generator",
+        "title": "Ai Celebrity Voice Generator - Parrot AI",
+        "domain": "tryparrotai.com"
+      },
+      {
+        "url": "https://speechactors.com/article/speechactors-vs-free-tts-tools/",
+        "title": "Speechactors vs Free TTS Tools: Hidden Costs and Limitations Explained",
+        "domain": "speechactors.com"
+      },
+      {
+        "url": "https://aivoicelab.net/en/celebrity-ai-voice-generator",
+        "title": "Free Celebrity AI Voice Generator",
+        "domain": "aivoicelab.net"
+      },
+      {
+        "url": "https://docs.uberduck.ai/",
+        "title": "Introduction | Uberduck API",
+        "domain": "uberduck.ai"
+      },
+      {
+        "url": "https://api.uberduck.ai/docs",
+        "title": "Uberduck Text To Speech API - Swagger UI",
+        "domain": "uberduck.ai"
+      },
+      {
+        "url": "https://docs.uberduck.ai/guides/text-to-speech",
+        "title": "Text-to-Speech Guide | Uberduck API",
+        "domain": "uberduck.ai"
+      },
+      {
+        "url": "https://www.media.io/celebrity-voice-generator.html",
+        "title": "Free AI Celebrity Voice Generator Online -Media.io",
+        "domain": "media.io"
+      },
+      {
+        "url": "https://www.seaart.ai/features/ai-celebrity-voice-generator",
+        "title": "AI Celebrity Voice Generator: Speak Like Your Favorite Celebrity",
+        "domain": "seaart.ai"
+      },
+      {
+        "url": "https://github.com/topics/uberduck",
+        "title": "uberduck · GitHub Topics · GitHub",
+        "domain": "github.com"
+      },
+      {
+        "url": "https://async.com/ai-voices/celebrity-text-to-speech",
+        "title": "Celebrity AI Voice Generator | Free AI Voices",
+        "domain": "async.com"
+      },
+      {
+        "url": "https://reelmind.ai/blog/free-text-to-speech-celebrity-voice-ai-tool-demos",
+        "title": "Free Text to Speech Celebrity Voice: AI Tool Demos",
+        "domain": "reelmind.ai"
+      },
+      {
+        "url": "https://musely.ai/tools/text-to-voice",
+        "title": "Free AI Text to Speech Converter | Natural Voices | Musely.ai",
+        "domain": "musely.ai"
+      },
+      {
+        "url": "https://fakeyou.com/weight/weight_pq22qe3m8z727hdjg8amekdrh/jellybean-uberduck-ai",
+        "title": "JellyBean uberduck.ai AI TTS Model | FakeYou",
+        "domain": "fakeyou.com"
+      },
+      {
+        "url": "https://fakeyou.com/tts/",
+        "title": "FakeYou. Deep Fake Text to Speech. | FakeYou",
+        "domain": "fakeyou.com"
+      },
+      {
+        "url": "https://audio.galaxy.ai/ai-text-to-speech",
+        "title": "Free AI Text to Speech (Convert Text to Voice) | Galaxy.ai",
+        "domain": "galaxy.ai"
+      },
+      {
+        "url": "https://wavel.ai/compare/uberduck-vs-fakeyou",
+        "title": "2025 Comparison: Uberduck or FakeYou – Which One to Choose?",
+        "domain": "wavel.ai"
+      },
+      {
+        "url": "https://www.openai-fm.com/",
+        "title": "OpenAI FM | Free AI-Powered Text-to-Speech Tool",
+        "domain": "openai-fm.com"
+      },
+      {
+        "url": "https://aitools.fyi/compare/fakeyou-vs-uberduck",
+        "title": "FakeYou vs Uberduck Comparison of AI tools",
+        "domain": "aitools.fyi"
+      },
+      {
+        "url": "https://celebvoicify.com/",
+        "title": "AI Voice Generator | Create Realistic Celebrity Voices",
+        "domain": "celebvoicify.com"
+      },
+      {
+        "url": "https://www.revoyant.com/compare/uberduck-vs-fakeyou",
+        "title": "uberduck and fakeyou - Which AI Text to Speech Software Platform Is ...",
+        "domain": "revoyant.com"
+      },
+      {
+        "url": "https://airmore.ai/text-to-speech",
+        "title": "Free Online Text to Speech with Realistic AI Voices",
+        "domain": "airmore.ai"
+      },
+      {
+        "url": "https://techemergent.com/celebrity-text-to-speech-ai-voice-generators/",
+        "title": "Best Celebrity Text-to-speech AI Voice Generators In 2024 (Free & Paid)",
+        "domain": "techemergent.com"
+      },
+      {
+        "url": "https://www.starvoiceai.com/blog/celebrity-voices-with-text-to-speech",
+        "title": "The Best Celebrity Text-to-Speech Voice Generators - StarVoice",
+        "domain": "starvoiceai.com"
+      },
+      {
+        "url": "https://websitevoice.com/blog/text-to-speech-celebrity-voices/",
+        "title": "The Rise of Text To Speech Celebrity Voices in 2025",
+        "domain": "websitevoice.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 34,
+    "total_all": 42
+  },
+  "response_stats": {
+    "total_length": 3419,
+    "citation_count": 9,
+    "chars_with_citations": 166
+  }
+}

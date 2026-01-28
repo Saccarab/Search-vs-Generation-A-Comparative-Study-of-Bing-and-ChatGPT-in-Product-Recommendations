@@ -1,0 +1,345 @@
+{
+  "run_id": "P071_r2",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend a transcription website to convert my audio into text?",
+  "metadata": {
+    "hidden_queries": [
+      "best transcription website to convert audio to text",
+      "audio to text transcription services online review"
+    ],
+    "sonic_classification": {
+      "latency_ms": 21.548986085690558,
+      "simple_search_prob": 0.9983794710649547,
+      "complex_search_prob": 0.00024672829745462407,
+      "no_search_prob": 0.0013738006375906492,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 147,
+        "end_idx": 179
+      },
+      "citation_token": "citeturn0search1turn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://geekflare.com/best/best-transcription-software/",
+      "url_position": 159,
+      "claim_text": "Here are some reliable online transcription options to convert audio into text — free and paid — with different strengths depending on your needs: Geekflare+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 305,
+        "end_idx": 324
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://audiototext.com/",
+          "title": "Free Audio to Text Converter - Transcribe Audio Online | AudioToText.com",
+          "snippet": "Convert audio to text online instantly with our 100% free AI transcription tool. Upload MP3, WAV, or any audio file and get accurate speech-to-text transcripts in minutes.",
+          "domain": "audiototext.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://audiototext.com/",
+      "url_position": 345,
+      "claim_text": "Free / Easy web tools AudioToText.com – simple free tool to upload audio and get text quickly. No sign-up needed. AudioToText",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 417,
+        "end_idx": 436
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechnotes.co/",
+      "url_position": 476,
+      "claim_text": "Speechnotes – browser-based speech-to-text with quick turnaround and basic editing. FreeSpeechText.com",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 525,
+        "end_idx": 544
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://flixier.com/tools/convert-audio-to-text",
+      "url_position": 591,
+      "claim_text": "Flixier AI Transcriber – free online AI transcription for common audio formats. Flixier",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 630,
+        "end_idx": 650
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://restream.io/tools/transcribe-audio-to-text",
+      "url_position": 728,
+      "claim_text": "Restream Transcription Tool – free AI transcription directly in the browser. Restream",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 773,
+        "end_idx": 793
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/audio-to-text",
+      "url_position": 905,
+      "claim_text": "Otter.ai – strong free plan with real-time and file upload transcriptions (limits on minutes unless you upgrade). Otter.ai",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 939,
+        "end_idx": 944
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/audio-to-text",
+      "url_position": 1086,
+      "claim_text": "More full-featured services (free tier + paid) Happy Scribe – supports 120+ languages, online editor and exports to multiple formats. HappyScribe",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1063,
+        "end_idx": 1083
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://turboscribe.ai/",
+      "url_position": 1238,
+      "claim_text": "TurboScribe – high accuracy, speaker recognition, subtitle export, free quota then paid plans. TurboScribe",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1196,
+        "end_idx": 1201
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://pt.wikipedia.org/wiki/Transkriptor.com",
+      "url_position": 1386,
+      "claim_text": "Transkriptor.com – AI voice-to-text with multi-language support and additional features like summaries. pt.wikipedia.org",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1350,
+        "end_idx": 1369
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://geekflare.com/best/best-transcription-software/",
+      "url_position": 1573,
+      "claim_text": "Notes Accuracy varies with audio quality, accents, background noise, etc. Human-checked services cost more but reduce errors. Geekflare",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1431,
+        "end_idx": 1451
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/audio-to-text",
+      "url_position": 1698,
+      "claim_text": "Free tiers often limit upload length or monthly minutes. Otter.ai",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://geekflare.com/best/best-transcription-software/",
+        "title": "17 Best Transcription Software for Audio to Text in 2025 - Geekflare",
+        "domain": "Geekflare"
+      },
+      {
+        "url": "https://audiototext.com/",
+        "title": "Free Audio to Text Converter - Transcribe Audio Online | AudioToText.com",
+        "domain": "AudioToText"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "FreeSpeechText.com"
+      },
+      {
+        "url": "https://flixier.com/tools/convert-audio-to-text",
+        "title": "Audio to Text Online Converter - AI Transcriber - Flixier",
+        "domain": "Flixier"
+      },
+      {
+        "url": "https://restream.io/tools/transcribe-audio-to-text",
+        "title": "Transcribe Audio to Text: AI Transcription Software | Restream",
+        "domain": "Restream"
+      },
+      {
+        "url": "https://otter.ai/audio-to-text",
+        "title": "Convert Audio to Text: Free, Instant AI Transcription",
+        "domain": "Otter.ai"
+      },
+      {
+        "url": "https://www.happyscribe.com/audio-to-text",
+        "title": "Convert Audio to Text Free | AI Transcription Tool - Happy Scribe",
+        "domain": "HappyScribe"
+      },
+      {
+        "url": "https://turboscribe.ai/",
+        "title": "Transcribe Audio and Video to Text | TurboScribe",
+        "domain": "TurboScribe"
+      },
+      {
+        "url": "https://pt.wikipedia.org/wiki/Transkriptor.com",
+        "title": "Transkriptor.com",
+        "domain": "pt.wikipedia.org"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.topconsumerreviews.com/best-transcription-services/detailed-reviews.php",
+        "title": "The 10 Best Transcription Services for 2026 | Free Buyers Guide",
+        "domain": "topconsumerreviews.com"
+      },
+      {
+        "url": "https://technicalwall.com/software-reviews/best-audio-to-text-converter/",
+        "title": "9 Best Audio to Text Converter of 2026 (Free and Paid)",
+        "domain": "technicalwall.com"
+      },
+      {
+        "url": "https://www.wpbeginner.com/showcase/best-transcription-services/",
+        "title": "5 Best Transcription Services of 2026 Compared (Cheap & Accurate)",
+        "domain": "wpbeginner.com"
+      },
+      {
+        "url": "https://riverside.com/blog/best-transcription-services",
+        "title": "10 Best Transcription Services for Accurate Transcripts (2026)",
+        "domain": "riverside.com"
+      },
+      {
+        "url": "https://www.techradar.com/best/best-transcription-services",
+        "title": "Best transcription service of 2025 - TechRadar",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://www.hypescribe.com/blog/best-online-transcription-service",
+        "title": "12 Best Online Transcription Service Options for 2025",
+        "domain": "hypescribe.com"
+      },
+      {
+        "url": "https://www.simplymac.com/ai/best-transcription-services",
+        "title": "Best Transcription Services for Audio-to-Text Conversion",
+        "domain": "simplymac.com"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-free-audio-to-text-converter",
+        "title": "The Best Free Audio to Text Converters (2025 Tested)",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-free-audio-to-text-converters",
+        "title": "6 best free audio-to-text converters in 2025 - Descript",
+        "domain": "descript.com"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-transcription",
+        "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+        "domain": "usefulai.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 10,
+    "total_all": 19
+  },
+  "response_stats": {
+    "total_length": 1905,
+    "citation_count": 11,
+    "chars_with_citations": 198
+  }
+}

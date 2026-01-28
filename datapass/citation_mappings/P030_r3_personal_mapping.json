@@ -1,0 +1,402 @@
+{
+  "run_id": "P030_r3",
+  "account_type": "personal",
+  "prompt": "Whats a good voiceover AI that allows me to change the voice of generated speech?",
+  "metadata": {
+    "hidden_queries": [
+      "AI voiceover tools that allow changing voice of generated speech",
+      "best text to speech AI customizable voices"
+    ],
+    "sonic_classification": {
+      "latency_ms": 18.2729089865461,
+      "simple_search_prob": 0.9797957067878815,
+      "complex_search_prob": 0.005649544181071319,
+      "no_search_prob": 0.014554749031047155,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "AI voiceover tools that allow changing voice of generated speech"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 292,
+        "end_idx": 324
+      },
+      "citation_token": "citeturn0search6turn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://elevenlabs.io/voice-changer?utm_source=chatgpt.com",
+          "title": "AI Voice Changer: Use AI To Change Your Voice For Free",
+          "snippet": "An AI voice changer uses advanced artificial intelligence algorithms to transform one voice into another while maintaining the original performance ...",
+          "domain": "elevenlabs.io",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://zapier.com/blog/best-ai-voice-generator/",
+      "url_position": 290,
+      "claim_text": "Here are some solid AI tools for generating voiceovers and changing the voice of the speech you create: Top options for customizable AI voiceovers ElevenLabs – Highly realistic TTS with multiple voices and voice-changing features. You can pick different voices and adjust style. Zapier+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 427,
+        "end_idx": 428
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/voice-changer",
+      "url_position": 446,
+      "claim_text": "Murf AI – AI voice generator + voice changer with 200+ voices; lets you tweak pitch and tone. Murf AI+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 542,
+        "end_idx": 561
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://typecast.ai/",
+      "url_position": 561,
+      "claim_text": "Typecast.ai – Big library of 600+ customizable voices and voice cloning. Typecast",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 656,
+        "end_idx": 676
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wellsaid.io/",
+      "url_position": 683,
+      "claim_text": "WellSaid – Professional-quality TTS with varied voices that work well for voiceovers. wellsaid.io",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 783,
+        "end_idx": 816
+      },
+      "citation_token": "citeturn0search8turn0search30",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.resemble.ai/?utm_source=chatgpt.com",
+          "title": "Resemble AI: AI Voice Generator and Deepfake Detection for ...",
+          "snippet": "Resemble AI helps enterprises create ultra-realistic voices and detect deepfakes instantly. Secure, scalable, and built for production.",
+          "domain": "resemble.ai",
+          "ref_type": "search",
+          "ref_index": 30,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_30"
+        }
+      ],
+      "inline_url": "https://www.respeecher.com/blog/best-ai-text-to-speech-tools",
+      "url_position": 822,
+      "claim_text": "Respeecher or Resemble AI – Voice cloning and voice generation if you need custom voice profiles. Respeecher+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 914,
+        "end_idx": 948
+      },
+      "citation_token": "citeturn0search27turn0search33",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://clipchamp.com/en/features/ai-voice-over-generator/?utm_source=chatgpt.com",
+          "title": "AI voiceover generator | Text to speech for video",
+          "snippet": "Create lifelike voiceovers for video using the best free online voiceover generator in Clipchamp. Type your script and turn text into narration with AI.",
+          "domain": "clipchamp.com",
+          "ref_type": "search",
+          "ref_index": 33,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_33"
+        }
+      ],
+      "inline_url": "https://www.canva.com/features/ai-voice-generator/",
+      "url_position": 983,
+      "claim_text": "Canva / Clipchamp AI Voiceover – Simpler, integrated voice generator for video projects. Canva+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1124,
+        "end_idx": 1125
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.altered.ai/",
+      "url_position": 1225,
+      "claim_text": "Other voice changer tools (more real-time or live) Altered Studio / Voice.ai / Voicemod – Focus on changing voices in real time (more for streaming/chat than TTS). altered.ai+2voice.ai+2",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://zapier.com/blog/best-ai-voice-generator/",
+        "title": "The 9 best AI voice generators in 2025",
+        "domain": "Zapier"
+      },
+      {
+        "url": "https://murf.ai/voice-changer",
+        "title": "AI Voice Changer: Change Your Voice With a Realistic ...",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://typecast.ai/",
+        "title": "AI Voice Generator & Text-to-Speech | Voiceover Tool",
+        "domain": "Typecast"
+      },
+      {
+        "url": "https://www.wellsaid.io/",
+        "title": "Most Realistic AI Voice Generator | WellSaid",
+        "domain": "wellsaid.io"
+      },
+      {
+        "url": "https://www.respeecher.com/blog/best-ai-text-to-speech-tools",
+        "title": "Best AI Text-to-Speech Tools for Realistic Voice Generation",
+        "domain": "Respeecher"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-voice-generator/",
+        "title": "AI Voice Generator: Text to Speech Online",
+        "domain": "Canva"
+      },
+      {
+        "url": "https://www.altered.ai/",
+        "title": "Professional AI Voice Changer Software and Services | Altered",
+        "domain": "altered.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.bentoml.com/blog/exploring-the-world-of-open-source-text-to-speech-models",
+        "title": "The Best Open-Source Text-to-Speech Models in 2026 - BentoML",
+        "domain": "bentoml.com"
+      },
+      {
+        "url": "https://forum.devtalk.com/t/what-are-the-best-text-to-speech-ai-generation-tools-that-you-can-run-locally/191895",
+        "title": "What are the best text-to-speech ai generation tools that you can run ...",
+        "domain": "devtalk.com"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Voice_changer",
+        "title": "Voice changer - WikipediaAI Voice Changer: Use AI To Change Your Voice For Free",
+        "domain": "wikipedia.org"
+      },
+      {
+        "url": "https://medium.com/freelancers-hub/best-ai-voice-generators-2025-review-i-tested-20-tools-to-find-the-top-5-0c2b45070273",
+        "title": "I Tested 25+ AI Voice Generators: Here are the Top 7 for ...",
+        "domain": "medium.com"
+      },
+      {
+        "url": "https://www.lalal.ai/voice-changer/",
+        "title": "LALAL.AI Voice Changer",
+        "domain": "lalal.ai"
+      },
+      {
+        "url": "https://elevenlabs.io/voice-changer",
+        "title": "AI Voice Changer: Use AI To Change Your Voice For Free",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://www.reddit.com/r/artificial/comments/16tmabo/looking_to_change_my_own_voice_for_audio/",
+        "title": "Looking to change my own voice for audio production",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/3CX/comments/1hzl8sy/whats_the_best_texttospeech_ai_tool_youre_using/",
+        "title": "What's the Best Text-to-Speech AI Tool You're Using Right ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.audiocipher.com/post/ai-voice-generators",
+        "title": "10 Best AI Singing Voice Generators for Making Music in ...",
+        "domain": "audiocipher.com"
+      },
+      {
+        "url": "https://voice.ai/",
+        "title": "Voice.ai: Free AI Voice Changer & Voice Agent Platform",
+        "domain": "voice.ai"
+      },
+      {
+        "url": "https://www.voicemod.net/en/voice-changer/",
+        "title": "best real-time voice changer",
+        "domain": "voicemod.net"
+      },
+      {
+        "url": "https://www.beatoven.ai/blog/10-best-ai-voice-changers-key-features-pricing-details/",
+        "title": "10 Best AI Voice Changers [Key Features + Pricing Details] -",
+        "domain": "beatoven.ai"
+      },
+      {
+        "url": "https://inworld.ai/tts",
+        "title": "Top-Rated TTS & Voice Cloning",
+        "domain": "inworld.ai"
+      },
+      {
+        "url": "https://play.ht/",
+        "title": "#1 Free AI Voice Generator, Text to Speech, & AI Voice Over",
+        "domain": "play.ht"
+      },
+      {
+        "url": "https://www.epidemicsound.com/voices/",
+        "title": "AI Voiceover - Human Voices AI Generator",
+        "domain": "epidemicsound.com"
+      },
+      {
+        "url": "https://www.veed.io/tools/ai-voice-cloning/video-voice-changer",
+        "title": "Videos Voice Changer - Clone Your Voice",
+        "domain": "veed.io"
+      },
+      {
+        "url": "https://dev.to/nitinfab/i-tried-25-ai-voice-generators-these-7-are-the-best-for-realistic-voices-2025-4h07",
+        "title": "I Tried 25+ AI Voice Generators - These 7 Are the Best for ...",
+        "domain": "dev.to"
+      },
+      {
+        "url": "https://www.acapela-group.com/",
+        "title": "Acapela Group: Text To Speech (TTS) Solutions, Personalized ...",
+        "domain": "acapela-group.com"
+      },
+      {
+        "url": "https://finevoice.fineshare.com/",
+        "title": "AI Voice Generator: Free Voice Changer & Text to Speech",
+        "domain": "fineshare.com"
+      },
+      {
+        "url": "https://kripeshadwani.com/best-ai-voice-changers/",
+        "title": "7 Best AI Voice Changers (2026) - The Future of Voice is ...",
+        "domain": "kripeshadwani.com"
+      },
+      {
+        "url": "https://www.aixploria.com/en/category/voice-reading/",
+        "title": "Top 30 Best AI Voice Generators & Text-to-Speech (TTS)",
+        "domain": "aixploria.com"
+      },
+      {
+        "url": "https://murf.ai/",
+        "title": "Murf AI: Free AI Voice Generator & Text to Speech Online",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://www.readspeaker.com/",
+        "title": "Text to Speech with 200+ Realistic AI Voices in 50+ languages",
+        "domain": "readspeaker.com"
+      },
+      {
+        "url": "https://www.resemble.ai/",
+        "title": "Resemble AI: AI Voice Generator and Deepfake Detection for ...",
+        "domain": "resemble.ai"
+      },
+      {
+        "url": "https://speechify.com/voice-changer/?srsltid=AfmBOoofeqn1MMv9TDQsT2bXTwEXVESi9kJ9BsGgbMNT2aCTamxglN1V",
+        "title": "The Best AI Voice Changer",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://aws.amazon.com/polly/",
+        "title": "AI Voice Generator and Text-to-Speech Tool - Amazon Polly",
+        "domain": "amazon.com"
+      },
+      {
+        "url": "https://clipchamp.com/en/features/ai-voice-over-generator/",
+        "title": "AI voiceover generator | Text to speech for video",
+        "domain": "clipchamp.com"
+      },
+      {
+        "url": "https://www.fingoweb.com/blog/the-best-text-to-speech-ai-models-in-2026/",
+        "title": "The best text to speech AI models in 2026",
+        "domain": "fingoweb.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech with Gemini and ChatGPT AI Voices",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://revoicer.com/",
+        "title": "Revoicer - AI Text To Speech - Emotion-based AI Voice ...",
+        "domain": "revoicer.com"
+      },
+      {
+        "url": "https://www.techradar.com/best/best-text-to-speech-software",
+        "title": "Best text-to-speech software of 2025",
+        "domain": "techradar.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 31,
+    "total_all": 38
+  },
+  "response_stats": {
+    "total_length": 1409,
+    "citation_count": 7,
+    "chars_with_citations": 140
+  }
+}

@@ -1,0 +1,369 @@
+{
+  "run_id": "P061_r2",
+  "account_type": "enterprise",
+  "prompt": "Is there an AI that translates audio?",
+  "metadata": {
+    "hidden_queries": [
+      "AI that translates audio translation services",
+      "audio translation AI tools real time audio translator"
+    ],
+    "sonic_classification": {
+      "latency_ms": 15.968216117471457,
+      "simple_search_prob": 0.9119426657435565,
+      "complex_search_prob": 0.0005179797397815895,
+      "no_search_prob": 0.08753935451666188,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "AI that translates audio translation services"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 266,
+        "end_idx": 298
+      },
+      "citation_token": "citeturn0search0turn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/tools/audio-translator",
+          "title": "Free AI Audio Translator - Translate Voice Instantly",
+          "snippet": "Benefits of Automatic Audio Translation Whether you are a content creator, a professional translator, or a worker who occasionally needs voice translation, Maestra's online voice translator can automatically transcribe voice recordings, audio, or voice notes and translate audio to text to multiple languages in just a few minutes.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://maestra.ai/tools/audio-translator",
+      "url_position": 271,
+      "claim_text": "Yes — AI that translates audio exists, and there are tools that can both transcribe and translate spoken language from audio files or in real time. These systems use speech-to-text → translation → text-to-speech pipelines to convert one language to another. Maestra AI+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 425,
+        "end_idx": 444
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 440,
+      "claim_text": "Examples of AI audio translators: Maestra Live – real-time voice translation in 125+ languages with spoken output. Maestra",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 574,
+        "end_idx": 621
+      },
+      "citation_token": "citeturn0search4turn0search18turn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://audio.galaxy.ai/ai-audio-translator",
+      "url_position": 610,
+      "claim_text": "Galaxy.ai / Murf.ai / VMEG.ai / VEED.io – online tools where you upload audio and get it translated to another language. Galaxy.ai+2Murf AI+2",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 713,
+        "end_idx": 733
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.smartcat.com/audio-translator/",
+      "url_position": 749,
+      "claim_text": "Smartcat – platform for translating audio/video files into many languages quickly. Smartcat",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 816,
+        "end_idx": 836
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.transmonkey.ai/voice-translator",
+      "url_position": 881,
+      "claim_text": "Transmonkey.ai – uses AI speech models to transcribe and translate voice. Transmonkey",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 903,
+        "end_idx": 909
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/audio-translation",
+      "url_position": 993,
+      "claim_text": "Wordly – focused on live event/meeting audio translation. Wordly",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1076,
+        "end_idx": 1094
+      },
+      "citation_token": "citeturn0news25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_25"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 1189,
+      "claim_text": "Hardware options with AI translation: Some earbuds (e.g., Mymanu Orb) offer built-in AI real-time translation of conversations while you listen. SFGATE",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1170,
+        "end_idx": 1189
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 1366,
+      "claim_text": "What they do: Live translation: interpret speech as it happens. Maestra",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1282,
+        "end_idx": 1293
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://audio.galaxy.ai/ai-audio-translator",
+      "url_position": 1488,
+      "claim_text": "Audio file translation: upload recordings and get translated speech or transcripts. Galaxy.ai",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1377,
+        "end_idx": 1396
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 1610,
+      "claim_text": "Voice output: translated text can be spoken aloud using AI voices. Maestra",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://maestra.ai/tools/audio-translator",
+        "title": "Free AI Audio Translator - Translate Voice Instantly",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://audio.galaxy.ai/ai-audio-translator",
+        "title": "Free AI Audio Translator (Translate Voice in 30+ Languages)",
+        "domain": "Galaxy.ai"
+      },
+      {
+        "url": "https://www.smartcat.com/audio-translator/",
+        "title": "AI Audio Translator – Fast, Accurate Audio Translator Online - Smartcat",
+        "domain": "Smartcat"
+      },
+      {
+        "url": "https://www.transmonkey.ai/voice-translator",
+        "title": "AI Voice Translator - Translate & Dub Voice | Transmonkey",
+        "domain": "Transmonkey"
+      },
+      {
+        "url": "https://www.wordly.ai/audio-translation",
+        "title": "Live Audio Translation Platform | Wordly",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.tbsnews.net/tech/when-ai-speaks-you-future-live-translation-1338521",
+        "title": "When AI speaks for you: The future of live translation",
+        "domain": "tbsnews.net"
+      },
+      {
+        "url": "https://slator.com/openai-launches-chatgpt-translate-standalone-translation-tool/",
+        "title": "OpenAI Quietly Launches ChatGPT Translate as a Standalone Translation Tool",
+        "domain": "slator.com"
+      },
+      {
+        "url": "https://www.pcworld.com/article/3034006/open-ai-launches-chatgpt-translate-to-take-on-google.html",
+        "title": "Open AI launches ChatGPT Translate to take on Google",
+        "domain": "pcworld.com"
+      },
+      {
+        "url": "https://www.heygen.com/blog/translate-your-audio-content-with-ai",
+        "title": "AI Translate Audio with Speech Recognition & Synthesis | HeyGen",
+        "domain": "heygen.com"
+      },
+      {
+        "url": "https://murf.ai/blog/best-audio-translator",
+        "title": "9 Best Audio Translators of 2026 | Murf AI",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://alignify.co/tools/audio-translator",
+        "title": "5 Best AI Audio Translator Tools (2026): Real-Time | Alignify",
+        "domain": "alignify.co"
+      },
+      {
+        "url": "https://xcelore.com/real-time-audio-translator/",
+        "title": "Real-Time Audio Translation | AI Audio Translator - Xcelore",
+        "domain": "xcelore.com"
+      },
+      {
+        "url": "https://products.aspose.ai/total/voice-translator",
+        "title": "Free AI Voice Translator | Online Audio Translation",
+        "domain": "aspose.ai"
+      },
+      {
+        "url": "https://www.vmeg.ai/tools/audio-translator/",
+        "title": "AI Audio Translator - Translate Voices to Any Languages Online",
+        "domain": "vmeg.ai"
+      },
+      {
+        "url": "https://musely.ai/tools/speech-translator",
+        "title": "Free Speech Translator | Instant Voice Translation App - Musely",
+        "domain": "musely.ai"
+      },
+      {
+        "url": "https://screenapp.io/features/audio-translator",
+        "title": "Voice Translator - Free Voice Translate to English Online",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.adobe.com/products/firefly/features/translate-audio.html",
+        "title": "Translate audio with AI audio translator – Adobe Firefly",
+        "domain": "adobe.com"
+      },
+      {
+        "url": "https://synthesys.io/ai-audio-translation/",
+        "title": "AI Audio Translation Online Free | Synthesys.io",
+        "domain": "synthesys.io"
+      },
+      {
+        "url": "https://murf.ai/tools/audio-translator",
+        "title": "Free Voice Translator: Translate Audio Online in 40+ Languages",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://www.veed.io/tools/audio-translator/listen-and-translate",
+        "title": "Listen and Translate - AI Audio Translator - VEED.IO",
+        "domain": "veed.io"
+      },
+      {
+        "url": "https://livevoice.io/en/ai-voice-translation",
+        "title": "LiveVoice: AI Voice Translation",
+        "domain": "livevoice.io"
+      },
+      {
+        "url": "https://www.transmonkey.ai/audio-translator",
+        "title": "Audio Translator - AI Audio Translation | Transmonkey",
+        "domain": "transmonkey.ai"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 17,
+    "total_all": 24
+  },
+  "response_stats": {
+    "total_length": 1801,
+    "citation_count": 10,
+    "chars_with_citations": 211
+  }
+}

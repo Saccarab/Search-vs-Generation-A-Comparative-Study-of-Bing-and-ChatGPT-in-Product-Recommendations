@@ -1,0 +1,390 @@
+{
+  "run_id": "P040_r1",
+  "account_type": "personal",
+  "prompt": "Can you recommend an application for live voice translation from French to English?",
+  "metadata": {
+    "hidden_queries": [
+      "application live voice translation French to English app",
+      "best apps for live voice translation French to English"
+    ],
+    "sonic_classification": {
+      "latency_ms": 0.0639050267636776,
+      "simple_search_prob": 0.9962241609312039,
+      "complex_search_prob": 0.0015215695580474628,
+      "no_search_prob": 0.00225426951074862,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "application live voice translation French to English app"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 268,
+        "end_idx": 288
+      },
+      "citation_token": "citeturn0search28",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://translatepress.com/best-app-for-language-translation-iphone-android/",
+          "title": "The Best Language Translation App for iPhone & Android",
+          "snippet": "Aug 26, 2025 — Transcribe – Google Translate allows you to translate someone speaking a different language in real-time; ... real-time voice translation ...Read more",
+          "domain": "translatepress.com",
+          "ref_type": "search",
+          "ref_index": 28,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_28"
+        }
+      ],
+      "inline_url": "https://translatepress.com/best-app-for-language-translation-iphone-android/",
+      "url_position": 270,
+      "claim_text": "Here are some good apps that can do live voice translation from French to English: Mobile apps for real-time speech translation Google Translate – free and widely used; supports live voice conversation mode between languages including French ↔ English. TranslatePress",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 377,
+        "end_idx": 409
+      },
+      "citation_token": "citeturn0search0turn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/itranslate-translator/id288113403",
+          "title": "iTranslate Translator - App Store - Apple",
+          "snippet": "Seamlessly translate text, websites, objects, or start voice-to-voice conversations in over 100 languages. Our unique Custom Phrasebook feature allows you to ...Read more",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820?utm_source=chatgpt.com",
+          "title": "iTranslate Voice - App Store",
+          "snippet": "Speak & Translate in Real Time​​ Instantly speak over 40 languages with the all-new iTranslate Voice! Already trusted by Millions, the completely re-designed ...",
+          "domain": "apple.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/itranslate-translator/id288113403",
+      "url_position": 442,
+      "claim_text": "iTranslate / iTranslate Voice – translates voice in real time in 40+ languages. App Store+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 503,
+        "end_idx": 522
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/instant-voice-translate/id1298384039",
+          "title": "Instant Voice Translate - App Store - Apple",
+          "snippet": "Voice Translation: Speak naturally and let the app provide instant translations in real-time. Communicate effortlessly and break down language barriers. 2 ...",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/instant-voice-translate/id1298384039",
+      "url_position": 604,
+      "claim_text": "Instant Voice Translate – simple app with real-time voice translation powered by AI. App Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 618,
+        "end_idx": 637
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/us/app/deepl-translate/id1552407475",
+      "url_position": 771,
+      "claim_text": "DeepL Translate – excellent overall translation quality, includes speech input/output. App Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 732,
+        "end_idx": 752
+      },
+      "citation_token": "citeturn0search45",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Naver_Papago",
+      "url_position": 929,
+      "claim_text": "Naver Papago – multilingual translator that handles voice and text (includes French). Wikipedia",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 886,
+        "end_idx": 892
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.ezdubs.ai/languages/french",
+      "url_position": 1108,
+      "claim_text": "Other options depending on use case EzDubs – real-time French ↔ English live translation across calls and voice messages. ezdubs.ai",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1072,
+        "end_idx": 1103
+      },
+      "citation_token": "citeturn0search10turn0search",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wordly.ai/live-translation",
+          "title": "Live Translation – Real-Time AI Audio & Caption ...",
+          "snippet": "Wordly offers real-time simultaneous live translation and live subtitles into dozens of languages - and supports over a dozen speaker language options. That ...Read more",
+          "domain": "www.wordly.ai",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://www.wordly.ai/live-translation",
+      "url_position": 1336,
+      "claim_text": "Live translation web tools (e.g., Maestra / Wordly / Palabra) – browser-based real-time voice translation and captions, good for meetings or group settings. wordly.ai+2live.maestra.ai+2",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://translatepress.com/best-app-for-language-translation-iphone-android/",
+        "title": "The Best Language Translation App for iPhone & Android",
+        "domain": "TranslatePress"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-translator/id288113403",
+        "title": "iTranslate Translator - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/instant-voice-translate/id1298384039",
+        "title": "Instant Voice Translate - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/deepl-translate/id1552407475",
+        "title": "DeepL Translate - App Store",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Naver_Papago",
+        "title": "Naver Papago",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.ezdubs.ai/languages/french",
+        "title": "Real-Time French Translation App for Phone Calls, Text & ...",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/live-translation",
+        "title": "Live Translation – Real-Time AI Audio & Caption ...",
+        "domain": "wordly.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.anhlt.frentranslator",
+        "title": "French - English Translator - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details/VoiceTra_%E9%9F%B3%E5%A3%B0%E7%BF%BB%E8%A8%B3?hl=en_IN&id=jp.go.nict.voicetra",
+        "title": "VoiceTra(Voice Translator) – Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/",
+        "title": "JotMe - Live Translator & AI Interpreter",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+        "title": "iTranslate Voice - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://copycatcafe.com/blog/french-translation",
+        "title": "The best French translators (and why you can't trust them)",
+        "domain": "copycatcafe.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/French/comments/13rcgk7/best_translation_apps/",
+        "title": "Best translation apps : r/French",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/TranslationStudies/comments/1bhce7m/live_translation_apps_for_meetings/",
+        "title": "Live translation apps for meetings : r/TranslationStudies",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://itranslate.com/",
+        "title": "iTranslate: The Leading Translation and Dictionary App",
+        "domain": "itranslate.com"
+      },
+      {
+        "url": "https://www.transyncai.com/blog-english-to-french-translator/",
+        "title": "The best English to French Translator – Real-Time ...",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.transyncai.com/blog/english-to-french-translator//",
+        "title": "The best English to French Translator – Real-Time ...",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-french-translation-apps",
+        "title": "10 Best French Translation Apps (Free & Paid Options)",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/translation-app",
+        "title": "Translation App – Real‑Time AI Voice & Text ...",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.facebook.com/groups/23814372316/posts/10162848335907317/",
+        "title": "Voice translator app recommendations for non-French ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://community.ricksteves.com/travel-forum/france/translation-app-5a950197-92ca-4cba-b375-e7ab33802ce0",
+        "title": "Translation app - Rick Steves Travel Forum",
+        "domain": "ricksteves.com"
+      },
+      {
+        "url": "https://www.palabra.ai/",
+        "title": "Palabra.ai: Live Voice Translator & Real-Time Speech ...",
+        "domain": "palabra.ai"
+      },
+      {
+        "url": "https://proofed.com/writing-tips/5-free-french-to-english-translation-services/",
+        "title": "5 Free French-to-English Translation Services",
+        "domain": "proofed.com"
+      },
+      {
+        "url": "https://ezdubs.ai/",
+        "title": "EzDubs: Best Phone Call Translator App for iOS and Android",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://www.mezzoguild.com/learn/french/resources/english-to-french-translation-apps/",
+        "title": "13 Best English To French Translation Apps And Services",
+        "domain": "mezzoguild.com"
+      },
+      {
+        "url": "https://en.amazingtalker.com/blog/en/french/69070/",
+        "title": "Top 15 French to English Translation Apps You Must Know",
+        "domain": "amazingtalker.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 24,
+    "total_all": 31
+  },
+  "response_stats": {
+    "total_length": 1509,
+    "citation_count": 7,
+    "chars_with_citations": 147
+  }
+}

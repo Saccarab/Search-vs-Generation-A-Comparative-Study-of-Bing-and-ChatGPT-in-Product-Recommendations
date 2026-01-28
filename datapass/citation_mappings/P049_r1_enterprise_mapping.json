@@ -1,0 +1,368 @@
+{
+  "run_id": "P049_r1",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend an extension that provides live translation with subtitles?",
+  "metadata": {
+    "hidden_queries": [
+      "browser extension live translation with subtitles live translation subtitles extension",
+      "Chrome extension for live translation with subtitles translation subtitles for meetings videos"
+    ],
+    "sonic_classification": {
+      "latency_ms": 13.235032907687128,
+      "simple_search_prob": 0.9865948954854964,
+      "complex_search_prob": 0.011026864295738919,
+      "no_search_prob": 0.002378240218764689,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "browser extension live translation with subtitles live translation subtitles extension"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 194,
+        "end_idx": 218
+      },
+      "citation_token": "citeturn0search0turn0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://microsoftedge.microsoft.com/addons/detail/felo-subtitles-chatgpt-l/kpkonigmgcobgnnbogjplhnflbnbjlfc",
+          "title": "Felo Subtitles: ChatGPT Live Translation - Microsoft Edge Addons",
+          "snippet": "Felo browser subtitles provide real-time translation, enhancing your web meetings and live streams with AI technology. Using the latest AI, it delivers the most accurate and reliable transcription & translation results.",
+          "domain": "microsoftedge.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://microsoftedge.microsoft.com/addons/detail/felo-subtitles-chatgpt-l/kpkonigmgcobgnnbogjplhnflbnbjlfc",
+      "url_position": 256,
+      "claim_text": "Here are browser extensions that add live translation with subtitles for videos, live streams, meetings, and general audio content. Options vary by features, language support, and platform: Chrome Web Store+4microsoftedge.microsoft.com+4Chrome Web Store+4",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 513,
+        "end_idx": 532
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+          "title": "Live Translation: Real-Time Video & Audio Translator",
+          "snippet": "Overview AI-powered real-time translation tool for videos, live streams, and meetings, supporting 50+ languages. Break language barriers effortlessly with Tellus AI, your Chrome extension for instant video translation from any language into yours so that you can unlock the power of communication.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+      "url_position": 609,
+      "claim_text": "Good options: 1) Tellus / Live Translation (Chrome) • Adds live translated subtitles and spoken translations for videos, live streams, meetings, webinars, podcasts. • Supports 50+ languages and works across many web apps. Chrome Web Store",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 777,
+        "end_idx": 797
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/real-time-bilingual-video/mlmgeakkomnhoblldciflmoeefmdaaha",
+      "url_position": 953,
+      "claim_text": "2) SonicCaption (Chrome) • Real-time bilingual subtitles (original + translation) for any tab. • Works with video/audio streams including YouTube, movies, online meetings, courses, podcasts. • 60+ languages, low latency. Chrome Web Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 978,
+        "end_idx": 998
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/translatesub/monkfjniakmcfficglpbmaoifmidhmne",
+          "title": "TranslateSub - Chrome Web Store",
+          "snippet": "Real-time audio & video transcription and translation with subtitles This extension automatically transcribes audio from web pages (including videos and live streams) into real-time subtitles while providing translations in 75 languages.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_11"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/translatesub/monkfjniakmcfficglpbmaoifmidhmne",
+      "url_position": 1237,
+      "claim_text": "3) TranslateSub (Chrome) • Auto live transcription + translation with subtitles. • Supports 75 languages. • Basic real-time captions for video and live streams. Chrome Web Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1193,
+        "end_idx": 1213
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho",
+      "url_position": 1527,
+      "claim_text": "4) ViiTor Translate (Chrome) • Real-time bilingual subtitles & translation for live audio, video pages, meetings. • Supports ~19 languages with built-in privacy-focused processing. Chrome Web Store",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1400,
+        "end_idx": 1419
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://microsoftedge.microsoft.com/addons/detail/felo-subtitles-chatgpt-l/kpkonigmgcobgnnbogjplhnflbnbjlfc",
+          "title": "Felo Subtitles: ChatGPT Live Translation - Microsoft Edge Addons",
+          "snippet": "Felo browser subtitles provide real-time translation, enhancing your web meetings and live streams with AI technology. Using the latest AI, it delivers the most accurate and reliable transcription & translation results.",
+          "domain": "microsoftedge.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://microsoftedge.microsoft.com/addons/detail/felo-subtitles-chatgpt-l/kpkonigmgcobgnnbogjplhnflbnbjlfc",
+      "url_position": 1833,
+      "claim_text": "5) Felo Subtitles (Chrome/Edge) • Adds real-time translated captions for meetings (Google Meet) and live streams (YouTube, Twitch). • Supports a handful of major languages. microsoftedge.microsoft.com",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1550,
+        "end_idx": 1569
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+          "title": "Live Translation: Real-Time Video & Audio Translator",
+          "snippet": "Overview AI-powered real-time translation tool for videos, live streams, and meetings, supporting 50+ languages. Break language barriers effortlessly with Tellus AI, your Chrome extension for instant video translation from any language into yours so that you can unlock the power of communication.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+      "url_position": 2074,
+      "claim_text": "Notes / caveats to check before installing: Some extensions require an account or usage limits (minutes/hours). Chrome Web Store",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1762,
+        "end_idx": 1781
+      },
+      "citation_token": "citeturn0search0",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://microsoftedge.microsoft.com/addons/detail/felo-subtitles-chatgpt-l/kpkonigmgcobgnnbogjplhnflbnbjlfc",
+          "title": "Felo Subtitles: ChatGPT Live Translation - Microsoft Edge Addons",
+          "snippet": "Felo browser subtitles provide real-time translation, enhancing your web meetings and live streams with AI technology. Using the latest AI, it delivers the most accurate and reliable transcription & translation results.",
+          "domain": "microsoftedge.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://microsoftedge.microsoft.com/addons/detail/felo-subtitles-chatgpt-l/kpkonigmgcobgnnbogjplhnflbnbjlfc?utm_source=chatgpt.com",
+          "title": "Felo Subtitles: ChatGPT Live Translation - Microsoft Edge Addons",
+          "snippet": "Felo browser subtitles provide real-time translation, enhancing your web meetings and live streams with AI technology. Using the latest AI, it delivers the most accurate and reliable transcription & translation results.",
+          "domain": "microsoftedge.microsoft.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://microsoftedge.microsoft.com/addons/detail/felo-subtitles-chatgpt-l/kpkonigmgcobgnnbogjplhnflbnbjlfc",
+      "url_position": 1833,
+      "claim_text": "5) Felo Subtitles (Chrome/Edge) • Adds real-time translated captions for meetings (Google Meet) and live streams (YouTube, Twitch). • Supports a handful of major languages. microsoftedge.microsoft.com",
+      "url_index": 5
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://microsoftedge.microsoft.com/addons/detail/felo-subtitles-chatgpt-l/kpkonigmgcobgnnbogjplhnflbnbjlfc",
+        "title": "Felo Subtitles: ChatGPT Live Translation - Microsoft Edge Addons",
+        "domain": "microsoftedge.microsoft.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+        "title": "Live Translation: Real-Time Video & Audio Translator",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-bilingual-video/mlmgeakkomnhoblldciflmoeefmdaaha",
+        "title": "Real-Time Bilingual Video & Audio Translation – SonicCaption - Chrome ...",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/translatesub/monkfjniakmcfficglpbmaoifmidhmne",
+        "title": "TranslateSub - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho",
+        "title": "ViiTor Translate - AI Translation & Real-Time Bilingual Subtitles ...",
+        "domain": "Chrome Web Store"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://live-subtitle-with-translation.en.softonic.com/chrome/extension",
+        "title": "Live subtitle with translation for Google Chrome - Extension Download",
+        "domain": "softonic.com"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9ph1r9djg47s",
+        "title": "Live Subtitles – Bilingual Captions & Speech Translator",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://microsoftedge.microsoft.com/addons/search/live%20subtitles",
+        "title": "Microsoft Edge Add-ons - live subtitles",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://microsoftedge.microsoft.com/addons/detail/live-subtitle-with-transl/gkfndmahdpgodbmdmcamcdnbfjjfnbeh?hl=en-au",
+        "title": "Live caption with translation (ChatGPT) - Microsoft Edge Addons",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://github.com/botbahlul/crx-live-translate",
+        "title": "GitHub - botbahlul/crx-live-translate: Chrome/Edge BROWSER EXTENSION ...",
+        "domain": "github.com"
+      },
+      {
+        "url": "https://sublango.com/",
+        "title": "Sublango – AI subtitles & voice-over Chrome extension",
+        "domain": "sublango.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+        "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/felo-subtitles-chatgpt-li/ponokiofkijoolhebggofhhibnafebna",
+        "title": "Felo Subtitles: ChatGPT Live Translation - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://subtitles.felo.me/",
+        "title": "Felo Translator - Felo Subtitles | High-Precision Real-Time ...",
+        "domain": "felo.me"
+      },
+      {
+        "url": "https://subtitles.felo.cc/",
+        "title": "Felo Subtitles - Live Captions & Translated Subtitles",
+        "domain": "felo.cc"
+      },
+      {
+        "url": "https://www.subtly.media/",
+        "title": "Subtly",
+        "domain": "subtly.media"
+      },
+      {
+        "url": "https://livetl.app/livetl/about",
+        "title": "LiveTL - About Extension",
+        "domain": "livetl.app"
+      },
+      {
+        "url": "https://creati.ai/ai-tools/real-time-video-audio-translation/",
+        "title": "Real-Time Video & Audio Translation Chrome Extension | Creati.ai",
+        "domain": "creati.ai"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 13,
+    "total_all": 18
+  },
+  "response_stats": {
+    "total_length": 2606,
+    "citation_count": 8,
+    "chars_with_citations": 160
+  }
+}

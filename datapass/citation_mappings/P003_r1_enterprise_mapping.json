@@ -1,0 +1,309 @@
+{
+  "run_id": "P003_r1",
+  "account_type": "enterprise",
+  "prompt": "Is there a transcription software available for a one-time payment instead of a subscription?",
+  "metadata": {
+    "hidden_queries": [
+      "transcription software one-time payment (not subscription)",
+      "best transcription software with one-time purchase license"
+    ],
+    "sonic_classification": {
+      "latency_ms": 14.03946301434189,
+      "simple_search_prob": 0.9926550444817196,
+      "complex_search_prob": 0.0011105918099820796,
+      "no_search_prob": 0.006234363708298325,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "transcription software one-time payment (not subscription)"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 337,
+        "end_idx": 356
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://whispernotes.app/",
+          "title": "Whisper Notes - Offline Whisper Transcription App | $4.99 for iOS & Mac",
+          "snippet": "100% offline transcription app for iOS & Mac. Record voice memos, import audio files, get accurate text—all on-device with Whisper AI. No internet, no subscriptions, no cloud uploads. $4.99 one-time. Trusted by 60,000+ users.",
+          "domain": "whispernotes.app",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://whispernotes.app/",
+      "url_position": 337,
+      "claim_text": "Yes — you can get transcription software with a one-time payment instead of a subscription, but options are far fewer than subscription services. One-Time Purchase Options 1. Whisper Notes (iOS / macOS) Offline transcription app you buy once (~$4.99) with no subscription. All processing happens locally on your device. Whisper Notes",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 497,
+        "end_idx": 516
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://stationerypal.com/blogs/bullet-journal-blog/rectext-ai-unlimited-offline-transcription",
+      "url_position": 513,
+      "claim_text": "2. RecText AI (one-time license) Marketed as a one-time payment with unlimited use — likely a standalone app with no ongoing fees. Stationery Pal",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 744,
+        "end_idx": 763
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/pricing",
+      "url_position": 833,
+      "claim_text": "Pay-Per-Use or One-Time Credit Models Not exactly a one-time purchase, but avoids subscriptions: Sonix lets you buy transcription hours upfront without committing to a subscription (you just pay for what you use). Sonix",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1023,
+        "end_idx": 1042
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://hyprnote.com/blog/free-transcription-software/",
+      "url_position": 1120,
+      "claim_text": "Free / Open-Source Alternatives (no subscription) You can run these on your own hardware, so there’s no ongoing fee: • OpenAI’s Whisper (via whisper.cpp or GUIs like Mac Whisper) — offline speech-to-text model with no subscription (free software). Hyprnote",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1171,
+        "end_idx": 1205
+      },
+      "citation_token": "citeturn0search22turn0search28",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Transcriber",
+          "title": "Transcriber",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 22,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_22"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Transcriber",
+      "url_position": 1308,
+      "claim_text": "• Transcriber / TranscriberAG, ELAN — open-source tools for manual or semi-automated transcription (no ongoing cost). Wikipedia+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1359,
+        "end_idx": 1391
+      },
+      "citation_token": "citeturn0search1turn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.softwaretestinghelp.com/best-transcription-software/",
+          "title": "Top 15 Best Transcription Software in 2026 (Audio/Video to Text)",
+          "snippet": "Here is a comprehensive list of the best Transcription Software to convert your audio/speech or video files into text files. These audio video transcription tools are used mainly by professional transcriptionists. Check out and compare these top automatic transcription services and download the best one for your Windows or Mac system:",
+          "domain": "www.softwaretestinghelp.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1767916800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.softwaretestinghelp.com/best-transcription-software/",
+      "url_position": 1518,
+      "claim_text": "Notes Professional AI platforms like Otter, Trint, Descript, etc. typically require subscriptions and don’t offer simple one-time payments. Software Testing Help+1",
+      "url_index": 5
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://whispernotes.app/",
+        "title": "Whisper Notes - Offline Whisper Transcription App | $4.99 for iOS & Mac",
+        "domain": "Whisper Notes"
+      },
+      {
+        "url": "https://stationerypal.com/blogs/bullet-journal-blog/rectext-ai-unlimited-offline-transcription",
+        "title": "RecText AI: Unlimited Offline Transcription, One Price",
+        "domain": "Stationery Pal"
+      },
+      {
+        "url": "https://sonix.ai/pricing",
+        "title": "Pricing: The most affordable speech-to-text platform | Sonix",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://hyprnote.com/blog/free-transcription-software/",
+        "title": "Best Free Transcription Software in 2025 - Hyprnote Blog",
+        "domain": "Hyprnote"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Transcriber",
+        "title": "Transcriber",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.softwaretestinghelp.com/best-transcription-software/",
+        "title": "Top 15 Best Transcription Software in 2026 (Audio/Video to Text)",
+        "domain": "Software Testing Help"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.guru99.com/best-transcription-software.html",
+        "title": "8 BEST Transcription Software & Services (2026) - Guru99",
+        "domain": "guru99.com"
+      },
+      {
+        "url": "https://transcript.lol/blog/best-audio-transcription-software",
+        "title": "12 Best Audio Transcription Software Picks for 2025",
+        "domain": "transcript.lol"
+      },
+      {
+        "url": "https://voicetype.com/blog/best-free-transcription-software",
+        "title": "12 Best Free Transcription Software Options for 2025",
+        "domain": "voicetype.com"
+      },
+      {
+        "url": "https://geekflare.com/best/best-transcription-software/",
+        "title": "17 Best Transcription Software for Audio to Text in 2025 - Geekflare",
+        "domain": "geekflare.com"
+      },
+      {
+        "url": "https://speechgen.io/en/node/one-time-payments/",
+        "title": "Pay as you go for text to speech (One-time Payments)",
+        "domain": "speechgen.io"
+      },
+      {
+        "url": "https://clickup.com/blog/transcription-software/",
+        "title": "10 Best Transcription Software & Apps in 2026 (Free & Paid) - ClickUp",
+        "domain": "clickup.com"
+      },
+      {
+        "url": "https://myelearningworld.com/best-transcription-software/",
+        "title": "14 Best Transcription Software & Services for Audio/Video to Text",
+        "domain": "myelearningworld.com"
+      },
+      {
+        "url": "https://www.nearity.co/blog/audio-transcription-software",
+        "title": "Best Transcription Software: Free, Paid & AI-Powered Options Compared",
+        "domain": "nearity.co"
+      },
+      {
+        "url": "https://www.softwareworld.co/transcription-software/comparison/",
+        "title": "Top 10 Transcription Software Comparison 2026 | SoftwareWorld",
+        "domain": "softwareworld.co"
+      },
+      {
+        "url": "https://otter.ai/pricing",
+        "title": "Pricing | Otter.ai",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://transcribe.com/pricing",
+        "title": "Pricing | Transcribe App & Online Editor",
+        "domain": "transcribe.com"
+      },
+      {
+        "url": "https://www.softwareadvice.com/transcription/",
+        "title": "Best Transcription Software - 2025 Reviews & Pricing",
+        "domain": "softwareadvice.com"
+      },
+      {
+        "url": "https://www.toolify.ai/ai-news/discover-the-best-onetime-fee-tts-software-no-subscriptions-needed-1647384",
+        "title": "Discover the Best One-Time Fee TTS Software: No Subscriptions ... - Toolify",
+        "domain": "toolify.ai"
+      },
+      {
+        "url": "https://www.capterra.com/transcription-software/",
+        "title": "Best Transcription Software 2026 | Capterra",
+        "domain": "capterra.com"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 14,
+    "total_all": 20
+  },
+  "response_stats": {
+    "total_length": 1863,
+    "citation_count": 6,
+    "chars_with_citations": 142
+  }
+}

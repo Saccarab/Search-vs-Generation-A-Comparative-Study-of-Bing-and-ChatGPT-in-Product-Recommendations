@@ -1,0 +1,489 @@
+{
+  "run_id": "P032_r1",
+  "account_type": "personal",
+  "prompt": "什么实时翻译软件好用？",
+  "metadata": {
+    "hidden_queries": [
+      "实时翻译软件 哪个好用 推荐 实时翻译 app",
+      "best real-time translation apps features comparison real-time translation software"
+    ],
+    "sonic_classification": {
+      "latency_ms": 15.933707123622298,
+      "simple_search_prob": 0.9680486683125621,
+      "complex_search_prob": 0.002663708515843261,
+      "no_search_prob": 0.02928762317159465,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "实时翻译软件 哪个好用 推荐 实时翻译 app"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 37,
+        "end_idx": 93
+      },
+      "citation_token": "citeturn0search0turn0search3turn0search1turn0search",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://zhuanlan.zhihu.com/p/692820631",
+          "title": "十款好用翻译软件排名，实时翻译app排名前十",
+          "snippet": "Apr 16, 2024 — 译妙蛙翻译官是一款功能十分强大的多端多场景翻译神器，也是最为推荐的一款翻译工具，把它放在第一位介绍，绝对是非常合适的。译妙蛙翻译官适合非常多的使用 ...Read more",
+          "domain": "zhuanlan.zhihu.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://play.google.com/store/apps/details?hl=zh&id=com.google.android.apps.translate",
+          "title": "Google 翻译- Google Play 上的应用",
+          "snippet": "文字翻译：只需输入文字，即可在108 种语言之间互译• 点按翻译：在任何应用中复制文字，然后点按“Google 翻译”图标，即可翻译（不限语言） • 离线翻译：无需连接到互联网即可 ...Read more",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 3,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_3"
+        }
+      ],
+      "inline_url": "https://zhuanlan.zhihu.com/p/692820631",
+      "url_position": 63,
+      "claim_text": "以下是 好用的实时翻译软件推荐（支持语音/对话/拍照等实时翻译）：Aiphone+4Zhihu+4Google Play+4",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 180,
+        "end_idx": 199
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=zh&id=com.google.android.apps.translate",
+          "title": "Google 翻译- Google Play 上的应用",
+          "snippet": "文字翻译：只需输入文字，即可在108 种语言之间互译• 点按翻译：在任何应用中复制文字，然后点按“Google 翻译”图标，即可翻译（不限语言） • 离线翻译：无需连接到互联网即可 ...Read more",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 3,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_3"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=zh&id=com.google.android.apps.translate",
+      "url_position": 177,
+      "claim_text": "🌐 通用 & 多语言（适合旅行/日常） Google 翻译 – 支持文本、语音对话实时翻译、拍照翻译，语言覆盖最广。Google Play",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 259,
+        "end_idx": 293
+      },
+      "citation_token": "citeturn0search10turn0search23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://tw.my-best.com/115102",
+          "title": "專家監製10 大翻譯軟體推薦排行榜【2025最新】",
+          "snippet": "專家監製10 大翻譯軟體推薦排行榜【2025最新】 ; 1. Google LLC. Google 翻譯 ; 2. NAVER Corp. Naver Papago ; 3. DeepL SE. DeepL Translate ; 4. OpenAI. ChatGPT ; 5.Read more",
+          "domain": "tw.my-best.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        },
+        {
+          "url": "https://boostlingo.com/blog/best-apps-for-real-time-ai-translation/?utm_source=chatgpt.com",
+          "title": "Best Apps for Real Time AI Translation",
+          "snippet": "Jul 16, 2025 — Top Real-Time Translation Apps for Instant Communication · Boostlingo AI Interpreter · Google Translate · iTranslate · SayHi · Microsoft Translator.Read more",
+          "domain": "boostlingo.com",
+          "ref_type": "search",
+          "ref_index": 23,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_23"
+        }
+      ],
+      "inline_url": "https://tw.my-best.com/115102",
+      "url_position": 326,
+      "claim_text": "Microsoft Translator（微软翻译） – 对话模式实时双语翻译，对跨语言沟通体验好评。mybest+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 330,
+        "end_idx": 331
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/cn/app/itranslate-%E7%BF%BB%E8%AF%91-%E8%AF%AD%E9%9F%B3%E5%92%8C%E5%9B%BE%E7%89%87%E7%BF%BB%E8%AF%91%E5%99%A8/id288113403",
+      "url_position": 397,
+      "claim_text": "iTranslate – 支持语音、图片翻译，功能全面。App Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 413,
+        "end_idx": 433
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/cn/app/%E5%AE%9E%E6%97%B6%E7%BF%BB%E8%AF%91%E5%AE%98-%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D%E7%BF%BB%E8%AF%91%E8%BD%AF%E4%BB%B6/id1606572387",
+          "title": "实时翻译官-实时语音对话翻译软件 - App Store - Apple",
+          "snippet": "实时翻译官，潜心打造的翻译神器， 随身必备智能翻译助手，用过就让您爱不释手【文本翻译】 包括英文翻译、法文翻译、日文翻译、韩文翻译、德语翻译、俄语翻译等在内的 ...Read more",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 21,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_21"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/cn/app/%E5%AE%9E%E6%97%B6%E7%BF%BB%E8%AF%91%E5%AE%98-%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D%E7%BF%BB%E8%AF%91%E8%BD%AF%E4%BB%B6/id1606572387",
+      "url_position": 608,
+      "claim_text": "🇨🇳 国内常见 & AI翻译 实时翻译官 – 简单易用的中文实时翻译工具，支持语音对话、图片翻译等。App Store",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 493,
+        "end_idx": 526
+      },
+      "citation_token": "citeturn0search2turn0search25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator&utm_source=chatgpt.com",
+          "title": "Instant Voice Translate - Apps on Google Play",
+          "snippet": "\"Instant Voice Translate\" is a free and user-friendly language translation app powered by cutting-edge AI technology.",
+          "domain": "google.com",
+          "ref_type": "search",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_25"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=zh&id=com.erudite.translator",
+      "url_position": 856,
+      "claim_text": "语音翻译神器 / Instant Voice Translate – 专注语音实时翻译，按键即可启动。Google Play+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 583,
+        "end_idx": 603
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.aiphone.ai/blog/zh/voice-voice-translation-app/",
+      "url_position": 987,
+      "claim_text": "🗣️ 其它特色选择 Naver Papago – 适合韩语、日语等亚洲语言的实时翻译。Aiphone",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 653,
+        "end_idx": 672
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.transyncai.com/zh/blog-best-chinese-translator-app/",
+          "title": "2025年最佳中文翻译应用：轻松打破语言障碍",
+          "snippet": "Oct 20, 2025 — 2025年五大最佳中文翻译应用 · 1. Transync AI （编辑推荐⭐） · 2. 谷歌翻译 · 3. DeepL翻译器 · 4. 微软翻译 · 5. 帕帕戈.Read more",
+          "domain": "www.transyncai.com",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_4"
+        }
+      ],
+      "inline_url": "https://www.transyncai.com/zh/blog-best-chinese-translator-app/",
+      "url_position": 1096,
+      "claim_text": "Transync AI / DeepL 等 – 精准度高，适合专业文本与对话场景。同言翻译",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 829,
+        "end_idx": 848
+      },
+      "citation_token": "citeturn0search5",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/zh-cn/blog/best-chinese-to-english-live-translation?utm_source=chatgpt.com",
+          "title": "最佳中英实时翻译工具：五大精选",
+          "snippet": "Aug 22, 2025 — 简短答案： 最好的中文到英语的实时翻译工具是JotMe、Wordly AI、Talo、DeepL Voice和Maestra AI。每种工具都提供不同的功能，以帮助简化您的工作流程。Read more",
+          "domain": "jotme.io",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/zh-cn/blog/best-chinese-to-english-live-translation",
+      "url_position": 1305,
+      "claim_text": "📱 Tips 如果是 出国旅行/现场对话，优先用 Google 翻译 或 Microsoft Translator。 如果只需要 中文界面 & 基本功能，国内的一些实时翻译 app 够用。 要是专业会议/商务用途，可以考虑有 AI 实时语音与转录能力的工具。jotme.io",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://zhuanlan.zhihu.com/p/692820631",
+        "title": "十款好用翻译软件排名，实时翻译app排名前十",
+        "domain": "Zhihu"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=zh&id=com.google.android.apps.translate",
+        "title": "Google 翻译- Google Play 上的应用",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://tw.my-best.com/115102",
+        "title": "專家監製10 大翻譯軟體推薦排行榜【2025最新】",
+        "domain": "mybest"
+      },
+      {
+        "url": "https://apps.apple.com/cn/app/itranslate-%E7%BF%BB%E8%AF%91-%E8%AF%AD%E9%9F%B3%E5%92%8C%E5%9B%BE%E7%89%87%E7%BF%BB%E8%AF%91%E5%99%A8/id288113403",
+        "title": "iTranslate 翻译- 语音和图片翻译器 - App Store",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://apps.apple.com/cn/app/%E5%AE%9E%E6%97%B6%E7%BF%BB%E8%AF%91%E5%AE%98-%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D%E7%BF%BB%E8%AF%91%E8%BD%AF%E4%BB%B6/id1606572387",
+        "title": "实时翻译官-实时语音对话翻译软件 - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=zh&id=com.erudite.translator",
+        "title": "语音翻译神器Instant Voice Translate",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/zh/voice-voice-translation-app/",
+        "title": "10款精准好用的实时语音翻译软件推荐",
+        "domain": "Aiphone"
+      },
+      {
+        "url": "https://www.transyncai.com/zh/blog-best-chinese-translator-app/",
+        "title": "2025年最佳中文翻译应用：轻松打破语言障碍",
+        "domain": "同言翻译"
+      },
+      {
+        "url": "https://www.jotme.io/zh-cn/blog/best-chinese-to-english-live-translation",
+        "title": "最佳中英实时翻译工具：五大精选",
+        "domain": "jotme.io"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.atanet.org/client-assistance/blog-best-translation-apps-a-translator-puts-four-to-the-test/",
+        "title": "Best Translation Apps: A Translator Puts Four to the Test",
+        "domain": "atanet.org"
+      },
+      {
+        "url": "https://www.reddit.com/r/shanghai/comments/1gid0or/best_conversation_translator_app/?tl=zh-hans",
+        "title": "最好的对话翻译app是哪个？ : r/shanghai",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/ChatGPTPro/comments/15z93kb/are_there_any_handsfree_realtime_voice/",
+        "title": "Are there any Hands-Free, Realtime, Voice Translation ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/femaletravels/comments/1hi0w20/based_on_your_experience_which_translation_app_is/",
+        "title": "Based on your experience, which translation app is the ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://apps.apple.com/cn/app/%E7%BF%BB%E8%AF%91-%E7%AB%8B%E5%8D%B3%E7%BF%BB%E8%AF%91-%E8%AF%AD%E8%A8%80-%E7%BF%BB%E8%AF%91%E8%BD%AF%E4%BB%B6-%E8%AF%AD%E9%9F%B3%E7%BF%BB%E8%AF%91-%E6%8B%8D%E7%85%A7%E7%BF%BB%E8%AF%91/id1348028646",
+        "title": "翻译- 立即翻译: 语言翻译软件, 语音翻译, 拍照翻译 - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/translate-now-ai-translator/id1348028646",
+        "title": "Translate Now - AI Translator App - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/translate/id1514844618",
+        "title": "Translate - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://www.iflyrec.com/zhuanxie/67171d0e.html",
+        "title": "哪些在线会议翻译软件好用？分享3个能实时 ...",
+        "domain": "iflyrec.com"
+      },
+      {
+        "url": "https://sonix.ai/resources/zh/%E6%9C%80%E4%BD%B3%E7%BF%BB%E8%AF%91%E8%BD%AF%E4%BB%B6/",
+        "title": "10 Best Translation Software Options For 2026",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/5-best-translation-apps-for-travel",
+        "title": "5 Best Translation Apps for International Travel in 2025",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://www.pairaphrase.com/blog/15-best-professional-translation-software-features",
+        "title": "19 Best Translation Software Tools for Professional Use ...",
+        "domain": "pairaphrase.com"
+      },
+      {
+        "url": "https://www.deepl.com/zh/translator",
+        "title": "DeepL翻译：全世界最准确的翻译",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://taia.io/blog/technology-and-translation/best-translation-software/",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://www.convey911.com/blog/verbal-translate-app",
+        "title": "9 Essential Verbal Translate App Picks for 2025",
+        "domain": "convey911.com"
+      },
+      {
+        "url": "https://immersivetranslate.com/zh-Hans/",
+        "title": "沉浸式翻译- 新一代AI翻译软件| 双语对照网页翻译/PDF ...",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://boostlingo.com/blog/best-apps-for-real-time-ai-translation/",
+        "title": "Best Apps for Real Time AI Translation",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho?hl=zh-CN",
+        "title": "ViiTor实时翻译- AI翻译&实时双语字幕&免费- Chrome 应用商店",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://zhuanlan.zhihu.com/p/564645430",
+        "title": "留学生都在用的实时翻译软件",
+        "domain": "zhihu.com"
+      },
+      {
+        "url": "https://wordvice.ai/cn/blog/best-free-online-translators",
+        "title": "2025年9个免费翻译软件工具推荐",
+        "domain": "wordvice.ai"
+      },
+      {
+        "url": "https://translatepress.com/best-app-for-language-translation-iphone-android/",
+        "title": "The Best Language Translation App for iPhone & Android",
+        "domain": "translatepress.com"
+      },
+      {
+        "url": "https://www.whistleout.com/CellPhones/Guides/best-translation-apps-for-international-travel",
+        "title": "6 Best Translation Apps for International Travel",
+        "domain": "whistleout.com"
+      },
+      {
+        "url": "https://blog.csdn.net/jren_099/article/details/153401221",
+        "title": "2025实时翻译软件测评：五大热门App真实对比原创",
+        "domain": "csdn.net"
+      },
+      {
+        "url": "https://www.smartling.com/blog/real-time-translation",
+        "title": "Real-time translation software: Everything you need to know",
+        "domain": "smartling.com"
+      },
+      {
+        "url": "https://www.wordly.ai/translation-app",
+        "title": "Translation App – Real‑Time AI Voice & Text ...",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://itranslate.com/",
+        "title": "iTranslate: The Leading Translation and Dictionary App",
+        "domain": "itranslate.com"
+      },
+      {
+        "url": "https://www.weglot.com/zh/blog/machine-translation-software",
+        "title": "2025年你可以尝试的最佳机器翻译软件",
+        "domain": "weglot.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 28,
+    "total_all": 37
+  },
+  "response_stats": {
+    "total_length": 1381,
+    "citation_count": 9,
+    "chars_with_citations": 221
+  }
+}

@@ -1,0 +1,360 @@
+{
+  "run_id": "P069_r3",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend free text-to-speech extensions that dont sound robotic?",
+  "metadata": {
+    "hidden_queries": [
+      "free text-to-speech browser extensions natural sounding voices",
+      "free TTS extensions that don't sound robotic Chrome Firefox free text to speech"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.888886055909097,
+      "simple_search_prob": 0.9981849756618617,
+      "complex_search_prob": 0.0005732554786477667,
+      "no_search_prob": 0.0012417688594905268,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free text-to-speech browser extensions natural sounding voices"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 262,
+        "end_idx": 281
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/hoverspeak-%E2%80%93-free-text-to/kpkdjcalihjnkemhkdlciiekkmooglmb",
+          "title": "HoverSpeak – Free Text-to-Speech Chrome Extension",
+          "snippet": "Reads aloud any text you hover or select in a natural voice. 100% free, built for dyslexic readers. HoverSpeak is a truly free text-to-speech (TTS) Chrome extension that instantly speaks the exact words under your mouse or in any selected text using natural-sounding voices.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/hoverspeak-%E2%80%93-free-text-to/kpkdjcalihjnkemhkdlciiekkmooglmb",
+      "url_position": 260,
+      "claim_text": "Here are some free browser text-to-speech extensions that use natural-sounding voices (less robotic than old TTS): Chrome / Edge / Firefox HoverSpeak – Free TTS that reads selected or hovered text with natural voices. No signup or paywalls. Chrome Web Store",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 380,
+        "end_idx": 414
+      },
+      "citation_token": "citeturn0search10turn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/naturalreader-ai-text-to/kohfgcgbkjodfcfkcackpagifgbcmimk",
+          "title": "NaturalReader - AI Text to Speech - Chrome Web Store",
+          "snippet": "Read aloud any text with realistic AI voices, compatible with webpages, kindle Ebooks, Google Docs, PDF, Emails, and more. NaturalReader - Text To Speech, is a chrome extension that converts text online into natural sounding audio.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        },
+        {
+          "url": "https://www.naturalreaders.com/",
+          "title": "AI Voices - NaturalReader Home",
+          "snippet": "NaturalReader: Free Text to Speech for Online, Mobile App, Commercial license and Education with AI voices.",
+          "domain": "www.naturalreaders.com",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_15"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/naturalreader-ai-text-to/kohfgcgbkjodfcfkcackpagifgbcmimk",
+      "url_position": 479,
+      "claim_text": "NaturalReader (Chrome) – Converts web text, PDFs, Docs, emails into realistic AI voices. Chrome Web Store+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 549,
+        "end_idx": 581
+      },
+      "citation_token": "citeturn0search3turn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://microsoftedge.microsoft.com/addons/detail/speechify-text-to-speech-/ogapibpahpkbcdidopigillpmndjemnj?form=MT001Y",
+      "url_position": 730,
+      "claim_text": "Speechify (Chrome/Edge) – Popular extension with AI-driven, lifelike voices and multi-language support. Free tier available. Microsoft Edge Addons+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 710,
+        "end_idx": 729
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://texttospeechextension.com/",
+      "url_position": 998,
+      "claim_text": "Read Aloud / Read Aloud Lite – Simple free TTS with options to pick natural voices (built-in engines or cloud voices). Text to Speech Extension",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 827,
+        "end_idx": 846
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voiceout.app/",
+      "url_position": 1134,
+      "claim_text": "Voice Out – Free Chrome extension with ~100+ natural-sounding voices in many languages. Voice Out",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 956,
+        "end_idx": 976
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://blog.pixiebrix.com/blog/8-of-the-best-text-to-speech-extensions-for-chrome",
+          "title": "The Best Text-to-Speech Extensions for Chrome - PixieBrix",
+          "snippet": "Talkie is maybe one of the most useful free text-to-speech Chrome extensions for when you’re exploring new languages to learn. Select text on any part of the page and Talkie will automatically detect the text language and choose a voice in the same language.",
+          "domain": "blog.pixiebrix.com",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": 1731369600,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://blog.pixiebrix.com/blog/8-of-the-best-text-to-speech-extensions-for-chrome",
+      "url_position": 1274,
+      "claim_text": "Talkie – Free TTS that auto-detects language and selects appropriate voice (good for multilingual). PixieBrix Blog",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1128,
+        "end_idx": 1148
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://smallest.ai/blog/best-text-to-speech-extensions-for-chrome",
+      "url_position": 1515,
+      "claim_text": "Notes / tips “Natural” quality varies by voice engine; extensions tied to modern AI voices (e.g., Neural, WaveNet, AI generators) sound best. Smallest.ai",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1249,
+        "end_idx": 1268
+      },
+      "citation_token": "citeturn0search8",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.swifdoo.com/blog/text-to-speech-chrome-extension",
+          "title": "6 Best Text-to-Speech Chrome Extensions of 2025 [Free/Paid]",
+          "snippet": "Looking for a reliable text-to-speech Chrome extension to improve productivity? Discover the 6 best free or paid ones to read text aloud in your browser.",
+          "domain": "www.swifdoo.com",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": 1764806400,
+          "ref_key": "0_search_8"
+        },
+        {
+          "url": "https://www.swifdoo.com/blog/text-to-speech-chrome-extension?utm_source=chatgpt.com",
+          "title": "6 Best Text-to-Speech Chrome Extensions of 2025 [Free/Paid]",
+          "snippet": "Looking for a reliable text-to-speech Chrome extension to improve productivity? Discover the 6 best free or paid ones to read text aloud in your browser.",
+          "domain": "swifdoo.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.swifdoo.com/blog/text-to-speech-chrome-extension",
+      "url_position": 1693,
+      "claim_text": "Some free extensions let you choose between available voices or link to higher-quality engines. swifdoo.com",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://chromewebstore.google.com/detail/hoverspeak-%E2%80%93-free-text-to/kpkdjcalihjnkemhkdlciiekkmooglmb",
+        "title": "HoverSpeak – Free Text-to-Speech Chrome Extension",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/naturalreader-ai-text-to/kohfgcgbkjodfcfkcackpagifgbcmimk",
+        "title": "NaturalReader - AI Text to Speech - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://microsoftedge.microsoft.com/addons/detail/speechify-text-to-speech-/ogapibpahpkbcdidopigillpmndjemnj?form=MT001Y",
+        "title": "Speechify — Voice AI Assistant - Microsoft Edge Addons",
+        "domain": "Microsoft Edge Addons"
+      },
+      {
+        "url": "https://texttospeechextension.com/",
+        "title": "Free Text to Speech Chrome Extension – Read Aloud Lite",
+        "domain": "Text to Speech Extension"
+      },
+      {
+        "url": "https://voiceout.app/",
+        "title": "Voice Out - #1 Text-To-Speech Extension for Chrome",
+        "domain": "Voice Out"
+      },
+      {
+        "url": "https://blog.pixiebrix.com/blog/8-of-the-best-text-to-speech-extensions-for-chrome",
+        "title": "The Best Text-to-Speech Extensions for Chrome - PixieBrix",
+        "domain": "PixieBrix Blog"
+      },
+      {
+        "url": "https://smallest.ai/blog/best-text-to-speech-extensions-for-chrome",
+        "title": "Best Text to Speech Extensions for Chrome - smallest.ai",
+        "domain": "Smallest.ai"
+      },
+      {
+        "url": "https://www.swifdoo.com/blog/text-to-speech-chrome-extension",
+        "title": "6 Best Text-to-Speech Chrome Extensions of 2025 [Free/Paid]",
+        "domain": "swifdoo.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://voice.ai/hub/tts/best-text-to-speech-chrome-extension/",
+        "title": "15 Best Text-to-Speech Chrome Extensions to Save Time and ... - Voice.ai",
+        "domain": "voice.ai"
+      },
+      {
+        "url": "https://voice.ai/hub/tts/text-to-speech-chrome-extension/",
+        "title": "20 Best Text To Speech Chrome Extensions To Turn Any Webpage Into Audio",
+        "domain": "voice.ai"
+      },
+      {
+        "url": "https://www.vidnoz.com/ai-solutions/text-to-speech-extension.html",
+        "title": "6 Best Text to Speech Extensions from Chrome, Firefox & Opera - Vidnoz",
+        "domain": "vidnoz.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech with Gemini and ChatGPT AI Voices",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/",
+        "title": "AI Voices - NaturalReader Home",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://speechify.com/text-to-speech-chrome-extension/",
+        "title": "Free Text To Speech & Voice Typing Chrome Extension | Speechify",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://speechify.com/text-to-speech-online/",
+        "title": "Speechify: Free Text to Speech with Humanlike AI Voices",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://freereadtext.com/blog/text-to-speech-chrome-extension-guide",
+        "title": "Text to Speech Chrome Extension: Best Browser Reading Tools",
+        "domain": "freereadtext.com"
+      },
+      {
+        "url": "https://microsoftedge.microsoft.com/addons/detail/hoverspeak-%E2%80%93-free-textto/omibkefgmhnhfboefblahmjdcgapoeea?hl=en-US",
+        "title": "HoverSpeak – Free Text-to-Speech Edge Extension",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.getwoord.com/blog/best-free-text-to-speech-with-chrome-extension-for-quick-use",
+        "title": "Best Free Text To Speech With Chrome Extension For Quick Use",
+        "domain": "getwoord.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/text-to-speech-extension/dgfphehljklflggebnikioimdpjoblim",
+        "title": "Text to Speech Extension - Chrome Web Store",
+        "domain": "google.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 11,
+    "total_all": 19
+  },
+  "response_stats": {
+    "total_length": 1858,
+    "citation_count": 8,
+    "chars_with_citations": 182
+  }
+}

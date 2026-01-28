@@ -1,0 +1,464 @@
+{
+  "run_id": "P061_r3",
+  "account_type": "personal",
+  "prompt": "Is there an AI that translates audio?",
+  "metadata": {
+    "hidden_queries": [
+      "AI that translates audio real-time audio translation services",
+      "tools for translating audio to another language AI audio translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 17.41130999289453,
+      "simple_search_prob": 0.9004833123707595,
+      "complex_search_prob": 0.0007765036966661134,
+      "no_search_prob": 0.09874018393257437,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "AI that translates audio real-time audio translation services"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 125,
+        "end_idx": 157
+      },
+      "citation_token": "citeturn0search0turn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wordly.ai/",
+          "title": "AI Translation & Captions for Meetings and Events | Wordly",
+          "snippet": "Wordly provides real-time AI translation, captions, transcripts, and summaries for meetings and events, making them more accessible, inclusive, ...",
+          "domain": "www.wordly.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation?utm_source=chatgpt.com",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025 - JotMe",
+          "snippet": "The top AI live translation tools in 2025 are: JotMe, Wordly, Interprefy, Maestra AI, Kudo, Talo, and DeepL Voice. Each offers something unique ...",
+          "domain": "jotme.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.wordly.ai/",
+      "url_position": 132,
+      "claim_text": "Yes — there are AI tools that translate audio into another language. They can work with live speech or pre‑recorded audio. Wordly+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 336,
+        "end_idx": 337
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/",
+      "url_position": 333,
+      "claim_text": "Live/Real‑Time translation (speech‑to‑speech or speech‑to‑text): AI meeting tools like Wordly translate spoken language and provide captions/transcripts in real time. Wordly",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 460,
+        "end_idx": 479
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 463,
+      "claim_text": "Maestra listens and instantly translates speech into another language, even with spoken output. Maestra",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 551,
+        "end_idx": 571
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.palabra.ai/",
+      "url_position": 562,
+      "claim_text": "Palabra.ai offers sub‑second, two‑way live speech translation. Palabra",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 647,
+        "end_idx": 681
+      },
+      "citation_token": "citeturn0search10turn0search23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.transyncai.com/tools/real-time-translation/?utm_source=chatgpt.com",
+          "title": "Real-time Translation Tool",
+          "snippet": "Experience Transync AI's real-time translation tool for instant voice and text in 60 languages. Perfect for meetings, travel, and global communication.",
+          "domain": "transyncai.com",
+          "ref_type": "search",
+          "ref_index": 23,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_23"
+        }
+      ],
+      "inline_url": "https://livevoice.io/en/ai-voice-translation",
+      "url_position": 667,
+      "claim_text": "LiveVoice and Transync AI also provide live audio translation. LiveVoice.io+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 768,
+        "end_idx": 788
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+      "url_position": 809,
+      "claim_text": "Many mobile apps (e.g., Instant Voice Translate) also translate live voice input. Google Play",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 944,
+        "end_idx": 963
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://notegpt.io/ai-audio-translator",
+          "title": "AI Audio Translator: Translate Mp3 & Audio Files Online Free",
+          "snippet": "AI Audio Translator lets you translate MP3 and audio files into 100+ languages with natural AI audio output. Export as MP3, WAV, SRT, or TXT — free and online.Read more",
+          "domain": "notegpt.io",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        }
+      ],
+      "inline_url": "https://notegpt.io/ai-audio-translator",
+      "url_position": 1043,
+      "claim_text": "Translate uploaded audio files (batch): AI Audio Translator tools let you upload recordings (MP3, WAV) and get translated audio or text output. NoteGPT",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1074,
+        "end_idx": 1094
+      },
+      "citation_token": "citeturn0search33",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.smartcat.com/audio-translator/",
+      "url_position": 1196,
+      "claim_text": "Platforms like Smartcat AI can translate audio files into 100+ languages and export translated files. Smartcat",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1243,
+        "end_idx": 1261
+      },
+      "citation_token": "citeturn0news40",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 40,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_40"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 1391,
+      "claim_text": "Consumer devices with built‑in AI translation: There are earbuds that translate speech in real time (e.g., models supporting 50+ languages). SFGATE",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://www.palabra.ai/",
+        "title": "Palabra.ai: Live Voice Translator & Real-Time Speech ...",
+        "domain": "Palabra"
+      },
+      {
+        "url": "https://livevoice.io/en/ai-voice-translation",
+        "title": "AI Voice Translation - LiveVoice",
+        "domain": "LiveVoice.io"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://notegpt.io/ai-audio-translator",
+        "title": "AI Audio Translator: Translate Mp3 & Audio Files Online Free",
+        "domain": "NoteGPT"
+      },
+      {
+        "url": "https://www.smartcat.com/audio-translator/",
+        "title": "AI Audio Translator: Translate Audio to Any Language",
+        "domain": "Smartcat"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025 - JotMe",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://lokalise.com/blog/best-ai-translation-tools/",
+        "title": "The Best AI translation tools right now - Lokalise",
+        "domain": "lokalise.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/artificial/comments/150p0w6/has_anyone_built_in_ai_live_translation_app/",
+        "title": "Has anyone built in AI live translation app : r/artificial - Reddit",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/Hololive/comments/123ktq2/i_wanted_to_break_the_language_barrier_so_i/",
+        "title": "Self-Hosted, Real-Time audio translation in any language ... - Reddit",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-speech-translation-tools",
+        "title": "5 Best Speech Translation Tools We Recommend in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.interprefy.com/solutions/event-ai-speech-translator",
+        "title": "Live Translation Infrastructure for Global Business | Interprefy AI",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://www.interprefy.com/",
+        "title": "Interprefy: Interpretation, AI Speech Translation & Captions Tech",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://www.adobe.com/products/firefly/features/translate-audio.html",
+        "title": "Translate audio into multiple languages with Adobe Firefly.",
+        "domain": "adobe.com"
+      },
+      {
+        "url": "https://notegpt.io/ai-voice-translator",
+        "title": "AI Voice Translator – Translate Your Voice Online, No Sign ...",
+        "domain": "notegpt.io"
+      },
+      {
+        "url": "https://kudo.ai/solutions/kudo-ai-speech-translator/",
+        "title": "KUDO AI Speech Translator | Audio & Captions in 60+ Languages",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://maestra.ai/tools/audio-translator",
+        "title": "Free AI Audio Translator - Translate Voice Instantly",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://soniox.com/",
+        "title": "Soniox | Speech-to-Text AI",
+        "domain": "soniox.com"
+      },
+      {
+        "url": "https://www.rask.ai/tools/audio-translator",
+        "title": "Translate Voice and Audio Online",
+        "domain": "rask.ai"
+      },
+      {
+        "url": "https://www.vozo.ai/blogs/best-online-audio-translator",
+        "title": "We Tested the Best Online Audio Translator Platforms 2025",
+        "domain": "vozo.ai"
+      },
+      {
+        "url": "https://www.reddit.com/r/LanguageTechnology/comments/1otblws/looking_for_an_ai_tool_to_translate_audio_files/",
+        "title": "Looking for an AI tool to translate audio files to English ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.camb.ai/",
+        "title": "CAMB.AI | Localization AI for Content, Entertainment & Sports",
+        "domain": "camb.ai"
+      },
+      {
+        "url": "https://www.heygen.com/blog/translate-your-audio-content-with-ai",
+        "title": "AI Translate Audio with Speech Recognition & Synthesis",
+        "domain": "heygen.com"
+      },
+      {
+        "url": "https://translatepress.com/best-ai-translation-tool/",
+        "title": "My Favorite AI Translation Tools & Online ...",
+        "domain": "translatepress.com"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/real-time-translation/",
+        "title": "Real-time Translation Tool",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://elevenlabs.io/dubbing-studio",
+        "title": "AI Dubbing: Localize Content Across 29 Languages",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://perso.ai/",
+        "title": "Perso AI: AI Video Translator & Dubbing with Realistic Lip Sync",
+        "domain": "perso.ai"
+      },
+      {
+        "url": "https://taloai.com/",
+        "title": "Talo - Real-Time AI Translator for Video Calls",
+        "domain": "taloai.com"
+      },
+      {
+        "url": "https://www.translatelive.com/",
+        "title": "TranslateLive: Translation Tools for Businesses",
+        "domain": "translatelive.com"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.ai-media.tv/our-products/caption-services/translation/",
+        "title": "Live AI Translation Solutions | Automated & Human Translation",
+        "domain": "ai-media.tv"
+      },
+      {
+        "url": "https://www.wordly.ai/real-time-translation",
+        "title": "Real-Time Translation Solutions",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.deepl.com/en/products/voice",
+        "title": "instant, secure voice translation for global teams",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://www.happyscribe.com/",
+        "title": "HappyScribe: AI-Notetaker, Transcription, Subtitles & Translation",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://www.convey911.com/blog/ai-audio-translator",
+        "title": "AI Audio Translator Guide: Seamless Voice Translation 2025",
+        "domain": "convey911.com"
+      },
+      {
+        "url": "https://research.google/blog/real-time-speech-to-speech-translation/",
+        "title": "Real-time speech-to-speech translation",
+        "domain": "research.google"
+      },
+      {
+        "url": "https://blog.google/products/translate/language-learning-live-translate/",
+        "title": "Google Translate adds live translation and language learning",
+        "domain": "blog.google"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 33,
+    "total_all": 41
+  },
+  "response_stats": {
+    "total_length": 1599,
+    "citation_count": 9,
+    "chars_with_citations": 183
+  }
+}

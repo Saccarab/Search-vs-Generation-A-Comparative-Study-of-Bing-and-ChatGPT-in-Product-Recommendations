@@ -1,0 +1,486 @@
+{
+  "run_id": "P046_r3",
+  "account_type": "enterprise",
+  "prompt": "What are direct competitors of Doctranslate that offer similar translation services for text, audio, video, and live translation?",
+  "metadata": {
+    "hidden_queries": [
+      "Doctranslate competitors similar translation services for text audio video live translation",
+      "best translation platforms offering text audio video live interpretation services alternative to Doctranslate"
+    ],
+    "sonic_classification": {
+      "latency_ms": 20.482180174440145,
+      "simple_search_prob": 0.6939233279482332,
+      "complex_search_prob": 0.2948861730195452,
+      "no_search_prob": 0.011190499032221635,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Doctranslate competitors similar translation services for text audio video live translation"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 321,
+        "end_idx": 341
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vmeg.ai/blog/best-translation-apps/",
+      "url_position": 312,
+      "claim_text": "Here are direct competitors to Doctranslate that offer similar capabilities covering text, audio, video, and/or live translation: Comprehensive AI-powered translation platforms Google Translate – text, voice/speech, camera/image translation; real-time conversation mode (broad support across formats). VMEG AI",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 455,
+        "end_idx": 456
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Microsoft_Translator",
+      "url_position": 478,
+      "claim_text": "Microsoft Translator – text, speech, and live conversation translation integrated across Microsoft apps. Wikipedia",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 599,
+        "end_idx": 618
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+      "url_position": 657,
+      "claim_text": "DeepL – high-quality text and document translation; recent expansions include voice and live meeting integrations. Fora Soft",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 763,
+        "end_idx": 783
+      },
+      "citation_token": "citeturn0search27",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Smartling",
+      "url_position": 881,
+      "claim_text": "Smartling – enterprise localization and translation workflows spanning documents, web content, apps; strong API and automation support. Wikipedia",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 915,
+        "end_idx": 935
+      },
+      "citation_token": "citeturn0search26",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Stepes",
+      "url_position": 1057,
+      "claim_text": "Stepes – cloud translation and localization service pairing AI with human translators for documents, video, and workflows. Wikipedia",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1069,
+        "end_idx": 1089
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/",
+      "url_position": 1225,
+      "claim_text": "Live speech/meeting translation Wordly AI – live translation, captions, transcripts, summaries for meetings and events. Wordly",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1195,
+        "end_idx": 1215
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://kudo.ai/",
+      "url_position": 1353,
+      "claim_text": "KUDO – real-time speech translation and interpretation (AI + human) for remote/in-person events. KUDO",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1315,
+        "end_idx": 1335
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.stenomatic.ai/post/best-voice-translator-apps",
+      "url_position": 1475,
+      "claim_text": "Interprefy – cloud simultaneous interpretation & live translation for events and meetings. Stenomatic",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1418,
+        "end_idx": 1437
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/blogs/best-live-translation-apps",
+          "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+          "snippet": "We tested 9 live translation software tools in real-world meetings, events, and conversations. See what worked, what didn’t, and how they compare in 2026.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 7,
+          "turn_index": 0,
+          "pub_date": 1769040000,
+          "ref_key": "0_search_7"
+        }
+      ],
+      "inline_url": "https://maestra.ai/blogs/best-live-translation-apps",
+      "url_position": 1621,
+      "claim_text": "Maestra AI – real-time voice translation, live captions across languages. Maestra AI",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1535,
+        "end_idx": 1554
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for real-time translation during meetings, events, and video calls.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1752624000,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1774,
+      "claim_text": "JotMe – live AI meeting translation + transcription across major conferencing platforms. jotme.io",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1680,
+        "end_idx": 1700
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Vidby",
+      "url_position": 1948,
+      "claim_text": "Video/audio-centric translation/localization Vidby – AI video translation, dubbing, subtitles across languages. Wikipedia",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1825,
+        "end_idx": 1845
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/CaptionHub",
+          "title": "CaptionHub",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_25"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/CaptionHub",
+      "url_position": 2113,
+      "claim_text": "CaptionHub – transcription, machine translation, and voice-over localization for video (including live subtitling). Wikipedia",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 2017,
+        "end_idx": 2037
+      },
+      "citation_token": "citeturn0search30",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/LanguageLine_Solutions",
+      "url_position": 2326,
+      "claim_text": "General professional services (hybrid human + tech) LanguageLine Solutions – phone/video interpreting and document translation at scale (human interpreters). Wikipedia",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 2157,
+        "end_idx": 2163
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.translationstation.com/",
+      "url_position": 2513,
+      "claim_text": "Translation Station – corporate translation/interpretation services across formats including video and events. Translation Station",
+      "url_index": 13
+    },
+    {
+      "token_position": {
+        "start_idx": 2323,
+        "end_idx": 2342
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/blog/best-voice-translation-apps",
+      "url_position": 2693,
+      "claim_text": "Smaller or niche competitors worth considering iTranslate / iTranslate Voice – consumer mobile focus on text and voice translation. Murf AI",
+      "url_index": 14
+    },
+    {
+      "token_position": {
+        "start_idx": 2425,
+        "end_idx": 2444
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/blogs/best-live-translation-apps",
+          "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+          "snippet": "We tested 9 live translation software tools in real-world meetings, events, and conversations. See what worked, what didn’t, and how they compare in 2026.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 7,
+          "turn_index": 0,
+          "pub_date": 1769040000,
+          "ref_key": "0_search_7"
+        }
+      ],
+      "inline_url": "https://maestra.ai/blogs/best-live-translation-apps",
+      "url_position": 2830,
+      "claim_text": "Timekettle – dedicated voice translation hardware and conversation focus. Maestra AI",
+      "url_index": 15
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.vmeg.ai/blog/best-translation-apps/",
+        "title": "5 Best Translation Apps in 2026 for Text & Video Localization",
+        "domain": "VMEG AI"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Microsoft_Translator",
+        "title": "Microsoft Translator",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "Fora Soft"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Smartling",
+        "title": "Smartling",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Stepes",
+        "title": "Stepes",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "KUDO"
+      },
+      {
+        "url": "https://www.stenomatic.ai/post/best-voice-translator-apps",
+        "title": "The Best Voice Translator Apps in 2025 (The Expert's Guide)",
+        "domain": "Stenomatic"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-live-translation-apps",
+        "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Vidby",
+        "title": "Vidby",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/CaptionHub",
+        "title": "CaptionHub",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/LanguageLine_Solutions",
+        "title": "LanguageLine Solutions",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.translationstation.com/",
+        "title": "Translation Station",
+        "domain": "Translation Station"
+      },
+      {
+        "url": "https://murf.ai/blog/best-voice-translation-apps",
+        "title": "10 Best Voice Translation Apps for Global Communication 2026",
+        "domain": "Murf AI"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.techradar.com/best/best-translation-software",
+        "title": "Best translation software of 2025 - TechRadar",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://www.softwareworld.co/competitors/doctranslateio-alternatives/",
+        "title": "Top Doctranslate.io Alternatives & Competitors - SoftwareWorld",
+        "domain": "softwareworld.co"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-real-time-translators-for-meetings",
+        "title": "5 Best Real-Time Translators for Meetings",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://aichief.com/ai-business-tools/doctranslate/",
+        "title": "DocTranslate Review – Cost, Use Cases & Alternatives [2025]",
+        "domain": "aichief.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-translation-software",
+        "title": "8 Best Translation Software to Use in 2025 (Free & Paid)",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+        "title": "Top Tools for Live Meeting Translation (2025) - tactiq.io",
+        "domain": "tactiq.io"
+      },
+      {
+        "url": "https://blogs.doctranslate.io/2025/03/12/en/top-5-free-document-translators-you-should-try-now/",
+        "title": "Top 5 Free Document Translators You Should Try Now",
+        "domain": "doctranslate.io"
+      },
+      {
+        "url": "https://alternativeto.net/software/doctranslator/",
+        "title": "DocTranslator Alternatives - Explore Similar Sites & Apps",
+        "domain": "alternativeto.net"
+      },
+      {
+        "url": "https://www.g2.com/products/doctranslate/competitors/alternatives",
+        "title": "Top 10 Doctranslate Alternatives & Competitors in 2025 | G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://www.g2.com/categories/translation",
+        "title": "Best Translation Services: User Reviews from January 2026 - G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://www.techjockey.com/alternatives/doctranslate",
+        "title": "20 Best Doctranslate Alternatives & Competitors in 2026 - Techjockey",
+        "domain": "techjockey.com"
+      },
+      {
+        "url": "https://sourceforge.net/software/product/DocTranslator/alternatives",
+        "title": "Best DocTranslator Alternatives & Competitors - SourceForge",
+        "domain": "sourceforge.net"
+      }
+    ],
+    "total_cited": 15,
+    "total_additional": 12,
+    "total_all": 27
+  },
+  "response_stats": {
+    "total_length": 3237,
+    "citation_count": 16,
+    "chars_with_citations": 282
+  }
+}

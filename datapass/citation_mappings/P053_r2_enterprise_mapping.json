@@ -1,0 +1,459 @@
+{
+  "run_id": "P053_r2",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend the best free AI text-to-speech software with celebrity voices for IoT applications?",
+  "metadata": {
+    "hidden_queries": [
+      "free AI text to speech software celebrity voices free text to speech celebrity voices",
+      "best open source or free TTS with celebrity voices API for IoT",
+      "free text-to-speech API celebrity voices ElevenLabs free tier celebrity voices API IoT integration",
+      "open source TTS celebrity voices or voice cloning free for developers API"
+    ],
+    "sonic_classification": {
+      "latency_ms": 0.7563880644738674,
+      "simple_search_prob": 0.7357614498580519,
+      "complex_search_prob": 0.2591425705787096,
+      "no_search_prob": 0.005095979563238484,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free AI text to speech software celebrity voices free text to speech celebrity voices"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 549,
+        "end_idx": 568
+      },
+      "citation_token": "citeturn1search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://elevenlabs.io/text-to-speech",
+          "title": "Free Text To Speech Online with Lifelike AI Voices - ElevenLabs",
+          "snippet": "Transform text into lifelike speech with ElevenLabs' Text to Speech. Ultra-realistic text-to-speech supports 70+ languages and TTS API integrations.",
+          "domain": "elevenlabs.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_0"
+        }
+      ],
+      "inline_url": "https://elevenlabs.io/text-to-speech",
+      "url_position": 524,
+      "claim_text": "Here’s a practical, developer-oriented list of free (or free-tier) AI text-to-speech tools you could use for IoT applications with realistic or celebrity-style voices. Be skeptical of “true celebrity voices” online — many free tools just offer sound-alikes and have legal/licensing limits if used in products. 🧠 1) Free/Paid Hybrid with Realistic Voices (Best for IoT APIs) ElevenLabs (Free tier + API) Why it’s relevant: Ultra-realistic TTS with emotional control, API support for integrating into apps/IoT. ElevenLabs",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 646,
+        "end_idx": 666
+      },
+      "citation_token": "citeturn1search22",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.theinteractivestory.com/interactive-video/eleven-labs-free-ai-voices",
+      "url_position": 655,
+      "claim_text": "Free tier: You get a small monthly quota of free characters to test. The Interactive Story",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1301,
+        "end_idx": 1320
+      },
+      "citation_token": "citeturn1search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://glm-tts.com/",
+          "title": "GLM-TTS | Free AI Voice Cloning & Text-to-Speech | Zero-Shot Voice ...",
+          "snippet": "GLM-TTS is an industrial-grade open-source text-to-speech system from Zhipu AI. Clone any voice in 3 seconds with zero-shot learning, emotional expression control, streaming inference, and phoneme-level pronunciation. Free online demo, API docs, and local deployment guides.",
+          "domain": "glm-tts.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_1"
+        }
+      ],
+      "inline_url": "https://glm-tts.com/",
+      "url_position": 1329,
+      "claim_text": "Celebrity voices: Not actual licensed celebrity voices for commercial use — but very human-sounding voices that are often used instead. Integration: REST API with SDKs, easy to embed on servers for IoT to call and stream audio. Use case: Smart speakers, voice assistants, notification systems where quality matters. Pros: Realistic, scalable, API. Cons: Free tier limited; celebrity imitation usually not legally cleared. 🕹 2) Open Source / Self-Hosted (Best for Offline / IoT) GLM-TTS (Open Source Voice Cloning) Feature: Zero-shot voice cloning (train on a short sample). GLM-TTS",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1916,
+        "end_idx": 1935
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://aivoicelab.net/en/celebrity-ai-voice-generator",
+          "title": "Free Celebrity AI Voice Generator",
+          "snippet": "Transform text to speech in seconds with our Celebrity AI Voice Generator free tool. Generate hours of professional narration in minutes without compromising quality, making it perfect for rapid content creation and iteration.",
+          "domain": "aivoicelab.net",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://aivoicelab.net/en/celebrity-ai-voice-generator",
+      "url_position": 1910,
+      "claim_text": "Benefit: You can customize voices yourself without ongoing service costs. Integration: Deploy on local hardware or cloud for IoT services. Use case: Private voice assistants, local alerts, embedded devices. Pros: Self-hosted, free. Cons: Needs compute (especially for high quality), not celebrity licensed. 🧰 3) Free Online Celebrity-Style Generators (Good for Prototyping) These are not suitable for commercial/embedded products — mostly web tools. AIVoiceLab / AI Celebrity Voice Generator – simple web TTS with celebrity-style voices. Aivoicelab",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 2015,
+        "end_idx": 2021
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voidmagic.ai/ai-celebrity-voice-generator",
+      "url_position": 2051,
+      "claim_text": "VoidMagic / Media.io online tools – choose sound-alike voices quickly. VoidMagic+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 2427,
+        "end_idx": 2447
+      },
+      "citation_token": "citeturn1search13",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+          "title": "12 Best Open Source Text to Speech Tools in 2025 | Blog",
+          "snippet": "Explore the top 12 open source text to speech tools for 2025. Our detailed guide covers libraries and frameworks for developers and hobbyists.",
+          "domain": "www.lemonfox.ai",
+          "ref_type": "search",
+          "ref_index": 13,
+          "turn_index": 1,
+          "pub_date": 1762646400,
+          "ref_key": "1_search_13"
+        }
+      ],
+      "inline_url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+      "url_position": 2456,
+      "claim_text": "Limitations: Typically no API for IoT. Legal risk if you claim it’s a real celebrity voice. Use case: Rapid prototyping or demos. 🛠 4) Pure Open-Source TTS Engines (No celebrity but flexible) If celebrity voices aren’t a hard requirement but free / embedded friendly TTS is, consider: Coqui TTS / Mozilla TTS – high-quality neural TTS. Lemonfox",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 2528,
+        "end_idx": 2545
+      },
+      "citation_token": "citeturn1search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+      "url_position": 2596,
+      "claim_text": "Piper / Mimic / MaryTTS / Flite – lightweight engines for edge devices. Lemonfox",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 2599,
+        "end_idx": 2619
+      },
+      "citation_token": "citeturn1search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chatterboxtts.org/",
+      "url_position": 2712,
+      "claim_text": "Chatterbox TTS – simple MIT-licensed TTS. Chatterbox TTS",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://elevenlabs.io/text-to-speech",
+        "title": "Free Text To Speech Online with Lifelike AI Voices - ElevenLabs",
+        "domain": "ElevenLabs"
+      },
+      {
+        "url": "https://www.theinteractivestory.com/interactive-video/eleven-labs-free-ai-voices",
+        "title": "FREE Text to Speech AI Voices (Eleven Labs) - The Interactive Story",
+        "domain": "The Interactive Story"
+      },
+      {
+        "url": "https://glm-tts.com/",
+        "title": "GLM-TTS | Free AI Voice Cloning & Text-to-Speech | Zero-Shot Voice ...",
+        "domain": "GLM-TTS"
+      },
+      {
+        "url": "https://aivoicelab.net/en/celebrity-ai-voice-generator",
+        "title": "Free Celebrity AI Voice Generator",
+        "domain": "Aivoicelab"
+      },
+      {
+        "url": "https://voidmagic.ai/ai-celebrity-voice-generator",
+        "title": "Free Online AI Celebrity Voice Generator - Create Famous Voices Instantly",
+        "domain": "VoidMagic"
+      },
+      {
+        "url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+        "title": "12 Best Open Source Text to Speech Tools in 2025 | Blog",
+        "domain": "Lemonfox"
+      },
+      {
+        "url": "https://chatterboxtts.org/",
+        "title": "Chatterbox TTS - Free Advanced Open-Source Text-to-Speech",
+        "domain": "Chatterbox TTS"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://nerdynav.com/open-source-ai-voice/",
+        "title": "Best FREE ElevenLabs Alternatives & Opensource Text to Speech Models ...",
+        "domain": "nerdynav.com"
+      },
+      {
+        "url": "https://bentoml.com/blog/exploring-the-world-of-open-source-text-to-speech-models",
+        "title": "The Best Open-Source Text-to-Speech Models in 2026",
+        "domain": "bentoml.com"
+      },
+      {
+        "url": "https://github.com/topics/voice-cloning",
+        "title": "voice-cloning · GitHub Topics · GitHub",
+        "domain": "github.com"
+      },
+      {
+        "url": "https://www.resemble.ai/best-open-source-text-to-speech-models/",
+        "title": "Best Open Source Text-to-Speech Models in 2025: A Developer and ...",
+        "domain": "resemble.ai"
+      },
+      {
+        "url": "https://www.speechmatics.com/company/articles-and-news/best-tts-apis-in-2025-top-12-text-to-speech-services-for-developers",
+        "title": "Best TTS APIs in 2026: Top 12 Text-to-Speech services for developers",
+        "domain": "speechmatics.com"
+      },
+      {
+        "url": "https://apidog.com/blog/free-text-to-speech-apis/",
+        "title": "Free Text to Speech APIs: 10 Best TTS APIs for Developers",
+        "domain": "apidog.com"
+      },
+      {
+        "url": "https://elevenlabsai.us/",
+        "title": "ElevenLabs – ElevenLabs: Free Text to Speech & AI Voice Generator",
+        "domain": "elevenlabsai.us"
+      },
+      {
+        "url": "https://www.geeksforgeeks.org/websites-apps/text-to-speech-with-elevenlabs-a-simple-guide-for-everyone/",
+        "title": "Text-to-Speech with ElevenLabs - GeeksforGeeks",
+        "domain": "geeksforgeeks.org"
+      },
+      {
+        "url": "https://www.aithinkmedia.com/post/elevenlabs-text-to-speech-ai-tool",
+        "title": "ElevenLabs Text to Speech AI Voice Generator Tool: The Ultimate Guide ...",
+        "domain": "aithinkmedia.com"
+      },
+      {
+        "url": "https://mljourney.com/free-text-to-speech-models-best-open-source-tts-solutions-in-2025/",
+        "title": "Free Text to Speech Models: Best Open Source TTS Solutions in 2025",
+        "domain": "mljourney.com"
+      },
+      {
+        "url": "https://altagic.com/artificial-intelligence/how-to-use-eleven-labs-for-free-a-complete-guide/",
+        "title": "How to Use Eleven Labs for Free: A Complete Guide - Altagic",
+        "domain": "altagic.com"
+      },
+      {
+        "url": "https://modal.com/blog/open-source-tts",
+        "title": "The Top Open-Source Text to Speech (TTS) Models",
+        "domain": "modal.com"
+      },
+      {
+        "url": "https://www.datacamp.com/blog/best-open-source-text-to-speech-tts-engines",
+        "title": "9 Best Open Source Text-to-Speech (TTS) Engines - DataCamp",
+        "domain": "datacamp.com"
+      },
+      {
+        "url": "https://code-b.dev/blog/open-source-text-to-speech-tts-engines",
+        "title": "9 Best Open Source TTS Engines for Voice Synthesis",
+        "domain": "code-b.dev"
+      },
+      {
+        "url": "https://11labs.us/",
+        "title": "11labs – ElevenLabs: Free Text to Speech & AI Voice Generator",
+        "domain": "11labs.us"
+      },
+      {
+        "url": "https://aicelebrityvoice.org/",
+        "title": "AI Celebrity Voice Generator",
+        "domain": "aicelebrityvoice.org"
+      },
+      {
+        "url": "https://en-elevenlabs.com/",
+        "title": "ElevenLabs - Official Website | Sign Up For FREE Today!",
+        "domain": "en-elevenlabs.com"
+      },
+      {
+        "url": "https://zonostts.live/",
+        "title": "Zonos TTS: Open Source Voice Cloning & Expressive Speech",
+        "domain": "zonostts.live"
+      },
+      {
+        "url": "https://www.tryparrotai.com/ai-voice-generator",
+        "title": "Ai Celebrity Voice Generator - Parrot AI",
+        "domain": "tryparrotai.com"
+      },
+      {
+        "url": "https://github.com/arzen07/awesome-free-tts",
+        "title": "GitHub - arzen07/awesome-free-tts: Awesome list of open source text-to ...",
+        "domain": "github.com"
+      },
+      {
+        "url": "https://github.com/Numiq/elevenlabs-python-free-voice",
+        "title": "GitHub - Numiq/elevenlabs-python-free-voice: The official Python API ...",
+        "domain": "github.com"
+      },
+      {
+        "url": "https://www.edenai.co/post/top-free-text-to-speech-tools-apis-and-open-source-models",
+        "title": "Top Free Text-to-Speech tools, APIs, and Open Source models",
+        "domain": "edenai.co"
+      },
+      {
+        "url": "https://www.media.io/celebrity-voice-generator.html",
+        "title": "Free AI Celebrity Voice Generator Online -Media.io",
+        "domain": "media.io"
+      },
+      {
+        "url": "https://anyvoicelab.com/voices/celebrity-news-voice/",
+        "title": "Celebrity News Voice AI Text To Speech Converter (Free & No Login)",
+        "domain": "anyvoicelab.com"
+      },
+      {
+        "url": "https://www.siliconflow.com/articles/en/best-open-source-models-for-voice-cloning",
+        "title": "Ultimate Guide - The Best Open Source Models for Voice Cloning in 2026",
+        "domain": "siliconflow.com"
+      },
+      {
+        "url": "https://www.capcut.com/tools/ai-celebrity-voice-generator",
+        "title": "Free AI Celebrity Voice Generator - CapCut",
+        "domain": "capcut.com"
+      },
+      {
+        "url": "https://elevenlabs.io/",
+        "title": "Free AI Voice Generator & Voice Agents Platform | ElevenLabs",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://elevenlabs.io/voice-library/entertainment-and-tv",
+        "title": "Entertainment & Tv AI Voices | ElevenLabs Voice Library",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://wavel.ai/solutions/text-to-speech/text-to-speech-celebrity-voices",
+        "title": "Celebrity Voice Text to Speech: Free AI Voice Generator Online",
+        "domain": "wavel.ai"
+      },
+      {
+        "url": "https://www.seaart.ai/features/ai-celebrity-voice-generator",
+        "title": "AI Celebrity Voice Generator: Speak Like Your Favorite Celebrity",
+        "domain": "seaart.ai"
+      },
+      {
+        "url": "https://async.com/ai-voices/celebrity-text-to-speech",
+        "title": "Celebrity AI Voice Generator | Free AI Voices - async.com",
+        "domain": "async.com"
+      },
+      {
+        "url": "https://apipie.ai/docs/Features/Voices",
+        "title": "AI Voice: ElevenLabs & OpenAI TTS API Guide | APIpie",
+        "domain": "apipie.ai"
+      },
+      {
+        "url": "https://text-to-speech.toolxox.com/",
+        "title": "Free Text to Speech Online | Celebrity Voice Generator | AI Voice Generator",
+        "domain": "toolxox.com"
+      },
+      {
+        "url": "https://arting.ai/ai-celebrity-voice-generator",
+        "title": "Free AI Celebrity Voice Generator Online ( No Sign Up )",
+        "domain": "arting.ai"
+      },
+      {
+        "url": "https://www.tavus.io/post/best-text-to-speech-ai-apis",
+        "title": "15 Best Text to Speech AI APIs and Platforms [2025]",
+        "domain": "tavus.io"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 35,
+    "total_all": 42
+  },
+  "response_stats": {
+    "total_length": 3736,
+    "citation_count": 8,
+    "chars_with_citations": 140
+  }
+}

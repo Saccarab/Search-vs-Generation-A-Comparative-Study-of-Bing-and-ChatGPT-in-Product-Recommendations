@@ -1,0 +1,495 @@
+{
+  "run_id": "P053_r3",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend the best free AI text-to-speech software with celebrity voices for IoT applications?",
+  "metadata": {
+    "hidden_queries": [
+      "free AI text to speech software with celebrity voices for IoT applications",
+      "best free TTS engines celebrity voices free API IoT",
+      "FakeYou celebrity voice TTS API free or free tier FakeYou TTS",
+      "15.dev TTS celebrity voices free for use or API integration"
+    ],
+    "sonic_classification": {
+      "latency_ms": 21.10017603263259,
+      "simple_search_prob": 0.7357614498580519,
+      "complex_search_prob": 0.2591425705787096,
+      "no_search_prob": 0.005095979563238484,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free AI text to speech software with celebrity voices for IoT applications"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 484,
+        "end_idx": 516
+      },
+      "citation_token": "citeturn1search0turn1search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://fakeyou.com/tts/",
+          "title": "FakeYou. Deep Fake Text to Speech. | FakeYou",
+          "snippet": "How to Use FakeYou TTS Step 1: Find Your Perfect Voice Browse our collection of 3,500+ community-created voices. Check out our featured voices for popular options, or use the search bar to find specific characters. You can filter by language, and community ratings to find exactly what you need.",
+          "domain": "fakeyou.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_0"
+        },
+        {
+          "url": "https://fakeyou.com/",
+          "title": "FakeYou Celebrity Voice Generator | FakeYou",
+          "snippet": "AI Music, Text to Speech, and Voice to Voice Use FakeYou's AI voice technology to generate audio or videos of your favorite characters saying anything you want.",
+          "domain": "fakeyou.com",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_6"
+        }
+      ],
+      "inline_url": "https://fakeyou.com/tts/",
+      "url_position": 475,
+      "claim_text": "Here are free or free-tier AI text-to-speech options with celebrity or character voice capability you could evaluate for IoT use. Note: many “celebrity voices” online are imitations/sound-alikes, not officially licensed actual celebrity recordings. Best Free / Developer-Friendly Options 1) FakeYou TTS (free, huge voice library) Web platform with 3,500+ community-created voices, including celebrity/fictional styles that you can use to generate TTS audio. fakeyou.com+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 582,
+        "end_idx": 601
+      },
+      "citation_token": "citeturn1search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://docs.fakeyou.com/",
+      "url_position": 577,
+      "claim_text": "Offers a public API you can integrate into apps/devices. docs.fakeyou.com",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1051,
+        "end_idx": 1070
+      },
+      "citation_token": "citeturn1search7",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://async.com/ai-voices/celebrity-text-to-speech",
+          "title": "Celebrity AI Voice Generator | Free AI Voices",
+          "snippet": "Celebrity Text-to-Speech (TTS) refers to AI voice technology that can generate speech that sounds remarkably similar to recognizable celebrities, public figures, or well-known personalities.",
+          "domain": "async.com",
+          "ref_type": "search",
+          "ref_index": 7,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_7"
+        }
+      ],
+      "inline_url": "https://async.com/ai-voices/celebrity-text-to-speech",
+      "url_position": 1034,
+      "claim_text": "Pros: free, massive variety, community-rich voices. Cons: voices are imitations/character-style, not officially licensed; quality varies and may not be suitable for commercial IoT without checking terms. Use case: PoC, fun demos, voice-feedback devices, prototypes where licensing isn’t required. 2) Async Celebrity TTS (free tier) Provides celebrity-style TTS with a free tier (~10,000 characters/mo) for developers. Async",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1419,
+        "end_idx": 1439
+      },
+      "citation_token": "citeturn1search13",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.capcut.com/tools/ai-celebrity-voice-generator",
+          "title": "Free AI Celebrity Voice Generator - CapCut",
+          "snippet": "Explore CapCut's free AI celebrity voice generator. Create realistic celebrity voiceovers with our sound-alike text to speech (TTS) for YouTube and more.",
+          "domain": "www.capcut.com",
+          "ref_type": "search",
+          "ref_index": 13,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_13"
+        }
+      ],
+      "inline_url": "https://www.capcut.com/tools/ai-celebrity-voice-generator",
+      "url_position": 1420,
+      "claim_text": "Pros: more structured free quota, API-ready, better for product testing. Cons: free tier cap; deeper integration may need paid plan. Use case: IoT voice alerts, smart assistant prototypes. 3) CapCut AI TTS (sound-alike voices) Free tool offering celebrity-inspired sound-alike voices you can generate and export audio. CapCut",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1771,
+        "end_idx": 1805
+      },
+      "citation_token": "citeturn1search11turn1search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voidmagic.ai/ai-celebrity-voice-generator",
+          "title": "Free Online AI Celebrity Voice Generator - Create Famous Voices Instantly",
+          "snippet": "Make a celebrity Voice with Text-to-Speech in 3 Simple Steps Make the celebrity voice is incredibly easy. Follow these simple steps to bring your text to life with famous celebrity voices.",
+          "domain": "voidmagic.ai",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_11"
+        }
+      ],
+      "inline_url": "https://voidmagic.ai/ai-celebrity-voice-generator",
+      "url_position": 1803,
+      "claim_text": "Not an API; better for generating assets offline and bundling into devices. Use case: Pre-generated voice packs for IoT notifications. Other Tools Worth Mentioning (Not Strictly IoT API) 4) VoidMagic / Media.io / SeaArt AI Online free AI celebrity voice generators (text→audio) with broad voice libraries. VoidMagic+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1971,
+        "end_idx": 1991
+      },
+      "citation_token": "citeturn1search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/15.ai",
+      "url_position": 2020,
+      "claim_text": "Good for content creation, not ideal for production IoT API integration. 5) 15.ai Free tool for fictional/character voices, not mainstream celebrities. Wikipedia",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 2753,
+        "end_idx": 2772
+      },
+      "citation_token": "citeturn1search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apidog.com/blog/free-text-to-speech-apis/",
+      "url_position": 2777,
+      "claim_text": "No official API; more niche use. Caveats & Practical Notes Licensing/legal: Many free celebrity TTS generators use imitations—not legally cleared celebrity voices. For commercial IoT, verify rights and terms. Integration: For real IoT deployment, APIs with stable quotas and SLAs matter more than free web tools. Quality control: Free services vary in voice naturalness and consistency; you’ll want to test output quality on your device pipeline. If you want more robust non-celebrity TTS for IoT If realistic, non-celebrity voices are also acceptable, mainstream free-tier developer APIs are better fits technically (though not celebrity voices): Google Cloud Text-to-Speech – neural voices, free tier. apidog",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 2889,
+        "end_idx": 2899
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.openai-fm.com/",
+      "url_position": 2952,
+      "claim_text": "OpenAI text-to-speech/API – built for apps with strong voice quality (free credits available; check terms). openai-fm.com",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 2991,
+        "end_idx": 3011
+      },
+      "citation_token": "citeturn1search19",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voice.ai/hub/tts/text-to-speech-api/",
+          "title": "21 Best Text To Speech API Tools for Realistic Voice Generation",
+          "snippet": "The ultimate guide to Text To Speech APIs. Featuring 21 tools for converting text into incredibly realistic, natural voices.",
+          "domain": "voice.ai",
+          "ref_type": "search",
+          "ref_index": 19,
+          "turn_index": 1,
+          "pub_date": 1751500800,
+          "ref_key": "1_search_19"
+        }
+      ],
+      "inline_url": "https://voice.ai/hub/tts/text-to-speech-api/",
+      "url_position": 3064,
+      "claim_text": "ElevenLabs API – excellent natural voice quality (free trial available). Voice.ai",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://fakeyou.com/tts/",
+        "title": "FakeYou. Deep Fake Text to Speech. | FakeYou",
+        "domain": "fakeyou.com"
+      },
+      {
+        "url": "https://docs.fakeyou.com/",
+        "title": "FakeYou API Docs",
+        "domain": "docs.fakeyou.com"
+      },
+      {
+        "url": "https://async.com/ai-voices/celebrity-text-to-speech",
+        "title": "Celebrity AI Voice Generator | Free AI Voices",
+        "domain": "Async"
+      },
+      {
+        "url": "https://www.capcut.com/tools/ai-celebrity-voice-generator",
+        "title": "Free AI Celebrity Voice Generator - CapCut",
+        "domain": "CapCut"
+      },
+      {
+        "url": "https://voidmagic.ai/ai-celebrity-voice-generator",
+        "title": "Free Online AI Celebrity Voice Generator - Create Famous Voices Instantly",
+        "domain": "VoidMagic"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/15.ai",
+        "title": "15.ai",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://apidog.com/blog/free-text-to-speech-apis/",
+        "title": "Free Text to Speech APIs: 10 Best TTS APIs for Developers",
+        "domain": "apidog"
+      },
+      {
+        "url": "https://www.openai-fm.com/",
+        "title": "OpenAI FM | Free AI-Powered Text-to-Speech Tool",
+        "domain": "openai-fm.com"
+      },
+      {
+        "url": "https://voice.ai/hub/tts/text-to-speech-api/",
+        "title": "21 Best Text To Speech API Tools for Realistic Voice Generation",
+        "domain": "Voice.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://smallest.ai/blog/5-best-ai-text-to-speech-tools-for-celebrity-voices",
+        "title": "5 Best AI Text-to-Speech Tools for Celebrity Voices",
+        "domain": "smallest.ai"
+      },
+      {
+        "url": "https://www.resemble.ai/free-15ai-character-voice-cloning-alternatives/",
+        "title": "Free 15.ai Character Voice Cloning and Alternatives",
+        "domain": "resemble.ai"
+      },
+      {
+        "url": "https://www.lemonfox.ai/blog/fakeyou-text-to-speech",
+        "title": "FakeYou Text to Speech A Deep Dive Guide | Blog",
+        "domain": "lemonfox.ai"
+      },
+      {
+        "url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+        "title": "12 Best Open Source Text to Speech Tools in 2025 | Blog",
+        "domain": "lemonfox.ai"
+      },
+      {
+        "url": "https://www.speechmatics.com/company/articles-and-news/best-tts-apis-in-2025-top-12-text-to-speech-services-for-developers",
+        "title": "Best TTS APIs in 2026: Top 12 Text-to-Speech services for developers",
+        "domain": "speechmatics.com"
+      },
+      {
+        "url": "https://navtools.ai/tool/fakeyou",
+        "title": "FakeYou: AI Text-to-Speech with Celebrity Voices",
+        "domain": "navtools.ai"
+      },
+      {
+        "url": "https://www.kukarella.com/resources/text-to-speech/the-8-best-free-text-to-speech-and-ai-voice-generators-in-2025-tested-and-compared",
+        "title": "The 8 Best Free Text to Speech & AI Voice Generators in 2025 (Tested ...",
+        "domain": "kukarella.com"
+      },
+      {
+        "url": "https://mljourney.com/free-text-to-speech-models-best-open-source-tts-solutions-in-2025/",
+        "title": "Free Text to Speech Models: Best Open Source TTS Solutions in 2025",
+        "domain": "mljourney.com"
+      },
+      {
+        "url": "https://modal.com/blog/open-source-tts",
+        "title": "The Top Open-Source Text to Speech (TTS) Models",
+        "domain": "modal.com"
+      },
+      {
+        "url": "https://octogo.ai/en/tools/fakeyou-celebrity-ai-voice-and-video-generator",
+        "title": "FakeYou Celebrity AI Voice and Video Generator",
+        "domain": "octogo.ai"
+      },
+      {
+        "url": "https://speechify.com/blog/celebrity-voices-with-text-to-speech/",
+        "title": "The best celebrity text to speech voice generators | Speechify",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://www.datacamp.com/blog/best-open-source-text-to-speech-tts-engines",
+        "title": "9 Best Open Source Text-to-Speech (TTS) Engines - DataCamp",
+        "domain": "datacamp.com"
+      },
+      {
+        "url": "https://15.dev/",
+        "title": "15.ai - 15.dev",
+        "domain": "15.dev"
+      },
+      {
+        "url": "https://www.tryparrotai.com/ai-voice-generator",
+        "title": "Ai Celebrity Voice Generator - Parrot AI",
+        "domain": "tryparrotai.com"
+      },
+      {
+        "url": "https://code-b.dev/blog/open-source-text-to-speech-tts-engines",
+        "title": "9 Best Open Source TTS Engines for Voice Synthesis",
+        "domain": "code-b.dev"
+      },
+      {
+        "url": "https://aivoicelab.net/en/celebrity-ai-voice-generator",
+        "title": "Free Celebrity AI Voice Generator",
+        "domain": "aivoicelab.net"
+      },
+      {
+        "url": "https://rapidapi.com/collection/best-text-to-speech-apis",
+        "title": "Best Text to Speech APIs",
+        "domain": "rapidapi.com"
+      },
+      {
+        "url": "https://rapidapi.com/thefishstick/api/ai-voice-text-to-speech-with-celebrities",
+        "title": "AI Voice (Text to Speech) with Celebrities - Rapid",
+        "domain": "rapidapi.com"
+      },
+      {
+        "url": "https://www.media.io/celebrity-voice-generator.html",
+        "title": "Free AI Celebrity Voice Generator Online -Media.io",
+        "domain": "media.io"
+      },
+      {
+        "url": "https://fakeyou.com/",
+        "title": "FakeYou Celebrity Voice Generator | FakeYou",
+        "domain": "fakeyou.com"
+      },
+      {
+        "url": "https://fakeyou.com/f5-tts",
+        "title": "F5-TTS Zero-Shot Voice Cloning | FakeYou",
+        "domain": "fakeyou.com"
+      },
+      {
+        "url": "https://fakeyou.com/tts%0D%0A",
+        "title": "FakeYou Celebrity AI Voice and Video Generator",
+        "domain": "fakeyou.com"
+      },
+      {
+        "url": "https://fakeyou.com/profile/text-to-speech",
+        "title": "text-to-speech | FakeYou",
+        "domain": "fakeyou.com"
+      },
+      {
+        "url": "https://fakeyou.com/pricing",
+        "title": "Premium Deep Fake TTS | FakeYou",
+        "domain": "fakeyou.com"
+      },
+      {
+        "url": "https://www.seaart.ai/features/ai-celebrity-voice-generator",
+        "title": "AI Celebrity Voice Generator: Speak Like Your Favorite Celebrity",
+        "domain": "seaart.ai"
+      },
+      {
+        "url": "https://musely.ai/tools/text-to-voice",
+        "title": "Free AI Text to Speech Converter | Natural Voices | Musely.ai",
+        "domain": "musely.ai"
+      },
+      {
+        "url": "https://audio.galaxy.ai/ai-text-to-speech",
+        "title": "Free AI Text to Speech (Convert Text to Voice) | Galaxy.ai",
+        "domain": "galaxy.ai"
+      },
+      {
+        "url": "https://storyteller.ai/tts",
+        "title": "FakeYou. Deep Fake Text to Speech. | Storyteller.ai",
+        "domain": "storyteller.ai"
+      },
+      {
+        "url": "https://getvoices.ai/voices",
+        "title": "AI Voice Library - Discover Our Voice AI Library | Voices AI",
+        "domain": "getvoices.ai"
+      },
+      {
+        "url": "https://www.camb.ai/blog-post/best-free-text-to-speech-ai-apis",
+        "title": "Best Free Text‑to‑Speech AI APIs in 2026 | CAMB.AI",
+        "domain": "camb.ai"
+      },
+      {
+        "url": "https://celebvoicify.com/",
+        "title": "AI Voice Generator | Create Realistic Celebrity Voices",
+        "domain": "celebvoicify.com"
+      },
+      {
+        "url": "https://getpeech.com/blog/the-best-free-text-to-speech-apis-in-2024",
+        "title": "The Best Free Text-to-Speech APIs in 2025 - Peech",
+        "domain": "getpeech.com"
+      },
+      {
+        "url": "https://airmore.ai/text-to-speech",
+        "title": "Free Online Text to Speech with Realistic AI Voices",
+        "domain": "airmore.ai"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 33,
+    "total_all": 42
+  },
+  "response_stats": {
+    "total_length": 3511,
+    "citation_count": 9,
+    "chars_with_citations": 193
+  }
+}

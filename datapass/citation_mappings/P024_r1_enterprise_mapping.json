@@ -1,0 +1,484 @@
+{
+  "run_id": "P024_r1",
+  "account_type": "enterprise",
+  "prompt": "Give me the best speech to text solutions.",
+  "metadata": {
+    "hidden_queries": [
+      "best speech to text solutions 2026",
+      "top automatic speech recognition (ASR) tools for speech to text features"
+    ],
+    "sonic_classification": {
+      "latency_ms": 3.725009970366955,
+      "simple_search_prob": 0.9389751906315924,
+      "complex_search_prob": 0.004938420045705915,
+      "no_search_prob": 0.05608638932270168,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best speech to text solutions 2026"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 270,
+        "end_idx": 316
+      },
+      "citation_token": "citeturn0search1turn0search5turn0search13",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 281,
+      "claim_text": "Here are the top speech-to-text (STT) / automatic speech recognition (ASR) solutions worth considering in 2026 — ranked across use cases like enterprise APIs, desktop/mobile apps, and developer tools. Most are cloud APIs, some are apps; all are widely reviewed. Gartner+2Murf AI+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 514,
+        "end_idx": 547
+      },
+      "citation_token": "citeturn0search1turn0search13",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 528,
+      "claim_text": "🧠 Cloud & Enterprise APIs (best accuracy, scalability) Google Cloud Speech-to-Text Strong accuracy, real-time + batch transcription, REST API. Wide language support. Gartner+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 712,
+        "end_idx": 731
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 747,
+      "claim_text": "Microsoft Azure Speech-to-Text Enterprise-grade, integrates with Azure ecosystem, real-time transcript. Good for CRM/voice command use cases. Gartner",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 899,
+        "end_idx": 932
+      },
+      "citation_token": "citeturn0search1turn0search13",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 971,
+      "claim_text": "Amazon Transcribe (AWS) Cloud API with real-time and batch, speaker labeling, custom vocab. Good for contact centers and large volume workflows. Gartner+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1063,
+        "end_idx": 1097
+      },
+      "citation_token": "citeturn0search11turn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.peerspot.com/categories/speech-to-text-services",
+      "url_position": 1159,
+      "claim_text": "Deepgram Neural deep learning engine, fast and accurate, noise robust. Custom models and domain adaptation. PeerSpot+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1218,
+        "end_idx": 1238
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.peerspot.com/categories/speech-to-text-services",
+      "url_position": 1331,
+      "claim_text": "AssemblyAI API with summary, topic detection, and diarization added. Simple developer experience. PeerSpot",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1319,
+        "end_idx": 1338
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 1468,
+      "claim_text": "Speechmatics Multilingual ASR-focused API, flexible integration. Gartner",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1556,
+        "end_idx": 1575
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/blog/top-speech-to-text-softwares",
+      "url_position": 1733,
+      "claim_text": "💻 Desktop & Mobile Speech-to-Text Tools These are end-user apps or services you can use without building an API: Otter.ai Meeting transcription with collaboration. Works on mobile/web. Murf AI",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1710,
+        "end_idx": 1721
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://zapier.com/blog/best-text-dictation-software/",
+      "url_position": 1907,
+      "claim_text": "Dragon (Nuance) Very accurate dictation / professional use (PC/phone). Good for writers, attorneys, clinicians. Zapier",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1859,
+        "end_idx": 1878
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://zapier.com/blog/best-text-dictation-software/",
+      "url_position": 2080,
+      "claim_text": "Apple Dictation & Gboard Free built-in speech-to-text on iOS/Android. Best for casual use and quick notes. Zapier",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1981,
+        "end_idx": 2000
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://zapier.com/blog/best-text-dictation-software/",
+      "url_position": 2232,
+      "claim_text": "Just Press Record / Speechnotes Simple record-and-transcribe apps with export options. Zapier",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 2109,
+        "end_idx": 2127
+      },
+      "citation_token": "citeturn0news36",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wired.com/story/handy-free-speech-to-text-app",
+          "title": "Stop Using Your Keyboard and Start Using This Simple, Free Speech-to-Text App",
+          "snippet": "The article introduces Handy, a free and user-friendly speech-to-text application designed to make advanced voice transcription accessible to everyone. Developed by CJ Pais after an injury that prevented him from typing, Handy simplifies the use of powerful open-source AI speech-to-text models like Nvidia’s Parakeet and OpenAI’s Whisper by offering a one-click setup and easy keyboard shortcut activation. Available for Windows, macOS, and Linux, Handy lets users speak naturally while their words are transcribed directly into any text field. The app supports multiple languages, is resilient to background noise like music, and includes optional customizations for shortcuts, microphones, audio feedback, and startup behavior. Though it includes advanced options for tech-savvy users, Handy is designed for simplicity, ensuring minimal setup or maintenance. It stands out as a distraction-free, no-cost solution in a market often filled with subscription-based AI tools. Ideal for those seeking an alternative to typing—whether due to accessibility needs or preference—Handy delivers on the long-promised futuristic convenience of voice-controlled computing.",
+          "domain": "www.wired.com",
+          "ref_type": "news",
+          "ref_index": 36,
+          "turn_index": 0,
+          "pub_date": 1767441600,
+          "ref_key": "0_news_36"
+        }
+      ],
+      "inline_url": "https://www.wired.com/story/handy-free-speech-to-text-app",
+      "url_position": 2389,
+      "claim_text": "Handy (free AI-powered app) Wraps open-source models like Whisper into a simple desktop app. WIRED",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 2279,
+        "end_idx": 2298
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.gladia.io/blog/a-review-of-the-best-asr-engines-and-the-models-powering-them-in-2024",
+      "url_position": 2594,
+      "claim_text": "🛠 Developer / Embedded Options OpenAI Whisper (open-source model) – high accuracy, offline capable (via 3rd-party tools/app wrappers). Gladia",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 2373,
+        "end_idx": 2393
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.apphitect.ae/blog/best-speech-to-text-apis/",
+      "url_position": 2772,
+      "claim_text": "MirrorFly API – customizable speech recognition pipelines for apps. Apphitect",
+      "url_index": 13
+    },
+    {
+      "token_position": {
+        "start_idx": 2735,
+        "end_idx": 2767
+      },
+      "citation_token": "citeturn0search1turn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 3154,
+      "claim_text": "💡 Quick Picks (based on use case) Best for developers / apps: Google Cloud, Azure, AWS Transcribe, Deepgram, AssemblyAI. Best for meetings & notes: Otter.ai, Otter mobile, Dragon. Best free/basic: Apple Dictation, Gboard, Handy. Best customizable / embedded: Whisper via local deployment or API partner. Gartner+1",
+      "url_index": 14
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+        "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+        "domain": "Gartner"
+      },
+      {
+        "url": "https://www.peerspot.com/categories/speech-to-text-services",
+        "title": "Best Speech-To-Text Services solutions 2026 - PeerSpot",
+        "domain": "PeerSpot"
+      },
+      {
+        "url": "https://murf.ai/blog/top-speech-to-text-softwares",
+        "title": "Choosing the Best: Top 10 Speech to Text Applications of 2026 - Murf",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://zapier.com/blog/best-text-dictation-software/",
+        "title": "The 9 best dictation and speech-to-text software in 2026 - Zapier",
+        "domain": "Zapier"
+      },
+      {
+        "url": "https://www.wired.com/story/handy-free-speech-to-text-app",
+        "title": "Stop Using Your Keyboard and Start Using This Simple, Free Speech-to-Text App",
+        "domain": "WIRED"
+      },
+      {
+        "url": "https://www.gladia.io/blog/a-review-of-the-best-asr-engines-and-the-models-powering-them-in-2024",
+        "title": "A review of the best ASR engines and the models powering them ... - Gladia",
+        "domain": "Gladia"
+      },
+      {
+        "url": "https://www.apphitect.ae/blog/best-speech-to-text-apis/",
+        "title": "Top 05 Best Speech to Text APIs [2026 Reviews] - apphitect.ae",
+        "domain": "Apphitect"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.toptal.com/developers/whisper/automatic-speech-recognition-guide",
+        "title": "Automatic Speech Recognition (ASR): A Comprehensive Guide | Toptal®",
+        "domain": "toptal.com"
+      },
+      {
+        "url": "https://telnyx.com/resources/best-speech-to-text-engine",
+        "title": "Explore the 8 best speech-to-text (STT) engines of 2025 - Telnyx",
+        "domain": "telnyx.com"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-speech-to-text-software/",
+        "title": "13 Best Speech-to-Text Software for Accurate Transcription in 2026",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://www.boundev.com/blog/automatic-speech-recognition-asr-guide",
+        "title": "Automatic Speech Recognition Guide: ASR & Whisper 2025",
+        "domain": "boundev.com"
+      },
+      {
+        "url": "https://www.netcomlearning.com/blog/automatic-speech-recognition",
+        "title": "What is Automatic Speech Recognition (ASR): How It Works & Future",
+        "domain": "netcomlearning.com"
+      },
+      {
+        "url": "https://riverside.com/blog/best-speech-to-text-software",
+        "title": "8 Best Speech-to-Text Software & Apps for 2026 (All Devices)",
+        "domain": "riverside.com"
+      },
+      {
+        "url": "https://www.shunyalabs.ai/blog/automatic-speech-recognition-explained-everything-you-need-to-know-about-asr",
+        "title": "Automatic Speech Recognition (ASR) & Speech to Text Explained ...",
+        "domain": "shunyalabs.ai"
+      },
+      {
+        "url": "https://www.digitalocean.com/resources/articles/ai-transcription-tools",
+        "title": "10 AI Transcription Tools to Convert Speech to Text in 2025",
+        "domain": "digitalocean.com"
+      },
+      {
+        "url": "https://www.fingoweb.com/blog/top-6-speech-to-text-ai-solutions-in-2026/",
+        "title": "Top 6 speech to text AI solutions in 2026 - Fingoweb",
+        "domain": "fingoweb.com"
+      },
+      {
+        "url": "https://www.labellerr.com/blog/best-automatic-speech-recognition-tools-asr/",
+        "title": "6 Best Automatic Speech Recognition (ASR) Tools - Labellerr",
+        "domain": "labellerr.com"
+      },
+      {
+        "url": "https://www.altexsoft.com/blog/speech-recognition/",
+        "title": "5 Best Speech Recognition Software - AltexSoft",
+        "domain": "altexsoft.com"
+      },
+      {
+        "url": "https://hashdork.com/best-automatic-speech-recognition-software-systems/",
+        "title": "15 Best Automatic Speech Recognition Software & Systems",
+        "domain": "hashdork.com"
+      },
+      {
+        "url": "https://www.f6s.com/software/category/speech-recognition",
+        "title": "Automatic Speech Recognition (ASR) Software - F6S",
+        "domain": "f6s.com"
+      },
+      {
+        "url": "https://www.f22labs.com/blogs/13-text-to-speech-tts-solutions-in-2025/",
+        "title": "13 Text-to-Speech (TTS) Solutions in 2026 - F22 Labs",
+        "domain": "f22labs.com"
+      },
+      {
+        "url": "https://slashdot.org/software/speech-to-text/",
+        "title": "Top Speech to Text Software in 2026 - Slashdot",
+        "domain": "slashdot.org"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 15,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 3733,
+    "citation_count": 15,
+    "chars_with_citations": 361
+  }
+}

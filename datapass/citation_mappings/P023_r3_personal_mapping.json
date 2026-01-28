@@ -1,0 +1,437 @@
+{
+  "run_id": "P023_r3",
+  "account_type": "personal",
+  "prompt": "What tools are available for text to speech?",
+  "metadata": {
+    "hidden_queries": [
+      "tools available for text to speech TTS services",
+      "text to speech tools list software TTS options"
+    ],
+    "sonic_classification": {
+      "latency_ms": 7.847185945138335,
+      "simple_search_prob": 0.9088487600604171,
+      "complex_search_prob": 0.0010429729311666634,
+      "no_search_prob": 0.09010826700841619,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "tools available for text to speech TTS services"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 197,
+        "end_idx": 216
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://cloud.google.com/text-to-speech",
+      "url_position": 195,
+      "claim_text": "Here are common text-to-speech (TTS) tools and options available today: Cloud / API Services (for apps, devs) Google Cloud Text-to-Speech – natural voices, many languages via API. Google Cloud",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 285,
+        "end_idx": 319
+      },
+      "citation_token": "citeturn0search17turn0search39",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://aws.amazon.com/polly/",
+          "title": "AI Voice Generator and Text-to-Speech Tool - Amazon Polly",
+          "snippet": "Amazon Polly is a fully-managed service that generates voice on demand, converting any text to an audio stream. Using deep learning technologies to convert ...Read more",
+          "domain": "aws.amazon.com",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://aws.amazon.com/polly/",
+      "url_position": 326,
+      "claim_text": "Amazon Polly – scalable API with many voices and languages. Amazon Web Services, Inc.+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 409,
+        "end_idx": 415
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.edenai.co/post/top-free-text-to-speech-tools-apis-and-open-source-models",
+      "url_position": 448,
+      "claim_text": "Microsoft Azure Speech – part of Azure Cognitive Services with TTS capabilities. Eden AI",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 519,
+        "end_idx": 539
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.naturalreaders.com/online/",
+      "url_position": 630,
+      "claim_text": "Online & Consumer Tools NaturalReader – online TTS with realistic voices. naturalreaders.com",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 597,
+        "end_idx": 616
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechify.com/?srsltid=AfmBOoqFVy2KjZTR8R0SHhMNyUGH3a3K-x-fCwoOaH60zw0whF4uMaik",
+      "url_position": 731,
+      "claim_text": "Speechify – reads text, PDFs, web content aloud. Speechify",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 668,
+        "end_idx": 688
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ttsreader.com/",
+      "url_position": 879,
+      "claim_text": "TTSReader – simple free online TTS reader. ttsreader.com",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 774,
+        "end_idx": 793
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.aixploria.com/en/category/voice-reading/",
+      "url_position": 988,
+      "claim_text": "Play.ht, ElevenLabs, Murf (AI voice generators with natural output). aixploria.com",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 891,
+        "end_idx": 910
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dres.illinois.edu/accommodations/ams/assitive-technology/text-to-speech-software/",
+      "url_position": 1147,
+      "claim_text": "Built-in System & Accessibility Options Windows Narrator – built-in TTS on Windows. dres.illinois.edu",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 975,
+        "end_idx": 994
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dres.illinois.edu/accommodations/ams/assitive-technology/text-to-speech-software/",
+      "url_position": 1314,
+      "claim_text": "Microsoft Read Aloud / Immersive Reader in Office apps. dres.illinois.edu",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1030,
+        "end_idx": 1049
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dres.illinois.edu/accommodations/ams/assitive-technology/text-to-speech-software/",
+      "url_position": 1452,
+      "claim_text": "Apple Speech on macOS/iOS. dres.illinois.edu",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1100,
+        "end_idx": 1117
+      },
+      "citation_token": "citeturn0search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dres.illinois.edu/accommodations/ams/assitive-technology/text-to-speech-software/",
+      "url_position": 1605,
+      "claim_text": "Mobile TTS apps like @Voice Aloud Reader. dres.illinois.edu",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1234,
+        "end_idx": 1254
+      },
+      "citation_token": "citeturn0search14",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.edenai.co/post/top-free-text-to-speech-tools-apis-and-open-source-models?utm_source=chatgpt.com",
+          "title": "Top Free Text-to-Speech tools, APIs, and Open Source models",
+          "snippet": "Discover best free text-to-speech tools, APIs, and open-source models for seamless voice generation. Enhance your applications today!",
+          "domain": "Eden AI",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.edenai.co/post/top-free-text-to-speech-tools-apis-and-open-source-models",
+      "url_position": 1796,
+      "claim_text": "Open-Source / Local Models eSpeak, MARYTTS, Mimic, CMU Flite – lightweight open engines. Eden AI",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1334,
+        "end_idx": 1367
+      },
+      "citation_token": "citeturn0search6turn0search14",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.bentoml.com/blog/exploring-the-world-of-open-source-text-to-speech-models?utm_source=chatgpt.com",
+          "title": "The Best Open-Source Text-to-Speech Models in 2026 - BentoML",
+          "snippet": "Chatterbox is a family of high-performance, open-source TTS models developed by Resemble AI for low-latency, production-grade voice applications ...",
+          "domain": "bentoml.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.bentoml.com/blog/exploring-the-world-of-open-source-text-to-speech-models",
+      "url_position": 1961,
+      "claim_text": "Mozilla TTS, Chatterbox, MeloTTS – higher-quality open models. bentoml.com+1",
+      "url_index": 12
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://cloud.google.com/text-to-speech",
+        "title": "Text-to-Speech AI: Lifelike Speech Synthesis - Google Cloud",
+        "domain": "Google Cloud"
+      },
+      {
+        "url": "https://aws.amazon.com/polly/",
+        "title": "AI Voice Generator and Text-to-Speech Tool - Amazon Polly",
+        "domain": "Amazon Web Services, Inc."
+      },
+      {
+        "url": "https://www.edenai.co/post/top-free-text-to-speech-tools-apis-and-open-source-models",
+        "title": "Top Free Text-to-Speech tools, APIs, and Open Source models",
+        "domain": "Eden AI"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech Online with Realistic AI Voices",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://speechify.com/?srsltid=AfmBOoqFVy2KjZTR8R0SHhMNyUGH3a3K-x-fCwoOaH60zw0whF4uMaik",
+        "title": "Speechify: Free Text to Speech & Voice Typing AI Assistant | 50M+ ...",
+        "domain": "Speechify"
+      },
+      {
+        "url": "https://ttsreader.com/",
+        "title": "TTSReader | Text To Speech Reader Online. Accurate & Free",
+        "domain": "ttsreader.com"
+      },
+      {
+        "url": "https://www.aixploria.com/en/category/voice-reading/",
+        "title": "Top 30 Best AI Voice Generators & Text-to-Speech (TTS) - AIxploria",
+        "domain": "aixploria.com"
+      },
+      {
+        "url": "https://dres.illinois.edu/accommodations/ams/assitive-technology/text-to-speech-software/",
+        "title": "Text-to-Speech Software",
+        "domain": "dres.illinois.edu"
+      },
+      {
+        "url": "https://www.bentoml.com/blog/exploring-the-world-of-open-source-text-to-speech-models",
+        "title": "The Best Open-Source Text-to-Speech Models in 2026 - BentoML",
+        "domain": "bentoml.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.respeecher.com/blog/best-ai-text-to-speech-tools",
+        "title": "Top Text-to-Speech Conversion Tools | Best AI TTS Platforms for ...",
+        "domain": "respeecher.com"
+      },
+      {
+        "url": "https://www.f22labs.com/blogs/13-text-to-speech-tts-solutions-in-2025/",
+        "title": "13 Text-to-Speech (TTS) Solutions in 2025 - F22 Labs",
+        "domain": "f22labs.com"
+      },
+      {
+        "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+        "title": "Best free text-to-speech software of 2025 - TechRadar",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://www.business.com/articles/best-text-to-speech-software/",
+        "title": "The Best Free Text-to-Speech Software - Business.com",
+        "domain": "business.com"
+      },
+      {
+        "url": "https://zapier.com/blog/best-ai-voice-generator/",
+        "title": "The 9 best AI voice generators in 2025 - Zapier",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://forum.devtalk.com/t/what-are-the-best-text-to-speech-ai-generation-tools-that-you-can-run-locally/191895",
+        "title": "What are the best text-to-speech ai generation tools that you can run ...",
+        "domain": "devtalk.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/3CX/comments/1hzl8sy/whats_the_best_texttospeech_ai_tool_youre_using/",
+        "title": "What's the Best Text-to-Speech AI Tool You're Using Right Now?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.tavus.io/post/best-text-to-speech-ai-apis",
+        "title": "15 Best Text to Speech AI APIs and Platforms [2025] - Tavus",
+        "domain": "tavus.io"
+      },
+      {
+        "url": "https://www.plecoforums.com/threads/alternative-text-to-speech-options.7337/",
+        "title": "Alternative text to speech options - Pleco Software Forums",
+        "domain": "plecoforums.com"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/text-to-speech",
+        "title": "Text to speech overview - Speech service - Foundry Tools",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.techradar.com/best/best-text-to-speech-software",
+        "title": "Best text-to-speech software of 2025",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://wideo.co/text-to-speech/",
+        "title": "Free Text to Speech Software (TTS)",
+        "domain": "wideo.co"
+      },
+      {
+        "url": "https://modal.com/blog/open-source-tts",
+        "title": "The Top Open-Source Text to Speech (TTS) Models",
+        "domain": "modal.com"
+      },
+      {
+        "url": "https://speechify.com/?srsltid=AfmBOopY9nyh5km47xLDtSxjxdyCpnvuG7gh8usLkI3qkDVOJ_13g7_j",
+        "title": "Speechify: Free Text to Speech & Voice Typing AI Assistant | 50M+ ...",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://www.speechmatics.com/company/articles-and-news/best-tts-apis-in-2025-top-12-text-to-speech-services-for-developers",
+        "title": "Best TTS APIs in 2025: Top 12 Text-to-Speech services for ...",
+        "domain": "speechmatics.com"
+      },
+      {
+        "url": "https://qcall.ai/text-to-speech-tool/",
+        "title": "Top 31 Text to Speech Tool Reviews 2026 - Don't Buy Yet..",
+        "domain": "qcall.ai"
+      },
+      {
+        "url": "https://academictech.uchicago.edu/2024/06/13/text-to-speech-is-for-everyone/",
+        "title": "Text-to-Speech Is for Everyone",
+        "domain": "uchicago.edu"
+      },
+      {
+        "url": "https://www.readingrockets.org/topics/assistive-technology/articles/text-speech-technology-what-it-and-how-it-works",
+        "title": "Text-to-Speech Technology: What It Is and How It Works",
+        "domain": "readingrockets.org"
+      },
+      {
+        "url": "https://www.readingrockets.org/topics/assistive-technology/articles/text-speech-tts",
+        "title": "Text-to-Speech (TTS)",
+        "domain": "readingrockets.org"
+      },
+      {
+        "url": "https://voice.ai/hub/tools/best-text-to-speech/",
+        "title": "27 Best Text-to-Speech Tools to Make Content More ...",
+        "domain": "voice.ai"
+      },
+      {
+        "url": "https://elearningindustry.com/text-to-speech-software-complete-guide-top-authoring-tools-tts-support",
+        "title": "The Complete Guide On Text-To-Speech (TTS) Software",
+        "domain": "elearningindustry.com"
+      },
+      {
+        "url": "https://community.articulate.com/discussions/discuss/text-to-speech-software-recommendations/551815",
+        "title": "Text to speech software recommendations?",
+        "domain": "articulate.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 22,
+    "total_all": 31
+  },
+  "response_stats": {
+    "total_length": 2128,
+    "citation_count": 13,
+    "chars_with_citations": 264
+  }
+}

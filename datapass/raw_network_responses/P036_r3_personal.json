@@ -1,0 +1,21 @@
+{
+  "query_index": "36",
+  "run_number": "3",
+  "prompt_id": "P036",
+  "query": "What is the accurate translator English to Japanese with audio?",
+  "generated_search_query": "N/A",
+  "hidden_queries_json": "[]",
+  "search_result_groups_json": "[]",
+  "content_references_json": "[{\"matched_text\":\"\",\"start_idx\":139,\"end_idx\":140,\"safe_urls\":[],\"refs\":[],\"alt\":null,\"prompt_text\":null,\"type\":\"hidden\",\"invalid\":true},\"entity\",147,\"[\\\"company\\\",\\\"Deep\",163,\"L\\\",\\\"translation software company\\\"]\",197,\"DeepL\",\"DeepL\",\"entity\",{\"name\":\"DeepL\",\"entity_data\":null,\"status\":\"loading\",\"extra_params\":{\"disambiguation\":\"translation software company\"},\"metadata\":null,\"priority\":1,\"category\":\"company\"},\"\",198,\"done\",{\"matched_text\":\"\",\"start_idx\":483,\"end_idx\":484,\"safe_urls\":[],\"refs\":[],\"alt\":null,\"prompt_text\":null,\"type\":\"hidden\",\"invalid\":true},\"entity[\\\"company\\\",\\\"Google Translate\\\",\\\"google\",528,\"Google Translate\",\"Google Translate\",\"entity\",{\"name\":\"Google Translate\",\"entity_data\":null,\"status\":\"loading\",\"extra_params\":null,\"metadata\":null,\"priority\":1,\"category\":\"company\"},\" translation service\\\"]\",551,{\"disambiguation\":\"google translation service\"},\"done\",{\"matched_text\":\"entity[\\\"company\",\"start_idx\":752,\"end_idx\":769,\"safe_urls\":[],\"refs\":[],\"alt\":null,\"prompt_text\":null,\"type\":\"hidden\",\"invalid\":true},\"\\\",\\\"Microsoft Translator\\\",\\\"microsoft translation service\\\"]\",826,\"Microsoft Translator\",\"Microsoft Translator\",\"entity\",{\"name\":\"Microsoft Translator\",\"entity_data\":null,\"status\":\"loading\",\"extra_params\":{\"disambiguation\":\"microsoft translation service\"},\"metadata\":null,\"priority\":1,\"category\":\"company\"},\"\",827,\"done\",{\"matched_text\":\"entity[\\\"company\\\",\\\"Papago\",\"start_idx\":940,\"end_idx\":966,\"safe_urls\":[],\"refs\":[],\"alt\":null,\"prompt_text\":null,\"type\":\"hidden\",\"invalid\":true},\"\\\",\\\"naver translation app\\\"]\",993,\"Papago\",\"Papago\",\"entity\",{\"name\":\"Papago\",\"entity_data\":null,\"status\":\"loading\",\"extra_params\":{\"disambiguation\":\"naver translation app\"},\"metadata\":null,\"priority\":1,\"category\":\"company\"},\"done\"]",
+  "sonic_classification_json": "null",
+  "response_text": "If you want accurate English → Japanese translation with audio, these are the best options right now:  ✅ Best Overall  DeepL Translator  Extremely accurate for Japanese nuance  Natural phrasing (beats Google for JP most of the time)  Has text-to-speech audio  Web + mobile app  👉 Best choice for writing, studying, or professional use  ✅ Best Free & Fast (with strong audio)  Google Translate  Very solid English → Japanese  Clear native-style audio  Camera, voice, and conversation modes  👉 Best for travel and quick checks  ✅ Best for Learning & Pronunciation  Microsoft Translator  Good accuracy  Slower, clearer Japanese audio  Helpful for learners  ⚠️ Not for Accuracy  Papago  Great for Korean ↔ Japanese  Less reliable for English ↔ Japanese  Quick recommendation  Accuracy first: DeepL  Audio + convenience: Google Translate  Studying pronunciation: Microsoft Translator  If you want anime-natural, formal business, or casual Japanese, say the use case and I’ll narrow it down fast.",
+  "web_search_forced": "false",
+  "web_search_triggered": "false",
+  "items_json": "[]",
+  "items_count": "0",
+  "items_with_citations_count": "0",
+  "sources_cited_json": "[]",
+  "sources_additional_json": "[]",
+  "sources_all_json": "[]",
+  "account_type": "personal"
+}

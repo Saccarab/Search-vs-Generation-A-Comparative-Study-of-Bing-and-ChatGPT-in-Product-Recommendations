@@ -1,0 +1,430 @@
+{
+  "run_id": "P037_r3",
+  "account_type": "personal",
+  "prompt": "What is the AI app that changes the language of videos?",
+  "metadata": {
+    "hidden_queries": [
+      "AI app that changes the language of videos",
+      "app that automatically translates and dubs video language AI"
+    ],
+    "sonic_classification": {
+      "latency_ms": 5.141169996932149,
+      "simple_search_prob": 0.9610863387916402,
+      "complex_search_prob": 0.0026797436025783683,
+      "no_search_prob": 0.03623391760578145,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "AI app that changes the language of videos"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 220,
+        "end_idx": 239
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.heygen.com/translate",
+          "title": "AI Video Translator – Translate Videos into 175+ Languages - HeyGen",
+          "snippet": "Upload your video and automatically translate into 175+ different languages and dialects using AI-cloned voices, accurate lip sync, and subtitles.",
+          "domain": "www.heygen.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.heygen.com/translate",
+      "url_position": 216,
+      "claim_text": "Here are some AI tools/apps that change a video’s language (translate + dub): Popular AI video language-changer apps/tools HeyGen – AI video translator with automatic dubbing & subtitles for 175+ languages. HeyGen",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 329,
+        "end_idx": 334
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dubly.ai/",
+      "url_position": 344,
+      "claim_text": "Dubly.AI – Translates and lip-syncs videos into many languages with voice cloning. Dubly.AI",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 415,
+        "end_idx": 434
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.rask.ai/",
+      "url_position": 430,
+      "claim_text": "Rask.ai – AI video localization & dubbing (130+ languages). Rask",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 508,
+        "end_idx": 528
+      },
+      "citation_token": "citeturn0search26",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://perso.ai/",
+          "title": "Perso AI: AI Video Translator & Dubbing with Realistic Lip Sync",
+          "snippet": "Transform your videos into any language with AI dubbing and perfect lip sync — fast, natural, and ready to share with Perso AI.",
+          "domain": "perso.ai",
+          "ref_type": "search",
+          "ref_index": 26,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_26"
+        }
+      ],
+      "inline_url": "https://perso.ai/",
+      "url_position": 527,
+      "claim_text": "Perso AI – AI video translator + voice cloning + precise lip sync. Perso",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 595,
+        "end_idx": 614
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechify.com/dubbing/?srsltid=AfmBOop2GNQlI563gz-ICOtfY16FUkz36WYtsJcrBlKFpfiZxb1JWL58",
+      "url_position": 618,
+      "claim_text": "Speechify AI Dubbing – Browser-based AI dubbing for videos. Speechify",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 690,
+        "end_idx": 710
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.vozo.ai/video-translate",
+          "title": "AI Video Translator: Translate Videos to 110+ Languages",
+          "snippet": "Make your videos multilingual with Vozo's free online translator. Get AI-dubbed audio with voice cloning, lip-sync, and subtitles. No sign-up is required.",
+          "domain": "www.vozo.ai",
+          "ref_type": "search",
+          "ref_index": 22,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_22"
+        }
+      ],
+      "inline_url": "https://www.vozo.ai/video-translate",
+      "url_position": 791,
+      "claim_text": "Vozo.ai – Online video translator with AI dubbed audio and lip sync. Vozo",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 802,
+        "end_idx": 807
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://videotranslator.blipcut.com/",
+      "url_position": 932,
+      "claim_text": "BlipCut Video Translator – Free online translator with clipping, dubbing, auto-subs. Video Translator",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 928,
+        "end_idx": 961
+      },
+      "citation_token": "citeturn0search8turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/ai-video-translator/id6467438215?utm_source=chatgpt.com",
+          "title": "AI Video Translator - App Store",
+          "snippet": "Oct 27, 2023 — This app seamlessly translated spoken content in a video into multiple languages, accurately capturing nuances and accents. The user-friendly ...Read more",
+          "domain": "apple.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en&id=ai.voiser.aidubbing",
+      "url_position": 1085,
+      "claim_text": "AI Video Translator (mobile app) – Smartphone app that translates/dubs videos into many languages. Google Play+1",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1037,
+        "end_idx": 1057
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.canva.com/features/ai-video-translator/",
+          "title": "AI Video Translator: Translate a video with AI",
+          "snippet": "With the free video translator on Canva, you can easily dub videos into multiple languages using advanced AI. Simply select a video from your design, then ...Read more",
+          "domain": "www.canva.com",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://www.canva.com/features/ai-video-translator/",
+      "url_position": 1231,
+      "claim_text": "Canva also has an AI video translator feature inside its editor. Canva",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1178,
+        "end_idx": 1196
+      },
+      "citation_token": "citeturn0news46",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.androidcentral.com/apps-software/youtube/youtubes-new-trick-automatically-re-dubs-any-video-into-your-native-tongue",
+      "url_position": 1416,
+      "claim_text": "Bonus: YouTube now offers automatic AI dubbing for videos in multiple languages via its platform for creators. androidcentral.com",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.heygen.com/translate",
+        "title": "AI Video Translator – Translate Videos into 175+ Languages - HeyGen",
+        "domain": "HeyGen"
+      },
+      {
+        "url": "https://dubly.ai/",
+        "title": "Dubly.AI – Translate Videos with AI & Lip Sync | Fast, Natural ...",
+        "domain": "Dubly.AI"
+      },
+      {
+        "url": "https://www.rask.ai/",
+        "title": "Leading AI video localization & dubbing tool",
+        "domain": "Rask"
+      },
+      {
+        "url": "https://perso.ai/",
+        "title": "Perso AI: AI Video Translator & Dubbing with Realistic Lip Sync",
+        "domain": "Perso"
+      },
+      {
+        "url": "https://speechify.com/dubbing/?srsltid=AfmBOop2GNQlI563gz-ICOtfY16FUkz36WYtsJcrBlKFpfiZxb1JWL58",
+        "title": "AI Dubbing Online For Video Localization: Try For Free! | Speechify",
+        "domain": "Speechify"
+      },
+      {
+        "url": "https://www.vozo.ai/video-translate",
+        "title": "AI Video Translator: Translate Videos to 110+ Languages",
+        "domain": "Vozo"
+      },
+      {
+        "url": "https://videotranslator.blipcut.com/",
+        "title": "Free AI Video Translator: Translate Videos to 140+ Languages",
+        "domain": "Video Translator"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en&id=ai.voiser.aidubbing",
+        "title": "AI Dubbing & Video Translator - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-video-translator/",
+        "title": "AI Video Translator: Translate a video with AI",
+        "domain": "Canva"
+      },
+      {
+        "url": "https://www.androidcentral.com/apps-software/youtube/youtubes-new-trick-automatically-re-dubs-any-video-into-your-native-tongue",
+        "title": "YouTube's new trick automatically re-dubs any video into your native tongue",
+        "domain": "androidcentral.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.synthesia.io/post/best-video-translator-apps",
+        "title": "The 6 Best AI Video Translator Apps of 2025 (Compared) - Synthesia",
+        "domain": "synthesia.io"
+      },
+      {
+        "url": "https://www.camb.ai/",
+        "title": "CAMB.AI | Localization AI for Content, Entertainment & Sports",
+        "domain": "camb.ai"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+        "title": "7 Best AI Video Translator Apps of 2025 [Tested]",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://akool.com/apps/video-translation",
+        "title": "Best Free AI Video Translation | Best Lip Sync AI | AKOOL",
+        "domain": "akool.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/ai-video-translator/id6467438215",
+        "title": "AI Video Translator - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/dub-ai-video-translator-app/id6612030937",
+        "title": "Dub AI – Video Translator App - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://maestra.ai/",
+        "title": "AI Media Translation, Subtitles & Dubbing Platform | Maestra",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://maestra.ai/tools/video-translator",
+        "title": "AI Video Translator with Voice Cloning & Lip Sync | Free Trial",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://project-aeon.com/blogs/top-12-best-video-translation-app-choices-for-2025",
+        "title": "Top 12 Best Video Translation App Choices for 2025 - Aeon",
+        "domain": "project-aeon.com"
+      },
+      {
+        "url": "https://invideo.io/make/video-translator/",
+        "title": "Free AI Video Translator",
+        "domain": "invideo.io"
+      },
+      {
+        "url": "https://www.adobe.com/products/firefly/features/translate-video.html",
+        "title": "Translate Video with AI - Adobe Firefly",
+        "domain": "adobe.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=abh.yak.dubaivideotranslatorhgyurpwq",
+        "title": "Dub AI Video Translator - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.happyscribe.com/translate-video",
+        "title": "AI Video Translator",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://www.smartcat.com/video-translation/",
+        "title": "The #1 AI Video Translator: Fast, on-brand video translation",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://www.vozo.ai/translate-english-video-to-spanish",
+        "title": "Translate English Video to Spanish",
+        "domain": "vozo.ai"
+      },
+      {
+        "url": "https://elevenlabs.io/dubbing-studio",
+        "title": "AI Dubbing: Localize Content Across 29 Languages",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://vimeo.com/features/ai-translation",
+        "title": "AI Automatic Language Video Translator for Dubbing & ...",
+        "domain": "vimeo.com"
+      },
+      {
+        "url": "https://perso.ai/video-translation/english-video-to-spanish",
+        "title": "Translate English Videos to Spanish with AI Video Dubbing",
+        "domain": "perso.ai"
+      },
+      {
+        "url": "https://speechify.com/dubbing/?srsltid=AfmBOoovHmuAe3XvsMGc-l1OjiXtNJpiLhlS3HH-i_wqpcmJ8imRe110",
+        "title": "AI Dubbing Online For Video Localization: Try For Free!",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://ezdubs.ai/",
+        "title": "EzDubs: Best Phone Call Translator App for iOS and Android",
+        "domain": "ezdubs.ai"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 21,
+    "total_all": 31
+  },
+  "response_stats": {
+    "total_length": 1602,
+    "citation_count": 10,
+    "chars_with_citations": 178
+  }
+}

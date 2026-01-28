@@ -1,0 +1,360 @@
+{
+  "run_id": "P042_r2",
+  "account_type": "personal",
+  "prompt": "Can you recommend a real-time voice translator app?",
+  "metadata": {
+    "hidden_queries": [
+      "real-time voice translator app recommendations",
+      "best live voice translation apps features and list"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.995494900271297,
+      "simple_search_prob": 0.987371352970064,
+      "complex_search_prob": 0.0013225656735691856,
+      "no_search_prob": 0.01130608135636686,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "real-time voice translator app recommendations"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 306,
+        "end_idx": 340
+      },
+      "citation_token": "citeturn0search11turn0search16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://translate.google.com/about/",
+          "title": "A Personal Interpreter on Your Phone or Computer",
+          "snippet": "Translate with your camera · No internet? No problem. · Have a conversation · Translate speech simultaneously · Translate from any app · Type, say, or handwrite.Read more",
+          "domain": "translate.google.com",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_11"
+        },
+        {
+          "url": "https://blog.google/products/translate/language-learning-live-translate/?utm_source=chatgpt.com",
+          "title": "Google Translate adds live translation and language learning",
+          "snippet": "Aug 26, 2025 — Google Translate's new AI features make live conversations and language learning easier than ever. Real-time translation now lets you have ...Read more",
+          "domain": "blog.google",
+          "ref_type": "search",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_16"
+        }
+      ],
+      "inline_url": "https://translate.google.com/about/",
+      "url_position": 312,
+      "claim_text": "Here are some real-time voice translator apps you can try — good for travel, conversations, meetings, or live translation: Top general options Google Translate – free, supports real-time conversation translation in 70+ languages with speech; also text/photo translate and offline downloads. Google Translate+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 459,
+        "end_idx": 492
+      },
+      "citation_token": "citeturn0search7turn0search13",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://community.ricksteves.com/travel-forum/general-europe/voice-translators?utm_source=chatgpt.com",
+          "title": "Voice translators - Rick Steves Travel Forum",
+          "snippet": "Jan 2, 2025 — I'm an Android user, and my wife and I use the Microsoft \"Translator\" app. Works great for us. You can type, or speak into it and see or hear another language.Read more",
+          "domain": "ricksteves.com",
+          "ref_type": "search",
+          "ref_index": 13,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_13"
+        }
+      ],
+      "inline_url": "https://holasim.com/en/blog/the-truth-about-free-real-time-voice-translators/",
+      "url_position": 471,
+      "claim_text": "Microsoft Translator – free app with conversation mode where two people speak and see translated speech/text. HOLASIM+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 594,
+        "end_idx": 613
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+      "url_position": 655,
+      "claim_text": "iTranslate Voice – voice-to-voice real-time translation across 40+ languages on iOS/Android. App Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 717,
+        "end_idx": 750
+      },
+      "citation_token": "citeturn0search2turn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/instant-voice-translate/id1298384039?utm_source=chatgpt.com",
+          "title": "Instant Voice Translate - App Store - Apple",
+          "snippet": "\"Instant Voice Translate\" is a free and user-friendly language translation app powered by cutting-edge ChatGPT technology.Read more",
+          "domain": "apple.com",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_15"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+      "url_position": 826,
+      "claim_text": "Instant Voice Translate – simple free app focused on instant speech translation (Android/iOS). Google Play+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 855,
+        "end_idx": 875
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/live-translator-ai-translate/id6740606431",
+          "title": "Live Translator - AI Translate App - App Store",
+          "snippet": "... Live Translator - AI Translate help your voice be heard in any language! Key Features: • Free real-time text and voice translator • AI-powered keyboard ...Read more",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 19,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_19"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/live-translator-ai-translate/id6740606431",
+      "url_position": 1013,
+      "claim_text": "Live Translator – AI Translate – real-time voice and text translation with AI keyboard support. App Store",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1019,
+        "end_idx": 1038
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://holasim.com/en/blog/the-truth-about-free-real-time-voice-translators/",
+      "url_position": 1227,
+      "claim_text": "Other tools worth considering SayHi Translate – easy instant speech translation (often cited with high language/dialect support). HOLASIM",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1175,
+        "end_idx": 1194
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ezdubs.ai/blog/top-5-call-translators",
+      "url_position": 1439,
+      "claim_text": "EzDubs / AI Phone / Lingvanex / iTour – apps focused on real-time phone call translation (translate as you talk on a call). EzDubs",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1434,
+        "end_idx": 1466
+      },
+      "citation_token": "citeturn0search1turn0search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wordly.ai/?utm_source=chatgpt.com",
+          "title": "Wordly: AI Translation & Captions for Meetings and Events",
+          "snippet": "Wordly provides real-time AI translation, captions, transcripts, and summaries for meetings and events, making them more accessible, inclusive, ...",
+          "domain": "wordly.ai",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1725,
+      "claim_text": "If you want something specifically for meetings or event captions, enterprise tools like JotMe or Wordly handle live translation and transcripts in group settings, though they’re more business-oriented than simple phone apps. jotme.io+1",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://translate.google.com/about/",
+        "title": "A Personal Interpreter on Your Phone or Computer",
+        "domain": "Google Translate"
+      },
+      {
+        "url": "https://holasim.com/en/blog/the-truth-about-free-real-time-voice-translators/",
+        "title": "The Truth About Free Real-Time Voice Translators",
+        "domain": "HOLASIM"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+        "title": "iTranslate Voice - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/live-translator-ai-translate/id6740606431",
+        "title": "Live Translator - AI Translate App - App Store",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://ezdubs.ai/blog/top-5-call-translators",
+        "title": "Top 6 Phone Call Translators",
+        "domain": "EzDubs"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.reddit.com/r/ChatGPTPro/comments/15z93kb/are_there_any_handsfree_realtime_voice/",
+        "title": "Are there any Hands-Free, Realtime, Voice Translation ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.freelensia.com/es-ES/blog/articles/32",
+        "title": "Best Voice Translation Apps",
+        "domain": "freelensia.com"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "Wordly: AI Translation & Captions for Meetings and Events",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.atanet.org/client-assistance/blog-best-translation-apps-a-translator-puts-four-to-the-test/",
+        "title": "Best Translation Apps: A Translator Puts Four to the Test",
+        "domain": "atanet.org"
+      },
+      {
+        "url": "https://apps.apple.com/us/story/id1681938832",
+        "title": "The Best Translators - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-translator/id288113403",
+        "title": "iTranslate Translator - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/instant-voice-translate/id1298384039",
+        "title": "Instant Voice Translate - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://community.ricksteves.com/travel-forum/general-europe/voice-translators",
+        "title": "Voice translators - Rick Steves Travel Forum",
+        "domain": "ricksteves.com"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/voice-translator-app",
+        "title": "Top 6 Voice Translator Apps Powered by AI in 2025",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://blog.google/products/translate/language-learning-live-translate/",
+        "title": "Google Translate adds live translation and language learning",
+        "domain": "blog.google"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=LahFSeaa6Lw",
+        "title": "Top 5 AI Translation Apps in 2025",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://itranslate.com/",
+        "title": "iTranslate: The Leading Translation and Dictionary App",
+        "domain": "itranslate.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 13,
+    "total_all": 20
+  },
+  "response_stats": {
+    "total_length": 1846,
+    "citation_count": 8,
+    "chars_with_citations": 209
+  }
+}

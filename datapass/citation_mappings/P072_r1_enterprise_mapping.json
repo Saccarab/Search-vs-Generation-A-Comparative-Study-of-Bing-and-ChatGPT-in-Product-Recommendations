@@ -1,0 +1,342 @@
+{
+  "run_id": "P072_r1",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend the best video translator extension for YouTube?",
+  "metadata": {
+    "hidden_queries": [
+      "best video translator extension for YouTube browser extension to translate subtitles or audio",
+      "browser extension to translate YouTube videos subtitles recommendations"
+    ],
+    "sonic_classification": {
+      "latency_ms": 5.7222789619117975,
+      "simple_search_prob": 0.9959160533567348,
+      "complex_search_prob": 0.0029708427615289515,
+      "no_search_prob": 0.0011131038817362169,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best video translator extension for YouTube browser extension to translate subtitles or audio"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 369,
+        "end_idx": 389
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/transparrot-youtube-trans/dnaiiaebpjiggalgfdjggcpdffcghcgc",
+          "title": "TransParrot: YouTube Translate & Dual Subtitles - Chrome Web Store",
+          "snippet": "Translate YouTube videos with AI-powered subtitles. dual/bilingual subtitles and natural text-to-speech. AI YouTube Translate & Language Learning The ultimate AI-powered YouTube translator extension. Experience seamless video translation with intelligent dual subtitles, natural voice synthesis, and immersive language learning across 100+ languages. 🔹 【AI-Optimized for Accurate & Fluent ...",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/transparrot-youtube-trans/dnaiiaebpjiggalgfdjggcpdffcghcgc",
+      "url_position": 373,
+      "claim_text": "Here are reliable YouTube video-translator extensions you can install in your browser (Chrome/Edge) to translate subtitles or audio while watching: Top picks (subtitle + translation): TransParrot – YouTube Translate & Dual Subtitles – AI-powered subtitle translator with optional text-to-speech and dual language display. Works directly in YouTube’s UI. Chrome Web Store",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 549,
+        "end_idx": 568
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/video-cc-translator/fhbpmacbgklobobcieiaoibpjhdnmcfn",
+          "title": "Video CC translator - Chrome Web Store",
+          "snippet": "Translate Udemy, YouTube, and Udacity video lectures into your preferred language! This extension automatically translates subtitles (Closed Captions, CC) in real-time using Google Translate and DeepL.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 2,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_2"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/video-cc-translator/fhbpmacbgklobobcieiaoibpjhdnmcfn",
+      "url_position": 644,
+      "claim_text": "Video CC Translator – Automatically translates closed captions (CC) on YouTube (and other platforms) in real time with Google Translate/DeepL support. Chrome Web Store",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 701,
+        "end_idx": 718
+      },
+      "citation_token": "citeturn0search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/hovertranslate-youtube-su/jbddomeagbjjdoaehkdffdhifdhnmfic",
+      "url_position": 882,
+      "claim_text": "HoverTranslate – YouTube Subtitle Translator – Good for quick subtitle translation and phrase lookup directly on the video. Chrome Web Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 885,
+        "end_idx": 905
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Language_Reactor",
+          "title": "Language Reactor",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_25"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Language_Reactor",
+      "url_position": 1150,
+      "claim_text": "Language Reactor – Designed for enhanced subtitle control and learning on YouTube/Netflix (not purely a translator but useful for reading dual subtitles). Wikipedia",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1048,
+        "end_idx": 1067
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vozo.ai/blogs/chrome-video-translator",
+      "url_position": 1337,
+      "claim_text": "Other options worth considering: iTour Video Translation – A broader video translator (not YouTube-only) with real-time subtitles. Vozo",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1197,
+        "end_idx": 1214
+      },
+      "citation_token": "citeturn0search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+      "url_position": 1528,
+      "claim_text": "Real-Time Video & Audio Translation (Byrdhouse AI) – Supports video translation on YouTube but has mixed reviews/rating. Chrome Web Store",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1345,
+        "end_idx": 1364
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sublango.com/",
+      "url_position": 1764,
+      "claim_text": "Sublango – Paid service with real-time subtitles and AI voice-over across streaming sites including YouTube (not free). sublango.com",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1538,
+        "end_idx": 1557
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.guidingtech.com/youtube-subtitle-translator-chrome-extensions/",
+          "title": "4 Best YouTube Subtitle Translator Chrome Extensions",
+          "snippet": "For more translation features, you can download an extension from the Chrome Webstore. These extensions offer features like audio translation, dual subtitles, and AI-based language translations ...",
+          "domain": "www.guidingtech.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1715731200,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.guidingtech.com/youtube-subtitle-translator-chrome-extensions/",
+      "url_position": 1965,
+      "claim_text": "Notes & caveats Most extensions depend on YouTube captions already being available (either uploaded or auto-generated). Without captions, translation won’t work. Guiding Tech",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://chromewebstore.google.com/detail/transparrot-youtube-trans/dnaiiaebpjiggalgfdjggcpdffcghcgc",
+        "title": "TransParrot: YouTube Translate & Dual Subtitles - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/video-cc-translator/fhbpmacbgklobobcieiaoibpjhdnmcfn",
+        "title": "Video CC translator - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/hovertranslate-youtube-su/jbddomeagbjjdoaehkdffdhifdhnmfic",
+        "title": "HoverTranslate - YouTube Subtitle Translator - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Language_Reactor",
+        "title": "Language Reactor",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.vozo.ai/blogs/chrome-video-translator",
+        "title": "Top 8 Chrome Addons for Youtube Translation In 2025",
+        "domain": "Vozo"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+        "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://sublango.com/",
+        "title": "Sublango – AI subtitles & voice-over Chrome extension",
+        "domain": "sublango.com"
+      },
+      {
+        "url": "https://www.guidingtech.com/youtube-subtitle-translator-chrome-extensions/",
+        "title": "4 Best YouTube Subtitle Translator Chrome Extensions",
+        "domain": "Guiding Tech"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://murf.ai/blog/chrome-addons-for-translating-youtube-videos",
+        "title": "Top Chrome Addon YouTube Translator for Effortless Video Understanding",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://umatechnology.org/4-best-youtube-subtitle-translator-chrome-extensions/",
+        "title": "4 Best YouTube Subtitle Translator Chrome Extensions",
+        "domain": "umatechnology.org"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/youtube-translator-youtub/ndbhldoclidahhoogmgklimmomnnepjg",
+        "title": "YouTube Translator & YouTube Video Dubbing - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/edge/features/real-time-video-translation",
+        "title": "Real-time video translation | Microsoft Edge",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://microsoftedge.microsoft.com/addons/detail/transparrot/ofbchmolllgigokljcoeakennbjaflnl",
+        "title": "TransParrot: YouTube Translate & Dual Subtitles",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://microsoftedge.microsoft.com/addons/detail/fast-translation-video-/pfjbndijngbohcphefhcgcbbedjkjopf",
+        "title": "Fast Translation - Video | YouTube - Microsoft Edge Addons",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://microsoftedge.microsoft.com/addons/detail/emnbmkhbohfjmbkdipkppnbdlhgnhmhm",
+        "title": "HoverTranslate - YouTube Subtitle Translator - Microsoft Edge Addons",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://videotranslator.io/video-translator-addons",
+        "title": "Video Translator Chrome Extension - Global Video Translation",
+        "domain": "videotranslator.io"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/video/",
+        "title": "AI Video Translator with Real-Time Bilingual Subtitles | Immersive ...",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://www.vmeg.ai/tools/youtube-video-translator/",
+        "title": "YouTube Video Translator – Translate YouTube Videos to English",
+        "domain": "vmeg.ai"
+      },
+      {
+        "url": "https://doculator.org/video-translator-addons",
+        "title": "Video Translator Addons - AI Video Translation Tool",
+        "domain": "doculator.org"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 11,
+    "total_all": 19
+  },
+  "response_stats": {
+    "total_length": 2235,
+    "citation_count": 8,
+    "chars_with_citations": 150
+  }
+}

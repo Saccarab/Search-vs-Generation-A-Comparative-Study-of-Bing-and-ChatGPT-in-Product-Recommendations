@@ -1,0 +1,315 @@
+{
+  "run_id": "P007_r2",
+  "account_type": "enterprise",
+  "prompt": "Is there a real time audio to text translation?",
+  "metadata": {
+    "hidden_queries": [
+      "real time audio to text translation services live transcription",
+      "is there real-time audio-to-text translation technology"
+    ],
+    "sonic_classification": {
+      "latency_ms": 2.2678669774904847,
+      "simple_search_prob": 0.9665236529587535,
+      "complex_search_prob": 0.0013132281577612748,
+      "no_search_prob": 0.03216311888348519,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "real time audio to text translation services live transcription"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 341,
+        "end_idx": 359
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://live.maestra.ai/transcribe/",
+          "title": "Live Transcribe | Real Time Speech to Text Transcription",
+          "snippet": "Live transcribe audio to text for free using an AI-powered real time audio transcription app. Available in over 125 languages with premium features such as live translation, session sharing and more.",
+          "domain": "live.maestra.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://live.maestra.ai/transcribe/",
+      "url_position": 340,
+      "claim_text": "Yes — real-time audio-to-text tech exists right now. It’s widely used in apps, services, and developer tools to convert spoken audio into text as it happens with minimal delay. Examples of real-time audio-to-text systems: Apps/web tools like live transcription services that display text instantly as you speak or upload audio. Maestra+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 475,
+        "end_idx": 495
+      },
+      "citation_token": "citeturn0search34",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Live_Transcribe",
+      "url_position": 486,
+      "claim_text": "Accessibility tools (e.g., Google’s Live Transcribe app) for live captioning on Android devices. Wikipedia",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 660,
+        "end_idx": 692
+      },
+      "citation_token": "citeturn0search1turn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+      "url_position": 711,
+      "claim_text": "Cloud APIs from major platforms (Microsoft Azure, Google Cloud, AWS, etc.) that provide real-time speech-to-text streams for meetings, live events, and apps. Microsoft Learn+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 808,
+        "end_idx": 827
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://proactor.ai/features/live-transcription/",
+      "url_position": 921,
+      "claim_text": "Specialized services that offer streaming transcription with very low latency (<1 s) and multi-language support. proactor.ai",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1015,
+        "end_idx": 1048
+      },
+      "citation_token": "citeturn0search6turn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ailivetranslate.net/en",
+      "url_position": 1172,
+      "claim_text": "Not just text — translation too: Some systems combine real-time transcription with live language translation (speech-to-text → translated text) for multilingual conversations. ailivetranslate.net+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1178,
+        "end_idx": 1197
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://live.maestra.ai/transcribe/",
+          "title": "Live Transcribe | Real Time Speech to Text Transcription",
+          "snippet": "Live transcribe audio to text for free using an AI-powered real time audio transcription app. Available in over 125 languages with premium features such as live translation, session sharing and more.",
+          "domain": "live.maestra.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://live.maestra.ai/transcribe/",
+      "url_position": 1337,
+      "claim_text": "What this means in practice: You can speak into a mic on your phone or computer and see the text appear almost instantly. Maestra",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1278,
+        "end_idx": 1283
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://micwrite.com/",
+      "url_position": 1467,
+      "claim_text": "In some advanced setups, it can handle multiple languages and translate live. micwrite.com",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://live.maestra.ai/transcribe/",
+        "title": "Live Transcribe | Real Time Speech to Text Transcription",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Live_Transcribe",
+        "title": "Live Transcribe",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text",
+        "title": "Speech to Text Overview - Speech Service - Foundry Tools",
+        "domain": "Microsoft Learn"
+      },
+      {
+        "url": "https://proactor.ai/features/live-transcription/",
+        "title": "Live Transcription - Real-Time Speech to Text | Proactor AI",
+        "domain": "proactor.ai"
+      },
+      {
+        "url": "https://ailivetranslate.net/en",
+        "title": "LiveTranslate - Real-time Speech Translation",
+        "domain": "ailivetranslate.net"
+      },
+      {
+        "url": "https://micwrite.com/",
+        "title": "Real-Time Transcription & Live Translation | Voice to Text | MicWrite ...",
+        "domain": "micwrite.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://research.google/blog/real-time-speech-to-speech-translation/",
+        "title": "Real-time speech-to-speech translation - Google Research",
+        "domain": "research.google"
+      },
+      {
+        "url": "https://www.assemblyai.com/blog/10-ways-live-transcription-streaming-speech-to-text-is-being-used-today",
+        "title": "10 ways streaming speech-to-text (live transcription) is ... - AssemblyAI",
+        "domain": "assemblyai.com"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-translation",
+        "title": "Speech translation overview - Speech service - Foundry Tools",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://screenapp.io/features/online-live-caption-tool",
+        "title": "Live Transcribe - Free Live Audio to Text Converter - ScreenApp",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://aws.amazon.com/transcribe/",
+        "title": "Speech To Text - Amazon Transcribe - AWS",
+        "domain": "amazon.com"
+      },
+      {
+        "url": "https://transcribe.com/services/live-transcription",
+        "title": "Live Transcription Service | Transcribe App & Web Editor",
+        "domain": "transcribe.com"
+      },
+      {
+        "url": "https://cloud.google.com/speech-to-text",
+        "title": "Speech-to-Text AI: speech recognition and transcription",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.agora.io/en/products/speech-to-text/",
+        "title": "Real-Time Speech to Text API for Live Transcription | Agora",
+        "domain": "agora.io"
+      },
+      {
+        "url": "https://livetrans.pro/",
+        "title": "LiveTrans - AI-Powered Real-Time Voice Transcription & Live Translation ...",
+        "domain": "livetrans.pro"
+      },
+      {
+        "url": "https://www.livetranscribe.app/",
+        "title": "Live Transcribe - Caption speech in real time",
+        "domain": "livetranscribe.app"
+      },
+      {
+        "url": "https://elevenlabs.io/speech-to-text",
+        "title": "Speech to Text — Most Accurate Speech to Text Model - ElevenLabs",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://elevenlabs.io/audio-to-text",
+        "title": "Transcribe Audio to Text with AI — Fast Audio to Text Converter",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://livetranslation.ai/",
+        "title": "Home - livetranslation.ai",
+        "domain": "livetranslation.ai"
+      },
+      {
+        "url": "https://otter.ai/speech-to-text",
+        "title": "Convert Speech to Text: Free, Instant, and Accurate - Otter.ai",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://xcelore.com/real-time-audio-translator/",
+        "title": "Real-Time Audio Translation | AI Audio Translator - Xcelore",
+        "domain": "xcelore.com"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 15,
+    "total_all": 21
+  },
+  "response_stats": {
+    "total_length": 1570,
+    "citation_count": 7,
+    "chars_with_citations": 146
+  }
+}

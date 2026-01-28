@@ -1,0 +1,372 @@
+{
+  "run_id": "P003_r2",
+  "account_type": "enterprise",
+  "prompt": "Is there a transcription software available for a one-time payment instead of a subscription?",
+  "metadata": {
+    "hidden_queries": [
+      "transcription software one-time payment vs subscription transcription software one-time purchase",
+      "software to transcribe audio to text with one time purchase license transcription"
+    ],
+    "sonic_classification": {
+      "latency_ms": 18.97087204270065,
+      "simple_search_prob": 0.9926550444817196,
+      "complex_search_prob": 0.0011105918099820796,
+      "no_search_prob": 0.006234363708298325,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "transcription software one-time payment vs subscription transcription software one-time purchase"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 241,
+        "end_idx": 242
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.voicci.com/blog/voice-to-text-pricing-comparison-2025.html",
+      "url_position": 244,
+      "claim_text": "Yes — there are transcription software options you can buy with a one-time payment instead of a subscription. Most full cloud AI transcription services use subscriptions, but some local/offline apps let you pay once and own the software.Voicci",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 431,
+        "end_idx": 450
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.voicci.com/blog/voice-to-text-pricing-comparison-2025.html",
+          "title": "Voice-to-Text Pricing: One-Time vs Subscription in 2025",
+          "snippet": "Compare voice-to-text pricing models: one-time purchase vs subscriptions. See why Voicci's pricing beats monthly fees for Mac dictation software.",
+          "domain": "www.voicci.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1765561000.195,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.voicci.com/blog/voice-to-text-pricing-comparison-2025.html",
+      "url_position": 484,
+      "claim_text": "Examples with one-time payment options MacWhisper / Superwhisper / Voicci – simple voice-to-text apps with one-time purchase licenses for Mac (often offline).Voicci",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 560,
+        "end_idx": 566
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://myelearningworld.com/express-scribe-pricing/",
+      "url_position": 676,
+      "claim_text": "Express Scribe – a basic transcription tool you can buy for a single fee (~$60 for Standard edition).MyeLearningWorld",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 688,
+        "end_idx": 707
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.stacksocial.com/sales/voicetapp-lifetime-subscription",
+      "url_position": 843,
+      "claim_text": "Voicetapp – transcription software available as a lifetime deal (one-time fee for lifetime access).StackSocial",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 840,
+        "end_idx": 860
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/ELAN_software",
+          "title": "ELAN software",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_25"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/ELAN_software",
+      "url_position": 1043,
+      "claim_text": "Open-source / free local alternatives ELAN – free, open-source annotation/transcription tool (manual or semi-automatic).Wikipedia",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 954,
+        "end_idx": 974
+      },
+      "citation_token": "citeturn0search30",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Transcriber",
+      "url_position": 1185,
+      "claim_text": "Transcriber / TranscriberAG – open-source transcription tools you can use at no cost.Wikipedia",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1097,
+        "end_idx": 1116
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://geekflare.com/best/best-transcription-software/",
+          "title": "17 Best Transcription Software for Audio to Text in 2025 - Geekflare",
+          "snippet": "Transcription software is a digital transcriber that converts audio into text. With the rise of voice technology in everything from podcasts and video conferencing to voice assistants, the demand for transcription is rising.",
+          "domain": "geekflare.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1754524800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://geekflare.com/best/best-transcription-software/",
+      "url_position": 1351,
+      "claim_text": "What to watch out for Many high-accuracy AI services (Otter.ai, Trint, Descript, etc.) are subscription-based.Geekflare",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1250,
+        "end_idx": 1269
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.voicci.com/blog/voice-to-text-pricing-comparison-2025.html",
+          "title": "Voice-to-Text Pricing: One-Time vs Subscription in 2025",
+          "snippet": "Compare voice-to-text pricing models: one-time purchase vs subscriptions. See why Voicci's pricing beats monthly fees for Mac dictation software.",
+          "domain": "www.voicci.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1765561000.195,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.voicci.com/blog/voice-to-text-pricing-comparison-2025.html",
+      "url_position": 1542,
+      "claim_text": "One-time purchase tools often rely on local processing and may have fewer advanced features (no cloud sync, limited editing).Voicci",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.voicci.com/blog/voice-to-text-pricing-comparison-2025.html",
+        "title": "Voice-to-Text Pricing: One-Time vs Subscription in 2025",
+        "domain": "Voicci"
+      },
+      {
+        "url": "https://myelearningworld.com/express-scribe-pricing/",
+        "title": "Express Scribe Pricing, Plans, Free Trial Info, More (2025)",
+        "domain": "MyeLearningWorld"
+      },
+      {
+        "url": "https://www.stacksocial.com/sales/voicetapp-lifetime-subscription",
+        "title": "Voice to Text Transcription: Lifetime Deal by Voicetapp",
+        "domain": "StackSocial"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/ELAN_software",
+        "title": "ELAN software",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Transcriber",
+        "title": "Transcriber",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://geekflare.com/best/best-transcription-software/",
+        "title": "17 Best Transcription Software for Audio to Text in 2025 - Geekflare",
+        "domain": "Geekflare"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.softwaretestinghelp.com/best-transcription-software/",
+        "title": "Top 15 Best Transcription Software in 2026 (Audio/Video to Text)",
+        "domain": "softwaretestinghelp.com"
+      },
+      {
+        "url": "https://www.subscriptionflow.com/2025/09/subscription-vs-one-time-purchase/",
+        "title": "Subscription vs One Time Purchase Deciding the Best Revenue Model",
+        "domain": "subscriptionflow.com"
+      },
+      {
+        "url": "https://transcript.lol/blog/best-audio-transcription-software",
+        "title": "12 Best Audio Transcription Software Picks for 2025",
+        "domain": "transcript.lol"
+      },
+      {
+        "url": "https://dodopayments.com/blogs/one-time-vs-subscription-saas-pricing",
+        "title": "One-Time Payments vs. Subscriptions: Which Model Fits Your SaaS",
+        "domain": "dodopayments.com"
+      },
+      {
+        "url": "https://www.indiehackers.com/post/subscriptions-vs-one-time-payments-a-developers-honest-take-f153e48960",
+        "title": "Subscriptions vs. One-Time Payments: A Developer's Honest Take",
+        "domain": "indiehackers.com"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-transcription-software",
+        "title": "Transcription Software: Best Audio-to-Text Tools in 2025",
+        "domain": "descript.com"
+      },
+      {
+        "url": "https://www.techbloat.com/17-best-transcription-software-for-audio-to-text-in-2025.html",
+        "title": "17 Best Transcription Software for Audio to Text in 2025",
+        "domain": "techbloat.com"
+      },
+      {
+        "url": "https://myelearningworld.com/best-transcription-software/",
+        "title": "14 Best Transcription Software & Services for Audio/Video to Text",
+        "domain": "myelearningworld.com"
+      },
+      {
+        "url": "https://www.techradar.com/pro/software-services/subscription-vs-one-time-purchase-software-we-analyzed-the-true-cost-for-smbs",
+        "title": "Software subscription or one-time purchase? What's better? - TechRadar",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://every-bit-matters.com/2025/03/28/paid-subscriptions-vs-one-time-purchases/",
+        "title": "Paid Subscriptions vs. One-Time Purchases – OmniScope",
+        "domain": "every-bit-matters.com"
+      },
+      {
+        "url": "https://createandgo.com/transcription-software",
+        "title": "11 Best Transcription Software Tools In 2025 [Speech To Text]",
+        "domain": "createandgo.com"
+      },
+      {
+        "url": "https://www.switcherstudio.com/blog/one-time-vs-recurring-payments/",
+        "title": "Subscription vs. One-Time Purchase: Which Is Best for Your Video Content?",
+        "domain": "switcherstudio.com"
+      },
+      {
+        "url": "https://www.mvix.com/blog/subscription-vs-one-time-cost",
+        "title": "Exploring SaaS Pricing Models: One-Time-Cost vs. Subscription",
+        "domain": "mvix.com"
+      },
+      {
+        "url": "https://transcription.1oa.cc/comparisons",
+        "title": "Transcription Software Comparisons: Find Your Best Match - Mac ...",
+        "domain": "1oa.cc"
+      },
+      {
+        "url": "https://transcribe.com/pricing",
+        "title": "Pricing | Transcribe App & Online Editor",
+        "domain": "transcribe.com"
+      },
+      {
+        "url": "https://otter.ai/pricing",
+        "title": "Pricing | Otter.ai",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://transcribe.wreally.com/",
+        "title": "Transcription Software to Convert Audio to Text | Transcribe",
+        "domain": "wreally.com"
+      },
+      {
+        "url": "https://www.flyriver.com/g/subscription-fee-one-time",
+        "title": "Subscription Fee vs. One-Time Fee: A Comprehensive Analysis",
+        "domain": "flyriver.com"
+      },
+      {
+        "url": "https://trint.com/",
+        "title": "Transcription Software | AI Transcription & Content Editor | Trint",
+        "domain": "trint.com"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 19,
+    "total_all": 25
+  },
+  "response_stats": {
+    "total_length": 1824,
+    "citation_count": 8,
+    "chars_with_citations": 123
+  }
+}

@@ -1,0 +1,490 @@
+{
+  "run_id": "P035_r1",
+  "account_type": "enterprise",
+  "prompt": "Can you list translation services with live interpreters and their 2-day pricing?",
+  "metadata": {
+    "hidden_queries": [
+      "translation services with live interpreters pricing 2 day cost live interpreter service pricing",
+      "live interpreter translation services 2 day pricing interpreter on demand translation live interpreters cost",
+      "Jeenie live interpreter pricing per minute or per session Jeenie translation live interpreters cost",
+      "does Jeenie or similar service list pricing or 2-day event pricing live interpreters Jeenie or Boostlingo pricing"
+    ],
+    "sonic_classification": {
+      "latency_ms": 9.736735024489462,
+      "simple_search_prob": 0.926000229059428,
+      "complex_search_prob": 0.06928529799347989,
+      "no_search_prob": 0.004714472947092083,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 498,
+        "end_idx": 517
+      },
+      "citation_token": "citeturn1search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://jeenie.com/pricing",
+          "title": "Plans & Pricing | Jeenie",
+          "snippet": "Get started at $1.99/min. Find a plan that fits your needs. No commitment. No minimums.",
+          "domain": "jeenie.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_0"
+        }
+      ],
+      "inline_url": "https://jeenie.com/pricing",
+      "url_position": 475,
+      "claim_text": "Here’s a list of live interpreter translation services with available pricing structures you can use to estimate a 2-day cost. I’ve focused on services with published rates or typical billing models: 1) Jeenie – On-Demand Live Interpreters Pricing: Pay-as-you-go starting at ≈ $1.99/min for common languages; higher for rare languages (up to ~$4.99/min) and ASL. Video & audio cost the same. Plans reduce per-minute rates with subscriptions ($49/mo, $149/mo, etc.). Jeenie",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 804,
+        "end_idx": 823
+      },
+      "citation_token": "citeturn1search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://jeenie.com/pricing",
+          "title": "Plans & Pricing | Jeenie",
+          "snippet": "Get started at $1.99/min. Find a plan that fits your needs. No commitment. No minimums.",
+          "domain": "jeenie.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_0"
+        }
+      ],
+      "inline_url": "https://jeenie.com/pricing",
+      "url_position": 748,
+      "claim_text": "2-Day Pricing Estimate: Low usage (1 hr/day): ~120 min × $1.99 = ~$240 Medium usage (4 hrs/day): ~480 min × $1.29–$1.99 = ~$620–$955 High usage (8 hrs/day): ~960 min × $0.89–$1.99 = ~$855–$1,910 (Depends on plan and language tier.) Jeenie",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 997,
+        "end_idx": 1016
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.languageline.com/personal-interpreter",
+          "title": "Pay Per Minute Interpreter | LanguageLine Solutions",
+          "snippet": "Pay Per Minute Interpreter services. No monthly minimums, just pay for the minutes you use. 24/7 access to phone and video interpreting.",
+          "domain": "www.languageline.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.languageline.com/personal-interpreter",
+      "url_position": 955,
+      "claim_text": "2) LanguageLine Solutions – Pay-Per-Minute Pricing: ~$3.95/min for audio; ~$4.95/min for video interpreting on demand. 24/7 access, no monthly minimums. LanguageLine Solutions",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1217,
+        "end_idx": 1236
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.languageline.com/personal-interpreter",
+          "title": "Pay Per Minute Interpreter | LanguageLine Solutions",
+          "snippet": "Pay Per Minute Interpreter services. No monthly minimums, just pay for the minutes you use. 24/7 access to phone and video interpreting.",
+          "domain": "www.languageline.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.languageline.com/personal-interpreter",
+      "url_position": 1186,
+      "claim_text": "2-Day Estimate: 2 hrs/day: 240 min × ~$3.95 = ~$950 (audio) 4 hrs/day: 480 min × ~$4.95 = ~$2,376 (video) 8 hrs/day: 960 min × ~$4.95 = ~$4,752 (video) LanguageLine Solutions",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1443,
+        "end_idx": 1462
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dayinterpreting.com/pricing",
+      "url_position": 1439,
+      "claim_text": "3) Day Interpreting – Pay As You Go Pricing model: Pay-per-minute/prepaid credits; typical prices around $1.25–$1.75/min for many languages (Spanish ~$1.25/min, others ~ $1.75/min). Day Interpreting",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1637,
+        "end_idx": 1642
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dayinterpreting.com/pricing",
+      "url_position": 1624,
+      "claim_text": "2-Day Estimate: 2 hrs/day: 240 min × ~$1.25 = ~$300 4 hrs/day: 480 min × ~$1.75 = ~$840 8 hrs/day: 960 min × ~$1.75 = ~$1,680 Day Interpreting",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1857,
+        "end_idx": 1876
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://kingsoftranslation.com/on-demand-interpreting-services",
+      "url_position": 1857,
+      "claim_text": "4) Kings of Translation – Remote On-Demand Pricing: ~$1.29/min for remote phone or secure video interpreting (5-min minimum). On-site interpreters about $80/hr (2-hr min). Kings of Translation",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 2135,
+        "end_idx": 2154
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://kingsoftranslation.com/on-demand-interpreting-services",
+      "url_position": 2146,
+      "claim_text": "2-Day Estimate (remote): 2 hrs/day: 240 min × $1.29 = ~$310 4 hrs/day: 480 min × $1.29 = ~$620 8 hrs/day: 960 min × $1.29 = ~$1,240 2-Day Estimate (on-site): 16 hrs × $80 = ~$1,280 (minimums apply) Kings of Translation",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 2337,
+        "end_idx": 2343
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://languagers.com/on-demand-interpretation-services/",
+      "url_position": 2390,
+      "claim_text": "5) Languagers – On-Demand Interpreting (Pricing on request) Pricing: Professional on-demand phone/video interpreters; exact rates require contacting for a quote. languagers.com",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 2675,
+        "end_idx": 2694
+      },
+      "citation_token": "citeturn1search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://jeenie.com/pricing",
+          "title": "Plans & Pricing | Jeenie",
+          "snippet": "Get started at $1.99/min. Find a plan that fits your needs. No commitment. No minimums.",
+          "domain": "jeenie.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_0"
+        }
+      ],
+      "inline_url": "https://jeenie.com/pricing",
+      "url_position": 2746,
+      "claim_text": "2-Day Estimate: Depends on language and usage — contact for rates. Notes/Considerations Most interpreter services bill per minute or per hour; 2-day pricing is proportional to usage. Some platforms offer subscriptions that lower per-minute cost if you expect heavy use (e.g., Jeenie). Jeenie",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 2813,
+        "end_idx": 2832
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://kingsoftranslation.com/on-demand-interpreting-services",
+      "url_position": 2911,
+      "claim_text": "On-site interpreting (in person) will be more expensive due to travel, scheduling, and often multi-hour minimums. Kings of Translation",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://jeenie.com/pricing",
+        "title": "Plans & Pricing | Jeenie",
+        "domain": "Jeenie"
+      },
+      {
+        "url": "https://www.languageline.com/personal-interpreter",
+        "title": "Pay Per Minute Interpreter | LanguageLine Solutions",
+        "domain": "LanguageLine Solutions"
+      },
+      {
+        "url": "https://dayinterpreting.com/pricing",
+        "title": "Phone Interpreter Services - Real Time Multilingual Interpreting",
+        "domain": "Day Interpreting"
+      },
+      {
+        "url": "https://kingsoftranslation.com/on-demand-interpreting-services",
+        "title": "On-Demand Interpreting Services | Kings of Translation",
+        "domain": "Kings of Translation"
+      },
+      {
+        "url": "https://languagers.com/on-demand-interpretation-services/",
+        "title": "On-Demand Interpretation Services - Languagers",
+        "domain": "languagers.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://jrlanguage.com/blog/interpretation-services-rates-a-complete-guide/",
+        "title": "Interpretation Services Rates – A complete guide - JR Language",
+        "domain": "jrlanguage.com"
+      },
+      {
+        "url": "https://blog.ablio.com/how-much-does-an-interpreting-service-cost-2/",
+        "title": "How much does an Interpreting Service Cost?",
+        "domain": "ablio.com"
+      },
+      {
+        "url": "https://www.hopetranslator.com/en/resources/how-much-does-live-translation-cost",
+        "title": "How Much Does Live Translation Cost? Complete Pricing Guide 2025",
+        "domain": "hopetranslator.com"
+      },
+      {
+        "url": "https://www.charitablehealthcarenetwork.org/our-services/jeenie-translation.html",
+        "title": "Jeenie On-Demand Interpreters",
+        "domain": "charitablehealthcarenetwork.org"
+      },
+      {
+        "url": "https://elion.health/products/jeenie",
+        "title": "Jeenie Reviews, Pricing, Features & Integrations | Elion",
+        "domain": "elion.health"
+      },
+      {
+        "url": "https://boostlingo.com/solutions/interpreter-services/on-demand/",
+        "title": "On-Demand Interpretation | Phone & Video Services | Boostlingo",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://jeenie.com/platform/live-interpreting",
+        "title": "Live Interpreting Services | Jeenie",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://jeenie.com/",
+        "title": "Jeenie | Language Services and Translation in 300+ Languages",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://go.jeenie.com/ssu-translation-2p",
+        "title": "Jeenie | Get Interpreter Translations",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://jeenie.com/platform/live-interpreting/over-the-phone",
+        "title": "Over the Phone Interpreting Services | Jeenie",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://jeenie.com/for-interpreters",
+        "title": "Interpret on Jeenie | Join 20K+ Professional Interpreters",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://get.jeenie.com/view-plans/",
+        "title": "Get A Free Demo - get.jeenie.com",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://go.jeenie.com/ssu-interpreting-2p",
+        "title": "Jeenie | Get Quality Interpreters",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://jeenie.com/platform",
+        "title": "Direct-To-Interpreter (DTI) Platform | Instant Interpreting Services",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://app.jeenie.com/v3/on-boarding?signup_plan=connect",
+        "title": "Jeenie",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://app.jeenie.com/v3/on-boarding?signup_plan=plus",
+        "title": "Jeenie",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://go.jeenie.com/ssu-medical-interpreting-2p",
+        "title": "Jeenie | Medical Interpreters",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://go.jeenie.com/top-quality-interpreters-for-better-communication",
+        "title": "Jeenie | Top-Quality Interpreters for Better Communication",
+        "domain": "jeenie.com"
+      },
+      {
+        "url": "https://sourceforge.net/software/product/Jeenie/",
+        "title": "Jeenie Reviews in 2026 - SourceForge",
+        "domain": "sourceforge.net"
+      },
+      {
+        "url": "https://www.interpreters.com/pricing/interpretation/per-hour/",
+        "title": "In-person Interpreting Services | Hourly Pricing | Interpreters Unlimited",
+        "domain": "interpreters.com"
+      },
+      {
+        "url": "https://www.interpreters.com/pricing/",
+        "title": "Find Pricing for Interpretation and Translation Services",
+        "domain": "interpreters.com"
+      },
+      {
+        "url": "https://slashdot.org/software/p/Jeenie/",
+        "title": "Jeenie Reviews - 2026 - Slashdot",
+        "domain": "slashdot.org"
+      },
+      {
+        "url": "https://www.linguabee.com/interpreting-services/pricing",
+        "title": "Rates for Interpreting Services | Linguabee",
+        "domain": "linguabee.com"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/interpreting-service-cost",
+        "title": "How Much Does an Interpreting Service Cost? [2025 Guidance]",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://topbusinesssoftware.com/products/Jeenie/reviews/",
+        "title": "Jeenie Reviews (2026) - topbusinesssoftware.com",
+        "domain": "topbusinesssoftware.com"
+      },
+      {
+        "url": "https://sailanguage.com/on-demand-services/",
+        "title": "On-Demand Language Services | Translation & Interpreting",
+        "domain": "sailanguage.com"
+      },
+      {
+        "url": "https://www.rapporttranslations.com/pillar_page/how-much-does-translation-and-interpretation-cost",
+        "title": "How Much Does Translation & Interpretation Cost?",
+        "domain": "rapporttranslations.com"
+      },
+      {
+        "url": "https://info.interprenet.net/interpretation-translation-services",
+        "title": "Interpretation & Translation Services | Interprenet",
+        "domain": "interprenet.net"
+      },
+      {
+        "url": "https://www.interprefy.com/pricing",
+        "title": "Interprefy Pricing | Tailored for Multilingual Meetings and Events",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://affordablelanguageservices.com/",
+        "title": "Language Interpreting and Translation - Affordable Language Services",
+        "domain": "affordablelanguageservices.com"
+      },
+      {
+        "url": "https://worldwideinterpreters.com/interpretation/phone-interpreters/",
+        "title": "On Demand Phone Interpreters » WorldWide Interpreters",
+        "domain": "worldwideinterpreters.com"
+      },
+      {
+        "url": "https://www.stenomatic.ai/post/simultaneous-interpretation-rates-per-hour",
+        "title": "Simultaneous Interpretation Rates Per Hour: Comparison Guide",
+        "domain": "stenomatic.ai"
+      },
+      {
+        "url": "https://thetranslationgate.com/live-translation-services/",
+        "title": "Live Translation Services | The Translation Gate",
+        "domain": "thetranslationgate.com"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 33,
+    "total_all": 38
+  },
+  "response_stats": {
+    "total_length": 3186,
+    "citation_count": 11,
+    "chars_with_citations": 182
+  }
+}

@@ -1,0 +1,387 @@
+{
+  "run_id": "P064_r1",
+  "account_type": "personal",
+  "prompt": "Can you recommend the best audio to text AI transcription and summarization platforms for short form projects?",
+  "metadata": {
+    "hidden_queries": [
+      "best audio to text AI transcription and summarization platforms for short form projects",
+      "AI transcription and summarization tools comparison audio to text summarization"
+    ],
+    "sonic_classification": {
+      "latency_ms": 17.99341302830726,
+      "simple_search_prob": 0.9858779537615295,
+      "complex_search_prob": 0.012888215368621541,
+      "no_search_prob": 0.0012338308698489238,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best audio to text AI transcription and summarization platforms for short form projects"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 367,
+        "end_idx": 386
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/",
+      "url_position": 360,
+      "claim_text": "Here are strong options for AI audio‑to‑text transcription + summarization, especially suited for short‑form projects (quick transcripts + key points, summaries or highlights): 📌 Best All‑Around Platforms Otter.ai – real‑time audio transcription + automated summaries, speaker labels, exportable notes; simple UI for short recordings and meetings. Otter.ai",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 520,
+        "end_idx": 539
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 512,
+      "claim_text": "Sonix – high‑accuracy speech‑to‑text with summary features and multilingual support; great for short clips and quick output. Sonix",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 670,
+        "end_idx": 690
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://fireflies.ai/",
+      "url_position": 721,
+      "claim_text": "Fireflies.ai – auto transcribe + summarize audio/video; integrates with Zoom/Meet, good for capturing key takeaways fast. Fireflies.ai",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 894,
+        "end_idx": 913
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 946,
+      "claim_text": "📌 Editors With Built‑In Transcription + Summaries Descript – excellent for creators; transcript becomes editable content, plus basic summaries; ideal if you repurpose audio into social clips. Sonix",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1029,
+        "end_idx": 1048
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.notta.ai/en/blog/transcript-summarizer",
+      "url_position": 1133,
+      "claim_text": "Notta – focused on transcript summarization and multilingual support; fast summaries for short recordings. Notta",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1215,
+        "end_idx": 1234
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://notegpt.io/audio-summary",
+          "title": "AI Audio Summarizer – Free MP3 & Voice Summary Tool",
+          "snippet": "Limited time for full audio playback？ Use AI Audio Summarizer to quickly summarize audio files, saving you from the need to listen to the entire recordings.Read more",
+          "domain": "notegpt.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://notegpt.io/audio-summary",
+      "url_position": 1352,
+      "claim_text": "📌 Simple Web Tools / Quick Play AI Audio Summarizer (NoteGPT) – free browser tool that transcribes audio to text with quick summary output; minimal setup. NoteGPT",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1353,
+        "end_idx": 1373
+      },
+      "citation_token": "citeturn0search30",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://tactiq.io/",
+          "title": "Tactiq.io - AI Meeting Transcripts for Google Meet, Zoom ...",
+          "snippet": "Get more from your meetings with Tactiq.io AI meeting assistant. From live transcription to AI summaries, action items and custom AI prompts just for you.",
+          "domain": "tactiq.io",
+          "ref_type": "search",
+          "ref_index": 30,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_30"
+        }
+      ],
+      "inline_url": "https://tactiq.io/",
+      "url_position": 1505,
+      "claim_text": "Tactiq.io – live transcript + quick AI summaries and action items, good for meeting snippets and short clips. Tactiq",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1540,
+        "end_idx": 1559
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.notta.ai/en/blog/transcript-summarizer",
+      "url_position": 1690,
+      "claim_text": "🧠 Pro / Developer Options AssemblyAI Playground – API‑based, powerful transcription + summarization for custom workflows or short bursts programmatically. Notta",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1796,
+        "end_idx": 1828
+      },
+      "citation_token": "citeturn0search1turn0search5",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/?utm_source=chatgpt.com",
+          "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026",
+          "snippet": "Jan 9, 2026 — Enhance your workflow with the 11 best transcription apps of 2025. Get accurate, reliable speech-to-text solutions. Start using them today!",
+          "domain": "Sonix",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 1957,
+      "claim_text": "Quick pick guidance: Fast, casual content: Otter.ai or AI Audio Summarizer. Creator workflows (repurposing clips): Descript. Multilingual short projects: Sonix or Notta. API / custom apps: AssemblyAI. Sonix+1",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://otter.ai/",
+        "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+        "domain": "Otter.ai"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+        "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://fireflies.ai/",
+        "title": "Fireflies.ai | The #1 AI Notetaker for Your Meetings",
+        "domain": "Fireflies.ai"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/transcript-summarizer",
+        "title": "9 Best Transcript Summarizers Powered by AI",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://notegpt.io/audio-summary",
+        "title": "AI Audio Summarizer – Free MP3 & Voice Summary Tool",
+        "domain": "NoteGPT"
+      },
+      {
+        "url": "https://tactiq.io/",
+        "title": "Tactiq.io - AI Meeting Transcripts for Google Meet, Zoom ...",
+        "domain": "Tactiq"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.lindy.ai/blog/ai-transcriber-teams",
+        "title": "The 10 Best AI Transcribers for Teams in 2025",
+        "domain": "lindy.ai"
+      },
+      {
+        "url": "https://www.lindy.ai/blog/best-ai-summarizer",
+        "title": "9 Best AI Summarizer Tools in 2025 (I Tested 20+ To Find ...",
+        "domain": "lindy.ai"
+      },
+      {
+        "url": "https://medium.com/%40milan28.botify/i-tested-30-ai-note-taking-tools-for-college-heres-what-actually-works-and-what-s-a-complete-6025ee25ad63",
+        "title": "I Tested 30+ AI Note-Taking Tools for College — Here's ...",
+        "domain": "medium.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/artificial/comments/1m1twyw/whats_the_best_ai_for_audio_transcription/",
+        "title": "What's the best AI for audio transcription? : r/artificial",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.assemblyai.com/blog/transcript-summarizers",
+        "title": "7 best transcript summarizers powered by AI",
+        "domain": "assemblyai.com"
+      },
+      {
+        "url": "https://assemblyai.com/blog/transcript-summarizers",
+        "title": "7 best transcript summarizers powered by AI",
+        "domain": "assemblyai.com"
+      },
+      {
+        "url": "https://otio.ai/blog/best-ai-video-summarization-tools",
+        "title": "15 Best AI Video Summarization Tools for Fast Summaries",
+        "domain": "otio.ai"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/meeting-transcription-software",
+        "title": "10 Best Meeting Transcription Software [2026]",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/free-transcription-software",
+        "title": "Best Free Transcription Software: 6 Tools Tested ... - Jamie AI",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://evernote.com/ai-transcribe",
+        "title": "AI Transcribe by Evernote",
+        "domain": "evernote.com"
+      },
+      {
+        "url": "https://soundtype.ai/",
+        "title": "SoundType AI - Transcribe audio to text",
+        "domain": "soundtype.ai"
+      },
+      {
+        "url": "https://ink.dwave.cc/news/85",
+        "title": "7 AI Meeting Assistant Tools Comparison - Meeting Ink",
+        "domain": "dwave.cc"
+      },
+      {
+        "url": "https://reduct.video/blog/transcription-software-for-video/",
+        "title": "8 Best Audio and Video Transcription Software in 2026",
+        "domain": "reduct.video"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-meeting-transcription-and-summary-tools",
+        "title": "The Best Meeting Transcription and Summary Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://summarizemeeting.com/en/comparison/free-meeting-ai-tools",
+        "title": "Free AI Meeting Tools Comparison 2025 - Best No-Cost Options",
+        "domain": "summarizemeeting.com"
+      },
+      {
+        "url": "https://learn.g2.com/best-ai-transcription-tools",
+        "title": "10 Best AI Transcription Tools for Businesses on G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=8ulnQBZQ-hU",
+        "title": "Which is the BEST AI note taker? Plaud vs Zoom, Otter and ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=0inVCwpbP3s",
+        "title": "The Best AI Meeting Notetakers of 2025",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://voicetonotes.ai/blog/best-voice-to-notes-app/",
+        "title": "12 Best Voice to Notes Apps (2026) | Ranked & Reviewed",
+        "domain": "voicetonotes.ai"
+      },
+      {
+        "url": "https://www.read.ai/uploads",
+        "title": "Audio Video Transcription and Summarization",
+        "domain": "read.ai"
+      },
+      {
+        "url": "https://dataforest.ai/blog/ai-tools-to-finally-make-your-zoom-meetings-productive",
+        "title": "10 Best AI Tools for Transcribing & Summarizing Meetings",
+        "domain": "dataforest.ai"
+      },
+      {
+        "url": "https://klap.app/blog/ai-to-summarize-videos",
+        "title": "The 12 Best AI Tools to Summarize Videos for Creators in ...",
+        "domain": "klap.app"
+      },
+      {
+        "url": "https://www.kangaroos.ai/blog/best-ai-note-takers/",
+        "title": "The 10 Best AI Note Takers in 2026 (For Students)",
+        "domain": "kangaroos.ai"
+      },
+      {
+        "url": "https://zapier.com/blog/best-transcription-apps/",
+        "title": "The best transcription software in 2025",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://mapify.so/blog/best-audio-summarizers",
+        "title": "Top 5 AI Audio Summarizers to Effortlessly ...",
+        "domain": "mapify.so"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 25,
+    "total_all": 31
+  },
+  "response_stats": {
+    "total_length": 2090,
+    "citation_count": 9,
+    "chars_with_citations": 186
+  }
+}

@@ -1,0 +1,429 @@
+{
+  "run_id": "P054_r1",
+  "account_type": "personal",
+  "prompt": "What is the best instant translator for conferences?",
+  "metadata": {
+    "hidden_queries": [
+      "best instant translators for conferences devices interpretation real time",
+      "instant translator device or app for conference simultaneous translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 1.6987929120659828,
+      "simple_search_prob": 0.9680051564172423,
+      "complex_search_prob": 0.013423806258720411,
+      "no_search_prob": 0.018571037324037316,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best instant translators for conferences devices interpretation real time"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 191,
+        "end_idx": 224
+      },
+      "citation_token": "products{\"selections\":[\n[\"turn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1731,
+      "claim_text": "Here are top instant translators suited for conferences and professional settings — ranging from devices for in-person use to portable units you can raise to the speaker or pass around: Vasco Translator V4$449.00•vasco-translator.com + othersTimekettle T1 Handheld Translator Device$299.99•Timekettle + othersiFLYTEK Smart Translator$399.99•iflytek OfficialJarvisen Translator 2$399.99•Jarvisen + othersIntelligent Voice Translator$281.36•Walmart - qingqingmaoyigongsiAI Translator Recorder$99.99•K&F ConceptShow more Best overall for conference/business use Vasco Translator V4 – High accuracy, supports ~112 languages, lifetime global connectivity (no subscription); great for live event voice translation. Timekettle T1 Handheld Translator Device – Fast real-time speech translation and offline support; practical for group use. iFLYTEK Smart Translator – Premium multilingual AI device with strong translation quality. Jarvisen Translator 2 – Upper-tier all-in-one pocket translator with broad language support. Good mid-range / portable options Intelligent Voice Translator – Solid real-time translation and photo translation features. AI Translator Recorder – Adds recorded audio transcription/translation. Smart Instant Voice Translator – Budget friendly with basic real-time voice support. Pocketalk Classic Language Translator Device – Basic pocket model with global data, very affordable. Notes For large events and professional simultaneous interpretation, enterprise platforms (software/services) like Wordly, KUDO, Interprefy, and X-doc.AI Translive are often better than standalone hardware — they deliver real-time captions/interpretation across audiences and integrate into AV systems. JotMe+2Wordly+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 679,
+        "end_idx": 729
+      },
+      "citation_token": "entity[\"turn0product8\",\"Vasco Translator V4\",1]",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://translate.google.com/about/",
+      "url_position": 1963,
+      "claim_text": "Smartphones with apps (Google/Microsoft Translator) can work in a pinch but aren’t as streamlined for conferences as dedicated devices or professional platforms. Google Translate+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 868,
+        "end_idx": 939
+      },
+      "citation_token": "entity[\"turn0product0\",\"Timekettle T1 Handheld Translator Device\",0]",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1731,
+      "claim_text": "Here are top instant translators suited for conferences and professional settings — ranging from devices for in-person use to portable units you can raise to the speaker or pass around: Vasco Translator V4$449.00•vasco-translator.com + othersTimekettle T1 Handheld Translator Device$299.99•Timekettle + othersiFLYTEK Smart Translator$399.99•iflytek OfficialJarvisen Translator 2$399.99•Jarvisen + othersIntelligent Voice Translator$281.36•Walmart - qingqingmaoyigongsiAI Translator Recorder$99.99•K&F ConceptShow more Best overall for conference/business use Vasco Translator V4 – High accuracy, supports ~112 languages, lifetime global connectivity (no subscription); great for live event voice translation. Timekettle T1 Handheld Translator Device – Fast real-time speech translation and offline support; practical for group use. iFLYTEK Smart Translator – Premium multilingual AI device with strong translation quality. Jarvisen Translator 2 – Upper-tier all-in-one pocket translator with broad language support. Good mid-range / portable options Intelligent Voice Translator – Solid real-time translation and photo translation features. AI Translator Recorder – Adds recorded audio transcription/translation. Smart Instant Voice Translator – Budget friendly with basic real-time voice support. Pocketalk Classic Language Translator Device – Basic pocket model with global data, very affordable. Notes For large events and professional simultaneous interpretation, enterprise platforms (software/services) like Wordly, KUDO, Interprefy, and X-doc.AI Translive are often better than standalone hardware — they deliver real-time captions/interpretation across audiences and integrate into AV systems. JotMe+2Wordly+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 1030,
+        "end_idx": 1085
+      },
+      "citation_token": "entity[\"turn0product2\",\"iFLYTEK Smart Translator\",0]",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1731,
+      "claim_text": "Here are top instant translators suited for conferences and professional settings — ranging from devices for in-person use to portable units you can raise to the speaker or pass around: Vasco Translator V4$449.00•vasco-translator.com + othersTimekettle T1 Handheld Translator Device$299.99•Timekettle + othersiFLYTEK Smart Translator$399.99•iflytek OfficialJarvisen Translator 2$399.99•Jarvisen + othersIntelligent Voice Translator$281.36•Walmart - qingqingmaoyigongsiAI Translator Recorder$99.99•K&F ConceptShow more Best overall for conference/business use Vasco Translator V4 – High accuracy, supports ~112 languages, lifetime global connectivity (no subscription); great for live event voice translation. Timekettle T1 Handheld Translator Device – Fast real-time speech translation and offline support; practical for group use. iFLYTEK Smart Translator – Premium multilingual AI device with strong translation quality. Jarvisen Translator 2 – Upper-tier all-in-one pocket translator with broad language support. Good mid-range / portable options Intelligent Voice Translator – Solid real-time translation and photo translation features. AI Translator Recorder – Adds recorded audio transcription/translation. Smart Instant Voice Translator – Budget friendly with basic real-time voice support. Pocketalk Classic Language Translator Device – Basic pocket model with global data, very affordable. Notes For large events and professional simultaneous interpretation, enterprise platforms (software/services) like Wordly, KUDO, Interprefy, and X-doc.AI Translive are often better than standalone hardware — they deliver real-time captions/interpretation across audiences and integrate into AV systems. JotMe+2Wordly+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 1160,
+        "end_idx": 1189
+      },
+      "citation_token": "entity[\"turn0product7\",\"Jar",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1731,
+      "claim_text": "Here are top instant translators suited for conferences and professional settings — ranging from devices for in-person use to portable units you can raise to the speaker or pass around: Vasco Translator V4$449.00•vasco-translator.com + othersTimekettle T1 Handheld Translator Device$299.99•Timekettle + othersiFLYTEK Smart Translator$399.99•iflytek OfficialJarvisen Translator 2$399.99•Jarvisen + othersIntelligent Voice Translator$281.36•Walmart - qingqingmaoyigongsiAI Translator Recorder$99.99•K&F ConceptShow more Best overall for conference/business use Vasco Translator V4 – High accuracy, supports ~112 languages, lifetime global connectivity (no subscription); great for live event voice translation. Timekettle T1 Handheld Translator Device – Fast real-time speech translation and offline support; practical for group use. iFLYTEK Smart Translator – Premium multilingual AI device with strong translation quality. Jarvisen Translator 2 – Upper-tier all-in-one pocket translator with broad language support. Good mid-range / portable options Intelligent Voice Translator – Solid real-time translation and photo translation features. AI Translator Recorder – Adds recorded audio transcription/translation. Smart Instant Voice Translator – Budget friendly with basic real-time voice support. Pocketalk Classic Language Translator Device – Basic pocket model with global data, very affordable. Notes For large events and professional simultaneous interpretation, enterprise platforms (software/services) like Wordly, KUDO, Interprefy, and X-doc.AI Translive are often better than standalone hardware — they deliver real-time captions/interpretation across audiences and integrate into AV systems. JotMe+2Wordly+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 1329,
+        "end_idx": 1383
+      },
+      "citation_token": "entity[\"turn0product6\",\"Intelligent Voice Translator",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1731,
+      "claim_text": "Here are top instant translators suited for conferences and professional settings — ranging from devices for in-person use to portable units you can raise to the speaker or pass around: Vasco Translator V4$449.00•vasco-translator.com + othersTimekettle T1 Handheld Translator Device$299.99•Timekettle + othersiFLYTEK Smart Translator$399.99•iflytek OfficialJarvisen Translator 2$399.99•Jarvisen + othersIntelligent Voice Translator$281.36•Walmart - qingqingmaoyigongsiAI Translator Recorder$99.99•K&F ConceptShow more Best overall for conference/business use Vasco Translator V4 – High accuracy, supports ~112 languages, lifetime global connectivity (no subscription); great for live event voice translation. Timekettle T1 Handheld Translator Device – Fast real-time speech translation and offline support; practical for group use. iFLYTEK Smart Translator – Premium multilingual AI device with strong translation quality. Jarvisen Translator 2 – Upper-tier all-in-one pocket translator with broad language support. Good mid-range / portable options Intelligent Voice Translator – Solid real-time translation and photo translation features. AI Translator Recorder – Adds recorded audio transcription/translation. Smart Instant Voice Translator – Budget friendly with basic real-time voice support. Pocketalk Classic Language Translator Device – Basic pocket model with global data, very affordable. Notes For large events and professional simultaneous interpretation, enterprise platforms (software/services) like Wordly, KUDO, Interprefy, and X-doc.AI Translive are often better than standalone hardware — they deliver real-time captions/interpretation across audiences and integrate into AV systems. JotMe+2Wordly+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 1459,
+        "end_idx": 1512
+      },
+      "citation_token": "entity[\"turn0product5\",\"AI Translator Recorder\",0]",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1731,
+      "claim_text": "Here are top instant translators suited for conferences and professional settings — ranging from devices for in-person use to portable units you can raise to the speaker or pass around: Vasco Translator V4$449.00•vasco-translator.com + othersTimekettle T1 Handheld Translator Device$299.99•Timekettle + othersiFLYTEK Smart Translator$399.99•iflytek OfficialJarvisen Translator 2$399.99•Jarvisen + othersIntelligent Voice Translator$281.36•Walmart - qingqingmaoyigongsiAI Translator Recorder$99.99•K&F ConceptShow more Best overall for conference/business use Vasco Translator V4 – High accuracy, supports ~112 languages, lifetime global connectivity (no subscription); great for live event voice translation. Timekettle T1 Handheld Translator Device – Fast real-time speech translation and offline support; practical for group use. iFLYTEK Smart Translator – Premium multilingual AI device with strong translation quality. Jarvisen Translator 2 – Upper-tier all-in-one pocket translator with broad language support. Good mid-range / portable options Intelligent Voice Translator – Solid real-time translation and photo translation features. AI Translator Recorder – Adds recorded audio transcription/translation. Smart Instant Voice Translator – Budget friendly with basic real-time voice support. Pocketalk Classic Language Translator Device – Basic pocket model with global data, very affordable. Notes For large events and professional simultaneous interpretation, enterprise platforms (software/services) like Wordly, KUDO, Interprefy, and X-doc.AI Translive are often better than standalone hardware — they deliver real-time captions/interpretation across audiences and integrate into AV systems. JotMe+2Wordly+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 1570,
+        "end_idx": 1631
+      },
+      "citation_token": "entity[\"turn0product1\",\"Smart Instant Voice Translator\",0]",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1731,
+      "claim_text": "Here are top instant translators suited for conferences and professional settings — ranging from devices for in-person use to portable units you can raise to the speaker or pass around: Vasco Translator V4$449.00•vasco-translator.com + othersTimekettle T1 Handheld Translator Device$299.99•Timekettle + othersiFLYTEK Smart Translator$399.99•iflytek OfficialJarvisen Translator 2$399.99•Jarvisen + othersIntelligent Voice Translator$281.36•Walmart - qingqingmaoyigongsiAI Translator Recorder$99.99•K&F ConceptShow more Best overall for conference/business use Vasco Translator V4 – High accuracy, supports ~112 languages, lifetime global connectivity (no subscription); great for live event voice translation. Timekettle T1 Handheld Translator Device – Fast real-time speech translation and offline support; practical for group use. iFLYTEK Smart Translator – Premium multilingual AI device with strong translation quality. Jarvisen Translator 2 – Upper-tier all-in-one pocket translator with broad language support. Good mid-range / portable options Intelligent Voice Translator – Solid real-time translation and photo translation features. AI Translator Recorder – Adds recorded audio transcription/translation. Smart Instant Voice Translator – Budget friendly with basic real-time voice support. Pocketalk Classic Language Translator Device – Basic pocket model with global data, very affordable. Notes For large events and professional simultaneous interpretation, enterprise platforms (software/services) like Wordly, KUDO, Interprefy, and X-doc.AI Translive are often better than standalone hardware — they deliver real-time captions/interpretation across audiences and integrate into AV systems. JotMe+2Wordly+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 1694,
+        "end_idx": 1770
+      },
+      "citation_token": "entity[\"turn0product12\",\"Pocketalk Classic Language Translator Device\",0]",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1731,
+      "claim_text": "Here are top instant translators suited for conferences and professional settings — ranging from devices for in-person use to portable units you can raise to the speaker or pass around: Vasco Translator V4$449.00•vasco-translator.com + othersTimekettle T1 Handheld Translator Device$299.99•Timekettle + othersiFLYTEK Smart Translator$399.99•iflytek OfficialJarvisen Translator 2$399.99•Jarvisen + othersIntelligent Voice Translator$281.36•Walmart - qingqingmaoyigongsiAI Translator Recorder$99.99•K&F ConceptShow more Best overall for conference/business use Vasco Translator V4 – High accuracy, supports ~112 languages, lifetime global connectivity (no subscription); great for live event voice translation. Timekettle T1 Handheld Translator Device – Fast real-time speech translation and offline support; practical for group use. iFLYTEK Smart Translator – Premium multilingual AI device with strong translation quality. Jarvisen Translator 2 – Upper-tier all-in-one pocket translator with broad language support. Good mid-range / portable options Intelligent Voice Translator – Solid real-time translation and photo translation features. AI Translator Recorder – Adds recorded audio transcription/translation. Smart Instant Voice Translator – Budget friendly with basic real-time voice support. Pocketalk Classic Language Translator Device – Basic pocket model with global data, very affordable. Notes For large events and professional simultaneous interpretation, enterprise platforms (software/services) like Wordly, KUDO, Interprefy, and X-doc.AI Translive are often better than standalone hardware — they deliver real-time captions/interpretation across audiences and integrate into AV systems. JotMe+2Wordly+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 2157,
+        "end_idx": 2203
+      },
+      "citation_token": "citeturn0search0turn0search1turn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/blog/best-live-translation",
+          "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+          "snippet": "Jul 16, 2025 — Discover the 7 best AI live translation tools in 2025, including JotMe, Kudo, Wordly, and more. Compare features, pricing, and use cases for ...",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.wordly.ai/?utm_source=chatgpt.com",
+          "title": "AI Translation & Captions for Meetings and Events | Wordly",
+          "snippet": "Wordly provides real-time AI translation, captions, transcripts, and summaries for meetings and events, making them more accessible, inclusive, ...",
+          "domain": "wordly.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://www.interprefy.com/?utm_source=chatgpt.com",
+          "title": "Interprefy: Interpretation, AI Speech Translation & Captions Tech",
+          "snippet": "Empower your multilingual events with Interprefy interpretation, AI speech translation, and captions, ensuring seamless communication for global audiences.",
+          "domain": "interprefy.com",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1731,
+      "claim_text": "Here are top instant translators suited for conferences and professional settings — ranging from devices for in-person use to portable units you can raise to the speaker or pass around: Vasco Translator V4$449.00•vasco-translator.com + othersTimekettle T1 Handheld Translator Device$299.99•Timekettle + othersiFLYTEK Smart Translator$399.99•iflytek OfficialJarvisen Translator 2$399.99•Jarvisen + othersIntelligent Voice Translator$281.36•Walmart - qingqingmaoyigongsiAI Translator Recorder$99.99•K&F ConceptShow more Best overall for conference/business use Vasco Translator V4 – High accuracy, supports ~112 languages, lifetime global connectivity (no subscription); great for live event voice translation. Timekettle T1 Handheld Translator Device – Fast real-time speech translation and offline support; practical for group use. iFLYTEK Smart Translator – Premium multilingual AI device with strong translation quality. Jarvisen Translator 2 – Upper-tier all-in-one pocket translator with broad language support. Good mid-range / portable options Intelligent Voice Translator – Solid real-time translation and photo translation features. AI Translator Recorder – Adds recorded audio transcription/translation. Smart Instant Voice Translator – Budget friendly with basic real-time voice support. Pocketalk Classic Language Translator Device – Basic pocket model with global data, very affordable. Notes For large events and professional simultaneous interpretation, enterprise platforms (software/services) like Wordly, KUDO, Interprefy, and X-doc.AI Translive are often better than standalone hardware — they deliver real-time captions/interpretation across audiences and integrate into AV systems. JotMe+2Wordly+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 2370,
+        "end_idx": 2404
+      },
+      "citation_token": "citeturn0search20turn0search21",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.microsoft.com/en-us/translator/education/?utm_source=chatgpt.com",
+          "title": "Microsoft Translator for Education",
+          "snippet": "Start using the Translator apps to translate and caption live presentations and engage students who are non-native speakers, deaf or hard of hearing, dyslexic, ...",
+          "domain": "microsoft.com",
+          "ref_type": "search",
+          "ref_index": 21,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_21"
+        }
+      ],
+      "inline_url": "https://translate.google.com/about/",
+      "url_position": 1963,
+      "claim_text": "Smartphones with apps (Google/Microsoft Translator) can work in a pinch but aren’t as streamlined for conferences as dedicated devices or professional platforms. Google Translate+1",
+      "url_index": 1
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "JotMe"
+      },
+      {
+        "url": "https://translate.google.com/about/",
+        "title": "A Personal Interpreter on Your Phone or Computer",
+        "domain": "Google Translate"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/simultaneous-interpretation",
+        "title": "Real‑Time AI Simultaneous Interpreter",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-zoom-translation",
+        "title": "Top 6 AI Live Translation Tools for Zoom Meetings",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.reddit.com/r/TranslationStudies/comments/1bhce7m/live_translation_apps_for_meetings/",
+        "title": "Live translation apps for meetings : r/TranslationStudies",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/livesound/comments/uqxhng/systems_for_adding_live_translation_to_events/",
+        "title": "Systems for adding live translation to events? : r/livesound",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://vasco-translator.com/",
+        "title": "Vasco Instant Translator Devices",
+        "domain": "vasco-translator.com"
+      },
+      {
+        "url": "https://vasco-translator.com/translators/",
+        "title": "Portable Language Translator",
+        "domain": "vasco-translator.com"
+      },
+      {
+        "url": "https://kudo.ai/blog/mind-blowing-real-time-translation-devices/",
+        "title": "5 Real-Time AI Translation Devices That Will Blow Your Mind",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://certifiedlanguages.com/blog/we-tested-ai-generated-translation-devices/",
+        "title": "AI Translation Devices: We Tested 3 So You Don't Have To",
+        "domain": "certifiedlanguages.com"
+      },
+      {
+        "url": "https://www.deepl.com/en/products/voice/deepl-voice-for-meetings",
+        "title": "DeepL Voice for Meetings",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://www.amazon.com/Best-Sellers-Electronic-Foreign-Language-Translators/zgbs/office-products/290461",
+        "title": "Best Electronic Foreign Language Translators",
+        "domain": "amazon.com"
+      },
+      {
+        "url": "https://www.facebook.com/groups/504847121011133/posts/1333538158142021/",
+        "title": "Best real-time verbal translation apps for parent ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://boostlingo.com/blog/best-ai-tools-for-translation-at-events/",
+        "title": "Best AI Tools for Live Translation at Events",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-ai-translators-for-live-events",
+        "title": "The Best AI Translators for Live Events of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-zoom-live-translation-tools",
+        "title": "The Best Zoom Live Translation Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-ai-simultaneous-interpretater-tools",
+        "title": "The Best AI Simultaneous Interpreter Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-real-time-translators-for-meetings",
+        "title": "5 Best Real-Time Translators for Meetings",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://translationequipmenthq.com/",
+        "title": "Simultaneous Interpretation and Translation Equipment 101",
+        "domain": "translationequipmenthq.com"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/pocket-translators",
+        "title": "Top 3 Pocket Translators 2025: Smart Travel ...",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://www.interprefy.com/",
+        "title": "Interprefy: Interpretation, AI Speech Translation & Captions Tech",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://www.interprefy.com/download-interprefy-app",
+        "title": "Download the Interprefy Mobile App",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://www.interpretcloud.com/learn/best-voice-translator-device-conferences/",
+        "title": "What is the best voice translator device for conferences",
+        "domain": "interpretcloud.com"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/translator/education/",
+        "title": "Microsoft Translator for Education",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://wanderonwards.co/device-that-translates-languages/",
+        "title": "The Best Device That Translates Languages in Real Time",
+        "domain": "wanderonwards.co"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://livevoice.io/en/simultaneous-interpretation",
+        "title": "Live Audio for Simultaneous Interpretation - On site and",
+        "domain": "livevoice.io"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video ...",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds ...",
+        "domain": "screenapp.io"
+      }
+    ],
+    "total_cited": 2,
+    "total_additional": 29,
+    "total_all": 31
+  },
+  "response_stats": {
+    "total_length": 2138,
+    "citation_count": 11,
+    "chars_with_citations": 562
+  }
+}

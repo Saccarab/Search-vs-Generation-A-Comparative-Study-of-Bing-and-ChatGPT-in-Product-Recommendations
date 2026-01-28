@@ -1,0 +1,478 @@
+{
+  "run_id": "P003_r2",
+  "account_type": "personal",
+  "prompt": "Is there a transcription software available for a one-time payment instead of a subscription?",
+  "metadata": {
+    "hidden_queries": [
+      "transcription software one time payment instead of subscription",
+      "best one time purchase speech-to-text software transcription one-time payment"
+    ],
+    "sonic_classification": {
+      "latency_ms": 12.897087028250098,
+      "simple_search_prob": 0.9921158406509808,
+      "complex_search_prob": 0.0015082787486047076,
+      "no_search_prob": 0.006375880600414496,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "transcription software one time payment instead of subscription"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 266,
+        "end_idx": 285
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://whispernotes.app/",
+      "url_position": 265,
+      "claim_text": "Yes — there are transcription tools you can buy with a one-time payment instead of a subscription: Software with one-off purchase models Whisper Notes (iOS/macOS) – offline speech-to-text app with a single payment (about $4.99) and no subscription. Whisper Notes",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 384,
+        "end_idx": 404
+      },
+      "citation_token": "citeturn0search33",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.meetjamie.ai/blog/10-best-speech-to-text-software",
+          "title": "10 Best Speech-to-Text Software [Updated August 2025]",
+          "snippet": "Dec 13, 2025 — One-time purchase: $4.99. Source: Just Press Record. Just Press Record Pros and Cons. Pros. ✓ Convert speech into editable, searchable text.Read more",
+          "domain": "www.meetjamie.ai",
+          "ref_type": "search",
+          "ref_index": 33,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_33"
+        }
+      ],
+      "inline_url": "https://www.meetjamie.ai/blog/10-best-speech-to-text-software",
+      "url_position": 390,
+      "claim_text": "Just Press Record (iOS) – simple dictation/transcription app sold as a one-time purchase. Jamie",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 579,
+        "end_idx": 599
+      },
+      "citation_token": "citeturn0search26",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+          "title": "11 Best AI Transcription Apps for Speech-to-Text in 2025",
+          "snippet": "Pricing Model: Dragon Speech uses a one-time purchase model, with Dragon Professional Individual priced at $500. While this represents a significant upfront ...",
+          "domain": "sonix.ai",
+          "ref_type": "search",
+          "ref_index": 26,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_26"
+        }
+      ],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 627,
+      "claim_text": "Dragon Professional Individual / Dragon NaturallySpeaking (Windows) – traditional speech-to-text/transcription with a high one-time license rather than monthly fees. Sonix",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 695,
+        "end_idx": 714
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=PG&hl=en-US",
+          "title": "Transcribe Audio to Text - WizWhisp",
+          "snippet": "Dec 29, 2025 — Free to start, Pro one-time purchase (no subscription). ⏱️ Handles long recordings with ease Transcribe multi-hour interviews, long lectures, or ...Read more",
+          "domain": "apps.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_4"
+        }
+      ],
+      "inline_url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=PG&hl=en-US",
+      "url_position": 804,
+      "claim_text": "WizWhisp (Windows app) – free to start and offers a pro version via one-time purchase. Microsoft Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 854,
+        "end_idx": 855
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.maxqda.com/automatic-transcription",
+      "url_position": 1007,
+      "claim_text": "MAXQDA Transcription time packages – lets you buy blocks of transcription minutes without an ongoing subscription (pay-as-you-go). MAXQDA",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 971,
+        "end_idx": 991
+      },
+      "citation_token": "citeturn0search32",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://deepgram.com/ai-apps/vid2txt",
+      "url_position": 1154,
+      "claim_text": "Vid2txt – appears to be a transcription app sold for a one-time fee with unlimited use. Deepgram",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1124,
+        "end_idx": 1144
+      },
+      "citation_token": "citeturn0search23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.inqscribe.com/",
+          "title": "InqScribe",
+          "snippet": "AI transcription, no subscription, no usage limits. Starts immediately, runs on your computer, and is never used to train AI models. Media-savvy text editor.Read more",
+          "domain": "www.inqscribe.com",
+          "ref_type": "search",
+          "ref_index": 23,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_23"
+        }
+      ],
+      "inline_url": "https://www.inqscribe.com/",
+      "url_position": 1328,
+      "claim_text": "Other non-subscription or free options InqScribe – desktop transcription tool without subscription (local processing). inqscribe.com",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1251,
+        "end_idx": 1270
+      },
+      "citation_token": "citeturn0search0",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.reddit.com/r/podcasting/comments/13pg3a1/im_looking_for_a_transcribe_audio_to_text/",
+          "title": "I'm looking for a Transcribe Audio to Text Recorder one ...",
+          "snippet": "Pytranscriber uses the Google tts service and is completely free. Github page. It outputs both srt and txt so it's pretty convenient.Read more",
+          "domain": "www.reddit.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.reddit.com/r/podcasting/comments/13pg3a1/im_looking_for_a_transcribe_audio_to_text/?utm_source=chatgpt.com",
+          "title": "I'm looking for a Transcribe Audio to Text Recorder one ...",
+          "snippet": "Pytranscriber uses the Google tts service and is completely free. Github page. It outputs both srt and txt so it's pretty convenient.Read more",
+          "domain": "reddit.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.reddit.com/r/podcasting/comments/13pg3a1/im_looking_for_a_transcribe_audio_to_text/",
+      "url_position": 1467,
+      "claim_text": "Free/open tools like Pytranscriber or GitHub-based Whisper UIs — free and not subscription-based. reddit.com",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1428,
+        "end_idx": 1447
+      },
+      "citation_token": "citeturn0search2",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://zapier.com/blog/best-text-dictation-software/",
+          "title": "The 9 best dictation and speech-to-text software in 2026",
+          "snippet": "Dragon by Nuance price: $14.99/month for Dragon Anywhere (iOS and Android); Professional packages start at $700 for a perpetual license. Best dictation app for ...Read more",
+          "domain": "zapier.com",
+          "ref_type": "search",
+          "ref_index": 2,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_2"
+        },
+        {
+          "url": "https://zapier.com/blog/best-text-dictation-software/?utm_source=chatgpt.com",
+          "title": "The 9 best dictation and speech-to-text software in 2026",
+          "snippet": "Dragon by Nuance price: $14.99/month for Dragon Anywhere (iOS and Android); Professional packages start at $700 for a perpetual license. Best dictation app for ...Read more",
+          "domain": "zapier.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://zapier.com/blog/best-text-dictation-software/",
+      "url_position": 1733,
+      "claim_text": "Subscription services (like Otter, Sonix, Descript, etc.) dominate but these one-off purchase options exist especially in standalone apps or offline tools. zapier.com",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://whispernotes.app/",
+        "title": "Whisper Notes - Best Offline Speech to Text App | iOS & Mac",
+        "domain": "Whisper Notes"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/10-best-speech-to-text-software",
+        "title": "10 Best Speech-to-Text Software [Updated August 2025]",
+        "domain": "Jamie"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+        "title": "11 Best AI Transcription Apps for Speech-to-Text in 2025",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=PG&hl=en-US",
+        "title": "Transcribe Audio to Text - WizWhisp",
+        "domain": "Microsoft Store"
+      },
+      {
+        "url": "https://www.maxqda.com/automatic-transcription",
+        "title": "Automatic transcription with MAXQDA Transcription",
+        "domain": "MAXQDA"
+      },
+      {
+        "url": "https://deepgram.com/ai-apps/vid2txt",
+        "title": "Easiest Video & Audio Transcription App - vid2txt",
+        "domain": "Deepgram"
+      },
+      {
+        "url": "https://www.inqscribe.com/",
+        "title": "InqScribe",
+        "domain": "inqscribe.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/podcasting/comments/13pg3a1/im_looking_for_a_transcribe_audio_to_text/",
+        "title": "I'm looking for a Transcribe Audio to Text Recorder one ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://zapier.com/blog/best-text-dictation-software/",
+        "title": "The 9 best dictation and speech-to-text software in 2026",
+        "domain": "zapier.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.reddit.com/r/podcasting/comments/o7trfd/onetime_purchase_transcription_software/",
+        "title": "One-Time Purchase Transcription Software : r/podcasting",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/ArtificialInteligence/comments/1ds2f4n/does_anyone_have_a_recommendation_for_a_free_ai/",
+        "title": "Does anyone have a recommendation for a free AI ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.capterra.ca/directory/31836/transcription/pricing/free/software",
+        "title": "Free Transcription Software",
+        "domain": "capterra.ca"
+      },
+      {
+        "url": "https://thewritepractice.com/speech-to-text-apps-for-write/",
+        "title": "The Best Dictation and Speech-to-Text Apps for Writers",
+        "domain": "thewritepractice.com"
+      },
+      {
+        "url": "https://lumivero.com/products/nvivo-transcription/",
+        "title": "NVivo Transcription: Fast Transcription Software",
+        "domain": "lumivero.com"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9pgq3h6jxl4c?gl=US&hl=en-US",
+        "title": "Transcribe Audio to Text - WizWhisp",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://voicetonotes.ai/blog/best-voice-to-notes-app/",
+        "title": "12 Best Voice to Notes Apps (2026) | Ranked & Reviewed",
+        "domain": "voicetonotes.ai"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/free-transcription-software",
+        "title": "Best Free Transcription Software: 6 Tools Tested ... - Jamie AI",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://speakwrite.com/blog/meeting-transcription-service/",
+        "title": "Best Meeting Transcription Apps, Software, & Services (2025)",
+        "domain": "speakwrite.com"
+      },
+      {
+        "url": "https://reduct.video/blog/transcription-software-for-video/",
+        "title": "8 Best Audio and Video Transcription Software in 2025",
+        "domain": "reduct.video"
+      },
+      {
+        "url": "https://breev.ai/en/audio-transcription",
+        "title": "Transcribe audio without registration - Breev",
+        "domain": "breev.ai"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://otter.ai/",
+        "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://whispernotes.app/offline-speech-to-text",
+        "title": "Offline Speech to Text | Whisper Notes $4.99",
+        "domain": "whispernotes.app"
+      },
+      {
+        "url": "https://whispernotes.app/offline-transcription-software",
+        "title": "Offline Transcription Software | $4.99 vs $500",
+        "domain": "whispernotes.app"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/transcribe-speech-to-text/id1241342461",
+        "title": "Transcribe - Speech to Text - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://hyprnote.com/blog/free-transcription-software/",
+        "title": "Best Free Transcription Software in 2025",
+        "domain": "hyprnote.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=jfp8SidpbB8",
+        "title": "5 Free Apps to Automatically Transcribe Audio or Video to ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=eXYiJW8llXc",
+        "title": "Vibe is a Free, Open Source, Offline Multi-Platform ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "speechnotes.co"
+      },
+      {
+        "url": "https://www.facebook.com/groups/1242476092434209/posts/8452951944719885/",
+        "title": "Hi all, can anyone recommend a free transcribing app, I ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://zapier.com/blog/best-transcription-apps/",
+        "title": "The best transcription software in 2025",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-10-transcription-apps-review",
+        "title": "Best 10 Transcription Apps: Complete Review & Comparison",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://www.honeybear.ai/blog/best-free-transcription-software",
+        "title": "Find the Best Free Transcription Software to Turn Audio ...",
+        "domain": "honeybear.ai"
+      },
+      {
+        "url": "https://wisprflow.ai/",
+        "title": "Wispr Flow | Effortless Voice Dictation",
+        "domain": "wisprflow.ai"
+      },
+      {
+        "url": "https://shop.nuance.com/home-professional-and-consumer",
+        "title": "Dragon Speech Recognition Software and Solutions - Nuance",
+        "domain": "nuance.com"
+      },
+      {
+        "url": "https://www.speechlive.com/us/",
+        "title": "Philips SpeechLive: All-in-one dictation & transcription for ...",
+        "domain": "speechlive.com"
+      },
+      {
+        "url": "https://superwhisper.com/",
+        "title": "superwhisper",
+        "domain": "superwhisper.com"
+      },
+      {
+        "url": "https://www.lindy.ai/blog/best-speech-to-text-software",
+        "title": "I Tried 25+ Best Speech-to-Text Software: Here Are My Top ...",
+        "domain": "lindy.ai"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 29,
+    "total_all": 38
+  },
+  "response_stats": {
+    "total_length": 1790,
+    "citation_count": 9,
+    "chars_with_citations": 157
+  }
+}

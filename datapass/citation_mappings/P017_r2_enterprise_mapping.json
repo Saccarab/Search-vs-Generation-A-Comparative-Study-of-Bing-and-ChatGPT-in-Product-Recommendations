@@ -1,0 +1,357 @@
+{
+  "run_id": "P017_r2",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend a text to speech service that can generate such a conversation with multiple voices?",
+  "metadata": {
+    "hidden_queries": [
+      "text to speech services that can generate conversation with multiple voices",
+      "multi-voice conversational AI TTS service voices different characters"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.96095284447074,
+      "simple_search_prob": 0.949478938454673,
+      "complex_search_prob": 0.04341187531460184,
+      "no_search_prob": 0.007109186230725144,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "text to speech services that can generate conversation with multiple voices"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 311,
+        "end_idx": 330
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://cliptics.com/ai-multi-voice-text-to-speech-free",
+          "title": "Free Multi Voice Text to Speech | Cliptics",
+          "snippet": "Our multi voice text to speech tool is perfect for creating realistic dialogues and conversations. Add different speakers for each character, and generate natural-sounding conversations for podcasts, storytelling, educational content, and more.",
+          "domain": "cliptics.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://cliptics.com/ai-multi-voice-text-to-speech-free",
+      "url_position": 307,
+      "claim_text": "Here are solid text-to-speech services that can generate multi-voice conversations (useful for podcasts, dialogues, storytelling): Online tools (easy, no coding) Cliptics – simple multi-voice TTS for conversations with several speakers. You assign voices per speaker and generate dialogue audio. Cliptics",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 455,
+        "end_idx": 474
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://musely.ai/tools/text-to-speech-multiple-characters",
+          "title": "AI Multi-Character Text to Speech - Free Voice Generator",
+          "snippet": "How many different characters/voices can I use in one audio file? Musely's AI Multi-Character Text to Speech tool supports up to 10 distinct speakers within a single audio generation. This allows for complex dialogues and interactive scenarios, giving each character a unique identity and making your audio content more engaging and professional.",
+          "domain": "musely.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://musely.ai/tools/text-to-speech-multiple-characters",
+      "url_position": 489,
+      "claim_text": "Musely (Multi-Character TTS) – supports up to ~10 distinct voices in one audio file with individual voice controls. Musely",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 611,
+        "end_idx": 630
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://realdubbing.com/dialogue",
+      "url_position": 695,
+      "claim_text": "RealDubbing Dialogue Generator – lets you add as many character voices as needed from its library and export multi-voice audio. realdubbing.com",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 742,
+        "end_idx": 761
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.narakeet.com/create/dialogue-generator.html",
+      "url_position": 843,
+      "claim_text": "Narakeet Dialogue Generator – >900 voices across 100+ languages for multi-speaker dialogue generation. Narakeet",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 865,
+        "end_idx": 884
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://realtimetts.com/dialogue-tts",
+      "url_position": 1013,
+      "claim_text": "RealTimeTTS Dialogue TTS – supports at least two speakers with distinct voice characteristics. realtimetts.com",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1109,
+        "end_idx": 1142
+      },
+      "citation_token": "citeturn0search5turn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechgen.io/en/node/multi-voice/",
+      "url_position": 1280,
+      "claim_text": "Advanced / developer-oriented Vibe Voice (Microsoft / open-source models) – open-source TTS with up to ~4 distinct speakers and long-form multi-speaker conversation generation (good for podcast-style dialogue). SpeechGen.io+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1263,
+        "end_idx": 1283
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://wavel.ai/solutions/ai-voice-generator/multi-character-voiceover",
+      "url_position": 1443,
+      "claim_text": "Wavel.ai Multi-Character Voiceover – multi-voice dialogue generation geared toward storytelling and voiceovers. Wavel",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1447,
+        "end_idx": 1466
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voicape.com/",
+      "url_position": 1677,
+      "claim_text": "Custom voice options Voicape – multi-speaker speech synthesis and voice cloning, letting you tailor voices or clone your own for conversation tracks. Voicape",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1554,
+        "end_idx": 1573
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.voixon.com/",
+      "url_position": 1787,
+      "claim_text": "Voixon – multi-voice dialogues with emotion control and personality variation. Voixon",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1767,
+        "end_idx": 1787
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.speechmatics.com/company/articles-and-news/best-tts-apis-in-2025-top-12-text-to-speech-services-for-developers",
+      "url_position": 2007,
+      "claim_text": "Notes General TTS platforms like Google Cloud, AWS Polly, Azure TTS allow multiple voices via SSML scripting, but are more technical and require building your own dialogue logic. Speechmatics",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1930,
+        "end_idx": 1964
+      },
+      "citation_token": "citeturn0search27turn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Speechify",
+      "url_position": 2290,
+      "claim_text": "Off-the-shelf audiobook or simple reader tools (Speechify, TTSReader) may not natively support multi-voice dialogue without extra coding. en.wikipedia.org+1",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://cliptics.com/ai-multi-voice-text-to-speech-free",
+        "title": "Free Multi Voice Text to Speech | Cliptics",
+        "domain": "Cliptics"
+      },
+      {
+        "url": "https://musely.ai/tools/text-to-speech-multiple-characters",
+        "title": "AI Multi-Character Text to Speech - Free Voice Generator",
+        "domain": "Musely"
+      },
+      {
+        "url": "https://realdubbing.com/dialogue",
+        "title": "Free AI Dialogue Generator - Create Multi-Voice Audio",
+        "domain": "realdubbing.com"
+      },
+      {
+        "url": "https://www.narakeet.com/create/dialogue-generator.html",
+        "title": "Dialogue Voice Generator - narakeet.com",
+        "domain": "Narakeet"
+      },
+      {
+        "url": "https://realtimetts.com/dialogue-tts",
+        "title": "Dialogue TTS | Text to Speech Generator",
+        "domain": "realtimetts.com"
+      },
+      {
+        "url": "https://speechgen.io/en/node/multi-voice/",
+        "title": "Multi voice text to speech synthesis with dialogues",
+        "domain": "SpeechGen.io"
+      },
+      {
+        "url": "https://wavel.ai/solutions/ai-voice-generator/multi-character-voiceover",
+        "title": "Multi-Voice Voiceover Generator | Multiple AI Characters",
+        "domain": "Wavel"
+      },
+      {
+        "url": "https://voicape.com/",
+        "title": "Voicape — TTS, Multi‑Speaker Voice, Voice Cloning",
+        "domain": "Voicape"
+      },
+      {
+        "url": "https://www.voixon.com/",
+        "title": "Voixon | Advanced Text to Speech Generator",
+        "domain": "Voixon"
+      },
+      {
+        "url": "https://www.speechmatics.com/company/articles-and-news/best-tts-apis-in-2025-top-12-text-to-speech-services-for-developers",
+        "title": "Best TTS APIs in 2026: Top 12 Text-to-Speech services for developers",
+        "domain": "Speechmatics"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Speechify",
+        "title": "Speechify",
+        "domain": "en.wikipedia.org"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://ttsreader.com/blog/creating-multi-voice-multi-languages-in-ttsreader/",
+        "title": "Creating Multi-Voice & Multi-Languages in TTSReader",
+        "domain": "ttsreader.com"
+      },
+      {
+        "url": "https://musely.ai/tools/dialogue-text-to-speech",
+        "title": "Free AI Dialogue Text to Speech - Realistic Voices | Musely",
+        "domain": "musely.ai"
+      },
+      {
+        "url": "https://elevenlabs.io/docs/agents-platform/customization/voice/multi-voice-support",
+        "title": "Multi-voice support | ElevenLabs Documentation",
+        "domain": "elevenlabs.io"
+      },
+      {
+        "url": "https://vibe-voice.io/text-to-speech",
+        "title": "AI Text to Speech Generator - Multi-Speaker Voice Synthesis - Vibe Voice",
+        "domain": "vibe-voice.io"
+      },
+      {
+        "url": "https://vibevoice.io/",
+        "title": "VibeVoice - Frontier Open-Source Text-to-Speech Model",
+        "domain": "vibevoice.io"
+      },
+      {
+        "url": "https://vibe-voice.org/",
+        "title": "Vibe Voice: Open-Source AI for Text to Speech & Dialogue",
+        "domain": "vibe-voice.org"
+      },
+      {
+        "url": "https://cloud.google.com/text-to-speech",
+        "title": "Text-to-Speech AI: Lifelike Speech Synthesis | Google Cloud",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://voice.ai/text-to-speech/",
+        "title": "Free AI Text to Speech Engine with Realistic Human-Like Voices",
+        "domain": "voice.ai"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 8,
+    "total_all": 19
+  },
+  "response_stats": {
+    "total_length": 2612,
+    "citation_count": 11,
+    "chars_with_citations": 240
+  }
+}

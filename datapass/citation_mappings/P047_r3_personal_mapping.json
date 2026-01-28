@@ -1,0 +1,411 @@
+{
+  "run_id": "P047_r3",
+  "account_type": "personal",
+  "prompt": "I need a Chrome extension for live Chinese to English translation that works better than the built-in live caption feature.",
+  "metadata": {
+    "hidden_queries": [
+      "Chrome extension live Chinese to English translation",
+      "Chrome extension real time translation Chinese to English live translation extension"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.628672083839774,
+      "simple_search_prob": 0.8199909996461727,
+      "complex_search_prob": 0.17004102772071403,
+      "no_search_prob": 0.009967972633113248,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Chrome extension live Chinese to English translation"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 331,
+        "end_idx": 350
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+          "title": "Speech Translator - Chrome Web Store",
+          "snippet": "Translate any video, audio or livestream in real-time. This extension uses speech recognition technology, powered by Google, to convert speech from any source ...",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 2,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_2"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+      "url_position": 334,
+      "claim_text": "Here are Chrome extensions you can try for better live Chinese → English translation than Chrome’s built-in live caption: 🧠 Real-Time / AI-Powered Translation Speech Translator – translates audio/video in real time with speech recognition, then shows text translation. Works on livestreams, videos, meetings, etc. Chrome Web Store",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 495,
+        "end_idx": 515
+      },
+      "citation_token": "citeturn0search26",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://translatesub.com/en/extension",
+      "url_position": 574,
+      "claim_text": "TranslateSub – aims to show live translated subtitles for audio/video content directly in Chrome (75+ languages, includes Chinese). TranslateSub",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 665,
+        "end_idx": 671
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/",
+      "url_position": 762,
+      "claim_text": "JotMe – Live Translator & AI Interpreter – supports live translation and transcription in Chrome for meetings and calls (supports Mandarin). JotMe",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 851,
+        "end_idx": 857
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho?hl=en",
+      "url_position": 961,
+      "claim_text": "AI Translation & Real-Time Bilingual Subtitles (ViiTor) – provides real-time translation and caption support for Chinese and English during online meetings. Chrome Web Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1060,
+        "end_idx": 1079
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb?hl=en",
+          "title": "Google Translate - Chrome Web Store",
+          "snippet": "Highlight or right-click on a section of text and click on Translate icon next to it to translate it to your language.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb?hl=en",
+      "url_position": 1263,
+      "claim_text": "📘 Text & Page Translation (helpful for reading content) (Not “live audio” but useful when browsing Chinese sites) Google Translate – instant page and selection translation. Chrome Web Store",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1167,
+        "end_idx": 1186
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.deepl.com/en/chrome-extension",
+          "title": "DeepL for Chrome: communicate with the world in your ...",
+          "snippet": "Select source text on a webpage and click the DeepL icon to instantly translate · Select your editable text, and click the DeepL icon to translate your writing.",
+          "domain": "www.deepl.com",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        }
+      ],
+      "inline_url": "https://www.deepl.com/en/chrome-extension",
+      "url_position": 1452,
+      "claim_text": "DeepL for Chrome – often more accurate text translation than Google Translate. deepl.com",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1280,
+        "end_idx": 1299
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/immersive-translate-trans/bpoadfkcbjbfhfodiogcnhhhpibjhbnh?hl=en",
+          "title": "Immersive Translate - Translate Web & PDF",
+          "snippet": "Free Translate Website, Translate PDF & Epub eBook, Translate Video Subtitles in Bilingual. The Website Translation Extension with Explosive Word of Mouth ...Read more",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/immersive-translate-trans/bpoadfkcbjbfhfodiogcnhhhpibjhbnh?hl=en",
+      "url_position": 1599,
+      "claim_text": "Immersive Translate – hover/paragraph translation for web pages with better context. Chrome Web Store",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1681,
+        "end_idx": 1701
+      },
+      "citation_token": "citeturn0search15",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://noiz.io/blog/the-7-best-translation-extensions-for-chrome/",
+          "title": "7 Best Chrome Translation Extensions: Comparison - Noiz",
+          "snippet": "Jan 29, 2025 — Discover the top 7 Chrome translation extensions, from Google Translate to DeepL. Compare features, accuracy, and pricing to find the ...",
+          "domain": "noiz.io",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_15"
+        },
+        {
+          "url": "https://noiz.io/blog/the-7-best-translation-extensions-for-chrome/?utm_source=chatgpt.com",
+          "title": "7 Best Chrome Translation Extensions: Comparison - Noiz",
+          "snippet": "Jan 29, 2025 — Discover the top 7 Chrome translation extensions, from Google Translate to DeepL. Compare features, accuracy, and pricing to find the ...",
+          "domain": "noiz.io",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://noiz.io/blog/the-7-best-translation-extensions-for-chrome/",
+      "url_position": 2077,
+      "claim_text": "📌 Notes Most Chrome extensions don’t truly translate live audio directly from all apps (like Netflix, Zoom) unless they hook into the audio stream — Speech Translator and TranslateSub are your best bets for live translation of audio/video. Extensions like Google Translate/DeepL/Immersive Translate are better for text on pages rather than real-time speech. noiz.io",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://translatesub.com/en/extension",
+        "title": "Real-Time Audio & Video Translation",
+        "domain": "TranslateSub"
+      },
+      {
+        "url": "https://www.jotme.io/",
+        "title": "JotMe - Live Translator & AI Interpreter",
+        "domain": "JotMe"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho?hl=en",
+        "title": "AI Translation & Real-Time Bilingual Subtitles & Free",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb?hl=en",
+        "title": "Google Translate - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://www.deepl.com/en/chrome-extension",
+        "title": "DeepL for Chrome: communicate with the world in your ...",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/immersive-translate-trans/bpoadfkcbjbfhfodiogcnhhhpibjhbnh?hl=en",
+        "title": "Immersive Translate - Translate Web & PDF",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://noiz.io/blog/the-7-best-translation-extensions-for-chrome/",
+        "title": "7 Best Chrome Translation Extensions: Comparison - Noiz",
+        "domain": "noiz.io"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://support.google.com/chrome/answer/10538231?hl=en",
+        "title": "Manage captions and translations in Chrome",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/zhongwen-chinese-english/kkmlkkjojmombglmlpbpapmhcaljjkde",
+        "title": "Zhongwen: Chinese-English Dictionary - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/chinese-tools/aicnjppelckphnaiohdpicomfaedhnfk?hl=en",
+        "title": "Chinese Tools - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/live-captions/ckpgjpenbhnkhcalechemlifbcinneen?hl=en-US",
+        "title": "Live Captions - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/youtube-translator-youtub/ndbhldoclidahhoogmgklimmomnnepjg",
+        "title": "YouTube Video Translator & AI Dubbing - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/chrome/answer/173424?co=GENIE.Platform%3DDesktop&hl=en",
+        "title": "Translate pages and change Chrome languages - Computer",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/live-caption-with-transla/nphdnilkdkhfkobojgmcjpbnpnjlipip?hl=en-US",
+        "title": "Live caption with translation (ChatGPT) - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/linguist-web-page-transla/gbefmodhlophhakmoecijeppjblibmie",
+        "title": "Linguist - web page translator",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/simple-translate/ibplnjkanclpjokhdolnendpplpjiace?hl=en",
+        "title": "Simple Translate - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/slides_translator/333911051422",
+        "title": "Slides Translator - Google Workspace Marketplace",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/chinalife/comments/10nxns0/browser_extensions_for_translating_entire/",
+        "title": "Browser extensions for translating entire webpages in ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/chrome/comments/1904s13/looking_for_real_time_website_translation/",
+        "title": "Looking for real time website translation extension. : r/chrome",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://flexiclasses.com/mandarin/chrome-extensions/",
+        "title": "10 Best Chrome Extensions for Learning Chinese",
+        "domain": "flexiclasses.com"
+      },
+      {
+        "url": "https://speechlogger.com/",
+        "title": "Speechlogger - Real Time Speech to Text",
+        "domain": "speechlogger.com"
+      },
+      {
+        "url": "https://www.smartcat.com/extension-translator/chrome-web-store/",
+        "title": "Google Translate Chrome Web Store: Best Alternatives & ...",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://www.smartcat.com/extension-translator/chrome/",
+        "title": "The Ultimate Translator Extension for Chrome",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://www.smartcat.com/extension-translator/chinese/",
+        "title": "AI-Powered Chinese Translator Chrome Extension",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://www.smartcat.com/integrations/chrome-extension/",
+        "title": "Chrome Translation Plugin | Translate Any Website with AI",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://www.pixiebrix.com/blog/best-translation-extensions-chrome/",
+        "title": "The Best Translation Extensions for Chrome",
+        "domain": "pixiebrix.com"
+      },
+      {
+        "url": "https://blog.pixiebrix.com/blog/best-translation-extensions-chrome",
+        "title": "The Best Translation Extensions for Chrome",
+        "domain": "pixiebrix.com"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/",
+        "title": "Immersive Translate - Next-Gen AI Translator | Bilingual ...",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://help.method.me/en/articles/6653416-how-to-add-the-google-translate-extension-in-chrome",
+        "title": "How to add the Google Translate extension in Chrome",
+        "domain": "method.me"
+      },
+      {
+        "url": "https://www.wps.com/blog/7-best-translation-chrome-extensions/",
+        "title": "7 Best Translation Chrome Extensions 2025",
+        "domain": "wps.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 23,
+    "total_all": 31
+  },
+  "response_stats": {
+    "total_length": 2262,
+    "citation_count": 8,
+    "chars_with_citations": 128
+  }
+}

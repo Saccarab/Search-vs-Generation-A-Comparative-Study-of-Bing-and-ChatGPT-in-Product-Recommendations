@@ -1,0 +1,414 @@
+{
+  "run_id": "P063_r1",
+  "account_type": "enterprise",
+  "prompt": "What is the best machine translation tool for live translation that saves context?",
+  "metadata": {
+    "hidden_queries": [
+      "best machine translation tool for live translation that maintains context",
+      "tools supporting live translation with contextual memory features",
+      "which live translation tools maintain conversation context or memory in translation? contextual memory in live translation",
+      "machine translation live translation maintaining context features translation memory or adaptive context in real-time tools"
+    ],
+    "sonic_classification": {
+      "latency_ms": 7.037954870611429,
+      "simple_search_prob": 0.9548307438541255,
+      "complex_search_prob": 0.03738313118585369,
+      "no_search_prob": 0.007786124960020839,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best machine translation tool for live translation that maintains context"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 375,
+        "end_idx": 394
+      },
+      "citation_token": "citeturn1search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-ai-translators-with-contextual-memory",
+      "url_position": 371,
+      "claim_text": "Skeptically: there’s no single “best” tool universally, especially for live translation with long-term context/memory. Most live translators focus on real-time speech/text translation, but true conversational context retention (remembering topics, terms, style across an extended session) is rare and often requires specialized enterprise systems or custom setups. X-Doc",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 752,
+        "end_idx": 772
+      },
+      "citation_token": "citeturn1search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.google.com/translate/thread/368009254/what%E2%80%99s-new-ai-powered-live-translation-and-language-learning-tools-in-google-translate?hl=en",
+      "url_position": 803,
+      "claim_text": "Here’s the landscape with context awareness and live translation in mind: 1) Best for live real-time translation (fast, broad use) Google Translate (Live Translate / Conversation mode) – very broad language support and live speech translation in real conversations; good for travel/meetings but limited memory beyond immediate utterances. Google Help",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 891,
+        "end_idx": 910
+      },
+      "citation_token": "citeturn1search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-live-translation-apps",
+      "url_position": 1082,
+      "claim_text": "Maestra AI – strong real-time voice translation and live captions across platforms; good for meetings/events. Maestra AI",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1019,
+        "end_idx": 1029
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1246,
+      "claim_text": "JotMe / Wordly AI – reliable live translation + transcription in meeting platforms like Zoom/Teams. jotme.io",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1417,
+        "end_idx": 1436
+      },
+      "citation_token": "citeturn1search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-ai-translators-with-contextual-memory",
+      "url_position": 1661,
+      "claim_text": "2) Tools oriented toward context or memory Enterprise Translation Memory + Adaptive Systems (e.g., X-doc.AI Translive, Lilt, Smartling, Phrase) – these integrate translation memory (TM) and contextual models to remember terminology and style across sessions/documents. They’re not strictly “live translator apps”, but they maintain context for consistency. X-Doc",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1578,
+        "end_idx": 1579
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Smartcat",
+      "url_position": 1883,
+      "claim_text": "Smartcat – combines translation memory and AI, learning from past edits to improve accuracy over time (useful for repeated content). Wikipedia",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1760,
+        "end_idx": 1780
+      },
+      "citation_token": "citeturn1search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://learn.microsoft.com/en-us/azure/ai-services/translator/",
+      "url_position": 2094,
+      "claim_text": "Azure / Custom MT + TM – cloud APIs with custom translation memory support (developer focus) that retain context across sessions if engineered that way. Microsoft Learn",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 2000,
+        "end_idx": 2020
+      },
+      "citation_token": "citeturn1search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://polypal.ai/",
+      "url_position": 2376,
+      "claim_text": "3) Hybrid / niche hardware or apps Timekettle / PolyPal – real-time voice translation devices and apps; good for quick face-to-face interactions; context retention is limited to the immediate conversation. Polypal",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 2252,
+        "end_idx": 2271
+      },
+      "citation_token": "citeturn1search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-ai-translators-with-contextual-memory",
+      "url_position": 2624,
+      "claim_text": "What’s realistic now? True long-term context retention (beyond sentence-by-sentence) in live conversation is still emerging and often requires systems that combine TM, LLMs, and custom workflows, not just mobile apps. X-Doc",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-ai-translators-with-contextual-memory",
+        "title": "Ultimate Guide – The Top AI Translators with Contextual Memory of 2026",
+        "domain": "X-Doc"
+      },
+      {
+        "url": "https://support.google.com/translate/thread/368009254/what%E2%80%99s-new-ai-powered-live-translation-and-language-learning-tools-in-google-translate?hl=en",
+        "title": "What’s new: AI-powered live translation and language learning tools in ...",
+        "domain": "Google Help"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-live-translation-apps",
+        "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Smartcat",
+        "title": "Smartcat",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/translator/",
+        "title": "Azure Translator in Foundry Tools documentation",
+        "domain": "Microsoft Learn"
+      },
+      {
+        "url": "https://polypal.ai/",
+        "title": "PolyPal - AI Live Translation & Real-time Subtitles by Timekettle",
+        "domain": "Polypal"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.toptut.com/best-machine-ai-translation-tools/",
+        "title": "The 15 Best Machine (AI) Translation Tools to Use in 2026",
+        "domain": "toptut.com"
+      },
+      {
+        "url": "https://devblogs.microsoft.com/foundry/translation-customization-a-developers-guide-to-adaptive-custom-translation/",
+        "title": "Translation Customization, A Developer's Guide to Adaptive Custom ...",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.jotform.com/ai/best-ai-translator/",
+        "title": "Tried and tested: My honest review of 7 AI translators in 2026",
+        "domain": "jotform.com"
+      },
+      {
+        "url": "https://www.techharry.com/2025/10/10-best-ai-tools-for-live-translation.html",
+        "title": "10 Best AI Tools for Live Translation: AI-powered voice interpretation ...",
+        "domain": "techharry.com"
+      },
+      {
+        "url": "https://www.polilingua.com/blog/post/top_3_computer_assisted_translation_tools.htm",
+        "title": "Top 3 Computer-Assisted Translation (CAT) Tools in 2025",
+        "domain": "polilingua.com"
+      },
+      {
+        "url": "https://valiantceo.com/real-time-transcription-with-live-translation-a-technical-deep-dive/",
+        "title": "Real-Time Transcription with Live Translation: A Technical Deep Dive",
+        "domain": "valiantceo.com"
+      },
+      {
+        "url": "https://blog.google/products-and-platforms/products/translate/language-learning-live-translate/",
+        "title": "Google Translate adds live translation and language learning",
+        "domain": "blog.google"
+      },
+      {
+        "url": "https://crowdin.com/blog/best-machine-translation-software",
+        "title": "The List of Best Machine Translation Software Out There",
+        "domain": "crowdin.com"
+      },
+      {
+        "url": "https://www.allaboutai.com/best-ai-tools/productivity/translation/",
+        "title": "10 Best AI Tools for Translation in 2026 | [Accuracy Tested]",
+        "domain": "allaboutai.com"
+      },
+      {
+        "url": "https://www.taskfoundry.com/2025/07/ai-real-time-translation-best-apps.html",
+        "title": "How to Use AI for Real-Time Translation (DeepL Live vs Google Translate ...",
+        "domain": "taskfoundry.com"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.machinetranslation.com/blog/best-machine-translation-software",
+        "title": "The 10 Best Machine Translation Software in 2025",
+        "domain": "machinetranslation.com"
+      },
+      {
+        "url": "https://reverieinc.com/blog/computer-assisted-translation-tools/",
+        "title": "Top 10 Computer-Assisted Translation Tools in 2025",
+        "domain": "reverieinc.com"
+      },
+      {
+        "url": "https://taia.io/resources/blog/best-translation-software",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools by Features ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://activeloc.com/blog/best-translation-tools/",
+        "title": "Best Translation Tools Every Translator Should Know",
+        "domain": "activeloc.com"
+      },
+      {
+        "url": "https://dev.to/colinreed/translation-memory-tm-ultimate-guide-for-organizations-2829",
+        "title": "Translation Memory (TM): Ultimate Guide for Organizations",
+        "domain": "dev.to"
+      },
+      {
+        "url": "https://seatongue.com/blog/business/how-translation-memory-tools-are-evolving-to-integrate-contextual-ai/",
+        "title": "How Translation Memory Tools are Evolving to Integrate Contextual AI",
+        "domain": "seatongue.com"
+      },
+      {
+        "url": "https://www.argosmultilingual.com/blog/real-time-translation-what-works-what-doesnt-and-whats-next",
+        "title": "Real-Time Translation: What Works, What Doesn’t, and What’s Next",
+        "domain": "argosmultilingual.com"
+      },
+      {
+        "url": "https://slator.com/aws-on-using-translation-memory-for-better-contextual-ai-translation/",
+        "title": "AWS on Using Translation Memory for Better Contextual AI Translation",
+        "domain": "slator.com"
+      },
+      {
+        "url": "https://seatongue.com/blog/business/top-10-ai-professional-tools-for-translators-revolutionising-the-industry-in-2025/",
+        "title": "Top 10 AI Professional Tools for Translators - SEAtongue",
+        "domain": "seatongue.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-real-time-translation-apps/",
+        "title": "10 Best Real-time Language Translation Apps for Effortless Communication",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.sciencedirect.com/science/article/pii/S2589004224021035",
+        "title": "Overview and challenges of machine translation for contextually ...",
+        "domain": "sciencedirect.com"
+      },
+      {
+        "url": "https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00677/123652/Context-Aware-Machine-Translation-with-Source",
+        "title": "Context-Aware Machine Translation with Source Coreference Explanation",
+        "domain": "mit.edu"
+      },
+      {
+        "url": "https://www.g2.com/articles/machine-translation-tools",
+        "title": "10 Best Machine Translation Tools to Consider in 2024 - G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://github.com/GILT-Forum/TM-Mgmt-Best-Practices/blob/master/best-practices.md",
+        "title": "Best Practices in Translation Memory Management - GitHub",
+        "domain": "github.com"
+      },
+      {
+        "url": "https://www.naargmedia.com/translation-memory-tools/",
+        "title": "10 Best Translation Memory Tools in 2025 - naargmedia.com",
+        "domain": "naargmedia.com"
+      },
+      {
+        "url": "https://arxiv.org/pdf/2506.07583",
+        "title": "Beyond the Sentence: A Survey on Context-Aware Machine Translation with ...",
+        "domain": "arxiv.org"
+      },
+      {
+        "url": "https://www.transifex.com/translation-memory-software",
+        "title": "Translation Memory Software | Boost Efficiency And Consistency",
+        "domain": "transifex.com"
+      },
+      {
+        "url": "https://translated.com/resources/real-time-translation-live-language-processing",
+        "title": "Real-Time Translation: A Guide to Live Language Processing",
+        "domain": "translated.com"
+      },
+      {
+        "url": "https://www.stenomatic.ai/post/best-ai-translation-platforms",
+        "title": "The Best AI Translation Tools & Software in 2025 - Stenomatic",
+        "domain": "stenomatic.ai"
+      },
+      {
+        "url": "https://ehlion.com/magazine/translation-software/",
+        "title": "The 5 Best Machine Translation Tools in 2025 - EHLION",
+        "domain": "ehlion.com"
+      },
+      {
+        "url": "https://localizejs.com/articles/everything-you-want-to-know-about-real-time-translation",
+        "title": "The Ultimate Guide to Real-Time Language Translation",
+        "domain": "localizejs.com"
+      },
+      {
+        "url": "https://www.strikingly.com/blog/posts/top-7-real-time-translation-tools-you-need-in-2025",
+        "title": "Top 7 Real-Time Translation Tools You Need in 2025 - En...",
+        "domain": "strikingly.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 33,
+    "total_all": 40
+  },
+  "response_stats": {
+    "total_length": 3070,
+    "citation_count": 9,
+    "chars_with_citations": 147
+  }
+}

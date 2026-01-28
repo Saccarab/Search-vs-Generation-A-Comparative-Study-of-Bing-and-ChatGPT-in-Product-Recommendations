@@ -1,0 +1,376 @@
+{
+  "run_id": "P069_r1",
+  "account_type": "personal",
+  "prompt": "Can you recommend free text-to-speech extensions that dont sound robotic?",
+  "metadata": {
+    "hidden_queries": [
+      "free text to speech extensions that don't sound robotic browser extension",
+      "best free TTS extensions natural voices Chrome / Firefox free text to speech"
+    ],
+    "sonic_classification": {
+      "latency_ms": 16.073266975581646,
+      "simple_search_prob": 0.9961987105709372,
+      "complex_search_prob": 0.0007938455519019565,
+      "no_search_prob": 0.0030074438771608143,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free text to speech extensions that don't sound robotic browser extension"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 238,
+        "end_idx": 244
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/naturalreader-ai-text-to/kohfgcgbkjodfcfkcackpagifgbcmimk?hl=en",
+      "url_position": 242,
+      "claim_text": "Here are some free browser text‑to‑speech extensions that generally sound more natural and less robotic: Chrome / Cross‑Browser NaturalReader – AI Text to Speech – realistic voices with many languages and decent free tier. Chrome Web Store",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 418,
+        "end_idx": 423
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/read-aloud-a-text-to-spee/hdhinadidafjejdhmfkjgnolgimiaplp?hl=en",
+      "url_position": 521,
+      "claim_text": "Read Aloud: A Text to Speech Voice Reader – supports cloud voices like Google Wavenet, Amazon Polly, Microsoft (more natural than basic system voices). Chrome Web Store+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 563,
+        "end_idx": 583
+      },
+      "citation_token": "citeturn0search26",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/voice-out-text-to-speech/jmodgcjbfcmningbahdmedofbabejbba?hl=en",
+          "title": "Voice Out: Text to Speech Voice Reader - Chrome Web Store",
+          "snippet": "Voice Out Text to Speech (TTS) extension lets you read aloud any webpage ... Our voices aren't just robotic; they're crafted to sound natural and engaging.Read more",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 26,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_26"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/voice-out-text-to-speech/jmodgcjbfcmningbahdmedofbabejbba?hl=en",
+      "url_position": 750,
+      "claim_text": "Voice Out: Text to Speech (TTS) – offers a large set of voices designed to sound natural and engaging. Chrome Web Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 669,
+        "end_idx": 689
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voice.ai/hub/tts/text-to-speech-chrome-extension/",
+      "url_position": 944,
+      "claim_text": "Talkie – simple TTS with multiple language support and voice options (free). Voice.ai",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 785,
+        "end_idx": 805
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://addons.mozilla.org/en-US/firefox/addon/read-aloud/",
+      "url_position": 1104,
+      "claim_text": "Firefox Read Aloud – similar to the Chrome version with browser and cloud voices. Firefox Add-ons",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 901,
+        "end_idx": 921
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.semantix.com/resources/blog/text-to-speech-software-guide/text-to-speech-firefox",
+      "url_position": 1262,
+      "claim_text": "Text to Speech (TTS) – uses HTML5 & system voices that can sound natural, easy to use. Semantix",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 983,
+        "end_idx": 984
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/blog/text-to-speech-mozilla",
+      "url_position": 1419,
+      "claim_text": "TTS Fox – lightweight reader with adjustable speech. Murf AI",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1163,
+        "end_idx": 1174
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voice.ai/hub/tts/best-text-to-speech-chrome-extension/",
+      "url_position": 1623,
+      "claim_text": "Notes Some free extensions let you choose higher‑quality cloud voices but may prompt for optional sign‑in or limited daily usage on the free tier. Voice.ai",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1312,
+        "end_idx": 1331
+      },
+      "citation_token": "citeturn0search2",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/read-aloud-a-text-to-spee/hdhinadidafjejdhmfkjgnolgimiaplp?hl=en",
+          "title": "Read Aloud: A Text to Speech Voice Reader",
+          "snippet": "Read Aloud uses text-to-speech (TTS) technology to convert webpage text to audio. It works on a variety of websites, including news sites, blogs, fan fiction, ...",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 2,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_2"
+        },
+        {
+          "url": "https://chromewebstore.google.com/detail/read-aloud-a-text-to-spee/hdhinadidafjejdhmfkjgnolgimiaplp?hl=en&utm_source=chatgpt.com",
+          "title": "Read Aloud: A Text to Speech Voice Reader",
+          "snippet": "Read Aloud uses text-to-speech (TTS) technology to convert webpage text to audio. It works on a variety of websites, including news sites, blogs, fan fiction, ...",
+          "domain": "Chrome Web Store",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/read-aloud-a-text-to-spee/hdhinadidafjejdhmfkjgnolgimiaplp?hl=en",
+      "url_position": 1830,
+      "claim_text": "Basic system voices (the ones built into the OS) can still sound a bit artificial — cloud or AI voices tend to be smoother. Chrome Web Store",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://chromewebstore.google.com/detail/naturalreader-ai-text-to/kohfgcgbkjodfcfkcackpagifgbcmimk?hl=en",
+        "title": "NaturalReader - AI Text to Speech - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/read-aloud-a-text-to-spee/hdhinadidafjejdhmfkjgnolgimiaplp?hl=en",
+        "title": "Read Aloud: A Text to Speech Voice Reader",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/voice-out-text-to-speech/jmodgcjbfcmningbahdmedofbabejbba?hl=en",
+        "title": "Voice Out: Text to Speech Voice Reader - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://voice.ai/hub/tts/text-to-speech-chrome-extension/",
+        "title": "20 Best Text To Speech Chrome Extensions To Turn Any ...",
+        "domain": "Voice.ai"
+      },
+      {
+        "url": "https://addons.mozilla.org/en-US/firefox/addon/read-aloud/",
+        "title": "Read Aloud: A Text to Speech Voice Reader",
+        "domain": "Firefox Add-ons"
+      },
+      {
+        "url": "https://www.semantix.com/resources/blog/text-to-speech-software-guide/text-to-speech-firefox",
+        "title": "How to use Text-to-Speech with Firefox | Semantix",
+        "domain": "Semantix"
+      },
+      {
+        "url": "https://murf.ai/blog/text-to-speech-mozilla",
+        "title": "Mozilla TTS and Top 5 Text to Speech Ad-ons for Firefox",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://voice.ai/hub/tts/best-text-to-speech-chrome-extension/",
+        "title": "15 Best Text-to-Speech Chrome Extensions to Save Time ...",
+        "domain": "Voice.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.reddit.com/r/GetStudying/comments/16r6hn8/best_free_natural_sounding_text_to_speech_program/",
+        "title": "Best Free Natural Sounding Text to Speech program?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/software/comments/1gajk6j/any_natural_sounding_text_to_speech_chrome/",
+        "title": "any natural sounding text to speech chrome extension?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/firefox/comments/1ht9o59/where_can_i_find_natural_voice_text_to_speech/",
+        "title": "where can i find \" NATURAL VOICE \" text to speech addon?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/software/comments/1j464ys/any_good_text_to_speech_extension_for_which_reads/",
+        "title": "any good text to speech extension for which reads from ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/firefox/comments/1fgnadw/any_good_text_to_speech_for_firefox_like_edge/",
+        "title": "Any good text to speech for Firefox like edge?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/firefox/comments/1bjzy4s/any_good_read_aloud_extensions/",
+        "title": "Any good read aloud extensions? : r/firefox",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.sybill.ai/blogs/best-chrome-text-to-speech-extensions",
+        "title": "7 Best Chrome Text to Speech Extensions in 2025",
+        "domain": "sybill.ai"
+      },
+      {
+        "url": "https://www.facebook.com/groups/assistive.technology.group/posts/8080664795321914/",
+        "title": "What are free text-to-speech reading options without ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://speechify.com/text-to-speech-chrome-extension/?srsltid=AfmBOopJ4Xut7M_xsTuKpsrur8XJ9ooZmY9guLO4AsgAfge9A6j9sE0l",
+        "title": "Free Text To Speech & Voice Typing Chrome Extension",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://typecast.ai/learn/text-to-speech-chrome-extension/",
+        "title": "The Best Text-to-Speech Chrome Extensions",
+        "domain": "typecast.ai"
+      },
+      {
+        "url": "https://medium.com/%40KanikaBK/5-mind-blowing-ai-chrome-extensions-that-transform-reading-into-power-9fd541685a5e",
+        "title": "5 mind-blowing AI Chrome extensions that transform ...",
+        "domain": "medium.com"
+      },
+      {
+        "url": "https://readvox.com/",
+        "title": "Readvox: Text to Speech TTS AI",
+        "domain": "readvox.com"
+      },
+      {
+        "url": "https://www.listening.com/browser-extension",
+        "title": "Text to Speech Browser Extension | Chrome & Firefox ...",
+        "domain": "listening.com"
+      },
+      {
+        "url": "https://murf.ai/blog/best-text-to-speech-chrome-extensions",
+        "title": "Top 7 Best Text to Speech Chrome Extensions",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://notegpt.io/text-to-speech",
+        "title": "Text to Speech with AI Free, Natural & Realistic AI Voices",
+        "domain": "notegpt.io"
+      },
+      {
+        "url": "https://getpeech.com/blog/text-to-speech-add-ons-for-mozilla-firefox",
+        "title": "Top 4 Text-to-Speech Firefox Add-ons",
+        "domain": "getpeech.com"
+      },
+      {
+        "url": "https://news.ycombinator.com/item?id=33163751",
+        "title": "Ask HN: Best free text-to-speech plugins for browsers?",
+        "domain": "ycombinator.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speechify-%E2%80%94-voice-ai-assi/ljflmlehinmoeknoonhibbjpldiijjmm",
+        "title": "Speechify — Voice AI Assistant - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://ttsreader.com/",
+        "title": "TTSReader | Text To Speech Reader Online. Accurate & Free",
+        "domain": "ttsreader.com"
+      },
+      {
+        "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+        "title": "Best free text-to-speech software of 2025",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech with Gemini and ChatGPT AI Voices",
+        "domain": "naturalreaders.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 21,
+    "total_all": 29
+  },
+  "response_stats": {
+    "total_length": 1939,
+    "citation_count": 9,
+    "chars_with_citations": 122
+  }
+}

@@ -1,0 +1,434 @@
+{
+  "run_id": "P039_r2",
+  "account_type": "personal",
+  "prompt": "What are some free transcription AI tools available?",
+  "metadata": {
+    "hidden_queries": [
+      "free transcription AI tools available",
+      "free automatic transcription AI software free tier"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.967776994220912,
+      "simple_search_prob": 0.9938796591439218,
+      "complex_search_prob": 0.0006366331227161959,
+      "no_search_prob": 0.005483707733361959,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 168,
+        "end_idx": 188
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://otter.ai/",
+          "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+          "snippet": "Otter is the AI Notetaker that builds your knowledge base and powers your workflow with transcription, automated summaries, AI Chat, and more.Read more",
+          "domain": "otter.ai",
+          "ref_type": "search",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_25"
+        }
+      ],
+      "inline_url": "https://otter.ai/",
+      "url_position": 164,
+      "claim_text": "Here are some free AI transcription tools you can use right now: Online & standalone tools Otter.ai – AI meeting & audio transcription with a free tier. Otter.ai",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 252,
+        "end_idx": 253
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.descript.com/transcription",
+      "url_position": 249,
+      "claim_text": "Descript – Free starter plan with basic transcription. Descript",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 345,
+        "end_idx": 364
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://riverside.com/transcription",
+      "url_position": 366,
+      "claim_text": "Riverside Transcription – Free AI transcription for audio/video. Riverside",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 430,
+        "end_idx": 440
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.notta.ai/en",
+      "url_position": 468,
+      "claim_text": "Notta – AI meeting + recording transcription free trial. Notta",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 515,
+        "end_idx": 535
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.uniscribe.co/",
+      "url_position": 561,
+      "claim_text": "UniScribe – Upload audio/video to get free transcripts. UniScribe",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 599,
+        "end_idx": 609
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://breev.ai/en/audio-transcription",
+      "url_position": 651,
+      "claim_text": "Breev.ai – Free, no-signup online audio transcription. Breev",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 679,
+        "end_idx": 699
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://turboscribe.ai/",
+      "url_position": 757,
+      "claim_text": "TurboScribe – Free unlimited transcription claims. TurboScribe",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 771,
+        "end_idx": 790
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://deepgram.com/free-transcription",
+      "url_position": 856,
+      "claim_text": "Deepgram Free Transcription – Free online speech-to-text tool. Deepgram",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 860,
+        "end_idx": 880
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://aurisai.io/",
+      "url_position": 968,
+      "claim_text": "Auris AI – Free online transcription & subtitle generation. Auris AI",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 952,
+        "end_idx": 972
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechnotes.co/",
+      "url_position": 1080,
+      "claim_text": "Speechnotes – Free speech-to-text browser tool with dictation. Free Speech Transcription",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1037,
+        "end_idx": 1057
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://notegpt.io/audio-to-text-converter",
+      "url_position": 1174,
+      "claim_text": "NoteGPT Audio to Text – Free online audio-to-text tool. notegpt.io",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1148,
+        "end_idx": 1168
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://gotranscript.com/blog/top-5-free-transcription-tools",
+      "url_position": 1317,
+      "claim_text": "Other free options Google Docs Voice Typing – Free live dictation inside Docs. gotranscript.com",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1273,
+        "end_idx": 1293
+      },
+      "citation_token": "citeturn0search23",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.assemblyai.com/blog/the-top-free-speech-to-text-apis-and-open-source-engines?utm_source=chatgpt.com",
+          "title": "The top free Speech-to-Text APIs, AI Models, and Open ...",
+          "snippet": "Oct 23, 2025 — Let's compare three of the most popular Speech-to-Text APIs and AI models with a free tier: AssemblyAI, Google, and AWS Transcribe.Read more",
+          "domain": "assemblyai.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.assemblyai.com/blog/the-top-free-speech-to-text-apis-and-open-source-engines",
+      "url_position": 1492,
+      "claim_text": "Speech-to-Text APIs with free tiers (AssemblyAI, Google, AWS) if you’re building your own tool. assemblyai.com",
+      "url_index": 12
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://otter.ai/",
+        "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+        "domain": "Otter.ai"
+      },
+      {
+        "url": "https://www.descript.com/transcription",
+        "title": "Free AI Transcription for Audio & Video | Fast & Accurate",
+        "domain": "Descript"
+      },
+      {
+        "url": "https://riverside.com/transcription",
+        "title": "Audio & Video Transcription. Powered by AI.",
+        "domain": "Riverside"
+      },
+      {
+        "url": "https://www.notta.ai/en",
+        "title": "AI Note Taker | Free AI Meeting Transcription",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://www.uniscribe.co/",
+        "title": "Convert audio and video to text online for free",
+        "domain": "UniScribe"
+      },
+      {
+        "url": "https://breev.ai/en/audio-transcription",
+        "title": "Transcribe audio - without registration, directly online",
+        "domain": "Breev"
+      },
+      {
+        "url": "https://turboscribe.ai/",
+        "title": "TurboScribe: Transcribe Audio and Video to Text",
+        "domain": "TurboScribe"
+      },
+      {
+        "url": "https://deepgram.com/free-transcription",
+        "title": "Free Transcription Tool",
+        "domain": "Deepgram"
+      },
+      {
+        "url": "https://aurisai.io/",
+        "title": "Auris AI - Free Transcription, Translation & Subtitling Tool",
+        "domain": "Auris AI"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "Free Speech Transcription"
+      },
+      {
+        "url": "https://notegpt.io/audio-to-text-converter",
+        "title": "Audio to Text Converter with AI - Free Online, No Sign-up",
+        "domain": "notegpt.io"
+      },
+      {
+        "url": "https://gotranscript.com/blog/top-5-free-transcription-tools",
+        "title": "Top 5 Free Transcription Tools (and When to Upgrade)",
+        "domain": "gotranscript.com"
+      },
+      {
+        "url": "https://www.assemblyai.com/blog/the-top-free-speech-to-text-apis-and-open-source-engines",
+        "title": "The top free Speech-to-Text APIs, AI Models, and Open ...",
+        "domain": "assemblyai.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://otter.ai/free-ai-transcription",
+        "title": "AI Transcription Free: Fast, Easy, Accurate Transcription",
+        "domain": "otter.ai"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Otter.ai",
+        "title": "Otter.ai - WikipediaInteractive transcripts - WikipediaAI Transcription Free: Fast, Easy, Accurate Transcription",
+        "domain": "wikipedia.org"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/free-transcription-software",
+        "title": "Best Free Transcription Software: 6 Tools Tested ... - Jamie AI",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://affine.pro/blog/cheapest-ai-transcription-service-tips",
+        "title": "Finding the Cheapest AI Transcription Service: 5 Top Options",
+        "domain": "affine.pro"
+      },
+      {
+        "url": "https://www.reddit.com/r/ArtificialInteligence/comments/1ds2f4n/does_anyone_have_a_recommendation_for_a_free_ai/",
+        "title": "Does anyone have a recommendation for a free AI ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://meetgeek.ai/blog/best-free-transcription-software",
+        "title": "4 Best Free Transcription Software For 2026",
+        "domain": "meetgeek.ai"
+      },
+      {
+        "url": "https://www.ai-media.tv/knowledge-hub/insights/free-transcription-tools/",
+        "title": "AI-Powered Transcription Tools & Solutions for Businesses",
+        "domain": "ai-media.tv"
+      },
+      {
+        "url": "https://hyprnote.com/blog/free-transcription-software/",
+        "title": "Best Free Transcription Software in 2025",
+        "domain": "hyprnote.com"
+      },
+      {
+        "url": "https://vizard.ai/tools/video-to-text",
+        "title": "Video to Text Converter - AI Transcript Generator for Free",
+        "domain": "vizard.ai"
+      },
+      {
+        "url": "https://wondertools.substack.com/p/the-best-ai-transcription-tools",
+        "title": "Best AI Transcription Tools: Otter, Sonix, Notta and others",
+        "domain": "substack.com"
+      },
+      {
+        "url": "https://restream.io/tools/transcribe-audio-to-text",
+        "title": "Transcribe Audio to Text: AI Transcription Software",
+        "domain": "restream.io"
+      },
+      {
+        "url": "https://restream.io/tools/transcribe-video-to-text",
+        "title": "Transcribe Video to Text: AI Transcription Software",
+        "domain": "restream.io"
+      },
+      {
+        "url": "https://www.beey.io/en/",
+        "title": "Beey.ai - Automatic transcription and subtitles for your audio ...",
+        "domain": "beey.io"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=s4VAbMGRXhU",
+        "title": "Top 9 Best FREE Audio Transcription Sites You're Not ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://scribewave.com/",
+        "title": "Scribewave | AI transcription, 100% private - Free account",
+        "domain": "scribewave.com"
+      },
+      {
+        "url": "https://evernote.com/ai-transcribe",
+        "title": "AI Transcribe by Evernote",
+        "domain": "evernote.com"
+      },
+      {
+        "url": "https://www.songscription.ai/",
+        "title": "Songscription AI - Transcribe Your Music for Free",
+        "domain": "songscription.ai"
+      },
+      {
+        "url": "https://insidea.com/blog/ai/ai-tools-for-transcribing/",
+        "title": "Top 10 AI Tools for Transcribing (Free & Paid) ...",
+        "domain": "insidea.com"
+      },
+      {
+        "url": "https://zapier.com/blog/best-transcription-apps/",
+        "title": "The best transcription software in 2025",
+        "domain": "zapier.com"
+      }
+    ],
+    "total_cited": 13,
+    "total_additional": 19,
+    "total_all": 32
+  },
+  "response_stats": {
+    "total_length": 1646,
+    "citation_count": 13,
+    "chars_with_citations": 219
+  }
+}

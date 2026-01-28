@@ -1,0 +1,478 @@
+{
+  "run_id": "P041_r3",
+  "account_type": "personal",
+  "prompt": "What other text-to-speech software options are available besides Outplayed?",
+  "metadata": {
+    "hidden_queries": [
+      "text-to-speech software options besides Outplayed",
+      "best text to speech tools available TTS software alternatives"
+    ],
+    "sonic_classification": {
+      "latency_ms": 29.03983707074076,
+      "simple_search_prob": 0.9946482004296437,
+      "complex_search_prob": 0.0020832240574202,
+      "no_search_prob": 0.0032685755129360527,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "text-to-speech software options besides Outplayed"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 184,
+        "end_idx": 190
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 185,
+      "claim_text": "Here are some notable text-to-speech (TTS) alternatives to Outplayed: General & popular TTS tools NaturalReader – Cloud-based TTS with multiple voices and document support. TechRadar",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 288,
+        "end_idx": 307
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2025",
+          "snippet": "This document from TechRadar (dated September 29, 2025) presents a comprehensive guide to the best text-to-speech (TTS) software of 2025. It emphasizes the growing importance of TTS for accessibility, productivity, and content creation, particularly in media like YouTube and podcasting.\n\nThe top picks include:\n\n1. **NaturalReader** – Best overall for personal/home use, offering 56 voices across 9 languages and cloud-based access.\n2. **Murf** – Best for realistic AI voices, ideal for e-learning and presentations, with advanced editing and voice-changing tools.\n3. **Amazon Polly** – Best for developers, offering easy API integration and broad language support.\n4. **Play.ht** – Best for podcasting, providing nearly 600 voices in over 60 languages, with options tailored for commercial use.\n5. **Voice Dream Reader** – Best for Mac and iOS users, offering 186 voices in 30 languages and compatibility with multiple cloud services.\n\nThe article also explains the difference between web-based TTS services and desktop software, discusses subscription models, and offers advice for integrating TTS into business workflows. Each software was rigorously tested based on performance, usability, voice quality, and pricing.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": 1759131698,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 334,
+      "claim_text": "Murf AI – High-quality AI voices and editing features, good for voiceovers. TechRadar",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 393,
+        "end_idx": 412
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2025",
+          "snippet": "This document from TechRadar (dated September 29, 2025) presents a comprehensive guide to the best text-to-speech (TTS) software of 2025. It emphasizes the growing importance of TTS for accessibility, productivity, and content creation, particularly in media like YouTube and podcasting.\n\nThe top picks include:\n\n1. **NaturalReader** – Best overall for personal/home use, offering 56 voices across 9 languages and cloud-based access.\n2. **Murf** – Best for realistic AI voices, ideal for e-learning and presentations, with advanced editing and voice-changing tools.\n3. **Amazon Polly** – Best for developers, offering easy API integration and broad language support.\n4. **Play.ht** – Best for podcasting, providing nearly 600 voices in over 60 languages, with options tailored for commercial use.\n5. **Voice Dream Reader** – Best for Mac and iOS users, offering 186 voices in 30 languages and compatibility with multiple cloud services.\n\nThe article also explains the difference between web-based TTS services and desktop software, discusses subscription models, and offers advice for integrating TTS into business workflows. Each software was rigorously tested based on performance, usability, voice quality, and pricing.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": 1759131698,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 484,
+      "claim_text": "Play.ht – Many languages/voices, geared toward podcasting and video content. TechRadar",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 487,
+        "end_idx": 505
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2025",
+          "snippet": "This document from TechRadar (dated September 29, 2025) presents a comprehensive guide to the best text-to-speech (TTS) software of 2025. It emphasizes the growing importance of TTS for accessibility, productivity, and content creation, particularly in media like YouTube and podcasting.\n\nThe top picks include:\n\n1. **NaturalReader** – Best overall for personal/home use, offering 56 voices across 9 languages and cloud-based access.\n2. **Murf** – Best for realistic AI voices, ideal for e-learning and presentations, with advanced editing and voice-changing tools.\n3. **Amazon Polly** – Best for developers, offering easy API integration and broad language support.\n4. **Play.ht** – Best for podcasting, providing nearly 600 voices in over 60 languages, with options tailored for commercial use.\n5. **Voice Dream Reader** – Best for Mac and iOS users, offering 186 voices in 30 languages and compatibility with multiple cloud services.\n\nThe article also explains the difference between web-based TTS services and desktop software, discusses subscription models, and offers advice for integrating TTS into business workflows. Each software was rigorously tested based on performance, usability, voice quality, and pricing.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": 1759131698,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 623,
+      "claim_text": "Voice Dream Reader – Mobile-friendly TTS with broad file support. TechRadar",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 589,
+        "end_idx": 609
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://narrationbox.com/blog/top-text-to-speech-tools-in-2025-free-and-paid-options",
+      "url_position": 777,
+      "claim_text": "Balabolka – Free Windows TTS with customizable voices and export options. narrationbox.com",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 677,
+        "end_idx": 697
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voice.ai/hub/tools/best-text-to-speech/",
+      "url_position": 933,
+      "claim_text": "Panopreter Basic – Simple free TTS that saves audio files. Voice.ai",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 759,
+        "end_idx": 779
+      },
+      "citation_token": "citeturn0search26",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechify.com/?srsltid=AfmBOoo02oL6en0zIIZjmuTTSehDfpG9Rm4nsk1r_sQCrxwbN6zk8l1z",
+      "url_position": 1047,
+      "claim_text": "Speechify – Popular reader for web, PDFs, and books. Speechify",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 840,
+        "end_idx": 860
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.eweek.com/artificial-intelligence/speechify-alternatives/",
+      "url_position": 1200,
+      "claim_text": "ElevenLabs – AI voice generation and voice cloning. eweek.com",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 926,
+        "end_idx": 946
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.eweek.com/artificial-intelligence/speechify-alternatives/",
+      "url_position": 1340,
+      "claim_text": "LOVO – AI voice production suite with many voice styles. eweek.com",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1011,
+        "end_idx": 1031
+      },
+      "citation_token": "citeturn0search30",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Typecast_%28AI_voice_generator%29",
+      "url_position": 1479,
+      "claim_text": "Typecast – Web-based TTS with advanced prosody control. Wikipedia",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1142,
+        "end_idx": 1162
+      },
+      "citation_token": "citeturn0search31",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Amazon_Polly",
+          "title": "Amazon Polly",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 31,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_31"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Amazon_Polly",
+      "url_position": 1654,
+      "claim_text": "Developer / API-focused options Amazon Polly – TTS API with many languages and realistic voices. Wikipedia",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1247,
+        "end_idx": 1267
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.g2.com/categories/text-to-speech",
+      "url_position": 1779,
+      "claim_text": "Google Cloud Text-to-Speech – Large voice library and deep learning voices. G2",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1332,
+        "end_idx": 1352
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.eweek.com/artificial-intelligence/speechify-alternatives/",
+      "url_position": 1340,
+      "claim_text": "LOVO – AI voice production suite with many voice styles. eweek.com",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1441,
+        "end_idx": 1461
+      },
+      "citation_token": "citeturn0search37",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.g2.com/categories/text-to-speech",
+      "url_position": 1886,
+      "claim_text": "Microsoft Azure Text to Speech – Neural voices via API. G2",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 1532,
+        "end_idx": 1552
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/ESpeak",
+      "url_position": 2020,
+      "claim_text": "Open-source / technical eSpeakNG – Compact cross-platform open-source TTS. Wikipedia",
+      "url_index": 13
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.techradar.com/best/best-text-to-speech-software",
+        "title": "Best text-to-speech software of 2025",
+        "domain": "TechRadar"
+      },
+      {
+        "url": "https://narrationbox.com/blog/top-text-to-speech-tools-in-2025-free-and-paid-options",
+        "title": "Top Text-to-Speech Tools in 2025: Free and Paid Options",
+        "domain": "narrationbox.com"
+      },
+      {
+        "url": "https://voice.ai/hub/tools/best-text-to-speech/",
+        "title": "27 Best Text-to-Speech Tools to Make Content More ...",
+        "domain": "Voice.ai"
+      },
+      {
+        "url": "https://speechify.com/?srsltid=AfmBOoo02oL6en0zIIZjmuTTSehDfpG9Rm4nsk1r_sQCrxwbN6zk8l1z",
+        "title": "Speechify: Free Text to Speech & Voice Typing AI Assistant ...",
+        "domain": "Speechify"
+      },
+      {
+        "url": "https://www.eweek.com/artificial-intelligence/speechify-alternatives/",
+        "title": "6 Best Speechify Alternatives and Competitors",
+        "domain": "eweek.com"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Typecast_%28AI_voice_generator%29",
+        "title": "Typecast (AI voice generator)",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Amazon_Polly",
+        "title": "Amazon Polly",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.g2.com/categories/text-to-speech",
+        "title": "Best Text to Speech Software",
+        "domain": "G2"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/ESpeak",
+        "title": "ESpeak",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.speechmatics.com/company/articles-and-news/best-tts-apis-in-2025-top-12-text-to-speech-services-for-developers",
+        "title": "Best TTS APIs in 2026: Top 12 Text-to-Speech services for ...",
+        "domain": "Speechmatics"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://forum.devtalk.com/t/what-are-the-best-text-to-speech-ai-generation-tools-that-you-can-run-locally/191895",
+        "title": "What are the best text-to-speech ai generation tools that you can run ...",
+        "domain": "devtalk.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/TextToSpeech/comments/1g6vwz6/best_text_to_speech_software_purely_for_having/",
+        "title": "Best Text to Speech software purely for having text read out ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/audiobooks/comments/t3pan6/whats_the_best_text_to_speech_software_these_days/",
+        "title": "What's the best text to speech software these days?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/software/comments/1mhfccm/whats_the_best_free_text_to_speech_ai_tool_that/",
+        "title": "What's the best free text to speech AI tool that sounds really ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+        "title": "Best free text-to-speech software of 2026",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=Ic1CjOCQ1ZI",
+        "title": "Text to Speech Software: 5 Tools You NEED To Know",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=t0zXc7SGr9I",
+        "title": "The BEST Text to Speech Software | This is WILD",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://medium.com/freelancers-hub/best-ai-voice-generators-2025-review-i-tested-20-tools-to-find-the-top-5-0c2b45070273",
+        "title": "I Tested 25+ AI Voice Generators: Here are the Top 7 for ...",
+        "domain": "medium.com"
+      },
+      {
+        "url": "https://www.facebook.com/groups/assistive.technology.group/posts/8080664795321914/",
+        "title": "What are free text-to-speech reading options without ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://smallest.ai/blog/open-source-tts-alternatives-compared",
+        "title": "Top Open Source Text to Speech Alternatives Compared",
+        "domain": "smallest.ai"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech Online with Realistic AI Voices - NaturalReader",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://micmonster.com/google-text-to-speech-alternative/",
+        "title": "Google Text-to-Speech Alternative: Top 4 Options Compared",
+        "domain": "micmonster.com"
+      },
+      {
+        "url": "https://www.respeecher.com/blog/best-ai-text-to-speech-tools",
+        "title": "Best AI Text-to-Speech Tools for Realistic Voice Generation",
+        "domain": "respeecher.com"
+      },
+      {
+        "url": "https://zapier.com/blog/best-ai-voice-generator/",
+        "title": "The 9 best AI voice generators in 2025",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://getpeech.com/blog/naturalreader-alternatives",
+        "title": "NaturalReader Text to Speech: 4 Best Alternatives & ...",
+        "domain": "getpeech.com"
+      },
+      {
+        "url": "https://text-to-speech-tts-930.soft112.com/text-to-speech-tts-930-alternatives.html",
+        "title": "TTS Alternatives - Soft112 - Top 10 Text To Speech",
+        "domain": "soft112.com"
+      },
+      {
+        "url": "https://www.powtoon.com/blog/text-to-speech-software/",
+        "title": "Best text to speech software to try in 2024",
+        "domain": "powtoon.com"
+      },
+      {
+        "url": "https://www.business.com/articles/best-text-to-speech-software/",
+        "title": "Best Free Text-to-Speech Software for 2026",
+        "domain": "business.com"
+      },
+      {
+        "url": "https://modal.com/blog/open-source-tts",
+        "title": "The Top Open-Source Text to Speech (TTS) Models",
+        "domain": "modal.com"
+      },
+      {
+        "url": "https://cartesia.ai/learn/top-speechify-alternatives",
+        "title": "Top 15 Best Speechify Alternatives in 2025",
+        "domain": "cartesia.ai"
+      }
+    ],
+    "total_cited": 10,
+    "total_additional": 20,
+    "total_all": 30
+  },
+  "response_stats": {
+    "total_length": 2377,
+    "citation_count": 15,
+    "chars_with_citations": 282
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "run_id": "P012_r2",
+  "account_type": "personal",
+  "prompt": "What is the best platform to convert video voice into another language?",
+  "metadata": {
+    "hidden_queries": [
+      "best platforms to convert video voice into another language voice translation voiceover",
+      "best tools for video voice translation and dubbing service video speech translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 22.521513979882002,
+      "simple_search_prob": 0.9796551954339234,
+      "complex_search_prob": 0.009069052514650941,
+      "no_search_prob": 0.011275752051425628,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 270,
+        "end_idx": 290
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.synthesia.io/features/video-translator",
+          "title": "FREE AI Video Translator in 130+ Languages",
+          "snippet": "Synthesia is widely considered the best video translation tool. It delivers accurate translations, natural-sounding voices, and frame-accurate lip‑sync ...Read more",
+          "domain": "www.synthesia.io",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_15"
+        }
+      ],
+      "inline_url": "https://www.synthesia.io/features/video-translator",
+      "url_position": 120,
+      "claim_text": "Here are top platforms for converting video spoken voice into another language (AI-powered dubbing/translationSynthesia",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 401,
+        "end_idx": 406
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/us/app/lingvotube-video-translator/id1632282523",
+      "url_position": 425,
+      "claim_text": "App Store",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 532,
+        "end_idx": 552
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.androidcentral.com/apps-software/youtube/youtubes-new-trick-automatically-re-dubs-any-video-into-your-native-tongue",
+      "url_position": 513,
+      "claim_text": "Android Central",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 647,
+        "end_idx": 666
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/",
+          "title": "AI Media Translation, Subtitles & Dubbing Platform | Maestra",
+          "snippet": "With Maestra you can automatically: transcribe, caption, and voiceover your video and audio files into more than 125 languages. Theme. Tools / Product. Live ...Read more",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_4"
+        }
+      ],
+      "inline_url": "https://maestra.ai/",
+      "url_position": 251,
+      "claim_text": "Maestra AI",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 731,
+        "end_idx": 751
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/translate-video",
+      "url_position": 370,
+      "claim_text": "HappyScribe",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 864,
+        "end_idx": 884
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenpal.com/tool/ai-video-translator",
+      "url_position": 310,
+      "claim_text": "ScreenPal",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 997,
+        "end_idx": 1003
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dubly.ai/",
+      "url_position": 281,
+      "claim_text": "Dubly.AI",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1095,
+        "end_idx": 1114
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/lingvotube-video-translator/id1632282523",
+          "title": "Lingvotube: Video translator - App Store",
+          "snippet": "This subtitle translator player app helps you to convert video subtitles into your favorite languages and learn new languages by listening to voiceovers or ...",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/lingvotube-video-translator/id1632282523",
+      "url_position": 425,
+      "claim_text": "App Store",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1229,
+        "end_idx": 1247
+      },
+      "citation_token": "citeturn0news56",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.heygen.com/translate",
+      "url_position": 179,
+      "claim_text": "HeyGen",
+      "url_index": 1
+    }
+  ],
+  "source_summary": {
+    "cited": [],
+    "additional": [],
+    "total_cited": 0,
+    "total_additional": 0,
+    "total_all": 0
+  },
+  "response_stats": {
+    "total_length": 644,
+    "citation_count": 9,
+    "chars_with_citations": 147
+  }
+}

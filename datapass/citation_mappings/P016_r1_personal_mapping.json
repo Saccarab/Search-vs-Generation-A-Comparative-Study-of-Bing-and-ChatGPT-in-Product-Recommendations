@@ -1,0 +1,116 @@
+{
+  "run_id": "P016_r1",
+  "account_type": "personal",
+  "prompt": "I need live transcribing while using online streaming or watching videos.",
+  "metadata": {
+    "hidden_queries": [],
+    "sonic_classification": null,
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 163,
+        "end_idx": 183
+      },
+      "citation_token": "image_group{\"query",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 289,
+        "end_idx": 309
+      },
+      "citation_token": "entity[\"company\",\"",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 466,
+        "end_idx": 519
+      },
+      "citation_token": "entity[\"organization\",\"Microsoft\",\"software company",
+      "type": "entity",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 661,
+        "end_idx": 669
+      },
+      "citation_token": "entity",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 862,
+        "end_idx": 870
+      },
+      "citation_token": "entity",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 1032,
+        "end_idx": 1033
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 1232,
+        "end_idx": 1239
+      },
+      "citation_token": "entity",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 1350,
+        "end_idx": 1399
+      },
+      "citation_token": "entity[\"company\",\"Twitch\",\"streaming platform\"]",
+      "type": "entity",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 1499,
+        "end_idx": 1516
+      },
+      "citation_token": "entity[\"company",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 1638,
+        "end_idx": 1639
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": []
+    }
+  ],
+  "source_summary": {
+    "cited": [],
+    "additional": [],
+    "total_cited": 0,
+    "total_additional": 0,
+    "total_all": 0
+  },
+  "response_stats": {
+    "total_length": 1358,
+    "citation_count": 10,
+    "chars_with_citations": 184
+  }
+}

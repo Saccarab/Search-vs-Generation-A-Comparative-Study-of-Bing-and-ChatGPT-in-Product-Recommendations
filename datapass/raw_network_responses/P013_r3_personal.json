@@ -1,0 +1,21 @@
+{
+  "query_index": "13",
+  "run_number": "3",
+  "prompt_id": "P013",
+  "query": "How can I convert an audio file to text?",
+  "generated_search_query": "N/A",
+  "hidden_queries_json": "[]",
+  "search_result_groups_json": "[]",
+  "content_references_json": "[]",
+  "sonic_classification_json": "null",
+  "response_text": "You’ve got a few easy options—pick based on whether you want quick, free, or automated.  Fast & simple (no setup)  Google Docs → Tools → Voice typing (play the audio near your mic)  Otter.ai → upload audio, good accuracy for meetings  Notta / Sonix / Descript → upload → get text in minutes  On your phone  iPhone: Voice Memos → share → transcribe (iOS 17+)  Android: Google Recorder → auto-transcribes  Offline / technical (best control)  OpenAI Whisper  bashCopy codepip install whisper  whisper audio.mp3 --model small  Already on YouTube?  Upload → use auto-captions → download transcript  If you tell me file type, language, and whether you want free vs highest accuracy, I’ll point you to the best exact option.",
+  "web_search_forced": "false",
+  "web_search_triggered": "false",
+  "items_json": "[]",
+  "items_count": "0",
+  "items_with_citations_count": "0",
+  "sources_cited_json": "[]",
+  "sources_additional_json": "[]",
+  "sources_all_json": "[]",
+  "account_type": "personal"
+}

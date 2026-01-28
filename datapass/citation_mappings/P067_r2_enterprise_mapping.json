@@ -1,0 +1,94 @@
+{
+  "run_id": "P067_r2",
+  "account_type": "enterprise",
+  "prompt": "How can I add a live translation service for official meetings?",
+  "metadata": {
+    "hidden_queries": [],
+    "sonic_classification": null,
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 788,
+        "end_idx": 789
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0064768",
+      "url_position": 753,
+      "claim_text": "To add live translation for official meetings, decide first whether you need human interpretation (best for accuracy/legal nuance) or AI captions/translation (cheaper, faster, but riskier). 1) Pick the delivery model Simultaneous interpretation (human): Participants choose an audio language channel. Best for formal/regulated settings. Live translated captions (AI): On-screen translated text (and sometimes transcripts). Good for accessibility and lower-stakes content. Hybrid: Human interpreters for the “official record” + AI captions as a convenience. 2) Use what your meeting platform already supports Zoom: Built-in Language Interpretation lets hosts assign interpreters and run interpretation channels in scheduled meetings/webinars. Zoom",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 1014,
+        "end_idx": 1015
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.microsoft.com/en-us/office/multilingual-speech-recognition-in-microsoft-teams-650cb6d2-8a33-40e7-840d-36bb90216aa4",
+      "url_position": 1048,
+      "claim_text": "Microsoft Teams: Supports multilingual features like live translated captions/transcripts, and newer “Interpreter” capabilities depending on licensing (often Teams Premium / Microsoft 365 Copilot). Microsoft Support+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1532,
+        "end_idx": 1533
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.interprefy.com/solutions/remote-simultaneous-interpretation",
+      "url_position": 1665,
+      "claim_text": "If you’re already standardized on Zoom/Teams, starting with the native feature is usually the fastest path. 3) When you need “enterprise/official” reliability, add an RSI provider For higher control (interpreter management, analytics, dial-in, hybrid AV integration, compliance options), consider a Remote Simultaneous Interpretation (RSI) vendor that can plug into your platform: Interprefy (RSI; integrates with common meeting platforms; also available for Teams). Interprefy+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1656,
+        "end_idx": 1657
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://kudo.ai/solutions/live-speech-translation-online-meeting-platform/",
+      "url_position": 1829,
+      "claim_text": "KUDO (human or AI speech translation; can integrate via widget / run on its own). KUDO+1",
+      "url_index": 3
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0064768",
+        "title": "support.zoom.com",
+        "domain": "support.zoom.com"
+      },
+      {
+        "url": "https://support.microsoft.com/en-us/office/multilingual-speech-recognition-in-microsoft-teams-650cb6d2-8a33-40e7-840d-36bb90216aa4",
+        "title": "support.microsoft.com",
+        "domain": "support.microsoft.com"
+      },
+      {
+        "url": "https://www.interprefy.com/solutions/remote-simultaneous-interpretation",
+        "title": "www.interprefy.com",
+        "domain": "www.interprefy.com"
+      }
+    ],
+    "additional": [],
+    "total_cited": 3,
+    "total_additional": 0,
+    "total_all": 3
+  },
+  "response_stats": {
+    "total_length": 3347,
+    "citation_count": 4,
+    "chars_with_citations": 4
+  }
+}

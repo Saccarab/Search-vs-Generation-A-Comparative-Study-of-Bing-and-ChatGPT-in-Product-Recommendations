@@ -1,0 +1,343 @@
+{
+  "run_id": "P063_r1",
+  "account_type": "personal",
+  "prompt": "What is the best machine translation tool for live translation that saves context?",
+  "metadata": {
+    "hidden_queries": [
+      "best machine translation tool for live translation that saves context",
+      "实时翻译 保存上下文 机器翻译 工具 live translation context aware"
+    ],
+    "sonic_classification": {
+      "latency_ms": 28.909263899549842,
+      "simple_search_prob": 0.9509097897310212,
+      "complex_search_prob": 0.03940340546663844,
+      "no_search_prob": 0.009686804802340312,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best machine translation tool for live translation that saves context"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 341,
+        "end_idx": 374
+      },
+      "citation_token": "citeturn0search3turn0search31",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://x-doc.ai/usecases/en/the-best-ai-translators-with-contextual-memory?utm_source=chatgpt.com",
+          "title": "The Best AI Translators with Contextual Memory of 2026",
+          "snippet": "Our top 5 recommendations include X-doc.AI Translive, Lilt, Smartling, Phrase, and DeepL for their outstanding contextual features and performance. What Is an ...Read more",
+          "domain": "x-doc.ai",
+          "ref_type": "search",
+          "ref_index": 31,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_31"
+        }
+      ],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-ai-real-time-translators",
+      "url_position": 336,
+      "claim_text": "Here are the best machine translation tools for live translation that keep context (ongoing conversation memory or contextual awareness): Top options (2026) 1) X‑doc.AI Translive – Best overall for live voice + text with context memory and meeting features like summaries. Context retention tailored for ongoing conversations.X-Doc+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 512,
+        "end_idx": 532
+      },
+      "citation_token": "citeturn0search23",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/",
+      "url_position": 540,
+      "claim_text": "2) Wordly – Real‑time transcription + translation + summaries for meetings/events (helps preserve meaning/context across sessions).Wordly",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 653,
+        "end_idx": 673
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.smartling.com/blog/real-time-translation",
+      "url_position": 694,
+      "claim_text": "3) Microsoft Translator – Real‑time conversation mode via app/Teams with context carry‑over in multi‑person chats.smartling.com",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 822,
+        "end_idx": 840
+      },
+      "citation_token": "citeturn0news34",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+      "url_position": 904,
+      "claim_text": "4) Google Translate (Live) – Live speech + text; recent updates improve context/idiom understanding, and live headphone translation available.Tom's Guide",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1037,
+        "end_idx": 1057
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.deepl.com/en/translator",
+      "url_position": 1237,
+      "claim_text": "Also good (but less “context memory” focused) DeepL – Excellent accuracy and natural phrasing; best for text translation with contextual quality, not full continuous live speech memory.deepl.com",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1180,
+        "end_idx": 1200
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://immersivetranslate.com/en/",
+      "url_position": 1410,
+      "claim_text": "Immersive Translate – Combines multiple engines with context‑aware text translation (less real‑time speech focus).Immersive Translate",
+      "url_index": 5
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-ai-real-time-translators",
+        "title": "Ultimate Guide – The Best AI Real Time Translators of 2026",
+        "domain": "X-Doc"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://www.smartling.com/blog/real-time-translation",
+        "title": "Real-time translation software: Everything you need to know",
+        "domain": "smartling.com"
+      },
+      {
+        "url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+        "title": "Google Translate is bringing real-time translations powered by Gemini to your headphones",
+        "domain": "Tom's Guide"
+      },
+      {
+        "url": "https://www.deepl.com/en/translator",
+        "title": "DeepL Translate: The world's most accurate translator",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/",
+        "title": "Immersive Translate - Next-Gen AI Translator | Bilingual ...",
+        "domain": "Immersive Translate"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.convey911.com/blog/text-translation-software?hsLang=en",
+        "title": "9 Essential Text Translation Software Picks for 2026",
+        "domain": "convey911.com"
+      },
+      {
+        "url": "https://crowdin.com/blog/best-machine-translation-software",
+        "title": "The List of Best Machine Translation Software Out There - Crowdin",
+        "domain": "crowdin.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://certifiedlanguages.com/blog/we-tested-ai-generated-translation-devices/",
+        "title": "AI Translation Devices: We Tested 3 So You Don't Have To",
+        "domain": "certifiedlanguages.com"
+      },
+      {
+        "url": "https://ehlion.com/magazine/translation-software/",
+        "title": "The 5 Best Machine Translation Tools in 2025 | EHLION",
+        "domain": "ehlion.com"
+      },
+      {
+        "url": "https://blog.csdn.net/weixin_42311427/article/details/156800566",
+        "title": "HY-MT1.5-1.8B保姆级教程：边缘设备实时翻译部署案例原创",
+        "domain": "csdn.net"
+      },
+      {
+        "url": "https://blog.csdn.net/weixin_29903713/article/details/156805182",
+        "title": "HY-MT1.5旅游场景应用：实时语音翻译设备集成方案",
+        "domain": "csdn.net"
+      },
+      {
+        "url": "https://crowdin.com/blog/best-llms-for-translation",
+        "title": "List of The Best Large Language Models for Translation",
+        "domain": "crowdin.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/live-translator-ai-%E6%B2%89%E6%B5%B8%E5%BC%8F%E7%BF%BB%E8%AF%91/id6740606431?l=zh-Hans-CN",
+        "title": "Live Translator - AI 沉浸式翻译 - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://www.pairaphrase.com/blog/ai-translation-tools",
+        "title": "17 Best AI Translation Tools for Enterprise Teams [2025]",
+        "domain": "pairaphrase.com"
+      },
+      {
+        "url": "https://patents.google.com/patent/CN105408891B/zh",
+        "title": "CN105408891B - 用于多用户多语言通信的系统和方法",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://docs.cloud.google.com/architecture/security/fedramp-dod-compliance-scope?hl=zh-cn",
+        "title": "FedRAMP 和DoD 合规范围",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/machinetranslation/comments/1ct8lx1/which_ai_is_best_suited_for_translating_a_novel/",
+        "title": "Which AI is best suited for translating a novel?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://lokalise.com/blog/best-ai-translation-tools/",
+        "title": "The Best AI translation tools right now",
+        "domain": "lokalise.com"
+      },
+      {
+        "url": "https://www.machinetranslation.com/",
+        "title": "Machine Translation - AI Translator",
+        "domain": "machinetranslation.com"
+      },
+      {
+        "url": "https://learn.microsoft.com/zh-cn/azure/developer/ai/build-openai-mcp-server-dotnet",
+        "title": "在Azure 容器应用中使用MCP 服务器生成.NET OpenAI 代理",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://github.com/jxzzlfh/awesome-stars",
+        "title": "jxzzlfh/awesome-stars",
+        "domain": "github.com"
+      },
+      {
+        "url": "https://xtm.cloud/blog/ai-translation-tools/",
+        "title": "The Best AI Translation Tools for 2025",
+        "domain": "xtm.cloud"
+      },
+      {
+        "url": "https://taia.io/blog/technology-and-translation/best-translation-software/",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1546383/000121390022000062/ea153284ex10-2_jxluxven.htm",
+        "title": "全球购电子商务开放平台店铺服务协议",
+        "domain": "sec.gov"
+      },
+      {
+        "url": "https://www.adverbum.com/post/best-ai-translation-tools-in-2026-ranked-8",
+        "title": "Top 8 Best AI Translation Tools in 2026, Ranked",
+        "domain": "adverbum.com"
+      },
+      {
+        "url": "https://docs.qgis.org/3.22/pdf/zh_Hans/QGIS-3.22-DesktopUserGuide-zh_Hans.pdf",
+        "title": "QGIS Desktop 3.22 User Guide",
+        "domain": "qgis.org"
+      },
+      {
+        "url": "https://www.polilingua.com/blog/post/top-machine-language-translation-software.htm",
+        "title": "Best Machine Translation Software in 2025",
+        "domain": "polilingua.com"
+      },
+      {
+        "url": "https://lilt.com/blog/best-ai-translation-tools-choosing-the-right-platform-for-global-communication",
+        "title": "Best AI Translation Tools: How to Choose the Right Platform",
+        "domain": "lilt.com"
+      },
+      {
+        "url": "https://translatepress.com/best-ai-translation-tool/",
+        "title": "My Favorite AI Translation Tools & Online ...",
+        "domain": "translatepress.com"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-tourist-real-time-translation-tools",
+        "title": "The Best Tourist Real Time Translation Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-ai-translators-with-contextual-memory",
+        "title": "The Best AI Translators with Contextual Memory of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://help.sap.com/doc/f26f2b506c9b1014bf2c9a7eb0e91070/2.8.21.0/zh-CN/28_analysisplugin_user_zh.pdf",
+        "title": "Analysis Plug-in User Guide",
+        "domain": "sap.com"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 28,
+    "total_all": 34
+  },
+  "response_stats": {
+    "total_length": 1808,
+    "citation_count": 6,
+    "chars_with_citations": 131
+  }
+}

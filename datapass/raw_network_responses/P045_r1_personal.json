@@ -1,0 +1,21 @@
+{
+  "query_index": "45",
+  "run_number": "1",
+  "prompt_id": "P045",
+  "query": "What are the biggest opportunities for live speech translation in sports arenas and football stadiums?",
+  "generated_search_query": "N/A",
+  "hidden_queries_json": "[]",
+  "search_result_groups_json": "[]",
+  "content_references_json": "[]",
+  "sonic_classification_json": "{\"latency_ms\":0.06597000174224377,\"simple_search_prob\":0.6845597342036651,\"complex_search_prob\":0.23242289057652765,\"no_search_prob\":0.08301737521980723,\"simple_search_threshold\":0,\"complex_search_threshold\":0.4,\"no_search_threshold\":0.175,\"threshold_order\":[\"no_search\",\"complex\",\"simple\"],\"classifier_config_name\":\"sonic_classifier_5p2_3cls_ev3\",\"classifier_config\":{\"model_name\":\"snc-pg-sw-3cls-ev3\",\"renderer_name\":\"harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action\",\"classifier_config_name\":\"sonic_classifier_5p2_3cls_ev3\",\"model_config_name\":\"chatgpt_sonic_classifier_model_config\",\"disable_sonic_prefetch_classifier\":false,\"force_disabled_rate\":0,\"force_enabled_rate\":0,\"num_messages\":20,\"only_user_messages\":false,\"remove_memory\":true,\"support_mm\":true,\"n_ctx\":2048,\"max_action_length\":4,\"dynamic_set_max_message_size\":false,\"max_message_tokens\":2000,\"append_base_config\":false,\"no_search_token\":\"1\",\"simple_search_token\":\"7\",\"complex_search_token\":\"5\",\"simple_search_threshold\":0,\"complex_search_threshold\":0.4,\"no_search_threshold\":0.175,\"prefetch_threshold\":0.55,\"first_turn_prefetch_threshold\":null,\"force_search_first_turn_threshold\":0.00001,\"threshold_order\":[\"no_search\",\"complex\",\"simple\"],\"passthrough_tool_calls\":null,\"passthrough_tool_name_exclusions\":[\"genui\"],\"timeout\":1},\"classifier_snapshot_id\":\"wli-searchdb-model5-2025-09-23-20-17\",\"decision_source\":\"classifier\",\"passthrough_tool_names\":[]}",
+  "response_text": "Here are the biggest opportunities for live speech translation in sports arenas and football stadiums — direct and concise:  Fan Experience  Real-time translation of announcements (announcers, PA system).  Translated commentary on personal devices/headsets.  Multilingual wayfinding & service messages (concession stands, restrooms, exits).  Global Audiences  Support for international fans attending matches.  Tailored language channels for major visitor demographics.  In-Venue Apps & AR  Live translated captions in stadium apps.  Augmented reality overlays with translated speech/text.  Player & Coach Interactions  Sideline communication support for multilingual teams.  Press conferences with instant translation.  Safety & Accessibility  Emergency announcements automatically translated.  Accessibility support for deaf/hard-of-hearing (speech-to-text + translation).  Sponsored Content  Multilingual sponsor messages and promotions.  Interactive voice ads in different languages.  Social & Community Engagement  Live fan polls/questions translated.  Multilingual chat during breaks/halftime.  If you want, I can break down the technical solutions that make these work.",
+  "web_search_forced": "false",
+  "web_search_triggered": "false",
+  "items_json": "[]",
+  "items_count": "0",
+  "items_with_citations_count": "0",
+  "sources_cited_json": "[]",
+  "sources_additional_json": "[]",
+  "sources_all_json": "[]",
+  "account_type": "personal"
+}

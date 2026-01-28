@@ -1,0 +1,326 @@
+{
+  "run_id": "P063_r2",
+  "account_type": "personal",
+  "prompt": "What is the best machine translation tool for live translation that saves context?",
+  "metadata": {
+    "hidden_queries": [
+      "best machine translation tool for live translation with context saving",
+      "live translation tools that preserve context machine translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 3.4240051172673702,
+      "simple_search_prob": 0.9509097897310212,
+      "complex_search_prob": 0.03940340546663844,
+      "no_search_prob": 0.009686804802340312,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best machine translation tool for live translation with context saving"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 274,
+        "end_idx": 294
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wordly.ai/",
+          "title": "AI Translation & Captions for Meetings and Events | Wordly",
+          "snippet": "Wordly provides real-time AI translation, captions, transcripts, and summaries for meetings and events, making them more accessible, inclusive, ...",
+          "domain": "www.wordly.ai",
+          "ref_type": "search",
+          "ref_index": 19,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_19"
+        }
+      ],
+      "inline_url": "https://www.wordly.ai/",
+      "url_position": 273,
+      "claim_text": "Here are the top live machine translation tools that handle real‑time translation and retain context well (for conversation or ongoing content): 1) Wordly – real‑time translation + captions + transcripts for meetings and events, keeps context across conversations. Wordly",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 467,
+        "end_idx": 485
+      },
+      "citation_token": "citeturn0news36",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+          "title": "Google Translate is bringing real-time translations powered by Gemini to your headphones",
+          "snippet": "Google has announced a major update to Google Translate that brings real-time translation powered by its AI model, Gemini, to any pair of headphones with a microphone. Previously limited to Google's Pixel Buds, this capability is now available in beta to users with the Google Translate app in the U.S., Mexico, and India. By tapping the \"Live translate\" button with headphones paired, users can access live, one-way voice translations supporting over 70 languages. This allows users to engage in conversations, listen to lectures, or watch shows in foreign languages with real-time translation delivered through their headphones.\n\nThe update also enhances text translations by leveraging AI to better understand tone, emphasis, idioms, and slang, improving naturalness and accuracy. Currently launched with support for nearly 20 languages, these improvements aim to make translation more intuitive and effective. Additionally, a new tracking feature has been introduced to monitor language learning streaks, similar to Duolingo, encouraging consistent practice. Expansion to iOS and more countries is expected in 2026.",
+          "domain": "www.tomsguide.com",
+          "ref_type": "news",
+          "ref_index": 36,
+          "turn_index": 0,
+          "pub_date": 1765651995,
+          "ref_key": "0_news_36"
+        }
+      ],
+      "inline_url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+      "url_position": 477,
+      "claim_text": "2) Google Translate (Live Translate & Gemini) – instant speech/text translation with AI that better understands tone and context (now expanding live voice features). Tom's Guide",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 616,
+        "end_idx": 622
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.smartling.com/blog/real-time-translation",
+      "url_position": 752,
+      "claim_text": "3) Microsoft Translator – live text/voice translation with integration in Teams/Office; decent continuity in conversations. smartling.com",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 819,
+        "end_idx": 852
+      },
+      "citation_token": "citeturn0search4turn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.deepl.com/en/translator?utm_source=chatgpt.com",
+          "title": "DeepL Translate: The world's most accurate translator",
+          "snippet": "Translate texts & full document files instantly. Accurate translations for individuals and Teams. Millions translate with DeepL every day.",
+          "domain": "deepl.com",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://shamiltranslation.com/2025/10/29/top-10-translation-tools-recommended-by-translators/",
+      "url_position": 1005,
+      "claim_text": "4) DeepL – excellent context‑aware text translation (less “live speech” but strong preservation of meaning across larger blocks of text); API can be integrated into workflows. Shamil Translation+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 987,
+        "end_idx": 1007
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://x-doc.ai/usecases/en/the-best-real-time-chat-translation-tools",
+          "title": "The Best Real Time Chat Translation Tools of 2026",
+          "snippet": "Our top 5 recommendations include X-doc.AI Translive, Google Translate, Microsoft Translator, Amazon Translate, and DeepL for their outstanding features and ...Read more",
+          "domain": "x-doc.ai",
+          "ref_type": "search",
+          "ref_index": 24,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_24"
+        }
+      ],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-real-time-chat-translation-tools",
+      "url_position": 1236,
+      "claim_text": "5) X‑doc.AI Translive (emerging) – strong real‑time chat/voice translation with summaries and context tracking (2026 rankings). X-Doc",
+      "url_index": 4
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+        "title": "Google Translate is bringing real-time translations powered by Gemini to your headphones",
+        "domain": "Tom's Guide"
+      },
+      {
+        "url": "https://www.smartling.com/blog/real-time-translation",
+        "title": "Real-time translation software: Everything you need to know",
+        "domain": "smartling.com"
+      },
+      {
+        "url": "https://shamiltranslation.com/2025/10/29/top-10-translation-tools-recommended-by-translators/",
+        "title": "Top 10 Translation Tools recommended by translators",
+        "domain": "Shamil Translation"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-real-time-chat-translation-tools",
+        "title": "The Best Real Time Chat Translation Tools of 2026",
+        "domain": "X-Doc"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.convey911.com/blog/text-translation-software?hsLang=en",
+        "title": "9 Essential Text Translation Software Picks for 2026",
+        "domain": "convey911.com"
+      },
+      {
+        "url": "https://crowdin.com/blog/best-machine-translation-software",
+        "title": "The List of Best Machine Translation Software Out There - Crowdin",
+        "domain": "crowdin.com"
+      },
+      {
+        "url": "https://lokalise.com/blog/best-translation-management-systems/",
+        "title": "5 Best Translation Management Systems Ranked - Lokalise",
+        "domain": "lokalise.com"
+      },
+      {
+        "url": "https://www.pairaphrase.com/blog/15-best-professional-translation-software-features",
+        "title": "19 Best Translation Software Tools for Professional Use [2025]",
+        "domain": "pairaphrase.com"
+      },
+      {
+        "url": "https://www.pairaphrase.com/blog/ai-translation-tools",
+        "title": "17 Best AI Translation Tools for Enterprise Teams [2025]",
+        "domain": "pairaphrase.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://certifiedlanguages.com/blog/we-tested-ai-generated-translation-devices/",
+        "title": "AI Translation Devices: We Tested 3 So You Don't Have To",
+        "domain": "certifiedlanguages.com"
+      },
+      {
+        "url": "https://ehlion.com/magazine/translation-software/",
+        "title": "The 5 Best Machine Translation Tools in 2025 | EHLION",
+        "domain": "ehlion.com"
+      },
+      {
+        "url": "https://www.machinetranslation.com/",
+        "title": "Machine Translation - AI Translator",
+        "domain": "machinetranslation.com"
+      },
+      {
+        "url": "https://crowdin.com/blog/best-llms-for-translation",
+        "title": "List of The Best Large Language Models for Translation",
+        "domain": "crowdin.com"
+      },
+      {
+        "url": "https://lokalise.com/blog/best-ai-translation-tools/",
+        "title": "The Best AI translation tools right now",
+        "domain": "lokalise.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/machinetranslation/comments/1ct8lx1/which_ai_is_best_suited_for_translating_a_novel/",
+        "title": "Which AI is best suited for translating a novel?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.atanet.org/client-assistance/blog-best-translation-apps-a-translator-puts-four-to-the-test/",
+        "title": "Best Translation Apps: A Translator Puts Four to the Test",
+        "domain": "atanet.org"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/",
+        "title": "Immersive Translate - Next-Gen AI Translator | Bilingual ...",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://xtm.cloud/blog/ai-translation-tools/",
+        "title": "The Best AI Translation Tools for 2025",
+        "domain": "xtm.cloud"
+      },
+      {
+        "url": "https://taia.io/blog/technology-and-translation/best-translation-software/",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://www.wordly.ai/real-time-translation",
+        "title": "Real-Time Translation Solutions",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.deepl.com/en/translator",
+        "title": "DeepL Translate: The world's most accurate translator",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://www.polilingua.com/blog/post/top-machine-language-translation-software.htm",
+        "title": "Best Machine Translation Software in 2025",
+        "domain": "polilingua.com"
+      },
+      {
+        "url": "https://translatepress.com/best-ai-translation-tool/",
+        "title": "My Favorite AI Translation Tools & Online ...",
+        "domain": "translatepress.com"
+      },
+      {
+        "url": "https://www.smartling.com/blog/5-machine-translation-software-and-when-to-use-them",
+        "title": "5 Machine Translation Software and When to Use Them",
+        "domain": "smartling.com"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 21,
+    "total_all": 26
+  },
+  "response_stats": {
+    "total_length": 1703,
+    "citation_count": 5,
+    "chars_with_citations": 97
+  }
+}

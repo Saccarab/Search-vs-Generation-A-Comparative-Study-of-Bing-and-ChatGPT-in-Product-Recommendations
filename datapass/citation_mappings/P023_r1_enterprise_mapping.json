@@ -1,0 +1,521 @@
+{
+  "run_id": "P023_r1",
+  "account_type": "enterprise",
+  "prompt": "What tools are available for text to speech?",
+  "metadata": {
+    "hidden_queries": [
+      "tools available for text to speech",
+      "best text to speech tools list TTS software"
+    ],
+    "sonic_classification": {
+      "latency_ms": 2.5960360653698444,
+      "simple_search_prob": 0.9315214313845466,
+      "complex_search_prob": 0.000676587585564752,
+      "no_search_prob": 0.06780198102988867,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "tools available for text to speech"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 238,
+        "end_idx": 257
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 231,
+      "claim_text": "Here’s a straight overview of common text-to-speech (TTS) tools — from consumer apps to developer APIs: Consumer / Creative TTS Platforms NaturalReader — web/app TTS, reads documents and web pages aloud, decent voices. TechRadar",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 347,
+        "end_idx": 366
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://geekflare.com/best/best-text-to-speech-converters/",
+      "url_position": 385,
+      "claim_text": "Murf.ai — professional voiceovers and realistic voices for video/audio projects. Geekflare",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 438,
+        "end_idx": 457
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 520,
+      "claim_text": "Play.ht — large library of AI voices, export to audio formats. TechRadar",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 528,
+        "end_idx": 547
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 667,
+      "claim_text": "Speechify — popular for accessibility and personal listening. Software Testing Help",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 620,
+        "end_idx": 639
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 805,
+      "claim_text": "Voice Dream Reader — strong mobile TTS app with many languages. TechRadar",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 715,
+        "end_idx": 735
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.fahimai.com/best-text-to-speech-software",
+      "url_position": 944,
+      "claim_text": "ElevenLabs — high-quality, expressive AI voices and voice cloning. Fahim AI",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 829,
+        "end_idx": 875
+      },
+      "citation_token": "citeturn0search1turn0search2turn0search12",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+          "title": "Best free text-to-speech software of 2025 - TechRadar",
+          "snippet": "Stand-alone, app-based TTS tools, which should not be confused with the best speech-to-text apps, often have limitations compared to more comprehensive, free text-to-speech software.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1758240000,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://speaktor.com/best-free-text-to-speech-apps/",
+          "title": "7 Best FREE Text to Speech Apps in 2025 - speaktor.com",
+          "snippet": "Turn text into lifelike audio for free. Discover 2025’s top 7 Text to Speech apps with natural voices, multi-language support, and easy exports.",
+          "domain": "speaktor.com",
+          "ref_type": "search",
+          "ref_index": 2,
+          "turn_index": 0,
+          "pub_date": 1757376000,
+          "ref_key": "0_search_2"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+      "url_position": 1107,
+      "claim_text": "Speaktor / ElevenReader / Text2Speech.online — free or lightweight online TTS tools. TechRadar+2Speaktor+2",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 978,
+        "end_idx": 997
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 1275,
+      "claim_text": "Developer / API-Level TTS Amazon Polly — API for integrating TTS into apps/services. TechRadar",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1072,
+        "end_idx": 1092
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://theaisurf.com/best-ai-text-to-speech-software/",
+      "url_position": 1444,
+      "claim_text": "Google Cloud Text-to-Speech — developer API with advanced voices. THE AI SURF- BEST AI TOOLS AND SOFTWARE",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1155,
+        "end_idx": 1160
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 1578,
+      "claim_text": "Azure Text-to-Speech — Microsoft’s cloud TTS service. Software Testing Help",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1291,
+        "end_idx": 1310
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+      "url_position": 1751,
+      "claim_text": "Open Source & Libraries (for developers) Coqui TTS — deep learning toolkit for flexible synthesis. Lemonfox",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1377,
+        "end_idx": 1387
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+      "url_position": 1877,
+      "claim_text": "Piper — lightweight offline TTS (good for edge/embedded). Lemonfox",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1486,
+        "end_idx": 1505
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+      "url_position": 2026,
+      "claim_text": "Hugging Face TTS models (e.g., Bark, VITS) — model catalog you can run yourself. Lemonfox",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 1564,
+        "end_idx": 1583
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 1578,
+      "claim_text": "Azure Text-to-Speech — Microsoft’s cloud TTS service. Software Testing Help",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1724,
+        "end_idx": 1743
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 2341,
+      "claim_text": "Built-in / System Tools Many operating systems and apps include basic TTS (e.g., built-in screen readers, browser read-aloud). TechRadar",
+      "url_index": 14
+    },
+    {
+      "token_position": {
+        "start_idx": 1833,
+        "end_idx": 1852
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+          "title": "Best free text-to-speech software of 2025 - TechRadar",
+          "snippet": "Stand-alone, app-based TTS tools, which should not be confused with the best speech-to-text apps, often have limitations compared to more comprehensive, free text-to-speech software.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1758240000,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+      "url_position": 2497,
+      "claim_text": "Notes before picking: • Free vs paid: free tools often limit voices or downloads. TechRadar",
+      "url_index": 15
+    },
+    {
+      "token_position": {
+        "start_idx": 1910,
+        "end_idx": 1929
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 2634,
+      "claim_text": "• Developer APIs are more flexible but require coding. TechRadar",
+      "url_index": 16
+    },
+    {
+      "token_position": {
+        "start_idx": 2037,
+        "end_idx": 2057
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+      "url_position": 2144,
+      "claim_text": "MaryTTS / Festival — classic open TTS frameworks. Lemonfox",
+      "url_index": 13
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.techradar.com/best/best-text-to-speech-software",
+        "title": "Best text-to-speech software of 2026 - TechRadar",
+        "domain": "TechRadar"
+      },
+      {
+        "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+        "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+        "domain": "Geekflare"
+      },
+      {
+        "url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+        "title": "Top 16 BEST Text To Speech Software (2026 Review)",
+        "domain": "Software Testing Help"
+      },
+      {
+        "url": "https://www.fahimai.com/best-text-to-speech-software",
+        "title": "11 Best Text to Speech Software: Realistic Voices in 2025",
+        "domain": "Fahim AI"
+      },
+      {
+        "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+        "title": "Best free text-to-speech software of 2025 - TechRadar",
+        "domain": "TechRadar"
+      },
+      {
+        "url": "https://theaisurf.com/best-ai-text-to-speech-software/",
+        "title": "15 Top Text-to-Speech Software in 2025 - theaisurf.com",
+        "domain": "THE AI SURF- BEST AI TOOLS AND SOFTWARE"
+      },
+      {
+        "url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+        "title": "12 Best Open Source Text to Speech Tools in 2025 | Blog",
+        "domain": "Lemonfox"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.geeky-gadgets.com/qwen3-tts-voice-cloning/",
+        "title": "Qwen3-TTS vs ElevenLabs : Multilingual TTS with Tone & Emotion Control",
+        "domain": "geeky-gadgets.com"
+      },
+      {
+        "url": "https://www.geeky-gadgets.com/qwen-ai-multilingual-speech-synthesis/",
+        "title": "Qwen 3 TTS AI Released : Clone Any Voice for Free and Craft Rich Speech",
+        "domain": "geeky-gadgets.com"
+      },
+      {
+        "url": "https://www.softwareworld.co/text-to-speech-software/",
+        "title": "List of Top Text-To-Speech Software - Jan 2026 Reviews | SoftwareWorld",
+        "domain": "softwareworld.co"
+      },
+      {
+        "url": "https://contentmavericks.com/best-text-to-speech-software/",
+        "title": "7 Best Text-to-Speech Software 2026 (50 TTS Tools Ranked)",
+        "domain": "contentmavericks.com"
+      },
+      {
+        "url": "https://smallest.ai/blog/best-text-to-speech-tools",
+        "title": "Top 10 Text-to-Speech Apps in 2025 | Best AI Voice Tools",
+        "domain": "smallest.ai"
+      },
+      {
+        "url": "https://speaktor.com/best-free-text-to-speech-apps/",
+        "title": "7 Best FREE Text to Speech Apps in 2025 - speaktor.com",
+        "domain": "speaktor.com"
+      },
+      {
+        "url": "https://rigorousthemes.com/blog/best-text-to-speech-ai-tools/",
+        "title": "10 Best Text-to-Speech AI Tools In 2026 (Free & Paid)",
+        "domain": "rigorousthemes.com"
+      },
+      {
+        "url": "https://dev.to/raef_17/the-5-best-text-to-speech-platforms-in-2025-5alb",
+        "title": "The 5 Best Text-to-Speech Platforms in 2025 - DEV Community",
+        "domain": "dev.to"
+      },
+      {
+        "url": "https://soundmadeseen.com/blog/best-text-to-speech-software-tools",
+        "title": "8 Best Text-to-Speech Software Tools - SoundMadeSeen",
+        "domain": "soundmadeseen.com"
+      },
+      {
+        "url": "https://typecast.ai/learn/text-to-speech-software/",
+        "title": "The Best Text-to-Speech Software and Tools in 2025 - Typecast",
+        "domain": "typecast.ai"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 10,
+    "total_all": 17
+  },
+  "response_stats": {
+    "total_length": 2968,
+    "citation_count": 18,
+    "chars_with_citations": 349
+  }
+}

@@ -1,0 +1,517 @@
+{
+  "run_id": "P010_r1",
+  "account_type": "personal",
+  "prompt": "Give me the best speech to text solutions.",
+  "metadata": {
+    "hidden_queries": [
+      "best speech to text solutions 2026 speech recognition software",
+      "top speech to text APIs and tools comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 4.423507954925299,
+      "simple_search_prob": 0.9233586468665466,
+      "complex_search_prob": 0.0021189708692535775,
+      "no_search_prob": 0.07452238226419985,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best speech to text solutions 2026 speech recognition software"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 123,
+        "end_idx": 128
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voicetonotes.ai/blog/best-voice-to-text-app-android-iphone/",
+      "url_position": 152,
+      "claim_text": "Here are the best speech-to-text solutions (2026) — covering apps, APIs, and platforms with top accuracy and features: x-doc.ai+3VoiceToNotes+3Zapier+3",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 346,
+        "end_idx": 365
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-speech-to-text-converter-online-tools",
+      "url_position": 381,
+      "claim_text": "🧠 Top Speech-to-Text Platforms (General Use) 1) X-doc.AI Translive Best overall all-in-one transcription & translation. High accuracy and secure. x-doc.ai",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 496,
+        "end_idx": 515
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 588,
+      "claim_text": "2) Sonix Excellent accuracy (~99%), multi-language support, great for professional transcriptions and editing workflows. Sonix",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 583,
+        "end_idx": 600
+      },
+      "citation_token": "citeturn0search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 727,
+      "claim_text": "3) Otter.ai Best for meetings, live notes, collaboration. Sonix",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 691,
+        "end_idx": 710
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 887,
+      "claim_text": "4) Rev (AI + Human) Hybrid option with higher final accuracy via human review. Sonix",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 789,
+        "end_idx": 808
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 1037,
+      "claim_text": "5) Descript Good for audio/video editing and transcription combined. Sonix",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 922,
+        "end_idx": 941
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://kindlepreneur.com/dictation-software/",
+          "title": "The Best Dictation Software for Authors in 2026",
+          "snippet": "The best voice dictation software for authors is Dragon Professional Individual, with Dragon Home as a slightly cheaper option if you don't need to write on ...Read more",
+          "domain": "kindlepreneur.com",
+          "ref_type": "search",
+          "ref_index": 7,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_7"
+        }
+      ],
+      "inline_url": "https://kindlepreneur.com/dictation-software/",
+      "url_position": 1230,
+      "claim_text": "6) Dragon Professional (Nuance) Strong for dictation and long-form writing, deep vocabulary adaptation. Kindlepreneur",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1078,
+        "end_idx": 1097
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-speech-to-text-converter-online-tools",
+      "url_position": 1408,
+      "claim_text": "☁️ Cloud & Developer APIs 7) Google Cloud Speech-to-Text Leader for multi-language, strong models, real-time + batch. x-doc.ai",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1195,
+        "end_idx": 1214
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-speech-to-text-converter-online-tools",
+      "url_position": 1585,
+      "claim_text": "8) Microsoft Azure Speech to Text Enterprise cloud STT with realtime and customization. x-doc.ai",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1312,
+        "end_idx": 1331
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-speech-to-text-converter-online-tools",
+      "url_position": 1762,
+      "claim_text": "9) Amazon Transcribe Good for live streaming and batch, with punctuation & diarization. x-doc.ai",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1414,
+        "end_idx": 1434
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-speech-to-text-converter-online-tools",
+      "url_position": 1408,
+      "claim_text": "☁️ Cloud & Developer APIs 7) Google Cloud Speech-to-Text Leader for multi-language, strong models, real-time + batch. x-doc.ai",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1536,
+        "end_idx": 1556
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.assemblyai.com/blog/the-top-free-speech-to-text-apis-and-open-source-engines",
+      "url_position": 1930,
+      "claim_text": "10) AssemblyAI Universal Top developer-focused API with strong accuracy. assemblyai.com",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1666,
+        "end_idx": 1685
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://deepgram.com/learn/best-speech-to-text-apis",
+      "url_position": 2124,
+      "claim_text": "11) Deepgram Speech-to-Text API Deep learning based, robust performance with customization. Deepgram",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1782,
+        "end_idx": 1801
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-speech-to-text-converter-online-tools",
+      "url_position": 2289,
+      "claim_text": "12) OpenAI Whisper (and variants) Strong open-source and cloud models with competitive performance. x-doc.ai",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 1862,
+        "end_idx": 1880
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.assemblyai.com/blog/the-top-free-speech-to-text-apis-and-open-source-engines",
+      "url_position": 1930,
+      "claim_text": "10) AssemblyAI Universal Top developer-focused API with strong accuracy. assemblyai.com",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1962,
+        "end_idx": 1993
+      },
+      "citation_token": "citeturn0search2turn0news51",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://zapier.com/blog/best-text-dictation-software/",
+      "url_position": 2457,
+      "claim_text": "📱 Best Apps (Mobile/Desktop) Apple Dictation — Built-in free for Apple devices. Zapier",
+      "url_index": 13
+    },
+    {
+      "token_position": {
+        "start_idx": 2330,
+        "end_idx": 2362
+      },
+      "citation_token": "citeturn0search0turn0search2",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://voicetonotes.ai/blog/best-voice-to-text-app-android-iphone/",
+          "title": "14 Best Voice to Text Apps for Android, iPhone & PC (2026)",
+          "snippet": "6 days ago — Download the best Voice to text app free for Android, iPhone & PC. Our 2026 guide covers the top speech to text apps for accurate dictation",
+          "domain": "voicetonotes.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://voicetonotes.ai/blog/best-voice-to-text-app-android-iphone/?utm_source=chatgpt.com",
+          "title": "14 Best Voice to Text Apps for Android, iPhone & PC (2026)",
+          "snippet": "6 days ago — Download the best Voice to text app free for Android, iPhone & PC. Our 2026 guide covers the top speech to text apps for accurate dictation",
+          "domain": "VoiceToNotes",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://voicetonotes.ai/blog/best-voice-to-text-app-android-iphone/",
+      "url_position": 3077,
+      "claim_text": "🧩 Quick Picks by Use Case Best for meetings & team notes: Otter.ai Best for accuracy & transcription depth: Sonix, X-doc.AI Best for developers: Google Cloud, Microsoft Azure, AssemblyAI, Deepgram Best free/basic: Apple Dictation, Windows Voice Access, Gboard Best hybrid (AI+human): Rev VoiceToNotes+1",
+      "url_index": 16
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://voicetonotes.ai/blog/best-voice-to-text-app-android-iphone/",
+        "title": "14 Best Voice to Text Apps for Android, iPhone & PC (2026)",
+        "domain": "VoiceToNotes"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-speech-to-text-converter-online-tools",
+        "title": "The Best Speech to Text Converter Online Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+        "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://kindlepreneur.com/dictation-software/",
+        "title": "The Best Dictation Software for Authors in 2026",
+        "domain": "Kindlepreneur"
+      },
+      {
+        "url": "https://www.assemblyai.com/blog/the-top-free-speech-to-text-apis-and-open-source-engines",
+        "title": "The top free Speech-to-Text APIs, AI Models, and Open ...",
+        "domain": "assemblyai.com"
+      },
+      {
+        "url": "https://deepgram.com/learn/best-speech-to-text-apis",
+        "title": "Best Speech-to-Text APIs in 2025",
+        "domain": "Deepgram"
+      },
+      {
+        "url": "https://zapier.com/blog/best-text-dictation-software/",
+        "title": "The 9 best dictation and speech-to-text software in 2026",
+        "domain": "Zapier"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.youtube.com/watch?v=t38gZi8WNKE",
+        "title": "The Most Accurate Speech-to-text APIs in 2025 - YouTube",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/speechtech/comments/1kd9abp/i_benchmarked_12_speechtotext_apis_under_various/",
+        "title": "I benchmarked 12+ speech-to-text APIs under various real- ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-accurate-speech-to-text-tools",
+        "title": "The Best Accurate Speech to Text Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-speech-recognition-transcription-tools",
+        "title": "The Best Speech Recognition Transcription Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-ai-speech-recognition-tools",
+        "title": "The Best AI Speech Recognition Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-speech-to-text-software/",
+        "title": "13 Best Speech-to-Text Software for Accurate Transcription ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://www.edenai.co/post/best-speech-to-text-apis",
+        "title": "Best Speech-to-Text APIs in 2025 - Eden AI",
+        "domain": "edenai.co"
+      },
+      {
+        "url": "https://voicetonotes.ai/blog/speech-to-text-apps/",
+        "title": "Best Speech to Text Apps in 2026 (Ranked & Reviewed)",
+        "domain": "voicetonotes.ai"
+      },
+      {
+        "url": "https://www.capterra.com/speech-recognition-software/",
+        "title": "Best Speech Recognition Software 2026",
+        "domain": "capterra.com"
+      },
+      {
+        "url": "https://voicewriter.io/blog/best-speech-recognition-api-2025",
+        "title": "The Best Speech Recognition API in 2025: A Head-to- ...",
+        "domain": "voicewriter.io"
+      },
+      {
+        "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+        "title": "Best Speech-to-Text Solutions Reviews 2026",
+        "domain": "gartner.com"
+      },
+      {
+        "url": "https://activewizards.com/blog/comparison-of-the-top-speech-processing-apis/",
+        "title": "Comparison of the Top Speech Processing APIs - ActiveWizards",
+        "domain": "activewizards.com"
+      },
+      {
+        "url": "https://reverieinc.com/blog/speech-text-api-comparison/",
+        "title": "8 Best Speech-to-Text APIs in 2026: A Complete Comparison ...",
+        "domain": "reverieinc.com"
+      },
+      {
+        "url": "https://reduct.video/blog/transcription-software-for-video/",
+        "title": "8 Best Audio and Video Transcription Software in 2026",
+        "domain": "reduct.video"
+      },
+      {
+        "url": "https://nextlevel.ai/best-speech-to-text-models/",
+        "title": "Best Speech to Text Models 2025: Real-Time Agent Comparison",
+        "domain": "nextlevel.ai"
+      },
+      {
+        "url": "https://www.lindy.ai/blog/best-speech-to-text-software",
+        "title": "I Tried 25+ Best Speech-to-Text Software: Here Are My Top ...",
+        "domain": "lindy.ai"
+      },
+      {
+        "url": "https://qcall.ai/speech-to-text-tool/",
+        "title": "Speech to Text Tool Review: 31 Best Tools 2026 (Honest)",
+        "domain": "qcall.ai"
+      },
+      {
+        "url": "https://getstream.io/blog/speech-apis/",
+        "title": "Top 5 Real-Time Speech-to-Speech APIs and Libraries ...",
+        "domain": "getstream.io"
+      },
+      {
+        "url": "https://vocafuse.com/blog/best-speech-to-text-api-comparison-2025/",
+        "title": "Best Speech to Text APIs 2025 (Pricing per Minute)",
+        "domain": "vocafuse.com"
+      },
+      {
+        "url": "https://www.assemblyai.com/blog/best-real-time-speech-to-text-apps",
+        "title": "Best real-time speech-to-text apps in 2026",
+        "domain": "assemblyai.com"
+      },
+      {
+        "url": "https://smallest.ai/blog/best-free-voice-to-text-apps",
+        "title": "Top 7 Free Voice-to-Text Software to Evaluate in 2026",
+        "domain": "smallest.ai"
+      },
+      {
+        "url": "https://www.sembly.ai/blog/best-transcription-software-top-free-and-paid-tools/",
+        "title": "Best Transcription Software 2026: Top Free & Paid",
+        "domain": "sembly.ai"
+      },
+      {
+        "url": "https://murf.ai/blog/top-speech-to-text-softwares",
+        "title": "Top 10 Speech to Text Software in 2026",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://www.speechmatics.com/company/articles-and-news/best-tts-apis-in-2025-top-12-text-to-speech-services-for-developers",
+        "title": "Best TTS APIs in 2026: Top 12 Text-to-Speech services for ...",
+        "domain": "speechmatics.com"
+      },
+      {
+        "url": "https://learn.g2.com/best-voice-recognition-software",
+        "title": "Dictation Made Easy: 9 Best Voice Recognition Software I ...",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://medium.com/%40isabelleradcliffe/speech-to-text-accuracy-my-2025-guide-to-getting-the-most-from-voice-transcription-99fc9e8e9228",
+        "title": "Speech to Text Accuracy: My 2025 Guide to Getting the ...",
+        "domain": "medium.com"
+      },
+      {
+        "url": "https://www.telusdigital.com/insights/data-and-ai/article/10-speech-to-text-models-tested",
+        "title": "We tested 10 speech-to-text models",
+        "domain": "telusdigital.com"
+      },
+      {
+        "url": "https://graphlogic.ai/blog/utilities/the-best-speech-to-text-apis-in-2025-a-comprehensive-guide/",
+        "title": "The Best Speech-to-Text APIs in 2025",
+        "domain": "graphlogic.ai"
+      },
+      {
+        "url": "https://docs.cloud.google.com/speech-to-text/docs/transcription-model",
+        "title": "Compare transcription models | Cloud Speech-to-Text",
+        "domain": "google.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 29,
+    "total_all": 36
+  },
+  "response_stats": {
+    "total_length": 3223,
+    "citation_count": 17,
+    "chars_with_citations": 333
+  }
+}

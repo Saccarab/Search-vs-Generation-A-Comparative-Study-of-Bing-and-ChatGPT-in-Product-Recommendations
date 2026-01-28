@@ -1,0 +1,516 @@
+{
+  "run_id": "P048_r1",
+  "account_type": "personal",
+  "prompt": "Can I add a live translation app to calls?",
+  "metadata": {
+    "hidden_queries": [
+      "add live translation to phone calls iPhone Android real time translation calls app",
+      "¿puedo agregar traducción en vivo a llamadas telefónicas aplicación traducción en llamadas"
+    ],
+    "sonic_classification": {
+      "latency_ms": 16.65571192279458,
+      "simple_search_prob": 0.9161788027753048,
+      "complex_search_prob": 0.003485699904396487,
+      "no_search_prob": 0.08033549732029868,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "add live translation to phone calls iPhone Android real time translation calls app"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 97,
+        "end_idx": 98
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.apple.com/guide/iphone/translate-messages-calls-and-conversations-iph22b72984d/ios",
+      "url_position": 111,
+      "claim_text": "Yes — you can add live translation to calls, but how depends on your device and what you want: Apple Support+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 315,
+        "end_idx": 321
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.apple.com/guide/iphone/translate-messages-calls-and-conversations-iph22b72984d/ios",
+      "url_position": 401,
+      "claim_text": "Built-in options iPhone (Apple) — newer iPhones with Apple Intelligence can translate during regular phone calls in real time inside the Phone app (voice & on-screen text). Apple Support",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 461,
+        "end_idx": 481
+      },
+      "citation_token": "citeturn0search31",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://news.samsung.com/pe/traduce-llamadas-y-mensajes-simultaneamente-con-galaxy-ai",
+      "url_position": 646,
+      "claim_text": "Samsung Galaxy — some Samsung phones offer a “Translation Simultánea” feature that can translate your call audio live. Samsung Global Newsroom",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 614,
+        "end_idx": 646
+      },
+      "citation_token": "citeturn0search0turn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=es_MX&id=com.nordicwise.translator_call",
+          "title": "Traductor de llamadas de voz - Apps en Google Play",
+          "snippet": "La aplicación traduce la voz de ambas personas que llaman durante una llamada Puedes llamar tanto a teléfonos móviles como a teléfonos fijos",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://ezdubs.ai/",
+          "title": "EzDubs: Best Phone Call Translator App for iOS and Android",
+          "snippet": "The Phone Translator That Breaks Language Barriers with Real-Time Call, Meeting, and Message Translations. EzDubs is available on iOS and Android.",
+          "domain": "ezdubs.ai",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_4"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=es_MX&id=com.nordicwise.translator_call",
+      "url_position": 877,
+      "claim_text": "Third-party apps (iOS & Android) These work by routing or bridging your voice through their service to translate in real time: Google Play+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 754,
+        "end_idx": 773
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.aiphone.secondphonenumber",
+          "title": "AI Phone:Call&Voice Translator - Apps on Google Play",
+          "snippet": "AI Phone Translator is your all-in-one real-time translation app for phone calls, video calls, in-person conversations and more—across 150+ languages and ...Read more",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.aiphone.secondphonenumber",
+      "url_position": 1081,
+      "claim_text": "AI Phone / AI Call Translator – real-time voice translation during phone/VoiP calls in 100+ languages. Google Play",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 844,
+        "end_idx": 845
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ezdubs.ai/",
+      "url_position": 1244,
+      "claim_text": "EzDubs – live translation with voice tone preservation for calls. EzDubs+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 989,
+        "end_idx": 1009
+      },
+      "citation_token": "citeturn0search39",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.nordicwise.translator_call",
+          "title": "Call Translator. Voice Changer - Apps on Google Play",
+          "snippet": "Lingvanex Phone Call Translator is an all-in-one solution for translating live conversations during phone calls, including landlines.Read more",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 39,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_39"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.nordicwise.translator_call",
+      "url_position": 1385,
+      "claim_text": "Lingvanex Phone Call Translator – translates live calls, doesn’t require the other person to have the app. Google Play",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1075,
+        "end_idx": 1095
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=es_US&id=com.tangdi.baiguotong",
+          "title": "iTourTranslator - Apps en Google Play",
+          "snippet": "iTourTranslator es una poderosa APLICACIÓN de traducción con muchas funciones de traducción: (1) Admite traducción en tiempo real para realizar y recibir ...Read more",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 24,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_24"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=es_US&id=com.tangdi.baiguotong",
+      "url_position": 1547,
+      "claim_text": "iTourTranslator – translates phone and messaging calls live. Google Play",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1156,
+        "end_idx": 1176
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.telelingo.io/",
+          "title": "Telelingo - Real-Time Phone Call Translator",
+          "snippet": "Telelingo is an AI-powered phone call translator, offering real-time translation across 80+ languages for seamless communication.",
+          "domain": "www.telelingo.io",
+          "ref_type": "search",
+          "ref_index": 20,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_20"
+        }
+      ],
+      "inline_url": "https://www.telelingo.io/",
+      "url_position": 1696,
+      "claim_text": "Telelingo – AI phone call translator for 80+ languages. telelingo.io",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1300,
+        "end_idx": 1319
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=es&id=com.nordicwise.translator_call",
+          "title": "Traductor de llamadas de voz - Aplicaciones en Google Play",
+          "snippet": "Traductor de teléfono de llamada - traducción de voz en tiempo real. La aplicación se traduce la voz de las dos llamadas durante una llamada. Puede llamar a ...",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=es&id=com.nordicwise.translator_call",
+      "url_position": 1852,
+      "claim_text": "Limitations Many third-party apps may route calls through their system and can charge per minute or subscription. Google Play",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1405,
+        "end_idx": 1411
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.nordicwise.translator_call",
+      "url_position": 1385,
+      "claim_text": "Lingvanex Phone Call Translator – translates live calls, doesn’t require the other person to have the app. Google Play",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://support.apple.com/guide/iphone/translate-messages-calls-and-conversations-iph22b72984d/ios",
+        "title": "Translate messages, calls, and conversations on iPhone",
+        "domain": "Apple Support"
+      },
+      {
+        "url": "https://news.samsung.com/pe/traduce-llamadas-y-mensajes-simultaneamente-con-galaxy-ai",
+        "title": "Traduce llamadas y mensajes simultáneamente con ...",
+        "domain": "Samsung Global Newsroom"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=es_MX&id=com.nordicwise.translator_call",
+        "title": "Traductor de llamadas de voz - Apps en Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.aiphone.secondphonenumber",
+        "title": "AI Phone:Call&Voice Translator - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://ezdubs.ai/",
+        "title": "EzDubs: Best Phone Call Translator App for iOS and Android",
+        "domain": "EzDubs"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.nordicwise.translator_call",
+        "title": "Call Translator. Voice Changer - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=es_US&id=com.tangdi.baiguotong",
+        "title": "iTourTranslator - Apps en Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://www.telelingo.io/",
+        "title": "Telelingo - Real-Time Phone Call Translator",
+        "domain": "telelingo.io"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=es&id=com.nordicwise.translator_call",
+        "title": "Traductor de llamadas de voz - Aplicaciones en Google Play",
+        "domain": "Google Play"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.aiphone.ai/blog/es/aplicaciones-de-traductor-de-voz-para-llamadas-multilingues/",
+        "title": "Las 5 mejores aplicaciones de traductor de voz para llamadas ...",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=acLiz9omZrU",
+        "title": "TRADUCE Llamadas en tiempo REAL: Descubre AI Phone - YouTube",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.lanacion.com.ar/tecnologia/7-aplicaciones-para-hacer-traduccion-en-tiempo-real-y-conversar-sin-que-el-idioma-sea-una-barrera-nid30082023/",
+        "title": "7 aplicaciones para hacer traducción en tiempo real y conversar sin ...",
+        "domain": "lanacion.com.ar"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=CM4rT1iRwRM",
+        "title": "Como ACTIVAR la TRADUCCIÓN SIMULTÁNEA de ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=vxwFOervekg",
+        "title": "Como TRADUCIR llamadas en TIEMPO REAL con esta APP ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=Ehnbuvf9jno",
+        "title": "TRADUCE Llamadas, Videollamadas y Cara a Cara en ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-translator/id288113403",
+        "title": "iTranslate Translator - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/hn/app/ai-phone-traducci%C3%B3n-de-llamada/id6465173251",
+        "title": "AI Phone:Traducción de Llamada - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/cr/app/ai-phone-traducci%C3%B3n-de-llamada/id6465173251",
+        "title": "AI Phone:Traducción de Llamada - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/es/app/hablar-y-traducir-traductor/id804641004",
+        "title": "Hablar y Traducir - Traductor - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=es_DO&id=com.nordicwise.translator_call",
+        "title": "Traductor de llamadas de voz - Apps en Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=es_PE&id=com.aiphone.secondphonenumber",
+        "title": "AI Phone:Traducción de Llamada - Apps en Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=es",
+        "title": "Escuchar traducciones de voz en tiempo real con ...",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://store.google.com/intl/en/ideas/articles/pixel-live-translate/",
+        "title": "Translate the world in real time, now with your voice.",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.jotme.io/",
+        "title": "JotMe - Live Translator & AI Interpreter",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/es/blog/best-live-translation",
+        "title": "Las 7 mejores herramientas de traducción en vivo de IA ...",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.reddit.com/r/travel/comments/yxaqip/translation_of_phone_calls/",
+        "title": "Translation of phone calls : r/travel",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/AskTechnology/comments/1gnqt7n/are_there_any_video_chatting_apps_with_an/?tl=es-419",
+        "title": "¿Hay alguna app para videollamadas con traductor ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/top-6-phone-call-translators",
+        "title": "Top 6 Phone Call Translators You Should Try",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://www.timekettle.co/es/blogs/tips-and-tricks/top-phone-call-translators-for-real-time-ufe",
+        "title": "Usando la mejor traducción en tiempo real de llamadas ...",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://ezdubs.ai/blog/mejores-traductores-llamadas-tiempo-real",
+        "title": "Los 6 mejores traductores de llamadas en tiempo real (2025)",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://ezdubs.ai/es",
+        "title": "Traductor de teléfono con IA para llamadas, mensajes y más",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://ezdubs.ai/phone-call-translator",
+        "title": "Live Phone Call Translator App",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://translatepress.com/best-app-for-language-translation-iphone-android/",
+        "title": "The Best Language Translation App for iPhone & Android",
+        "domain": "translatepress.com"
+      },
+      {
+        "url": "https://www.justanswer.com/cell-phones/mewqz-app-translate.html",
+        "title": "Is there an app or other way to translate each other on a ...",
+        "domain": "justanswer.com"
+      },
+      {
+        "url": "https://www.popsci.com/diy/how-to-get-real-time-translations-on-your-phone/",
+        "title": "How to get real-time translations on your phone",
+        "domain": "popsci.com"
+      },
+      {
+        "url": "https://www.ringover.es/blog/traductor-de-llamadas",
+        "title": "Traductor de Llamadas de Voz: App para Traducción ...",
+        "domain": "ringover.es"
+      },
+      {
+        "url": "https://itranslate.com/",
+        "title": "iTranslate: The Leading Translation and Dictionary App",
+        "domain": "itranslate.com"
+      },
+      {
+        "url": "https://www.1aicall.com/blog-post/top-5-ai-phone-call-translator-apps-in-2025-comparison-guide",
+        "title": "translate phone call - AI Call",
+        "domain": "1aicall.com"
+      },
+      {
+        "url": "https://www.samsung.com/cl/support/mobile-devices/como-usar-la-traduccion-simultanea-para-llamadas-telefonicas-en-el-galaxy-s24/",
+        "title": "Cómo usar la traducción simultanea para llamadas ...",
+        "domain": "samsung.com"
+      },
+      {
+        "url": "https://reccloud.com/phone-call-translation.html",
+        "title": "Real Time Phone Call Translation: Top 3 Apps You Must Try",
+        "domain": "reccloud.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 32,
+    "total_all": 41
+  },
+  "response_stats": {
+    "total_length": 2224,
+    "citation_count": 11,
+    "chars_with_citations": 164
+  }
+}

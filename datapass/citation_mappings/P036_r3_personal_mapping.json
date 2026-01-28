@@ -1,0 +1,62 @@
+{
+  "run_id": "P036_r3",
+  "account_type": "personal",
+  "prompt": "What is the accurate translator English to Japanese with audio?",
+  "metadata": {
+    "hidden_queries": [],
+    "sonic_classification": null,
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 139,
+        "end_idx": 140
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 483,
+        "end_idx": 484
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 752,
+        "end_idx": 769
+      },
+      "citation_token": "entity[\"company",
+      "type": "hidden",
+      "sources": []
+    },
+    {
+      "token_position": {
+        "start_idx": 940,
+        "end_idx": 966
+      },
+      "citation_token": "entity[\"company\",\"Papago",
+      "type": "hidden",
+      "sources": []
+    }
+  ],
+  "source_summary": {
+    "cited": [],
+    "additional": [],
+    "total_cited": 0,
+    "total_additional": 0,
+    "total_all": 0
+  },
+  "response_stats": {
+    "total_length": 992,
+    "citation_count": 4,
+    "chars_with_citations": 45
+  }
+}

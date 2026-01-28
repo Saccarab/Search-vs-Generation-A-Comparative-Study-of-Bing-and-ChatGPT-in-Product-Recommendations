@@ -1,0 +1,545 @@
+{
+  "run_id": "P038_r1",
+  "account_type": "personal",
+  "prompt": "Anlık ses çevirisi yapan programlar nelerdir?",
+  "metadata": {
+    "hidden_queries": [
+      "anlık ses çevirisi yapan programlar gerçek zamanlı ses çeviri uygulamaları",
+      "real time voice translation software apps instant voice translation"
+    ],
+    "sonic_classification": {
+      "latency_ms": 21.94193610921502,
+      "simple_search_prob": 0.9147011611431605,
+      "complex_search_prob": 0.0024044175449330694,
+      "no_search_prob": 0.08289442131190647,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "anlık ses çevirisi yapan programlar gerçek zamanlı ses çeviri uygulamaları"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 93,
+        "end_idx": 129
+      },
+      "citation_token": "citeturn0search0turn0search1turn",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.notta.ai/tr/blog/voice-translator-app",
+          "title": "2025 te AI destekli en iyi 6 ses çeviri uygulaması - Notta",
+          "snippet": "",
+          "domain": "www.notta.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.notta.ai/tr/blog/voice-translator-app",
+      "url_position": 123,
+      "claim_text": "İşte anlık ses çevirisi yapan programlar / uygulamalar (mobil, masaüstü ve web tabanlı): Google Play+6Notta+6Google Play+6",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 322,
+        "end_idx": 354
+      },
+      "citation_token": "citeturn0search1turn0search2",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/instant-voice-translate/id1298384039?utm_source=chatgpt.com",
+          "title": "Instant Voice Translate - App Store - Apple",
+          "snippet": "\"Instant Voice Translate\" is a free and user-friendly language translation app powered by cutting-edge ChatGPT technology.Read more",
+          "domain": "apple.com",
+          "ref_type": "search",
+          "ref_index": 2,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_2"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+      "url_position": 308,
+      "claim_text": "Mobil Uygulamalar Instant Voice Translate / Instant Sesli Çeviri – gerçek zamanlı ses çevirisi yapar (Android & iOS) Google Play+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 452,
+        "end_idx": 469
+      },
+      "citation_token": "citeturn0search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=tr",
+      "url_position": 490,
+      "claim_text": "Google Translate – “Canlı Çeviri (Live Translate)” modu ile anlık konuşma çevirisi sunar Google Help",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 535,
+        "end_idx": 555
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+          "title": "iTranslate Voice - App Store - Apple",
+          "snippet": "Our Transcripts feature allows you to export or share your conversation within seconds. VOICE TRANSLATION Instantly converse in over 40 Languages. PHRASEBOOK ...Read more",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_11"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+      "url_position": 643,
+      "claim_text": "iTranslate Voice – 40+ dilde anlık ses çevirisi yapar App Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 631,
+        "end_idx": 651
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/tr/app/konu%C5%9F-%C3%A7evir-%C3%A7eviri/id804641004?l=tr",
+      "url_position": 782,
+      "claim_text": "Konuş & Çevir – sesli çeviri ve iki yönlü konuşma çevirisi desteği App Store",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 740,
+        "end_idx": 759
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/cy/app/viitor-%C3%A7eviri-ses-ve-ar/id6480452970?l=tr",
+          "title": "ViiTor Çeviri - Ses ve AR Uygulaması - App Store - Apple",
+          "snippet": "Sorunsuz bir şekilde gerçek zamanlı sesli çeviri, konuşma çevirisi, kamera çevirisi, gerçek zamanlı transkripsiyon ve ekran alt yazısı sağlar. 【Temel ...Read more",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/cy/app/viitor-%C3%A7eviri-ses-ve-ar/id6480452970?l=tr",
+      "url_position": 956,
+      "claim_text": "ViiTor Çeviri – gerçek zamanlı sesli çeviri, iki yönlü çeviri ve transkripsiyon App Store",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 845,
+        "end_idx": 865
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details/VoiceTra_%E9%9F%B3%E5%A3%B0%E7%BF%BB%E8%A8%B3?hl=tr&id=jp.go.nict.voicetra",
+          "title": "VoiceTra(Voice Translator) - Google Play'de Uygulamalar",
+          "snippet": "VoiceTra, konuşmanızı farklı dillere çeviren bir konuşma çevirisi uygulamasıdır. VoiceTra 31 dili destekler ve ücretsiz olarak indirilebilir ve ...",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_16"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details/VoiceTra_%E9%9F%B3%E5%A3%B0%E7%BF%BB%E8%A8%B3?hl=tr&id=jp.go.nict.voicetra",
+      "url_position": 1125,
+      "claim_text": "VoiceTra (Voice Translator) – sesli çeviri uygulaması, birçok dili destekler Google Play",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 937,
+        "end_idx": 938
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/tr/app/sesli-%C3%A7eviri-ai-translate/id1036725690?l=tr",
+      "url_position": 1319,
+      "claim_text": "Sesli çeviri – AI Translate – 100+ dilde gerçek zamanlı çeviri App Store",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1091,
+        "end_idx": 1124
+      },
+      "citation_token": "citeturn0search8turn0search26",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wordly.ai/real-time-translation",
+          "title": "Real-Time Translation Solutions",
+          "snippet": "Use Wordly real-time translation and real time translator to connect multilingual audiences instantly. Translate speeches, webinars, and meetings live.",
+          "domain": "www.wordly.ai",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        },
+        {
+          "url": "https://www.wordly.ai/translation-app?utm_source=chatgpt.com",
+          "title": "Translation App – Real‑Time AI Voice & Text ...",
+          "snippet": "Experience the Wordly Translation App for real-time AI voice & text translation in meetings, webinars, and multilingual events.",
+          "domain": "wordly.ai",
+          "ref_type": "search",
+          "ref_index": 26,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_26"
+        }
+      ],
+      "inline_url": "https://www.wordly.ai/real-time-translation",
+      "url_position": 1534,
+      "claim_text": "Web & Masaüstü / Kurumsal Çözümler Wordly – toplantılar, etkinlikler için gerçek zamanlı ses çevirisi ve altyazı çözümleri Wordly+1",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1215,
+        "end_idx": 1235
+      },
+      "citation_token": "citeturn0search22",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.palabra.ai/?utm_source=chatgpt.com",
+          "title": "Palabra.ai: Live Voice Translator & Real-Time Speech ...",
+          "snippet": "Live voice translator with real-time speech translation. AI-powered translator for meetings, events, streams in 60+ languages. Try free today.",
+          "domain": "palabra.ai",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.palabra.ai/",
+      "url_position": 1674,
+      "claim_text": "Palabra.ai – canlı ses çevirisi ve konuşma akışı için AI tabanlı çeviri platformu palabra.ai",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1341,
+        "end_idx": 1361
+      },
+      "citation_token": "citeturn0search34",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://live.maestra.ai/",
+          "title": "Live Translate | Real-Time Online Voice Translator",
+          "snippet": "Real-time audio translation with AI voice cloning. Fast, accurate, and low-latency—available in 125+ languages with integrations and sharing.",
+          "domain": "live.maestra.ai",
+          "ref_type": "search",
+          "ref_index": 34,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_34"
+        },
+        {
+          "url": "https://live.maestra.ai/?utm_source=chatgpt.com",
+          "title": "Live Translate | Real-Time Online Voice Translator",
+          "snippet": "Real-time audio translation with AI voice cloning. Fast, accurate, and low-latency—available in 125+ languages with integrations and sharing.",
+          "domain": "live.maestra.ai",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 1814,
+      "claim_text": "Maestra Live Translate (web) – tarayıcı üzerinden gerçek zamanlı konuşma çevirisi ve sesli çıktı live.maestra.ai",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1490,
+        "end_idx": 1509
+      },
+      "citation_token": "citeturn0search0",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.notta.ai/tr/blog/voice-translator-app",
+          "title": "2025 te AI destekli en iyi 6 ses çeviri uygulaması - Notta",
+          "snippet": "",
+          "domain": "www.notta.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.notta.ai/tr/blog/voice-translator-app?utm_source=chatgpt.com",
+          "title": "2025 te AI destekli en iyi 6 ses çeviri uygulaması - Notta",
+          "snippet": null,
+          "domain": "Notta",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.notta.ai/tr/blog/voice-translator-app",
+      "url_position": 1975,
+      "claim_text": "Bu araçlar anlık sesli konuşmayı algılayıp başka bir dile çevirebiliyor; bazıları çevrilen metni okuyarak da geri verebiliyor. Notta",
+      "url_index": 11
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.notta.ai/tr/blog/voice-translator-app",
+        "title": "2025 te AI destekli en iyi 6 ses çeviri uygulaması - Notta",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=tr",
+        "title": "Canlı Çeviri ile konuşma çevirilerini canlı konuşma olarak dinleme",
+        "domain": "Google Help"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+        "title": "iTranslate Voice - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://apps.apple.com/tr/app/konu%C5%9F-%C3%A7evir-%C3%A7eviri/id804641004?l=tr",
+        "title": "Konuş & Çevir - Çeviri Uygulaması - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://apps.apple.com/cy/app/viitor-%C3%A7eviri-ses-ve-ar/id6480452970?l=tr",
+        "title": "ViiTor Çeviri - Ses ve AR Uygulaması - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details/VoiceTra_%E9%9F%B3%E5%A3%B0%E7%BF%BB%E8%A8%B3?hl=tr&id=jp.go.nict.voicetra",
+        "title": "VoiceTra(Voice Translator) - Google Play'de Uygulamalar",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://apps.apple.com/tr/app/sesli-%C3%A7eviri-ai-translate/id1036725690?l=tr",
+        "title": "Sesli çeviri: AI Translate Uygulaması - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://www.wordly.ai/real-time-translation",
+        "title": "Real-Time Translation Solutions",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://www.palabra.ai/",
+        "title": "Palabra.ai: Live Voice Translator & Real-Time Speech ...",
+        "domain": "palabra.ai"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "live.maestra.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.youtube.com/watch?v=WG2GRE9rmoc",
+        "title": "İSTEDİĞİNİZ DİLDE İLETİŞİM KURUN! DeepL YAPAY ZEKA İLE BU ...",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/instant-voice-translate/id1298384039",
+        "title": "Instant Voice Translate - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=tr&id=com.erudite.translator",
+        "title": "Instant Sesli Çeviri - Google Play'de Uygulamalar",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://translate.google.com/about/",
+        "title": "A Personal Interpreter on Your Phone or Computer",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/video_translator_k%C3%A4%C3%A4nn%C3%A4_video_ja_%C3%A4%C3%A4ni_ve/285433175728?hl=tr",
+        "title": "Video Translator - Çevrimiçi Video ve Ses Çevirisi",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=tr&id=com.yapp.voicecameratranslator",
+        "title": "Sesli çeviri - konuş ve çevir - Google Play'de Uygulamalar",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=k4pgY58VAcs",
+        "title": "Gerçek Zamanlı Sesli Çeviri",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://voiser.net/desifre",
+        "title": "Sesten Metne Dönüştürme, Sesi Yazıya Çevirme, Deşifre",
+        "domain": "voiser.net"
+      },
+      {
+        "url": "https://www.transyncai.com/tr/blog-best-audio-translation-app/",
+        "title": "2025'in En İyi Ses Çeviri Uygulaması | Gerçek Zamanlı ...",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://tr.rask.ai/tools/audio-translator",
+        "title": "AI Ses Çevirmeni - Ses ve Sesi Çevrimiçi Çevirin - Rask YAPAY ZEKA",
+        "domain": "rask.ai"
+      },
+      {
+        "url": "https://tr.smartcat.com/software-translator/real-time-voice-translation-api/",
+        "title": "Gerçek Zamanlı Sesli Çeviri API'si",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/ChatGPTPro/comments/15z93kb/are_there_any_handsfree_realtime_voice/",
+        "title": "Are there any Hands-Free, Realtime, Voice Translation ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.deepl.com/tr/translator",
+        "title": "DeepL Translate: Dünyanın en isabetli çevirisi",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://maestra.ai/tr/araclar/gercek-zamanli-ceviri",
+        "title": "Gerçek Zamanlı Çevirmen - Yapay Zeka Canlı Çeviri",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://livevoice.io/en/ai-voice-translation",
+        "title": "AI Voice Translation",
+        "domain": "livevoice.io"
+      },
+      {
+        "url": "https://mangoanimate.com/blog/tr/8-best-ai-voice-translator-apps-for-accurate-voice-translation/22212/",
+        "title": "8 Doğru Sesli Çeviri için En İyi Yapay Zeka Sesli Çevirmen ...",
+        "domain": "mangoanimate.com"
+      },
+      {
+        "url": "https://www.interprefy.com/",
+        "title": "Interprefy: Interpretation, AI Speech Translation & Captions Tech",
+        "domain": "interprefy.com"
+      },
+      {
+        "url": "https://www.wordly.ai/translation-app",
+        "title": "Translation App – Real‑Time AI Voice & Text ...",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "Wordly: AI Translation & Captions for Meetings and Events",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.alem.com.tr/yasam/konusurken-anlik-ceviri-yapan-en-iyi-uygulamalar-1079308",
+        "title": "Konuşurken Anlık Çeviri Yapan En İyi Uygulamalar",
+        "domain": "alem.com.tr"
+      },
+      {
+        "url": "https://www.capcut.com/tr-tr/resource/voice-translator-app",
+        "title": "Android ve iOS için En İyi Ses Tercüman Uygulaması",
+        "domain": "capcut.com"
+      },
+      {
+        "url": "https://itranslate.com/",
+        "title": "iTranslate: The Leading Translation and Dictionary App",
+        "domain": "itranslate.com"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 24,
+    "total_all": 35
+  },
+  "response_stats": {
+    "total_length": 2028,
+    "citation_count": 12,
+    "chars_with_citations": 257
+  }
+}

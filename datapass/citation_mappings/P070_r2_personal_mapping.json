@@ -1,0 +1,402 @@
+{
+  "run_id": "P070_r2",
+  "account_type": "personal",
+  "prompt": "What are the best free audio to text transcription tools?",
+  "metadata": {
+    "hidden_queries": [
+      "best free audio to text transcription tools",
+      "free audio to text transcription tools features and comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 128.79897002130747,
+      "simple_search_prob": 0.989153908629639,
+      "complex_search_prob": 0.0009605807122193238,
+      "no_search_prob": 0.009885510658141642,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best free audio to text transcription tools"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 118,
+        "end_idx": 124
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-free-transcription-software",
+      "url_position": 132,
+      "claim_text": "Here are some of the best free audio‑to‑text transcription tools you can use for converting recordings into text: happyscribe.com+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 338,
+        "end_idx": 369
+      },
+      "citation_token": "citeturn0search2turn0news31",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/",
+      "url_position": 388,
+      "claim_text": "🎙️ Free / Freemium Tools (Good for general use) Otter.ai – AI transcription with a free plan offering monthly minutes (good accuracy, speaker labels, live & uploaded audio). Otter AI+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 485,
+        "end_idx": 519
+      },
+      "citation_token": "citeturn0search14turn0search16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.happyscribe.com/blog/best-free-transcription-software",
+          "title": "Best Free Transcription Software for 2026: Speech to Text ...",
+          "snippet": "Oct 2, 2025 — Best Free Transcription Software for 2026: Speech to Text, Voice to Text & AI Transcription · HappyScribe- Top Pick · Whisper · Otter AI · Descript ...Read more",
+          "domain": "www.happyscribe.com",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_14"
+        },
+        {
+          "url": "https://www.happyscribe.com/audio-to-text?utm_source=chatgpt.com",
+          "title": "Convert Audio to Text Free | AI Transcription Tool",
+          "snippet": "Free Audio to Text Converter - Transcribe audio in 120+ languages with 99% accuracy. No credit card needed. Try HappyScribe free now.",
+          "domain": "happyscribe.com",
+          "ref_type": "search",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_16"
+        }
+      ],
+      "inline_url": "https://www.happyscribe.com/blog/best-free-transcription-software",
+      "url_position": 534,
+      "claim_text": "HappyScribe (free trial) – AI‑powered transcription with support for 120+ languages; free starter minutes. happyscribe.com+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 617,
+        "end_idx": 636
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.canva.com/features/audio-to-text-converter/",
+      "url_position": 702,
+      "claim_text": "Canva Audio to Text – Upload audio and get AI‑powered text transcripts easily via Canva. canva.com",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 740,
+        "end_idx": 760
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://riverside.com/transcription",
+          "title": "Audio & Video Transcription. Powered by AI.",
+          "snippet": "Transcribe audio and video in 100+ languages with just a few clicks! Riverside's transcriber offers accurate AI transcriptions completely free!",
+          "domain": "riverside.com",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://riverside.com/transcription",
+      "url_position": 866,
+      "claim_text": "Riverside Transcriber – Free AI transcription for audio and video with multi‑language support. Riverside",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 861,
+        "end_idx": 881
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechnotes.co/",
+      "url_position": 1019,
+      "claim_text": "Speechnotes – Free online speech‑to‑text and dictation tool (real‑time and uploaded files). Speech to Text Online",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1042,
+        "end_idx": 1062
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/5-best-free-audio-transcription-software",
+      "url_position": 1211,
+      "claim_text": "🛠️ Fully Free / Open‑Source Options OpenAI Whisper – Powerful free model capable of transcribing many languages (via open‑source implementations). happyscribe.com",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1147,
+        "end_idx": 1167
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/5-best-free-audio-transcription-software",
+      "url_position": 1380,
+      "claim_text": "MacWhisper – Free transcription app for macOS using Whisper under the hood. happyscribe.com",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1274,
+        "end_idx": 1294
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otranscribe.com/",
+      "url_position": 1567,
+      "claim_text": "oTranscribe – Free browser‑based manual transcription helper (no AI, but useful for manual work). oTranscribe",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1454,
+        "end_idx": 1473
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.microsoft.com/en-us/office/transcribe-your-recordings-7fc2efec-245e-45f0-b053-2a97531ecf57",
+      "url_position": 1765,
+      "claim_text": "🧠 Built‑In or Easy Alternatives Microsoft Word Transcribe – Built‑in transcription feature in Word (upload audio, get text + speaker separation). support.microsoft.com",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1583,
+        "end_idx": 1601
+      },
+      "citation_token": "citeturn0news30",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.tomsguide.com/ai/google-gemini/transcribe-audio-with-google-gemini-for-free-heres-how-to-do-it",
+      "url_position": 1990,
+      "claim_text": "Google Gemini free audio upload – Free short‑audio transcription via Google’s AI (limited duration). tomsguide.com",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1777,
+        "end_idx": 1797
+      },
+      "citation_token": "citeturn0search10",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.happyscribe.com/blog/5-best-free-audio-transcription-software?utm_source=chatgpt.com",
+          "title": "5 Best free audio transcription software in 2026",
+          "snippet": "Nov 19, 2025 — 5 Best free audio transcription software: At a glance · 1. HappyScribe · 2. Gladia · 3. MacWhisper · 5. OpenAI Whisper.Read more",
+          "domain": "happyscribe.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.happyscribe.com/blog/5-best-free-audio-transcription-software",
+      "url_position": 2286,
+      "claim_text": "Note: Many services offer free plans with limits (minutes per month or file size). Fully unlimited free transcription is usually open‑source/model‑based (e.g., Whisper). happyscribe.com",
+      "url_index": 11
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.happyscribe.com/blog/best-free-transcription-software",
+        "title": "Best Free Transcription Software for 2026: Speech to Text ...",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://otter.ai/",
+        "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+        "domain": "Otter AI"
+      },
+      {
+        "url": "https://www.canva.com/features/audio-to-text-converter/",
+        "title": "Free Audio to Text Converter: Transcribe audio to text",
+        "domain": "canva.com"
+      },
+      {
+        "url": "https://riverside.com/transcription",
+        "title": "Audio & Video Transcription. Powered by AI.",
+        "domain": "Riverside"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "Speech to Text Online"
+      },
+      {
+        "url": "https://www.happyscribe.com/blog/5-best-free-audio-transcription-software",
+        "title": "5 Best free audio transcription software in 2026",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://otranscribe.com/",
+        "title": "oTranscribe",
+        "domain": "oTranscribe"
+      },
+      {
+        "url": "https://support.microsoft.com/en-us/office/transcribe-your-recordings-7fc2efec-245e-45f0-b053-2a97531ecf57",
+        "title": "Transcribe your recordings",
+        "domain": "support.microsoft.com"
+      },
+      {
+        "url": "https://www.tomsguide.com/ai/google-gemini/transcribe-audio-with-google-gemini-for-free-heres-how-to-do-it",
+        "title": "Transcribe audio with Google Gemini for free - here's how to do it",
+        "domain": "tomsguide.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.meetjamie.ai/blog/free-transcription-software",
+        "title": "Best Free Transcription Software: 6 Tools Tested ... - Jamie AI",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://www.reddit.com/r/software/comments/13g1lly/free_and_easy_audio_transcription_ai/",
+        "title": "Free and easy audio transcription AI? : r/software",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/ArtificialInteligence/comments/1ds2f4n/does_anyone_have_a_recommendation_for_a_free_ai/",
+        "title": "Does anyone have a recommendation for a free AI ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/podcasting/comments/1lra87u/are_there_any_recommendations_for_fast_and_free/",
+        "title": "Are there any recommendations for fast and free ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.assemblyai.com/blog/the-top-free-speech-to-text-apis-and-open-source-engines",
+        "title": "The top free Speech-to-Text APIs, AI Models, and Open ...",
+        "domain": "assemblyai.com"
+      },
+      {
+        "url": "https://wondertools.substack.com/p/the-best-ai-transcription-tools",
+        "title": "Best AI Transcription Tools: Otter, Sonix, Notta and others",
+        "domain": "substack.com"
+      },
+      {
+        "url": "https://meetgeek.ai/blog/best-free-transcription-software",
+        "title": "4 Best Free Transcription Software For 2026",
+        "domain": "meetgeek.ai"
+      },
+      {
+        "url": "https://reduct.video/blog/transcription-software-for-video/",
+        "title": "8 Best Audio and Video Transcription Software in 2026",
+        "domain": "reduct.video"
+      },
+      {
+        "url": "https://www.sembly.ai/blog/best-transcription-software-top-free-and-paid-tools/",
+        "title": "Best Transcription Software 2026: Top Free & Paid",
+        "domain": "sembly.ai"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+        "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://www.happyscribe.com/audio-to-text",
+        "title": "Convert Audio to Text Free | AI Transcription Tool",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://zapier.com/blog/best-transcription-apps/",
+        "title": "The best transcription software in 2025",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://www.ai-media.tv/knowledge-hub/insights/free-transcription-tools/",
+        "title": "AI-Powered Transcription Tools & Solutions for Businesses",
+        "domain": "ai-media.tv"
+      },
+      {
+        "url": "https://www.honeybear.ai/blog/best-free-transcription-software",
+        "title": "Find the Best Free Transcription Software to Turn Audio ...",
+        "domain": "honeybear.ai"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 15,
+    "total_all": 24
+  },
+  "response_stats": {
+    "total_length": 2363,
+    "citation_count": 12,
+    "chars_with_citations": 247
+  }
+}

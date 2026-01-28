@@ -1,0 +1,393 @@
+{
+  "run_id": "P064_r3",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend the best audio to text AI transcription and summarization platforms for short form projects?",
+  "metadata": {
+    "hidden_queries": [
+      "best audio to text AI transcription and summarization platforms short form projects",
+      "AI transcription with summarization features comparison audio to text summary tools"
+    ],
+    "sonic_classification": {
+      "latency_ms": 12.611975893378258,
+      "simple_search_prob": 0.9871773000924173,
+      "complex_search_prob": 0.011772888381822996,
+      "no_search_prob": 0.001049811525759673,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best audio to text AI transcription and summarization platforms short form projects"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 412,
+        "end_idx": 443
+      },
+      "citation_token": "citeturn0search4turn0news34",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+          "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026 - Sonix",
+          "snippet": "Enhance your workflow with the 11 best transcription apps of 2025. Get accurate, reliable speech-to-text solutions. Start using them today!",
+          "domain": "sonix.ai",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": 1767916800,
+          "ref_key": "0_search_4"
+        },
+        {
+          "url": "https://www.lifewire.com/use-otter-ai-8733745",
+          "title": "Unlock the Power of Otter AI: A Beginner's Guide to Transcribing",
+          "snippet": "This beginner’s guide to Otter AI, published on November 17, 2024, explains how to use the transcription tool for meetings through automatic, manual, or file-upload methods. Otter AI's core service, OtterPilot, enables users to link calendar accounts like Google or Microsoft to automatically join, record, and transcribe meetings. Users can also manually initiate recordings or upload audio/video files (e.g., MP3, MP4, WAV) up to 5GB in size for transcription. Detailed instructions are provided for automatic syncing with platforms like Zoom, as well as on starting recordings manually or uploading files directly through the web or mobile apps.\n\nOtter AI offers real-time transcription, meeting summaries, and the ability to manage edited conversations via “My Conversations.” It integrates with services like Google Calendar, Zoom, Microsoft Teams, and Slack, and can be used with either a free or premium plan. Overall, Otter AI enhances productivity by simplifying the note-taking process during meetings, using AI tools such as OtterPilot and AI Chat.",
+          "domain": "www.lifewire.com",
+          "ref_type": "news",
+          "ref_index": 34,
+          "turn_index": 0,
+          "pub_date": 1731859200,
+          "ref_key": "0_news_34"
+        }
+      ],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 408,
+      "claim_text": "Here are the best AI platforms for audio-to-text transcription + summarization suited to short-form projects — focusing on speed, accuracy, and getting concise insights quickly: 📌 All-in-one Transcription + Summarization Otter.ai – real-time transcription, speaker ID, automated meeting summaries and keyword highlights; integrates with Zoom/Teams/Calendar. Strong for meetings and quick uploads. Sonix+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 575,
+        "end_idx": 594
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://usefulai.com/tools/ai-transcription",
+          "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+          "snippet": "AI Transcription Tools are software applications that use artificial intelligence and machine learning to help you transcribe audio and video recordings into text.",
+          "domain": "usefulai.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1730505600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://usefulai.com/tools/ai-transcription",
+      "url_position": 615,
+      "claim_text": "Descript – transcription + audio/video editing + summaries in one interface; good for short clips and repurposing content. Useful AI",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 719,
+        "end_idx": 738
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/best-ai-tools-for-transcription/",
+      "url_position": 784,
+      "claim_text": "Rev AI – solid speech-to-text with optional summarization and subtitle support; fast; enterprise and pro workflows. Sonix",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 863,
+        "end_idx": 883
+      },
+      "citation_token": "citeturn0search30",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://es.wikipedia.org/wiki/Transkriptor_%28empresa%29",
+          "title": "Transkriptor (empresa)",
+          "snippet": "",
+          "domain": "es.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 30,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_30"
+        }
+      ],
+      "inline_url": "https://es.wikipedia.org/wiki/Transkriptor_%28empresa%29",
+      "url_position": 973,
+      "claim_text": "Transkriptor – automatic speech-to-text with summary and keyword extraction; includes assistant tools for meetings. Wikipedia",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 997,
+        "end_idx": 1016
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+          "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026 - Sonix",
+          "snippet": "Enhance your workflow with the 11 best transcription apps of 2025. Get accurate, reliable speech-to-text solutions. Start using them today!",
+          "domain": "sonix.ai",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": 1767916800,
+          "ref_key": "0_search_4"
+        }
+      ],
+      "inline_url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+      "url_position": 1144,
+      "claim_text": "Sonix – accurate transcription with AI-driven insights and search; suitable if you want speed + quality. Sonix",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1207,
+        "end_idx": 1227
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/audio-summarizer",
+      "url_position": 1411,
+      "claim_text": "🔍 Tools with Strong Summarization Focus Happy Scribe (Audio Summarizer) – upload audio → transcript + concise AI summary with bullet-points/action items; supports many languages. HappyScribe",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1348,
+        "end_idx": 1367
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.skimming.ai/free-tools/audio-summarizer",
+      "url_position": 1580,
+      "claim_text": "Skimming.ai / Notta Audio Summarizer – free/basic audio summarization online; good for one-off quick summaries. Skimming",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1550,
+        "end_idx": 1570
+      },
+      "citation_token": "citeturn0search29",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Whisper_%28speech_recognition_system%29",
+      "url_position": 1817,
+      "claim_text": "⚙️ Developer / API Options (if you want to build) OpenAI Whisper (via API) – flexible backend for building custom transcription pipelines; combine with GPT summarization. Wikipedia",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1674,
+        "end_idx": 1693
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.assemblyai.com/blog/transcript-summarizers",
+          "title": "7 best transcript summarizers powered by AI - AssemblyAI",
+          "snippet": "AI summarization is a powerful tool across industries—from sales to education to business. In this article, we compare seven transcript summarizers across accuracy, features, pricing, and more.",
+          "domain": "www.assemblyai.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": 1765152000,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://www.assemblyai.com/blog/transcript-summarizers",
+      "url_position": 1996,
+      "claim_text": "AssemblyAI – APIs that do speech-to-text and auto-summarization; good for automation at scale. AssemblyAI",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://sonix.ai/resources/best-transcription-apps-for-speech-to-text/",
+        "title": "11 Best AI Transcription Apps for Speech-to-Text in 2026 - Sonix",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-transcription",
+        "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+        "domain": "Useful AI"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-ai-tools-for-transcription/",
+        "title": "12 Best AI Tools For Transcription in 2026 [Complete Guide]",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://es.wikipedia.org/wiki/Transkriptor_%28empresa%29",
+        "title": "Transkriptor (empresa)",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.happyscribe.com/audio-summarizer",
+        "title": "AI Audio Summarizer - Happy Scribe",
+        "domain": "HappyScribe"
+      },
+      {
+        "url": "https://www.skimming.ai/free-tools/audio-summarizer",
+        "title": "Free Audio Summarizer | Quick AI Audio Summaries Online",
+        "domain": "Skimming"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Whisper_%28speech_recognition_system%29",
+        "title": "Whisper (speech recognition system)",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.assemblyai.com/blog/transcript-summarizers",
+        "title": "7 best transcript summarizers powered by AI - AssemblyAI",
+        "domain": "AssemblyAI"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://voicedash.ai/ai-powered-transcription-software/",
+        "title": "The 12 Best AI Powered Transcription Software Tools of 2026",
+        "domain": "voicedash.ai"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-audio-summarizers",
+        "title": "Best Audio Summarizer Tools - Top 10 AI Audio Summarizers Reviewed",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://clickup.com/blog/ai-transcription-tools/",
+        "title": "10 Best AI Transcription Tools To Try in 2026 | ClickUp",
+        "domain": "clickup.com"
+      },
+      {
+        "url": "https://contentmavericks.com/best-ai-transcription-software/",
+        "title": "7 Best AI Transcription Software 2026 (50 Services Ranked)",
+        "domain": "contentmavericks.com"
+      },
+      {
+        "url": "https://voicetype.com/blog/best-ai-transcription-software",
+        "title": "12 Best AI Transcription Software of 2025: In-Depth Reviews",
+        "domain": "voicetype.com"
+      },
+      {
+        "url": "https://www.tomedes.com/translator-hub/best-ai-transcription",
+        "title": "9 Best AI Transcription Tools in 2025 - tomedes.com",
+        "domain": "tomedes.com"
+      },
+      {
+        "url": "https://www.digitalocean.com/resources/articles/ai-transcription-tools",
+        "title": "10 AI Transcription Tools to Convert Speech to Text in 2025",
+        "domain": "digitalocean.com"
+      },
+      {
+        "url": "https://www.quizcat.ai/blog/top-7-ai-tools-for-audio-to-text-transcription",
+        "title": "Top 7 AI Tools for Audio-to-Text Transcription",
+        "domain": "quizcat.ai"
+      },
+      {
+        "url": "https://vomo.ai/blog/audio-to-transcript-and-summary-the-best-tools-to-simplify-your-workflow",
+        "title": "Audio to Transcript and Summary: The Best Tools to Simplify Your ...",
+        "domain": "vomo.ai"
+      },
+      {
+        "url": "https://www.mikestuzzi.com/best-ai-summarizing-tools-text-audio-video/",
+        "title": "6 Best AI Summarizing Tools in 2024 (Text, Audio, Video)",
+        "domain": "mikestuzzi.com"
+      },
+      {
+        "url": "https://www.unite.ai/best-ai-transcription-software-services/",
+        "title": "10 Best AI Transcription Software & Services (January 2026)",
+        "domain": "unite.ai"
+      },
+      {
+        "url": "https://www.avoma.com/blog/best-ai-transcription-software-tools",
+        "title": "9 Best AI Transcription Software Tools in 2026 - Avoma",
+        "domain": "avoma.com"
+      },
+      {
+        "url": "https://vizard.ai/blog/the-creators-edge-10-best-voice-recording-and-transcription-tools-for-creators-in-2025",
+        "title": "10 Best AI Transcription Tools for Creators in 2025",
+        "domain": "vizard.ai"
+      },
+      {
+        "url": "https://mojiokoshi3.com/en/post/voice_summarizer_ai/",
+        "title": "AI Audio Summarization: 12 Best Tools for 2025 (Free Options!)",
+        "domain": "mojiokoshi3.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 14,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 2397,
+    "citation_count": 9,
+    "chars_with_citations": 186
+  }
+}

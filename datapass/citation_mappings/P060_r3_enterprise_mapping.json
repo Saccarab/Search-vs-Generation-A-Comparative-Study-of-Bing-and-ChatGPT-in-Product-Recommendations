@@ -1,0 +1,484 @@
+{
+  "run_id": "P060_r3",
+  "account_type": "enterprise",
+  "prompt": "Anlık çeviri yapan programlar nelerdir?",
+  "metadata": {
+    "hidden_queries": [
+      "anlık çeviri yapan programlar gerçek zamanlı çeviri uygulamaları",
+      "real-time translation apps software realtime translation tools"
+    ],
+    "sonic_classification": {
+      "latency_ms": 12.410439958330244,
+      "simple_search_prob": 0.8740777184108327,
+      "complex_search_prob": 0.0022969137268410325,
+      "no_search_prob": 0.12362536786232627,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "anlık çeviri yapan programlar gerçek zamanlı çeviri uygulamaları"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 255,
+        "end_idx": 288
+      },
+      "citation_token": "citeturn0search0turn0search16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://netkurdu.net/konusurken-en-iyi-anlik-sesli-ceviri-yapan-uygulamalar.html/",
+          "title": "Konuşurken En İyi Anlık Sesli Çeviri Yapan Uygulamalar 2026",
+          "snippet": "Günümüzde anlık sesli çeviri uygulamaları, farklı diller konuşan insanlar arasında etkili ve hızlı iletişim kurmayı sağlayan vazgeçilmez araçlar haline gelmiştir. Özellikle yurt dışı seyahatleri, uluslararası toplantılar, eğitim ve iş dünyasında konuşurken anında yapay zeka destekli çeviri yapan uygulamalar büyük kolaylık sağlar. Bu makalede, 2026 yılı ...",
+          "domain": "netkurdu.net",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1741564800,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://appmus.com/feature/real-time-translation",
+          "title": "Best Software with Real-time translation Functionality (2025)",
+          "snippet": "Google Translate is a versatile, cloud-based translation service offering real-time text, voice, image, and document translation across numerous languages. It supports online and offline use, making language barriers more manageable for communication and learning.",
+          "domain": "appmus.com",
+          "ref_type": "search",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_16"
+        }
+      ],
+      "inline_url": "https://netkurdu.net/konusurken-en-iyi-anlik-sesli-ceviri-yapan-uygulamalar.html/",
+      "url_position": 254,
+      "claim_text": "İşte anlık/gerçek zamanlı çeviri yapan programlar ve araçlar (sesli, metinli veya sohbet esnasında çeviri yapabilen): 🎧 Mobil ve Web Uygulamaları Google Translate – Konuşma modu ile gerçek zamanlı sesli çeviri + metin ve fotoğraf çevirisi. Netkurdu+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 374,
+        "end_idx": 394
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.strikingly.com/blog/posts/top-7-real-time-translation-tools-you-need-in-2025",
+      "url_position": 427,
+      "claim_text": "Microsoft Translator – Sesli ve yazılı çeviri + çoklu cihaz sohbeti desteği. Strikingly",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 461,
+        "end_idx": 480
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://tr.vidabytes.com/7-ger%C3%A7ek-zamanl%C4%B1-konu%C5%9Fma-%C3%A7evirmeni-uygulamas%C4%B1/",
+      "url_position": 587,
+      "claim_text": "iTranslate – Sesli konuşma çevirisi yapan mobil uygulama. VidaBytes",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 560,
+        "end_idx": 580
+      },
+      "citation_token": "citeturn0search26",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Naver_Papago",
+          "title": "Naver Papago",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 26,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_26"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Naver_Papago",
+      "url_position": 768,
+      "claim_text": "Naver Papago – Özellikle Asya dilleri için güçlü anlık çeviri hizmeti. Wikipedia",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 651,
+        "end_idx": 652
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/articles/tr/the-most-accurate-real-time-translators",
+      "url_position": 882,
+      "claim_text": "SayHi Translate – Basit arayüzle sesli gerçek zamanlı çeviri. X-Doc",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 798,
+        "end_idx": 817
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.transyncai.com/tr/",
+      "url_position": 1074,
+      "claim_text": "🖥️ Toplantı / Canlı Konuşma Çeviri Araçları Transync AI – Çok dilli toplantılar ve canlı çeviri sunar (60+ dil). 同言翻译",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 898,
+        "end_idx": 917
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/tr/araclar/gercek-zamanli-ceviri",
+          "title": "Gerçek Zamanlı Çevirmen - Yapay Zeka Canlı Çeviri",
+          "snippet": "Maestra'nın yapay zeka destekli gerçek zamanlı çevirmenini kullanarak canlı etkinlikleri ve içerikleri yerelleştirin. İlk 10 dakika ücretsiz deneyin!",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        }
+      ],
+      "inline_url": "https://maestra.ai/tr/araclar/gercek-zamanli-ceviri",
+      "url_position": 1191,
+      "claim_text": "Maestra AI – Canlı ses çevirisi, altyazı ve çok konuşmacılı senaryolar. Maestra AI",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 977,
+        "end_idx": 997
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/blogs/best-live-translation-apps",
+          "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+          "snippet": "We tested 9 live translation software tools in real-world meetings, events, and conversations. See what worked, what didn’t, and how they compare in 2026.",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 22,
+          "turn_index": 0,
+          "pub_date": 1769040000,
+          "ref_key": "0_search_22"
+        }
+      ],
+      "inline_url": "https://maestra.ai/blogs/best-live-translation-apps",
+      "url_position": 1308,
+      "claim_text": "Wordly AI – Toplantılarda canlı çeviri ve altyazı. Maestra AI",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1104,
+        "end_idx": 1123
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1470,
+      "claim_text": "Kudo / Interprefy – Zoom/Webex gibi platformlarda gerçek zamanlı çeviri ve tercüman entegrasyonu. jotme.io",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1184,
+        "end_idx": 1203
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 1582,
+      "claim_text": "JotMe – Toplantı odaklı AI canlı çeviri ve altyazı. jotme.io",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1362,
+        "end_idx": 1380
+      },
+      "citation_token": "citeturn0news24",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.theverge.com/news/783653/whatsapp-message-translation-feature-iphone-android",
+          "title": "WhatsApp adds built-in text translations on iPhone and Android",
+          "snippet": "WhatsApp has introduced a new built-in translation feature for both iPhone and Android users, enabling real-time message translation within chats, groups, and Channel updates. The feature, rolling out gradually from September 23, 2025, allows users to long-press a message and tap \"Translate\" to convert the text into their preferred language. Android users initially get support for English, Spanish, Hindi, Portuguese, Russian, and Arabic, with the added ability to enable automatic translation for entire conversations. iPhone users can access translations in over 19 languages from launch. While the feature mirrors existing services like Google's \"Tap to Translate,\" it marks a significant update for WhatsApp’s global audience, enhancing ease of communication across languages. WhatsApp also plans to add more language options in the future.",
+          "domain": "www.theverge.com",
+          "ref_type": "news",
+          "ref_index": 24,
+          "turn_index": 0,
+          "pub_date": 1758640421,
+          "ref_key": "0_news_24"
+        }
+      ],
+      "inline_url": "https://www.theverge.com/news/783653/whatsapp-message-translation-feature-iphone-android",
+      "url_position": 1790,
+      "claim_text": "🧠 Diğer Çeviri Seçenekleri WhatsApp yerleşik çeviri – Mesaj içi dili otomatik ya da tek dokunuşla çevirme (gerçek zamanlı sohbet çevirisi için). The Verge",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1466,
+        "end_idx": 1486
+      },
+      "citation_token": "citeturn0search27",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Skype_Translator",
+      "url_position": 1969,
+      "claim_text": "Skype Translator – Konuşma sırasında başka dile sesli çeviri (Skype içinde). Wikipedia",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1708,
+        "end_idx": 1727
+      },
+      "citation_token": "citeturn0search0",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://netkurdu.net/konusurken-en-iyi-anlik-sesli-ceviri-yapan-uygulamalar.html/",
+          "title": "Konuşurken En İyi Anlık Sesli Çeviri Yapan Uygulamalar 2026",
+          "snippet": "Günümüzde anlık sesli çeviri uygulamaları, farklı diller konuşan insanlar arasında etkili ve hızlı iletişim kurmayı sağlayan vazgeçilmez araçlar haline gelmiştir. Özellikle yurt dışı seyahatleri, uluslararası toplantılar, eğitim ve iş dünyasında konuşurken anında yapay zeka destekli çeviri yapan uygulamalar büyük kolaylık sağlar. Bu makalede, 2026 yılı ...",
+          "domain": "netkurdu.net",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1741564800,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://netkurdu.net/konusurken-en-iyi-anlik-sesli-ceviri-yapan-uygulamalar.html/?utm_source=chatgpt.com",
+          "title": "Konuşurken En İyi Anlık Sesli Çeviri Yapan Uygulamalar 2026",
+          "snippet": "Günümüzde anlık sesli çeviri uygulamaları, farklı diller konuşan insanlar arasında etkili ve hızlı iletişim kurmayı sağlayan vazgeçilmez araçlar haline gelmiştir. Özellikle yurt dışı seyahatleri, uluslararası toplantılar, eğitim ve iş dünyasında konuşurken anında yapay zeka destekli çeviri yapan uygulamalar büyük kolaylık sağlar. Bu makalede, 2026 yılı ...",
+          "domain": "Netkurdu",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://netkurdu.net/konusurken-en-iyi-anlik-sesli-ceviri-yapan-uygulamalar.html/",
+      "url_position": 2246,
+      "claim_text": "Bu araçlar farklı kullanım senaryolarına göre değişir (mobil sohbet, seyahat, toplantı, iş vs.). Bazıları ücretsiz temel çeviri sunar, bazıları abonelik veya ücretli planla daha gelişmiş gerçek zamanlı özellik sağlar. Netkurdu",
+      "url_index": 12
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://netkurdu.net/konusurken-en-iyi-anlik-sesli-ceviri-yapan-uygulamalar.html/",
+        "title": "Konuşurken En İyi Anlık Sesli Çeviri Yapan Uygulamalar 2026",
+        "domain": "Netkurdu"
+      },
+      {
+        "url": "https://www.strikingly.com/blog/posts/top-7-real-time-translation-tools-you-need-in-2025",
+        "title": "Top 7 Real-Time Translation Tools You Need in 2025 - En...",
+        "domain": "Strikingly"
+      },
+      {
+        "url": "https://tr.vidabytes.com/7-ger%C3%A7ek-zamanl%C4%B1-konu%C5%9Fma-%C3%A7evirmeni-uygulamas%C4%B1/",
+        "title": "7 gerçek zamanlı konuşma çevirmeni uygulaması",
+        "domain": "VidaBytes"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Naver_Papago",
+        "title": "Naver Papago",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://x-doc.ai/articles/tr/the-most-accurate-real-time-translators",
+        "title": "Nihai Rehber - 2025'in En Doğru Gerçek Zamanlı Çevirmenleri",
+        "domain": "X-Doc"
+      },
+      {
+        "url": "https://www.transyncai.com/tr/",
+        "title": "Transync AI – Gerçek Zamanlı Yapay Zeka Çevirisi",
+        "domain": "同言翻译"
+      },
+      {
+        "url": "https://maestra.ai/tr/araclar/gercek-zamanli-ceviri",
+        "title": "Gerçek Zamanlı Çevirmen - Yapay Zeka Canlı Çeviri",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-live-translation-apps",
+        "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.theverge.com/news/783653/whatsapp-message-translation-feature-iphone-android",
+        "title": "WhatsApp adds built-in text translations on iPhone and Android",
+        "domain": "The Verge"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Skype_Translator",
+        "title": "Skype Translator",
+        "domain": "Wikipedia"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.screenapp.io/tr/blog/best-real-time-translators",
+        "title": "2025'in En İyi 10 Gerçek Zamanlı Çevirmeni",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://taia.io/resources/blog/best-translation-software",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools by Features ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-translation-software",
+        "title": "8 Best Translation Software to Use in 2025 (Free & Paid)",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://bordio.com/blog/best-translation-software/",
+        "title": "11 Best Translation Software Platforms in 2025 - Bordio",
+        "domain": "bordio.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-real-time-translation-apps/",
+        "title": "10 Best Real-time Language Translation Apps for Effortless Communication",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://askweb.com.tr/google-translate-ve-diger-ceviri-programlarinin-karsilastirmasi/",
+        "title": "Google Translate ve Diğer Çeviri Programlarının Karşılaştırması",
+        "domain": "askweb.com.tr"
+      },
+      {
+        "url": "https://www.neoldu.com.tr/en-iyi-ceviri-programlari-45197h.htm",
+        "title": "Etkili İletişim Kurabileceğiniz En İyi Çeviri Programları",
+        "domain": "neoldu.com.tr"
+      },
+      {
+        "url": "https://www.alem.com.tr/yasam/konusurken-anlik-ceviri-yapan-en-iyi-uygulamalar-1079308",
+        "title": "Konuşurken Anlık Çeviri Yapan En İyi Uygulamalar | Alem",
+        "domain": "alem.com.tr"
+      },
+      {
+        "url": "https://infostec.com/tr/en-iyi-aninda-ceviri-uygulamalari/",
+        "title": "En İyi Anlık Çeviri Uygulamaları - Infostec",
+        "domain": "infostec.com"
+      },
+      {
+        "url": "https://inglatech.com/tr/best-instant-translation-apps/",
+        "title": "En iyi anında çeviri uygulamaları - Inglatech",
+        "domain": "inglatech.com"
+      },
+      {
+        "url": "https://www.naargmedia.com/real-time-translation-tools/",
+        "title": "10 Game-Changing Real-Time Translation Tools in 2025",
+        "domain": "naargmedia.com"
+      },
+      {
+        "url": "https://www.transyncai.com/tr/tools/real-time-translation/",
+        "title": "Gerçek Zamanlı Çeviri Aracı | Transync AI",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/real-time-translation/",
+        "title": "Real-time Translation Tool | Transync AI",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://appmus.com/feature/real-time-translation",
+        "title": "Best Software with Real-time translation Functionality (2025)",
+        "domain": "appmus.com"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 15,
+    "total_all": 26
+  },
+  "response_stats": {
+    "total_length": 2331,
+    "citation_count": 13,
+    "chars_with_citations": 246
+  }
+}

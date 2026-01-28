@@ -1,0 +1,384 @@
+{
+  "run_id": "P012_r3",
+  "account_type": "enterprise",
+  "prompt": "What is the best platform to convert video voice into another language?",
+  "metadata": {
+    "hidden_queries": [
+      "platform to convert video voice into another language best automatic dubbing translation voiceovers",
+      "best tools for translating and dubbing video audio into another language"
+    ],
+    "sonic_classification": {
+      "latency_ms": 11.405532713979483,
+      "simple_search_prob": 0.9816536117819208,
+      "complex_search_prob": 0.010770799831959617,
+      "no_search_prob": 0.007575588386119596,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "platform to convert video voice into another language best automatic dubbing translation voiceovers"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 320,
+        "end_idx": 339
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dubpilotai.com/",
+      "url_position": 319,
+      "claim_text": "Here are some of the best platforms to convert video voice into another language (AI dubbing/translation) — direct and practical options: Top All-Around Tools (easy, automatic, many languages) DubPilot AI – automatic transcription, translation, and natural voiceover in 100+ languages with editing tools. DubPilot AI",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 443,
+        "end_idx": 462
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.veed.io/tools/voice-dubber/language-dubbing",
+          "title": "Language Dubbing - Dub Videos in Any Language - VEED.IO",
+          "snippet": "Translate your videos into any language with VEED's AI dubbing software. Upload a file, select a language, and get natural voice dubs in minutes.",
+          "domain": "www.veed.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.veed.io/tools/voice-dubber/language-dubbing",
+      "url_position": 449,
+      "claim_text": "VEED.io – simple browser upload and AI dubbing in any language; also full video editing suite. VEED.IO",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 548,
+        "end_idx": 567
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vozo.ai/video-translate",
+      "url_position": 590,
+      "claim_text": "Vozo.ai – translates to 110+ languages with customizable voice and lip sync. Vozo",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 677,
+        "end_idx": 696
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://videodubber.ai/",
+      "url_position": 742,
+      "claim_text": "VideoDubber – supports 150+ languages, voice cloning & subtitles; good balance of quality and price. VideoDubber",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 794,
+        "end_idx": 814
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://flixier.com/ai/ai-dubbing",
+          "title": "AI Dubbing Online | Translate Videos in Different Languages",
+          "snippet": "Translate your video to any language Break down language barriers when it comes to your online content with Flixier's AI dubbing tool. Connect with audiences worldwide with accurate audio translations in over 130 languages and dialects, all with just a few clicks.",
+          "domain": "flixier.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://flixier.com/ai/ai-dubbing",
+      "url_position": 866,
+      "claim_text": "Flixier AI Dubbing – quick online AI dubbing in 130+ languages without software install. Flixier",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 908,
+        "end_idx": 927
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/tools/video-dubber",
+      "url_position": 999,
+      "claim_text": "Maestra (Video Dubber) – voice cloning + 125+ language support, free tier available. Maestra AI",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1046,
+        "end_idx": 1065
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.kapwing.com/ai/dubbing",
+      "url_position": 1154,
+      "claim_text": "Simpler or Niche Options Kapwing AI Dubbing – straightforward tool for 40+ languages for small projects. Kapwing",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1137,
+        "end_idx": 1156
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speeek.io/en",
+      "url_position": 1262,
+      "claim_text": "Speeek – basic dubbing in ~20 languages, easy for quick tasks. Speeek",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1239,
+        "end_idx": 1259
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dubverse.ai/",
+      "url_position": 1372,
+      "claim_text": "Dubverse – flexible script editing + AI voiceovers (good for ads/shorts). Dubverse.ai",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1425,
+        "end_idx": 1443
+      },
+      "citation_token": "citeturn0news37",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.androidcentral.com/apps-software/youtube/youtubes-new-trick-automatically-re-dubs-any-video-into-your-native-tongue",
+          "title": "YouTube's new trick automatically re-dubs any video into your native tongue",
+          "snippet": "YouTube has launched a new multi-language audio feature that allows millions of creators to add dubbed audio tracks to their videos, significantly breaking down language barriers and expanding global reach. After two years of testing, the feature is now broadly available and uses Google’s Gemini AI to create translations that mimic the creator’s voice and emotional tone, helping make the dubs sound natural.\n\nCreators can choose between manual dubbing — using their own or professional voiceovers — or automatic dubbing, which uses machine translation and synthetic voices. Automatic dubbing is enabled by default for eligible channels, with an option to review and approve dubs before publishing. Currently, English videos can be auto-translated into Japanese, Hindi, Spanish, and Korean, with more languages coming soon.\n\nManagement of audio tracks is handled via YouTube Studio, giving creators control over which dubs to publish or delete. The feature was initially tested with select creators like MrBeast and Jamie Oliver, and the results showed major success — Jamie Oliver’s viewership tripled after implementing dubbed audio. For viewers, the update means easier, more immersive access to international content without relying on subtitles.",
+          "domain": "www.androidcentral.com",
+          "ref_type": "news",
+          "ref_index": 37,
+          "turn_index": 0,
+          "pub_date": 1758022398,
+          "ref_key": "0_news_37"
+        }
+      ],
+      "inline_url": "https://www.androidcentral.com/apps-software/youtube/youtubes-new-trick-automatically-re-dubs-any-video-into-your-native-tongue",
+      "url_position": 1551,
+      "claim_text": "Platform-Integrated (if you’re on social platforms) YouTube multi-language audio (Creators) – built-in auto dubs and voice cloning for uplAndroid Central",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1579,
+        "end_idx": 1584
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.techradar.com/ai-platforms-assistants/metas-ai-translation-remakes-reels-in-your-language",
+      "url_position": 1690,
+      "claim_text": "TechRadar",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://dubpilotai.com/",
+        "title": "Smart Online Video Translator | DubPilot AI",
+        "domain": "DubPilot AI"
+      },
+      {
+        "url": "https://www.veed.io/tools/voice-dubber/language-dubbing",
+        "title": "Language Dubbing - Dub Videos in Any Language - VEED.IO",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://www.vozo.ai/video-translate",
+        "title": "AI Video Translator | Translate Free to 110+ Languages - Vozo",
+        "domain": "Vozo"
+      },
+      {
+        "url": "https://videodubber.ai/",
+        "title": "VideoDubber: AI Video Translation & Voice Dubbing - Try Free",
+        "domain": "VideoDubber"
+      },
+      {
+        "url": "https://flixier.com/ai/ai-dubbing",
+        "title": "AI Dubbing Online | Translate Videos in Different Languages",
+        "domain": "Flixier"
+      },
+      {
+        "url": "https://maestra.ai/tools/video-dubber",
+        "title": "Free Video Dubber - AI Dubbing and Voice Cloning",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.kapwing.com/ai/dubbing",
+        "title": "AI Dubbing — Free Online Video Dubbing - Kapwing",
+        "domain": "Kapwing"
+      },
+      {
+        "url": "https://speeek.io/en",
+        "title": "Speeek: AI Video Translation & Dubbing Tool",
+        "domain": "Speeek"
+      },
+      {
+        "url": "https://dubverse.ai/",
+        "title": "Dubverse: AI Video Dubbing, AI Text to Speech, AI Subtitles",
+        "domain": "Dubverse.ai"
+      },
+      {
+        "url": "https://www.androidcentral.com/apps-software/youtube/youtubes-new-trick-automatically-re-dubs-any-video-into-your-native-tongue",
+        "title": "YouTube's new trick automatically re-dubs any video into your native tongue",
+        "domain": "Android Central"
+      },
+      {
+        "url": "https://www.techradar.com/ai-platforms-assistants/metas-ai-translation-remakes-reels-in-your-language",
+        "title": "Meta's AI translation remakes Reels in your language",
+        "domain": "TechRadar"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://vimeo.com/blog/post/tools-for-video-dubbing",
+        "title": "7 Top Online Tools for Dubbing Videos with AI Translations",
+        "domain": "vimeo.com"
+      },
+      {
+        "url": "https://techaidigest.com/best-ai-dubbing-tools/",
+        "title": "7 Best AI Dubbing Tools to Dub Videos in Multiple Languages (2025)",
+        "domain": "techaidigest.com"
+      },
+      {
+        "url": "https://techdictionary.io/best-ai-dubbing-software/",
+        "title": "7 Best AI Dubbing Software for Video Localization (Mar 2025)",
+        "domain": "techdictionary.io"
+      },
+      {
+        "url": "https://lipsync.video/video-dubbing",
+        "title": "Free AI Video Dubbing & Translator with Lipsync.video",
+        "domain": "lipsync.video"
+      },
+      {
+        "url": "https://www.vozo.ai/dubbing",
+        "title": "AI Dubbing ⚡️ Auto Dub Videos FREE",
+        "domain": "vozo.ai"
+      },
+      {
+        "url": "https://wavel.ai/solutions/dubbing/ai-dubbing-video-translator",
+        "title": "AI Dubbing Video Translator–Translate & Dub videos in Minutes",
+        "domain": "wavel.ai"
+      },
+      {
+        "url": "https://dubbix.com/",
+        "title": "Dubbix | AI-Powered Video Dubbing & Speech Translation",
+        "domain": "dubbix.com"
+      },
+      {
+        "url": "https://www.aistudios.com/features/ai-dubbing",
+        "title": "Free AI Dubbing & Video Translator | 150+ Languages – AI Studios",
+        "domain": "aistudios.com"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-dubbing/",
+        "title": "AI Dubbing: Dub videos into any language for free | Canva",
+        "domain": "canva.com"
+      },
+      {
+        "url": "https://www.vidnoz.com/ai-dubbing.html",
+        "title": "AI Dubbing: Localize & Dub Video into Any Language Free - Vidnoz",
+        "domain": "vidnoz.com"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-video-dubbing-apps",
+        "title": "Best 6 AI Dubbing Software for Video Localization [2025] - Notta",
+        "domain": "notta.ai"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 11,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 1795,
+    "citation_count": 11,
+    "chars_with_citations": 196
+  }
+}

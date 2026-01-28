@@ -1,0 +1,378 @@
+{
+  "run_id": "P054_r3",
+  "account_type": "enterprise",
+  "prompt": "What is the best instant translator for conferences?",
+  "metadata": {
+    "hidden_queries": [
+      "best instant translator for conferences real time translation devices software",
+      "实时 会议 同声 翻译 设备 软件 conference instant translator review"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.94976905733347,
+      "simple_search_prob": 0.9726379302404421,
+      "complex_search_prob": 0.011682224663677292,
+      "no_search_prob": 0.015679845095880614,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best instant translator for conferences real time translation devices software"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 486,
+        "end_idx": 506
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wordly.ai/conference-translation",
+          "title": "Conference Translation | Powered by Wordly AI",
+          "snippet": "Wordly provides conference translation powered by AI for dozens of languages at in-person and virtual events. Get live audio, captions, and transcripts in the language of your choice.",
+          "domain": "www.wordly.ai",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://www.wordly.ai/conference-translation",
+      "url_position": 462,
+      "claim_text": "Here’s a skeptical, direct comparison of the most relevant instant translators for conference use (software + hardware). Real-time accuracy, integration with conferencing platforms, and handling many languages matter most. 🧠 Best Instant Translators for Conferences 1) Wordly (AI conference translation platform) Designed specifically for in-person & virtual conferences. Provides live audio translation, captions, and transcripts in many languages. Wordly",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 820,
+        "end_idx": 840
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://zhuanlan.zhihu.com/p/29734447844",
+          "title": "开会效率倍增：会议实时翻译工具大盘点 - 知乎",
+          "snippet": "Interprefy 远程同声传译这块它做得特别好，和 Zoom、Teams 这些常用的视频会议软件能完美搭配。开大型远程会议的时候，它能支持好多人同时翻译，而且翻译得又快又准。 它用的语音识别和翻译技术都很先进，保证会议交流顺顺利利的，不管线上还是线下会议，有它在，语言就不再是交流的阻碍。",
+          "domain": "zhuanlan.zhihu.com",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": 1741737600,
+          "ref_key": "0_search_15"
+        }
+      ],
+      "inline_url": "https://zhuanlan.zhihu.com/p/29734447844",
+      "url_position": 804,
+      "claim_text": "Pros: built for events, scalable, no need for individual devices. Cons: enterprise pricing, set-up required. Best if: you need robust, multi-attendee translation at an event. 2) Interprefy (Professional/AI hybrid) Enterprise-level AI simultaneous interpretation used in large events. Zhihu",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1183,
+        "end_idx": 1184
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://belikenative.com/top-5-tools-for-real-time-meeting-translation/",
+      "url_position": 1181,
+      "claim_text": "Integrates with Zoom/Teams. Pros: high accuracy, supports many users and languages. Cons: pricey, geared toward professional events. Best if: high stakes conference with formal interpreting needs. 3) Zoom / Teams / Google Meet Built-in + Plugins Zoom has built-in automated translation & human interpreter support. BeLikeNative",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1272,
+        "end_idx": 1292
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.zhihu.com/question/504267879",
+      "url_position": 1325,
+      "claim_text": "Google Meet and other tools can show live translated captions. Zhihu",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1612,
+        "end_idx": 1631
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://belikenative.com/top-5-tools-for-real-time-meeting-translation/",
+      "url_position": 1677,
+      "claim_text": "Pros: no extra tools for basic captioning. Cons: limited languages, not true “simultaneous interpreting” quality. Best if: quick, low-cost translation for mainstream platforms. 4) Third-party realtime meeting tools Examples: Microsoft Translator — in-meeting speech translation with Teams. BeLikeNative",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1711,
+        "end_idx": 1731
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.palabra.ai/solutions/online-meetings-translation",
+      "url_position": 1833,
+      "claim_text": "Palabra.ai — AI real-time voice translation for meetings, 60+ languages. Palabra",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1800,
+        "end_idx": 1820
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://immersivetranslate.com/blog/instant-meeting-translation/",
+      "url_position": 1979,
+      "claim_text": "Immersive Translate — real-time captions for Zoom/Teams/Meet. Immersive Translate",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 2164,
+        "end_idx": 2182
+      },
+      "citation_token": "citeturn0news24",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 24,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_24"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 2373,
+      "claim_text": "Pros: software that works across platforms Cons: quality varies with accent, network, and context Best if: you want cross-platform real-time translation without enterprise fees. 5) Hardware translators (for in-person) AI translation earbuds like the new MyManu Orb (50+ languages) can translate conversations live. SFGATE",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 2263,
+        "end_idx": 2264
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.theverge.com/news/771665/timekettle-w4-ai-interpreter-wireless-earbuds-bone-conduction",
+      "url_position": 2561,
+      "claim_text": "Timekettle AI earbuds offer real-time translation in dozens of languages. The Verge",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.wordly.ai/conference-translation",
+        "title": "Conference Translation | Powered by Wordly AI",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://zhuanlan.zhihu.com/p/29734447844",
+        "title": "开会效率倍增：会议实时翻译工具大盘点 - 知乎",
+        "domain": "Zhihu"
+      },
+      {
+        "url": "https://belikenative.com/top-5-tools-for-real-time-meeting-translation/",
+        "title": "Meeting Translation: 5 Best AI Tools for Real-Time Translation",
+        "domain": "BeLikeNative"
+      },
+      {
+        "url": "https://www.zhihu.com/question/504267879",
+        "title": "有没有软件能实时翻译在线会议？ - 知乎",
+        "domain": "Zhihu"
+      },
+      {
+        "url": "https://www.palabra.ai/solutions/online-meetings-translation",
+        "title": "AI Real-Time Translator for Online Meetings | Palabra",
+        "domain": "Palabra"
+      },
+      {
+        "url": "https://immersivetranslate.com/blog/instant-meeting-translation/",
+        "title": "视频会议实时翻译神器：支持Zoom、Google Meet、Teams",
+        "domain": "Immersive Translate"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      },
+      {
+        "url": "https://www.theverge.com/news/771665/timekettle-w4-ai-interpreter-wireless-earbuds-bone-conduction",
+        "title": "Timekettle's new translation earbuds are made for sharing",
+        "domain": "The Verge"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://maestra.ai/blogs/best-real-time-translators-for-meetings",
+        "title": "5 Best Real-Time Translators for Meetings - maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.sohu.com/a/946512737_122542492",
+        "title": "2025年最实用的在线跨国会议翻译软件测评：哪款AI同传最靠谱？",
+        "domain": "sohu.com"
+      },
+      {
+        "url": "https://www.sohu.com/a/945437911_122542492",
+        "title": "跨国会议不再尴尬：5款AI在线翻译与记录软件横评 - 搜狐",
+        "domain": "sohu.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://tactiq.io/learn/top-tools-for-live-meeting-translation-2025",
+        "title": "Top Tools for Live Meeting Translation (2025) - tactiq.io",
+        "domain": "tactiq.io"
+      },
+      {
+        "url": "https://www.sohu.com/a/876379682_121692301",
+        "title": "会议如何实时翻译？实测4款同声传译软件，跨国开会效率翻倍",
+        "domain": "sohu.com"
+      },
+      {
+        "url": "https://www.snapsight.com/en/blog/the-complete-guide-to-choosing-live-translation-services-for-your-next-conference/",
+        "title": "Best Live Translation Services for Conferences | Snapsight",
+        "domain": "snapsight.com"
+      },
+      {
+        "url": "https://boostlingo.com/blog/best-ai-tools-for-translation-at-events/",
+        "title": "Best AI Tools for Live Translation at Events | Boostlingo",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://zhuanlan.zhihu.com/p/32863413026",
+        "title": "4款商务会议同声传译工具：助你零障碍沟通跨国开会不再慌",
+        "domain": "zhihu.com"
+      },
+      {
+        "url": "https://zhuanlan.zhihu.com/p/18456062219",
+        "title": "盘点7款热门同声传译免费工具，助你轻松应对国际会议",
+        "domain": "zhihu.com"
+      },
+      {
+        "url": "https://www.stenomatic.ai/post/best-simultaneous-translation-app",
+        "title": "The 6 Best Simultaneous Translation Apps for Conferences",
+        "domain": "stenomatic.ai"
+      },
+      {
+        "url": "https://maestra.ai/tools/real-time-translator/live-conference-translation",
+        "title": "Live Conference Translation - Instant Interpretation",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://tongchuan.iflyrec.com/",
+        "title": "讯飞同传-会议同传-专业AI同声传译设备-实时字幕翻译软件",
+        "domain": "iflyrec.com"
+      },
+      {
+        "url": "https://transgull.com/zh-CN/online-meeting-translation",
+        "title": "适用于 Zoom、Teams 和 Google Meet 等在线会议的实时同声传译软件 | 翻译鸥",
+        "domain": "transgull.com"
+      },
+      {
+        "url": "https://blog.csdn.net/yaya_192/article/details/146550787",
+        "title": "打工人必备的会议实时翻译工具，3秒解决会议语言不通尴尬-CSDN博客",
+        "domain": "csdn.net"
+      },
+      {
+        "url": "https://blog.csdn.net/chenmuchen_/article/details/144721889",
+        "title": "会议如何实时翻译？职场人都在用这6款~_会议实时翻译软件-CSDN博客",
+        "domain": "csdn.net"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 18,
+    "total_all": 26
+  },
+  "response_stats": {
+    "total_length": 3447,
+    "citation_count": 9,
+    "chars_with_citations": 139
+  }
+}

@@ -1,0 +1,458 @@
+{
+  "run_id": "P035_r2",
+  "account_type": "enterprise",
+  "prompt": "Can you list translation services with live interpreters and their 2-day pricing?",
+  "metadata": {
+    "hidden_queries": [
+      "translation services with live interpreters and pricing 2-day rates",
+      "translation interpretation services live interpreters cost pricing 2 days",
+      "specific translation/interpretation companies with published pricing live interpreters e.g. Day Interpreting, Interprefy pricing examples or typical event costs list",
+      "Wordly, OneAccord, and other interpretation platform pricing live interpreters pricing info"
+    ],
+    "sonic_classification": {
+      "latency_ms": 3.54329205583781,
+      "simple_search_prob": 0.926000229059428,
+      "complex_search_prob": 0.06928529799347989,
+      "no_search_prob": 0.004714472947092083,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 402,
+        "end_idx": 447
+      },
+      "citation_token": "citeturn1search1turn1search6turn1search7",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wordly.ai/pricing",
+          "title": "Wordly Pricing | AI Translation & Captions for Meetings and Events",
+          "snippet": "Get transparent pricing for Wordly AI translation and captions. Explore affordable plans for meetings and events at organizations of all sizes.",
+          "domain": "www.wordly.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_1"
+        }
+      ],
+      "inline_url": "https://www.wordly.ai/pricing",
+      "url_position": 419,
+      "claim_text": "Here are translation/interpretation services with live interpreters or real-time language support and what you can expect to pay for roughly a 2-day event, based on publicly available pricing info (quotes or typical cost models). Some companies don’t publish exact fixed 2-day pricing online — in those cases I give cost estimates you’d derive from their rates; you would still need a quote. Wordly+2Day Interpreting+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 1145,
+        "end_idx": 1150
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dayinterpreting.com/pricing",
+      "url_position": 1094,
+      "claim_text": "1) DayInterpreting (phone/video real-time interpreters) Service: Live human interpreters on phone or video (on-demand, 24/7). Pricing model: Pay-as-you-go per minute (prepaid credits). Typical rate: ~$1.25-$1.75/minute for primary languages (Spanish often at the low end), ~$0.25/min extra per additional participant if added via their platform. 2-day rough cost: If you had ~8 hours/day of interpreting for one language stream: 480 min/day × ~$1.75 = ~$840/day (~$1,680 for 2 days) Multiple simultaneous participants might add small incremental fees. Notes: No minimums or monthly fees; enterprise billing possible. Day Interpreting",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1446,
+        "end_idx": 1493
+      },
+      "citation_token": "citeturn1search0turn1search14turn1search22",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.tomedes.com/translator-hub/top-interpretation-companies",
+          "title": "Top 15 Interpretation Companies in the USA in 2025",
+          "snippet": "Conclusion The U.S. interpretation industry is evolving rapidly, with providers offering services tailored to different sectors such as healthcare, legal, and business. Whether you're looking for AI-driven solutions, culturally competent interpreters, or specialized services, the top 15 companies in this article are leading the way in 2025.",
+          "domain": "www.tomedes.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 1,
+          "pub_date": 1744243200,
+          "ref_key": "1_search_0"
+        },
+        {
+          "url": "https://www.kaplaninterpreting.com/",
+          "title": "Certified Interpreters and Translations | Kaplan Interpreting Services",
+          "snippet": "Kaplan Interpreting Services provides court-certified interpreters and 200+ language solutions for legal, medical, and event needs with same-day matching.",
+          "domain": "www.kaplaninterpreting.com",
+          "ref_type": "search",
+          "ref_index": 22,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_22"
+        }
+      ],
+      "inline_url": "https://www.tomedes.com/translator-hub/top-interpretation-companies",
+      "url_position": 1432,
+      "claim_text": "2) Standard Human Interpreter Agencies (phone, video, on-site) For providers like LanguageLine Solutions, Propio, TransPerfect, Kaplan Interpreting Services, Boostlingo, Languagers — they don’t list fixed 2-day pricing online but follow these general models: Tomedes+2Global Interpreting Network+2",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1697,
+        "end_idx": 1715
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://smallbusiness.costhelper.com/interpreters.html",
+      "url_position": 1701,
+      "claim_text": "Over the phone / video remote interpreting (human): Often per-minute or per-hour billing with 24/7 access. Typical per-minute is roughly $1.25–$3.00+ (varies by language/plan/provider). CostHelper",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 2079,
+        "end_idx": 2098
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.interpreters.com/pricing/interpretation/per-hour/",
+      "url_position": 2091,
+      "claim_text": "2-day estimate (8h/day): 960 min × ~$2/min ~ $1,920+ (for one language channel). Multiple language streams or certified/specialized interpreters (legal/medical) can push higher. On-site human interpreters: Charged hourly with minimum blocks (often 3-4 hrs minimum). Rates widely vary; rough US rates ~$50-$150+/hr. Interpreters",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 2840,
+        "end_idx": 2859
+      },
+      "citation_token": "citeturn1search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.interprefy.com/pricing",
+      "url_position": 2847,
+      "claim_text": "2-day estimate: 8 hrs × $80 = $640/day per interpreter → ~$1,280+ (one interpreter only). Simultaneous interpretation or multiple languages usually requires multiples of that and sometimes booth/equipment costs. Notes: These firms tailor quotes for your event (industry, language mix, tech needs). 3) Remote or Hybrid Meeting Platforms with Live Interpretation Support (custom quotes) Some platforms integrate human interpreters + tech but don’t publish price sheets; you must get a custom quote: Interprefy – remote simultaneous interpretation with human interpreters + tech support. Pricing is flexible/quote-based and depends on event size, languages, interpreter hours. Interprefy",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 3369,
+        "end_idx": 3387
+      },
+      "citation_token": "citeturn1search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.wordly.ai/pricing",
+          "title": "Wordly Pricing | AI Translation & Captions for Meetings and Events",
+          "snippet": "Get transparent pricing for Wordly AI translation and captions. Explore affordable plans for meetings and events at organizations of all sizes.",
+          "domain": "www.wordly.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_1"
+        }
+      ],
+      "inline_url": "https://www.wordly.ai/pricing",
+      "url_position": 3379,
+      "claim_text": "2-day estimation range: Often a few hundred to several thousand dollars per day depending on interpreter counts and setup. Wordly (AI-first, optional human interpreters) – primarily an AI real-time translation/captioning tool with live interpretation less central; published pricing info is based on packages of hours, not specific 48-hour pricing. Starting offers mention things like 10 hours package (which is ~1.25 days) around $1,500, but enterprise packages scale up from there. Wordly+1",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 3765,
+        "end_idx": 3785
+      },
+      "citation_token": "citeturn1search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.oneaccord.ai/",
+          "title": "OneAccord - Live AI Church Translation (50+ languages)",
+          "snippet": "OneAccord provides live AI translation for churches, helping you overcome language barriers and make your church services accessible to everyone in real-time.",
+          "domain": "www.oneaccord.ai",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_17"
+        }
+      ],
+      "inline_url": "https://www.oneaccord.ai/",
+      "url_position": 3766,
+      "claim_text": "2-day rough equivalent: If you needed ~16 hours live support, simple extrapolation from a 10-hr bundle pricing suggests ~$2,400+ for typical AI-powered real-time interpretation. OneAccord – live AI translation (church focus) — one of the real-time platforms but pricing isn’t published; likely subscription or usage-based with free trials. oneaccord.ai",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 3998,
+        "end_idx": 4017
+      },
+      "citation_token": "citeturn1search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.deeptrue.org/en/blog/top-5-real-time-translation-interpretation-tools-for-global-meetings-2025",
+      "url_position": 3996,
+      "claim_text": "Pricing Decision Points to Watch Human vs AI: AI solutions (Wordly, OneAccord) are usually cheaper per hour than human interpreters but may lack nuance in complex industry or legal settings. Deeptrue",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.wordly.ai/pricing",
+        "title": "Wordly Pricing | AI Translation & Captions for Meetings and Events",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://dayinterpreting.com/pricing",
+        "title": "Phone Interpreter Services - Real Time Multilingual Interpreting",
+        "domain": "Day Interpreting"
+      },
+      {
+        "url": "https://www.tomedes.com/translator-hub/top-interpretation-companies",
+        "title": "Top 15 Interpretation Companies in the USA in 2025",
+        "domain": "Tomedes"
+      },
+      {
+        "url": "https://smallbusiness.costhelper.com/interpreters.html",
+        "title": "Cost of an Interpreter - Small Business - CostHelper",
+        "domain": "CostHelper"
+      },
+      {
+        "url": "https://www.interpreters.com/pricing/interpretation/per-hour/",
+        "title": "In-person Interpreting Services | Hourly Pricing | Interpreters Unlimited",
+        "domain": "Interpreters"
+      },
+      {
+        "url": "https://www.interprefy.com/pricing",
+        "title": "Interprefy Pricing | Tailored for Multilingual Meetings and Events",
+        "domain": "Interprefy"
+      },
+      {
+        "url": "https://www.oneaccord.ai/",
+        "title": "OneAccord - Live AI Church Translation (50+ languages)",
+        "domain": "oneaccord.ai"
+      },
+      {
+        "url": "https://www.deeptrue.org/en/blog/top-5-real-time-translation-interpretation-tools-for-global-meetings-2025",
+        "title": "Top 4 Real-Time Translation & Interpretation Tools for Global Meetings ...",
+        "domain": "Deeptrue"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.transperfect.com/solutions/translation-and-language-services/interpretation",
+        "title": "Professional Interpretation Services | TransPerfect",
+        "domain": "transperfect.com"
+      },
+      {
+        "url": "https://www.daytranslations.com/blog/top-interpreting-companies/",
+        "title": "Top 3 Interpreting Companies - Day Translations",
+        "domain": "daytranslations.com"
+      },
+      {
+        "url": "https://www.toolplateai.io/tool/wordly",
+        "title": "Wordly AI Reviews, Features, Pricing, & Alternative Tools",
+        "domain": "toolplateai.io"
+      },
+      {
+        "url": "https://www.g2.com/products/wordly-ai-powered-interpretation/pricing",
+        "title": "Wordly AI-Powered Interpretation Pricing 2026",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://boostlingo.com/blog/top-interpreting-companies-in-2025/",
+        "title": "Top Language Interpreter Companies in 2025 | Boostlingo",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://circletranslations.com/blog/cost-of-translation-services",
+        "title": "Translation Services Costs in 2025: Pricing Models, Rates, and Saving Tips",
+        "domain": "circletranslations.com"
+      },
+      {
+        "url": "https://translatebyhumans.com/9-factors-shaping-interpretation-cost-a-comprehensive-pricing-guide/",
+        "title": "9 Factors Shaping Interpretation Cost – A Comprehensive Pricing Guide",
+        "domain": "translatebyhumans.com"
+      },
+      {
+        "url": "https://blog.ablio.com/how-much-does-an-interpreting-service-cost-2/",
+        "title": "How much does an Interpreting Service Cost?",
+        "domain": "ablio.com"
+      },
+      {
+        "url": "https://www.hopetranslator.com/en/resources/how-much-does-live-translation-cost",
+        "title": "How Much Does Live Translation Cost? Complete Pricing Guide 2025",
+        "domain": "hopetranslator.com"
+      },
+      {
+        "url": "https://www.translationstation.com/",
+        "title": "Translation Station",
+        "domain": "translationstation.com"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/interpreting-service-cost",
+        "title": "How Much Does an Interpreting Service Cost? [2025 Guidance]",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://www.linguabee.com/interpreting-services/pricing",
+        "title": "Rates for Interpreting Services | Linguabee",
+        "domain": "linguabee.com"
+      },
+      {
+        "url": "https://www.g2.com/categories/interpretation",
+        "title": "Best Interpretation Services: User Reviews from January 2026 - G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://www.g2.com/products/wordly-ai-powered-interpretation/reviews",
+        "title": "Wordly AI-Powered Interpretation Reviews 2026: Details, Pricing ... - G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://www.rapporttranslations.com/interpretation-costs-and-turnaround",
+        "title": "Interpretation Services Price and Turnaround",
+        "domain": "rapporttranslations.com"
+      },
+      {
+        "url": "https://www.stenomatic.ai/post/simultaneous-interpretation-rates-per-hour",
+        "title": "Simultaneous Interpretation Rates Per Hour: Comparison Guide",
+        "domain": "stenomatic.ai"
+      },
+      {
+        "url": "https://www.aitoolnet.com/compare/oneaccord-vs-wordlyai",
+        "title": "OneAccord vs Wordly.ai Comparison in 2025 - Aitoolnet",
+        "domain": "aitoolnet.com"
+      },
+      {
+        "url": "https://clutch.co/interpretation-services",
+        "title": "Top Language Interpretation Services - Jan 2026 Rankings | Clutch.co",
+        "domain": "clutch.co"
+      },
+      {
+        "url": "https://languagers.com/services/",
+        "title": "Best Interpretation and Translation Services | Languagers",
+        "domain": "languagers.com"
+      },
+      {
+        "url": "https://www.f6s.com/software/wordly",
+        "title": "Wordly Reviews and Pricing 2026 | F6S",
+        "domain": "f6s.com"
+      },
+      {
+        "url": "https://translators-usa.com/our-services/live-interpretation/",
+        "title": "Live Interpretation: Expert Event Solutions in 2025 - Translators USA",
+        "domain": "translators-usa.com"
+      },
+      {
+        "url": "https://affordablelanguageservices.com/",
+        "title": "Language Interpreting and Translation - Affordable Language Services",
+        "domain": "affordablelanguageservices.com"
+      },
+      {
+        "url": "https://www.sespanish.com/rates/",
+        "title": "Dec. 2026 Document Translation Rates, Current Cost to Translate",
+        "domain": "sespanish.com"
+      },
+      {
+        "url": "https://globalinterpreting.com/",
+        "title": "Interpretation & Translation Services | 300+ Languages",
+        "domain": "globalinterpreting.com"
+      },
+      {
+        "url": "https://www.softwaresuggest.com/wordly",
+        "title": "Wordly - Pricing, Features, and Details in 2026 - SoftwareSuggest",
+        "domain": "softwaresuggest.com"
+      },
+      {
+        "url": "https://www.interpreters.com/pricing/",
+        "title": "Find Pricing for Interpretation and Translation Services",
+        "domain": "interpreters.com"
+      },
+      {
+        "url": "https://topbusinesssoftware.com/products/Wordly/reviews/",
+        "title": "Wordly Reviews (2026) - topbusinesssoftware.com",
+        "domain": "topbusinesssoftware.com"
+      },
+      {
+        "url": "https://www.kaplaninterpreting.com/",
+        "title": "Certified Interpreters and Translations | Kaplan Interpreting Services",
+        "domain": "kaplaninterpreting.com"
+      },
+      {
+        "url": "https://meetings.skift.com/reviews/wordly-live-ai-translation-and-captioning-review/",
+        "title": "Wordly Live AI Translation and Captioning [Review]",
+        "domain": "skift.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 29,
+    "total_all": 37
+  },
+  "response_stats": {
+    "total_length": 5000,
+    "citation_count": 9,
+    "chars_with_citations": 210
+  }
+}

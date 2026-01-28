@@ -1,0 +1,356 @@
+{
+  "run_id": "P032_r1",
+  "account_type": "enterprise",
+  "prompt": "什么实时翻译软件好用？",
+  "metadata": {
+    "hidden_queries": [
+      "实时翻译软件 推荐 实时翻译App",
+      "best real time translation apps features comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 21.722505800426006,
+      "simple_search_prob": 0.9704456933486161,
+      "complex_search_prob": 0.0022633853694060116,
+      "no_search_prob": 0.02729092128197791,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 119,
+        "end_idx": 151
+      },
+      "citation_token": "citeturn0search1turn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 116,
+      "claim_text": "下面是好用的实时翻译软件/工具推荐（简洁实用，按用途区分）： 📱 手机实时翻译APP（免费或基础免费） Google 翻译 支持 100+ 语言，语音实时对话、文字、摄像头拍照实时翻译。免费，覆盖广。ScreenApp+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 210,
+        "end_idx": 216
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 230,
+      "claim_text": "Microsoft Translator 支持群聊实时翻译、会议字幕共享，适合团队交流。免费。ScreenApp",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 279,
+        "end_idx": 298
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 335,
+      "claim_text": "Papago（NAVER） 韩国语、日语等亚洲语言翻译较准，实时语音/文字。ScreenApp",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 342,
+        "end_idx": 348
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 434,
+      "claim_text": "iTranslate 支持离线语言包、语音翻译等功能，适合旅行。ScreenApp",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 417,
+        "end_idx": 428
+      },
+      "citation_token": "citeturn0",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://zhuanlan.zhihu.com/p/692820631",
+      "url_position": 541,
+      "claim_text": "译妙蛙翻译官（部分国产软件） 支持多语种实时翻译、电话/视频同传、屏幕/摄像头实时字幕。Zhihu",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 511,
+        "end_idx": 530
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://blog.csdn.net/jren_099/article/details/153401221",
+          "title": "2025实时翻译软件测评：五大热门App真实对比 - CSDN博客",
+          "snippet": "文章浏览阅读6.8k次，点赞8次，收藏10次。2025年实时翻译软件测评：详评Transync AI、Google Translate、Microsoft Translator、Papago和iTranslate的语音识别、翻译速度与功能表现。_itranslate翻译app",
+          "domain": "blog.csdn.net",
+          "ref_type": "search",
+          "ref_index": 7,
+          "turn_index": 0,
+          "pub_date": 1760572800,
+          "ref_key": "0_search_7"
+        }
+      ],
+      "inline_url": "https://blog.csdn.net/jren_099/article/details/153401221",
+      "url_position": 655,
+      "claim_text": "💼 专业/会议实时翻译（AI 助力） Transync AI 低延迟实时翻译 + 会议摘要功能，更适合工作或跨国协作。CSDN Blog",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 611,
+        "end_idx": 630
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.jotme.io/blog/best-live-translation",
+      "url_position": 794,
+      "claim_text": "专业实时AI翻译平台（如 Wordly / JotMe 等） 在 Zoom/Teams 会议中提供实时字幕/翻译（主要在电脑/企业场景）。jotme.io",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 728,
+        "end_idx": 746
+      },
+      "citation_token": "citeturn0news23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 23,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_23"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 937,
+      "claim_text": "🎧 硬件实时翻译（设备辅助） 实时翻译耳塞（如 Timekettle WT2、Mymanu Orb） 对话时自动翻译，听说一体直接输出。这类设备适合无手机操作场景。SFGATE",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 956,
+        "end_idx": 975
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/blog/best-real-time-translators",
+      "url_position": 1223,
+      "claim_text": "🧠 选择建议（按场景） 日常对话/旅游：Google 翻译、Microsoft Translator 商务会议/多语种协作：Transync AI、Wordly、Microsoft Translator 日韩或特定语种优化：Papago 无网络场景：iTranslate（离线包） 面对面自然对话：翻译耳塞（如 WT2 / Orb）ScreenApp",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://screenapp.io/blog/best-real-time-translators",
+        "title": "10 Best Real-Time Translators of 2026 (Apps - Earbuds Reviewed)",
+        "domain": "ScreenApp"
+      },
+      {
+        "url": "https://zhuanlan.zhihu.com/p/692820631",
+        "title": "十款好用翻译软件排名，实时翻译app排名前十 - 知乎",
+        "domain": "Zhihu"
+      },
+      {
+        "url": "https://blog.csdn.net/jren_099/article/details/153401221",
+        "title": "2025实时翻译软件测评：五大热门App真实对比 - CSDN博客",
+        "domain": "CSDN Blog"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "SFGATE"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://summaryai.app/blog/the-best-translation-app-complete-guide/",
+        "title": "Best Translation App 2025: Complete AI Guide | Summary AI",
+        "domain": "summaryai.app"
+      },
+      {
+        "url": "https://www.dotefl.com/best-translation-apps/",
+        "title": "Top 5 Best Translation Apps: Bridging Language Gaps in 2025 - DoTEFL",
+        "domain": "dotefl.com"
+      },
+      {
+        "url": "https://www.sohu.com/a/945496385_122542492",
+        "title": "2025最值得下载的安卓翻译软件推荐：哪款才是真正好用？",
+        "domain": "sohu.com"
+      },
+      {
+        "url": "https://www.sohu.com/a/944519733_122542492",
+        "title": "2025实时翻译软件测评：五大热门App真实对比 - 搜狐",
+        "domain": "sohu.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-translation-apps",
+        "title": "Best Translation Apps in 2025: A Complete Guide - maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.sohu.com/a/933531879_121676061",
+        "title": "音频实时翻译工具哪个强？5款实时翻译工具深度测评推荐",
+        "domain": "sohu.com"
+      },
+      {
+        "url": "https://www.jotme.io/zh-cn/blog/best-live-translation",
+        "title": "我们在 2025 年尝试过的 7 种最佳 AI 实时翻译工具 - jotme.io",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.allaboutai.com/best-ai-tools/productivity/translation/",
+        "title": "10 Best AI Tools for Translation in 2026 | [Accuracy Tested]",
+        "domain": "allaboutai.com"
+      },
+      {
+        "url": "https://vertu.com/lifestyle/top-10-ai-translator-phone-apps-real-time-translation-2025/",
+        "title": "Top 10 AI Translator Phone Apps for Real-Time Conversations in 2025",
+        "domain": "vertu.com"
+      },
+      {
+        "url": "https://screenapp.io/zh/blog/best-real-time-translators",
+        "title": "2026年最佳实时翻译器Top 10（应用 - 耳机测评）",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://jurnalin.com/en/best-translation-apps/",
+        "title": "Best Translation Apps in 2025 – Which One is Right for You?",
+        "domain": "jurnalin.com"
+      },
+      {
+        "url": "https://taia.io/resources/blog/best-translation-software",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools by Features ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://mlforeveryone.com/best-ai-translators-for-2025-google-translate-vs-deepl-vs-microsoft-translator/",
+        "title": "Best AI Translators for 2025: Google Translate vs DeepL vs Microsoft ...",
+        "domain": "mlforeveryone.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/zh/voice-voice-translation-app/",
+        "title": "10款精准好用的实时语音翻译软件推荐 - aiphone.ai",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://zhuanlan.zhihu.com/p/1899829586105210859",
+        "title": "2025年最全同声传译实时翻译APP横评 - 知乎",
+        "domain": "zhihu.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-real-time-translation-apps/",
+        "title": "10 Best Real-time Language Translation Apps for Effortless Communication",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://zhuanlan.zhihu.com/p/689150285",
+        "title": "【干货】6款好用的语音翻译app，ai实时，多语言沟通无压力",
+        "domain": "zhihu.com"
+      },
+      {
+        "url": "https://zhuanlan.zhihu.com/p/29136896080",
+        "title": "打破语言边界！7款在线实时翻译软件实测，全球沟通零障碍",
+        "domain": "zhihu.com"
+      },
+      {
+        "url": "https://sj.qq.com/topic/200463832",
+        "title": "5款免费实时翻译神器推荐 - 应用宝",
+        "domain": "qq.com"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 19,
+    "total_all": 24
+  },
+  "response_stats": {
+    "total_length": 1342,
+    "citation_count": 9,
+    "chars_with_citations": 149
+  }
+}

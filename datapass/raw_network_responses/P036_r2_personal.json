@@ -1,0 +1,21 @@
+{
+  "query_index": "36",
+  "run_number": "2",
+  "prompt_id": "P036",
+  "query": "What is the accurate translator English to Japanese with audio?",
+  "generated_search_query": "N/A",
+  "hidden_queries_json": "[]",
+  "search_result_groups_json": "[]",
+  "content_references_json": "[{\"matched_text\":\"entity\",\"start_idx\":134,\"end_idx\":142,\"safe_urls\":[],\"refs\":[],\"alt\":null,\"prompt_text\":null,\"type\":\"hidden\",\"invalid\":true},\"[\\\"company\\\",\\\"DeepL\\\",\\\"translation software company\",190,\"DeepL\",\"DeepL\",\"entity\",{\"entity_data\":null,\"priority\":1,\"extra_params\":null,\"name\":\"DeepL\",\"metadata\":null,\"category\":\"company\",\"status\":\"loading\"},\"\\\"]\",193,{\"disambiguation\":\"translation software company\"},\"done\",{\"matched_text\":\"entity[\\\"company\\\",\\\"Google\",\"start_idx\":373,\"end_idx\":399,\"safe_urls\":[],\"refs\":[],\"alt\":null,\"prompt_text\":null,\"type\":\"hidden\",\"invalid\":true},\" Translate\\\",\\\"google translation service\\\"]\",441,\"Google Translate\",\"Google Translate\",\"entity\",{\"entity_data\":null,\"priority\":1,\"extra_params\":{\"disambiguation\":\"google translation service\"},\"name\":\"Google Translate\",\"metadata\":null,\"category\":\"company\",\"status\":\"loading\"},\"done\",{\"matched_text\":\"entity[\\\"company\",\"start_idx\":595,\"end_idx\":612,\"safe_urls\":[],\"refs\":[],\"alt\":null,\"prompt_text\":null,\"type\":\"hidden\",\"invalid\":true},\"\\\",\\\"Microsoft Translator\\\",\\\"microsoft translation service\\\"]\",670,\"Microsoft Translator\",\"Microsoft Translator\",\"entity\",{\"entity_data\":null,\"priority\":1,\"extra_params\":{\"disambiguation\":\"microsoft translation service\"},\"name\":\"Microsoft Translator\",\"metadata\":null,\"category\":\"company\",\"status\":\"loading\"},\"done\",{\"matched_text\":\"entity[\\\"\",\"start_idx\":804,\"end_idx\":814,\"safe_urls\":[],\"refs\":[],\"alt\":null,\"prompt_text\":null,\"type\":\"hidden\",\"invalid\":true},\"company\\\",\\\"Naver Papago\\\",\\\"k\",840,\"Naver Papago\",\"Naver Papago\",\"entity\",{\"entity_data\":null,\"priority\":1,\"extra_params\":null,\"name\":\"Naver Papago\",\"metadata\":null,\"category\":\"company\",\"status\":\"loading\"},\"orean\",845,\" translation app\\\"]\",864,{\"disambiguation\":\"korean translation app\"},\"done\",{\"matched_text\":\"\",\"start_idx\":997,\"end_idx\":998,\"safe_urls\":[],\"refs\":[],\"alt\":null,\"prompt_text\":null,\"type\":\"hidden\",\"invalid\":true},\"entity[\\\"company\\\",\\\"iTranslate\\\",\\\"translation app\\\"]\",1048,\"iTranslate\",\"iTranslate\",\"entity\",{\"entity_data\":null,\"priority\":1,\"extra_params\":{\"disambiguation\":\"translation app\"},\"name\":\"iTranslate\",\"metadata\":null,\"category\":\"company\",\"status\":\"loading\"},\"done\"]",
+  "sonic_classification_json": "null",
+  "response_text": "Here are the most accurate English → Japanese translators with audio, ranked for quality and reliability:  ✅ Best Overall  DeepL Translator  ⭐ Highest accuracy for natural Japanese  🔊 Audio available (web & app)  Best for sentences, writing, nuance  ✅ Best with Voice & Conversation  Google Translate  🔊 Text-to-speech + voice input  📱 Conversation mode  Slightly less natural than DeepL, but very versatile  ✅ Best for Learners  Microsoft Translator  🔊 Clear audio  👍 Good grammar explanations  Strong alternative to Google  ✅ Best Dictionary + Native Audio  Naver Papago  🔊 Natural Japanese pronunciation  Great for short phrases and everyday speech  ⚠️ Not recommended for accuracy  iTranslate – weaker Japanese nuance  Quick pick:  Writing / accuracy → DeepL  Speaking / listening → Google Translate  If you want real human-sounding Japanese audio or anime-style / polite / casual speech, tell me your use case.",
+  "web_search_forced": "false",
+  "web_search_triggered": "false",
+  "items_json": "[]",
+  "items_count": "0",
+  "items_with_citations_count": "0",
+  "sources_cited_json": "[]",
+  "sources_additional_json": "[]",
+  "sources_all_json": "[]",
+  "account_type": "personal"
+}

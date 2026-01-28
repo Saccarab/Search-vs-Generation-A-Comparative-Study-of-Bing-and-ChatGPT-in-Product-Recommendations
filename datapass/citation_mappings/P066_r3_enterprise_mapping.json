@@ -1,0 +1,372 @@
+{
+  "run_id": "P066_r3",
+  "account_type": "enterprise",
+  "prompt": "What are the highest quality audio to text transcription websites?",
+  "metadata": {
+    "hidden_queries": [
+      "best audio to text transcription websites high quality",
+      "audio transcription services comparison accuracy AI human online"
+    ],
+    "sonic_classification": {
+      "latency_ms": 16.13578572869301,
+      "simple_search_prob": 0.9498156375358863,
+      "complex_search_prob": 0.002336851407349921,
+      "no_search_prob": 0.04784751105676381,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best audio to text transcription websites high quality"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 374,
+        "end_idx": 394
+      },
+      "citation_token": "citeturn0search29",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Rev_%28company%29",
+      "url_position": 367,
+      "claim_text": "Here are some of the highest-quality audio-to-text transcription websites/services worth considering. I’m listing separate categories so you can pick based on accuracy needs and workflow: 🔎 Premium / Most Accurate (AI + Human Options) 1) Rev – human + AI transcription service with strong accuracy and captions/subtitles support. Well-known in industry. Wikipedia",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 505,
+        "end_idx": 510
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://technicalwall.com/software-reviews/best-audio-to-text-converter/",
+      "url_position": 539,
+      "claim_text": "2) Happy Scribe – supports both AI and human review; good for multi-language and higher accuracy needs. Technical Wall+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 622,
+        "end_idx": 641
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://geekflare.com/best/best-transcription-software/",
+      "url_position": 703,
+      "claim_text": "3) GoTranscript – human transcription focus; high reliability for hard audio. Geekflare",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 741,
+        "end_idx": 760
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-human-transcription-services",
+      "url_position": 867,
+      "claim_text": "4) TranscribeMe – human proofreading options give high accuracy for complex/corporate audio. HappyScribe",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1055,
+        "end_idx": 1074
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://notegpt.io/blog/transcribe-audio-to-text",
+          "title": "Top 10 Best Transcribe Audio to Text Tools in 2025",
+          "snippet": "Discover the 10 best audio to text transcription tools in 2025. Compare features, pricing, and accuracy to find the perfect tool for your needs.",
+          "domain": "notegpt.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1747353600,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://notegpt.io/blog/transcribe-audio-to-text",
+      "url_position": 1222,
+      "claim_text": "Use these if you need near-perfect accuracy for publication, legal, or professional content. Human reviews cost more but reduce errors. ⚡ Fast AI-Driven (Good Accuracy with Clean Audio) 5) Otter.ai – real-time and uploaded file transcription; strong for meetings/interviews. NoteGPT",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1147,
+        "end_idx": 1157
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://notegpt.io/blog/transcribe-audio-to-text",
+      "url_position": 1348,
+      "claim_text": "6) Sonix – automated, multilingual, includes editor & timestamps. NoteGPT",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1250,
+        "end_idx": 1268
+      },
+      "citation_token": "citeturn0news24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wired.com/2017/04/trint-multi-voice-transcription",
+      "url_position": 1483,
+      "claim_text": "7) Trint – web-based editor with time-linked transcript for easy correction. WIRED",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1333,
+        "end_idx": 1339
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://technicalwall.com/software-reviews/best-audio-to-text-converter/",
+      "url_position": 1621,
+      "claim_text": "8) Audext – quick AI transcription with speaker ID tools. Technical Wall",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1426,
+        "end_idx": 1445
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://technicalwall.com/software-reviews/best-audio-to-text-converter/",
+      "url_position": 1779,
+      "claim_text": "9) Veed.io – simple automatic transcription tied to video editing. Technical Wall",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1543,
+        "end_idx": 1563
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.umevo.ai/blogs/ume-all-posts/ai-transcription-accuracy-a-2025-comparison-of-top-services",
+          "title": "AI Transcription Accuracy: A 2025 Comparison of Top Services",
+          "snippet": "As you can see, while no AI can yet match the consistent 99%+ accuracy of a professional human transcriber in all conditions, the top services are getting remarkably close, especially with high-quality audio. For many use cases, the combination of speed, cost, and high accuracy makes AI transcription an incredibly powerful tool. One such tool making waves is Umevo.ai, which leverages advanced ...",
+          "domain": "www.umevo.ai",
+          "ref_type": "search",
+          "ref_index": 12,
+          "turn_index": 0,
+          "pub_date": 1762819200,
+          "ref_key": "0_search_12"
+        }
+      ],
+      "inline_url": "https://www.umevo.ai/blogs/ume-all-posts/ai-transcription-accuracy-a-2025-comparison-of-top-services",
+      "url_position": 1953,
+      "claim_text": "AI tools can hit ~90-95%+ accuracy on good audio. Expect more errors with noise or accents. UMEVO",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1805,
+        "end_idx": 1806
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-human-transcription-services",
+      "url_position": 2296,
+      "claim_text": "🧠 Notes on Accuracy AI alone won’t consistently match human transcription in difficult conditions (overlapping speakers, heavy accents, background noise). Human + AI or professional human services give ~99% where it matters. HappyScribe",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 2018,
+        "end_idx": 2036
+      },
+      "citation_token": "citeturn0news22",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apnews.com/article/90020cdf5fa16c79ca2e5b6c4c9bbb14",
+          "title": "Researchers say an AI-powered transcription tool used in hospitals invents things no one ever said",
+          "snippet": "A growing concern is emerging over OpenAI's AI-powered transcription tool, Whisper, which is being used widely across industries including healthcare. Despite being praised for near-human level accuracy, experts have found that Whisper frequently introduces false or fabricated text, known as \"hallucinations.\" These hallucinations can include imagined treatments, racial references, and violent statements—even in clear, short audio clips. Researchers have found hallucinations in up to 80% of transcripts studied, raising alarm about its use in sensitive fields like medicine.\n\nWhisper is already integrated into systems run by companies like Microsoft and Oracle and is used by over 30,000 clinicians through a Whisper-based medical tool developed by Nabla. Critics, including former OpenAI employees and academic researchers, warn that these errors can be dangerous in high-risk domains such as healthcare, especially since some hospitals erase original audio, removing a reference point for verification. OpenAI acknowledges the flaw and says it is working on improvements but advises against using Whisper in critical decision-making contexts. Lawmakers and patient advocates express additional concern over privacy issues tied to the use of sensitive audio by large tech platforms.",
+          "domain": "apnews.com",
+          "ref_type": "news",
+          "ref_index": 22,
+          "turn_index": 0,
+          "pub_date": 1729916140,
+          "ref_key": "0_news_22"
+        }
+      ],
+      "inline_url": "https://apnews.com/article/90020cdf5fa16c79ca2e5b6c4c9bbb14",
+      "url_position": 2561,
+      "claim_text": "Some AI engines (like older Whisper-based tools) have been documented to hallucinate text that wasn’t said, especially in sensitive or noisy real-world recordings — meaning tools matter. AP News",
+      "url_index": 11
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Rev_%28company%29",
+        "title": "Rev (company)",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://technicalwall.com/software-reviews/best-audio-to-text-converter/",
+        "title": "9 Best Audio to Text Converter of 2026 (Free and Paid)",
+        "domain": "Technical Wall"
+      },
+      {
+        "url": "https://geekflare.com/best/best-transcription-software/",
+        "title": "17 Best Transcription Software for Audio to Text in 2025",
+        "domain": "Geekflare"
+      },
+      {
+        "url": "https://www.happyscribe.com/blog/best-human-transcription-services",
+        "title": "6 Best Human Transcription Services in 2026 - Happy Scribe",
+        "domain": "HappyScribe"
+      },
+      {
+        "url": "https://notegpt.io/blog/transcribe-audio-to-text",
+        "title": "Top 10 Best Transcribe Audio to Text Tools in 2025",
+        "domain": "NoteGPT"
+      },
+      {
+        "url": "https://www.wired.com/2017/04/trint-multi-voice-transcription",
+        "title": "Transcribing Audio Sucks-So Make the Machines Do It",
+        "domain": "WIRED"
+      },
+      {
+        "url": "https://www.umevo.ai/blogs/ume-all-posts/ai-transcription-accuracy-a-2025-comparison-of-top-services",
+        "title": "AI Transcription Accuracy: A 2025 Comparison of Top Services",
+        "domain": "UMEVO"
+      },
+      {
+        "url": "https://apnews.com/article/90020cdf5fa16c79ca2e5b6c4c9bbb14",
+        "title": "Researchers say an AI-powered transcription tool used in hospitals invents things no one ever said",
+        "domain": "AP News"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.topconsumerreviews.com/best-transcription-services/detailed-reviews.php",
+        "title": "The 10 Best Transcription Services for 2026 | Free Buyers Guide",
+        "domain": "topconsumerreviews.com"
+      },
+      {
+        "url": "https://sonix.ai/resources/best-ai-tools-for-transcription/",
+        "title": "12 Best AI Tools For Transcription in 2026 [Complete Guide]",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://riverside.com/blog/best-audio-to-text-converters",
+        "title": "10 Best Audio to Text Converters Online for 2026 (Free & Paid) - Riverside",
+        "domain": "riverside.com"
+      },
+      {
+        "url": "https://gotranscript.com/en/blog/best-human-transcription-services-2026-comparison",
+        "title": "Best Human Transcription Services Comparison for 2026: GoTranscript vs ...",
+        "domain": "gotranscript.com"
+      },
+      {
+        "url": "https://riverside.com/blog/best-transcription-services",
+        "title": "10 Best Transcription Services for Accurate Transcripts (2026)",
+        "domain": "riverside.com"
+      },
+      {
+        "url": "https://www.lemonfox.ai/blog/best-audio-transcription-services",
+        "title": "7 Best Audio Transcription Services to Use in 2025",
+        "domain": "lemonfox.ai"
+      },
+      {
+        "url": "https://www.hypescribe.com/blog/best-online-transcription-service",
+        "title": "12 Best Online Transcription Service Options for 2025",
+        "domain": "hypescribe.com"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-transcription",
+        "title": "9 Best AI Transcription Tools for 2025 (17 Reviewed)",
+        "domain": "usefulai.com"
+      },
+      {
+        "url": "https://ddiy.co/freelance-websites/transcribers/",
+        "title": "12 Best Freelance Websites for Transcription Services",
+        "domain": "ddiy.co"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 9,
+    "total_all": 17
+  },
+  "response_stats": {
+    "total_length": 2990,
+    "citation_count": 12,
+    "chars_with_citations": 174
+  }
+}

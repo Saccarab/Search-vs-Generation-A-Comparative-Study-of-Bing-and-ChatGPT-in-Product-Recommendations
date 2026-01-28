@@ -1,0 +1,399 @@
+{
+  "run_id": "P029_r2",
+  "account_type": "enterprise",
+  "prompt": "Is there an API for audio transcription to text?",
+  "metadata": {
+    "hidden_queries": [
+      "APIs for audio transcription to text list audio transcription API",
+      "best speech-to-text APIs audio transcription API providers"
+    ],
+    "sonic_classification": {
+      "latency_ms": 12.62511732056737,
+      "simple_search_prob": 0.932932089976266,
+      "complex_search_prob": 0.0021342703198982188,
+      "no_search_prob": 0.06493363970383581,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "APIs for audio transcription to text list audio transcription API"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 311,
+        "end_idx": 330
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://platform.openai.com/docs/guides/speech-to-text",
+          "title": "Speech to text - OpenAI API",
+          "snippet": "The transcriptions API takes as input the audio file you want to transcribe and the desired output file format for the transcription of the audio. All models support the same set of input formats. On output: whisper-1 supports json, text, srt, verbose_json, and vtt. gpt-4o-transcribe and gpt-4o-mini-transcribe support json or plain text. gpt-4o-transcribe-diarize supports json, text, and ...",
+          "domain": "platform.openai.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://platform.openai.com/docs/guides/speech-to-text",
+      "url_position": 314,
+      "claim_text": "Yes — there are APIs that transcribe audio to text (speech-to-text / automatic speech recognition). You send audio data to the API and get back text. Common options: Major cloud API providers OpenAI Speech-to-Text API – transcribes audio files and supports multiple output formats and languages. OpenAI Platform",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 423,
+        "end_idx": 442
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://cloud.google.com/speech-to-text",
+      "url_position": 469,
+      "claim_text": "Google Cloud Speech-to-Text API – general purpose speech-to-text from Google Cloud. Google Cloud",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 554,
+        "end_idx": 573
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/rest-speech-to-text",
+      "url_position": 631,
+      "claim_text": "Microsoft Azure Speech-to-Text (Cognitive Services) – REST API with real-time and batch transcription. Microsoft Learn",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 647,
+        "end_idx": 666
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://reverieinc.com/blog/best-speech-to-text-apis/",
+          "title": "10 Best Speech-to-Text APIs for Real-Time Transcription",
+          "snippet": "Discover the best Speech-to-Text APIs to enhance accuracy, speed, and integration in your apps. Find the top options for real-time transcription and seamless voice recognition.",
+          "domain": "reverieinc.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1731283200,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://reverieinc.com/blog/best-speech-to-text-apis/",
+      "url_position": 794,
+      "claim_text": "Amazon Transcribe (AWS) – AWS API for converting speech to text. Reverie",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 777,
+        "end_idx": 796
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://reverieinc.com/blog/best-speech-to-text-apis/",
+          "title": "10 Best Speech-to-Text APIs for Real-Time Transcription",
+          "snippet": "Discover the best Speech-to-Text APIs to enhance accuracy, speed, and integration in your apps. Find the top options for real-time transcription and seamless voice recognition.",
+          "domain": "reverieinc.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1731283200,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://reverieinc.com/blog/best-speech-to-text-apis/",
+      "url_position": 957,
+      "claim_text": "Other specialized APIs Deepgram API – AI-focused transcription with real-time and async options. Reverie",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 905,
+        "end_idx": 936
+      },
+      "citation_token": "citeturn0search2turn0news33",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.itpro.com/technology/artificial-intelligence/otter-ai-wants-to-bring-agents-to-third-party-systems",
+          "title": "Otter.ai wants to bring agents to all third party systems - with transcription just the start",
+          "snippet": "Otter.ai has unveiled significant upgrades to its platform, introducing agentic AI features and a public API to facilitate integration with third-party enterprise systems such as CRMs (like Salesforce and HubSpot) and project management tools (such as Asana and Atlassian). These agents can both pull data from and send data to external systems, enhancing meeting automation—such as generating and inputting action items into Asana based on Zoom discussions.\n\nThe company has also introduced a model context protocol (MCP) server for interoperability with generative AI platforms like Claude and ChatGPT. Key features include automated slide capture during presentations, searchable transcripts including visual content, and advanced AI chat to explore and act upon audio or transcript data. Otter’s AI can also autonomously generate documents, schedule meetings, and keep users updated if they join meetings late.\n\nOtter.ai emphasizes data security, offering granular controls over data sharing and HIPAA compliance. While often seen as a transcription tool, Otter positions itself as a broader enterprise workflow enhancer by building structured, searchable meeting knowledge bases. It supports collaboration platforms like Zoom, Microsoft Teams, and Google Meet, and aims to improve workplace productivity through proprietary and integrated AI technologies.",
+          "domain": "www.itpro.com",
+          "ref_type": "news",
+          "ref_index": 33,
+          "turn_index": 0,
+          "pub_date": 1759843240,
+          "ref_key": "0_news_33"
+        }
+      ],
+      "inline_url": "https://www.swiftask.ai/blog/audio-transcription-api",
+      "url_position": 1125,
+      "claim_text": "Rev.ai / Otter API – transcription + features like speaker labels (Otter also offers a public API). Swiftask+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 994,
+        "end_idx": 1013
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.swiftask.ai/blog/audio-transcription-api",
+      "url_position": 1239,
+      "claim_text": "Speechmatics – multi-language audio to text API. Swiftask",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1084,
+        "end_idx": 1103
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.geeky-gadgets.com/free-speech-to-text-api/",
+      "url_position": 1371,
+      "claim_text": "AssemblyAI – API-first transcription with extra NLP features. Geeky Gadgets",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1201,
+        "end_idx": 1221
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://whisperapi.com/",
+      "url_position": 1530,
+      "claim_text": "Whisper-type APIs (e.g., third-party WhisperAPI) – standard Whisper-based audio-to-text. Whisper API",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1397,
+        "end_idx": 1417
+      },
+      "citation_token": "citeturn0search23",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://fr.wikipedia.org/wiki/Whisper_%28syst%C3%A8me_de_reconnaissance_vocale%29",
+      "url_position": 1737,
+      "claim_text": "Open-source alternatives you can self-host OpenAI Whisper (model) – not a hosted API but a model you can run yourself for free transcription on your own servers. fr.wikipedia.org",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1496,
+        "end_idx": 1516
+      },
+      "citation_token": "citeturn0search17",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.lemonfox.ai/blog/free-transcription-audio-to-text?utm_source=chatgpt.com",
+          "title": "Top 12 Tools for Free Transcription Audio to Text in 2025",
+          "snippet": "Discover the best tools for free transcription audio to text. Compare top services, APIs, and open-source options to get accurate transcripts instantly.",
+          "domain": "lemonfox.ai",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.lemonfox.ai/blog/free-transcription-audio-to-text",
+      "url_position": 1904,
+      "claim_text": "Vosk – offline speech recognition toolkit you can integrate directly. lemonfox.ai",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://platform.openai.com/docs/guides/speech-to-text",
+        "title": "Speech to text - OpenAI API",
+        "domain": "OpenAI Platform"
+      },
+      {
+        "url": "https://cloud.google.com/speech-to-text",
+        "title": "Speech-to-Text API: speech recognition and transcription | Google Cloud",
+        "domain": "Google Cloud"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/rest-speech-to-text",
+        "title": "Speech to text REST API - Speech service - Foundry Tools",
+        "domain": "Microsoft Learn"
+      },
+      {
+        "url": "https://reverieinc.com/blog/best-speech-to-text-apis/",
+        "title": "10 Best Speech-to-Text APIs for Real-Time Transcription",
+        "domain": "Reverie"
+      },
+      {
+        "url": "https://www.swiftask.ai/blog/audio-transcription-api",
+        "title": "Top 10 API for Audio Transcription - Swiftask",
+        "domain": "Swiftask"
+      },
+      {
+        "url": "https://www.geeky-gadgets.com/free-speech-to-text-api/",
+        "title": "5 Best Free Speech-to-Text APIs in 2025 Compared & Tested",
+        "domain": "Geeky Gadgets"
+      },
+      {
+        "url": "https://whisperapi.com/",
+        "title": "Whisper API - Affordable Transcription API",
+        "domain": "Whisper API"
+      },
+      {
+        "url": "https://fr.wikipedia.org/wiki/Whisper_%28syst%C3%A8me_de_reconnaissance_vocale%29",
+        "title": "Whisper (système de reconnaissance vocale)",
+        "domain": "fr.wikipedia.org"
+      },
+      {
+        "url": "https://www.lemonfox.ai/blog/free-transcription-audio-to-text",
+        "title": "Top 12 Tools for Free Transcription Audio to Text in 2025",
+        "domain": "lemonfox.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.upuply.com/blog/best-speech-to-text-api",
+        "title": "How to Choose the Best Speech to Text API in 2025",
+        "domain": "upuply.com"
+      },
+      {
+        "url": "https://ai-coustics.com/2025/11/27/top-5-speech-to-text-apis/",
+        "title": "The top 5 speech-to-text APIs for real-time voice AI (2026 Guide)",
+        "domain": "ai-coustics.com"
+      },
+      {
+        "url": "https://www.assemblyai.com/blog/the-top-free-speech-to-text-apis-and-open-source-engines",
+        "title": "The top free Speech-to-Text APIs, AI Models, and Open ... - AssemblyAI",
+        "domain": "assemblyai.com"
+      },
+      {
+        "url": "https://transkriptor.com/audio-to-text-apis/",
+        "title": "Best Audio to Text APIs for Developers | Transkriptor",
+        "domain": "transkriptor.com"
+      },
+      {
+        "url": "https://www.dhiwise.com/post/choosing-the-best-speech-to-text-api-for-accuracy",
+        "title": "Best Speech to Text API With High Accuracy Rates",
+        "domain": "dhiwise.com"
+      },
+      {
+        "url": "https://nordicapis.com/10-speech-to-text-apis-that-let-ai-listen/",
+        "title": "10 Speech-to-Text APIs That Let AI Listen - Nordic APIs",
+        "domain": "nordicapis.com"
+      },
+      {
+        "url": "https://speechify.com/blog/10-best-speech-to-text-apis/",
+        "title": "10 Best Speech to Text APIs | Speechify",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://deepgram.com/learn/best-speech-to-text-apis",
+        "title": "Best Speech-to-Text APIs in 2025 - Deepgram",
+        "domain": "deepgram.com"
+      },
+      {
+        "url": "https://graphlogic.ai/blog/utilities/the-best-speech-to-text-apis-in-2025-a-comprehensive-guide/",
+        "title": "The Best Speech-to-Text APIs in 2025: A Comprehensive Guide",
+        "domain": "graphlogic.ai"
+      },
+      {
+        "url": "https://transgate.ai/blog/best-audio-to-text-api",
+        "title": "Best Audio-to-Text APIs in 2025 – Transgate vs Google, AWS",
+        "domain": "transgate.ai"
+      },
+      {
+        "url": "https://www.transcribetube.com/blog/speech-to-text-api",
+        "title": "The Best Speech-to-Text API Services in 2024 (Honest Reviews)",
+        "domain": "transcribetube.com"
+      },
+      {
+        "url": "https://whisper-api.com/",
+        "title": "WhisperAPI - Fast & Accurate Video & Audio Transcription API",
+        "domain": "whisper-api.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 12,
+    "total_all": 21
+  },
+  "response_stats": {
+    "total_length": 2023,
+    "citation_count": 11,
+    "chars_with_citations": 224
+  }
+}

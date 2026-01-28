@@ -1,0 +1,297 @@
+{
+  "run_id": "P075_r3",
+  "account_type": "personal",
+  "prompt": "I need a video translator that can transcribe Spanish videos into English.",
+  "metadata": {
+    "hidden_queries": [
+      "video translator that can transcribe Spanish videos into English",
+      "tools to translate Spanish video to English transcript translate video"
+    ],
+    "sonic_classification": {
+      "latency_ms": 9.468987002037466,
+      "simple_search_prob": 0.9223397102446634,
+      "complex_search_prob": 0.02507128846473174,
+      "no_search_prob": 0.05258900129060483,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "video translator that can transcribe Spanish videos into English"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 246,
+        "end_idx": 265
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.happyscribe.com/translate-video/spanish-to-english",
+          "title": "Translate Spanish video to English | Happy Scribe",
+          "snippet": "HappyScribe's video translator can translate a video in Spanish to English automatically and seamlessly.",
+          "domain": "www.happyscribe.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.happyscribe.com/translate-video/spanish-to-english",
+      "url_position": 253,
+      "claim_text": "Here are some good tools you can use to transcribe and translate Spanish videos into English: Online AI video translators Happy Scribe – upload a Spanish video and get an English transcript and subtitles (with export options) quickly. happyscribe.com",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 380,
+        "end_idx": 399
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/tools/video-translator/spanish-to-english",
+          "title": "Translate Spanish Video to English Online",
+          "snippet": "Translate Spanish videos to English using subtitles, AI voices and voice cloning. Available in 125+ languages, try now for free!",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://maestra.ai/tools/video-translator/spanish-to-english",
+      "url_position": 440,
+      "claim_text": "Maestra – translates Spanish videos to English with subtitles and AI voiceovers; you can edit text afterward. Maestra AI",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 521,
+        "end_idx": 540
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.veed.io/tools/video-translator",
+      "url_position": 629,
+      "claim_text": "VEED.io – AI tool that auto‑transcribes and translates videos, adds English subtitles, and offers voice translation. VEED.IO",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 631,
+        "end_idx": 650
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.notta.ai/en/showcase/video-translator/translate-spanish-video-to-english",
+      "url_position": 767,
+      "claim_text": "Notta Showcase – translates Spanish videos to English with dubbed audio and captions. Notta",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 747,
+        "end_idx": 766
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.descript.com/tools/translate-spanish-video-to-english",
+      "url_position": 956,
+      "claim_text": "Descript – AI transcription + translation + synced captions integrated into a video editor. Descript",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 874,
+        "end_idx": 907
+      },
+      "citation_token": "citeturn0search4turn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://vidby.com/video-translation/spanish-english",
+      "url_position": 1140,
+      "claim_text": "Vidby – AI video translation/dubbing service that handles Spanish → English using machine translation. vidby.com+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1005,
+        "end_idx": 1025
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.rask.ai/",
+      "url_position": 1293,
+      "claim_text": "Rask.ai – good for automatic transcription and translation of longer videos (e.g., YouTube). Rask",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1121,
+        "end_idx": 1141
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vozo.ai/translate-spanish-video-to-english",
+      "url_position": 1413,
+      "claim_text": "Vozo.ai – translates and auto‑dubs Spanish video into English with customizable subtitles. Vozo",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1276,
+        "end_idx": 1296
+      },
+      "citation_token": "citeturn0search28",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Amara_%28organization%29?utm_source=chatgpt.com",
+          "title": "Amara (organization)",
+          "snippet": "",
+          "domain": "Wikipedia",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Amara_%28organization%29",
+      "url_position": 1609,
+      "claim_text": "Extra options (for subtitles only) You can use crowdsourced subtitling platforms like Amara to add/edit translations manually. Wikipedia",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.happyscribe.com/translate-video/spanish-to-english",
+        "title": "Translate Spanish video to English | Happy Scribe",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://maestra.ai/tools/video-translator/spanish-to-english",
+        "title": "Translate Spanish Video to English Online",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://www.veed.io/tools/video-translator",
+        "title": "Instant Video Translator - Translate with AI",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://www.notta.ai/en/showcase/video-translator/translate-spanish-video-to-english",
+        "title": "Translate Spanish Video to English Online | AI Dubbing",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://www.descript.com/tools/translate-spanish-video-to-english",
+        "title": "Translate Your Spanish Video to English & Add Subtitles",
+        "domain": "Descript"
+      },
+      {
+        "url": "https://vidby.com/video-translation/spanish-english",
+        "title": "Translate Video from Spanish to English",
+        "domain": "vidby.com"
+      },
+      {
+        "url": "https://www.rask.ai/",
+        "title": "Leading AI video localization & dubbing tool",
+        "domain": "Rask"
+      },
+      {
+        "url": "https://www.vozo.ai/translate-spanish-video-to-english",
+        "title": "Translate Spanish Video to English",
+        "domain": "Vozo"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Amara_%28organization%29",
+        "title": "Amara (organization)",
+        "domain": "Wikipedia"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://clideo.com/translate-spanish-video",
+        "title": "Translate Spanish Video",
+        "domain": "clideo.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/Spanish/comments/1brwqmj/is_there_any_app_i_can_use_to_translate_youtube/",
+        "title": "Is there any app I can use to translate YouTube videos from ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-video-translator/",
+        "title": "AI Video Translator: Translate a video with AI",
+        "domain": "canva.com"
+      },
+      {
+        "url": "https://www.facebook.com/groups/askaneditor/posts/1287379021342218/",
+        "title": "Tools for Transcribing and Translating Spanish Clips",
+        "domain": "facebook.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 4,
+    "total_all": 13
+  },
+  "response_stats": {
+    "total_length": 1774,
+    "citation_count": 9,
+    "chars_with_citations": 188
+  }
+}

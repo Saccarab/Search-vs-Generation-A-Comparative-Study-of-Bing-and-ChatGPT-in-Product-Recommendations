@@ -1,0 +1,467 @@
+{
+  "run_id": "P023_r3",
+  "account_type": "enterprise",
+  "prompt": "What tools are available for text to speech?",
+  "metadata": {
+    "hidden_queries": [
+      "Text to speech tools available software text to speech tools",
+      "Best text to speech tools text to speech software TTS options"
+    ],
+    "sonic_classification": {
+      "latency_ms": 1.0273929219692945,
+      "simple_search_prob": 0.9315214313845466,
+      "complex_search_prob": 0.000676587585564752,
+      "no_search_prob": 0.06780198102988867,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Text to speech tools available software text to speech tools"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 221,
+        "end_idx": 240
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 218,
+      "claim_text": "Here are common text-to-speech (TTS) tools you can use, from simple free options to advanced AI voice platforms: General / consumer tools NaturalReader — cloud & desktop TTS with many languages and voices. TechRadar",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 301,
+        "end_idx": 320
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://contentmavericks.com/best-text-to-speech-software/",
+      "url_position": 351,
+      "claim_text": "Speechify — easy AI TTS with many language options. Content Mavericks",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 381,
+        "end_idx": 400
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 475,
+      "claim_text": "Voice Dream Reader — strong mobile TTS (iOS/macOS). TechRadar",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 485,
+        "end_idx": 504
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softlist.io/best-text-to-speech-free-software-to-try/",
+      "url_position": 626,
+      "claim_text": "Browser extensions (e.g., Read Aloud) — read web pages/text aloud directly. Softlist.io",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 618,
+        "end_idx": 637
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 806,
+      "claim_text": "AI-focused / content creation Murf.ai — realistic AI voices, editing features, good for voiceovers. TechRadar",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 706,
+        "end_idx": 725
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwareworld.co/text-to-speech-software/",
+      "url_position": 942,
+      "claim_text": "Play.ht — large voice library for podcasts and narration. Software World",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 788,
+        "end_idx": 807
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+          "title": "Top 16 BEST Text To Speech Software (2026 Review)",
+          "snippet": "An extensive list of popular Text to Speech Software with features, pricing and comparison. Select the best text-to-speech software from here.",
+          "domain": "www.softwaretestinghelp.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1766620800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 1075,
+      "claim_text": "Lovo — customizable AI voices with expressive styles. Software Testing Help",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 870,
+        "end_idx": 889
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+          "title": "Top 16 BEST Text To Speech Software (2026 Review)",
+          "snippet": "An extensive list of popular Text to Speech Software with features, pricing and comparison. Select the best text-to-speech software from here.",
+          "domain": "www.softwaretestinghelp.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1766620800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 1215,
+      "claim_text": "Speechelo / Synthesys — easy TTS for marketing/media. Software Testing Help",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 937,
+        "end_idx": 956
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://geekflare.com/best/best-text-to-speech-converters/",
+      "url_position": 1328,
+      "claim_text": "Fliki — TTS plus video creation tools. Geekflare",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1027,
+        "end_idx": 1045
+      },
+      "citation_token": "citeturn0news21",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.theverge.com/2024/8/23/24226643/elevenlabs-ai-reader-app-32-languages-global-release",
+      "url_position": 1462,
+      "claim_text": "ElevenLabs — high-quality AI narration; mobile app available. The Verge",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1136,
+        "end_idx": 1155
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/best/best-text-to-speech-software",
+          "title": "Best text-to-speech software of 2026 - TechRadar",
+          "snippet": "We review the best text-to-speech software to convert text to voice for accessibility or for productivity applications.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1759104000,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 1650,
+      "claim_text": "Developer / API platforms Amazon Polly — scalable TTS API for apps/services. TechRadar",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1226,
+        "end_idx": 1245
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+          "title": "Top 16 BEST Text To Speech Software (2026 Review)",
+          "snippet": "An extensive list of popular Text to Speech Software with features, pricing and comparison. Select the best text-to-speech software from here.",
+          "domain": "www.softwaretestinghelp.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1766620800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 1215,
+      "claim_text": "Speechelo / Synthesys — easy TTS for marketing/media. Software Testing Help",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1305,
+        "end_idx": 1310
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 1797,
+      "claim_text": "Google Cloud Text-to-Speech — developer API with many voices. Software Testing Help",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1440,
+        "end_idx": 1459
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 1934,
+      "claim_text": "Azure Text to Speech — Microsoft’s TTS API option. Software Testing Help",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 1537,
+        "end_idx": 1556
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.theverge.com/2024/8/23/24226643/elevenlabs-ai-reader-app-32-languages-global-release",
+      "url_position": 1462,
+      "claim_text": "ElevenLabs — high-quality AI narration; mobile app available. The Verge",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1700,
+        "end_idx": 1718
+      },
+      "citation_token": "citeturn0news35",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dev.to/raef_17/the-5-best-text-to-speech-platforms-in-2025-5alb",
+      "url_position": 2115,
+      "claim_text": "Free / simple web tools Text2Speech.online / TTSFree.online / AudiofyText.com — basic free TTS sites. DEV Community",
+      "url_index": 13
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.techradar.com/best/best-text-to-speech-software",
+        "title": "Best text-to-speech software of 2026 - TechRadar",
+        "domain": "TechRadar"
+      },
+      {
+        "url": "https://contentmavericks.com/best-text-to-speech-software/",
+        "title": "7 Best Text-to-Speech Software 2026 (50 TTS Tools Ranked)",
+        "domain": "Content Mavericks"
+      },
+      {
+        "url": "https://www.softlist.io/best-text-to-speech-free-software-to-try/",
+        "title": "11 Best Text-to-Speech Free Software to Try This Year",
+        "domain": "Softlist.io"
+      },
+      {
+        "url": "https://www.softwareworld.co/text-to-speech-software/",
+        "title": "List of Top Text-To-Speech Software - Jan 2026 Reviews | SoftwareWorld",
+        "domain": "Software World"
+      },
+      {
+        "url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+        "title": "Top 16 BEST Text To Speech Software (2026 Review)",
+        "domain": "Software Testing Help"
+      },
+      {
+        "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+        "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+        "domain": "Geekflare"
+      },
+      {
+        "url": "https://www.theverge.com/2024/8/23/24226643/elevenlabs-ai-reader-app-32-languages-global-release",
+        "title": "ElevenLabs' AI Reader app can now narrate text in 32 languages",
+        "domain": "The Verge"
+      },
+      {
+        "url": "https://dev.to/raef_17/the-5-best-text-to-speech-platforms-in-2025-5alb",
+        "title": "The 5 Best Text-to-Speech Platforms in 2025 - DEV Community",
+        "domain": "DEV Community"
+      },
+      {
+        "url": "https://timesofindia.indiatimes.com/technology/tech-tips/how-to-use-google-docs-gemini-audio-text-to-speech-feature/articleshow/125674607.cms",
+        "title": "How to use Google Docs' Gemini audio text-to-speech feature",
+        "domain": "timesofindia.indiatimes.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://smallest.ai/blog/best-text-to-speech-tools",
+        "title": "Top 10 Text-to-Speech Apps in 2025 | Best AI Voice Tools",
+        "domain": "smallest.ai"
+      },
+      {
+        "url": "https://www.typinglounge.com/best-text-to-speech-software",
+        "title": "16 Best Text-to-Speech Software - AI TTS | Typing Lounge",
+        "domain": "typinglounge.com"
+      },
+      {
+        "url": "https://biglysales.com/best-text-to-speech-software/",
+        "title": "7 Best Text-to-Speech Software in 2025 - Bigly Sales",
+        "domain": "biglysales.com"
+      },
+      {
+        "url": "https://soundmadeseen.com/blog/best-text-to-speech-software-tools",
+        "title": "8 Best Text-to-Speech Software Tools - SoundMadeSeen",
+        "domain": "soundmadeseen.com"
+      },
+      {
+        "url": "https://www.elegantthemes.com/blog/business/best-text-to-speech-tools",
+        "title": "12 Best Text to Speech Tools in 2025 (Expert Picks) - Elegant Themes",
+        "domain": "elegantthemes.com"
+      },
+      {
+        "url": "https://typecast.ai/learn/text-to-speech-software/",
+        "title": "The Best Text-to-Speech Software and Tools in 2025 - Typecast",
+        "domain": "typecast.ai"
+      },
+      {
+        "url": "https://www.f22labs.com/blogs/13-text-to-speech-tts-solutions-in-2025/",
+        "title": "13 Text-to-Speech (TTS) Solutions in 2026 - F22 Labs",
+        "domain": "f22labs.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 7,
+    "total_all": 16
+  },
+  "response_stats": {
+    "total_length": 2737,
+    "citation_count": 16,
+    "chars_with_citations": 288
+  }
+}

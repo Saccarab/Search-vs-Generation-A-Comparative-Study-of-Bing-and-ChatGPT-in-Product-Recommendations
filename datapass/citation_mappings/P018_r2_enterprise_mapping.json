@@ -1,0 +1,379 @@
+{
+  "run_id": "P018_r2",
+  "account_type": "enterprise",
+  "prompt": "Can you suggest a free website or program that can translate my 20-minute video and add subtitles?",
+  "metadata": {
+    "hidden_queries": [
+      "free website program to translate and add subtitles to video automatically",
+      "無料 video 翻訳 字幕 自動 サービス free translate subtitles video"
+    ],
+    "sonic_classification": {
+      "latency_ms": 16.415952006354928,
+      "simple_search_prob": 0.9079914450162476,
+      "complex_search_prob": 0.07799755544824286,
+      "no_search_prob": 0.014010999535509522,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free website program to translate and add subtitles to video automatically"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 315,
+        "end_idx": 334
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.kapwing.com/subtitles",
+          "title": "Auto-Subtitle Generator — 99% Accurate (Free) - Kapwing",
+          "snippet": "Kapwing's Automatic Subtitles Generator offer industry-leading accuracy while streamlining the subtitle creation process for individuals and teams — whether for single social media videos or entire content libraries. Simply upload your video or audio file to generate word-by-word subtitles and a fully editable transcript in seconds, with export options like SRT for easy use on other ...",
+          "domain": "www.kapwing.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.kapwing.com/subtitles",
+      "url_position": 310,
+      "claim_text": "Yes. Here are free tools/websites that can translate your ~20-minute video and add subtitles (most support export of subtitle files like SRT/VTT): Online/Free options (no software install) Kapwing – automatic subtitle generation + translation in 100+ languages, export SRT/embedded subtitles online. Kapwing",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 453,
+        "end_idx": 472
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.media.io/jp/subtitle-translator.html",
+      "url_position": 466,
+      "claim_text": "Media.io Subtitle Translator – upload video, auto-generate & translate captions, edit and download subtitles. Media.io",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 561,
+        "end_idx": 567
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://flixier.com/tools/auto-subtitle-generator",
+      "url_position": 606,
+      "claim_text": "Flixier – AI caption generator for videos with translation, no download needed. Flixier",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 694,
+        "end_idx": 713
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://clipchamp.com/en/subtitle-generator/",
+      "url_position": 774,
+      "claim_text": "Clipchamp Subtitle Generator – online subtitle creation and editing for videos; supports many languages. Clipchamp",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 806,
+        "end_idx": 826
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://typito.com/video-translator",
+      "url_position": 913,
+      "claim_text": "Typito Video Translator – automatic translation and subtitle additions, export SRT. Typito",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 921,
+        "end_idx": 940
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://maestra.ai/ja/tools/subtitle-translator",
+          "title": "AI字幕翻訳ツール - 字幕をオンラインで無料翻訳 - Maestra",
+          "snippet": "MaestraのAI字幕翻訳ツールを使って、オンラインで字幕を翻訳しましょう。無料で試して、ビデオ、オーディオ、字幕ファイルを125以上の言語に簡単に変換できます。",
+          "domain": "maestra.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://maestra.ai/ja/tools/subtitle-translator",
+      "url_position": 1049,
+      "claim_text": "Maestra.ai – subtitle and translation tools for video/audio, supports many languages. Maestra AI",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1041,
+        "end_idx": 1060
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://jp.vidnoz.com/video-translate.html",
+          "title": "Vidnoz AI動画翻訳｜無料のAI動画の音声・字幕を翻訳するサイト",
+          "snippet": "Vidnoz AI動画翻訳は自然な音声クローンを利用し、英語など140以上の言語の和訳をサポートする動画AI翻訳サイトです。動画の音声とリップシンクを流暢に吹き替えます。",
+          "domain": "jp.vidnoz.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://jp.vidnoz.com/video-translate.html",
+      "url_position": 1195,
+      "claim_text": "Other options Vidnoz – free AI video translation site with subtitle creation + export. Vidnoz",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1563,
+        "end_idx": 1581
+      },
+      "citation_token": "citeturn0news30",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation",
+          "title": "VLC player demos real-time AI subtitling for videos",
+          "snippet": "At CES 2025, the open-source VLC media player showcased a new AI-powered feature that enables real-time subtitling and translation of videos directly on users' devices. Presented by VideoLAN President Jean-Baptiste Kempf, the demo highlighted the use of open-source AI models to generate and translate subtitles into over 100 languages completely offline, ensuring privacy and eliminating the need for cloud services. This feature is built directly into the VLC app, distinguishing it from earlier plug-ins that relied on platforms like OpenAI's Whisper. While the full rollout date hasn't been disclosed, the advancement demonstrates a significant leap in local AI integration for media playback. Additionally, VideoLAN announced that VLC has surpassed 6 billion downloads and continues to grow in active users despite the rise of streaming services.",
+          "domain": "www.theverge.com",
+          "ref_type": "news",
+          "ref_index": 30,
+          "turn_index": 0,
+          "pub_date": 1736431670,
+          "ref_key": "0_news_30"
+        },
+        {
+          "url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation?utm_source=chatgpt.com",
+          "title": "VLC player demos real-time AI subtitling for videos",
+          "snippet": "At CES 2025, the open-source VLC media player showcased a new AI-powered feature that enables real-time subtitling and translation of videos directly on users' devices. Presented by VideoLAN President Jean-Baptiste Kempf, the demo highlighted the use of open-source AI models to generate and translate subtitles into over 100 languages completely offline, ensuring privacy and eliminating the need for cloud services. This feature is built directly into the VLC app, distinguishing it from earlier plug-ins that relied on platforms like OpenAI's Whisper. While the full rollout date hasn't been disclosed, the advancement demonstrates a significant leap in local AI integration for media playback. Additionally, VideoLAN announced that VLC has surpassed 6 billion downloads and continues to grow in active users despite the rise of streaming services.",
+          "domain": "theverge.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation",
+      "url_position": 1718,
+      "claim_text": "Notes / considerations Free plans often have size/time limits for uploads or export quality. Some impose watermarks on exported video unless you upgrade to paid. It’s usually faster to generate subtitles first, then export/edit the SRT if you need precise translation timing. If you want a desktop/offline free approach, tools like VLC (future AI subtitling) or Vrew (free subtitle generator) might work (VLC translation feature hinted but not fully out yet). theverge.com",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.kapwing.com/subtitles",
+        "title": "Auto-Subtitle Generator — 99% Accurate (Free) - Kapwing",
+        "domain": "Kapwing"
+      },
+      {
+        "url": "https://www.media.io/jp/subtitle-translator.html",
+        "title": "[無料] オンライン字幕翻訳ツール - Media.io",
+        "domain": "Media.io"
+      },
+      {
+        "url": "https://flixier.com/tools/auto-subtitle-generator",
+        "title": "Translate & Add Subtitles to Video with AI Caption Generator",
+        "domain": "Flixier"
+      },
+      {
+        "url": "https://clipchamp.com/en/subtitle-generator/",
+        "title": "Auto subtitle generator online | Free in over 100 languages",
+        "domain": "Clipchamp"
+      },
+      {
+        "url": "https://typito.com/video-translator",
+        "title": "Translate Videos Online - Video Translator Online - Typito",
+        "domain": "Typito"
+      },
+      {
+        "url": "https://maestra.ai/ja/tools/subtitle-translator",
+        "title": "AI字幕翻訳ツール - 字幕をオンラインで無料翻訳 - Maestra",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://jp.vidnoz.com/video-translate.html",
+        "title": "Vidnoz AI動画翻訳｜無料のAI動画の音声・字幕を翻訳するサイト",
+        "domain": "Vidnoz"
+      },
+      {
+        "url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation",
+        "title": "VLC player demos real-time AI subtitling for videos",
+        "domain": "theverge.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://namakemono-short.com/video-translation-subtitle-free-tools/",
+        "title": "【無料AI】動画翻訳におすすめのサイト＆ソフト5選！自動で字幕を生成する方法も解説 - namakemonoshort",
+        "domain": "namakemono-short.com"
+      },
+      {
+        "url": "https://zeemo.ai/tools/video-translator",
+        "title": "Free Online Video Translator With High Accuracy - Zeemo AI",
+        "domain": "zeemo.ai"
+      },
+      {
+        "url": "https://maestra.ai/tools/add-subtitles-to-videos",
+        "title": "Add Subtitles to Video Automatically with AI - Online & Free Trial",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://maestra.ai/ja/tools/video-translator",
+        "title": "無料のAIビデオ翻訳 - 29の言語を即座に話すことができます！",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://www.vozo.ai/ja/video-translator",
+        "title": "AI動画翻訳 - 音声クローン吹き替えと字幕生成",
+        "domain": "vozo.ai"
+      },
+      {
+        "url": "https://www.kapwing.com/ja/subtitles/translator",
+        "title": "字幕翻訳 — 無料で字幕を翻訳（100以上の言語に対応）",
+        "domain": "kapwing.com"
+      },
+      {
+        "url": "https://addsubtitle.ai/",
+        "title": "Translate, Subtitle and Dub Video with AI - Add Subtitle.ai",
+        "domain": "addsubtitle.ai"
+      },
+      {
+        "url": "https://www.flexclip.com/jp/tools/ai-subtitle-translator/",
+        "title": "AI字幕翻訳サイト - オンラインで自動的に動画字幕を翻訳",
+        "domain": "flexclip.com"
+      },
+      {
+        "url": "https://subtitlebee.com/",
+        "title": "Add Subtitles to Video - 95% Accurate AI generated Subtitles",
+        "domain": "subtitlebee.com"
+      },
+      {
+        "url": "https://products.aspose.ai/total/ja/translator/subtitle",
+        "title": "無料の字幕翻訳ツール - AIで字幕を翻訳",
+        "domain": "aspose.ai"
+      },
+      {
+        "url": "https://www.canva.com/features/video-translator/",
+        "title": "Video translator: Translate video captions instantly | Canva",
+        "domain": "canva.com"
+      },
+      {
+        "url": "https://videotranslator.org/ja",
+        "title": "無料のAIビデオ翻訳者 - ビデオ字幕をオンラインで翻訳します",
+        "domain": "videotranslator.org"
+      },
+      {
+        "url": "https://wavel.ai/studio/add-subtitles-to-video",
+        "title": "Add Subtitles to Video Automatically Online For Free - Wavel",
+        "domain": "wavel.ai"
+      },
+      {
+        "url": "https://musely.ai/ja/tools/subtitle-translator",
+        "title": "無料AI字幕翻訳ツール｜動画テキストを瞬時に変換 - Musely",
+        "domain": "musely.ai"
+      },
+      {
+        "url": "https://www.veed.io/tools/auto-subtitle-generator-online",
+        "title": "Auto Subtitle Generator Online - 99.9% Accuracy - VEED.IO",
+        "domain": "veed.io"
+      },
+      {
+        "url": "https://miraitranslate.com/voice-translate/video/",
+        "title": "AI動画字幕（動画翻訳）｜AI自動翻訳『みらい翻訳』",
+        "domain": "miraitranslate.com"
+      },
+      {
+        "url": "https://www.happyscribe.com/tools/add-subtitles-to-video",
+        "title": "Add Subtitles to Video Online - 99% Accurate & Automatic",
+        "domain": "happyscribe.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 17,
+    "total_all": 25
+  },
+  "response_stats": {
+    "total_length": 1811,
+    "citation_count": 8,
+    "chars_with_citations": 139
+  }
+}

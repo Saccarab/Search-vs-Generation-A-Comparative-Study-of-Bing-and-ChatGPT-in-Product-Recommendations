@@ -1,0 +1,346 @@
+{
+  "run_id": "P028_r2",
+  "account_type": "personal",
+  "prompt": "Can you suggest any free programs to convert videos to 480p?",
+  "metadata": {
+    "hidden_queries": [
+      "free programs to convert videos to 480p",
+      "best free video converters to 480p resolution"
+    ],
+    "sonic_classification": {
+      "latency_ms": 23.467899998649955,
+      "simple_search_prob": 0.9938055080422881,
+      "complex_search_prob": 0.00043887412736403676,
+      "no_search_prob": 0.005755617830347897,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 227,
+        "end_idx": 228
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/HandBrake",
+      "url_position": 221,
+      "claim_text": "Here are some reliable free tools you can use to convert videos to 480p: 🖥️ Desktop Programs HandBrake – free open-source video transcoder (Windows, Mac, Linux). You can set output resolution to 480p easily. Wikipedia",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 343,
+        "end_idx": 362
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.any-video-converter.com/en8/for_video_free/",
+      "url_position": 371,
+      "claim_text": "Any Video Converter Free – free converter for Windows/Mac with custom output settings. Any Video Converter",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 460,
+        "end_idx": 480
+      },
+      "citation_token": "citeturn0search35",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Avidemux",
+      "url_position": 529,
+      "claim_text": "Avidemux – simple free video editor/transcoder where you can resize resolution manually. Wikipedia",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 596,
+        "end_idx": 616
+      },
+      "citation_token": "citeturn0search34",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/VSDC_Free_Video_Editor",
+      "url_position": 688,
+      "claim_text": "VSDC Free Video Editor (Windows) – full editor with export settings letting you pick resolution like 480p. Wikipedia",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 752,
+        "end_idx": 771
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.freeconvert.com/video-converter",
+      "url_position": 880,
+      "claim_text": "🌐 Online/Browser Tools FreeConvert.com Video Converter – web tool where you can adjust resolution to 480p during convert. FreeConvert",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 884,
+        "end_idx": 903
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://video-converter.com/",
+      "url_position": 1051,
+      "claim_text": "Online Video Converter (video-converter.com) – free browser converter that lets you choose 480p output. video-converter.com",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1031,
+        "end_idx": 1050
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.ezyzip.com/convert-video-to-480p-online.html",
+          "title": "Convert VIDEO To 480P | Downscale Resolution",
+          "snippet": "ezyZip is a free online video to 480p resolution downscaler that runs in your browser. No need to install any additional compression software.Read more",
+          "domain": "www.ezyzip.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.ezyzip.com/convert-video-to-480p-online.html",
+      "url_position": 1209,
+      "claim_text": "ezyZip Browser 480p Converter – free in-browser tool specifically for downscaling to 480p without installing software. EzyZip",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1191,
+        "end_idx": 1224
+      },
+      "citation_token": "citeturn0search3turn0search11",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.resize-video.com/?utm_source=chatgpt.com",
+          "title": "Resize-Video: Resize Video Online Free, Change Video ...",
+          "snippet": "This online video resizer lets you change resolution (width and height) of a video, you can resize and scale a video to fit Instagram, Twitter, or Facebook ...",
+          "domain": "resize-video.com",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_11"
+        }
+      ],
+      "inline_url": "https://www.onlineconverter.com/resize-video",
+      "url_position": 1423,
+      "claim_text": "Online Video Resizer/Converter sites (e.g., onlineconverter.com or resize-video.com) – let you specify custom resolution like 480p. onlineconverter.com+1",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1382,
+        "end_idx": 1402
+      },
+      "citation_token": "citeturn0search32",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/HandBrake",
+      "url_position": 1633,
+      "claim_text": "All these let you change resolution when exporting so you can output at 480p. If you want the simplest offline option, HandBrake is widely recommended. Wikipedia",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://en.wikipedia.org/wiki/HandBrake",
+        "title": "HandBrake",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.any-video-converter.com/en8/for_video_free/",
+        "title": "Any Video Converter Free: Convert Videos to MP4, MP3, ...",
+        "domain": "Any Video Converter"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Avidemux",
+        "title": "Avidemux",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/VSDC_Free_Video_Editor",
+        "title": "VSDC Free Video Editor",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.freeconvert.com/video-converter",
+        "title": "Video Converter - FreeConvert.com",
+        "domain": "FreeConvert"
+      },
+      {
+        "url": "https://video-converter.com/",
+        "title": "Online Video Converter - Convert Video to MP4, AVI, MPEG ...",
+        "domain": "video-converter.com"
+      },
+      {
+        "url": "https://www.ezyzip.com/convert-video-to-480p-online.html",
+        "title": "Convert VIDEO To 480P | Downscale Resolution",
+        "domain": "EzyZip"
+      },
+      {
+        "url": "https://www.onlineconverter.com/resize-video",
+        "title": "Resize Video: Change Video Size And Aspect Ratio (Free)",
+        "domain": "onlineconverter.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://vmake.ai/480p-to-1080p-upscaler",
+        "title": "480p to 1080p Video Upscaler Online Free",
+        "domain": "vmake.ai"
+      },
+      {
+        "url": "https://www.winxdvd.com/video-transcoder/1080p-720p-to-480p.htm",
+        "title": "How to Convert a 1080p or 720p HD Video to a 480p File",
+        "domain": "winxdvd.com"
+      },
+      {
+        "url": "https://www.winxdvd.com/edit-video/video-upscaler-software.htm",
+        "title": "8 Best AI Video Upscaling Software [Free & Paid]",
+        "domain": "winxdvd.com"
+      },
+      {
+        "url": "https://www.videoproc.com/media-converter/best-video-converter.htm",
+        "title": "9 Best Free Video Converters for PC and Mac (Compared)",
+        "domain": "videoproc.com"
+      },
+      {
+        "url": "https://online-video-cutter.com/resize-video",
+        "title": "Video Resizer - Change Video Resolution Online for Free",
+        "domain": "online-video-cutter.com"
+      },
+      {
+        "url": "https://www.veed.io/tools/resize-video",
+        "title": "Online Video Resizer - Aspect Ratio & Dimensions - VEED",
+        "domain": "veed.io"
+      },
+      {
+        "url": "https://www.veed.io/tools/video-compressor",
+        "title": "Video Compressor - No Loss in Video Quality",
+        "domain": "veed.io"
+      },
+      {
+        "url": "https://www.freeconvert.com/video-compressor",
+        "title": "Video Compressor | Reduce Video File Size Online",
+        "domain": "freeconvert.com"
+      },
+      {
+        "url": "https://www.resize-video.com/",
+        "title": "Resize-Video: Resize Video Online Free, Change Video ...",
+        "domain": "resize-video.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/handbrake/comments/10wot42/how_do_i_compress_a_fullhd_video_and_make_it/",
+        "title": "How do I compress a FullHD video and make it display in ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://hdconvert.com/en/",
+        "title": "Free Unlimited HD Online Media Converter with fast AI tools",
+        "domain": "hdconvert.com"
+      },
+      {
+        "url": "https://askubuntu.com/questions/620680/software-for-converting-mp4-files-from-720p-to-480p",
+        "title": "Software for converting mp4 files from 720p to 480p",
+        "domain": "askubuntu.com"
+      },
+      {
+        "url": "https://www.xconvert.com/video-compressor",
+        "title": "Online Video Compressor | Reduce Video File Size Free",
+        "domain": "xconvert.com"
+      },
+      {
+        "url": "https://unifab.ai/resource/hd-video-converter",
+        "title": "Top 6 SD to HD Video Converters in 2025 [Tested and ...",
+        "domain": "unifab.ai"
+      },
+      {
+        "url": "https://super-converter.com/index.html",
+        "title": "Super-Converter: Free Online Video Converter | Convert MP4 ...",
+        "domain": "super-converter.com"
+      },
+      {
+        "url": "https://elementor.com/tools/video-resolution-converter/",
+        "title": "Video Resolution Converter",
+        "domain": "elementor.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 16,
+    "total_all": 24
+  },
+  "response_stats": {
+    "total_length": 1676,
+    "citation_count": 9,
+    "chars_with_citations": 170
+  }
+}

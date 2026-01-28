@@ -1,0 +1,407 @@
+{
+  "run_id": "P007_r1",
+  "account_type": "personal",
+  "prompt": "Is there a real time audio to text translation?",
+  "metadata": {
+    "hidden_queries": [
+      "real time audio to text translation services",
+      "live speech to text translation tools"
+    ],
+    "sonic_classification": {
+      "latency_ms": 3.200818086043,
+      "simple_search_prob": 0.9518268728606659,
+      "complex_search_prob": 0.0016583782106195579,
+      "no_search_prob": 0.046514748928714524,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "real time audio to text translation services"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 160,
+        "end_idx": 192
+      },
+      "citation_token": "citeturn0search0turn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+          "title": "Instant Voice Translate - Apps on Google Play",
+          "snippet": "Voice Translation: Speak naturally and let the app provide instant translations in real-time. Communicate effortlessly and break down language barriers. 2.Read more",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+      "url_position": 170,
+      "claim_text": "Yes — there are real-time audio-to-text and translation solutions that can convert spoken words into written text (and often translated text) as you speak. Google Play+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 313,
+        "end_idx": 333
+      },
+      "citation_token": "citeturn0search48",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Live_Transcribe",
+          "title": "Live Transcribe",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 48,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_48"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Live_Transcribe",
+      "url_position": 372,
+      "claim_text": "🔹 Live Audio → Text (Speech-to-Text) Google Live Transcribe – Android app that captions speech in real time. Wikipedia",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 427,
+        "end_idx": 445
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechlogger.com/",
+      "url_position": 523,
+      "claim_text": "Speechlogger – Web service that provides live transcriptions and can translate them. speechlogger.com",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 509,
+        "end_idx": 529
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/",
+      "url_position": 615,
+      "claim_text": "Otter.ai – Real-time transcription in meetings/calls. Otter.ai",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 745,
+        "end_idx": 808
+      },
+      "citation_token": "citeturn0search7turn0search6turn0search2turn0search10turn",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.palabra.ai/?utm_source=chatgpt.com",
+          "title": "Palabra.ai: Live Voice Translator & Real-Time Speech ...",
+          "snippet": "Live voice translator with real-time speech translation. AI-powered translator for meetings, events, streams in 60+ languages. Try free today.",
+          "domain": "palabra.ai",
+          "ref_type": "search",
+          "ref_index": 6,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_6"
+        },
+        {
+          "url": "https://www.wordly.ai/real-time-translation?utm_source=chatgpt.com",
+          "title": "Real-Time Translation Solutions",
+          "snippet": "Wordly provides real-time translation of speakers into audio and captions for dozens of languages at in-person and virtual meetings and events.Read more",
+          "domain": "wordly.ai",
+          "ref_type": "search",
+          "ref_index": 2,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_2"
+        },
+        {
+          "url": "https://www.jotme.io/?utm_source=chatgpt.com",
+          "title": "JotMe - Live Translator & AI Interpreter",
+          "snippet": "JotMe is the most popular live AI translator for meetings. Real-time contextual translation, multilingual transcription, and AI note taking in any language.",
+          "domain": "jotme.io",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 876,
+      "claim_text": "🔹 Real-Time Translation (Speech-to-Text + Translation) Maestra/Palabra/Wordly/JotMe/Transync AI – AI tools that transcribe and translate speech in real time for meetings, conversations, or live events. 同言翻译+4live.maestra.ai+4palabra.ai+4",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 925,
+        "end_idx": 930
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+      "url_position": 1016,
+      "claim_text": "Instant Voice Translate / iTranslate Voice – Mobile apps that immediately translate spoken words. Google Play+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1090,
+        "end_idx": 1108
+      },
+      "citation_token": "citeturn0news39",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+      "url_position": 1232,
+      "claim_text": "Google Translate (Live Translate) – Live speech translation into text/audio in supported languages (beta in some regions). Tom's Guide",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1250,
+        "end_idx": 1270
+      },
+      "citation_token": "citeturn0search48",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Live_Transcribe",
+          "title": "Live Transcribe",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 48,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_48"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Live_Transcribe",
+      "url_position": 1513,
+      "claim_text": "📍 Summary ✔️ Real-time speech-to-text: Yes — many apps and tools convert spoken language directly into written text as it’s spoken. Wikipedia",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1386,
+        "end_idx": 1405
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 1687,
+      "claim_text": "✔️ Real-time audio translation: Yes — some tools also translate that speech into another language instantly. live.maestra.ai",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Live_Transcribe",
+        "title": "Live Transcribe",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://speechlogger.com/",
+        "title": "Speechlogger - Real Time Speech to Text",
+        "domain": "speechlogger.com"
+      },
+      {
+        "url": "https://otter.ai/",
+        "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+        "domain": "Otter.ai"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "live.maestra.ai"
+      },
+      {
+        "url": "https://www.tomsguide.com/computing/software/google-translate-is-bringing-real-time-translations-powered-by-gemini-to-your-headphones",
+        "title": "Google Translate is bringing real-time translations powered by Gemini to your headphones",
+        "domain": "Tom's Guide"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025 - JotMe",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.wordly.ai/real-time-translation",
+        "title": "Real-Time Translation Solutions",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/translation-app",
+        "title": "Translation App – Real‑Time AI Voice & Text Translation | Wordly",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-speech-translation-tools",
+        "title": "5 Best Speech Translation Tools We Recommend in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/",
+        "title": "JotMe - Live Translator & AI Interpreter",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://soniox.com/",
+        "title": "Soniox | Speech-to-Text AI",
+        "domain": "soniox.com"
+      },
+      {
+        "url": "https://www.palabra.ai/",
+        "title": "Palabra.ai: Live Voice Translator & Real-Time Speech ...",
+        "domain": "palabra.ai"
+      },
+      {
+        "url": "https://translate.google.com/about/",
+        "title": "A Personal Interpreter on Your Phone or Computer",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://support.google.com/translate/answer/6142468?co=GENIE.Platform%3DAndroid&hl=en",
+        "title": "Translate by speech - Android - Google Help",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://cloud.google.com/speech-to-text",
+        "title": "Speech-to-Text API: speech recognition and transcription",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "speechnotes.co"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/real-time-translation/",
+        "title": "Real-time Translation Tool | Transync AI",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.techradar.com/news/best-speech-to-text-app",
+        "title": "Best speech-to-text app of 2025",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://research.google/blog/real-time-speech-to-speech-translation/",
+        "title": "Real-time speech-to-speech translation",
+        "domain": "research.google"
+      },
+      {
+        "url": "https://certifiedlanguages.com/blog/we-tested-ai-generated-translation-devices/",
+        "title": "AI Translation Devices: We Tested 3 So You Don't Have To",
+        "domain": "certifiedlanguages.com"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+        "title": "iTranslate Voice - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://livevoice.io/en/ai-voice-translation",
+        "title": "AI Voice Translation",
+        "domain": "livevoice.io"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 21,
+    "total_all": 27
+  },
+  "response_stats": {
+    "total_length": 1897,
+    "citation_count": 9,
+    "chars_with_citations": 215
+  }
+}

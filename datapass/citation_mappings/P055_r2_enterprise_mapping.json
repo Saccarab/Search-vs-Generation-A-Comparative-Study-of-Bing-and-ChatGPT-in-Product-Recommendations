@@ -1,0 +1,446 @@
+{
+  "run_id": "P055_r2",
+  "account_type": "enterprise",
+  "prompt": "Welche Transkriptionssoftware ist die beste?",
+  "metadata": {
+    "hidden_queries": [
+      "Beste Transkriptionssoftware Vergleich Transkription Software",
+      "Best transcription software tools comparison features pricing accuracy"
+    ],
+    "sonic_classification": {
+      "latency_ms": 32.62567496858537,
+      "simple_search_prob": 0.9553335421039897,
+      "complex_search_prob": 0.023443483624763513,
+      "no_search_prob": 0.0212229742712468,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Beste Transkriptionssoftware Vergleich Transkription Software"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 260,
+        "end_idx": 306
+      },
+      "citation_token": "citeturn0search0turn0search5turn0search20",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+          "title": "Vergleich: Die beste Transkriptionssoftware | heise Download",
+          "snippet": "Vergleich: Die beste Transkriptionssoftware Transkriptions-Programme für Windows, Mac, Linux und Mobile Wer gesprochenes Wort in Text umwandeln will, war lange Zeit auf menschliche Hilfe angewiesen.",
+          "domain": "www.heise.de",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1757289600,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.sally.io/de/blog/die-7-besten-transkriptions-tools-2026",
+          "title": "Die 7 besten Transkriptionstools 2026: DSGVO, KI & Co.",
+          "snippet": "Ein Preis-Leistungs-Vergleich hilft bei der Auswahl des passenden Tools. Die besten KI-Transkriptionstools für Meetings, Notizen, Interviews & Co. Transkriptionstools sind längst mehr als nur einfache Helfer zur Umwandlung von Sprache in Text.",
+          "domain": "www.sally.io",
+          "ref_type": "search",
+          "ref_index": 20,
+          "turn_index": 0,
+          "pub_date": 1763078400,
+          "ref_key": "0_search_20"
+        }
+      ],
+      "inline_url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+      "url_position": 279,
+      "claim_text": "Es gibt keine „eine beste Transkriptionssoftware für alle“ – die richtige Lösung hängt vom konkreten Anwendungsfall ab (Einsatzgebiet, Sprache, Audioqualität, Budget). Nutzerbewertungen, Tests und Vergleichslisten zeigen mehrere starke Optionen 2025/2026. heise online+2Guru99+2",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 541,
+        "end_idx": 561
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.cotocus.com/blog/top-10-transcription-software-tools-in-2025-features-pros-cons-comparison/",
+      "url_position": 599,
+      "claim_text": "🔝 Top automatische Transkriptions-Tools (KI-gestützt) Otter.ai Echtzeit-Transkription, Speaker-Erkennung, Team-Kollaboration. Gut für Meetings, Interviews, Podcasts. Stark in Integrationen (Zoom/Google Meet u.ä.). Cotocus",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 708,
+        "end_idx": 727
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.descript.com/blog/article/best-transcription-software",
+      "url_position": 853,
+      "claim_text": "Descript KI-basiert, sehr hohe Genauigkeit. Zusätzliche Bearbeitungs- und Editing-Funktionen. Weiß-Glove-Option für 99 %+ Genauigkeit. Descript",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 817,
+        "end_idx": 837
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.appvizer.de/kommunikation/audio-transkription",
+      "url_position": 1013,
+      "claim_text": "Sonix Hohe Genauigkeit & Multi-Language-Support. Gut für Audio- & Videodateien. Appvizer",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 957,
+        "end_idx": 963
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.sally.io/de/blog/software-zum-transkribieren-die-7-besten-loesugen",
+      "url_position": 1195,
+      "claim_text": "Amberscript Automatische Transkription + Option auf manuelle Korrektur. Starker Fokus auf Datenschutz/Europa. Sally AI",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1076,
+        "end_idx": 1096
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.appvizer.de/kommunikation/audio-transkription",
+      "url_position": 1371,
+      "claim_text": "📊 Weitere nennenswerte Tools Happy Scribe – intuitive Oberfläche und mehrsprachig. Appvizer",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1152,
+        "end_idx": 1172
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.appvizer.de/kommunikation/audio-transkription",
+      "url_position": 1488,
+      "claim_text": "AutoCaption – günstig, schnelle Transkription. Appvizer",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1245,
+        "end_idx": 1265
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sourceforge.net/software/transcription/",
+      "url_position": 1625,
+      "claim_text": "Google Cloud Speech-to-Text – API-basiert, flexibel einsetzbar. SourceForge",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1349,
+        "end_idx": 1355
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/ELAN_software",
+      "url_position": 1761,
+      "claim_text": "ELAN – eher forschungsorientiert für manuelle/semiautomatische Annotation. Wikipedia",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1534,
+        "end_idx": 1554
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sally.io/de/blog/die-7-besten-transkriptions-tools-2026",
+          "title": "Die 7 besten Transkriptionstools 2026: DSGVO, KI & Co.",
+          "snippet": "Ein Preis-Leistungs-Vergleich hilft bei der Auswahl des passenden Tools. Die besten KI-Transkriptionstools für Meetings, Notizen, Interviews & Co. Transkriptionstools sind längst mehr als nur einfache Helfer zur Umwandlung von Sprache in Text.",
+          "domain": "www.sally.io",
+          "ref_type": "search",
+          "ref_index": 20,
+          "turn_index": 0,
+          "pub_date": 1763078400,
+          "ref_key": "0_search_20"
+        }
+      ],
+      "inline_url": "https://www.sally.io/de/blog/die-7-besten-transkriptions-tools-2026",
+      "url_position": 1969,
+      "claim_text": "🧠 Auswahlkriterien (kurz und kritisch) Genauigkeit: Unterschiedlich je nach Tool, Sprache, Akzent und Audioqualität. Oft sind Premium-Pläne präziser. Sally AI",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1653,
+        "end_idx": 1658
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.cotocus.com/blog/top-10-transcription-software-tools-in-2025-features-pros-cons-comparison/",
+      "url_position": 2140,
+      "claim_text": "Echtzeit vs. Datei-Upload: Manche transkribieren live (z.B. Otter), andere nur aus Dateien. Cotocus",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1785,
+        "end_idx": 1804
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/ELAN_software",
+      "url_position": 1761,
+      "claim_text": "ELAN – eher forschungsorientiert für manuelle/semiautomatische Annotation. Wikipedia",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1899,
+        "end_idx": 1919
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.sally.io/de/blog/die-7-besten-transkriptions-tools-2026",
+          "title": "Die 7 besten Transkriptionstools 2026: DSGVO, KI & Co.",
+          "snippet": "Ein Preis-Leistungs-Vergleich hilft bei der Auswahl des passenden Tools. Die besten KI-Transkriptionstools für Meetings, Notizen, Interviews & Co. Transkriptionstools sind längst mehr als nur einfache Helfer zur Umwandlung von Sprache in Text.",
+          "domain": "www.sally.io",
+          "ref_type": "search",
+          "ref_index": 20,
+          "turn_index": 0,
+          "pub_date": 1763078400,
+          "ref_key": "0_search_20"
+        }
+      ],
+      "inline_url": "https://www.sally.io/de/blog/die-7-besten-transkriptions-tools-2026",
+      "url_position": 1969,
+      "claim_text": "🧠 Auswahlkriterien (kurz und kritisch) Genauigkeit: Unterschiedlich je nach Tool, Sprache, Akzent und Audioqualität. Oft sind Premium-Pläne präziser. Sally AI",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 2351,
+        "end_idx": 2370
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+          "title": "Vergleich: Die beste Transkriptionssoftware | heise Download",
+          "snippet": "Vergleich: Die beste Transkriptionssoftware Transkriptions-Programme für Windows, Mac, Linux und Mobile Wer gesprochenes Wort in Text umwandeln will, war lange Zeit auf menschliche Hilfe angewiesen.",
+          "domain": "www.heise.de",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1757289600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+      "url_position": 3015,
+      "claim_text": "🧩 Fazit (skeptisch) Für schnelle, automatische Transkription (Meetings/Interviews): Otter.ai oder Descript. Für hohe Genauigkeit mit Bearbeitung: Descript > Sonix/ Amberscript. Für einfache, günstige Nutzung: Happy Scribe oder Testversionen der vorgenannten Tools. Keine Lösung ist perfekt; bei schlechten Audioaufnahmen oder vielen Sprechern bleibt manuelle Nachbearbeitung oft nötig. heise online",
+      "url_index": 13
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+        "title": "Vergleich: Die beste Transkriptionssoftware | heise Download",
+        "domain": "heise online"
+      },
+      {
+        "url": "https://www.cotocus.com/blog/top-10-transcription-software-tools-in-2025-features-pros-cons-comparison/",
+        "title": "Top 10 Transcription Software Tools in 2025: Features, Pros, Cons ...",
+        "domain": "Cotocus"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-transcription-software",
+        "title": "Transcription Software: Best Audio-to-Text Tools in 2025",
+        "domain": "Descript"
+      },
+      {
+        "url": "https://www.appvizer.de/kommunikation/audio-transkription",
+        "title": "Die 30 Besten Audio Transkription Software im Jahr 2026 | Appvizer",
+        "domain": "Appvizer"
+      },
+      {
+        "url": "https://www.sally.io/de/blog/software-zum-transkribieren-die-7-besten-loesugen",
+        "title": "Software zum Transkribieren: Die 7 besten Lösungen 2026",
+        "domain": "Sally AI"
+      },
+      {
+        "url": "https://sourceforge.net/software/transcription/",
+        "title": "Best Transcription Software of 2026 - Reviews & Comparison",
+        "domain": "SourceForge"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/ELAN_software",
+        "title": "ELAN software",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.sally.io/de/blog/die-7-besten-transkriptions-tools-2026",
+        "title": "Die 7 besten Transkriptionstools 2026: DSGVO, KI & Co.",
+        "domain": "Sally AI"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.stateofdigitalpublishing.com/de/tools-fur-digitale-plattformen/beste-transkriptionssoftware/",
+        "title": "15 Best Transcription Software in 2024 - State of Digital Publishing",
+        "domain": "stateofdigitalpublishing.com"
+      },
+      {
+        "url": "https://www.guru99.com/de/best-transcription-software.html",
+        "title": "8 Beste Transkriptionssoftware und -dienste (2026) - Guru99",
+        "domain": "guru99.com"
+      },
+      {
+        "url": "https://transcript.lol/blog/best-audio-transcription-software",
+        "title": "12 Best Audio Transcription Software Picks for 2025",
+        "domain": "transcript.lol"
+      },
+      {
+        "url": "https://www.devopsschool.com/blog/top-10-transcription-software-tools-in-2025-features-pros-cons-comparison/",
+        "title": "Top 10 Transcription Software Tools in 2025: Features, Pros, Cons ...",
+        "domain": "devopsschool.com"
+      },
+      {
+        "url": "https://clickup.com/blog/transcription-software/",
+        "title": "10 Best Transcription Software & Apps in 2026 (Free & Paid) - ClickUp",
+        "domain": "clickup.com"
+      },
+      {
+        "url": "https://geekflare.com/de/software/best-transcription-software/",
+        "title": "Top Transkriptionssoftware für Audio zu Text im Jahr 2025",
+        "domain": "geekflare.com"
+      },
+      {
+        "url": "https://www.tipsfortranscribers.com/best-transcription-software/",
+        "title": "Top Transcription Software for Professional Transcriptionists: Tools to ...",
+        "domain": "tipsfortranscribers.com"
+      },
+      {
+        "url": "https://www.scribbr.de/methodik/transkriptionssoftware/",
+        "title": "Verschiedene Transkriptionssoftwares im Vergleich - Scribbr",
+        "domain": "scribbr.de"
+      },
+      {
+        "url": "https://www.rtl.de/vergleiche/software/transkriptionssoftware-test/",
+        "title": "Die besten Transkriptionssoftwares im Test | rtl.de Vergleich",
+        "domain": "rtl.de"
+      },
+      {
+        "url": "https://jens.marketing/transkriptionssoftware/",
+        "title": "15 Transkriptionssoftwares im Vergleich (2026) - Jens.Marketing",
+        "domain": "jens.marketing"
+      },
+      {
+        "url": "https://www.softwareworld.co/transcription-software/comparison/",
+        "title": "Top 10 Transcription Software Comparison 2026 | SoftwareWorld",
+        "domain": "softwareworld.co"
+      },
+      {
+        "url": "https://jonasweckerle.de/ki-transkriptionssoftware-test/",
+        "title": "Die besten 6 KI-Transkriptionssoftwares im Test: Ein umfassender Vergleich",
+        "domain": "jonasweckerle.de"
+      },
+      {
+        "url": "https://www.g2.com/de/categories/transcription",
+        "title": "Beste Transkriptionssoftware: Nutzerbewertungen von Januar 2026 - G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://www.capterra.com/transcription-software/",
+        "title": "Best Transcription Software 2026 | Capterra",
+        "domain": "capterra.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 14,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 3250,
+    "citation_count": 14,
+    "chars_with_citations": 260
+  }
+}

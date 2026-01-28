@@ -1,0 +1,354 @@
+{
+  "run_id": "P074_r1",
+  "account_type": "personal",
+  "prompt": "Can you recommend live video translator apps for Mac?",
+  "metadata": {
+    "hidden_queries": [
+      "live video translator apps for Mac",
+      "Mac real-time video translation software Mac app live translate video"
+    ],
+    "sonic_classification": {
+      "latency_ms": 25.973623036406934,
+      "simple_search_prob": 0.9967066971216095,
+      "complex_search_prob": 0.0015199505880730557,
+      "no_search_prob": 0.0017733522903174137,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": false,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 272,
+        "end_idx": 291
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/transcrybe-live-translation/id6670778781",
+          "title": "Transcrybe - Live Translation - App Store - Apple",
+          "snippet": "Transcrybe (formerly \"Subtitle Me\") is a lightning-fast menu bar app that turns your Mac into a real-time translator. Whether you're in a Zoom call, ...",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/transcrybe-live-translation/id6670778781",
+      "url_position": 270,
+      "claim_text": "Here are some Mac‑compatible live video/real‑time translator options you can try: 🔹 Native/Apps on Mac Transcrybe – macOS app that listens to audio from your mic or any app and shows live translated subtitles on screen, including during meetings or videos. App Store",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 436,
+        "end_idx": 456
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/live-caption-screen-translate/id6479691152",
+          "title": "Live Caption-Screen Translate - App Store - Apple",
+          "snippet": "Real time subtitle recognition and translation software, supporting system audio, microphone, and screen area translation! Real time recognition of system ...",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 12,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_12"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/live-caption-screen-translate/id6479691152",
+      "url_position": 490,
+      "claim_text": "Live Caption‑Screen Translate – real‑time subtitle recognition and translation for system audio, microphone, and screen video playback. App Store",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 573,
+        "end_idx": 592
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/live-voice-translator-whisperr/id6504528888",
+          "title": "Live Voice Translator Whisperr - App Store - Apple",
+          "snippet": "Whisperr is a live voice translator that brings the fastest and most accurate realtime transcriptions and translations to you. It can also put a floating ...Read more",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 5,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_5"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/live-voice-translator-whisperr/id6504528888",
+      "url_position": 684,
+      "claim_text": "Whisperr (Live Voice Translator) – live voice translation with floating subtitles over video/audio content. App Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 735,
+        "end_idx": 754
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/us/app/lingvotube-video-translator/id1632282523",
+      "url_position": 905,
+      "claim_text": "Lingvotube – translates subtitles and generates voiceovers for videos (not strictly “live capture” but useful for video translation). App Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 928,
+        "end_idx": 948
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/",
+          "title": "JotMe - Live Translator & AI Interpreter",
+          "snippet": "JotMe is the most popular live AI translator for meetings. Real-time contextual translation, multilingual transcription, and AI note taking in any language.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_11"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/",
+      "url_position": 1147,
+      "claim_text": "🔹 Desktop Services / Tools JotMe AI Interpreter – desktop app for real‑time speech translation during meetings across Zoom/Teams/etc., with live transcription. JotMe",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1085,
+        "end_idx": 1104
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.transyncai.com/blog-mac-translation-app/",
+          "title": "Mac Translation App: Real-Time Voice & Subtitles with ...",
+          "snippet": "Aug 12, 2025 — Discover the best Mac translation app—Transync AI offers real-time voice, subtitles, and AI meeting notes for Zoom, Teams, Meet, ...",
+          "domain": "www.transyncai.com",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://www.transyncai.com/blog-mac-translation-app/",
+      "url_position": 1315,
+      "claim_text": "Transync AI – real‑time voice + subtitle translator that captures system audio for meetings and videos on Mac (browser or app). transyncai.com",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1278,
+        "end_idx": 1284
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://support.apple.com/guide/mac-help/translate-messages-and-calls-mchl58dfbdba/mac",
+      "url_position": 1553,
+      "claim_text": "🔹 Built‑In macOS Features Apple Live Translation (FaceTime/Calls) – built into macOS with Apple Intelligence for live captions/translation during FaceTime calls. support.apple.com",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://apps.apple.com/us/app/transcrybe-live-translation/id6670778781",
+        "title": "Transcrybe - Live Translation - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/live-caption-screen-translate/id6479691152",
+        "title": "Live Caption-Screen Translate - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/live-voice-translator-whisperr/id6504528888",
+        "title": "Live Voice Translator Whisperr - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/lingvotube-video-translator/id1632282523",
+        "title": "Lingvotube: Video translator - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://www.jotme.io/",
+        "title": "JotMe - Live Translator & AI Interpreter",
+        "domain": "JotMe"
+      },
+      {
+        "url": "https://www.transyncai.com/blog-mac-translation-app/",
+        "title": "Mac Translation App: Real-Time Voice & Subtitles with ...",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://support.apple.com/guide/mac-help/translate-messages-and-calls-mchl58dfbdba/mac",
+        "title": "Translate messages and calls on Mac",
+        "domain": "support.apple.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+        "title": "iTranslate Voice - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/polypal-ai-live-translator/id6450663871",
+        "title": "PolyPal - AI Live Translator - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-translator/id288113403",
+        "title": "iTranslate Translator - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://support.apple.com/guide/mac-help/get-live-captions-of-spoken-audio-mchldd11f4fd/mac",
+        "title": "Get live captions of spoken audio on Mac",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/fr/app/transcrybe-live-translation/id6670778781?mt=12",
+        "title": "Transcrybe - Live Translation - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/translate-me-live-translator/id1231853258",
+        "title": "Translate Me - Live Translator - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/live-caption-screen-translate/id6479691152?platform=mac",
+        "title": "Live Caption-Screen Translate - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/macapps/comments/1fitvqr/subtitle_me_ondevice_live_speech_translation_for/",
+        "title": "Subtitle Me: On-device live speech translation for macOS ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=l4t9fl6S8Sg",
+        "title": "Transcrybe: Live Translation for Mac",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://itranslate.com/",
+        "title": "iTranslate: The Leading Translation and Dictionary App",
+        "domain": "itranslate.com"
+      },
+      {
+        "url": "https://medium.com/%40GenerationAI/realtime-video-transcription-and-translation-with-whisper-and-nllb-on-macbook-air-31db4c62c074",
+        "title": "Realtime video transcription and translation with Whisper ...",
+        "domain": "medium.com"
+      },
+      {
+        "url": "https://utell.ai/use-case/real-time-translator-on-macbook/",
+        "title": "Real-Time Video Call Translator On MacBook",
+        "domain": "utell.ai"
+      },
+      {
+        "url": "https://www.transyncai.com/blog-best-translator-app-on-mac/",
+        "title": "Best Translator App on Mac: 7 Reasons Transync AI Wins",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://maestra.ai/",
+        "title": "AI Transcription & Real-Time Translation Platform - Maestra",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://speechify.com/blog/video-translator-app-mac/?srsltid=AfmBOorRbgGtxW0b7U_sb4YZFkHa9mpayeR1k2c7lXlELPCLkw_zpF6r",
+        "title": "The best video translator app for Mac",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://transcrybe.app/",
+        "title": "Transcrybe - Your Real-Time Translation Companion",
+        "domain": "transcrybe.app"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in ...",
+        "domain": "forasoft.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 17,
+    "total_all": 24
+  },
+  "response_stats": {
+    "total_length": 1721,
+    "citation_count": 7,
+    "chars_with_citations": 122
+  }
+}

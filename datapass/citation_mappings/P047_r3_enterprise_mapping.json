@@ -1,0 +1,353 @@
+{
+  "run_id": "P047_r3",
+  "account_type": "enterprise",
+  "prompt": "I need a Chrome extension for live Chinese to English translation that works better than the built-in live caption feature.",
+  "metadata": {
+    "hidden_queries": [
+      "Chrome extension live Chinese to English translation",
+      "Chrome plugin real-time translation Chinese to English extension Chrome"
+    ],
+    "sonic_classification": {
+      "latency_ms": 4.161766031756997,
+      "simple_search_prob": 0.7304152327079788,
+      "complex_search_prob": 0.26016797087546417,
+      "no_search_prob": 0.009416796416557016,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Chrome extension live Chinese to English translation"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 460,
+        "end_idx": 479
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.jotme.io/",
+          "title": "JotMe - Live Translator & AI Interpreter",
+          "snippet": "JotMe supports 107 languages for live translation and transcription on its desktop app and Chrome extension, including English, Japanese, Korean, Spanish, Vietnamese, Chinese, Russian, Portuguese, etc.",
+          "domain": "www.jotme.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.jotme.io/",
+      "url_position": 452,
+      "claim_text": "Here are Chrome extension options that can handle live Chinese-to-English translation better than Chrome’s built-in caption/translate tool — especially for audio/video and real-time use: 1) JotMe – Live Translator & AI Interpreter Real-time speech translation & transcription in ~100+ languages including Chinese → English. Works in meetings (Google Meet, Zoom, etc.) and live audio streams. More accurate/contextual than simple captions. jotme.io",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 722,
+        "end_idx": 742
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho",
+          "title": "ViiTor Translate - AI Translation & Real-Time Bilingual Subtitles ...",
+          "snippet": "The ViiTor translation provides translation for live audio & video, realizing bilingual subtitle functions. \" ViiTor Translator Plugin provides real-time audio transcription and translation for live audio/video streaming, online video, and online meetings, offering bilingual subtitles. ⭐️ Core Features. - The extension recognises the audio content on the page and converts it to the ...",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho",
+      "url_position": 718,
+      "claim_text": "2) ViiTor Translate – Real-Time Bilingual Subtitles Transcribes and translates live audio/video into bilingual subtitles. Works on YouTube, Bilibili, live streams and meetings. Good balance of performance and simplicity. Chrome Web Store",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 967,
+        "end_idx": 986
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+          "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+          "snippet": "AI-powered real-time translation for any video, meeting, or live-stream across 100+ languages. Unlock the power of communication with Byrdhouse AI, your ultimate Chrome extension for AI-powered real-time translation and transcription of any video, audio, conversation, and podcast.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+      "url_position": 1048,
+      "claim_text": "3) Real-Time Video & Audio Translation (Byrdhouse AI) AI translation overlay for videos, meetings and live streams. Supports Chinese among 100+ languages. User reviews are mixed — test before relying on it. Chrome Web Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1173,
+        "end_idx": 1192
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+      "url_position": 1340,
+      "claim_text": "4) Live Translation – Tellus AI Real-time translation for video/meetings/audio in browser. Limited free minutes; account required. Good for web content that auto-plays. Chrome Web Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1389,
+        "end_idx": 1408
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://immersivetranslate.com/en",
+          "title": "Immersive Translate - Next-Gen AI Translator | Bilingual Website ...",
+          "snippet": "It supports major browsers like Chrome, Edge, Firefox, and Safari, and is available for installation on both mobile and desktop devices. It supports mutual translation of hundreds of languages including Chinese, English, Japanese, Korean, French, German, Russian, Spanish, Portuguese, Vietnamese, Indonesian, Italian, Dutch, Thai, and more.",
+          "domain": "immersivetranslate.com",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://immersivetranslate.com/en",
+      "url_position": 1647,
+      "claim_text": "5) Immersive Translate Not strictly real-time audio, but strong context-aware webpage + subtitle translation with bilingual output. Useful if you also read Chinese text or subtitles. Immersive Translate",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1563,
+        "end_idx": 1583
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://chromewebstore.google.com/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb",
+          "title": "Google Translate - Chrome Web Store",
+          "snippet": "View translations easily as you browse the web. By the Google Translate team.",
+          "domain": "chromewebstore.google.com",
+          "ref_type": "search",
+          "ref_index": 18,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_18"
+        }
+      ],
+      "inline_url": "https://chromewebstore.google.com/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb",
+      "url_position": 1840,
+      "claim_text": "For text/webpage translation (not direct audio): Google Translate extension – reliable text translation and quick UI, but not live audio. Chrome Web Store",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1656,
+        "end_idx": 1676
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://lingvanex.com/products/extensions/chrome/",
+          "title": "Translator For Chrome - Lingvanex",
+          "snippet": "Translator For Chrome Lingvanex Extension for Chrome is a comprehensive solution for instant translation of content and web pages in over 100 languages. It includes AI translation with high accuracy, text-to-speech functionality, and a dictionary with examples of meanings and usage.",
+          "domain": "lingvanex.com",
+          "ref_type": "search",
+          "ref_index": 16,
+          "turn_index": 0,
+          "pub_date": 1715558400,
+          "ref_key": "0_search_16"
+        }
+      ],
+      "inline_url": "https://lingvanex.com/products/extensions/chrome/",
+      "url_position": 2012,
+      "claim_text": "Lingvanex – supports 100+ languages with AI text high accuracy. lingvanex.com",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.jotme.io/",
+        "title": "JotMe - Live Translator & AI Interpreter",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/viitor-translate-ai-trans/debflmkfmkejgppfabgfcbemelmnpnho",
+        "title": "ViiTor Translate - AI Translation & Real-Time Bilingual Subtitles ...",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp",
+        "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/live-translation-real-tim/aefebdiljiacpomdendfdnapkmjmfkji",
+        "title": "Live Translation: Real-Time Video & Audio Translator",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://immersivetranslate.com/en",
+        "title": "Immersive Translate - Next-Gen AI Translator | Bilingual Website ...",
+        "domain": "Immersive Translate"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb",
+        "title": "Google Translate - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://lingvanex.com/products/extensions/chrome/",
+        "title": "Translator For Chrome - Lingvanex",
+        "domain": "lingvanex.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://murf.ai/blog/top-translator-extension-for-chrome",
+        "title": "Best Translator Extension for Chrome: Top AI Translation Tools",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://www.wps.com/blog/7-best-translation-chrome-extensions/",
+        "title": "7 Best Translation Chrome Extensions 2026 - WPS Office",
+        "domain": "wps.com"
+      },
+      {
+        "url": "https://noiz.io/blog/the-7-best-translation-extensions-for-chrome/",
+        "title": "7 Best Chrome Translation Extensions: Comparison | Noiz",
+        "domain": "noiz.io"
+      },
+      {
+        "url": "https://en.softonic.com/articles/best-translation-chrome-extensions",
+        "title": "15 Best Translation Chrome Extensions - Softonic",
+        "domain": "softonic.com"
+      },
+      {
+        "url": "https://maestra.ai/tools/real-time-translator",
+        "title": "Real Time Translator - AI Live Translation",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://zhanghe.dev/products/native-translate",
+        "title": "Native Translate | Private Chrome AI Translation Extension",
+        "domain": "zhanghe.dev"
+      },
+      {
+        "url": "https://github.com/ai-learning-tools/viva-translate",
+        "title": "Viva Translate - Real-time translation copilot for your browser",
+        "domain": "github.com"
+      },
+      {
+        "url": "https://github.com/jxzhangaoran/ai_translate_chrome_plugin",
+        "title": "jxzhangaoran/ai_translate_chrome_plugin - GitHub",
+        "domain": "github.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-translator/ebiinkcjgjdkbebldjmklajjgpjanhja",
+        "title": "Real-Time Translator - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/anytalk-real-time-transla/dpoappanndkldopginopanlglnahceio",
+        "title": "Anytalk: Real-time translator and voiceover - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.jotme.io/tools/live-translation",
+        "title": "Live Translation - JotMe",
+        "domain": "jotme.io"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 12,
+    "total_all": 19
+  },
+  "response_stats": {
+    "total_length": 2372,
+    "citation_count": 7,
+    "chars_with_citations": 136
+  }
+}

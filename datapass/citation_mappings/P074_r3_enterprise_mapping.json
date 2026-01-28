@@ -1,0 +1,270 @@
+{
+  "run_id": "P074_r3",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend live video translator apps for Mac?",
+  "metadata": {
+    "hidden_queries": [
+      "live video translator apps for Mac",
+      "Mac apps that translate live video in real time"
+    ],
+    "sonic_classification": {
+      "latency_ms": 0.824526883661747,
+      "simple_search_prob": 0.9972757016547643,
+      "complex_search_prob": 0.0010997291941855889,
+      "no_search_prob": 0.0016245691510500984,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "live video translator apps for Mac"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 354,
+        "end_idx": 373
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://allthings.how/activate-real-time-text-and-voice-translation-on-macos-26/",
+      "url_position": 356,
+      "claim_text": "Here are solid live video translation options you can use on a Mac (real-time or near real-time): Native & System-Level macOS built-in Live Translation (FaceTime & Calls) – macOS 26 and later includes real-time voice/text translation and live captions for video calls in supported apps (Messages/FaceTime). Works without third-party apps. All Things How",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 624,
+        "end_idx": 643
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/us/app/transcrybe-live-translation/id6670778781?mt=12",
+      "url_position": 690,
+      "claim_text": "Mac Apps with Live Translation Transcrybe (formerly Subtitle Me) – menu-bar app that listens to system audio/mic and shows real-time translated subtitles anywhere on screen, including Zoom/YouTube/video calls. Works on-device for privacy. App Store",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 804,
+        "end_idx": 823
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://puritysb.github.io/ViewLingo/",
+      "url_position": 933,
+      "claim_text": "ViewLingo – live screen translator overlay that can capture and translate text in videos or apps; includes a live translation mode for dynamic content. Purity's B",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1042,
+        "end_idx": 1048
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://immersivetranslate.com/en/blog/immersive-translate-review-2026-the-best-tool-for-real-time-translating-live-video-and-live-stream-content/",
+      "url_position": 1202,
+      "claim_text": "Browser-Based / Extensions (useful for live streams) Immersive Translate (browser extension) – real-time subtitles for web video and live streams (e.g., YouTube). Not a native Mac app but works in browsers. Immersive Translate",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1236,
+        "end_idx": 1255
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.microsoft.com/en-us/edge/features/real-time-video-translation",
+          "title": "Real-time video translation | Microsoft Edge",
+          "snippet": "Enjoy real time video translation with ease and convenience The first time you translate a video to a new language, you'll be prompted to give your consent for a one-time language install. With your approval, Edge will install the translation model for that language directly on your device, ensuring all processing happens locally.",
+          "domain": "www.microsoft.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.microsoft.com/en-us/edge/features/real-time-video-translation",
+      "url_position": 1530,
+      "claim_text": "Microsoft Edge real-time video translation – built-in feature to translate videos and add dubbed audio or subtitles in supported languages as you watch in the browser. Microsoft",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1446,
+        "end_idx": 1465
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://screenapp.io/translator",
+      "url_position": 1797,
+      "claim_text": "Other Tools (not Mac-native apps but usable) Online AI translators (e.g., ScreenApp translator) – upload or stream video and get instant translations (not strictly live overlay). ScreenApp",
+      "url_index": 5
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://allthings.how/activate-real-time-text-and-voice-translation-on-macos-26/",
+        "title": "Activate Real-Time Text and Voice Translation on macOS 26",
+        "domain": "All Things How"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/transcrybe-live-translation/id6670778781?mt=12",
+        "title": "Transcrybe - Live Translation - App Store",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://puritysb.github.io/ViewLingo/",
+        "title": "ViewLingo - Live Screen Translator for macOS",
+        "domain": "Purity's B"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/blog/immersive-translate-review-2026-the-best-tool-for-real-time-translating-live-video-and-live-stream-content/",
+        "title": "Immersive Translate Review (2026): The Best Tool for Real-Time ...",
+        "domain": "Immersive Translate"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/edge/features/real-time-video-translation",
+        "title": "Real-time video translation | Microsoft Edge",
+        "domain": "Microsoft"
+      },
+      {
+        "url": "https://screenapp.io/translator",
+        "title": "AI Translators - Free Video & Audio Translation Tools | ScreenApp",
+        "domain": "ScreenApp"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://maestra.ai/blogs/best-live-translation-apps",
+        "title": "Top 9 AI Live Translation Software Tested & Reviewed (2026)",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/blog/6-best-video-translation-apps-for-computers-and-phones/",
+        "title": "6 Best Video Translation Apps for Computers and Phones",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://en.soydemac.com/The-best-translator-apps-for-Mac%3A-complete-guide/",
+        "title": "The best translator apps for Mac: a complete guide",
+        "domain": "soydemac.com"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://www.tech2geek.net/how-to-enable-real-time-text-and-voice-translation-in-macos-26/",
+        "title": "How to Enable Real-Time Text and Voice Translation in macOS 26",
+        "domain": "tech2geek.net"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/live-caption-screen-translate/id6479691152",
+        "title": "Live Caption-Screen Translate - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://speechify.com/blog/video-translator-app-mac/",
+        "title": "The best video translator app for Mac: A comprehensive guide",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://topbusinesssoftware.com/categories/video-translation/mac/",
+        "title": "The Top 6 Video Translation Software for Mac in 2026",
+        "domain": "topbusinesssoftware.com"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+        "title": "7 Best AI Video Translator Apps of 2025 [Tested] - Notta",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://sourceforge.net/software/video-translation/mac/",
+        "title": "Best Video Translation Software for Mac - SourceForge",
+        "domain": "sourceforge.net"
+      },
+      {
+        "url": "https://www.smartcat.com/live-video-translation/",
+        "title": "AI Video Translator: RealTime Subtitles & Dubbing | Smartcat",
+        "domain": "smartcat.com"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 11,
+    "total_all": 17
+  },
+  "response_stats": {
+    "total_length": 2326,
+    "citation_count": 6,
+    "chars_with_citations": 101
+  }
+}

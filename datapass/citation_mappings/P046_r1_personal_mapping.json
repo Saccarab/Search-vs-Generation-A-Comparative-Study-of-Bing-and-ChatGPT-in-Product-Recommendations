@@ -1,0 +1,381 @@
+{
+  "run_id": "P046_r1",
+  "account_type": "personal",
+  "prompt": "What are direct competitors of Doctranslate that offer similar translation services for text, audio, video, and live translation?",
+  "metadata": {
+    "hidden_queries": [
+      "Direct competitors of Doctranslate similar translation services text audio video live translation",
+      "Doctranslate what is it and similar services text audio video live translation competitors"
+    ],
+    "sonic_classification": {
+      "latency_ms": 12.876105960458517,
+      "simple_search_prob": 0.6991620063985802,
+      "complex_search_prob": 0.28717367750873624,
+      "no_search_prob": 0.013664316092683593,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Direct competitors of Doctranslate similar translation services text audio video live translation"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 352,
+        "end_idx": 371
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwareworld.co/competitors/doctranslateio-alternatives/",
+      "url_position": 350,
+      "claim_text": "Here are direct competitors to Doctranslate that offer similar translation services covering text, audio, video, and live translation capabilities: 1) General AI Translation Platforms (text/audio/video/live) Google Translate – text, document, speech (voice) translation, camera/visual/live features; API available for integration. Software World+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 520,
+        "end_idx": 540
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.toolify.ai/alternative/doctranslate-io",
+      "url_position": 557,
+      "claim_text": "DeepL – high-quality neural machine translation for text and documents (some support for voice features via API integration). Toolify",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 668,
+        "end_idx": 687
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://translatepress.com/best-ai-translation-tool/",
+      "url_position": 745,
+      "claim_text": "Microsoft Translator / Azure Cognitive Services – text, speech, and live conversation translation, plus SDKs for apps. TranslatePress",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 929,
+        "end_idx": 949
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Smartling",
+      "url_position": 1039,
+      "claim_text": "2) Localization & Enterprise Translation Platforms These support large-scale text workflows and sometimes audio/video localization: Smartling – cloud translation/localization with automation for apps, websites, documentation. Wikipedia",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1047,
+        "end_idx": 1066
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.g2.com/products/doctranslate/competitors/alternatives",
+          "title": "Top 10 Doctranslate Alternatives & Competitors in 2026 - G2",
+          "snippet": "",
+          "domain": "www.g2.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.g2.com/products/doctranslate/competitors/alternatives",
+      "url_position": 1174,
+      "claim_text": "Crowdin – collaborative translation and localization platform with multi-format support. G2",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1155,
+        "end_idx": 1174
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.g2.com/products/doctranslate/competitors/alternatives",
+          "title": "Top 10 Doctranslate Alternatives & Competitors in 2026 - G2",
+          "snippet": "",
+          "domain": "www.g2.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.g2.com/products/doctranslate/competitors/alternatives",
+      "url_position": 1326,
+      "claim_text": "Unbabel – AI + human hybrid translation service for content and communications. G2",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1272,
+        "end_idx": 1291
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.g2.com/products/doctranslate/competitors/alternatives",
+          "title": "Top 10 Doctranslate Alternatives & Competitors in 2026 - G2",
+          "snippet": "",
+          "domain": "www.g2.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.g2.com/products/doctranslate/competitors/alternatives",
+      "url_position": 1479,
+      "claim_text": "Lokalise / Phrase / Transifex – TMS tools for software and content localization. G2",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1520,
+        "end_idx": 1539
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://translatepress.com/best-ai-translation-tool/",
+      "url_position": 1774,
+      "claim_text": "3) Speech & Live Event Translation Tools These focus on real-time/voice/video translation use cases beyond static text: Wordly.ai – AI live translation and real-time captioning for meetings, webinars, events. TranslatePress",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1628,
+        "end_idx": 1647
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Vidby",
+      "url_position": 1916,
+      "claim_text": "Vidby – AI-based video translation/localization (speech/dubbing/subtitles). Wikipedia",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1746,
+        "end_idx": 1766
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Stepes",
+          "title": "Stepes",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 20,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_20"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Stepes",
+      "url_position": 2054,
+      "claim_text": "Stepes – translation management with human + AI workflows, including multimedia content. Wikipedia",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 2042,
+        "end_idx": 2062
+      },
+      "citation_token": "citeturn0search23",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/LanguageLine_Solutions",
+      "url_position": 2364,
+      "claim_text": "4) Professional Interpretation & Translation Services (live human + tech) Not purely software, but competitors in broader live translation: LanguageLine Solutions – on-demand/interpreter services including video remote interpreting and document translation. Wikipedia",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.softwareworld.co/competitors/doctranslateio-alternatives/",
+        "title": "Top Doctranslate.io Alternatives & Competitors 2026",
+        "domain": "Software World"
+      },
+      {
+        "url": "https://www.toolify.ai/alternative/doctranslate-io",
+        "title": "doctranslate.io Alternatives in 2026 - Toolify - Toolify.ai",
+        "domain": "Toolify"
+      },
+      {
+        "url": "https://translatepress.com/best-ai-translation-tool/",
+        "title": "My Favorite AI Translation Tools & Online Translators",
+        "domain": "TranslatePress"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Smartling",
+        "title": "Smartling",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.g2.com/products/doctranslate/competitors/alternatives",
+        "title": "Top 10 Doctranslate Alternatives & Competitors in 2026 - G2",
+        "domain": "G2"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Vidby",
+        "title": "Vidby",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Stepes",
+        "title": "Stepes",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/LanguageLine_Solutions",
+        "title": "LanguageLine Solutions",
+        "domain": "Wikipedia"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.facebook.com/groups/56588572673/posts/10162791009692674/",
+        "title": "What are free programs or sites to translate documents into English?",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://www.alphatrad.com/news/best-free-online-translators",
+        "title": "The 6 best free online translators - Optilingua",
+        "domain": "alphatrad.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/ArtificialInteligence/comments/14l5mzm/can_anyone_recommend_an_ai_online_translation/",
+        "title": "Can anyone recommend an AI online translation service for Word ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://sourceforge.net/software/product/Doctranslate.io/alternatives",
+        "title": "Best Doctranslate.io Alternatives & Competitors - SourceForge",
+        "domain": "sourceforge.net"
+      },
+      {
+        "url": "https://slashdot.org/software/p/Doctranslate.io/alternatives",
+        "title": "Top Doctranslate.io Alternatives in 2026",
+        "domain": "slashdot.org"
+      },
+      {
+        "url": "https://slashdot.org/software/p/DocTranslator/alternatives",
+        "title": "Top DocTranslator Alternatives in 2026",
+        "domain": "slashdot.org"
+      },
+      {
+        "url": "https://www.capterra.ae/alternatives/1069010/DocTranslate-io",
+        "title": "DocTranslate.io Alternatives - Capterra",
+        "domain": "capterra.ae"
+      },
+      {
+        "url": "https://topai.tools/alternatives/doctranslate-io",
+        "title": "Top DocTranslate.io Alternatives in 2025",
+        "domain": "topai.tools"
+      },
+      {
+        "url": "https://www.pairaphrase.com/blog/best-document-translation-software-features",
+        "title": "19 Best Document Translation Software Features [2025]",
+        "domain": "pairaphrase.com"
+      },
+      {
+        "url": "https://www.toolsmart.ai/blog/10-best-document-translation-services-reviewed-and-ranked/",
+        "title": "10 Best Document Translation Services (Reviewed & Ranked)",
+        "domain": "toolsmart.ai"
+      },
+      {
+        "url": "https://www.facebook.com/groups/703007927897194/posts/1037518891112761/",
+        "title": "Is there a website or app that can translate pdfs and docs ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://numerous.ai/blog/best-document-translation-software",
+        "title": "5 Best Document Translation Software",
+        "domain": "numerous.ai"
+      },
+      {
+        "url": "https://www.datanumen.com/blogs/11-best-online-doc-translator-tools-free/?srsltid=AfmBOopMh4cFc-bYnXaCxevr6vAa4ign-y9Di7B6g5jw2_PggTj0-R4k",
+        "title": "11 Best Online DOC Translator Tools (2025) [FREE]",
+        "domain": "datanumen.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 13,
+    "total_all": 21
+  },
+  "response_stats": {
+    "total_length": 2575,
+    "citation_count": 11,
+    "chars_with_citations": 213
+  }
+}

@@ -1,0 +1,378 @@
+{
+  "run_id": "P053_r2",
+  "account_type": "personal",
+  "prompt": "Can you recommend the best free AI text-to-speech software with celebrity voices for IoT applications?",
+  "metadata": {
+    "hidden_queries": [
+      "best free AI text-to-speech software with celebrity voices free text to speech celebrity voices",
+      "free AI TTS solutions with celebrity voices for IoT applications"
+    ],
+    "sonic_classification": {
+      "latency_ms": 23.34996301215142,
+      "simple_search_prob": 0.7504282789765676,
+      "complex_search_prob": 0.24396736826576254,
+      "no_search_prob": 0.00560435275766985,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best free AI text-to-speech software with celebrity voices free text to speech celebrity voices"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 357,
+        "end_idx": 358
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://fakeyou.com/",
+      "url_position": 348,
+      "claim_text": "Here are solid free AI text-to-speech options that include celebrity-style voices (or mimic them) — useful for prototyping or lightweight IoT voice output: 🎤 Free Tools with Celebrity-Style Voices FakeYou – Online celebrity voice generator with many celebrity-like models you can use for free (e.g., known figures speaking custom text). FakeYou",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 538,
+        "end_idx": 557
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://tryparrotai.com/ai-voice-generator",
+          "title": "AI Celebrity Voice Generator",
+          "snippet": "Try our free AI Celebrity Voice generator online. Simply pick an AI voice like Trump or Biden, enter text & get high quality AI text to speech.",
+          "domain": "tryparrotai.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://tryparrotai.com/ai-voice-generator",
+      "url_position": 534,
+      "claim_text": "TryParrotAI – Simple browser AI celebrity voice generator that lets you choose personalities (e.g., Trump/Biden) and convert text to speech at no cost. Parrot AI",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 690,
+        "end_idx": 709
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voidmagic.ai/ai-celebrity-voice-generator",
+      "url_position": 713,
+      "claim_text": "VoidMagic.ai Celebrity Generator – Free tool offering 100+ celebrity-style voices including characters and public figures. VoidMagic",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 854,
+        "end_idx": 887
+      },
+      "citation_token": "citeturn0search7turn0search23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://mockey.ai/blog/ai-celebrity-voice-generator/?utm_source=chatgpt.com",
+          "title": "10 Best Free AI Celebrity Voice Generator online in 2024",
+          "snippet": "Sep 9, 2024 — Vidnoz is an AI voice generator free celebrity text-to-speech software to mimic celebrity voices or any voice you want. Free AI-generated voice ...Read more",
+          "domain": "mockey.ai",
+          "ref_type": "search",
+          "ref_index": 23,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_23"
+        }
+      ],
+      "inline_url": "https://www.vidnoz.com/voice-changer.html",
+      "url_position": 910,
+      "claim_text": "Vidnoz AI Celebrity Voices – Free-focused tool with many pre-trained celebrity-like voices; supports custom text and language options. Vidnoz+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1014,
+        "end_idx": 1034
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.capcut.com/tools/ai-celebrity-voice-generator",
+      "url_position": 1079,
+      "claim_text": "CapCut AI Celebrity Voice Generator – Free celebrity TTS in a web/app tool (sound-alikes, adjustable pitch/emotion). CapCut",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1169,
+        "end_idx": 1189
+      },
+      "citation_token": "citeturn0search32",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/15.ai",
+          "title": "15.ai",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 32,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_32"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/15.ai",
+      "url_position": 1275,
+      "claim_text": "15.ai – Free online TTS for animated/fictional character voices (great for creative IoT prompts or character-style outputs). Wikipedia",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1693,
+        "end_idx": 1699
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.theverge.com/2024/8/23/24226643/elevenlabs-ai-reader-app-32-languages-global-release",
+      "url_position": 1806,
+      "claim_text": "Note: These generally provide sound-alike or mimic voices, not licensed recordings of real celebrities. Usage may have legal/ethical restrictions if deployed publicly or commercially. 🧠 For More Professional IoT Integration (APIs that aren’t fully free) If you need to embed TTS into an IoT system with more control (not strictly celebrity but high-quality): ElevenLabs (free tier) – Industry-leading TTS with natural voices; some experimental celebrity voices may be demoable. The Verge",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1845,
+        "end_idx": 1865
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voice.ai/ai-voice",
+      "url_position": 2040,
+      "claim_text": "Voice.ai / Voice.AI – Offers voice cloning and TTS tech that you can experiment with for custom voices (free starting tier). Voice.ai",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1987,
+        "end_idx": 2007
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://typecast.ai/",
+      "url_position": 2191,
+      "claim_text": "Typecast.ai – Free tier with many AI voices (not celebrity by default) but helps build custom audio for devices. Typecast",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://fakeyou.com/",
+        "title": "FakeYou Celebrity Voice Generator | FakeYou",
+        "domain": "FakeYou"
+      },
+      {
+        "url": "https://tryparrotai.com/ai-voice-generator",
+        "title": "AI Celebrity Voice Generator",
+        "domain": "Parrot AI"
+      },
+      {
+        "url": "https://voidmagic.ai/ai-celebrity-voice-generator",
+        "title": "Free Online AI Celebrity Voice Generator",
+        "domain": "VoidMagic"
+      },
+      {
+        "url": "https://www.vidnoz.com/voice-changer.html",
+        "title": "AI Voice Generator Celebrity Online Free",
+        "domain": "Vidnoz"
+      },
+      {
+        "url": "https://www.capcut.com/tools/ai-celebrity-voice-generator",
+        "title": "Free AI Celebrity Voice Generator",
+        "domain": "CapCut"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/15.ai",
+        "title": "15.ai",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.theverge.com/2024/8/23/24226643/elevenlabs-ai-reader-app-32-languages-global-release",
+        "title": "ElevenLabs' AI Reader app can now narrate text in 32 languages",
+        "domain": "The Verge"
+      },
+      {
+        "url": "https://voice.ai/ai-voice",
+        "title": "Free AI Voice Generator",
+        "domain": "Voice.ai"
+      },
+      {
+        "url": "https://typecast.ai/",
+        "title": "AI Voice Generator & Text-to-Speech | Voiceover Tool",
+        "domain": "Typecast"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.youtube.com/watch?v=lIDxTzABK94",
+        "title": "Best AI Voice Generators – Free, Realistic & Easy to Use",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=O-IReTsI3b4",
+        "title": "Sound Like ANY Celebrity with These AI Voice Tools",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.fineshare.com/ai-voice-generator/celebrity.html",
+        "title": "Online Free AI Celebrity Text to Speech Tool",
+        "domain": "fineshare.com"
+      },
+      {
+        "url": "https://murf.ai/blog/celebrity-voice-generator",
+        "title": "Top 8 Celebrity Voice Generators in 2026",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://async.com/ai-voices/celebrity-text-to-speech",
+        "title": "Celebrity AI Voice Generator | Free AI ...",
+        "domain": "async.com"
+      },
+      {
+        "url": "https://lovo.ai/",
+        "title": "LOVO: Free AI Voice Generator & Text to Speech",
+        "domain": "lovo.ai"
+      },
+      {
+        "url": "https://speechify.com/ai-voice-generator/?srsltid=AfmBOopvnfEOb2jRQlD0IVNLRUqFbFFXTFNJ3S66x5tfJwZ9jtuiaXIh",
+        "title": "Free AI Voice Generator",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://speechify.com/ai-voice-generator/?srsltid=AfmBOorOa8UPzSpIPxyvopCDIvfnrx1zlU9q8g6GIR7BVGu_C7QmHtXR",
+        "title": "Free AI Voice Generator",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://play.ht/",
+        "title": "#1 Free AI Voice Generator, Text to Speech, & AI Voice Over",
+        "domain": "play.ht"
+      },
+      {
+        "url": "https://aivoicelab.net/en/celebrity-ai-voice-generator",
+        "title": "Free Celebrity AI Voice Generator",
+        "domain": "aivoicelab.net"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.voiser.texttospeech",
+        "title": "AI Voice: Text to Speech TTS - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://musicfy.lol/blog/free-ai-voice-generator-celebrity",
+        "title": "Free AI Voice Generator Celebrity",
+        "domain": "musicfy.lol"
+      },
+      {
+        "url": "https://musicfy.lol/blog/celebrity-text-to-speech",
+        "title": "Free Celebrity Text To Speech Tool | Musicfy AI Blog",
+        "domain": "musicfy.lol"
+      },
+      {
+        "url": "https://musicfy.lol/blog/celebrity-voice-generator-text-to-speech-online",
+        "title": "Free Celebrity Voice Generator Text to Speech Online Tool",
+        "domain": "musicfy.lol"
+      },
+      {
+        "url": "https://ttsstudio.ai/",
+        "title": "Free AI Text to Speech & Online Voice Generator",
+        "domain": "ttsstudio.ai"
+      },
+      {
+        "url": "https://fish.audio/",
+        "title": "Fish Audio: Best AI Text To Speech & Free Voice Cloning",
+        "domain": "fish.audio"
+      },
+      {
+        "url": "https://www.aitoolssme.com/comparison/best-ai-voice-generators",
+        "title": "The Best AI Voice Generators | With Voice Examples",
+        "domain": "aitoolssme.com"
+      },
+      {
+        "url": "https://www.respeecher.com/",
+        "title": "AI Voice Generator | Advanced Text-to-Speech (TTS)",
+        "domain": "respeecher.com"
+      },
+      {
+        "url": "https://mockey.ai/blog/ai-celebrity-voice-generator/",
+        "title": "10 Best Free AI Celebrity Voice Generator online in 2024",
+        "domain": "mockey.ai"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 19,
+    "total_all": 28
+  },
+  "response_stats": {
+    "total_length": 2620,
+    "citation_count": 9,
+    "chars_with_citations": 158
+  }
+}

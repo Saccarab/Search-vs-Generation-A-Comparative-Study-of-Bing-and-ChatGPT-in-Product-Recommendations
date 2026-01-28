@@ -1,0 +1,393 @@
+{
+  "run_id": "P050_r3",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend a free app for live time translation during a call with French speakers?",
+  "metadata": {
+    "hidden_queries": [
+      "free app live translation during a call French speakers real time translation app",
+      "applications that translate live voice calls French free",
+      "Google Translate app live conversation translation free French English conversation mode phone",
+      "Microsoft Translator app real time voice conversation translation support French"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.064017958939075,
+      "simple_search_prob": 0.9957882155695995,
+      "complex_search_prob": 0.0026889939070882706,
+      "no_search_prob": 0.0015227905233122186,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free app live translation during a call French speakers real time translation app"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 455,
+        "end_idx": 487
+      },
+      "citation_token": "citeturn1search0turn1search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=en",
+          "title": "Hear live speech to speech translations with Live translate",
+          "snippet": "On your Android phone or tablet, open the Translate app . At the bottom, select the languages for your conversation. At the bottom, tap Live translate . The microphone automatically detects when one language stops and the other language starts. To hear a translation, tap any part of the text. To pause or resume translation, tap Speak .",
+          "domain": "support.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 1,
+          "pub_date": null,
+          "ref_key": "1_search_0"
+        }
+      ],
+      "inline_url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=en",
+      "url_position": 454,
+      "claim_text": "Here are some free apps/tools you can use for live-time translation in conversations with French speakers — including options that work in real life or over calls: 1) Google Translate (iOS & Android) Has a Live Translate / Conversation mode that listens and translates back-and-forth in real time between languages like English and French. You speak, it detects and translates on the fly with on-screen text and optional audio responses. Google Help+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 853,
+        "end_idx": 854
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.microsoft.com/en-us/translator/personal/",
+      "url_position": 902,
+      "claim_text": "Works for in-person or using the phone mic — not a full carrier voice call translator, but good for real-time dialogue. Fully free. 2) Microsoft Translator (iOS & Android) Offers a real-time conversation feature where two (or more) people can speak in their languages and get instant translated text (and in many cases audio) on their devices. Microsoft+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 1133,
+        "end_idx": 1152
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://talkpersona.com/translator",
+          "title": "TalkPersona - Free real-time voice translator",
+          "snippet": "In addition to the AI video chatbot, TalkPersona also offers a free Instant Voice Translator for Real-Time Multilingual Conversations. It enables seamless real-time cross-language conversations. Always listens and instantly translates between your language and foreign languages, with optional audio playback. Perfect for travel, business, and cross-language communication.",
+          "domain": "talkpersona.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://talkpersona.com/translator",
+      "url_position": 1202,
+      "claim_text": "It supports French and many languages, and is free to use. 3) TalkPersona Instant Voice Translator (Web / App) A free real-time voice translator that listens and translates spoken speech between languages (including French) live. TalkPersona",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1412,
+        "end_idx": 1431
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en-US&id=com.erudite.translator",
+      "url_position": 1500,
+      "claim_text": "Works in browser or compatible app contexts — best for conversational back-and-forth, less so for standard phone calls. 4) Instant Voice Translate (Android) Free app for real-time voice translation between languages (including French ↔ English). Google Play",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 2066,
+        "end_idx": 2099
+      },
+      "citation_token": "citeturn0search0turn0search13",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://ezdubs.ai/phone-call-translator",
+          "title": "Live Phone Call Translator App | EzDubs",
+          "snippet": "Top-tier Samsung Galaxy devices (e.g., S24, S23 series) offer a traditional, robotic live-translate mode for calls. However, these traditional android phone apps translate only after a sentence is spoken, and the voice is replaced by a robotic, third-party interpreter.",
+          "domain": "ezdubs.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://ezdubs.ai/phone-call-translator",
+      "url_position": 2198,
+      "claim_text": "Not built into regular phone voice calls, but lets you speak into the app and hear translations live. Notes / Limitations Most free tools don’t integrate directly into regular phone carrier calls (the native phone dialer) without specialized services (which are usually paid). Google Translate and Microsoft Translator are the most straightforward for live conversation translation in real time without extra fees. For actual phone call translation where both sides hear translated speech during a normal phone call, dedicated services like EzDubs or Telelingo exist, but they may require paid plans. ezdubs.ai+1",
+      "url_index": 4
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=en",
+        "title": "Hear live speech to speech translations with Live translate",
+        "domain": "Google Help"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/translator/personal/",
+        "title": "Microsoft Translator for Personal Use - Microsoft Translator",
+        "domain": "Microsoft"
+      },
+      {
+        "url": "https://talkpersona.com/translator",
+        "title": "TalkPersona - Free real-time voice translator",
+        "domain": "TalkPersona"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en-US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://ezdubs.ai/phone-call-translator",
+        "title": "Live Phone Call Translator App | EzDubs",
+        "domain": "ezdubs.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://maestra.ai/blogs/best-speech-translator-apps",
+        "title": "10 Best Speech Translator Apps for Live Voice Translation",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details/?hl=en-US&id=com.microsoft.translator",
+        "title": "Microsoft Translator - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/translator/solutions/translator-pro/faq",
+        "title": "Microsoft Translator Pro FAQ | Microsoft Learn",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.androidauthority.com/how-to-use-google-live-translate-3481218/",
+        "title": "How to use Google's Live Translate feature on your phone",
+        "domain": "androidauthority.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-ai-voice-translators-for-multilingual-calls/",
+        "title": "6 Best Voice Translator Apps for Multilingual Calls in 2025",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://the-decoder.com/google-translate-adds-live-conversation-and-language-learning-features/",
+        "title": "Google Translate adds live conversation and language learning features",
+        "domain": "the-decoder.com"
+      },
+      {
+        "url": "https://bgr.com/1950516/google-translate-conversations-real-time-practice-mode/",
+        "title": "Google Translate Can Translate Conversations In Real Time And ... - BGR",
+        "domain": "bgr.com"
+      },
+      {
+        "url": "https://www.tomsguide.com/ai/google-gemini/google-translate-just-got-a-huge-upgrade-live-conversations-and-language-practice-are-here",
+        "title": "Google Translate Just Got A Huge Upgrade — Live Conversations And ...",
+        "domain": "tomsguide.com"
+      },
+      {
+        "url": "https://blog.google/products-and-platforms/products/translate/language-learning-live-translate/",
+        "title": "Google Translate adds live translation and language learning",
+        "domain": "blog.google"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video Calls",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/top-phone-call-translators/",
+        "title": "Top 6 Phone Call Translator Apps for Multilingual Calls in 2025",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/best-real-time-translation-apps/",
+        "title": "10 Best Real-time Language Translation Apps for Effortless Communication",
+        "domain": "aiphone.ai"
+      },
+      {
+        "url": "https://slator.com/microsoft-previews-ai-speech-translation-app/",
+        "title": "Microsoft Previews AI Speech Translation App - Slator",
+        "domain": "slator.com"
+      },
+      {
+        "url": "https://winbuzzer.com/2024/11/21/microsoft-translator-pro-debuts-with-real-time-speech-translation-xcxwbn/",
+        "title": "Microsoft Translator Pro Debuts with Real-Time Speech Translation",
+        "domain": "winbuzzer.com"
+      },
+      {
+        "url": "https://www.pocket-lint.com/how-to-translate-live-audio-conversations-with-google-translate/",
+        "title": "How to translate live conversations with Google Translate",
+        "domain": "pocket-lint.com"
+      },
+      {
+        "url": "https://gizmodo.com/how-to-use-google-translate-iphone-android-1851128853",
+        "title": "How to Use Google Translate as a Real-Time Interpreter - Gizmodo",
+        "domain": "gizmodo.com"
+      },
+      {
+        "url": "https://screenapp.io/features/audio-translator",
+        "title": "Voice Translator - Free Voice Translate to English Online",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://translator.microsoft.com/",
+        "title": "Microsoft Translator",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/translator/apps/",
+        "title": "Apps - Microsoft Translator",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/translator/",
+        "title": "Microsoft Translator",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/translator/apps/features/",
+        "title": "App Features - Microsoft Translator",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/translator/help/multi-device-conversation/",
+        "title": "Microsoft Translator multi-device conversation help and FAQs",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://support.google.com/translate/answer/6142474?co=GENIE.Platform%3DAndroid&hl=en-GB",
+        "title": "Translate a bilingual conversation - Android - Google Help",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=QwlBo-02nAw",
+        "title": "How to Use Google Translate for Real-Time Conversation",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/ai-phone-call-voice-translator/id6465173251",
+        "title": "AI Phone:Call&Voice Translator - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/microsoft-translator/id1018949559",
+        "title": "‎Microsoft Translator App - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/ms/app/microsoft-translator/id1018949559",
+        "title": "‎Microsoft Translator App - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://talkao.com/real-time-translator/",
+        "title": "Real time translator - free live translator - TALKAO",
+        "domain": "talkao.com"
+      },
+      {
+        "url": "https://www.telelingo.io/",
+        "title": "Telelingo - Real-Time Phone Call Translator",
+        "domain": "telelingo.io"
+      },
+      {
+        "url": "https://vacapo.cc/en/vacapo-translate/",
+        "title": "Automated voice call translator - vacapo® translate",
+        "domain": "vacapo.cc"
+      },
+      {
+        "url": "https://ezdubs.ai/languages/french",
+        "title": "Real-Time French Translation App for Phone Calls, Text & Voice ...",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://talkpersona.com/translate/",
+        "title": "Instant Voice Translator for Real-Time Multilingual Conversations",
+        "domain": "talkpersona.com"
+      }
+    ],
+    "total_cited": 5,
+    "total_additional": 34,
+    "total_all": 39
+  },
+  "response_stats": {
+    "total_length": 2426,
+    "citation_count": 5,
+    "chars_with_citations": 104
+  }
+}

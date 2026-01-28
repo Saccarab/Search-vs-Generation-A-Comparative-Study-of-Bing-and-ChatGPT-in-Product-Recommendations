@@ -1,0 +1,3334 @@
+{
+  "generated_at": "2026-01-28T23:53:50.221Z",
+  "total_runs": 474,
+  "by_account_type": {
+    "enterprise": 237,
+    "personal": 237
+  },
+  "aggregate_stats": {
+    "total_citations": 4332,
+    "avg_citations_per_run": "9.14",
+    "total_cited_sources": 3476,
+    "total_additional_sources": 7326
+  },
+  "runs": [
+    {
+      "run_id": "P001_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P001_r2",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P001_r3",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P002_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P002_r2",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P002_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P003_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P003_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P003_r3",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P004_r1",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P004_r2",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P004_r3",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P005_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P005_r2",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P005_r3",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P006_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P006_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P006_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P007_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P007_r2",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P007_r3",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P008_r1",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P008_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P008_r3",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P009_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P009_r2",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P009_r3",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P010_r1",
+      "account_type": "personal",
+      "citation_count": 17,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P010_r2",
+      "account_type": "personal",
+      "citation_count": 23,
+      "cited_sources": 13,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P010_r3",
+      "account_type": "personal",
+      "citation_count": 15,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P011_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P011_r2",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P011_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P012_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P012_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P012_r3",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P013_r1",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P013_r2",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P013_r3",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P014_r1",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P014_r2",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P014_r3",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 5,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P015_r1",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P015_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P015_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P016_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P016_r2",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P016_r3",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P017_r1",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P017_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P017_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P018_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P018_r2",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P018_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P019_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P019_r2",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P019_r3",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P020_r1",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P020_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P020_r3",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P021_r1",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P021_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P021_r3",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P022_r1",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P022_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P022_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P023_r1",
+      "account_type": "personal",
+      "citation_count": 18,
+      "cited_sources": 14,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P023_r2",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P023_r3",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P024_r1",
+      "account_type": "personal",
+      "citation_count": 16,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P024_r2",
+      "account_type": "personal",
+      "citation_count": 15,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P024_r3",
+      "account_type": "personal",
+      "citation_count": 19,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P025_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P025_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P025_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P026_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P026_r2",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 13,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P026_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P027_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P027_r2",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P027_r3",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P028_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P028_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P028_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P029_r1",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P029_r2",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P029_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P030_r1",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P030_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P030_r3",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P031_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P031_r2",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P031_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P032_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P032_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P032_r3",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P033_r1",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P033_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P033_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P034_r1",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P034_r2",
+      "account_type": "personal",
+      "citation_count": 16,
+      "cited_sources": 13,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P034_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P035_r1",
+      "account_type": "personal",
+      "citation_count": 16,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P035_r2",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P035_r3",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P036_r1",
+      "account_type": "personal",
+      "citation_count": 4,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P036_r2",
+      "account_type": "personal",
+      "citation_count": 5,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P036_r3",
+      "account_type": "personal",
+      "citation_count": 4,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P037_r1",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P037_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P037_r3",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P038_r1",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P038_r2",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P038_r3",
+      "account_type": "personal",
+      "citation_count": 14,
+      "cited_sources": 14,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P039_r1",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P039_r2",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 13,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P039_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P040_r1",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P040_r2",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P040_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P041_r1",
+      "account_type": "personal",
+      "citation_count": 16,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P041_r2",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P041_r3",
+      "account_type": "personal",
+      "citation_count": 15,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P042_r1",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P042_r2",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P042_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P043_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P043_r2",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P043_r3",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P044_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P044_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P044_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P045_r1",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P045_r2",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P045_r3",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P046_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P046_r2",
+      "account_type": "personal",
+      "citation_count": 14,
+      "cited_sources": 14,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P046_r3",
+      "account_type": "personal",
+      "citation_count": 15,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P047_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P047_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P047_r3",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P048_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P048_r2",
+      "account_type": "personal",
+      "citation_count": 5,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P048_r3",
+      "account_type": "personal",
+      "citation_count": 3,
+      "cited_sources": 3,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P049_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P049_r2",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P049_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P050_r1",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P050_r2",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P050_r3",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P051_r1",
+      "account_type": "personal",
+      "citation_count": 14,
+      "cited_sources": 13,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P051_r2",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P051_r3",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P052_r1",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P052_r2",
+      "account_type": "personal",
+      "citation_count": 14,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P052_r3",
+      "account_type": "personal",
+      "citation_count": 14,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P053_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P053_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P053_r3",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P054_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 2,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P054_r2",
+      "account_type": "personal",
+      "citation_count": 14,
+      "cited_sources": 2,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P054_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 2,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P055_r1",
+      "account_type": "personal",
+      "citation_count": 15,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P055_r2",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P055_r3",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P056_r1",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P056_r2",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P056_r3",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P057_r1",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P057_r2",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P057_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P058_r1",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P058_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P058_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P059_r1",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P059_r2",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P059_r3",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P060_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P060_r2",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P060_r3",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 13,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P061_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P061_r2",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P061_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P062_r1",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P062_r2",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P062_r3",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P063_r1",
+      "account_type": "personal",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P063_r2",
+      "account_type": "personal",
+      "citation_count": 5,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P063_r3",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P064_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P064_r2",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P064_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P065_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P065_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P065_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P066_r1",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 13,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P066_r2",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 13,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P066_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P067_r1",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P067_r2",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P067_r3",
+      "account_type": "personal",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P068_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P068_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P068_r3",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P069_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P069_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P069_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P070_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P070_r2",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P070_r3",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P071_r1",
+      "account_type": "personal",
+      "citation_count": 14,
+      "cited_sources": 13,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P071_r2",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P071_r3",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P072_r1",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P072_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P072_r3",
+      "account_type": "personal",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P073_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P073_r2",
+      "account_type": "personal",
+      "citation_count": 13,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P073_r3",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P074_r1",
+      "account_type": "personal",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P074_r2",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P074_r3",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P075_r1",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P075_r2",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P075_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P076_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P076_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P076_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P077_r1",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P077_r2",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P077_r3",
+      "account_type": "personal",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P078_r1",
+      "account_type": "personal",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P078_r2",
+      "account_type": "personal",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P078_r3",
+      "account_type": "personal",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P079_r1",
+      "account_type": "personal",
+      "citation_count": 5,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P079_r2",
+      "account_type": "personal",
+      "citation_count": 4,
+      "cited_sources": 2,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P079_r3",
+      "account_type": "personal",
+      "citation_count": 4,
+      "cited_sources": 3,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P001_r1",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P001_r2",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P001_r3",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 8,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P002_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P002_r2",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P002_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P003_r1",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P003_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P003_r3",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P004_r1",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P004_r2",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P004_r3",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P005_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P005_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P005_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P006_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P006_r2",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P006_r3",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P007_r1",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P007_r2",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P007_r3",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P008_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P008_r2",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P008_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P009_r1",
+      "account_type": "enterprise",
+      "citation_count": 14,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P009_r2",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P009_r3",
+      "account_type": "enterprise",
+      "citation_count": 14,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P010_r1",
+      "account_type": "enterprise",
+      "citation_count": 18,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P010_r2",
+      "account_type": "enterprise",
+      "citation_count": 15,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P010_r3",
+      "account_type": "enterprise",
+      "citation_count": 15,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P011_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P011_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P011_r3",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P012_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P012_r2",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P012_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P013_r1",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P013_r2",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P013_r3",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P014_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P014_r2",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 3,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P014_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P015_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P015_r2",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P015_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P016_r1",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P016_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P016_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P017_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P017_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P017_r3",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P018_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P018_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P018_r3",
+      "account_type": "enterprise",
+      "citation_count": 5,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P019_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 3,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P019_r2",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P019_r3",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 3,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P020_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P020_r2",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P020_r3",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P021_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P021_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P021_r3",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P022_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P022_r2",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P022_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P023_r1",
+      "account_type": "enterprise",
+      "citation_count": 18,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P023_r2",
+      "account_type": "enterprise",
+      "citation_count": 17,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P023_r3",
+      "account_type": "enterprise",
+      "citation_count": 16,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P024_r1",
+      "account_type": "enterprise",
+      "citation_count": 15,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P024_r2",
+      "account_type": "enterprise",
+      "citation_count": 18,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P024_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P025_r1",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P025_r2",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P025_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P026_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P026_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P026_r3",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P027_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P027_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P027_r3",
+      "account_type": "enterprise",
+      "citation_count": 18,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P028_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P028_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P028_r3",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P029_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P029_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P029_r3",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P030_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P030_r2",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P030_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P031_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P031_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P031_r3",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P032_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P032_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P032_r3",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P033_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P033_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P033_r3",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P034_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P034_r2",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P034_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P035_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P035_r2",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P035_r3",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P036_r1",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P036_r2",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P036_r3",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P037_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P037_r2",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P037_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P038_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P038_r2",
+      "account_type": "enterprise",
+      "citation_count": 15,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P038_r3",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P039_r1",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P039_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P039_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P040_r1",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P040_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P040_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P041_r1",
+      "account_type": "enterprise",
+      "citation_count": 18,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P041_r2",
+      "account_type": "enterprise",
+      "citation_count": 21,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P041_r3",
+      "account_type": "enterprise",
+      "citation_count": 20,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P042_r1",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P042_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 3,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P042_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P043_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P043_r2",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P043_r3",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P044_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P044_r2",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P044_r3",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P045_r1",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P045_r2",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P045_r3",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P046_r1",
+      "account_type": "enterprise",
+      "citation_count": 18,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P046_r2",
+      "account_type": "enterprise",
+      "citation_count": 15,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P046_r3",
+      "account_type": "enterprise",
+      "citation_count": 16,
+      "cited_sources": 15,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P047_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P047_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P047_r3",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P048_r1",
+      "account_type": "enterprise",
+      "citation_count": 4,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P048_r2",
+      "account_type": "enterprise",
+      "citation_count": 4,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P048_r3",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P049_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P049_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P049_r3",
+      "account_type": "enterprise",
+      "citation_count": 5,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P050_r1",
+      "account_type": "enterprise",
+      "citation_count": 5,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P050_r2",
+      "account_type": "enterprise",
+      "citation_count": 5,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P050_r3",
+      "account_type": "enterprise",
+      "citation_count": 5,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P051_r1",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P051_r2",
+      "account_type": "enterprise",
+      "citation_count": 14,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P051_r3",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P052_r1",
+      "account_type": "enterprise",
+      "citation_count": 20,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P052_r2",
+      "account_type": "enterprise",
+      "citation_count": 16,
+      "cited_sources": 12,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P052_r3",
+      "account_type": "enterprise",
+      "citation_count": 16,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P053_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P053_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P053_r3",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P054_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P054_r2",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P054_r3",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P055_r1",
+      "account_type": "enterprise",
+      "citation_count": 15,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P055_r2",
+      "account_type": "enterprise",
+      "citation_count": 14,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P055_r3",
+      "account_type": "enterprise",
+      "citation_count": 14,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P056_r1",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P056_r2",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P056_r3",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P057_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P057_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P057_r3",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P058_r1",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P058_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P058_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P059_r1",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P059_r2",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P059_r3",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P060_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P060_r2",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P060_r3",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P061_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P061_r2",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P061_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P062_r1",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P062_r2",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P062_r3",
+      "account_type": "enterprise",
+      "citation_count": 0,
+      "cited_sources": 0,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P063_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P063_r2",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P063_r3",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P064_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P064_r2",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P064_r3",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P065_r1",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P065_r2",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P065_r3",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 13,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P066_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P066_r2",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P066_r3",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P067_r1",
+      "account_type": "enterprise",
+      "citation_count": 3,
+      "cited_sources": 3,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P067_r2",
+      "account_type": "enterprise",
+      "citation_count": 4,
+      "cited_sources": 3,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P067_r3",
+      "account_type": "enterprise",
+      "citation_count": 4,
+      "cited_sources": 3,
+      "web_search_triggered": false
+    },
+    {
+      "run_id": "P068_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P068_r2",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P068_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P069_r1",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P069_r2",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P069_r3",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P070_r1",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P070_r2",
+      "account_type": "enterprise",
+      "citation_count": 12,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P070_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P071_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P071_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P071_r3",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P072_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P072_r2",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P072_r3",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P073_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P073_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P073_r3",
+      "account_type": "enterprise",
+      "citation_count": 10,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P074_r1",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P074_r2",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P074_r3",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 6,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P075_r1",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P075_r2",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 11,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P075_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 10,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P076_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P076_r2",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P076_r3",
+      "account_type": "enterprise",
+      "citation_count": 9,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P077_r1",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P077_r2",
+      "account_type": "enterprise",
+      "citation_count": 7,
+      "cited_sources": 7,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P077_r3",
+      "account_type": "enterprise",
+      "citation_count": 8,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P078_r1",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P078_r2",
+      "account_type": "enterprise",
+      "citation_count": 13,
+      "cited_sources": 8,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P078_r3",
+      "account_type": "enterprise",
+      "citation_count": 11,
+      "cited_sources": 9,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P079_r1",
+      "account_type": "enterprise",
+      "citation_count": 5,
+      "cited_sources": 4,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P079_r2",
+      "account_type": "enterprise",
+      "citation_count": 6,
+      "cited_sources": 5,
+      "web_search_triggered": true
+    },
+    {
+      "run_id": "P079_r3",
+      "account_type": "enterprise",
+      "citation_count": 5,
+      "cited_sources": 2,
+      "web_search_triggered": true
+    }
+  ]
+}

@@ -1,0 +1,486 @@
+{
+  "run_id": "P025_r2",
+  "account_type": "enterprise",
+  "prompt": "Are there any free applications that can read text in naturalistic voices?",
+  "metadata": {
+    "hidden_queries": [
+      "free applications that can read text in naturalistic voices text to speech free apps",
+      "free apps with realistic voices TTS free natural sounding voices application"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.251931962557137,
+      "simple_search_prob": 0.9888909828044709,
+      "complex_search_prob": 0.0028267455295822833,
+      "no_search_prob": 0.008282271665946864,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 168,
+        "end_idx": 187
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voice.ai/hub/tts/best-free-text-to-speech/",
+          "title": "18 Best Free Text-to-Speech Apps for Realistic, Human-Like Voiceovers",
+          "snippet": "Discover the best free text-to-speech tools with natural voices, simple setup, and support for multiple languages, all at no cost.",
+          "domain": "voice.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1751155200,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://voice.ai/hub/tts/best-free-text-to-speech/",
+      "url_position": 177,
+      "claim_text": "Yes — several free apps and online tools can read text in natural-sounding voices. Most let you paste or upload text and hear it spoken, some with realistic AI voices. Voice.ai",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 356,
+        "end_idx": 374
+      },
+      "citation_token": "citeturn0news32",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.tomsguide.com/ai/chatgpt/chatgpt-can-now-read-out-loud-heres-how-i-use-it-instead-of-audible-or-speechify",
+          "title": "Forget Audible - ChatGPT can now read documents and even ebooks out loud to you (and it's surprisingly good)",
+          "snippet": "The article from Tom’s Guide highlights a new feature in ChatGPT that allows it to read documents and ebooks aloud, offering a viable alternative to text-to-speech apps like Speechify and audiobook services like Audible. This Read Aloud feature is integrated into the free ChatGPT mobile app for both iPhone and Android users and does not require a ChatGPT Plus subscription. Users can upload a file or paste text into a chat, and ChatGPT reads it back using a natural, human-like voice. \n\nCompared to paid services, ChatGPT's Read Aloud is praised for being free, seamless, and context-aware, making it especially useful for productivity, writing, and on-the-go listening. Some noted downsides include the manual uploading of documents and occasional interruptions with prompts to continue reading. Regardless, users find it highly effective for most everyday needs and a compelling alternative to pricier or less intuitive solutions.",
+          "domain": "www.tomsguide.com",
+          "ref_type": "news",
+          "ref_index": 32,
+          "turn_index": 0,
+          "pub_date": 1762857000,
+          "ref_key": "0_news_32"
+        }
+      ],
+      "inline_url": "https://www.tomsguide.com/ai/chatgpt/chatgpt-can-now-read-out-loud-heres-how-i-use-it-instead-of-audible-or-speechify",
+      "url_position": 401,
+      "claim_text": "Free, Naturalistic Text-to-Speech Options ChatGPT / ChatGPT app (free) – Built-in Read Aloud can read documents or pasted text in natural human-like voices. Tom's Guide",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 490,
+        "end_idx": 523
+      },
+      "citation_token": "citeturn0search0turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://speechify.com/text-reader/",
+          "title": "Speechify: Free Text Reader. Read text aloud for free",
+          "snippet": "Read any document, article, or webpage out loud with a Speechify’s text reader. Adjust speed, voice, and tone — perfect for multitasking.",
+          "domain": "speechify.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://speechify.com/text-to-speech-online/",
+          "title": "Speechify: Free Text to Speech with Humanlike AI Voices",
+          "snippet": "Experience free text to speech with Speechify’s AI voice generator, offering over 1,000 natural-sounding, realistic voices across 60+ languages. Simply convert text into speech, choose your favorite AI voice, and listen to any text read aloud or download your audio instantly.",
+          "domain": "speechify.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://speechify.com/text-reader/",
+      "url_position": 641,
+      "claim_text": "Speechify (free tier) – Online and mobile app with many realistic AI voices (1000+ voices, 60+ languages). Speechify+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 640,
+        "end_idx": 672
+      },
+      "citation_token": "citeturn0search4turn0search7",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.naturalreaders.com/",
+          "title": "AI Voices - NaturalReader Home",
+          "snippet": "NaturalReader: Free Text to Speech for Online, Mobile App, Commercial license and Education with AI voices.",
+          "domain": "www.naturalreaders.com",
+          "ref_type": "search",
+          "ref_index": 7,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_7"
+        }
+      ],
+      "inline_url": "https://www.naturalreaders.com/online/",
+      "url_position": 803,
+      "claim_text": "NaturalReader (free plan) – Web and app TTS with advanced AI voices (includes Gemini/ChatGPT voice models). NaturalReader+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 767,
+        "end_idx": 786
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ttsreader.com/",
+      "url_position": 956,
+      "claim_text": "TTSReader (online) – Free browser-based reader with natural voices and export to MP3. TTSReader Text To Speech",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 868,
+        "end_idx": 888
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://texttospeech.io/",
+          "title": "TextToSpeech.io - Free online Text to Speech reader",
+          "snippet": "TextToSpeech.io is a Free online Text To Speech Reader service. Accurate with natural voices, multilingual. Real time. Free & always will be.",
+          "domain": "texttospeech.io",
+          "ref_type": "search",
+          "ref_index": 11,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_11"
+        }
+      ],
+      "inline_url": "https://texttospeech.io/",
+      "url_position": 1071,
+      "claim_text": "TextToSpeech.io (online) – Simple free TTS with natural sounding voices. TextToSpeech.io",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1010,
+        "end_idx": 1056
+      },
+      "citation_token": "citeturn0search6turn0search9turn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://airmore.ai/text-to-speech",
+      "url_position": 1233,
+      "claim_text": "Airmore / Musely / Toolv.ai (online) – Free converters that generate natural-sounding speech for text you paste. AirMore AI+2Musely+2",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1147,
+        "end_idx": 1179
+      },
+      "citation_token": "citeturn0search1turn0search5",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voice.ai/hub/tts/best-free-text-to-speech/",
+          "title": "18 Best Free Text-to-Speech Apps for Realistic, Human-Like Voiceovers",
+          "snippet": "Discover the best free text-to-speech tools with natural voices, simple setup, and support for multiple languages, all at no cost.",
+          "domain": "voice.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1751155200,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://voice.ai/hub/tts/best-free-text-to-speech/",
+      "url_position": 1363,
+      "claim_text": "Speaktor (free level) – AI TTS with multiple natural voices and language support. Voice.ai+1",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1273,
+        "end_idx": 1293
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.naturalttslabs.com/",
+      "url_position": 1521,
+      "claim_text": "Natural TTS Labs – Free online natural voice converter with many voices (no signup). naturalttslabs.com",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1442,
+        "end_idx": 1460
+      },
+      "citation_token": "citeturn0news25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.theverge.com/2024/8/23/24226643/elevenlabs-ai-reader-app-32-languages-global-release",
+          "title": "ElevenLabs' AI Reader app can now narrate text in 32 languages",
+          "snippet": "ElevenLabs has globally launched its AI Reader text-to-speech app, expanding support to 32 languages, including Spanish, French, Arabic, Mandarin, and Hindi. Initially released in June in the US, UK, and Canada, the app is now available worldwide on iOS and Android. It allows users to listen to various text formats such as PDFs, articles, newsletters, and ePub files, though it does not support Kindle or Apple Books. The app offers a wide range of AI-generated voices, including those of deceased celebrities like Judy Garland and James Dean, with licensed usage approved by their heirs. The Reader app is free to use and doesn’t consume credits from ElevenLabs' main subscription plan. A premium version is in development, but the company assures a generous free tier will remain.",
+          "domain": "www.theverge.com",
+          "ref_type": "news",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": 1724405903,
+          "ref_key": "0_news_25"
+        }
+      ],
+      "inline_url": "https://www.theverge.com/2024/8/23/24226643/elevenlabs-ai-reader-app-32-languages-global-release",
+      "url_position": 1704,
+      "claim_text": "Mobile / Platform-Specific ElevenLabs AI Reader app (free tier) – Mobile text reader with high-quality voices (supports many languages). The Verge",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1546,
+        "end_idx": 1566
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en-US&id=com.ghosal.realvoice",
+      "url_position": 1893,
+      "claim_text": "Real Voice Text to Speech (Android) – Android app with natural-sounding TTS. Google Play",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1707,
+        "end_idx": 1726
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voice.ai/hub/tts/best-free-text-to-speech/",
+          "title": "18 Best Free Text-to-Speech Apps for Realistic, Human-Like Voiceovers",
+          "snippet": "Discover the best free text-to-speech tools with natural voices, simple setup, and support for multiple languages, all at no cost.",
+          "domain": "voice.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1751155200,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://voice.ai/hub/tts/best-free-text-to-speech/",
+      "url_position": 2115,
+      "claim_text": "Notes / trade-offs “Free” plans often limit voice choices, daily characters, or downloads; premium tiers improve quality and limits. Voice.ai",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1845,
+        "end_idx": 1865
+      },
+      "citation_token": "citeturn0search28",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/NonVisual_Desktop_Access",
+      "url_position": 2300,
+      "claim_text": "Dedicated screen readers (e.g., NVDA) are free but use basic voices or system TTS rather than advanced AI voices. en.wikipedia.org",
+      "url_index": 12
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://voice.ai/hub/tts/best-free-text-to-speech/",
+        "title": "18 Best Free Text-to-Speech Apps for Realistic, Human-Like Voiceovers",
+        "domain": "Voice.ai"
+      },
+      {
+        "url": "https://www.tomsguide.com/ai/chatgpt/chatgpt-can-now-read-out-loud-heres-how-i-use-it-instead-of-audible-or-speechify",
+        "title": "Forget Audible - ChatGPT can now read documents and even ebooks out loud to you (and it's surprisingly good)",
+        "domain": "Tom's Guide"
+      },
+      {
+        "url": "https://speechify.com/text-reader/",
+        "title": "Speechify: Free Text Reader. Read text aloud for free",
+        "domain": "Speechify"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech with Gemini and ChatGPT AI Voices",
+        "domain": "NaturalReader"
+      },
+      {
+        "url": "https://ttsreader.com/",
+        "title": "TTSReader | Text To Speech Reader Online. Accurate & Free",
+        "domain": "TTSReader Text To Speech"
+      },
+      {
+        "url": "https://texttospeech.io/",
+        "title": "TextToSpeech.io - Free online Text to Speech reader",
+        "domain": "TextToSpeech.io"
+      },
+      {
+        "url": "https://airmore.ai/text-to-speech",
+        "title": "Free Online Text to Speech with Realistic AI Voices",
+        "domain": "AirMore AI"
+      },
+      {
+        "url": "https://www.naturalttslabs.com/",
+        "title": "Natural TTS Labs - Free Ultra-Realistic Text to Speech",
+        "domain": "naturalttslabs.com"
+      },
+      {
+        "url": "https://www.theverge.com/2024/8/23/24226643/elevenlabs-ai-reader-app-32-languages-global-release",
+        "title": "ElevenLabs' AI Reader app can now narrate text in 32 languages",
+        "domain": "The Verge"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en-US&id=com.ghosal.realvoice",
+        "title": "Real Voice Text to Speech - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/NonVisual_Desktop_Access",
+        "title": "NonVisual Desktop Access",
+        "domain": "en.wikipedia.org"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+        "title": "Best free text-to-speech software of 2025 - TechRadar",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://speaktor.com/best-free-text-to-speech-apps/",
+        "title": "7 Best FREE Text to Speech Apps in 2025 - speaktor.com",
+        "domain": "speaktor.com"
+      },
+      {
+        "url": "https://www.kukarella.com/resources/text-to-speech/the-8-best-free-text-to-speech-and-ai-voice-generators-in-2025-tested-and-compared",
+        "title": "The 8 Best Free Text to Speech & AI Voice Generators in 2025 (Tested ...",
+        "domain": "kukarella.com"
+      },
+      {
+        "url": "https://anyvoicelab.com/free-text-to-speech-converter/",
+        "title": "Free Unlimited Realistic Text To Speech Converter (No Login)",
+        "domain": "anyvoicelab.com"
+      },
+      {
+        "url": "https://www.naturalreaders.com/",
+        "title": "AI Voices - NaturalReader Home",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://musely.ai/tools/text-reader-online",
+        "title": "Free Online Text Reader - Convert Text to Speech AI | Musely",
+        "domain": "musely.ai"
+      },
+      {
+        "url": "https://speechify.com/text-to-speech-online/",
+        "title": "Speechify: Free Text to Speech with Humanlike AI Voices",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://elevenreader.io/read-aloud",
+        "title": "Read Aloud & Read Text Out Loud – A Free Tool for Any Document",
+        "domain": "elevenreader.io"
+      },
+      {
+        "url": "https://www.ispeech.org/text.to.speech",
+        "title": "Text To Speech for Free - Natural Sounding TTS | iSpeech",
+        "domain": "ispeech.org"
+      },
+      {
+        "url": "https://www.naturalvoice.io/en",
+        "title": "NaturalVoice: Free Convert Text to Speech Online",
+        "domain": "naturalvoice.io"
+      },
+      {
+        "url": "https://www.g2.com/categories/text-to-speech/free",
+        "title": "Best 50 Free Text to Speech Software Picks in 2026 | G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://toolv.io/text-to-speech",
+        "title": "Free Text to Speech Online with Natural Sounding AI Voices",
+        "domain": "toolv.io"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 12,
+    "total_all": 23
+  },
+  "response_stats": {
+    "total_length": 2491,
+    "citation_count": 13,
+    "chars_with_citations": 316
+  }
+}

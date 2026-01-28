@@ -1,0 +1,321 @@
+{
+  "run_id": "P077_r1",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend a video translator app to help me understand content in a foreign language in English?",
+  "metadata": {
+    "hidden_queries": [
+      "video translator app translate foreign language video to English",
+      "apps that translate video in real time translate video subtitles"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.601705871522427,
+      "simple_search_prob": 0.9957036616312928,
+      "complex_search_prob": 0.0033496698436858863,
+      "no_search_prob": 0.0009466685250213557,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "video translator app translate foreign language video to English"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 464,
+        "end_idx": 484
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.veed.io/tools/video-translator",
+      "url_position": 452,
+      "claim_text": "Here are solid video translator app/software options that can help you understand foreign-language video content by translating audio or adding subtitles into English: 📱 Apps & Web Tools for Translating Videos 1. VEED.io — AI Video Translator Translate video audio + subtitles into English and many languages. Adds auto subtitles (125+ languages) and AI voice-over options. Works in browser (no install) but also has mobile editor tools. VEED.IO",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 649,
+        "end_idx": 668
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://zeemo.ai/tools/video-translator",
+          "title": "Free Online Video Translator With High Accuracy - Zeemo AI",
+          "snippet": "Use Zeemo's video translator to translate videos into 124 languages with 98% accuracy, localise your video content and reach a global audience. Try it for free!",
+          "domain": "zeemo.ai",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://zeemo.ai/tools/video-translator",
+      "url_position": 657,
+      "claim_text": "2. Zeemo AI Video Translator Online tool that translates videos into 120+ languages with high accuracy. Lets you customize caption style & appearance. Zeemo",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 837,
+        "end_idx": 856
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/translate-video",
+      "url_position": 869,
+      "claim_text": "3. Happy Scribe Video Translator Upload video, get transcription + translation in English (120+ languages). Good for comprehension and creating subtitles. HappyScribe",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 1051,
+        "end_idx": 1061
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://immersivetranslate.com/en/video/",
+      "url_position": 1119,
+      "claim_text": "4. Immersive Translate (Chrome Extension / Web) Translate streaming videos (YouTube/Web) into English subtitles. Works by link + extension, useful for online content you don’t own. Immersive Translate",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1225,
+        "end_idx": 1244
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://reccloud.com/video-translator-app",
+      "url_position": 1315,
+      "claim_text": "5. RecCloud Video Translator Simple app for adding translated subtitles or AI dubbing to video files. Good for studying or personal content. RecCloud",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1373,
+        "end_idx": 1392
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.canva.com/features/ai-video-translator/",
+      "url_position": 1483,
+      "claim_text": "6. Canva AI Video Translator Built into Canva for simple translate + AI dubbing. Easy UI if you already use Canva. Canva",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1525,
+        "end_idx": 1545
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://clideo.com/video-translator",
+      "url_position": 1666,
+      "claim_text": "7. Clideo Video Translator Online translator that adds translated subtitles or dubbed audio. Basic but quick and free. Clideo",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1888,
+        "end_idx": 1893
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation",
+      "url_position": 2040,
+      "claim_text": "🧠 Notes / Tips Most of these tools generate subtitles or voice translations rather than live real-time translation while watching — you upload or link the video first. If you want real-time subtitling on your device, the VLC player is developing AI subtitling/translation inside the app itself (rolling out gradually). theverge.com",
+      "url_index": 7
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.veed.io/tools/video-translator",
+        "title": "Instant Video Translator - Translate with AI - VEED.IO",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://zeemo.ai/tools/video-translator",
+        "title": "Free Online Video Translator With High Accuracy - Zeemo AI",
+        "domain": "Zeemo"
+      },
+      {
+        "url": "https://www.happyscribe.com/translate-video",
+        "title": "Online Video Translator - AI Video Translator - Happy Scribe",
+        "domain": "HappyScribe"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/video/",
+        "title": "AI Video Translator with Real-Time Bilingual Subtitles | Immersive ...",
+        "domain": "Immersive Translate"
+      },
+      {
+        "url": "https://reccloud.com/video-translator-app",
+        "title": "AI Video Translator App with Subtitles & Dubbing | RecCloud",
+        "domain": "RecCloud"
+      },
+      {
+        "url": "https://www.canva.com/features/ai-video-translator/",
+        "title": "AI Video Translator: Translate a video with AI | Canva",
+        "domain": "Canva"
+      },
+      {
+        "url": "https://clideo.com/video-translator",
+        "title": "Video Translator | Translate Your Video Online — Clideo",
+        "domain": "Clideo"
+      },
+      {
+        "url": "https://www.theverge.com/2025/1/9/24339817/vlc-player-automatic-ai-subtitling-translation",
+        "title": "VLC player demos real-time AI subtitling for videos",
+        "domain": "theverge.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://akool.com/blog-posts/best-video-translation-apps",
+        "title": "Best Video Translation Apps - akool.com",
+        "domain": "akool.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/top-10-video-translator-apps",
+        "title": "Top 10 Video Translator Apps - Free & Paid - maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-ai-video-translator",
+        "title": "8 Best AI Video Translators of 2025 (For Multilingual Transcription ...",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-video-translators",
+        "title": "7 Best AI Video Translators in 2025",
+        "domain": "usefulai.com"
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/edge/features/real-time-video-translation",
+        "title": "Real-time video translation | Microsoft Edge",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://airmore.ai/video-translation",
+        "title": "Free Online Video Translation With AI",
+        "domain": "airmore.ai"
+      },
+      {
+        "url": "https://akool.com/apps/video-translation",
+        "title": "Best Free AI Video Translation | Best Lip Sync AI | AKOOL",
+        "domain": "akool.com"
+      },
+      {
+        "url": "https://lipsync.video/video-translate",
+        "title": "Free AI Video Translate Tool – No Signup Needed",
+        "domain": "lipsync.video"
+      },
+      {
+        "url": "https://www.smartcat.com/live-video-translation/",
+        "title": "AI Video Translator: RealTime Subtitles & Dubbing | Smartcat",
+        "domain": "smartcat.com"
+      },
+      {
+        "url": "https://www.larksuite.com/en_us/tools/translate-video",
+        "title": "Video Translator Tool — Translate Video Online for Free",
+        "domain": "larksuite.com"
+      },
+      {
+        "url": "https://www.flexclip.com/tools/ai-video-translator/",
+        "title": "AI Video Translator - Translate Video & Do AI Dubbing Online | FlexClip",
+        "domain": "flexclip.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en&id=com.mg.subtitle.google",
+        "title": "Video Subtitle Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://dubverse.ai/video-translator/",
+        "title": "AI Video Translator & Video Translation | Dubverse",
+        "domain": "dubverse.ai"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+        "title": "7 Best AI Video Translator Apps of 2025 [Tested] - Notta",
+        "domain": "notta.ai"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 14,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 2277,
+    "citation_count": 8,
+    "chars_with_citations": 131
+  }
+}

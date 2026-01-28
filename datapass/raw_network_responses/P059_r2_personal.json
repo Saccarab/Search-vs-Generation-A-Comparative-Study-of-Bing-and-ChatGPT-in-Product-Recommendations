@@ -1,0 +1,21 @@
+{
+  "query_index": "59",
+  "run_number": "2",
+  "prompt_id": "P059",
+  "query": "Can I get AI to transcribe a video?",
+  "generated_search_query": "N/A",
+  "hidden_queries_json": "[]",
+  "search_result_groups_json": "[]",
+  "content_references_json": "[]",
+  "sonic_classification_json": "null",
+  "response_text": "Yes. AI can transcribe a video by extracting the audio and converting it to text. Some options:  Online tools/services: Otter.ai, Rev, Sonix, Descript, Trint.  Video platforms: YouTube auto-captions (can be downloaded).  Local/programmable solutions: Use Whisper (by OpenAI) or similar speech-to-text models.  Do you want it done automatically for you, or instructions to do it yourself?",
+  "web_search_forced": "false",
+  "web_search_triggered": "false",
+  "items_json": "[]",
+  "items_count": "0",
+  "items_with_citations_count": "0",
+  "sources_cited_json": "[]",
+  "sources_additional_json": "[]",
+  "sources_all_json": "[]",
+  "account_type": "personal"
+}

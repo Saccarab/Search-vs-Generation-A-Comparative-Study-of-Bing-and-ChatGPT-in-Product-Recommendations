@@ -1,0 +1,318 @@
+{
+  "run_id": "P014_r2",
+  "account_type": "personal",
+  "prompt": "What is the best app for voice translation?",
+  "metadata": {
+    "hidden_queries": [
+      "best app for voice translation",
+      "voice translation apps comparison features"
+    ],
+    "sonic_classification": {
+      "latency_ms": 0.0694239279255271,
+      "simple_search_prob": 0.9855763746145292,
+      "complex_search_prob": 0.0023814783488885468,
+      "no_search_prob": 0.012042147036582272,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 231,
+        "end_idx": 250
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://maestra.ai/blogs/best-speech-translator-apps",
+      "url_position": 231,
+      "claim_text": "Here are the top voice translation apps you can use right now, depending on what you need: Best overall (free & broad language support) Google Translate – real-time voice translation in many languages and free to use. Maestra AI",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 402,
+        "end_idx": 422
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://community.ricksteves.com/travel-forum/general-europe/voice-translators",
+          "title": "Voice translators - Rick Steves Travel Forum",
+          "snippet": "Jan 2, 2025 — I'm an Android user, and my wife and I use the Microsoft \"Translator\" app. Works great for us. You can type, or speak into it and see or hear another language.Read more",
+          "domain": "community.ricksteves.com",
+          "ref_type": "search",
+          "ref_index": 22,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_22"
+        }
+      ],
+      "inline_url": "https://community.ricksteves.com/travel-forum/general-europe/voice-translators",
+      "url_position": 448,
+      "claim_text": "Great for casual conversations / travel Microsoft Translator – solid voice translation with conversation mode and offline language packs. Rick Steves Community",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 499,
+        "end_idx": 518
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://translatepress.com/best-app-for-language-translation-iphone-android/",
+      "url_position": 613,
+      "claim_text": "SayHi Translate – simple and highly rated for spoken conversations. TranslatePress",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 619,
+        "end_idx": 638
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+      "url_position": 795,
+      "claim_text": "iTranslate Voice – focused on speech translation with phrase library and transcript export. App Store",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 830,
+        "end_idx": 836
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.transyncai.com/blog-best-audio-translation-app/",
+      "url_position": 1051,
+      "claim_text": "Advanced/AI-powered (more natural output and accuracy) Transync AI – top choice for high-quality, real-time voice translations with natural-sounding output (subscription-based). transyncai.com",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 948,
+        "end_idx": 968
+      },
+      "citation_token": "citeturn0search39",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Naver_Papago?utm_source=chatgpt.com",
+          "title": "Naver Papago",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/Naver_Papago",
+      "url_position": 1227,
+      "claim_text": "Other solid options include Papago for Asian languages and various niche voice translator apps. en.wikipedia.org",
+      "url_index": 5
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://maestra.ai/blogs/best-speech-translator-apps",
+        "title": "10 Best Speech Translator Apps for Live Voice ...",
+        "domain": "Maestra AI"
+      },
+      {
+        "url": "https://community.ricksteves.com/travel-forum/general-europe/voice-translators",
+        "title": "Voice translators - Rick Steves Travel Forum",
+        "domain": "Rick Steves Community"
+      },
+      {
+        "url": "https://translatepress.com/best-app-for-language-translation-iphone-android/",
+        "title": "The Best Language Translation App for iPhone & Android",
+        "domain": "TranslatePress"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+        "title": "iTranslate Voice - App Store",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://www.transyncai.com/blog-best-audio-translation-app/",
+        "title": "Best Audio Translation App in 2025 | Real-Time AI Voice ...",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Naver_Papago",
+        "title": "Naver Papago",
+        "domain": "en.wikipedia.org"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.facebook.com/groups/379302447418006/posts/973626204652291/",
+        "title": "What app is best to use as a translator for listening to someone ask ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/digitalnomad/comments/1by9l7o/whats_the_best_app_you_guys_use_for_voice/",
+        "title": "What's the best app you guys use for voice translation to ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/languagelearning/comments/1oiljdb/are_there_any_translation_apps_people_know_of/",
+        "title": "Are there any translation apps people know of that are ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/blog/audio-translation",
+        "title": "23 best voice translator for your PC, Android, and iPhone",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/best-ai-voice-translator-apps",
+        "title": "6 Best AI Voice Translator Apps in 2025 [with Download Link]",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://www.pairaphrase.com/blog/speech-translator-app",
+        "title": "Top 15 Speech Translator App Features for Enterprises ...",
+        "domain": "pairaphrase.com"
+      },
+      {
+        "url": "https://www.atanet.org/client-assistance/blog-best-translation-apps-a-translator-puts-four-to-the-test/",
+        "title": "Best Translation Apps: A Translator Puts Four to the Test",
+        "domain": "atanet.org"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://ezdubs.ai/blog/top-5-call-translators",
+        "title": "Top 6 Phone Call Translators",
+        "domain": "ezdubs.ai"
+      },
+      {
+        "url": "https://itranslate.com/",
+        "title": "iTranslate: The Leading Translation and Dictionary App",
+        "domain": "itranslate.com"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/voice-translator-app",
+        "title": "Top 6 Voice Translator Apps Powered by AI in 2025",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://www.naargmedia.com/best-voice-translator-apps/",
+        "title": "Best Voice Translator Apps in 2025",
+        "domain": "naargmedia.com"
+      },
+      {
+        "url": "https://www.transyncai.com/blog-best-translator-with-voice-app-2025/",
+        "title": "Best Translator with Voice App 2025",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.transyncai.com/blog/android-translation-apps-2025/",
+        "title": "Android Translation Apps: 7 Best Solutions Compared 2025",
+        "domain": "transyncai.com"
+      },
+      {
+        "url": "https://www.eskimo.travel/en/blog/best-translation-app?srsltid=AfmBOooFfwDUniTboUciujUL_zsW2TrOIhj5YBMqcnNv2OUauJCLcSHx",
+        "title": "Best Translation Apps for Travelers (Free & Offline Options)",
+        "domain": "eskimo.travel"
+      },
+      {
+        "url": "https://www.travelandleisure.com/travel-tips/mobile-apps/best-translation-apps-travelers",
+        "title": "Best Translation Apps for Travelers",
+        "domain": "travelandleisure.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/best-voice-translator-app",
+        "title": "Top 10+ Voice Translator Apps",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://boostlingo.com/blog/best-apps-for-real-time-ai-translation/",
+        "title": "Best Apps for Real Time AI Translation",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://www.generalitravelinsurance.com/travel-resources/translation-language-apps.html",
+        "title": "Best Free Travel Translation and Language Apps",
+        "domain": "generalitravelinsurance.com"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-travel-translation-app",
+        "title": "Ultimate Guide – The Best Travel Translation Apps of 2026",
+        "domain": "x-doc.ai"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 21,
+    "total_all": 27
+  },
+  "response_stats": {
+    "total_length": 1273,
+    "citation_count": 6,
+    "chars_with_citations": 103
+  }
+}

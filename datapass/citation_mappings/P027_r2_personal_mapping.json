@@ -1,0 +1,491 @@
+{
+  "run_id": "P027_r2",
+  "account_type": "personal",
+  "prompt": "Best Video Translator for agencies to expand reach and speed up content creation.",
+  "metadata": {
+    "hidden_queries": [
+      "best video translator tools for agencies expand reach speed up content creation",
+      "video translation and localization software for agencies features comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 14.224583050236106,
+      "simple_search_prob": 0.9237695271109536,
+      "complex_search_prob": 0.05202712164299032,
+      "no_search_prob": 0.024203351246056062,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best video translator tools for agencies expand reach speed up content creation"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 501,
+        "end_idx": 521
+      },
+      "citation_token": "citeturn0search17",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.synthesia.io/post/best-video-translator-apps",
+          "title": "The 6 Best AI Video Translator Apps of 2025 (Compared) - Synthesia",
+          "snippet": "Create AI videos with 230+ avatars in 140+ languages. Translate any video into 29+ languages with natural voice matching and lip sync.",
+          "domain": "www.synthesia.io",
+          "ref_type": "search",
+          "ref_index": 17,
+          "turn_index": 0,
+          "pub_date": 1753401600,
+          "ref_key": "0_search_17"
+        }
+      ],
+      "inline_url": "https://www.synthesia.io/post/best-video-translator-apps",
+      "url_position": 497,
+      "claim_text": "Here are top video translation tools and platforms agencies can use to expand reach and speed up content creation — focusing on automation, multilingual output, and scalability: 🌍 AI-First Video Translation & Localization Tools These are great for fast turnaround, subtitles, dubbing, lip-sync, and multilingual content workflows: 1. Synthesia – AI video platform with built-in translation, natural voice matching & lip-sync for 139+ languages (good for branded videos & campaigns). Synthesia",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 665,
+        "end_idx": 684
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.rask.ai/",
+          "title": "Leading AI video localization & dubbing tool",
+          "snippet": "Transcribe YouTube Video​​ Fast and accurate transcription and translation of YouTube videos using AI in over 130 languages. Supports videos up to 5 hours long.Read more",
+          "domain": "www.rask.ai",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://www.rask.ai/",
+      "url_position": 699,
+      "claim_text": "2. Rask AI – AI translator that handles transcription, subtitles, dubbing, and lip-sync in 130+ languages; scalable for long-form video. Rask",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 831,
+        "end_idx": 851
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://levitatemedia.com/learn/video-translation-tools",
+      "url_position": 878,
+      "claim_text": "3. VEED.io – AI-powered editor with automatic translation, subtitles and audio dubbing; simple interface good for social content workflows. Levitate Media",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 974,
+        "end_idx": 994
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://project-aeon.com/blogs/top-12-best-video-translation-app-choices-for-2025",
+          "title": "Top 12 Best Video Translation App Choices for 2025 - Aeon",
+          "snippet": "Nov 6, 2025 — Dubverse is an AI video translation app built for scale, targeting creators, marketers, and educational teams managing large volumes of content.",
+          "domain": "project-aeon.com",
+          "ref_type": "search",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_25"
+        }
+      ],
+      "inline_url": "https://project-aeon.com/blogs/top-12-best-video-translation-app-choices-for-2025",
+      "url_position": 1070,
+      "claim_text": "4. Dubverse – AI app built for batch translation/localization with real-time script editing and many voice options. project-aeon.com",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1127,
+        "end_idx": 1147
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://immersivetranslate.com/en/blog/top-10-video-translator-ai-tools-in-2026/",
+      "url_position": 1301,
+      "claim_text": "5. Vidnoz AI Video Translator – Browser-based tool focused on lip-sync and multilingual voice cloning for short-form content. Immersive Translate",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1302,
+        "end_idx": 1322
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://immersivetranslate.com/en/blog/top-10-video-translator-ai-tools-in-2026/",
+      "url_position": 1553,
+      "claim_text": "6. Immersive Translate – Browser extension for instant subtitles on existing videos (good for rapid testing or research on platforms like YouTube). Immersive Translate",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1418,
+        "end_idx": 1438
+      },
+      "citation_token": "citeturn0search27",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.heygen.com/blog/10-best-ai-video-translators-i-tested-in-2025-free-paid-tools-reviewed",
+      "url_position": 1733,
+      "claim_text": "7. Nova A.I. – Basic video translation + editing suite with subtitle generation and TTS. HeyGen",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1555,
+        "end_idx": 1574
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://veracontent.com/mix/video-translation-process/",
+          "title": "Video translation: Auto-generated vs. human translation services",
+          "snippet": "We've also covered the differences between using automatic video translation tools vs. human translation and localization services.",
+          "domain": "veracontent.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1698710400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://veracontent.com/mix/video-translation-process/",
+      "url_position": 1954,
+      "claim_text": "📈 What These Tools Excel At Speed: AI extracts speech, translates, and outputs in minutes vs hours/days. VeraContent",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1658,
+        "end_idx": 1677
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.rask.ai/",
+          "title": "Leading AI video localization & dubbing tool",
+          "snippet": "Transcribe YouTube Video​​ Fast and accurate transcription and translation of YouTube videos using AI in over 130 languages. Supports videos up to 5 hours long.Read more",
+          "domain": "www.rask.ai",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://www.rask.ai/",
+      "url_position": 2090,
+      "claim_text": "Scale: Many support 100+ languages, ideal for global content strategies. Rask",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1759,
+        "end_idx": 1779
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://immersivetranslate.com/en/blog/top-10-video-translator-ai-tools-in-2026/",
+      "url_position": 2207,
+      "claim_text": "Localization: Dubbing + lip-sync increases engagement vs just subtitles. Immersive Translate",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1876,
+        "end_idx": 1896
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://project-aeon.com/blogs/top-12-best-video-translation-app-choices-for-2025",
+          "title": "Top 12 Best Video Translation App Choices for 2025 - Aeon",
+          "snippet": "Nov 6, 2025 — Dubverse is an AI video translation app built for scale, targeting creators, marketers, and educational teams managing large volumes of content.",
+          "domain": "project-aeon.com",
+          "ref_type": "search",
+          "ref_index": 25,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_25"
+        }
+      ],
+      "inline_url": "https://project-aeon.com/blogs/top-12-best-video-translation-app-choices-for-2025",
+      "url_position": 2396,
+      "claim_text": "Workflow: Some offer batch processing and team/collaboration features (e.g., Dubverse). project-aeon.com",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 2057,
+        "end_idx": 2077
+      },
+      "citation_token": "citeturn0search22",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.rask.ai/",
+      "url_position": 2090,
+      "claim_text": "Scale: Many support 100+ languages, ideal for global content strategies. Rask",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 2174,
+        "end_idx": 2175
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://levitatemedia.com/learn/video-translation-tools",
+      "url_position": 2643,
+      "claim_text": "🧠 Agency Tips Combine AI translation with human review for tone, nuance, and cultural accuracy — especially for marketing or high-stake content. Levitate Media",
+      "url_index": 11
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.synthesia.io/post/best-video-translator-apps",
+        "title": "The 6 Best AI Video Translator Apps of 2025 (Compared) - Synthesia",
+        "domain": "Synthesia"
+      },
+      {
+        "url": "https://www.rask.ai/",
+        "title": "Leading AI video localization & dubbing tool",
+        "domain": "Rask"
+      },
+      {
+        "url": "https://levitatemedia.com/learn/video-translation-tools",
+        "title": "Video Translation Tools for Global Reach",
+        "domain": "Levitate Media"
+      },
+      {
+        "url": "https://project-aeon.com/blogs/top-12-best-video-translation-app-choices-for-2025",
+        "title": "Top 12 Best Video Translation App Choices for 2025 - Aeon",
+        "domain": "project-aeon.com"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/blog/top-10-video-translator-ai-tools-in-2026/",
+        "title": "Top 10 Video Translator AI Tools in 2026",
+        "domain": "Immersive Translate"
+      },
+      {
+        "url": "https://www.heygen.com/blog/10-best-ai-video-translators-i-tested-in-2025-free-paid-tools-reviewed",
+        "title": "10 Best AI Video Translators I Tested in 2025 (Free & Paid ...",
+        "domain": "HeyGen"
+      },
+      {
+        "url": "https://veracontent.com/mix/video-translation-process/",
+        "title": "Video translation: Auto-generated vs. human translation services",
+        "domain": "VeraContent"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.getblend.com/blog/10-best-software-localization-services-what-to-look-for/",
+        "title": "10 Best Software Localization Services: What to Look for in 2026",
+        "domain": "getblend.com"
+      },
+      {
+        "url": "https://project-aeon.com/blogs/a-guide-to-video-translation-services",
+        "title": "A Guide to Video Translation Services - Aeon",
+        "domain": "project-aeon.com"
+      },
+      {
+        "url": "https://xtm.cloud/blog/top-translation-companies/",
+        "title": "6 top translation companies and how to choose the right one",
+        "domain": "xtm.cloud"
+      },
+      {
+        "url": "https://ulsweb.com/translation-services-comparison/",
+        "title": "Exploring the Best Translation Services Comparison: A Guide for 2025",
+        "domain": "ulsweb.com"
+      },
+      {
+        "url": "https://www.atltranslate.com/blog/25-top-translation-companies-in-2022-services-reviewed",
+        "title": "25 Top Translation Companies in 2025: Services Reviewed",
+        "domain": "atltranslate.com"
+      },
+      {
+        "url": "https://lokalise.com/blog/how-to-choose-translation-company/",
+        "title": "12 best translation and localization services & companies - Lokalise",
+        "domain": "lokalise.com"
+      },
+      {
+        "url": "https://www.g2.com/categories/video-translation-services",
+        "title": "Best Video Translation Services in 2025 - G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://www.g2.com/categories/video-translation-software",
+        "title": "Best Video Translation Software",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://xtm.cloud/blog/ai-translation-tools/",
+        "title": "The Best AI Translation Tools for 2025",
+        "domain": "xtm.cloud"
+      },
+      {
+        "url": "https://pickwriters.com/video-translation-services",
+        "title": "The Best Video Translation Services For Global Businesses In 2025",
+        "domain": "pickwriters.com"
+      },
+      {
+        "url": "https://www.colossyan.com/posts/5-best-video-translator-software-options-for-global-content-reach",
+        "title": "5 Best Video Translator Software Options for Global ...",
+        "domain": "colossyan.com"
+      },
+      {
+        "url": "https://www.colossyan.com/posts/5-best-video-translation-tools-for-global-teams",
+        "title": "5 Best Video Translation Tools For Global Teams",
+        "domain": "colossyan.com"
+      },
+      {
+        "url": "https://www.gartner.com/reviews/market/ai-dubbing",
+        "title": "Best AI Dubbing Reviews 2026 | Gartner Peer Insights",
+        "domain": "gartner.com"
+      },
+      {
+        "url": "https://jrlanguage.com/translation-services/video-translations/",
+        "title": "Video Translation Services - Multilingual Videos",
+        "domain": "jrlanguage.com"
+      },
+      {
+        "url": "https://www.feisworld.com/blog/best-ai-video-translation-tools",
+        "title": "The Best AI Video Translation Tools Of 2026 (Our Top 5 ...",
+        "domain": "feisworld.com"
+      },
+      {
+        "url": "https://www.interproinc.com/service/translation-services/video-translation/",
+        "title": "Video Translation",
+        "domain": "interproinc.com"
+      },
+      {
+        "url": "https://www.storyblocks.com/resources/blog/20-ai-video-tools-to-speed-up-content-creation",
+        "title": "20 Best AI video tools to speed up content creation",
+        "domain": "storyblocks.com"
+      },
+      {
+        "url": "https://www.digitaljournal.com/pr/news/winston-news-wire/top-11-ai-video-translators-173663320.html",
+        "title": "Top 11 AI Video Translators to Localize Your Content in 2026",
+        "domain": "digitaljournal.com"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/blog/top-10-ai-video-translators-for-e-learning-content-in-2026/",
+        "title": "Top 10 AI Video Translators for E-Learning Content in 2026",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://dubly.ai/blog/the-best-video-translation-software-in-2025-comparison-recommendation",
+        "title": "The Best Video Translation Software in 2025: Comparison ...",
+        "domain": "dubly.ai"
+      },
+      {
+        "url": "https://vimeo.com/blog/post/tools-for-video-dubbing",
+        "title": "7 Top Online Tools for Dubbing Videos with AI Translations",
+        "domain": "vimeo.com"
+      },
+      {
+        "url": "https://www.amplifysoft.io/en/the-best-ai-translator-for-media-speed-and-savings/",
+        "title": "The best AI translator for media: Speed and savings",
+        "domain": "amplifysoft.io"
+      },
+      {
+        "url": "https://www.aistudios.com/best/best-6-ai-dubbing-software-for-localization",
+        "title": "Dub Videos and Audio in Difference Languages",
+        "domain": "aistudios.com"
+      },
+      {
+        "url": "https://perso.ai/",
+        "title": "Best AI Video Translator & Dubbing for Creator Business | Perso",
+        "domain": "perso.ai"
+      },
+      {
+        "url": "https://www.reddit.com/r/AIToolTesting/comments/1qm9zde/comparing_ai_dubbing_and_tts_tools_after_testing/",
+        "title": "Comparing AI dubbing and TTS tools after testing a few for ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://translationreport.com/video-translation-services",
+        "title": "Get the Best Video Translation Services",
+        "domain": "translationreport.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 26,
+    "total_all": 33
+  },
+  "response_stats": {
+    "total_length": 3111,
+    "citation_count": 13,
+    "chars_with_citations": 238
+  }
+}

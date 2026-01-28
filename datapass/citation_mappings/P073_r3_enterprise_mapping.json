@@ -1,0 +1,422 @@
+{
+  "run_id": "P073_r3",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend the best video translator for YouTube?",
+  "metadata": {
+    "hidden_queries": [
+      "best video translator for YouTube translate videos subtitles tools",
+      "YouTube video translator tools comparison automatic translation subtitles for YouTube",
+      "tools to translate YouTube videos subtitles or audio translate YouTube video translator",
+      "best YouTube video translation tools automatic subtitle translation and dubbing for YouTube",
+      "best tools to translate YouTube videos subtitles automatic translate and dubbing YouTube translation tools",
+      "how to translate YouTube video subtitles or audio - tools like VEED, Kapwing, Happy Scribe"
+    ],
+    "sonic_classification": {
+      "latency_ms": 4.326868336647749,
+      "simple_search_prob": 0.9773789267643763,
+      "complex_search_prob": 0.012390873326632863,
+      "no_search_prob": 0.010230199908990815,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best video translator for YouTube translate videos subtitles tools"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 287,
+        "end_idx": 319
+      },
+      "citation_token": "citeturn0search1turn0search8",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.veed.io/tools/video-translator",
+          "title": "Instant Video Translator - Translate with AI - VEED.IO",
+          "snippet": "Instantly translate videos into 29 languages (voiced) and 125+ languages for subtitles with the AI video translator. 99.9% accuracy. Replace audio with a translated voiceover.",
+          "domain": "www.veed.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://www.veed.io/tools/subtitle-translator",
+          "title": "Translate Subtitles - Online Subtitle Translator - VEED.IO",
+          "snippet": "Automatically translate subtitles online. Translate your SRT or VTT file. Or upload your audio or video and translate to over 100 languages! Fast, accurate, and automatic.",
+          "domain": "www.veed.io",
+          "ref_type": "search",
+          "ref_index": 8,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_8"
+        }
+      ],
+      "inline_url": "https://www.veed.io/tools/video-translator",
+      "url_position": 283,
+      "claim_text": "Here are the most effective YouTube video translator tools (for subtitles, dubbed audio, or full localization): Best All-Around Online Translators VEED.io – Automatic subtitle translation into 100+ languages and optional voice dubbing. Good balance of speed and quality. VEED.IO+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 435,
+        "end_idx": 454
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.kapwing.com/tools/translate",
+          "title": "Video Translator — Quickly Translate With AI - Kapwing",
+          "snippet": "Kapwing’s AI-powered Video Translator offers a smarter, more affordable way to make content accessible in over 100 languages — without the need for costly agencies or complex workflows. Designed for speed and accuracy, the tool helps individuals and teams translate video, audio, and subtitles with just a few clicks. Whether you're a creator expanding your reach, a small business entering ...",
+          "domain": "www.kapwing.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://www.kapwing.com/tools/translate",
+      "url_position": 443,
+      "claim_text": "Kapwing Video Translator – Translate video audio plus captions in 100+ languages with an easy web editor. Kapwing",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 568,
+        "end_idx": 587
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/translate-video",
+      "url_position": 601,
+      "claim_text": "Happy Scribe – Transcribes and translates videos into 120+ languages; outputs editable subtitle files. HappyScribe",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 731,
+        "end_idx": 764
+      },
+      "citation_token": "citeturn0search4turn0search21",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.vmeg.ai/tools/youtube-video-translator/",
+          "title": "YouTube Video Translator – Translate YouTube Videos to English",
+          "snippet": "Use VMEG YouTube Video Translator to translate YouTube videos and audio to english and into 170+ languages online. Clone your voice, choose from 7,000+ AI voices, auto-sync subtitles, and share translated videos instantly.",
+          "domain": "www.vmeg.ai",
+          "ref_type": "search",
+          "ref_index": 21,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_21"
+        }
+      ],
+      "inline_url": "https://www.vmeg.ai/tools/youtube-subtitle-translator/",
+      "url_position": 792,
+      "claim_text": "VMEG YouTube Subtitle Translator – Paste a YouTube link and get subtitles or dubbed audio in 170+ languages; can export SRT or video. VMEG AI+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 900,
+        "end_idx": 919
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.synthesia.io/tools/translate-youtube-video",
+          "title": "AI YouTube Video Translator – Free Translation into 130+ Languages",
+          "snippet": "Yes, the free YouTube video translator tool allows you to translate videos into 130+ languages and accents. The first minute of video translation is completely free, giving you the opportunity to experience professional-quality AI dubbing with preserved original voices and perfect lip-sync.",
+          "domain": "www.synthesia.io",
+          "ref_type": "search",
+          "ref_index": 9,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_9"
+        }
+      ],
+      "inline_url": "https://www.synthesia.io/tools/translate-youtube-video",
+      "url_position": 986,
+      "claim_text": "Synthesia YouTube Translator – AI translator that supports 130+ languages, preserves voices and lip-sync (first minute free). Synthesia",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1026,
+        "end_idx": 1045
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dubpilotai.com/",
+      "url_position": 1153,
+      "claim_text": "DubPilot AI – Focus on natural voiceovers with multi-speaker detection and editable transcripts. DubPilot AI",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1186,
+        "end_idx": 1205
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.kapwing.com/resources/how-to-translate-youtube-videos-for-free/",
+          "title": "How to Translate YouTube Videos (Subbing & Dubbing) - Kapwing",
+          "snippet": "Here are the three top ways to translate YouTube videos in 2024: Auto-translate, Subtitle translation, and dubbing. We break down each in a step-by-step tutorial.",
+          "domain": "www.kapwing.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1707350400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.kapwing.com/resources/how-to-translate-youtube-videos-for-free/",
+      "url_position": 1316,
+      "claim_text": "Simple/Quick Options YouTube auto-translate – Built-in CC translation (limited languages, only subtitles) — no uploads needed. Kapwing",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1335,
+        "end_idx": 1354
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/youtube-translator-youtub/ndbhldoclidahhoogmgklimmomnnepjg",
+      "url_position": 1533,
+      "claim_text": "Browser extensions (e.g., YouTube Translator) – Instant on-page subtitle translation for videos with available captions. Chrome Web Store",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1604,
+        "end_idx": 1623
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.kapwing.com/resources/how-to-translate-youtube-videos-for-free/",
+          "title": "How to Translate YouTube Videos (Subbing & Dubbing) - Kapwing",
+          "snippet": "Here are the three top ways to translate YouTube videos in 2024: Auto-translate, Subtitle translation, and dubbing. We break down each in a step-by-step tutorial.",
+          "domain": "www.kapwing.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1707350400,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.kapwing.com/resources/how-to-translate-youtube-videos-for-free/",
+      "url_position": 1870,
+      "claim_text": "Notes on Quality & Use Subtitles vs. dubbing: Subtitle translation is usually more accurate than AI-generated voice dubbing. Workflow: Most services let you download SRT/VTT files to upload back to YouTube for better reach. Kapwing",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1705,
+        "end_idx": 1706
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.vmeg.ai/tools/youtube-subtitle-translator/",
+      "url_position": 2030,
+      "claim_text": "Language support varies widely (some cover 100+ languages, others 170+). VMEG AI",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.veed.io/tools/video-translator",
+        "title": "Instant Video Translator - Translate with AI - VEED.IO",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://www.kapwing.com/tools/translate",
+        "title": "Video Translator — Quickly Translate With AI - Kapwing",
+        "domain": "Kapwing"
+      },
+      {
+        "url": "https://www.happyscribe.com/translate-video",
+        "title": "Online Video Translator - AI Video Translator - Happy Scribe",
+        "domain": "HappyScribe"
+      },
+      {
+        "url": "https://www.vmeg.ai/tools/youtube-subtitle-translator/",
+        "title": "YouTube Subtitle Translator – Convert & Translate Subtitles Instantly ...",
+        "domain": "VMEG AI"
+      },
+      {
+        "url": "https://www.synthesia.io/tools/translate-youtube-video",
+        "title": "AI YouTube Video Translator – Free Translation into 130+ Languages",
+        "domain": "Synthesia"
+      },
+      {
+        "url": "https://dubpilotai.com/",
+        "title": "Smart Online Video Translator | DubPilot AI",
+        "domain": "DubPilot AI"
+      },
+      {
+        "url": "https://www.kapwing.com/resources/how-to-translate-youtube-videos-for-free/",
+        "title": "How to Translate YouTube Videos (Subbing & Dubbing) - Kapwing",
+        "domain": "Kapwing"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/youtube-translator-youtub/ndbhldoclidahhoogmgklimmomnnepjg",
+        "title": "YouTube Translator & YouTube Video Dubbing - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://unifab.ai/resource/free-video-translator",
+        "title": "6 Best Free Video Translators in 2025 - unifab.ai",
+        "domain": "unifab.ai"
+      },
+      {
+        "url": "https://www.unite.ai/best-ai-video-translation-tools/",
+        "title": "10 Best AI Video Translation Tools (January 2026) - Unite.AI",
+        "domain": "unite.ai"
+      },
+      {
+        "url": "https://www.translatedright.com/blog/7-best-video-translation-tools/",
+        "title": "7 Best Video Translation Tools - Translated Right",
+        "domain": "translatedright.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=wzz_AFNqA_Y",
+        "title": "How to Translate Subtitles with AI | Online Subtitle Translator",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=Cf5ATkWeNjA",
+        "title": "How to Translate Videos in 1 Minute | Online Subtitle Translator",
+        "domain": "youtube.com"
+      },
+      {
+        "url": "https://www.veed.io/tools/subtitle-translator",
+        "title": "Translate Subtitles - Online Subtitle Translator - VEED.IO",
+        "domain": "veed.io"
+      },
+      {
+        "url": "https://dhl.veed.io/learn/translate-youtube-video",
+        "title": "How to Translate YouTube Videos in a Few Clicks with VEED",
+        "domain": "veed.io"
+      },
+      {
+        "url": "https://flixier.com/tools/translate-your-video-online",
+        "title": "AI Video Translator | AI Dubbing & Subtitles in 130+ Languages",
+        "domain": "flixier.com"
+      },
+      {
+        "url": "https://www.vozo.ai/translate-youtube-video-to-english",
+        "title": "Translate Youtube Video to English | Vozo Video Translator",
+        "domain": "vozo.ai"
+      },
+      {
+        "url": "https://www.transmonkey.ai/youtube-video-translator",
+        "title": "YouTube Video Translator: Translate YouTube Videos with AI",
+        "domain": "transmonkey.ai"
+      },
+      {
+        "url": "https://mangoanimate.com/blog/how-to-translate-youtube-videos-with-subtitles-and-ai-dubbing/21993/",
+        "title": "How to Translate YouTube Videos with Subtitles and AI Dubbing",
+        "domain": "mangoanimate.com"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/video/",
+        "title": "AI Video Translator with Real-Time Bilingual Subtitles | Immersive ...",
+        "domain": "immersivetranslate.com"
+      },
+      {
+        "url": "https://www.youtube-dubbing.com/en/",
+        "title": "YouTube Dubbing - Eliminate language barriers for watching videos",
+        "domain": "youtube-dubbing.com"
+      },
+      {
+        "url": "https://www.vmeg.ai/tools/youtube-video-translator/",
+        "title": "YouTube Video Translator – Translate YouTube Videos to English",
+        "domain": "vmeg.ai"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 14,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 2244,
+    "citation_count": 10,
+    "chars_with_citations": 199
+  }
+}

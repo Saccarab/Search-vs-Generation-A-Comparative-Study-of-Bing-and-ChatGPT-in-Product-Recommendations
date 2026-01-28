@@ -1,0 +1,414 @@
+{
+  "run_id": "P057_r2",
+  "account_type": "enterprise",
+  "prompt": "Can you recommend a video translator app to help me understand content in a foreign language in English?",
+  "metadata": {
+    "hidden_queries": [
+      "video translator app to translate foreign language video into English best apps",
+      "apps that translate video content into English real-time or post translation video translator tools"
+    ],
+    "sonic_classification": {
+      "latency_ms": 1.694925012998283,
+      "simple_search_prob": 0.9957036616312928,
+      "complex_search_prob": 0.0033496698436858863,
+      "no_search_prob": 0.0009466685250213557,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "video translator app to translate foreign language video into English best apps"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 167,
+        "end_idx": 226
+      },
+      "citation_token": "citeturn0search0turn0search1turn0search3turn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+          "title": "7 Best AI Video Translator Apps of 2025 [Tested] - Notta",
+          "snippet": "Best AI video translators with voice dubbing With the advancement of technology comes the game-changing tools that translate videos with dubbed audio, taking your content production efficiency to the next level. 1. Notta Showcase As an emerging AI video translator, Notta Showcase stands out with robust dubbing capabilities and user-friendliness.",
+          "domain": "www.notta.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://screenapp.io/blog/best-ai-video-translator",
+          "title": "8 Best AI Video Translators of 2025 (For Multilingual Transcription ...",
+          "snippet": "Go global with your video content. We tested the 7 best AI video translators of 2025 to automatically transcribe, translate, and create multilingual subtitles for your videos.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1758240000,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://screenapp.io/translator",
+          "title": "AI Translators - Free Video & Audio Translation Tools | ScreenApp",
+          "snippet": "Free AI translators for videos, audio files, and podcasts. Translate content to 50+ languages instantly. Video dubbing and localization tools.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_15"
+        }
+      ],
+      "inline_url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+      "url_position": 193,
+      "claim_text": "Here are reliable video translator apps/tools that can help you understand foreign-language video content by adding subtitles or translating/dubbing into English: ScreenApp+3Notta+3ScreenApp+3",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 436,
+        "end_idx": 456
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://screenapp.io/translator",
+          "title": "AI Translators - Free Video & Audio Translation Tools | ScreenApp",
+          "snippet": "Free AI translators for videos, audio files, and podcasts. Translate content to 50+ languages instantly. Video dubbing and localization tools.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_15"
+        }
+      ],
+      "inline_url": "https://screenapp.io/translator",
+      "url_position": 457,
+      "claim_text": "Top Options (Free + Paid): ScreenApp – Upload videos or YouTube links and get automatic transcripts, translated subtitles, and dubbing in English and 50+ languages. Works on desktop and mobile. ScreenApp",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 591,
+        "end_idx": 610
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.unite.ai/best-ai-video-translation-tools/",
+      "url_position": 625,
+      "claim_text": "Veed.io – Easy web editor that transcribes and translates videos into English with subtitles. Great for social media clips. unite.ai",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 757,
+        "end_idx": 758
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.unite.ai/best-ai-video-translation-tools/",
+      "url_position": 827,
+      "claim_text": "Fliki Video Translator – AI-driven tool that translates video audio and subtitles into 80+ languages, with natural-sounding voiceovers. unite.ai",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 897,
+        "end_idx": 917
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dubverse.ai/video-translator/",
+      "url_position": 1006,
+      "claim_text": "Dubverse – Simple interface for translating video content and adding English voiceovers or subtitles quickly. Dubverse.ai",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1041,
+        "end_idx": 1047
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.d-id.com/blog/best-ai-video-translators/",
+      "url_position": 1165,
+      "claim_text": "Descript – Combines editing + AI translation, so you can tweak transcripts and output accurate English versions. D-ID",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1228,
+        "end_idx": 1247
+      },
+      "citation_token": "citeturn0search5",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://immersivetranslate.com/en/video/",
+      "url_position": 1397,
+      "claim_text": "Other Useful Tools: Immersive Translate (Chrome extension/web) – Translate videos (like YouTube) into English by generating subtitles you can play inline. Immersive Translate",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1389,
+        "end_idx": 1409
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://immersivetranslate.com/en/blog/6-best-video-translation-apps-for-computers-and-phones/",
+          "title": "6 Best Video Translation Apps for Computers and Phones",
+          "snippet": "It currently supports translation between 18 languages, including English, Chinese, French, Spanish, German, Japanese, and more. The translations are accurate, and the interface is straightforward. Just upload a video and select your languages. TransGull is available on iOS, Android, Windows, and Mac, so you can use it on almost any device.",
+          "domain": "immersivetranslate.com",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": 1764547200,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://immersivetranslate.com/en/blog/6-best-video-translation-apps-for-computers-and-phones/",
+      "url_position": 1592,
+      "claim_text": "TransGull – Simple app for bilingual subtitles, useful if you just want to watch and see English text while a foreign video plays. Immersive Translate",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1510,
+        "end_idx": 1530
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://screenapp.io/translator",
+          "title": "AI Translators - Free Video & Audio Translation Tools | ScreenApp",
+          "snippet": "Free AI translators for videos, audio files, and podcasts. Translate content to 50+ languages instantly. Video dubbing and localization tools.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_15"
+        }
+      ],
+      "inline_url": "https://screenapp.io/translator",
+      "url_position": 1790,
+      "claim_text": "Notes on choosing: If you need quick subtitles, go for Veed.io, ScreenApp, or TransGull. ScreenApp",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1605,
+        "end_idx": 1624
+      },
+      "citation_token": "citeturn0search3",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.unite.ai/best-ai-video-translation-tools/?utm_source=chatgpt.com",
+          "title": "10 Best AI Video Translation Tools (January 2026) - Unite.AI",
+          "snippet": "Fliki Video Translator stands out as a cutting-edge AI tool that enables users to translate video content into over 80 languages with remarkable ease. Fliki delivers high-quality translations and natural-sounding voiceovers, making your videos accessible to a global audience.",
+          "domain": "unite.ai",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.unite.ai/best-ai-video-translation-tools/",
+      "url_position": 1902,
+      "claim_text": "If you want voice dubbing in English, Fliki or Dubverse are better. unite.ai",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1692,
+        "end_idx": 1712
+      },
+      "citation_token": "citeturn0search17",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.d-id.com/blog/best-ai-video-translators/?utm_source=chatgpt.com",
+          "title": "10 Best AI Video Translators of 2024 [Free & Paid Tools Reviewed]",
+          "snippet": "Descript combines video editing with AI translation, offering a seamless experience for creators who need to quickly transcribe, translate, and edit videos as if they were working on a document, allowing you to adjust translations in real-time. Key features: AI-powered transcription Real-time translation in 20+ languages Text-based video ...",
+          "domain": "D-ID",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.d-id.com/blog/best-ai-video-translators/",
+      "url_position": 2025,
+      "claim_text": "For editing/accuracy control, Descript gives more precision. D-ID",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+        "title": "7 Best AI Video Translator Apps of 2025 [Tested] - Notta",
+        "domain": "Notta"
+      },
+      {
+        "url": "https://screenapp.io/translator",
+        "title": "AI Translators - Free Video & Audio Translation Tools | ScreenApp",
+        "domain": "ScreenApp"
+      },
+      {
+        "url": "https://www.unite.ai/best-ai-video-translation-tools/",
+        "title": "10 Best AI Video Translation Tools (January 2026) - Unite.AI",
+        "domain": "unite.ai"
+      },
+      {
+        "url": "https://dubverse.ai/video-translator/",
+        "title": "AI Video Translator & Video Translation | Dubverse",
+        "domain": "Dubverse.ai"
+      },
+      {
+        "url": "https://www.d-id.com/blog/best-ai-video-translators/",
+        "title": "10 Best AI Video Translators of 2024 [Free & Paid Tools Reviewed]",
+        "domain": "D-ID"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/video/",
+        "title": "AI Video Translator with Real-Time Bilingual Subtitles | Immersive ...",
+        "domain": "Immersive Translate"
+      },
+      {
+        "url": "https://immersivetranslate.com/en/blog/6-best-video-translation-apps-for-computers-and-phones/",
+        "title": "6 Best Video Translation Apps for Computers and Phones",
+        "domain": "Immersive Translate"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.mobileappdaily.com/products/best-ai-video-translators",
+        "title": "11 Best AI Video Translators For 2026: Tested & Ranked",
+        "domain": "mobileappdaily.com"
+      },
+      {
+        "url": "https://akool.com/blog-posts/best-video-translation-apps",
+        "title": "Best Video Translation Apps - akool.com",
+        "domain": "akool.com"
+      },
+      {
+        "url": "https://maestra.ai/blogs/top-10-video-translator-apps",
+        "title": "Top 10 Video Translator Apps - Free & Paid - maestra.ai",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://screenapp.io/blog/best-ai-video-translator",
+        "title": "8 Best AI Video Translators of 2025 (For Multilingual Transcription ...",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://unifab.ai/resource/free-video-translator",
+        "title": "6 Best Free Video Translators in 2025 - unifab.ai",
+        "domain": "unifab.ai"
+      },
+      {
+        "url": "https://www.vozo.ai/blogs/best-ai-video-translation-tools",
+        "title": "Best 10 AI Video Translator Apps (2025 Reviews & Guides) - Vozo",
+        "domain": "vozo.ai"
+      },
+      {
+        "url": "https://usefulai.com/tools/ai-video-translators",
+        "title": "7 Best AI Video Translators in 2025",
+        "domain": "usefulai.com"
+      },
+      {
+        "url": "https://akool.com/apps/video-translation",
+        "title": "Best Free AI Video Translation | Best Lip Sync AI | AKOOL",
+        "domain": "akool.com"
+      },
+      {
+        "url": "https://fixthephoto.com/best-ai-video-translator.html",
+        "title": "8 Best AI Video Translators in 2026 [Reviewed & Tested]",
+        "domain": "fixthephoto.com"
+      },
+      {
+        "url": "https://www.synthesia.io/post/best-video-translator-apps",
+        "title": "The 10 Best AI Video Translation Tools (Tried & Tested) - Synthesia",
+        "domain": "synthesia.io"
+      },
+      {
+        "url": "https://www.dreamfaceapp.com/tools/video-translator",
+        "title": "AI Video Translator | Fast & Accurate Multi-Language Video Translation",
+        "domain": "dreamfaceapp.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 11,
+    "total_all": 18
+  },
+  "response_stats": {
+    "total_length": 2156,
+    "citation_count": 11,
+    "chars_with_citations": 223
+  }
+}

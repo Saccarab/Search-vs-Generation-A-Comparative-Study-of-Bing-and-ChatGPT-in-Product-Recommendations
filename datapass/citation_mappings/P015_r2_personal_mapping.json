@@ -1,0 +1,367 @@
+{
+  "run_id": "P015_r2",
+  "account_type": "personal",
+  "prompt": "Can you provide a tool for voice translation?",
+  "metadata": {
+    "hidden_queries": [
+      "best tools for voice translation apps or devices voice translator",
+      "voice translation tool recommendations speech translation software"
+    ],
+    "sonic_classification": {
+      "latency_ms": 13.353507965803146,
+      "simple_search_prob": 0.9193869574024367,
+      "complex_search_prob": 0.006275493194981589,
+      "no_search_prob": 0.0743375494025817,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best tools for voice translation apps or devices voice translator"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 243,
+        "end_idx": 275
+      },
+      "citation_token": "citeturn0search26turn0news44",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://translate.google.com/about/",
+      "url_position": 249,
+      "claim_text": "Here are simple voice translation tool options you can use: Mobile & Web Apps Google Translate – speaks and translates conversation in real time on iPhone/Android and now supports live translation through paired headphones too. Google Translate+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 347,
+        "end_idx": 366
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+      "url_position": 363,
+      "claim_text": "Instant Voice Translate – free app for live voice translation. Google Play",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 444,
+        "end_idx": 464
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+      "url_position": 523,
+      "claim_text": "iTranslate Voice – focused on spoken conversation in many languages. App Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 560,
+        "end_idx": 579
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.palabra.ai/",
+      "url_position": 680,
+      "claim_text": "Palabra.ai – AI-powered real-time speech-to-speech translator for meetings and events. Palabra",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 677,
+        "end_idx": 697
+      },
+      "citation_token": "citeturn0search30",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://live.maestra.ai/",
+      "url_position": 803,
+      "claim_text": "Maestra (Live Translate) – browser-based real-time voice translation in 125+ languages. Maestra",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 801,
+        "end_idx": 820
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wordly.ai/",
+      "url_position": 929,
+      "claim_text": "Professional / Event Tools Wordly – real-time translation + captions for meetings/events. Wordly",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 888,
+        "end_idx": 908
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://kudo.ai/",
+      "url_position": 1019,
+      "claim_text": "Kudo – live speech translation with human/AI interpreters. KUDO",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1018,
+        "end_idx": 1038
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://wanderonwards.co/device-that-translates-languages/",
+      "url_position": 1153,
+      "claim_text": "Dedicated Devices Timekettle Translator Earbuds/Devices – real-time voice translation hardware. wanderonwards.co",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1127,
+        "end_idx": 1147
+      },
+      "citation_token": "citeturn0search27",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://vasco-translator.com/",
+      "url_position": 1316,
+      "claim_text": "Vasco Instant Translator – pocket device with global voice translation support. vasco-translator.com",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://translate.google.com/about/",
+        "title": "Understand your world and communicate across languages",
+        "domain": "Google Translate"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/itranslate-voice/id522626820",
+        "title": "iTranslate Voice - App Store",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://www.palabra.ai/",
+        "title": "Palabra.ai: Live Voice Translator & Real-Time Speech Translation",
+        "domain": "Palabra"
+      },
+      {
+        "url": "https://live.maestra.ai/",
+        "title": "Live Translate | Real-Time Online Voice Translator",
+        "domain": "Maestra"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "AI Translation & Captions for Meetings and Events | Wordly",
+        "domain": "Wordly"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "KUDO"
+      },
+      {
+        "url": "https://wanderonwards.co/device-that-translates-languages/",
+        "title": "The Best Device That Translates Languages in Real Time",
+        "domain": "wanderonwards.co"
+      },
+      {
+        "url": "https://vasco-translator.com/",
+        "title": "Vasco Instant Translator Devices",
+        "domain": "vasco-translator.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.pairaphrase.com/blog/15-best-professional-translation-software-features",
+        "title": "19 Best Translation Software Tools for Professional Use [2025]",
+        "domain": "pairaphrase.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/digitalnomad/comments/1by9l7o/whats_the_best_app_you_guys_use_for_voice/",
+        "title": "What's the best app you guys use for voice translation to foreign ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/audio-translation",
+        "title": "23 best voice translator for your PC, Android, and iPhone",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-speech-translation-tools",
+        "title": "5 Best Speech Translation Tools We Recommend in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.timekettle.co/blogs/tips-and-tricks/best-ai-voice-translator-apps",
+        "title": "6 Best AI Voice Translator Apps in 2025 [with Download Link]",
+        "domain": "timekettle.co"
+      },
+      {
+        "url": "https://www.atanet.org/client-assistance/blog-best-translation-apps-a-translator-puts-four-to-the-test/",
+        "title": "Best Translation Apps: A Translator Puts Four to the Test",
+        "domain": "atanet.org"
+      },
+      {
+        "url": "https://lokalise.com/blog/best-ai-translation-tools/",
+        "title": "The Best AI translation tools right now",
+        "domain": "lokalise.com"
+      },
+      {
+        "url": "https://itranslate.com/",
+        "title": "iTranslate: The Leading Translation and Dictionary App",
+        "domain": "itranslate.com"
+      },
+      {
+        "url": "https://www.techradar.com/news/best-speech-to-text-app",
+        "title": "Best speech-to-text app of 2025",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://taia.io/blog/technology-and-translation/best-translation-software/",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-audio-translation-software",
+        "title": "Ultimate Guide – The Best Audio Translation Software of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-instant-voice-translation-tools",
+        "title": "The Best Instant Voice Translation Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://ehlion.com/magazine/translation-software/",
+        "title": "The 5 Best Machine Translation Tools in 2025",
+        "domain": "ehlion.com"
+      },
+      {
+        "url": "https://crowdin.com/blog/best-machine-translation-software",
+        "title": "The List of Best Machine Translation Software Out There",
+        "domain": "crowdin.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/voice-translator-ai-translate/id1036725690",
+        "title": "Voice Translator: AI Translate - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://www.deepl.com/en/products/voice",
+        "title": "instant, secure voice translation for global teams",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://www.facebook.com/groups/379302447418006/posts/973626204652291/",
+        "title": "What app is best to use as a translator for listening ...",
+        "domain": "facebook.com"
+      },
+      {
+        "url": "https://community.ricksteves.com/travel-forum/general-europe/voice-translators",
+        "title": "Voice translators - Rick Steves Travel Forum",
+        "domain": "ricksteves.com"
+      },
+      {
+        "url": "https://translatepress.com/best-ai-translation-tool/",
+        "title": "My Favorite AI Translation Tools & Online ...",
+        "domain": "translatepress.com"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://certifiedlanguages.com/blog/we-tested-ai-generated-translation-devices/",
+        "title": "AI Translation Devices: We Tested 3 So You Don't Have To",
+        "domain": "certifiedlanguages.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 24,
+    "total_all": 33
+  },
+  "response_stats": {
+    "total_length": 1470,
+    "citation_count": 9,
+    "chars_with_citations": 189
+  }
+}

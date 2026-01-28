@@ -1,0 +1,460 @@
+{
+  "run_id": "P066_r2",
+  "account_type": "personal",
+  "prompt": "What are the highest quality audio to text transcription websites?",
+  "metadata": {
+    "hidden_queries": [
+      "best audio to text transcription websites high quality",
+      "top audio transcription services accuracy and quality review"
+    ],
+    "sonic_classification": {
+      "latency_ms": 21.730037056840956,
+      "simple_search_prob": 0.9407147401565399,
+      "complex_search_prob": 0.0029274153308474645,
+      "no_search_prob": 0.05635784451261265,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": null,
+      "no_search_threshold": 0.15,
+      "threshold_order": [
+        "no_search",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_3cls_paid_v1_merge_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": null,
+        "no_search_threshold": 0.15,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best audio to text transcription websites high quality"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 176,
+        "end_idx": 227
+      },
+      "citation_token": "citeturn0search1turn0search2turn0search19turn0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.rev.com/resources/top-transcription-companies",
+          "title": "Top Transcription Companies of 2025 - Rev",
+          "snippet": "",
+          "domain": "www.rev.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.rev.com/resources/top-transcription-companies",
+      "url_position": 201,
+      "claim_text": "Here are some of the highest‑quality audio‑to‑text transcription services/websites right now, ranging from professional human‑enhanced options to strong AI‑only platforms: Sonix+3rev.com+3WPBeginner+3",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 400,
+        "end_idx": 419
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.rev.com/",
+          "title": "Rev: #1 Speech to Text Service For Lawyers + Beyond",
+          "snippet": "The best legal AI platform for precise transcription, secure evidence analysis, and court-ready summaries. Trusted by top law firms and attorneys ...",
+          "domain": "www.rev.com",
+          "ref_type": "search",
+          "ref_index": 3,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_3"
+        }
+      ],
+      "inline_url": "https://www.rev.com/",
+      "url_position": 423,
+      "claim_text": "Top Professional / High‑Accuracy Services Rev – Very high accuracy with human transcription options, widely used for reliable transcripts and captions. rev.com",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 519,
+        "end_idx": 538
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wpbeginner.com/showcase/best-transcription-services/",
+      "url_position": 549,
+      "claim_text": "GoTranscript – Known for very accurate transcription, supports many accents and languages. WPBeginner",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 618,
+        "end_idx": 638
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://scribie.com/",
+      "url_position": 696,
+      "claim_text": "Scribie – Offers human‑verified transcripts with high accuracy (~99%). Scribie",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 728,
+        "end_idx": 729
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.transcribeme.com/",
+      "url_position": 814,
+      "claim_text": "TranscribeMe – Combines AI with human review for improved transcription quality. TranscribeMe",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 902,
+        "end_idx": 922
+      },
+      "citation_token": "citeturn0search19",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/audio-to-text",
+      "url_position": 1007,
+      "claim_text": "Strong AI‑First / Automated Tools Happy Scribe – AI transcription with good accuracy and optional human proofreading; supports 120+ languages. happyscribe.com",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1014,
+        "end_idx": 1034
+      },
+      "citation_token": "citeturn0search27",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://sonix.ai/",
+          "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+          "snippet": "Sonix is the best audio and video transcription software online. Our industry-leading, speech-to-text algorithms will convert audio & video files to text in ...",
+          "domain": "sonix.ai",
+          "ref_type": "search",
+          "ref_index": 27,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_27"
+        }
+      ],
+      "inline_url": "https://sonix.ai/",
+      "url_position": 1141,
+      "claim_text": "Sonix.ai – Highly rated automated service with intuitive editor and good accuracy. Sonix",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1125,
+        "end_idx": 1145
+      },
+      "citation_token": "citeturn0search29",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://otter.ai/",
+      "url_position": 1253,
+      "claim_text": "Otter.ai – Excellent for meetings/interviews with live transcription + summaries. Otter AI",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1238,
+        "end_idx": 1257
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.uniscribe.co/",
+          "title": "Convert audio and video to text online for free",
+          "snippet": "Convert Audio & Video to Text. UniScribe lets you upload audio and video files or paste YouTube Links, quickly turning them into text with AI.Read more",
+          "domain": "www.uniscribe.co",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_4"
+        }
+      ],
+      "inline_url": "https://www.uniscribe.co/",
+      "url_position": 1368,
+      "claim_text": "UniScribe – Simple online AI transcription for audio/video files including YouTube. UniScribe",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1328,
+        "end_idx": 1348
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://transkriptor.com/",
+      "url_position": 1472,
+      "claim_text": "Transkriptor – AI audio‑to‑text conversion in 100+ languages. Transkriptor",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1437,
+        "end_idx": 1457
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://whisperit.ai/blog/best-audio-transcription-software",
+      "url_position": 1592,
+      "claim_text": "Others Worth Considering Temi – Fast, budget‑friendly automated transcripts. Whisperit AI",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1547,
+        "end_idx": 1567
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://speechnotes.co/",
+      "url_position": 1758,
+      "claim_text": "Speechnotes – Free browser‑based speech‑to‑text tool (lower accuracy but quick). Speech to Text Online",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1843,
+        "end_idx": 1863
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://gotranscript.com/blog/top-7-best-transcription-services",
+      "url_position": 2058,
+      "claim_text": "Tips for quality Human‑assisted services (Rev, GoTranscript, Scribie, TranscribeMe) tend to be most accurate for critical or technical content. Pure AI tools (Happy Scribe, Sonix, Otter) are fast and cost‑effective with strong accuracy for clear recordings. GoTranscript",
+      "url_index": 12
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.rev.com/resources/top-transcription-companies",
+        "title": "Top Transcription Companies of 2025 - Rev",
+        "domain": "rev.com"
+      },
+      {
+        "url": "https://www.rev.com/",
+        "title": "Rev: #1 Speech to Text Service For Lawyers + Beyond",
+        "domain": "rev.com"
+      },
+      {
+        "url": "https://www.wpbeginner.com/showcase/best-transcription-services/",
+        "title": "5 Best Transcription Services of 2025 Compared (Cheap & ...",
+        "domain": "WPBeginner"
+      },
+      {
+        "url": "https://scribie.com/",
+        "title": "Scribie provides Accurate & Affordable Human-Verified ...",
+        "domain": "Scribie"
+      },
+      {
+        "url": "https://www.transcribeme.com/",
+        "title": "TranscribeMe: Fast & Accurate Human Transcription Services",
+        "domain": "TranscribeMe"
+      },
+      {
+        "url": "https://www.happyscribe.com/audio-to-text",
+        "title": "Audio to Text Converter | Fast & Accurate AI Transcription",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://otter.ai/",
+        "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights",
+        "domain": "Otter AI"
+      },
+      {
+        "url": "https://www.uniscribe.co/",
+        "title": "Convert audio and video to text online for free",
+        "domain": "UniScribe"
+      },
+      {
+        "url": "https://transkriptor.com/",
+        "title": "Transcribe Audio to Text | Best AI Transcription Tool",
+        "domain": "Transkriptor"
+      },
+      {
+        "url": "https://whisperit.ai/blog/best-audio-transcription-software",
+        "title": "12 Best Audio Transcription Software Picks for 2025 - Whisperit",
+        "domain": "Whisperit AI"
+      },
+      {
+        "url": "https://speechnotes.co/",
+        "title": "Free Speech to Text Online, Voice Typing & Transcription",
+        "domain": "Speech to Text Online"
+      },
+      {
+        "url": "https://gotranscript.com/blog/top-7-best-transcription-services",
+        "title": "Top 7 Best Transcription Services (Detailed Comparison Guide)",
+        "domain": "GoTranscript"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.reddit.com/r/TechnologyProTips/comments/1ftt4xi/looking_for_an_app_or_website_that_converts_audio/",
+        "title": "Looking for an app or website that converts audio to text ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/Archivists/comments/1i7itoe/best_softwaretools_for_transcribing_voice/",
+        "title": "Best software/tools for transcribing voice recordings",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://caption-ed.com/the-best-transcription-software-in-2025/",
+        "title": "The Best Transcription Software in 2025 [8+ Tools Reviewed]",
+        "domain": "caption-ed.com"
+      },
+      {
+        "url": "https://www.g2.com/categories/transcription",
+        "title": "Best Transcription Software: User Reviews from December ...",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://reduct.video/blog/transcription-software-for-video/",
+        "title": "8 Best Audio and Video Transcription Software in 2025",
+        "domain": "reduct.video"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/free-transcription-software",
+        "title": "Best Free Transcription Software: 6 Tools Tested ... - Jamie AI",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://brasstranscripts.com/blog/best-ai-transcription-services-2025-tested-compared",
+        "title": "7 Best AI Transcription Services 2026: Comparison",
+        "domain": "brasstranscripts.com"
+      },
+      {
+        "url": "https://www.dittotranscripts.com/blog/most-affordable-transcription-services/",
+        "title": "The 10 Most Affordable Transcription Services",
+        "domain": "dittotranscripts.com"
+      },
+      {
+        "url": "https://otranscribe.com/",
+        "title": "oTranscribe",
+        "domain": "otranscribe.com"
+      },
+      {
+        "url": "https://riverside.com/blog/best-transcription-services",
+        "title": "10 Best Transcription Services for Accurate ...",
+        "domain": "riverside.com"
+      },
+      {
+        "url": "https://riverside.com/transcription",
+        "title": "Audio & Video Transcription. Powered by AI.",
+        "domain": "riverside.com"
+      },
+      {
+        "url": "https://translationreport.com/transcription-services",
+        "title": "5 Best Transcription Services Reviewed by TranslationReport",
+        "domain": "translationreport.com"
+      },
+      {
+        "url": "https://pickwriters.com/transcription-services",
+        "title": "Best Transcription Services For Audio and Video Reviewed",
+        "domain": "pickwriters.com"
+      },
+      {
+        "url": "https://zapier.com/blog/best-transcription-apps/",
+        "title": "The best transcription software in 2025",
+        "domain": "zapier.com"
+      },
+      {
+        "url": "https://www.happyscribe.com/blog/best-human-transcription-services",
+        "title": "6 Best Human Transcription Services in 2026",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://www.happyscribe.com/blog/best-video-to-text-software",
+        "title": "5 Best video to text Software in 2026",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://www.lemonfox.ai/blog/best-audio-transcription-services",
+        "title": "7 Best Audio Transcription Services to Use in 2025 | Blog",
+        "domain": "lemonfox.ai"
+      },
+      {
+        "url": "https://techcommunity.microsoft.com/discussions/windows11/what-is-the-best-audio-file-to-text-converter-for-transcribing/4403367",
+        "title": "What is the best audio file to text converter for Transcribing?",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://meetgeek.ai/blog/best-free-transcription-software",
+        "title": "4 Best Free Transcription Software For 2025 | Personally ...",
+        "domain": "meetgeek.ai"
+      }
+    ],
+    "total_cited": 13,
+    "total_additional": 19,
+    "total_all": 32
+  },
+  "response_stats": {
+    "total_length": 2200,
+    "citation_count": 13,
+    "chars_with_citations": 269
+  }
+}

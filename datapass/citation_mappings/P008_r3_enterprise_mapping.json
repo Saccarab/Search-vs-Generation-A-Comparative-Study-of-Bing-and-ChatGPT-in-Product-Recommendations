@@ -1,0 +1,383 @@
+{
+  "run_id": "P008_r3",
+  "account_type": "enterprise",
+  "prompt": "Is there an AI that changes your voice?",
+  "metadata": {
+    "hidden_queries": [
+      "AI that changes your voice real-time or recordings voice changer AI",
+      "best voice changing AI tools and software"
+    ],
+    "sonic_classification": {
+      "latency_ms": 11.194421909749508,
+      "simple_search_prob": 0.880739334371127,
+      "complex_search_prob": 0.0006293989188137188,
+      "no_search_prob": 0.11863126671005933,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "AI that changes your voice real-time or recordings voice changer AI"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 196,
+        "end_idx": 215
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.unite.ai/voice-changer-tools/",
+      "url_position": 201,
+      "claim_text": "Yes — there are AI tools that change your voice (in real time or from a recording). They use machine learning to modify pitch, tone, style, gender, age, or even imitate other types of voices. unite.ai",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 365,
+        "end_idx": 385
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.voicemod.net/en/ai-voices/",
+      "url_position": 392,
+      "claim_text": "Examples: Real-time (live voice change): Voicemod – AI voice changer for PC that alters your voice live (e.g., on Discord, games). voicemod.net",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 482,
+        "end_idx": 515
+      },
+      "citation_token": "citeturn0search5turn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wootechy.com/voice-change/best-ai-voice-changer/",
+      "url_position": 533,
+      "claim_text": "Voice.ai – real-time voice transformation with lots of voice presets and custom models. WooTechy+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 577,
+        "end_idx": 597
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.altered.ai/real-time/",
+      "url_position": 658,
+      "claim_text": "Altered – low-latency AI voice changer for live use. Altered",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 701,
+        "end_idx": 721
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.resemble.ai/voice-changer/",
+      "url_position": 802,
+      "claim_text": "Resemble AI – live speech-to-speech voice mod with integrations to apps like Zoom and Discord. Resemble AI",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 777,
+        "end_idx": 796
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://voicery.net/",
+      "url_position": 900,
+      "claim_text": "Voicery – open-source real-time voice changer. .voicery",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 920,
+        "end_idx": 939
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://elevenlabs.io/voice-changer",
+      "url_position": 1046,
+      "claim_text": "Recorded audio (post-processing): ElevenLabs Voice Changer – upload or record, then transform voice using AI. ElevenLabs",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1012,
+        "end_idx": 1031
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/voice-changer",
+      "url_position": 1157,
+      "claim_text": "Murf.ai – upload recordings and choose new AI voiceover styles. Murf AI",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1154,
+        "end_idx": 1200
+      },
+      "citation_token": "citeturn0search0turn0search8turn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://screenapp.io/features/ai-voice-changer",
+          "title": "AI Voice Changer Free - Change Voice Recording Online",
+          "snippet": "Free AI voice changer transforms your voice in real-time or recorded audio. Change voice recording pitch, tone, and style with voice changer AI online.",
+          "domain": "screenapp.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://screenapp.io/features/ai-voice-changer",
+      "url_position": 1331,
+      "claim_text": "Online free tools (e.g., Screenapp, AnyVoiceLab, ParrotAI) let you change voice by uploading a file in a browser. ScreenApp+2Any Voice Lab+2",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1368,
+        "end_idx": 1387
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://flixier.com/blog/best-ai-voice-changer-tools-in-2025-top-picks-and-how-to-make-your-choice",
+      "url_position": 1539,
+      "claim_text": "What they do: change pitch/timbre switch gender/age add effects (robotic, character voices) make voices unrecognizable or stylistically different Flixier",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1563,
+        "end_idx": 1582
+      },
+      "citation_token": "citeturn0search7",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://geekflare.com/best/best-voice-changer/?utm_source=chatgpt.com",
+          "title": "17 Best Voice Changers to Transform Your Voice [Tried and Tested]",
+          "snippet": "Best voice changers, including ElevenLabs and Murf AI, to help you create realistic audio effects for videos, gaming, podcasts, and live streams.",
+          "domain": "geekflare.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://geekflare.com/best/best-voice-changer/",
+      "url_position": 1825,
+      "claim_text": "Use cases: gaming, streaming, content creation, privacy or anonymity. Just be cautious — using voice changers for deception or impersonation has ethical and legal risks. geekflare.com",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.unite.ai/voice-changer-tools/",
+        "title": "9 Best AI Voice Changer Tools (January 2026) - Unite.AI",
+        "domain": "unite.ai"
+      },
+      {
+        "url": "https://www.voicemod.net/en/ai-voices/",
+        "title": "AI Voice Changer in real-time. And it's free! | Voicemod",
+        "domain": "voicemod.net"
+      },
+      {
+        "url": "https://www.wootechy.com/voice-change/best-ai-voice-changer/",
+        "title": "6 Best AI Voice Changers of 2025 (Ranked!) - WooTechy",
+        "domain": "WooTechy"
+      },
+      {
+        "url": "https://www.altered.ai/real-time/",
+        "title": "Real-Time Voice Changer | Altered",
+        "domain": "Altered"
+      },
+      {
+        "url": "https://www.resemble.ai/voice-changer/",
+        "title": "Real Time Live AI Voice Changer App by Resemble AI | Resemble AI",
+        "domain": "Resemble AI"
+      },
+      {
+        "url": "https://voicery.net/",
+        "title": ".voicery - Free Real-Time AI Voice Changer | Open Source",
+        "domain": ".voicery"
+      },
+      {
+        "url": "https://elevenlabs.io/voice-changer",
+        "title": "AI Voice Changer: Use AI To Change Your Voice For Free - ElevenLabs",
+        "domain": "ElevenLabs"
+      },
+      {
+        "url": "https://murf.ai/voice-changer",
+        "title": "AI Voice Changer: Change Your Voice With a Realistic AI Voice - Murf",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://screenapp.io/features/ai-voice-changer",
+        "title": "AI Voice Changer Free - Change Voice Recording Online",
+        "domain": "ScreenApp"
+      },
+      {
+        "url": "https://flixier.com/blog/best-ai-voice-changer-tools-in-2025-top-picks-and-how-to-make-your-choice",
+        "title": "Best AI Voice Changer Tools For Every Scenario - Flixier",
+        "domain": "Flixier"
+      },
+      {
+        "url": "https://geekflare.com/best/best-voice-changer/",
+        "title": "17 Best Voice Changers to Transform Your Voice [Tried and Tested]",
+        "domain": "geekflare.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://venturebeat.com/orchestration/everything-in-voice-ai-just-changed-how-enterprise-ai-builders-can-benefit",
+        "title": "Everything in voice AI just changed: how enterprise AI builders can benefit",
+        "domain": "venturebeat.com"
+      },
+      {
+        "url": "https://www.eweek.com/news/pocket-tts-real-time-voice-ai-laptop-neuron/",
+        "title": "Meet Pocket TTS: Real-Time Voice AI That Runs on a Laptop",
+        "domain": "eweek.com"
+      },
+      {
+        "url": "https://kripeshadwani.com/best-ai-voice-changers/",
+        "title": "7 Best AI Voice Changers (2026) – The Future of Voice is Here",
+        "domain": "kripeshadwani.com"
+      },
+      {
+        "url": "https://contentmavericks.com/best-ai-voice-changer/",
+        "title": "7 Best AI Voice Changers 2026 (#1 For PC & Mac) - Content Mavericks",
+        "domain": "contentmavericks.com"
+      },
+      {
+        "url": "https://alignify.co/tools/voice-changer",
+        "title": "5 Best AI Voice Changers 2026: Real-time, AI-Driven",
+        "domain": "alignify.co"
+      },
+      {
+        "url": "https://magichour.ai/blog/best-ai-voice-changers",
+        "title": "The 5 Best AI Voice Changers",
+        "domain": "magichour.ai"
+      },
+      {
+        "url": "https://www.straight.com/guides/software/best-ai-voice-changer-tools/",
+        "title": "Top 10 Best AI Voice Changer Tools in 2025 - Straight.com",
+        "domain": "straight.com"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-ai-voice-changer",
+        "title": "10 Best AI Voice Changers for Realistic Audio in 2025 - Descript",
+        "domain": "descript.com"
+      },
+      {
+        "url": "https://www.beatoven.ai/blog/10-best-ai-voice-changers-key-features-pricing-details/",
+        "title": "10 Best AI Voice Changers [Key Features + Pricing Details]",
+        "domain": "beatoven.ai"
+      },
+      {
+        "url": "https://anyvoicelab.com/voice-changer/",
+        "title": "AI Voice Changer (Free & No Login)",
+        "domain": "anyvoicelab.com"
+      },
+      {
+        "url": "https://aitoolmate.com/ai-tools/voice-changer/",
+        "title": "10 Best AI Voice Changer Tools [Free+Paid] 2026 - AiToolMate",
+        "domain": "aitoolmate.com"
+      },
+      {
+        "url": "https://voice.ai/",
+        "title": "Free AI Voice Changer & Voice Agent Platform - Voice.ai",
+        "domain": "voice.ai"
+      },
+      {
+        "url": "https://www.tryparrotai.com/tools/ai-voice-changer",
+        "title": "AI Voice Changer | Parrot AI",
+        "domain": "tryparrotai.com"
+      },
+      {
+        "url": "https://audioenhancer.ai/tools/voice-changer/",
+        "title": "Free AI Voice Changer - Change Your Voice Online in Seconds",
+        "domain": "audioenhancer.ai"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 14,
+    "total_all": 25
+  },
+  "response_stats": {
+    "total_length": 1875,
+    "citation_count": 11,
+    "chars_with_citations": 253
+  }
+}

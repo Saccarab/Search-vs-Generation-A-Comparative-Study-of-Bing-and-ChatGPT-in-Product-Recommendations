@@ -1,0 +1,423 @@
+{
+  "run_id": "P019_r2",
+  "account_type": "personal",
+  "prompt": "Quel est le meilleur logiciel de traduction instantané ?",
+  "metadata": {
+    "hidden_queries": [
+      "meilleur logiciel de traduction instantané logiciel traduction instantanée",
+      "best instant translation software real time translation tools comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 9.465807932429016,
+      "simple_search_prob": 0.9575395964757542,
+      "complex_search_prob": 0.0014110233567689646,
+      "no_search_prob": 0.04104938016747688,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "meilleur logiciel de traduction instantané logiciel traduction instantanée"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 113,
+        "end_idx": 114
+      },
+      "citation_token": "",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-ai-real-time-translators",
+      "url_position": 117,
+      "claim_text": "Voici les meilleurs logiciels et outils de traduction instantanée (texte, voix, conversation) actuellement : X-Doc+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 349,
+        "end_idx": 369
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.aiphone.ai/blog/fr/applications-de-traduction-en-temps-reel/",
+      "url_position": 379,
+      "claim_text": "1. Google Traduction – le plus polyvalent Traduction texte, voix, image et conversation en temps réel. Très large couverture de langues (100+). Gratuit et disponible sur web et mobile. Aiphone",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 584,
+        "end_idx": 617
+      },
+      "citation_token": "citeturn0search5turn0search36",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.lesnumeriques.com/intelligence-artificielle/quelles-sont-les-meilleures-ia-pour-traduire-du-texte-dans-diverses-langues-a234422.html?utm_source=chatgpt.com",
+          "title": "Quelles sont les meilleures IA pour traduire du texte dans ...",
+          "snippet": "25 Mar 2025 — DeepL est un service de traduction en ligne réputé pour la précision et la fluidité de ses traductions. Grâce à une intelligence artificielle ...Read more",
+          "domain": "lesnumeriques.com",
+          "ref_type": "search",
+          "ref_index": 36,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_36"
+        }
+      ],
+      "inline_url": "https://www.deepl.com/fr/translator",
+      "url_position": 670,
+      "claim_text": "2. DeepL – souvent la meilleure qualité de traduction texte Traductions plus naturelles et précises, notamment pour les langues européennes. Excellent pour documents et communications écrites rapides. deepl.com+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 766,
+        "end_idx": 786
+      },
+      "citation_token": "citeturn0search18",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.transyncai.com/blog-best-live-translator-solutions/",
+      "url_position": 851,
+      "claim_text": "3. Microsoft Translator – bon pour usage professionnel Traduction en direct de conversations de groupe. Intégration avec Teams/Office. 同言翻译",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 991,
+        "end_idx": 1011
+      },
+      "citation_token": "citeturn0search23",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://x-doc.ai/usecases/en/the-best-real-time-translation-software",
+          "title": "The Best Real Time Translation Software of 2026",
+          "snippet": "Ultimate Guide – The Top Real Time Translation Software of 2026: 1. X-doc.AI Translive; 2. DeepL; 3. Unbabel; 4. Lokalise; 5. CaptionHub.",
+          "domain": "x-doc.ai",
+          "ref_type": "search",
+          "ref_index": 23,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_23"
+        }
+      ],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-real-time-translation-software",
+      "url_position": 1117,
+      "claim_text": "4. X-doc.AI Translive – top choix pour traduction vocale en temps réel Solutions avancées pour conversations en direct sans latence importante. Très précis pour échanges vocaux multilingues. X-Doc",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1216,
+        "end_idx": 1249
+      },
+      "citation_token": "citeturn0search24turn0search4",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://numerique26.web.ac-grenoble.fr/applications-traduction",
+          "title": "Applications pour traduire instantanément une autre langue",
+          "snippet": "Applications pour traduire instantanément une autre langue · Say Hi Traduire · Google traduction · Microsoft translator : · Traduction de voix instantanée.Read more",
+          "domain": "numerique26.web.ac-grenoble.fr",
+          "ref_type": "search",
+          "ref_index": 24,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_24"
+        },
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en_CA&id=com.erudite.translator&utm_source=chatgpt.com",
+          "title": "Instant Voice Translate - Apps on Google Play",
+          "snippet": "\"Instant Voice Translate\" is a free and user-friendly language translation app powered by cutting-edge AI technology. Whether you're traveling abroad or ...Read more",
+          "domain": "google.com",
+          "ref_type": "search",
+          "ref_index": 4,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_4"
+        }
+      ],
+      "inline_url": "https://numerique26.web.ac-grenoble.fr/applications-traduction",
+      "url_position": 1397,
+      "claim_text": "5. iTranslate / SayHi / Instant Voice Translate (apps) – pratiques pour mobile Faciles à utiliser en voyage, traduction vocale simple. Bonnes alternatives quand tu veux juste une app rapide. Numérique 26+1",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1521,
+        "end_idx": 1531
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://x-doc.ai/usecases/en/the-best-ai-real-time-translators",
+      "url_position": 1712,
+      "claim_text": "👉 Pour usage quotidien gratuit et simple, Google Traduction est souvent le meilleur choix. Pour qualité linguistique supérieure, DeepL est très fort. Pour traduction vocale live pro, X-doc.AI Translive ou Microsoft Translator sont meilleurs. X-Doc",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-ai-real-time-translators",
+        "title": "Ultimate Guide – The Best AI Real Time Translators of 2026",
+        "domain": "X-Doc"
+      },
+      {
+        "url": "https://www.aiphone.ai/blog/fr/applications-de-traduction-en-temps-reel/",
+        "title": "10 Meilleures Applications de Traduction en Temps Réel",
+        "domain": "Aiphone"
+      },
+      {
+        "url": "https://www.deepl.com/fr/translator",
+        "title": "DeepL Translate : le meilleur traducteur au monde",
+        "domain": "deepl.com"
+      },
+      {
+        "url": "https://www.transyncai.com/blog-best-live-translator-solutions/",
+        "title": "Best Live Translator: Your Complete 2026 Guide",
+        "domain": "同言翻译"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-real-time-translation-software",
+        "title": "The Best Real Time Translation Software of 2026",
+        "domain": "X-Doc"
+      },
+      {
+        "url": "https://numerique26.web.ac-grenoble.fr/applications-traduction",
+        "title": "Applications pour traduire instantanément une autre langue",
+        "domain": "Numérique 26"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://francoischarron.com/gadgets-techno/web-applications/lapp-google-traduction-se-dote-finalement-de-cette-fonction-attendue/qywvN673J2/",
+        "title": "La traduction en direct grâce à Google Traduction et l'IA",
+        "domain": "francoischarron.com"
+      },
+      {
+        "url": "https://fr-ca.smartling.com/blog/5-machine-translation-software-and-when-to-use-them",
+        "title": "5 logiciels de traduction automatique et quand les utiliser - Smartling",
+        "domain": "smartling.com"
+      },
+      {
+        "url": "https://fr.smartling.com/blog/ai-translation-tools",
+        "title": "Les meilleurs outils de traduction par IA pour 2025",
+        "domain": "smartling.com"
+      },
+      {
+        "url": "https://www.smartling.com/blog/real-time-translation",
+        "title": "Real-time translation software: Everything you need to know",
+        "domain": "smartling.com"
+      },
+      {
+        "url": "https://pvtistes.net/applis-traduction/",
+        "title": "Les meilleures applis pour traduire en direct (texte, photo, vocal)",
+        "domain": "pvtistes.net"
+      },
+      {
+        "url": "https://www.jotme.io/fr/blog/best-live-translation",
+        "title": "Les 7 meilleurs outils de traduction en direct basés sur l'IA ...",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://www.weglot.com/fr/blog/machine-translation-software",
+        "title": "Les meilleurs logiciels de traduction automatique à ...",
+        "domain": "weglot.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_CA&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=fr&id=com.erudite.translator",
+        "title": "Traduction Vocale Instant – Applications sur ...",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://fr.capterra.ca/directory/30934/translation-management/software",
+        "title": "Logiciels de traduction - Avis, notes, prix et abonnements - Capterra",
+        "domain": "capterra.ca"
+      },
+      {
+        "url": "https://lokalise.com/blog/best-ai-translation-tools/",
+        "title": "The Best AI translation tools right now",
+        "domain": "lokalise.com"
+      },
+      {
+        "url": "https://www.polilingua.fr/blog/post/traduction-automatique-neuronale.htm",
+        "title": "Meilleurs Logiciels de Traduction Automatique 2025",
+        "domain": "polilingua.fr"
+      },
+      {
+        "url": "https://certifiedlanguages.com/blog/we-tested-ai-generated-translation-devices/",
+        "title": "AI Translation Devices: We Tested 3 So You Don't Have To",
+        "domain": "certifiedlanguages.com"
+      },
+      {
+        "url": "https://www.pairaphrase.com/blog/15-best-professional-translation-software-features",
+        "title": "19 Best Translation Software Tools for Professional Use ...",
+        "domain": "pairaphrase.com"
+      },
+      {
+        "url": "https://phrase.com/fr/blog/posts/machine-translation-tools/",
+        "title": "Outils de traduction automatique à explorer en 2025",
+        "domain": "phrase.com"
+      },
+      {
+        "url": "https://taia.io/blog/technology-and-translation/best-translation-software/",
+        "title": "The Best Translation Software in 2025: Compare 33 Tools ...",
+        "domain": "taia.io"
+      },
+      {
+        "url": "https://www.alphatrad.fr/actualites/les-meilleurs-sites-outils-de-traduction-gratuits",
+        "title": "Quels sont les meilleurs outils et sites de traduction gratuits",
+        "domain": "alphatrad.fr"
+      },
+      {
+        "url": "https://www.clubic.com/application-mobile/best-pick-380846-les-meilleures-applications-de-traduction-sur-android.html",
+        "title": "Quelles sont les meilleures applications de traduction ...",
+        "domain": "clubic.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/singularity/comments/12foqsp/what_is_the_best_current_real_time_voice/",
+        "title": "What is the best current real time voice translator?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://translatepress.com/best-ai-translation-tool/",
+        "title": "My Favorite AI Translation Tools & Online ...",
+        "domain": "translatepress.com"
+      },
+      {
+        "url": "https://www.sitew.com/intelligence-artificielle/logiciels-de-traduction-ia",
+        "title": "Les 12 meilleurs logiciels de traduction IA à utiliser en 2025",
+        "domain": "sitew.com"
+      },
+      {
+        "url": "https://ehlion.com/magazine/translation-software/",
+        "title": "The 5 Best Machine Translation Tools in 2025",
+        "domain": "ehlion.com"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-tourist-real-time-translation-tools",
+        "title": "The Best Tourist Real Time Translation Tools of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://x-doc.ai/usecases/en/the-best-real-time-translation-tools-for-travelers",
+        "title": "The Best Real Time Translation Tools for Travelers of 2026",
+        "domain": "x-doc.ai"
+      },
+      {
+        "url": "https://apps.apple.com/fr/app/traduction-vocale-instant/id1298384039",
+        "title": "Traduction Vocale Instant - App Store - Apple",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://www.bureauworks.com/fr/blog/5-meilleurs-outils-de-traduction-automatique-avec-exemples",
+        "title": "5 Meilleurs Outils de Traduction Automatique avec des ...",
+        "domain": "bureauworks.com"
+      },
+      {
+        "url": "https://boostlingo.com/blog/best-ai-tools-for-translation-at-events/",
+        "title": "Best AI Tools for Live Translation at Events",
+        "domain": "boostlingo.com"
+      },
+      {
+        "url": "https://centus.com/blog/best-online-translators",
+        "title": "Reviewing 10 Best Online Translators: Free & Professional",
+        "domain": "centus.com"
+      },
+      {
+        "url": "https://www.lesnumeriques.com/intelligence-artificielle/quelles-sont-les-meilleures-ia-pour-traduire-du-texte-dans-diverses-langues-a234422.html",
+        "title": "Quelles sont les meilleures IA pour traduire du texte dans ...",
+        "domain": "lesnumeriques.com"
+      },
+      {
+        "url": "https://www.atanet.org/client-assistance/blog-best-translation-apps-a-translator-puts-four-to-the-test/",
+        "title": "Best Translation Apps: A Translator Puts Four to the Test",
+        "domain": "atanet.org"
+      },
+      {
+        "url": "https://wanderonwards.co/device-that-translates-languages/",
+        "title": "The Best Device That Translates Languages in Real Time",
+        "domain": "wanderonwards.co"
+      },
+      {
+        "url": "https://www.rapidtranslate.org/fr/resources/language-translator-device",
+        "title": "Dispositif de traduction linguistique",
+        "domain": "rapidtranslate.org"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 34,
+    "total_all": 40
+  },
+  "response_stats": {
+    "total_length": 1778,
+    "citation_count": 7,
+    "chars_with_citations": 137
+  }
+}

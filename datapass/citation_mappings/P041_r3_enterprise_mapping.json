@@ -1,0 +1,546 @@
+{
+  "run_id": "P041_r3",
+  "account_type": "enterprise",
+  "prompt": "What other text-to-speech software options are available besides Outplayed?",
+  "metadata": {
+    "hidden_queries": [
+      "text-to-speech software options besides Outplayed",
+      "alternatives to Outplayed text to speech tools text-to-speech software list"
+    ],
+    "sonic_classification": {
+      "latency_ms": 17.078878998290747,
+      "simple_search_prob": 0.9942036887557621,
+      "complex_search_prob": 0.0023781851481572925,
+      "no_search_prob": 0.003418126096080558,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "text-to-speech software options besides Outplayed"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 295,
+        "end_idx": 314
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+          "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+          "snippet": "Murf.ai is the best professional text-to-speech converter in 20+ languages including English, French, German and Spanish. Balabolka is a free TTS software.",
+          "domain": "geekflare.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1754524800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://geekflare.com/best/best-text-to-speech-converters/",
+      "url_position": 292,
+      "claim_text": "Here are text-to-speech (TTS) software alternatives you can use besides Outplayed, covering free tools, commercial platforms, developer APIs, and open-source engines: Professional / Commercial TTS tools Murf.ai – AI voice generator with professional voiceovers and customization. Geekflare",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 368,
+        "end_idx": 387
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+          "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+          "snippet": "Murf.ai is the best professional text-to-speech converter in 20+ languages including English, French, German and Spanish. Balabolka is a free TTS software.",
+          "domain": "geekflare.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1754524800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://geekflare.com/best/best-text-to-speech-converters/",
+      "url_position": 409,
+      "claim_text": "LOVO – Lifelike voices with emotional range. Geekflare",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 464,
+        "end_idx": 483
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+          "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+          "snippet": "Murf.ai is the best professional text-to-speech converter in 20+ languages including English, French, German and Spanish. Balabolka is a free TTS software.",
+          "domain": "geekflare.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1754524800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://geekflare.com/best/best-text-to-speech-converters/",
+      "url_position": 549,
+      "claim_text": "Speechify – Popular for audiobooks, articles, and productivity use. Geekflare",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 554,
+        "end_idx": 573
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+          "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+          "snippet": "Murf.ai is the best professional text-to-speech converter in 20+ languages including English, French, German and Spanish. Balabolka is a free TTS software.",
+          "domain": "geekflare.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1754524800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://geekflare.com/best/best-text-to-speech-converters/",
+      "url_position": 683,
+      "claim_text": "ElevenLabs – Advanced AI voice cloning and expressive voices. Geekflare",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 636,
+        "end_idx": 655
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 809,
+      "claim_text": "Play.ht – Large voice library for podcasts and media. TechRadar",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 728,
+        "end_idx": 747
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.techradar.com/best/best-text-to-speech-software",
+      "url_position": 946,
+      "claim_text": "NaturalReader – Simple cloud-based TTS with multi-file support. TechRadar",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 821,
+        "end_idx": 831
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://contentmavericks.com/best-text-to-speech-software/",
+      "url_position": 1092,
+      "claim_text": "Descript – TTS tied into a broader audio/video editing workflow. Content Mavericks",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 902,
+        "end_idx": 922
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://contentmavericks.com/best-text-to-speech-software/",
+      "url_position": 1224,
+      "claim_text": "Synthesys – Tools focused on voiceovers for videos. Content Mavericks",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1006,
+        "end_idx": 1026
+      },
+      "citation_token": "citeturn0search24",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Typecast_%28AI_voice_generator%29",
+      "url_position": 1371,
+      "claim_text": "Typecast – Cloud TTS with expressive prosody (AI voice + avatar features). Wikipedia",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1136,
+        "end_idx": 1156
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Amazon_Polly",
+      "url_position": 1545,
+      "claim_text": "Developer-focused APIs Amazon Polly – Scalable speech synthesis with many languages and voices. Wikipedia",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1239,
+        "end_idx": 1259
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://cartesia.ai/learn/top-google-text-to-speech-alternatives",
+      "url_position": 1674,
+      "claim_text": "Google Cloud Text-to-Speech – High-quality neural TTS with developer API. Cartesia",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1333,
+        "end_idx": 1338
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 1829,
+      "claim_text": "Microsoft Azure TTS – Part of Azure Cognitive Services for apps. Software Testing Help",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1416,
+        "end_idx": 1435
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+          "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+          "snippet": "Murf.ai is the best professional text-to-speech converter in 20+ languages including English, French, German and Spanish. Balabolka is a free TTS software.",
+          "domain": "geekflare.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1754524800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://geekflare.com/best/best-text-to-speech-converters/",
+      "url_position": 1958,
+      "claim_text": "IBM Watson TTS – Business-oriented text-to-speech API. Geekflare",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 1523,
+        "end_idx": 1542
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+          "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+          "snippet": "Murf.ai is the best professional text-to-speech converter in 20+ languages including English, French, German and Spanish. Balabolka is a free TTS software.",
+          "domain": "geekflare.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1754524800,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://geekflare.com/best/best-text-to-speech-converters/",
+      "url_position": 2105,
+      "claim_text": "Free / Basic Tools Balabolka – Free Windows TTS with wide format support. Geekflare",
+      "url_index": 13
+    },
+    {
+      "token_position": {
+        "start_idx": 1652,
+        "end_idx": 1684
+      },
+      "citation_token": "citeturn0search4turn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://cartesia.ai/learn/top-google-text-to-speech-alternatives",
+      "url_position": 1674,
+      "claim_text": "Google Cloud Text-to-Speech – High-quality neural TTS with developer API. Cartesia",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1749,
+        "end_idx": 1769
+      },
+      "citation_token": "citeturn0search23",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://dev.to/raef_17/the-5-best-text-to-speech-platforms-in-2025-5alb",
+      "url_position": 2284,
+      "claim_text": "TTSReader / Text2Speech.online / tts4free / Texttovoice.online – Simple web-based or free TTS tools. DEV Community+1",
+      "url_index": 14
+    },
+    {
+      "token_position": {
+        "start_idx": 1871,
+        "end_idx": 1891
+      },
+      "citation_token": "citeturn0search25",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+      "url_position": 1829,
+      "claim_text": "Microsoft Azure TTS – Part of Azure Cognitive Services for apps. Software Testing Help",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1988,
+        "end_idx": 2008
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/FreeTTS",
+      "url_position": 2425,
+      "claim_text": "FreeTTS (open-source Java) – Developer-friendly engine. Wikipedia",
+      "url_index": 15
+    },
+    {
+      "token_position": {
+        "start_idx": 2104,
+        "end_idx": 2123
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/ESpeak",
+      "url_position": 2565,
+      "claim_text": "Open-Source and Lightweight Engines eSpeak (eSpeakNG) – Cross-platform open-source TTS. Wikipedia",
+      "url_index": 16
+    },
+    {
+      "token_position": {
+        "start_idx": 2303,
+        "end_idx": 2335
+      },
+      "citation_token": "citeturn0search1turn0search3",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+          "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+          "snippet": "Murf.ai is the best professional text-to-speech converter in 20+ languages including English, French, German and Spanish. Balabolka is a free TTS software.",
+          "domain": "geekflare.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1754524800,
+          "ref_key": "0_search_1"
+        },
+        {
+          "url": "https://geekflare.com/best/best-text-to-speech-converters/?utm_source=chatgpt.com",
+          "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+          "snippet": "Murf.ai is the best professional text-to-speech converter in 20+ languages including English, French, German and Spanish. Balabolka is a free TTS software.",
+          "domain": "Geekflare",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://geekflare.com/best/best-text-to-speech-converters/",
+      "url_position": 2105,
+      "claim_text": "Free / Basic Tools Balabolka – Free Windows TTS with wide format support. Geekflare",
+      "url_index": 13
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://geekflare.com/best/best-text-to-speech-converters/",
+        "title": "15 Best Text-to-Speech Software in 2025 - Geekflare",
+        "domain": "Geekflare"
+      },
+      {
+        "url": "https://www.techradar.com/best/best-text-to-speech-software",
+        "title": "Best text-to-speech software of 2026 - TechRadar",
+        "domain": "TechRadar"
+      },
+      {
+        "url": "https://contentmavericks.com/best-text-to-speech-software/",
+        "title": "7 Best Text-to-Speech Software 2026 (50 TTS Tools Ranked)",
+        "domain": "Content Mavericks"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Typecast_%28AI_voice_generator%29",
+        "title": "Typecast (AI voice generator)",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Amazon_Polly",
+        "title": "Amazon Polly",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://cartesia.ai/learn/top-google-text-to-speech-alternatives",
+        "title": "Top 10 Best Google Text-to-Speech Alternatives in 2025",
+        "domain": "Cartesia"
+      },
+      {
+        "url": "https://www.softwaretestinghelp.com/text-to-speech-software/",
+        "title": "Top 16 BEST Text To Speech Software (2026 Review)",
+        "domain": "Software Testing Help"
+      },
+      {
+        "url": "https://dev.to/raef_17/the-5-best-text-to-speech-platforms-in-2025-5alb",
+        "title": "The 5 Best Text-to-Speech Platforms in 2025 - DEV Community",
+        "domain": "DEV Community"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/FreeTTS",
+        "title": "FreeTTS",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/ESpeak",
+        "title": "ESpeak",
+        "domain": "Wikipedia"
+      },
+      {
+        "url": "https://www.lemonfox.ai/blog/open-source-text-to-speech",
+        "title": "12 Best Open Source Text to Speech Tools in 2025 | Blog",
+        "domain": "Lemonfox"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://nerdynav.com/open-source-ai-voice/",
+        "title": "Best FREE ElevenLabs Alternatives & Opensource Text to Speech Models ...",
+        "domain": "nerdynav.com"
+      },
+      {
+        "url": "https://www.softwareworld.co/text-to-speech-software/",
+        "title": "List of Top Text-To-Speech Software - Jan 2026 Reviews | SoftwareWorld",
+        "domain": "softwareworld.co"
+      },
+      {
+        "url": "https://smallest.ai/blog/open-source-tts-alternatives-compared",
+        "title": "Top Open Source Text to Speech Alternatives Compared",
+        "domain": "smallest.ai"
+      },
+      {
+        "url": "https://www.techradar.com/news/the-best-free-text-to-speech-software",
+        "title": "Best free text-to-speech software of 2025 - TechRadar",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://rigorousthemes.com/blog/best-text-to-speech-ai-tools/",
+        "title": "10 Best Text-to-Speech AI Tools In 2026 (Free & Paid)",
+        "domain": "rigorousthemes.com"
+      },
+      {
+        "url": "https://narrationbox.com/blog/top-text-to-speech-tools-in-2025-free-and-paid-options",
+        "title": "Top Text-to-Speech Tools in 2025: Free and Paid Options",
+        "domain": "narrationbox.com"
+      },
+      {
+        "url": "https://www.f22labs.com/blogs/13-text-to-speech-tts-solutions-in-2025/",
+        "title": "13 Text-to-Speech (TTS) Solutions in 2026 - F22 Labs",
+        "domain": "f22labs.com"
+      },
+      {
+        "url": "https://murf.ai/alternative/google-tts",
+        "title": "Top 15 Google Text to Speech Alternatives for 2026 [Free & Paid]",
+        "domain": "murf.ai"
+      },
+      {
+        "url": "https://topai.tools/alternatives/free-text-to-speech",
+        "title": "Best Free Text-To-Speech Alternatives in 2026 - topai.tools",
+        "domain": "topai.tools"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 9,
+    "total_all": 20
+  },
+  "response_stats": {
+    "total_length": 3163,
+    "citation_count": 20,
+    "chars_with_citations": 390
+  }
+}

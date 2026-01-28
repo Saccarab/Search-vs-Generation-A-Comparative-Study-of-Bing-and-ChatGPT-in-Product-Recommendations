@@ -1,0 +1,412 @@
+{
+  "run_id": "P075_r2",
+  "account_type": "enterprise",
+  "prompt": "I need a video translator that can transcribe Spanish videos into English.",
+  "metadata": {
+    "hidden_queries": [
+      "video translator that can transcribe Spanish videos to English",
+      "software to automatically translate Spanish video audio to English transcript"
+    ],
+    "sonic_classification": {
+      "latency_ms": 10.16093185171485,
+      "simple_search_prob": 0.9121553772036324,
+      "complex_search_prob": 0.032779661250531826,
+      "no_search_prob": 0.055064961545835796,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "N/A"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 279,
+        "end_idx": 312
+      },
+      "citation_token": "citeturn0search0turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.veed.io/tools/video-translator/spanish-to-english-video",
+          "title": "Translate Spanish Video to English - VEED.IO",
+          "snippet": "Translate Spanish video to English text with VEED. Upload a file, transcribe, & translate. AI voice dubbing and text-to-speech also available.",
+          "domain": "www.veed.io",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.veed.io/tools/audio-translator/translate-spanish-to-english-audio",
+          "title": "Online Audio Translator - Spanish To English - VEED.IO",
+          "snippet": "To use the auto-translate feature, upload the file you want to translate (either an audio or video file). Click ‘Subtitles’ > ‘Auto Subtitles,’ then set the language of your uploaded file and click ‘Start’ to generate a transcription. Select the ‘Translate’ option, click ‘Add new language,’ and choose a language to start the translation.",
+          "domain": "www.veed.io",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://www.veed.io/tools/video-translator/spanish-to-english-video",
+      "url_position": 276,
+      "claim_text": "Here are good tools you can use to transcribe and translate Spanish video to English: Online all-in-one translators (video → English transcript/subtitles/dub) VEED – upload video, auto-transcribe Spanish, then translate to English with subtitles or AI voice-over. VEED.IO+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 427,
+        "end_idx": 446
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.kapwing.com/tools/translate/video/spanish-to-english",
+      "url_position": 461,
+      "claim_text": "Kapwing – automatic speech-to-text, English translation, plus subtitle editing and optional dubbed voice. Kapwing",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 569,
+        "end_idx": 602
+      },
+      "citation_token": "citeturn0search4turn0search19",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.happyscribe.com/translate-video",
+          "title": "Online Video Translator - AI Video Translator - Happy Scribe",
+          "snippet": "HappyScribe transcribes video to text and translates it in to more than 120+ languages. Try our video translator for free!",
+          "domain": "www.happyscribe.com",
+          "ref_type": "search",
+          "ref_index": 19,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_19"
+        }
+      ],
+      "inline_url": "https://www.happyscribe.com/translate-video/spanish-to-english",
+      "url_position": 657,
+      "claim_text": "Happy Scribe – transcribe Spanish audio, translate to English, export as text, SRT subtitles, or burn into video. HappyScribe+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 692,
+        "end_idx": 711
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://videotranslator.io/video-translator",
+      "url_position": 821,
+      "claim_text": "VideoTranslator.io – instant AI video translation & subtitles in 130+ languages. Video Translator",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 808,
+        "end_idx": 827
+      },
+      "citation_token": "citeturn0search8",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.subeasy.ai/services/translate-spanish-media-to-english",
+      "url_position": 967,
+      "claim_text": "SubEasy.ai – upload video, auto-transcribe and translate with choice of quality levels. subeasy.ai",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 900,
+        "end_idx": 920
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://vizard.ai/tools/video-translator/spanish-to-english-video-translator",
+      "url_position": 1108,
+      "claim_text": "Vizard.ai – Spanish to English translator with subtitle export. Vizard",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 986,
+        "end_idx": 1006
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://zeemo.ai/tools/video-translator",
+      "url_position": 1251,
+      "claim_text": "Zeemo AI – video translator with subtitle customization. Zeemo",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1136,
+        "end_idx": 1155
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://clideo.com/translate-spanish-audio-to-english",
+          "title": "Translate Spanish Audio to English - Clideo",
+          "snippet": "Automatically translate Spanish audio to English text online. Create subtitles in English for a video in Spanish, add a translated AI voiceover for a video, and customize captions as needed.",
+          "domain": "clideo.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://clideo.com/translate-spanish-audio-to-english",
+      "url_position": 1418,
+      "claim_text": "Other options Clideo – online translator that generates English subtitles or dubbed voice from Spanish audio/video. Clideo",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1261,
+        "end_idx": 1281
+      },
+      "citation_token": "citeturn0search20",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.flexclip.com/tools/ai-video-translator/",
+          "title": "AI Video Translator - Translate Video & Do AI Dubbing Online - FlexClip",
+          "snippet": "Quickly translate your video into English, Spanish, Portuguese, French, Arabic, Russian, Chinese, Hindi, and more languages with FlexClip AI video translator. Start translating your videos to reach more audiences now.",
+          "domain": "www.flexclip.com",
+          "ref_type": "search",
+          "ref_index": 20,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_20"
+        }
+      ],
+      "inline_url": "https://www.flexclip.com/tools/ai-video-translator/",
+      "url_position": 1581,
+      "claim_text": "FlexClip AI Video Translator – simple tool to translate videos into English and other languages. FlexClip",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1364,
+        "end_idx": 1384
+      },
+      "citation_token": "citeturn0search15",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://1transcribe.com/translate-video-spanish-to-english/",
+      "url_position": 1722,
+      "claim_text": "1Transcribe – AI tool focused on turning Spanish video into English text. 1Transcribe",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1592,
+        "end_idx": 1612
+      },
+      "citation_token": "citeturn0search29",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://en.wikipedia.org/wiki/Whisper_%28speech_recognition_system%29",
+      "url_position": 1990,
+      "claim_text": "Developer / open-source alternative OpenAI Whisper – speech-to-text model that can transcribe Spanish and translate into English text; you’d need to run it yourself or via services built on it. Wikipedia",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.veed.io/tools/video-translator/spanish-to-english-video",
+        "title": "Translate Spanish Video to English - VEED.IO",
+        "domain": "VEED.IO"
+      },
+      {
+        "url": "https://www.kapwing.com/tools/translate/video/spanish-to-english",
+        "title": "Translate Spanish Video to English — Online + Free - Kapwing",
+        "domain": "Kapwing"
+      },
+      {
+        "url": "https://www.happyscribe.com/translate-video/spanish-to-english",
+        "title": "Translate Spanish video to English - Happy Scribe",
+        "domain": "HappyScribe"
+      },
+      {
+        "url": "https://videotranslator.io/video-translator",
+        "title": "Video Translator - Translate Videos with AI | VideoTranslator",
+        "domain": "Video Translator"
+      },
+      {
+        "url": "https://www.subeasy.ai/services/translate-spanish-media-to-english",
+        "title": "Translate Spanish audio/video to English - subeasy.ai",
+        "domain": "subeasy.ai"
+      },
+      {
+        "url": "https://vizard.ai/tools/video-translator/spanish-to-english-video-translator",
+        "title": "Video Translator: Auto Translate Spanish Videos Online",
+        "domain": "Vizard"
+      },
+      {
+        "url": "https://zeemo.ai/tools/video-translator",
+        "title": "Free Online Video Translator With High Accuracy - Zeemo AI",
+        "domain": "Zeemo"
+      },
+      {
+        "url": "https://clideo.com/translate-spanish-audio-to-english",
+        "title": "Translate Spanish Audio to English - Clideo",
+        "domain": "Clideo"
+      },
+      {
+        "url": "https://www.flexclip.com/tools/ai-video-translator/",
+        "title": "AI Video Translator - Translate Video & Do AI Dubbing Online - FlexClip",
+        "domain": "FlexClip"
+      },
+      {
+        "url": "https://1transcribe.com/translate-video-spanish-to-english/",
+        "title": "Translate Spanish Video to English Text Online",
+        "domain": "1Transcribe"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Whisper_%28speech_recognition_system%29",
+        "title": "Whisper (speech recognition system)",
+        "domain": "Wikipedia"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://anytranscribe.com/core-tools/audio-video-translator/",
+        "title": "Audio/Video Translator (Free Online & No Login)",
+        "domain": "anytranscribe.com"
+      },
+      {
+        "url": "https://screenapp.io/translator",
+        "title": "AI Translators - Free Video & Audio Translation Tools | ScreenApp",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://www.opus.pro/tools/translate-spanish-video-to-english",
+        "title": "Translate Spanish Video to English - opus.pro",
+        "domain": "opus.pro"
+      },
+      {
+        "url": "https://www.vozo.ai/translate-spanish-video-to-english",
+        "title": "Translate Spanish Video to English | Vozo Video Translator",
+        "domain": "vozo.ai"
+      },
+      {
+        "url": "https://www.veed.io/tools/audio-translator/translate-spanish-to-english-audio",
+        "title": "Online Audio Translator - Spanish To English - VEED.IO",
+        "domain": "veed.io"
+      },
+      {
+        "url": "https://clideo.com/video-translator",
+        "title": "Video Translator | Translate Your Video Online — Clideo",
+        "domain": "clideo.com"
+      },
+      {
+        "url": "https://maestra.ai/tools/audio-translator",
+        "title": "Free AI Audio Translator - Translate Voice Instantly",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://typito.com/video-translator",
+        "title": "Translate Videos Online - Video Translator Online - Typito",
+        "domain": "typito.com"
+      },
+      {
+        "url": "https://www.adobe.com/products/firefly/features/translate-audio/spanish.html",
+        "title": "Translate Spanish audio and video online - Adobe Firefly",
+        "domain": "adobe.com"
+      },
+      {
+        "url": "https://www.vidnoz.com/video-translate.html",
+        "title": "AI Video Translator: Translate Video to Any Language Online - Vidnoz",
+        "domain": "vidnoz.com"
+      },
+      {
+        "url": "https://www.happyscribe.com/translate-video",
+        "title": "Online Video Translator - AI Video Translator - Happy Scribe",
+        "domain": "happyscribe.com"
+      },
+      {
+        "url": "https://flixier.com/tools/audio-translator/translate-spanish-to-english-audio",
+        "title": "Translate Spanish to English Audio | Accurate & Fast - Flixier",
+        "domain": "flixier.com"
+      }
+    ],
+    "total_cited": 11,
+    "total_additional": 12,
+    "total_all": 23
+  },
+  "response_stats": {
+    "total_length": 2296,
+    "citation_count": 11,
+    "chars_with_citations": 242
+  }
+}

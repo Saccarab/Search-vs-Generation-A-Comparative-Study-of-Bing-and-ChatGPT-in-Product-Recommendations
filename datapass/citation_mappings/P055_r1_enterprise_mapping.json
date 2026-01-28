@@ -1,0 +1,424 @@
+{
+  "run_id": "P055_r1",
+  "account_type": "enterprise",
+  "prompt": "Welche Transkriptionssoftware ist die beste?",
+  "metadata": {
+    "hidden_queries": [
+      "Transkriptionssoftware beste Transkriptionssoftware Vergleich",
+      "best transcription software features pricing and performance 2026"
+    ],
+    "sonic_classification": {
+      "latency_ms": 24.864424020051956,
+      "simple_search_prob": 0.9553335421039897,
+      "complex_search_prob": 0.023443483624763513,
+      "no_search_prob": 0.0212229742712468,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "Transkriptionssoftware beste Transkriptionssoftware Vergleich"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 222,
+        "end_idx": 255
+      },
+      "citation_token": "citeturn0search0turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+          "title": "Vergleich: Die beste Transkriptionssoftware | heise Download",
+          "snippet": "Vergleich: Die beste Transkriptionssoftware Transkriptions-Programme für Windows, Mac, Linux und Mobile Wer gesprochenes Wort in Text umwandeln will, war lange Zeit auf menschliche Hilfe ...",
+          "domain": "www.heise.de",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": 1757289600,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+      "url_position": 233,
+      "claim_text": "Kurz und direkt: Die „beste“ Transkriptionssoftware hängt vom Einsatz ab (Meeting-Transkription, Podcasts, Interviews, Mehrsprachigkeit, Preis/Privatsphäre). Hier sind die Top-Kandidaten 2026 – mit was sie gut können: heise online+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 401,
+        "end_idx": 421
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-transcription-software-2026",
+      "url_position": 471,
+      "claim_text": "Starke Allround-Lösungen (Automatische KI-Transkription) Sonix – hohe Genauigkeit, viele Sprachen, gute Export-/Editier-Funktionen. HappyScribe",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 501,
+        "end_idx": 518
+      },
+      "citation_token": "citeturn0search",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-transcription-software-2026",
+      "url_position": 623,
+      "claim_text": "Otter.ai – live Transkription, Meeting-Fokus, kostenlose Grundversion. HappyScribe",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 604,
+        "end_idx": 624
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-transcription-software-2026",
+      "url_position": 778,
+      "claim_text": "Descript – gute Bearbeitungstools, Sprecherkennzeichnung, Team-Workflows. HappyScribe",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 692,
+        "end_idx": 712
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-transcription-software-2026",
+      "url_position": 918,
+      "claim_text": "Trint – starke Übersetzungs- und Kollaborationsfunktionen. HappyScribe",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 768,
+        "end_idx": 788
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-transcription-software-2026",
+      "url_position": 1046,
+      "claim_text": "Temi – günstig, schnell, mobile App verfügbar. HappyScribe",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 920,
+        "end_idx": 939
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://jens.marketing/transkriptionssoftware/",
+      "url_position": 1247,
+      "claim_text": "Speziell / Profi & Mehrsprachig GoSpeech – Fokus auf Datenschutz (deutsche Server), Sprecher- und Dialekterkennung. Jens.Marketing",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1048,
+        "end_idx": 1058
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://sonix.ai/resources/de/beste-mehrsprachige-transkriptionssoftware/",
+      "url_position": 1403,
+      "claim_text": "Mehrsprachige Tools (z. B. Sonix, Happy Scribe) – große Sprachabdeckung und Übersetzung integriert. Sonix",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1207,
+        "end_idx": 1227
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://meetergo.com/en/magazine/best-meeting-transcription-software",
+      "url_position": 1611,
+      "claim_text": "Für Meetings / Team-Workflows meetergo Log – kombiniert Transkription und Meeting-Management, lokal (ohne Bot-Eintritt). meetergo",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1407,
+        "end_idx": 1427
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-transcription-software-2026",
+      "url_position": 1860,
+      "claim_text": "Wichtige Auswahlkriterien Genauigkeit variiert stark je nach Sprache, Akzent und Audioqualität – 90 %+ ist üblich bei KI-Tools, aber Nachbearbeitung ist oft nötig. HappyScribe",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1499,
+        "end_idx": 1519
+      },
+      "citation_token": "citeturn0search21",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://sonix.ai/resources/de/beste-mehrsprachige-transkriptionssoftware/",
+          "title": "12 Best Multilingual Transcription Software Options in 2026",
+          "snippet": "Sie suchen eine mehrsprachige Transkriptionssoftware? In unserem Leitfaden finden Sie die 12 besten Optionen mit detaillierten Vergleichen zu Genauigkeit, Sprachunterstützung und wichtigen Funktionen für Unternehmen.",
+          "domain": "sonix.ai",
+          "ref_type": "search",
+          "ref_index": 21,
+          "turn_index": 0,
+          "pub_date": 1767830400,
+          "ref_key": "0_search_21"
+        }
+      ],
+      "inline_url": "https://sonix.ai/resources/de/beste-mehrsprachige-transkriptionssoftware/",
+      "url_position": 1998,
+      "claim_text": "Sprachen & Sprecherkennung je nach Tool unterschiedlich stark. Sonix",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 1613,
+        "end_idx": 1631
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://meetergo.com/en/magazine/best-meeting-transcription-software",
+      "url_position": 1611,
+      "claim_text": "Für Meetings / Team-Workflows meetergo Log – kombiniert Transkription und Meeting-Management, lokal (ohne Bot-Eintritt). meetergo",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1726,
+        "end_idx": 1746
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.softwareworld.co/transcription-software/comparison/",
+      "url_position": 2175,
+      "claim_text": "Preis/Minute oder Abo-Modelle können schnell teuer werden bei hohem Nutzungsvolumen. Software World",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 1819,
+        "end_idx": 1839
+      },
+      "citation_token": "citeturn0search10",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-transcription-software-2026",
+      "url_position": 2335,
+      "claim_text": "Kurzfazit: Otter.ai – beste Allround-Einsteigerauswahl (live Meeting + Upload). HappyScribe",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 1917,
+        "end_idx": 1937
+      },
+      "citation_token": "citeturn0search16",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.happyscribe.com/blog/best-transcription-software-2026",
+      "url_position": 1860,
+      "claim_text": "Wichtige Auswahlkriterien Genauigkeit variiert stark je nach Sprache, Akzent und Audioqualität – 90 %+ ist üblich bei KI-Tools, aber Nachbearbeitung ist oft nötig. HappyScribe",
+      "url_index": 9
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.heise.de/download/specials/Vergleich-Die-beste-Transkriptionssoftware-6176275",
+        "title": "Vergleich: Die beste Transkriptionssoftware | heise Download",
+        "domain": "heise online"
+      },
+      {
+        "url": "https://www.happyscribe.com/blog/best-transcription-software-2026",
+        "title": "Best 12 Transcription Software - Happy Scribe",
+        "domain": "HappyScribe"
+      },
+      {
+        "url": "https://jens.marketing/transkriptionssoftware/",
+        "title": "15 Transkriptionssoftwares im Vergleich (2026) - Jens.Marketing",
+        "domain": "Jens.Marketing"
+      },
+      {
+        "url": "https://sonix.ai/resources/de/beste-mehrsprachige-transkriptionssoftware/",
+        "title": "12 Best Multilingual Transcription Software Options in 2026",
+        "domain": "Sonix"
+      },
+      {
+        "url": "https://meetergo.com/en/magazine/best-meeting-transcription-software",
+        "title": "10 Best Meeting Transcription Software in 2026: Bot-Free & Unlimited ...",
+        "domain": "meetergo"
+      },
+      {
+        "url": "https://www.softwareworld.co/transcription-software/comparison/",
+        "title": "Top 10 Transcription Software Comparison 2026 | SoftwareWorld",
+        "domain": "Software World"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.softwaretestinghelp.com/best-transcription-software/",
+        "title": "Top 15 Best Transcription Software in 2026 (Audio/Video to Text)",
+        "domain": "softwaretestinghelp.com"
+      },
+      {
+        "url": "https://www.stateofdigitalpublishing.com/de/tools-fur-digitale-plattformen/beste-transkriptionssoftware/",
+        "title": "15 Best Transcription Software in 2024 - State of Digital Publishing",
+        "domain": "stateofdigitalpublishing.com"
+      },
+      {
+        "url": "https://renkz.com/best-transcription-software/",
+        "title": "The best transcription software in 2026 - Renkz",
+        "domain": "renkz.com"
+      },
+      {
+        "url": "https://www.guru99.com/de/best-transcription-software.html",
+        "title": "8 Beste Transkriptionssoftware und -dienste (2026) - Guru99",
+        "domain": "guru99.com"
+      },
+      {
+        "url": "https://www.guru99.com/best-transcription-software.html",
+        "title": "8 BEST Transcription Software & Services (2026) - Guru99",
+        "domain": "guru99.com"
+      },
+      {
+        "url": "https://vomo.ai/de/blog/die-5-besten-digitalen-transkriptionstools-fur-2025-funktionen-preise-und-bewertungen",
+        "title": "Die 5 besten digitalen Transkriptionsprogramme für 2025: Funktionen ...",
+        "domain": "vomo.ai"
+      },
+      {
+        "url": "https://clickup.com/blog/transcription-software/",
+        "title": "10 Best Transcription Software & Apps in 2026 (Free & Paid) - ClickUp",
+        "domain": "clickup.com"
+      },
+      {
+        "url": "https://nortonresearch.com/best-transcription-software",
+        "title": "Best Transcription Software (2026): A Research-Based Comparative ...",
+        "domain": "nortonresearch.com"
+      },
+      {
+        "url": "https://www.rtl.de/vergleiche/software/transkriptionssoftware-test/",
+        "title": "Die besten Transkriptionssoftwares im Test | rtl.de Vergleich",
+        "domain": "rtl.de"
+      },
+      {
+        "url": "https://jonasweckerle.de/ki-transkriptionssoftware-test/",
+        "title": "Die besten 6 KI-Transkriptionssoftwares im Test: Ein umfassender Vergleich",
+        "domain": "jonasweckerle.de"
+      },
+      {
+        "url": "https://www.sally.io/de/blog/die-7-besten-transkriptions-tools-2026",
+        "title": "Die 7 besten Transkriptionstools 2026: DSGVO, KI & Co.",
+        "domain": "sally.io"
+      },
+      {
+        "url": "https://www.sally.io/de/blog/software-zum-transkribieren-die-7-besten-loesugen",
+        "title": "Software zum Transkribieren: Die 7 besten Lösungen 2026",
+        "domain": "sally.io"
+      },
+      {
+        "url": "https://www.saasworthy.com/list/transcription-software",
+        "title": "20 Best Transcription Software for 2026 - SaaSworthy",
+        "domain": "saasworthy.com"
+      },
+      {
+        "url": "https://www.omt.de/online-marketing-tools/transkriptionssoftware/",
+        "title": "Transkriptionssoftware - Anbieter im Vergleich - OMT",
+        "domain": "omt.de"
+      },
+      {
+        "url": "https://www.g2.com/de/categories/transcription",
+        "title": "Beste Transkriptionssoftware: Nutzerbewertungen von Januar 2026 - G2",
+        "domain": "g2.com"
+      },
+      {
+        "url": "https://sourceforge.net/software/transcription/",
+        "title": "Best Transcription Software of 2026 - Reviews & Comparison",
+        "domain": "sourceforge.net"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 16,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 2803,
+    "citation_count": 15,
+    "chars_with_citations": 297
+  }
+}

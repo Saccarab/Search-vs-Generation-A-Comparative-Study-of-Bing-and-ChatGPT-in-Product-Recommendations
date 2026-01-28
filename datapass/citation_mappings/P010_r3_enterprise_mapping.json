@@ -1,0 +1,514 @@
+{
+  "run_id": "P010_r3",
+  "account_type": "enterprise",
+  "prompt": "Give me the best speech to text solutions.",
+  "metadata": {
+    "hidden_queries": [
+      "best speech to text solutions",
+      "top speech to text services and software comparison"
+    ],
+    "sonic_classification": {
+      "latency_ms": 2.5345979956910014,
+      "simple_search_prob": 0.9389751906315924,
+      "complex_search_prob": 0.004938420045705915,
+      "no_search_prob": 0.05608638932270168,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "best speech to text solutions"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 393,
+        "end_idx": 424
+      },
+      "citation_token": "citeturn0search7turn0news32",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.tomsguide.com/ai/google-gemini/transcribe-audio-with-google-gemini-for-free-heres-how-to-do-it",
+          "title": "Transcribe audio with Google Gemini for free - here's how to do it",
+          "snippet": "Google Gemini now offers a free tool for transcribing audio files up to 10 minutes long. Users can upload up to 10 audio files at once, provided their combined length doesn't exceed the time limit. Compatible formats include MP3, AAC, and WAV. To begin, users can access Gemini via its website or app, select the upload option, and choose their desired audio file. Once uploaded, a prompt like \"transcribe this speech\" initiates the process. If an error occurs, retrying usually resolves the issue. Transcriptions are generated quickly, though they may include filler words (e.g., \"uhms\" and \"ahs\"). Users can instruct Gemini to clean the transcript by prompting it to remove such filler words. Additionally, Gemini can help summarize the audio or extract key points, making it a versatile tool for various transcription needs.",
+          "domain": "www.tomsguide.com",
+          "ref_type": "news",
+          "ref_index": 32,
+          "turn_index": 0,
+          "pub_date": 1761544800,
+          "ref_key": "0_news_32"
+        }
+      ],
+      "inline_url": "https://influencermarketinghub.com/speech-to-text-software/",
+      "url_position": 407,
+      "claim_text": "Here’s a direct, up-to-date list of the best speech-to-text solutions (for different needs: developers, business, mobile, offline, collaborative meetings) based on recent reviews and comparisons: Top enterprise/cloud developer APIs Google Cloud Speech-to-Text / Gemini transcription – highly accurate, customizable models, supports real-time streaming & batch, strong for apps. Influencer Marketing Hub+1",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 559,
+        "end_idx": 592
+      },
+      "citation_token": "citeturn0search0turn0search12",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 606,
+      "claim_text": "Microsoft Azure Speech to Text – scalable, integrates with Azure ecosystem, good for multi-speaker and domain-specific vocab. Gartner+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 717,
+        "end_idx": 740
+      },
+      "citation_token": "citeturn0search0turn",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 799,
+      "claim_text": "Amazon Transcribe – robust cloud API with speaker/channel recognition, useful for call centers and app integration. Gartner+1",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 883,
+        "end_idx": 916
+      },
+      "citation_token": "citeturn0search0turn0search12",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 1000,
+      "claim_text": "IBM Watson Speech to Text – enterprise-oriented real-time and batch transcription with flexible deployment (cloud/on-prem). Gartner+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 1079,
+        "end_idx": 1111
+      },
+      "citation_token": "citeturn0search12turn0news36",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/blog/top-speech-to-text-softwares",
+      "url_position": 1229,
+      "claim_text": "Best for meetings, collaboration & productivity Otter.ai – live transcription, meeting summaries, speaker labels; optimized for teams and remote work. Murf AI+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1216,
+        "end_idx": 1236
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.meetjamie.ai/blog/10-best-speech-to-text-software",
+      "url_position": 1391,
+      "claim_text": "Jamie – AI meeting capture with automatic summaries and action items (desktop/meeting focused). meetjamie.ai",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1335,
+        "end_idx": 1354
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/news/best-speech-to-text-app",
+          "title": "Best speech-to-text app of 2025",
+          "snippet": "This comprehensive 2025 TechRadar guide ranks the top speech-to-text apps and services designed to simplify converting spoken language into written text across mobile, desktop, and cloud platforms. Speech-to-text tools have moved from niche uses to broader applications in business, education, and everyday productivity. As voice recognition accuracy has greatly improved, many platforms now boast around 99% transcription accuracy.\n\nKey offerings include:\n\n- **Speechmatics**, praised for its multilingual, accent-flexible AI-driven transcription tools.\n- **Dragon Professional**, ideal for business use with high accuracy and productivity tools.\n- **Otter**, optimized for mobile and collaborative note-taking during meetings.\n- **Verbit**, tailored for enterprise and education with hybrid AI and human transcription.\n- **Braina Pro**, a PC-based voice assistant offering versatile command and dictation support.\n- **Microsoft Azure Speech to Text** and **IBM Watson**, both cloud-native enterprise solutions offering real-time and batch transcription with customizable language models.\n- **Dragon Anywhere**, a mobile app delivering professional-grade dictation in the cloud.\n- **Amazon Transcribe**, optimized for business use with live and batch processing.\n\nTop free options include Google Gboard, Just Press Record, Speechnotes, and built-in features like Windows Speech Recognition. Additional apps like iTranslate, Voice Notes, and SpeechTexter highlight specialized capabilities for translation, note organization, and social media use. The guide concludes with advising selection based on user needs and testing methodology.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1764936431,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/news/best-speech-to-text-app",
+      "url_position": 1556,
+      "claim_text": "Verbit – hybrid AI + human option for high-accuracy, enterprise captioning/transcription. TechRadar",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1506,
+        "end_idx": 1538
+      },
+      "citation_token": "citeturn0search0turn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+          "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+          "snippet": "Find the top Speech-to-Text Solutions with Gartner. Compare and filter by verified product reviews and choose the software that’s right for your organization.",
+          "domain": "www.gartner.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://www.techradar.com/news/best-speech-to-text-app",
+          "title": "Best speech-to-text app of 2025",
+          "snippet": "This comprehensive 2025 TechRadar guide ranks the top speech-to-text apps and services designed to simplify converting spoken language into written text across mobile, desktop, and cloud platforms. Speech-to-text tools have moved from niche uses to broader applications in business, education, and everyday productivity. As voice recognition accuracy has greatly improved, many platforms now boast around 99% transcription accuracy.\n\nKey offerings include:\n\n- **Speechmatics**, praised for its multilingual, accent-flexible AI-driven transcription tools.\n- **Dragon Professional**, ideal for business use with high accuracy and productivity tools.\n- **Otter**, optimized for mobile and collaborative note-taking during meetings.\n- **Verbit**, tailored for enterprise and education with hybrid AI and human transcription.\n- **Braina Pro**, a PC-based voice assistant offering versatile command and dictation support.\n- **Microsoft Azure Speech to Text** and **IBM Watson**, both cloud-native enterprise solutions offering real-time and batch transcription with customizable language models.\n- **Dragon Anywhere**, a mobile app delivering professional-grade dictation in the cloud.\n- **Amazon Transcribe**, optimized for business use with live and batch processing.\n\nTop free options include Google Gboard, Just Press Record, Speechnotes, and built-in features like Windows Speech Recognition. Additional apps like iTranslate, Voice Notes, and SpeechTexter highlight specialized capabilities for translation, note organization, and social media use. The guide concludes with advising selection based on user needs and testing methodology.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1764936431,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+      "url_position": 1765,
+      "claim_text": "Best general use / mobile / simple transcription Speechmatics – multilingual, accent-robust AI transcription available via API or platform. Gartner+1",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1658,
+        "end_idx": 1677
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/news/best-speech-to-text-app",
+          "title": "Best speech-to-text app of 2025",
+          "snippet": "This comprehensive 2025 TechRadar guide ranks the top speech-to-text apps and services designed to simplify converting spoken language into written text across mobile, desktop, and cloud platforms. Speech-to-text tools have moved from niche uses to broader applications in business, education, and everyday productivity. As voice recognition accuracy has greatly improved, many platforms now boast around 99% transcription accuracy.\n\nKey offerings include:\n\n- **Speechmatics**, praised for its multilingual, accent-flexible AI-driven transcription tools.\n- **Dragon Professional**, ideal for business use with high accuracy and productivity tools.\n- **Otter**, optimized for mobile and collaborative note-taking during meetings.\n- **Verbit**, tailored for enterprise and education with hybrid AI and human transcription.\n- **Braina Pro**, a PC-based voice assistant offering versatile command and dictation support.\n- **Microsoft Azure Speech to Text** and **IBM Watson**, both cloud-native enterprise solutions offering real-time and batch transcription with customizable language models.\n- **Dragon Anywhere**, a mobile app delivering professional-grade dictation in the cloud.\n- **Amazon Transcribe**, optimized for business use with live and batch processing.\n\nTop free options include Google Gboard, Just Press Record, Speechnotes, and built-in features like Windows Speech Recognition. Additional apps like iTranslate, Voice Notes, and SpeechTexter highlight specialized capabilities for translation, note organization, and social media use. The guide concludes with advising selection based on user needs and testing methodology.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1764936431,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/news/best-speech-to-text-app",
+      "url_position": 1953,
+      "claim_text": "Dragon Professional / Dragon Anywhere – long-standing dictation software with high accuracy for professionals. TechRadar",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1774,
+        "end_idx": 1793
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/news/best-speech-to-text-app",
+          "title": "Best speech-to-text app of 2025",
+          "snippet": "This comprehensive 2025 TechRadar guide ranks the top speech-to-text apps and services designed to simplify converting spoken language into written text across mobile, desktop, and cloud platforms. Speech-to-text tools have moved from niche uses to broader applications in business, education, and everyday productivity. As voice recognition accuracy has greatly improved, many platforms now boast around 99% transcription accuracy.\n\nKey offerings include:\n\n- **Speechmatics**, praised for its multilingual, accent-flexible AI-driven transcription tools.\n- **Dragon Professional**, ideal for business use with high accuracy and productivity tools.\n- **Otter**, optimized for mobile and collaborative note-taking during meetings.\n- **Verbit**, tailored for enterprise and education with hybrid AI and human transcription.\n- **Braina Pro**, a PC-based voice assistant offering versatile command and dictation support.\n- **Microsoft Azure Speech to Text** and **IBM Watson**, both cloud-native enterprise solutions offering real-time and batch transcription with customizable language models.\n- **Dragon Anywhere**, a mobile app delivering professional-grade dictation in the cloud.\n- **Amazon Transcribe**, optimized for business use with live and batch processing.\n\nTop free options include Google Gboard, Just Press Record, Speechnotes, and built-in features like Windows Speech Recognition. Additional apps like iTranslate, Voice Notes, and SpeechTexter highlight specialized capabilities for translation, note organization, and social media use. The guide concludes with advising selection based on user needs and testing methodology.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1764936431,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/news/best-speech-to-text-app",
+      "url_position": 2109,
+      "claim_text": "Speechnotes – lightweight web/mobile dictation with voice commands; simple note-taking. TechRadar",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1896,
+        "end_idx": 1915
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/news/best-speech-to-text-app",
+          "title": "Best speech-to-text app of 2025",
+          "snippet": "This comprehensive 2025 TechRadar guide ranks the top speech-to-text apps and services designed to simplify converting spoken language into written text across mobile, desktop, and cloud platforms. Speech-to-text tools have moved from niche uses to broader applications in business, education, and everyday productivity. As voice recognition accuracy has greatly improved, many platforms now boast around 99% transcription accuracy.\n\nKey offerings include:\n\n- **Speechmatics**, praised for its multilingual, accent-flexible AI-driven transcription tools.\n- **Dragon Professional**, ideal for business use with high accuracy and productivity tools.\n- **Otter**, optimized for mobile and collaborative note-taking during meetings.\n- **Verbit**, tailored for enterprise and education with hybrid AI and human transcription.\n- **Braina Pro**, a PC-based voice assistant offering versatile command and dictation support.\n- **Microsoft Azure Speech to Text** and **IBM Watson**, both cloud-native enterprise solutions offering real-time and batch transcription with customizable language models.\n- **Dragon Anywhere**, a mobile app delivering professional-grade dictation in the cloud.\n- **Amazon Transcribe**, optimized for business use with live and batch processing.\n\nTop free options include Google Gboard, Just Press Record, Speechnotes, and built-in features like Windows Speech Recognition. Additional apps like iTranslate, Voice Notes, and SpeechTexter highlight specialized capabilities for translation, note organization, and social media use. The guide concludes with advising selection based on user needs and testing methodology.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1764936431,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/news/best-speech-to-text-app",
+      "url_position": 2267,
+      "claim_text": "Just Press Record / SpeechTexter – easy, affordable mobile transcription for quick notes. TechRadar",
+      "url_index": 10
+    },
+    {
+      "token_position": {
+        "start_idx": 2033,
+        "end_idx": 2052
+      },
+      "citation_token": "citeturn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://influencermarketinghub.com/speech-to-text-software/",
+      "url_position": 2457,
+      "claim_text": "Use-case guidance Developers & apps: pick cloud APIs (Google, Azure, Amazon) for integration and control. Influencer Marketing Hub",
+      "url_index": 11
+    },
+    {
+      "token_position": {
+        "start_idx": 2135,
+        "end_idx": 2155
+      },
+      "citation_token": "citeturn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/blog/top-speech-to-text-softwares",
+      "url_position": 2602,
+      "claim_text": "Teams & meetings: Otter.ai or Jamie for real-time transcript + summaries. Murf AI",
+      "url_index": 12
+    },
+    {
+      "token_position": {
+        "start_idx": 2234,
+        "end_idx": 2253
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/news/best-speech-to-text-app",
+          "title": "Best speech-to-text app of 2025",
+          "snippet": "This comprehensive 2025 TechRadar guide ranks the top speech-to-text apps and services designed to simplify converting spoken language into written text across mobile, desktop, and cloud platforms. Speech-to-text tools have moved from niche uses to broader applications in business, education, and everyday productivity. As voice recognition accuracy has greatly improved, many platforms now boast around 99% transcription accuracy.\n\nKey offerings include:\n\n- **Speechmatics**, praised for its multilingual, accent-flexible AI-driven transcription tools.\n- **Dragon Professional**, ideal for business use with high accuracy and productivity tools.\n- **Otter**, optimized for mobile and collaborative note-taking during meetings.\n- **Verbit**, tailored for enterprise and education with hybrid AI and human transcription.\n- **Braina Pro**, a PC-based voice assistant offering versatile command and dictation support.\n- **Microsoft Azure Speech to Text** and **IBM Watson**, both cloud-native enterprise solutions offering real-time and batch transcription with customizable language models.\n- **Dragon Anywhere**, a mobile app delivering professional-grade dictation in the cloud.\n- **Amazon Transcribe**, optimized for business use with live and batch processing.\n\nTop free options include Google Gboard, Just Press Record, Speechnotes, and built-in features like Windows Speech Recognition. Additional apps like iTranslate, Voice Notes, and SpeechTexter highlight specialized capabilities for translation, note organization, and social media use. The guide concludes with advising selection based on user needs and testing methodology.",
+          "domain": "www.techradar.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1764936431,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/news/best-speech-to-text-app",
+      "url_position": 2735,
+      "claim_text": "Individual dictation/note capture: Speechnotes/Dragon or mobile apps. TechRadar",
+      "url_index": 13
+    },
+    {
+      "token_position": {
+        "start_idx": 2381,
+        "end_idx": 2401
+      },
+      "citation_token": "citeturn0search13",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.sybill.ai/blogs/speech-to-text-software?utm_source=chatgpt.com",
+          "title": "The best speech-to-text software in 2025 - sybill.ai",
+          "snippet": "A practical guide to the best speech-to-text software: meeting tools, developer APIs, and platform captions. Compare Google, Azure, Amazon, OpenAI, Zoom, Otter, Sybill, and AssemblyAI to pick the right fit.",
+          "domain": "sybill.ai",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.sybill.ai/blogs/speech-to-text-software",
+      "url_position": 2927,
+      "claim_text": "Accuracy varies by audio quality, accents, and noise. Test a few with your real audio to see which fits your workflow best. sybill.ai",
+      "url_index": 14
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://influencermarketinghub.com/speech-to-text-software/",
+        "title": "Top 10 Speech To Text Software Solutions for 2025",
+        "domain": "Influencer Marketing Hub"
+      },
+      {
+        "url": "https://www.gartner.com/reviews/market/speech-to-text-solutions",
+        "title": "Best Speech-to-Text Solutions Reviews 2026 - Gartner",
+        "domain": "Gartner"
+      },
+      {
+        "url": "https://murf.ai/blog/top-speech-to-text-softwares",
+        "title": "Choosing the Best: Top 10 Speech to Text Applications of 2026 - Murf",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://www.meetjamie.ai/blog/10-best-speech-to-text-software",
+        "title": "10 Best Speech-to-Text Software [Updated August 2025] | Jamie",
+        "domain": "meetjamie.ai"
+      },
+      {
+        "url": "https://www.techradar.com/news/best-speech-to-text-app",
+        "title": "Best speech-to-text app of 2025",
+        "domain": "TechRadar"
+      },
+      {
+        "url": "https://www.sybill.ai/blogs/speech-to-text-software",
+        "title": "The best speech-to-text software in 2025 - sybill.ai",
+        "domain": "sybill.ai"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://sonix.ai/resources/best-speech-to-text-software/",
+        "title": "13 Best Speech-to-Text Software for Accurate Transcription in 2026",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://riverside.com/blog/best-speech-to-text-software",
+        "title": "8 Best Speech-to-Text Software & Apps for 2026 (All Devices)",
+        "domain": "riverside.com"
+      },
+      {
+        "url": "https://whisperbot.ai/blog/best-speech-to-text-software",
+        "title": "12 Best Speech to Text Software Options for 2025 (Reviewed)",
+        "domain": "whisperbot.ai"
+      },
+      {
+        "url": "https://voicetype.com/blog/best-speech-to-text-program",
+        "title": "12 Best Speech to Text Program Options for 2025 - VoiceType",
+        "domain": "voicetype.com"
+      },
+      {
+        "url": "https://www.bestdevops.com/top-10-speech-to-text-systems-tools-in-2025-features-pros-cons-comparison/",
+        "title": "Top 10 Speech-to-Text Systems Tools in 2025: Features, Pros, Cons ...",
+        "domain": "bestdevops.com"
+      },
+      {
+        "url": "https://www.devopsschool.com/blog/top-10-speech-to-text-tools-in-2025-features-pros-cons-comparison/",
+        "title": "Top 10 Speech-to-Text Tools in 2025: Features, Pros, Cons & Comparison",
+        "domain": "devopsschool.com"
+      },
+      {
+        "url": "https://geekflare.com/best/speech-to-text-solutions/",
+        "title": "10 Speech to Text Solutions for Personal and Business Use",
+        "domain": "geekflare.com"
+      },
+      {
+        "url": "https://www.descript.com/blog/article/best-speech-to-text-tools",
+        "title": "Best Speech to Text Tools for 2025: Top 7 Compared",
+        "domain": "descript.com"
+      },
+      {
+        "url": "https://www.lindy.ai/blog/best-speech-to-text-software",
+        "title": "I Tried 25+ Best Speech-to-Text Software: Here Are My Top 12 Picks - Lindy",
+        "domain": "lindy.ai"
+      },
+      {
+        "url": "https://www.hypescribe.com/blog/top-speech-to-text-software",
+        "title": "The Best Speech to Text Software Options for 2025",
+        "domain": "hypescribe.com"
+      },
+      {
+        "url": "https://www.peerspot.com/categories/speech-to-text-services",
+        "title": "Best Speech-To-Text Services solutions 2026 - PeerSpot",
+        "domain": "peerspot.com"
+      }
+    ],
+    "total_cited": 6,
+    "total_additional": 11,
+    "total_all": 17
+  },
+  "response_stats": {
+    "total_length": 2982,
+    "citation_count": 15,
+    "chars_with_citations": 358
+  }
+}

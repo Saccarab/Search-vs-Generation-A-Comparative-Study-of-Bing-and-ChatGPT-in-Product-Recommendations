@@ -1,0 +1,412 @@
+{
+  "run_id": "P020_r3",
+  "account_type": "personal",
+  "prompt": "Request a tool to translate foreign audio to English in real-time during video playback.",
+  "metadata": {
+    "hidden_queries": [
+      "tool to translate foreign audio to English in real time during video playback",
+      "实时 外国 语音 翻译 视频 播放 工具 real-time audio translation subtitles"
+    ],
+    "sonic_classification": {
+      "latency_ms": 21.845638984814286,
+      "simple_search_prob": 0.6556245176950903,
+      "complex_search_prob": 0.29697658766067847,
+      "no_search_prob": 0.04739889464423119,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": 0.55,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": null,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": []
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "tool to translate foreign audio to English in real time during video playback"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 270,
+        "end_idx": 289
+      },
+      "citation_token": "citeturn0search9",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+      "url_position": 274,
+      "claim_text": "Here are tools that can translate foreign audio to English in real time during video playback: Browser / Computer Extensions Speech Translator (Chrome extension) – translates any video/audio livestream in real time using speech recognition + translation. Chrome Web Store",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 418,
+        "end_idx": 424
+      },
+      "citation_token": "cite",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp?hl=en-US",
+      "url_position": 506,
+      "claim_text": "Real-Time Video & Audio Translation (Chrome extension) – AI powered translation and transcription for videos and sound. Chrome Web Store",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 586,
+        "end_idx": 606
+      },
+      "citation_token": "citeturn0search13",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/yplayer-live-translate-player/id1542569291",
+          "title": "YPlayer: Live Translate Player - App Store - Apple",
+          "snippet": "YPlayer is a video and audio player that can generate subtitles on-device and in realtime. ... 我们的翻译官-实时语音翻译字幕在线会议工具. ourfyg-留学实时网课识别 ...Read more",
+          "domain": "apps.apple.com",
+          "ref_type": "search",
+          "ref_index": 13,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_13"
+        }
+      ],
+      "inline_url": "https://apps.apple.com/us/app/yplayer-live-translate-player/id1542569291",
+      "url_position": 766,
+      "claim_text": "Apps / Players YPlayer: Live Translate Player – video/audio player that generates subtitles and real-time translated captions on device. App Store",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 735,
+        "end_idx": 768
+      },
+      "citation_token": "citeturn0search0turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=zh&id=com.subtitle.google",
+          "title": "视频语音翻译- Google Play 上的应用",
+          "snippet": "视频语音翻译：一键实时翻译海外影视剧，让语言不在兴趣的障碍，我追剧，我热爱！！ 实时语音翻译实时视频翻译实时直播翻译实时视频字幕翻译 -支持100多种语言 -更快的翻译Read more",
+          "domain": "play.google.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://play.google.com/store/apps/details?hl=zh&id=com.superman.video.translate&utm_source=chatgpt.com",
+          "title": "Real-Time Video Translator - Google Play 上的应用",
+          "snippet": "实时视频翻译器可以让您在线观看视频或需要将本地音视频文件的声音转换为文本。实时视频翻译机可以为您提供即时翻译，让您无需等待即可直接理解内容的含义。Read more",
+          "domain": "google.com",
+          "ref_type": "search",
+          "ref_index": 10,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_10"
+        }
+      ],
+      "inline_url": "https://play.google.com/store/apps/details?hl=zh&id=com.subtitle.google",
+      "url_position": 976,
+      "claim_text": "实时视频翻译 / 视频语音翻译 apps (Android) – apps that capture video audio and provide live translated text/subtitles for playback. Google Play+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 941,
+        "end_idx": 961
+      },
+      "citation_token": "citeturn0search28",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.microsoft.com/zh-tw/edge/features/real-time-video-translation",
+      "url_position": 1225,
+      "claim_text": "Other Options Microsoft Edge Real-Time Video Translation – built-in feature translating audio to your preferred language for supported videos (e.g., YouTube). microsoft.com",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 1132,
+        "end_idx": 1150
+      },
+      "citation_token": "citeturn0news38",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://www.techradar.com/computing/software/google-smashes-language-barriers-with-live-translation-for-any-earbuds-on-android-heres-how-it-works",
+          "title": "Google smashes language barriers with live translation for any earbuds on Android - here's how it works",
+          "snippet": "Google has announced a major upgrade to Google Translate, rolling out live translation capabilities to all earbuds on Android devices, currently in beta across the US, Mexico, and India. Previously limited to Pixel Buds, the feature will soon expand globally and to iOS by 2026. This advancement allows more natural and accurate translations by preserving tone, emphasis, and cadence, enhancing understandability in real-time conversations, lectures, and media in over 70 languages.\n\nThe upgrade leverages Google’s Gemini AI, which improves translation of slang, idioms, and expressions by interpreting contextual meanings—for example, accurately translating idioms like “stealing my thunder.” Additionally, Google has improved its built-in language learning tools, offering personalized pronunciation feedback, usage tips, and progress tracking features. These updates are expanding to 20 new countries, broadening access to language learning for users in Germany, India, Sweden, Taiwan, and more. This move strengthens Google Translate as a comprehensive language tool for communication and education alike.",
+          "domain": "www.techradar.com",
+          "ref_type": "news",
+          "ref_index": 38,
+          "turn_index": 0,
+          "pub_date": 1765810800,
+          "ref_key": "0_news_38"
+        }
+      ],
+      "inline_url": "https://www.techradar.com/computing/software/google-smashes-language-barriers-with-live-translation-for-any-earbuds-on-android-heres-how-it-works",
+      "url_position": 1478,
+      "claim_text": "Google Translate + earbuds/live capture – Google Translate can capture device audio and translate in real time into English (works with Android earbuds in beta). techradar.com",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 1417,
+        "end_idx": 1435
+      },
+      "citation_token": "citeturn0news32",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "www.sfgate.com",
+          "ref_type": "news",
+          "ref_index": 32,
+          "turn_index": 0,
+          "pub_date": 1769452211,
+          "ref_key": "0_news_32"
+        },
+        {
+          "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php?utm_source=chatgpt.com",
+          "title": "These $140 earbuds translate 50+ languages while you listen",
+          "snippet": "The Mymanu Orb Open-Ear AI Translation Earbuds, showcased at CES 2026, offer users a unique blend of audio entertainment, real-world awareness, and advanced language translation technology. Priced at $139.99 (down from a $179.99 MSRP), these earbuds feature an open-ear design that allows users to hear their surroundings while simultaneously listening to music, taking calls, or translating real-time conversations. The standout feature is their built-in AI, which supports translation in over 50 languages across live conversations, phone calls, and spoken audio—ideal for travel, work, or multilingual environments. Beyond translation, the earbuds function as typical audio accessories with a sleek, lightweight, and water-resistant design. With up to 35 hours of battery life using the charging case and hands-free controls, they offer a user-friendly and futuristic audio solution without added complexity.",
+          "domain": "sfgate.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+      "url_position": 1899,
+      "claim_text": "If you want seamless speech-to-speech translation (not just subtitles), devices like AI translation earbuds (e.g., Mymanu Orb) or dedicated translation hardware can also help while watching videos with foreign audio (but these are separate hardware solutions). sfgate.com",
+      "url_index": 6
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://chromewebstore.google.com/detail/speech-translator/jodfjmaiakpnmeddgpeflpafebmlhppn",
+        "title": "Speech Translator - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/real-time-video-audio-tra/cbokniolkggbjffkamfkloblcjckdohp?hl=en-US",
+        "title": "Real-Time Video & Audio Translation - Chrome Web Store",
+        "domain": "Chrome Web Store"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/yplayer-live-translate-player/id1542569291",
+        "title": "YPlayer: Live Translate Player - App Store - Apple",
+        "domain": "App Store"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=zh&id=com.subtitle.google",
+        "title": "视频语音翻译- Google Play 上的应用",
+        "domain": "Google Play"
+      },
+      {
+        "url": "https://www.microsoft.com/zh-tw/edge/features/real-time-video-translation",
+        "title": "實時視頻翻譯",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://www.techradar.com/computing/software/google-smashes-language-barriers-with-live-translation-for-any-earbuds-on-android-heres-how-it-works",
+        "title": "Google smashes language barriers with live translation for any earbuds on Android - here's how it works",
+        "domain": "techradar.com"
+      },
+      {
+        "url": "https://www.sfgate.com/shopping/article/mymanu-orb-open-ear-ai-translation-earbuds-deal-21315860.php",
+        "title": "These $140 earbuds translate 50+ languages while you listen",
+        "domain": "sfgate.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://www.synthesia.io/post/best-video-translator-apps",
+        "title": "The 6 Best AI Video Translator Apps of 2025 (Compared) - Synthesia",
+        "domain": "synthesia.io"
+      },
+      {
+        "url": "https://www.reddit.com/r/kpophelp/comments/16n5myb/are_there_any_apps_that_translate_videos_playing/",
+        "title": "Are there any apps that translate videos playing on your computer?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/%E8%AA%9E%E9%9F%B3%E8%AA%9E%E8%A8%80%E7%BF%BB%E8%AD%AF%E5%99%A8-ai/id1526102742?l=zh-Hant-TW",
+        "title": "語音語言翻譯器AI - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://apps.apple.com/us/app/lingvotube-video-translator/id1632282523",
+        "title": "Lingvotube: Video translator - App Store",
+        "domain": "apple.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/AskTechnology/comments/1gnqt7n/are_there_any_video_chatting_apps_with_an/",
+        "title": "Are there any video chatting apps with an auto-translator?",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://www.reddit.com/r/ChatGPTPro/comments/15z93kb/are_there_any_handsfree_realtime_voice/",
+        "title": "Are there any Hands-Free, Realtime, Voice Translation ...",
+        "domain": "reddit.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=zh&id=com.subtitle.voice",
+        "title": "实时语音翻译",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/video_translator_translate_video_voice_o/285433175728",
+        "title": "Translate Video & Voice online - Google Workspace Marketplace",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://chromewebstore.google.com/detail/video-translator-translat/ofhkcffhkdhjpnpplihikdpkcpailpnc?hl=zh-CN",
+        "title": "Video Translator - 在线翻译视频和语音- Chrome 应用商店",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=zh&id=com.superman.video.translate",
+        "title": "Real-Time Video Translator - Google Play 上的应用",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.erudite.translator",
+        "title": "Instant Voice Translate - Apps on Google Play",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://workspace.google.com/marketplace/app/traduttore_video_tradurre_video_online/285433175728?hl=zh",
+        "title": "视频翻译器- 在线翻译视频和语音",
+        "domain": "google.com"
+      },
+      {
+        "url": "https://www.jotme.io/blog/best-live-translation",
+        "title": "7 Best AI Live Translation Tools That We Tried in 2025",
+        "domain": "jotme.io"
+      },
+      {
+        "url": "https://sonix.ai/",
+        "title": "Automatically convert audio and video to text: Fast, Accurate ...",
+        "domain": "sonix.ai"
+      },
+      {
+        "url": "https://clideo.com/video-translator",
+        "title": "Online Video Translator",
+        "domain": "clideo.com"
+      },
+      {
+        "url": "https://www.heygen.com/translate",
+        "title": "AI Video Translator – Translate Videos into 175+ Languages",
+        "domain": "heygen.com"
+      },
+      {
+        "url": "https://www.wordly.ai/",
+        "title": "Wordly: AI Translation & Captions for Meetings and Events",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/live-translation",
+        "title": "Live Translation – Real-Time AI Audio & Caption ...",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.wordly.ai/real-time-translation",
+        "title": "Real-Time Translation Solutions",
+        "domain": "wordly.ai"
+      },
+      {
+        "url": "https://www.notta.ai/en/blog/best-video-translator-apps",
+        "title": "7 Best AI Video Translator Apps of 2025 [Tested]",
+        "domain": "notta.ai"
+      },
+      {
+        "url": "https://www.forasoft.com/blog/article/multilingual-translation-video-calls",
+        "title": "7 Best Tools for Multilingual Real-Time Translation in Video ...",
+        "domain": "forasoft.com"
+      },
+      {
+        "url": "https://apps.microsoft.com/detail/9ph1r9djg47s?gl=CN&hl=zh-CN",
+        "title": "Live Subtitles - 实时双语字幕- Windows官方下载",
+        "domain": "microsoft.com"
+      },
+      {
+        "url": "https://maestra.ai/zh/tools/real-time-translation",
+        "title": "实时翻译器",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://maestra.ai/",
+        "title": "AI Media Translation, Subtitles & Dubbing Platform | Maestra",
+        "domain": "maestra.ai"
+      },
+      {
+        "url": "https://taloai.com/",
+        "title": "Talo - Real-Time AI Translator for Video Calls",
+        "domain": "taloai.com"
+      },
+      {
+        "url": "https://kudo.ai/",
+        "title": "KUDO | Live Speech Translation & Captions in 200 Languages",
+        "domain": "kudo.ai"
+      },
+      {
+        "url": "https://www.transyncai.com/tools/real-time-translation/",
+        "title": "Real-time Translation Tool",
+        "domain": "transyncai.com"
+      }
+    ],
+    "total_cited": 7,
+    "total_additional": 27,
+    "total_all": 34
+  },
+  "response_stats": {
+    "total_length": 2003,
+    "citation_count": 7,
+    "chars_with_citations": 134
+  }
+}

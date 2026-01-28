@@ -1,0 +1,367 @@
+{
+  "run_id": "P008_r1",
+  "account_type": "enterprise",
+  "prompt": "Is there an AI that changes your voice?",
+  "metadata": {
+    "hidden_queries": [
+      "AI that changes your voice voice changer AI",
+      "voice transformation AI software change voice AI"
+    ],
+    "sonic_classification": {
+      "latency_ms": 36.46102920174599,
+      "simple_search_prob": 0.880739334371127,
+      "complex_search_prob": 0.0006293989188137188,
+      "no_search_prob": 0.11863126671005933,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "AI that changes your voice voice changer AI"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 203,
+        "end_idx": 222
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wootechy.com/voice-change/best-ai-voice-changer/",
+      "url_position": 212,
+      "claim_text": "Yes — there are AI tools that change your voice (real-time or from recordings). They use machine learning to transform your speech into different styles, tones, characters, or completely new voices. wootechy.com",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 332,
+        "end_idx": 365
+      },
+      "citation_token": "citeturn0search0turn0search15",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voice.ai/",
+          "title": "Free AI Voice Changer & Voice Agent Platform - Voice.ai",
+          "snippet": "Create lifelike speech using AI voice agents, voice changer, and text to speech from Voice.ai. Thousands of voices with secure, scalable APIs and SDKs.",
+          "domain": "voice.ai",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        },
+        {
+          "url": "https://voice.ai/ai-voice-changer",
+          "title": "AI Voice Changer for PC & Mac - Voice.ai",
+          "snippet": "Free Real-Time AI Voice Changer for PC & Mac Access thousands of free voices, or create your own, with Voice.ai, the leading real-time AI voice changer. Join our incredible community of audio and voice enthusiasts and help shape the future of social audio communication as we build the most exciting voice technology out there.",
+          "domain": "voice.ai",
+          "ref_type": "search",
+          "ref_index": 15,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_15"
+        }
+      ],
+      "inline_url": "https://voice.ai/",
+      "url_position": 386,
+      "claim_text": "Examples of AI voice changers: Voice.ai – real-time AI voice changer with many voices and styles. Voice.ai+1",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 462,
+        "end_idx": 481
+      },
+      "citation_token": "citeturn0search6",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://elevenlabs.io/voice-changer",
+      "url_position": 506,
+      "claim_text": "ElevenLabs Voice Changer – transforms your voice while preserving emotion and delivery. ElevenLabs",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 563,
+        "end_idx": 582
+      },
+      "citation_token": "citeturn0search3",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://murf.ai/voice-changer",
+      "url_position": 626,
+      "claim_text": "Murf.ai – professional quality voice changer for recordings and content. Murf AI",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 675,
+        "end_idx": 721
+      },
+      "citation_token": "citeturn0search2turn0search7turn0search12",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://twoshot.app/voice-changer",
+      "url_position": 768,
+      "claim_text": "TwoShot / Magic Hour / Parrot AI – online tools to upload/record and change voices. TwoShot+2Magic Hour AI+2",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 833,
+        "end_idx": 879
+      },
+      "citation_token": "citeturn0search1turn0search5turn0search10",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://anyvoicelab.com/voice-changer/",
+          "title": "AI Voice Changer (Free & No Login)",
+          "snippet": "Looking to transform your voice into another? Our free AI voice changer makes it simple to convert your voice recordings into any voice you can imagine.",
+          "domain": "anyvoicelab.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": 1740450632,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://anyvoicelab.com/voice-changer/",
+      "url_position": 935,
+      "claim_text": "Free web tools (e.g., AnyVoiceLab, AudioEnhancer.ai, Galaxy.ai) – simple browser voice transformation. Any Voice Lab+2ScreenApp+2",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 967,
+        "end_idx": 987
+      },
+      "citation_token": "citeturn0search14",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voicery.net/",
+          "title": ".voicery - Free Real-Time AI Voice Changer | Open Source",
+          "snippet": "Transform your voice in real-time using open-source AI. Perfect for gaming, streaming, and privacy online.",
+          "domain": "voicery.net",
+          "ref_type": "search",
+          "ref_index": 14,
+          "turn_index": 0,
+          "pub_date": 1746057600,
+          "ref_key": "0_search_14"
+        }
+      ],
+      "inline_url": "https://voicery.net/",
+      "url_position": 1065,
+      "claim_text": "Open-source options like Voicery provide customizable real-time voice changes. .voicery",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1160,
+        "end_idx": 1179
+      },
+      "citation_token": "citeturn0search4",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.wootechy.com/voice-change/best-ai-voice-changer/",
+      "url_position": 1265,
+      "claim_text": "What they do: AI voice changers can: change pitch/timbre and gender/speed make you sound like characters or accents modify recordings or live microphone input wootechy.com",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1307,
+        "end_idx": 1325
+      },
+      "citation_token": "citeturn0news34",
+      "type": "grouped_webpages",
+      "sources": [
+        {
+          "url": "https://timesofindia.indiatimes.com/city/mumbai/mumbai-ai-voice-cloning-violates-celebritys-personality-rights-says-bombay-high-court-on-singer-asha-bhosles-plea/articleshow/124264867.cms?utm_source=chatgpt.com",
+          "title": "Mumbai: AI voice cloning violates celebrity's personality rights, says Bombay high court on singer Asha Bhosle's plea",
+          "snippet": "The Bombay High Court granted temporary relief to renowned singer Asha Bhosle in her case against the unauthorized use of her voice by two US-based AI platforms and affiliated e-commerce and video-sharing sites. Justice Arif Doctor emphasized that using AI tools to clone a celebrity's voice without consent constitutes a clear violation of personality rights, as it misappropriates essential elements of a public persona, potentially enabling commercial and deceptive misuse. The court noted the defendants' failure to appear despite being served, which strengthened Bhosle’s claims. Balancing convenience favored Bhosle, as denial of relief would cause her irreparable harm. Consequently, the court restrained the parties from infringing Bhosle's rights and directed the removal of infringing content from two e-commerce sites. It also instructed a video-sharing platform to provide seller details at Bhosle's request, and recorded Google LLC’s commitment to take down specific links.",
+          "domain": "timesofindia.indiatimes.com",
+          "ref_type": "direct_item"
+        }
+      ],
+      "inline_url": "https://timesofindia.indiatimes.com/city/mumbai/mumbai-ai-voice-cloning-violates-celebritys-personality-rights-says-bombay-high-court-on-singer-asha-bhosles-plea/articleshow/124264867.cms",
+      "url_position": 1479,
+      "claim_text": "Caveat: Realistic cloning of someone else’s voice has ethical/legal concerns (deepfakes, impersonation). Use responsibly. timesofindia.indiatimes.com",
+      "url_index": 8
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://www.wootechy.com/voice-change/best-ai-voice-changer/",
+        "title": "6 Best AI Voice Changers of 2025 (Ranked!) - WooTechy",
+        "domain": "wootechy.com"
+      },
+      {
+        "url": "https://voice.ai/",
+        "title": "Free AI Voice Changer & Voice Agent Platform - Voice.ai",
+        "domain": "Voice.ai"
+      },
+      {
+        "url": "https://elevenlabs.io/voice-changer",
+        "title": "AI Voice Changer: Use AI To Change Your Voice For Free - ElevenLabs",
+        "domain": "ElevenLabs"
+      },
+      {
+        "url": "https://murf.ai/voice-changer",
+        "title": "AI Voice Changer: Change Your Voice With a Realistic AI Voice - Murf",
+        "domain": "Murf AI"
+      },
+      {
+        "url": "https://twoshot.app/voice-changer",
+        "title": "Free AI Voice Changer - Transform Voices & Create AI Covers on TwoShot",
+        "domain": "TwoShot"
+      },
+      {
+        "url": "https://anyvoicelab.com/voice-changer/",
+        "title": "AI Voice Changer (Free & No Login)",
+        "domain": "Any Voice Lab"
+      },
+      {
+        "url": "https://voicery.net/",
+        "title": ".voicery - Free Real-Time AI Voice Changer | Open Source",
+        "domain": ".voicery"
+      },
+      {
+        "url": "https://timesofindia.indiatimes.com/city/mumbai/mumbai-ai-voice-cloning-violates-celebritys-personality-rights-says-bombay-high-court-on-singer-asha-bhosles-plea/articleshow/124264867.cms",
+        "title": "Mumbai: AI voice cloning violates celebrity's personality rights, says Bombay high court on singer Asha Bhosle's plea",
+        "domain": "timesofindia.indiatimes.com"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://alignify.co/tools/voice-changer",
+        "title": "5 Best AI Voice Changers 2026: Real-time, AI-Driven",
+        "domain": "alignify.co"
+      },
+      {
+        "url": "https://magichour.ai/blog/best-ai-voice-changers",
+        "title": "The 5 Best AI Voice Changers",
+        "domain": "magichour.ai"
+      },
+      {
+        "url": "https://www.unite.ai/voice-changer-tools/",
+        "title": "9 Best AI Voice Changer Tools (January 2026) - Unite.AI",
+        "domain": "unite.ai"
+      },
+      {
+        "url": "https://screenapp.io/features/ai-voice-changer",
+        "title": "AI Voice Changer Free - Change Voice Recording Online",
+        "domain": "screenapp.io"
+      },
+      {
+        "url": "https://magichour.ai/products/ai-voice-changer",
+        "title": "AI Voice Changer - Change Your Voice Free Online | Magic Hour",
+        "domain": "magichour.ai"
+      },
+      {
+        "url": "https://audioenhancer.ai/tools/voice-changer/",
+        "title": "Free AI Voice Changer - Change Your Voice Online in Seconds",
+        "domain": "audioenhancer.ai"
+      },
+      {
+        "url": "https://audio.galaxy.ai/ai-voice-changer",
+        "title": "Free AI Voice Changer (Transform Your Voice with AI)",
+        "domain": "galaxy.ai"
+      },
+      {
+        "url": "https://www.storyblocks.com/voiceover/voice-changer",
+        "title": "AI Voice Changer - Transform Any Voice Online - Storyblocks",
+        "domain": "storyblocks.com"
+      },
+      {
+        "url": "https://www.tryparrotai.com/tools/ai-voice-changer",
+        "title": "AI Voice Changer | Parrot AI",
+        "domain": "tryparrotai.com"
+      },
+      {
+        "url": "https://voice.ai/ai-voice-changer",
+        "title": "AI Voice Changer for PC & Mac - Voice.ai",
+        "domain": "voice.ai"
+      },
+      {
+        "url": "https://www.dreamfaceapp.com/tools/voice-changer",
+        "title": "AI Voice Changer: Transform Your Voice with Amazing Effects",
+        "domain": "dreamfaceapp.com"
+      },
+      {
+        "url": "https://speechify.com/voice-changer/",
+        "title": "The Best AI Voice Changer | Speechify",
+        "domain": "speechify.com"
+      }
+    ],
+    "total_cited": 8,
+    "total_additional": 12,
+    "total_all": 20
+  },
+  "response_stats": {
+    "total_length": 1773,
+    "citation_count": 9,
+    "chars_with_citations": 239
+  }
+}

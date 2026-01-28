@@ -1,0 +1,408 @@
+{
+  "run_id": "P011_r1",
+  "account_type": "enterprise",
+  "prompt": "How can I quickly and for free convert text to speech?",
+  "metadata": {
+    "hidden_queries": [
+      "free quick text to speech online tools",
+      "fast free text to speech converters"
+    ],
+    "sonic_classification": {
+      "latency_ms": 12.245320016518235,
+      "simple_search_prob": 0.8393311740758264,
+      "complex_search_prob": 0.0012821268303557741,
+      "no_search_prob": 0.15938669909381786,
+      "simple_search_threshold": 0,
+      "complex_search_threshold": 0.4,
+      "no_search_threshold": 0.175,
+      "threshold_order": [
+        "no_search",
+        "complex",
+        "simple"
+      ],
+      "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+      "classifier_config": {
+        "model_name": "snc-pg-sw-3cls-ev3",
+        "renderer_name": "harmony_v4.0.15_16k_orion_text_only_no_asr_2k_action",
+        "classifier_config_name": "sonic_classifier_5p2_3cls_ev3",
+        "model_config_name": "chatgpt_sonic_classifier_model_config",
+        "disable_sonic_prefetch_classifier": false,
+        "force_disabled_rate": 0,
+        "force_enabled_rate": 0,
+        "num_messages": 20,
+        "only_user_messages": false,
+        "remove_memory": true,
+        "support_mm": true,
+        "n_ctx": 2048,
+        "max_action_length": 4,
+        "dynamic_set_max_message_size": false,
+        "max_message_tokens": 2000,
+        "append_base_config": false,
+        "no_search_token": "1",
+        "simple_search_token": "7",
+        "complex_search_token": "5",
+        "simple_search_threshold": 0,
+        "complex_search_threshold": 0.4,
+        "no_search_threshold": 0.175,
+        "prefetch_threshold": null,
+        "first_turn_prefetch_threshold": null,
+        "force_search_first_turn_threshold": 0.00001,
+        "threshold_order": [
+          "no_search",
+          "complex",
+          "simple"
+        ],
+        "passthrough_tool_calls": true,
+        "passthrough_tool_name_exclusions": [
+          "genui"
+        ],
+        "timeout": 1
+      },
+      "classifier_snapshot_id": "wli-searchdb-model5-2025-09-23-20-17",
+      "decision_source": "classifier",
+      "passthrough_tool_names": [
+        "api_tool",
+        "bio",
+        "container",
+        "gcal",
+        "gcontacts",
+        "gmail",
+        "image_gen_no_temp_chat",
+        "python",
+        "python_user_visible"
+      ]
+    },
+    "web_search_triggered": true,
+    "web_search_forced": false,
+    "generated_search_query": "free quick text to speech online tools"
+  },
+  "citation_mappings": [
+    {
+      "token_position": {
+        "start_idx": 365,
+        "end_idx": 384
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voicertool.com/",
+          "title": "Free Text to Speech Online – 300+ AI Voices, 70+ Languages | Voicertool",
+          "snippet": "Free Unlimited TTS Generator Voicertool leverages advanced AI speech synthesis to produce incredibly lifelike voices —complete with natural pauses, dynamic intonation, and emotional nuance that far surpass the stiff, robotic text-to-speech systems of the past. Unlike early TTS tools that sounded like mechanical drones reading words without feeling, our platform delivers audio so realistic ...",
+          "domain": "voicertool.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://voicertool.com/",
+      "url_position": 368,
+      "claim_text": "You can convert text to speech quickly and for free using online tools — no install required. Options let you paste or type text and generate audio instantly: Fast, Free Online Converters Web-based TTS you can use instantly (paste text → choose voice → play/download): • Voicertool — free unlimited conversions, multiple voices/languages, no signup. voicertool.com",
+      "url_index": 0
+    },
+    {
+      "token_position": {
+        "start_idx": 452,
+        "end_idx": 471
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://convertixy.com/text-to-speech",
+          "title": "Text to Speech Converter Online | Free, Fast & Realistic TTS Voice ...",
+          "snippet": "Convert text to natural-sounding speech instantly with our free Text to Speech Converter online. Choose from multiple voices, control pitch and speed, and download lifelike audio. Ideal for creators, teachers, accessibility users, and productivity. 100% browser-based and secure.",
+          "domain": "convertixy.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://convertixy.com/text-to-speech",
+      "url_position": 489,
+      "claim_text": "• Convertixy — simple browser tool with voice & speed options. Convertixy - Free Online Tools",
+      "url_index": 1
+    },
+    {
+      "token_position": {
+        "start_idx": 536,
+        "end_idx": 555
+      },
+      "citation_token": "citeturn0search2",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ttsmaker.com/",
+      "url_position": 599,
+      "claim_text": "• TTSMaker — 100+ languages, 600+ voices, MP3/WAV download. TTSMaker",
+      "url_index": 2
+    },
+    {
+      "token_position": {
+        "start_idx": 637,
+        "end_idx": 669
+      },
+      "citation_token": "citeturn0search3turn0search7",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://ttsforge.com/",
+      "url_position": 712,
+      "claim_text": "• TextaVoice/TextoVoice (TextaVoice/TTSForge) — free AI voices, fast output. TTSForge+1",
+      "url_index": 3
+    },
+    {
+      "token_position": {
+        "start_idx": 735,
+        "end_idx": 768
+      },
+      "citation_token": "citeturn0search8turn0search17",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://textspeakpro.com/",
+      "url_position": 817,
+      "claim_text": "• Basic TTS or TextSpeakPro — lightweight, no signup needed. textspeakpro.com+1",
+      "url_index": 4
+    },
+    {
+      "token_position": {
+        "start_idx": 836,
+        "end_idx": 846
+      },
+      "citation_token": "citeturn",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://text2speech.online/",
+      "url_position": 931,
+      "claim_text": "• Text2Speech.online — free with 100+ voices and MP3 download. Text to Speech Online",
+      "url_index": 5
+    },
+    {
+      "token_position": {
+        "start_idx": 927,
+        "end_idx": 961
+      },
+      "citation_token": "citeturn0search19turn0search20",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://www.ttsspeech.com/",
+      "url_position": 1041,
+      "claim_text": "• TopTTS / TTSspeech — multiple voices/languages free in browser. TTS Speech+1",
+      "url_index": 6
+    },
+    {
+      "token_position": {
+        "start_idx": 1051,
+        "end_idx": 1071
+      },
+      "citation_token": "citeturn0search11",
+      "type": "hidden",
+      "sources": [],
+      "inline_url": "https://iwl.me/tools/text-to-speech",
+      "url_position": 1163,
+      "claim_text": "Notes Most run entirely in your browser — paste text and get audio instantly. I Write Like",
+      "url_index": 7
+    },
+    {
+      "token_position": {
+        "start_idx": 1121,
+        "end_idx": 1140
+      },
+      "citation_token": "citeturn0search0",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://voicertool.com/",
+          "title": "Free Text to Speech Online – 300+ AI Voices, 70+ Languages | Voicertool",
+          "snippet": "Free Unlimited TTS Generator Voicertool leverages advanced AI speech synthesis to produce incredibly lifelike voices —complete with natural pauses, dynamic intonation, and emotional nuance that far surpass the stiff, robotic text-to-speech systems of the past. Unlike early TTS tools that sounded like mechanical drones reading words without feeling, our platform delivers audio so realistic ...",
+          "domain": "voicertool.com",
+          "ref_type": "search",
+          "ref_index": 0,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_0"
+        }
+      ],
+      "inline_url": "https://voicertool.com/",
+      "url_position": 1258,
+      "claim_text": "Many let you download MP3/WAV for reuse. voicertool.com",
+      "url_index": 8
+    },
+    {
+      "token_position": {
+        "start_idx": 1203,
+        "end_idx": 1222
+      },
+      "citation_token": "citeturn0search1",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://convertixy.com/text-to-speech",
+          "title": "Text to Speech Converter Online | Free, Fast & Realistic TTS Voice ...",
+          "snippet": "Convert text to natural-sounding speech instantly with our free Text to Speech Converter online. Choose from multiple voices, control pitch and speed, and download lifelike audio. Ideal for creators, teachers, accessibility users, and productivity. 100% browser-based and secure.",
+          "domain": "convertixy.com",
+          "ref_type": "search",
+          "ref_index": 1,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_1"
+        }
+      ],
+      "inline_url": "https://convertixy.com/text-to-speech",
+      "url_position": 1370,
+      "claim_text": "Some offer language/voice choices and speed controls. Convertixy - Free Online Tools",
+      "url_index": 9
+    },
+    {
+      "token_position": {
+        "start_idx": 1380,
+        "end_idx": 1399
+      },
+      "citation_token": "citeturn0search27",
+      "type": "hidden",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/ESpeak",
+          "title": "ESpeak",
+          "snippet": "",
+          "domain": "en.wikipedia.org",
+          "ref_type": "search",
+          "ref_index": 27,
+          "turn_index": 0,
+          "pub_date": null,
+          "ref_key": "0_search_27"
+        }
+      ],
+      "inline_url": "https://en.wikipedia.org/wiki/ESpeak",
+      "url_position": 1580,
+      "claim_text": "If you want something local (no web) on a computer, open-source engines like eSpeakNG can convert text to speech offline with various language support. en.wikipedia.org",
+      "url_index": 10
+    }
+  ],
+  "source_summary": {
+    "cited": [
+      {
+        "url": "https://voicertool.com/",
+        "title": "Free Text to Speech Online – 300+ AI Voices, 70+ Languages | Voicertool",
+        "domain": "voicertool.com"
+      },
+      {
+        "url": "https://convertixy.com/text-to-speech",
+        "title": "Text to Speech Converter Online | Free, Fast & Realistic TTS Voice ...",
+        "domain": "Convertixy - Free Online Tools"
+      },
+      {
+        "url": "https://ttsmaker.com/",
+        "title": "Free Text to Speech Online - TTSMaker",
+        "domain": "TTSMaker"
+      },
+      {
+        "url": "https://ttsforge.com/",
+        "title": "Free Text to Speech Online: 1000+ Realistic AI Voices",
+        "domain": "TTSForge"
+      },
+      {
+        "url": "https://textspeakpro.com/",
+        "title": "Free TTS Generator - TextSpeakPro",
+        "domain": "textspeakpro.com"
+      },
+      {
+        "url": "https://text2speech.online/",
+        "title": "Free Unlimited Online Tool to Convert Text to Speech",
+        "domain": "Text to Speech Online"
+      },
+      {
+        "url": "https://www.ttsspeech.com/",
+        "title": "Free Online Text to Speech Generator -ttsspeech",
+        "domain": "TTS Speech"
+      },
+      {
+        "url": "https://iwl.me/tools/text-to-speech",
+        "title": "Free Text to Speech Online - Natural Voice Synthesis",
+        "domain": "I Write Like"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/ESpeak",
+        "title": "ESpeak",
+        "domain": "en.wikipedia.org"
+      }
+    ],
+    "additional": [
+      {
+        "url": "https://anyvoicelab.com/free-text-to-speech-converter/",
+        "title": "Free Unlimited Realistic Text To Speech Converter (No Login)",
+        "domain": "anyvoicelab.com"
+      },
+      {
+        "url": "https://twoshot.app/text-to-speech",
+        "title": "Free Text to Speech - AI Voice Generator Online on TwoShot",
+        "domain": "twoshot.app"
+      },
+      {
+        "url": "https://www.naturalreaders.com/online/",
+        "title": "Free Text to Speech with Gemini and ChatGPT AI Voices",
+        "domain": "naturalreaders.com"
+      },
+      {
+        "url": "https://www.textavoice.com/",
+        "title": "Free Text to Speech TTS Converter | Read Aloud Text to MP3",
+        "domain": "textavoice.com"
+      },
+      {
+        "url": "https://speechify.com/text-to-speech-online/",
+        "title": "Speechify: Free Text to Speech with Humanlike AI Voices",
+        "domain": "speechify.com"
+      },
+      {
+        "url": "https://freetext2speech.com/en/",
+        "title": "Free Text to Speech Online | Text to Speech AI Converter",
+        "domain": "freetext2speech.com"
+      },
+      {
+        "url": "https://quillbot.com/tools/text-to-speech",
+        "title": "Text to Speech AI: Convert Text to Voice Instantly - QuillBot AI",
+        "domain": "quillbot.com"
+      },
+      {
+        "url": "https://airmore.ai/text-to-speech",
+        "title": "Free Online Text to Speech with Realistic AI Voices",
+        "domain": "airmore.ai"
+      },
+      {
+        "url": "https://musely.ai/tools/tts-online",
+        "title": "Free Text to Speech Online | AI Voice Generator | Musely.ai",
+        "domain": "musely.ai"
+      },
+      {
+        "url": "https://unlimitedtts.com/",
+        "title": "Free Unlimited Text‑to‑Speech | 200+ Voices, 100+ Languages",
+        "domain": "unlimitedtts.com"
+      },
+      {
+        "url": "https://basictts.com/",
+        "title": "Basic TTS",
+        "domain": "basictts.com"
+      },
+      {
+        "url": "https://turbotts.com/",
+        "title": "TurboTTS.com - Free Text To Speech Online Tool",
+        "domain": "turbotts.com"
+      },
+      {
+        "url": "https://toptts.com/",
+        "title": "TopTTS - Free Text to Speech Online Tool",
+        "domain": "toptts.com"
+      }
+    ],
+    "total_cited": 9,
+    "total_additional": 13,
+    "total_all": 22
+  },
+  "response_stats": {
+    "total_length": 1723,
+    "citation_count": 11,
+    "chars_with_citations": 243
+  }
+}
