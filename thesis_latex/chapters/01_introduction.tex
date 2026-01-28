@@ -1,0 +1,23 @@
+\chapter{Introduction}
+\label{chap:introduction}
+
+The paradigm of information retrieval is undergoing a fundamental shift. For two decades, the dominant model of web search has been \textit{ranking}: a process where algorithms index billions of documents and present a ranked list of blue links to the user, optimizing for click-through rates and relevance. However, the emergence of Large Language Models (LLMs) has introduced a competing paradigm: \textit{grounding}. In this new model, artificial intelligence acts as an orchestrator, retrieving information from the web not to present links, but to synthesize a direct answer. This transition from "Search Engine Optimization" (SEO) to "Generative Engine Optimization" (GEO) represents not merely a change in user interface, but a structural transformation of the internet's information economy.
+
+\section{Motivation}
+The commercial implications of this shift are profound, particularly in high-stakes domains such as product discovery. Recent industry reports indicate that commercial queries trigger a web search in over 53\% of ChatGPT conversations \cite{profound2026}. Unlike traditional search engines, which drive traffic to external websites, generative AI engines consume content to generate self-contained responses. This "zero-click" phenomenon raises critical questions about the visibility of information. If an LLM synthesizes a product recommendation, which sources does it cite? Does it prefer the same high-authority domains that rank at the top of Google and Bing, or does it bypass the "human web" to access a deeper, "agentic web"?
+
+\section{Problem Statement}
+Despite the rapid adoption of Retrieval-Augmented Generation (RAG) systems, the mechanisms by which these models select, filter, and synthesize information remain opaque. Preliminary observations suggest a significant divergence between the content visible to human users on Search Engine Result Pages (SERPs) and the content retrieved by AI agents. This thesis defines this divergence as the "AI Search Filter"—a measurable gap between the ranking priorities of traditional search algorithms and the grounding priorities of generative models.
+
+\section{Research Questions}
+To quantify this divergence, this thesis investigates the following core research questions:
+
+\begin{itemize}
+    \item \textbf{RQ1 (The Visibility Gap):} To what extent do the sources cited by Generative AI (ChatGPT, Gemini) overlap with the top-ranked results in traditional search engines (Bing, Google)?
+    \item \textbf{RQ2 (The Search Filter):} What are the characteristics of the "rejected" content—pages that rank highly in SERPs but are ignored by Generative AI?
+    \item \textbf{RQ3 (Extraction Efficiency):} How does the "Content DNA" of a webpage (e.g., structure, tone, schema) influence its likelihood of being cited and synthesized by an LLM?
+    \item \textbf{RQ4 (Stochasticity):} How consistent are AI-generated product recommendations across multiple independent runs of the same query?
+\end{itemize}
+
+\section{Thesis Structure}
+This thesis is organized as follows: Chapter \ref{chap:methodology} details the comparative methodology used to analyze 240 runs across 80 product recommendation prompts. Chapter \ref{chap:results} presents the empirical findings regarding citation overlap and the "Search Filter" effect. Chapter \ref{chap:discussion} discusses the theoretical implications of the shift from SEO to GEO, and Chapter \ref{chap:conclusion} offers concluding remarks and future research directions.

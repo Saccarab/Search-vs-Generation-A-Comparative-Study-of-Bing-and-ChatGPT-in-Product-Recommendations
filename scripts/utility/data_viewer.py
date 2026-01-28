@@ -126,7 +126,7 @@ HTML_TEMPLATE = """
         </div>
         <h3 style="color:#888; font-size:12px;">RUNS ({{ run_ids|length }})</h3>
         {% for rid in run_ids %}
-        <a href="/?run_id={{ rid }}" style="text-decoration:none; color:inherit;">
+        <a href="/?run_id={{ rid }}" style="text-decoration:none; color:inherit;" onclick="handleSidebarClick('{{ rid }}')">
             <div class="prompt-item {{ 'active' if rid == active_run_id else '' }}">
                 {{ rid }}
             </div>
@@ -147,8 +147,9 @@ HTML_TEMPLATE = """
             
             <!-- Stats Bar -->
             <div style="display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
-                <div style="background: {{ '#d1fae5' if run_raw.web_search_triggered == 'True' or run_raw.web_search_triggered == True else '#fee2e2' }}; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
-                    <strong>Web Search:</strong> {{ '✓ Triggered' if run_raw.web_search_triggered == 'True' or run_raw.web_search_triggered == True else '✗ Not Triggered' }}
+                {% set search_triggered = run_raw.web_search_triggered in ['1', 'true', 'True', True, 1] %}
+                <div style="background: {{ '#d1fae5' if search_triggered else '#fee2e2' }}; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Web Search:</strong> {{ '✓ Triggered' if search_triggered else '✗ Not Triggered' }}
                 </div>
                 {% if run_raw.web_search_forced %}
                 <div style="background: #fef3c7; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
@@ -164,6 +165,14 @@ HTML_TEMPLATE = """
                 <div style="background: #f3f4f6; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
                     <strong>Total Sources:</strong> {{ cit_db|length }}
                 </div>
+                <div style="background: #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Search Prob:</strong> Simple {{ run_raw.simple_search_prob }}% | Complex {{ run_raw.complex_search_prob }}% | None {{ run_raw.no_search_prob }}%
+                </div>
+                {% if run_raw.rejected_sources %}
+                <div style="background: #fef2f2; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Rejected:</strong> {{ run_raw.rejected_sources|length }} sources
+                </div>
+                {% endif %}
             </div>
 
             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
@@ -236,28 +245,58 @@ HTML_TEMPLATE = """
                             {% endfor %}
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Raw Response (collapsible) -->
-                    <details style="margin-top: 15px;">
-                        <summary style="cursor: pointer; font-size: 12px; color: #666; font-weight: bold;">RAW RESPONSE TEXT</summary>
-                        <div class="raw-text-box" style="margin-top: 10px;">{{ run_raw.response_text or 'No response text available' }}</div>
-                    </details>
-
-                    {% if prompt_volatility %}
-                    <div style="margin-top: 20px; padding: 12px; background: #fff1f2; border: 1px solid #fda4af; border-radius: 8px;">
-                        <h3 style="margin-top:0; color: #9f1239; font-size: 13px;">🚨 BING VOLATILITY ({{ prompt_volatility|length }} cases)</h3>
-                        <div style="max-height: 150px; overflow-y: auto;">
-                            {% for case in prompt_volatility %}
-                            <div style="margin-bottom: 8px; padding: 6px; background: white; border-radius: 4px; font-size: 10px; border-left: 2px solid #f43f5e;">
-                                <strong>{{ case.domain }}</strong><br>
-                                <span style="color: #059669;">✓ Found in: {{ case.in_bing|join(', ') }}</span><br>
-                                <span style="color: #dc2626;">✗ Missing in: {{ case.not_in_bing|join(', ') }}</span>
+                        
+                        <!-- Rejected Sources (retrieved but not cited) -->
+                        {% if run_raw.rejected_sources %}
+                        <div style="border-top: 1px solid #fca5a5; margin-top: 15px; padding-top: 15px; background: #fef2f2; margin: 15px -15px -15px; padding: 15px; border-radius: 0 0 8px 8px;">
+                            <div style="font-size: 11px; color: #991b1b; font-weight: bold; margin-bottom: 8px;">🚫 REJECTED SOURCES ({{ run_raw.rejected_sources|length }})</div>
+                            <div style="font-size: 10px; color: #666; margin-bottom: 10px;">Retrieved by ChatGPT but NOT used in response</div>
+                            {% for src in run_raw.rejected_sources %}
+                            <div style="margin-bottom: 8px; padding: 8px; background: white; border-radius: 4px; border-left: 3px solid #ef4444;">
+                                <div style="font-weight: bold; font-size: 11px; color: #111;">
+                                    <a href="{{ src.url }}" target="_blank" style="text-decoration: none; color: #111;">{{ src.domain }} 🔗</a>
+                                </div>
+                                <div style="font-size: 10px; color: #555;">{{ src.title[:60] }}{% if src.title|length > 60 %}...{% endif %}</div>
+                                <div style="font-size: 9px; color: #888; margin-top: 4px;">{{ src.snippet }}...</div>
                             </div>
                             {% endfor %}
                         </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
+                    
+                    <!-- Raw Network Data (collapsible) -->
+                    <details style="margin-top: 15px;">
+                        <summary style="cursor: pointer; font-size: 12px; color: #666; font-weight: bold;">📡 RAW NETWORK DATA</summary>
+                        <div style="margin-top: 10px;">
+                            <div style="margin-bottom: 10px;">
+                                <strong style="font-size: 11px;">Hidden Queries:</strong>
+                                <pre style="background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 10px; overflow-x: auto; white-space: pre-wrap;">{{ run_raw.hidden_queries_json or '[]' }}</pre>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong style="font-size: 11px;">Search Result Groups:</strong>
+                                <pre style="background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 10px; max-height: 200px; overflow: auto; white-space: pre-wrap;">{{ run_raw.search_result_groups_json or '[]' }}</pre>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong style="font-size: 11px;">Sources Cited:</strong>
+                                <pre style="background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 10px; max-height: 150px; overflow: auto; white-space: pre-wrap;">{{ run_raw.sources_cited_json or '[]' }}</pre>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong style="font-size: 11px;">Sources All:</strong>
+                                <pre style="background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 10px; max-height: 150px; overflow: auto; white-space: pre-wrap;">{{ run_raw.sources_all_json or '[]' }}</pre>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong style="font-size: 11px;">Sonic Classification (Search Probabilities):</strong>
+                                <pre style="background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 10px; max-height: 200px; overflow: auto; white-space: pre-wrap;">{{ run_raw.sonic_classification_json or '{}' }}</pre>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Raw Response (collapsible) -->
+                    <details style="margin-top: 15px;">
+                        <summary style="cursor: pointer; font-size: 12px; color: #666; font-weight: bold;">📝 RAW RESPONSE TEXT</summary>
+                        <div class="raw-text-box" style="margin-top: 10px;">{{ run_raw.response_text or 'No response text available' }}</div>
+                    </details>
+
                 </div>
                 
                 <!-- RIGHT: Bing Results -->
@@ -285,7 +324,9 @@ HTML_TEMPLATE = """
                         <span style="background:#e0e7ff; color:#3730a3; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold;">Q{{ q_num }}</span>
                         <span style="background:#f3f4f6; color:#666; padding:1px 4px; border-radius:3px; font-size:9px; margin-left:4px;">Pg {{ b['page_num'] or '?' }}</span>
                         {% if b['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold;">✓</span>{% endif %}
-                        <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">{{ (b['title'] or 'No title')[:50] }}...</div>
+                        <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">
+                            <a href="{{ b['url'] }}" target="_blank" style="text-decoration: none; color: #111;">{{ (b['title'] or 'No title')[:50] }}... 🔗</a>
+                        </div>
                         <div style="font-size: 10px; color: #10a37f;">{{ b['domain'] }}</div>
                     </div>
                     {% endfor %}
@@ -337,6 +378,36 @@ def get_db():
     conn.row_factory = sqlite3.Row
     return conn
 
+# Cache for raw network data
+_raw_data_cache = None
+
+def get_raw_network_data(run_id):
+    """Load raw network data from CSV for a specific run."""
+    global _raw_data_cache
+    
+    if _raw_data_cache is None:
+        import csv
+        csv_path = 'datapass/chatgpt_results_2026-01-27T11-23-04-enterprise.csv'
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                _raw_data_cache = {}
+                for row in reader:
+                    rid = f"{row['prompt_id']}_r{row['run_number']}"
+                    _raw_data_cache[rid] = {
+                        'hidden_queries_json': row.get('hidden_queries_json', '[]'),
+                        'search_result_groups_json': row.get('search_result_groups_json', '[]'),
+                        'sources_cited_json': row.get('sources_cited_json', '[]'),
+                        'sources_all_json': row.get('sources_all_json', '[]'),
+                        'sources_additional_json': row.get('sources_additional_json', '[]'),
+                        'sonic_classification_json': row.get('sonic_classification_json', '{}')
+                    }
+        except Exception as e:
+            print(f"Error loading CSV: {e}")
+            _raw_data_cache = {}
+    
+    return _raw_data_cache.get(run_id, {})
+
 @app.route('/')
 def index():
     run_id = request.args.get('run_id')
@@ -349,19 +420,23 @@ def index():
     bing_results = []
     items_raw = []
     unique_queries = []
-    prompt_volatility = []
     
     if run_id:
         # Get run data from database
         db_run = db.execute('''
             SELECT p.prompt as query, r.generated_search_query, r.response_text, r.hidden_queries, r.items_json,
-                   r.web_search_triggered, r.web_search_forced, r.items_count, r.items_with_citations_count
+                   r.web_search_triggered, r.web_search_forced, r.items_count, r.items_with_citations_count,
+                   r.search_result_groups_json
             FROM runs r
             LEFT JOIN prompts p ON r.prompt_id = p.prompt_id
             WHERE r.run_id = ?
         ''', (run_id,)).fetchone()
         
         if db_run:
+            # Load extra raw data from CSV
+            extra_data = get_raw_network_data(run_id)
+            print(f"DEBUG: extra_data keys for {run_id}: {list(extra_data.keys())}")
+            
             run_raw = {
                 'query': db_run['query'] or 'N/A',
                 'generated_search_query': db_run['generated_search_query'] or 'N/A',
@@ -370,15 +445,56 @@ def index():
                 'web_search_triggered': db_run['web_search_triggered'],
                 'web_search_forced': db_run['web_search_forced'],
                 'items_count': db_run['items_count'],
-                'items_with_citations_count': db_run['items_with_citations_count']
+                'items_with_citations_count': db_run['items_with_citations_count'],
+                'hidden_queries_json': extra_data.get('hidden_queries_json', '[]'),
+                'search_result_groups_json': extra_data.get('search_result_groups_json', '[]'),
+                'sources_cited_json': extra_data.get('sources_cited_json', '[]'),
+                'sources_all_json': extra_data.get('sources_all_json', '[]'),
+                'sources_additional_json': extra_data.get('sources_additional_json', '[]'),
+                'sonic_classification_json': extra_data.get('sonic_classification_json', '{}')
             }
+            
+            # Parse sonic classification for search probabilities
+            try:
+                sonic = json.loads(run_raw['sonic_classification_json'] or '{}')
+                run_raw['simple_search_prob'] = round(sonic.get('simple_search_prob', 0) * 100, 1)
+                run_raw['complex_search_prob'] = round(sonic.get('complex_search_prob', 0) * 100, 1)
+                run_raw['no_search_prob'] = round(sonic.get('no_search_prob', 0) * 100, 1)
+            except:
+                run_raw['simple_search_prob'] = 0
+                run_raw['complex_search_prob'] = 0
+                run_raw['no_search_prob'] = 0
+            
+                # Calculate rejected sources (retrieved but not cited/additional)
+                try:
+                    srg = json.loads(run_raw['search_result_groups_json'] or '[]')
+                    cited = set(s['url'] for s in json.loads(run_raw['sources_cited_json'] or '[]'))
+                    additional = set(s['url'] for s in json.loads(run_raw['sources_additional_json'] or '[]'))
+                    all_used = cited | additional
+                    
+                    rejected = []
+                    for group in srg:
+                        for entry in group.get('entries', []):
+                            if entry.get('url') and entry['url'] not in all_used:
+                                rejected.append({
+                                    'url': entry['url'],
+                                    'title': entry.get('title', ''),
+                                    'domain': group.get('domain', ''),
+                                    'snippet': (entry.get('snippet') or '')[:100]
+                                })
+                    run_raw['rejected_sources'] = rejected
+                    print(f"DEBUG: Found {len(rejected)} rejected sources for {run_id}")
+                except Exception as e:
+                    print(f"ERROR calculating rejected: {e}")
+                    run_raw['rejected_sources'] = []
+            
             # Parse items_json for structured display
             try:
                 items_raw = json.loads(db_run['items_json'] or '[]')
             except:
                 items_raw = []
         else:
-            run_raw = {'query': 'N/A', 'generated_search_query': 'N/A', 'response_text': f'Run {run_id} not found', 'hidden_queries': '', 'web_search_triggered': None, 'web_search_forced': None, 'items_count': 0, 'items_with_citations_count': 0}
+            run_raw = {'query': 'N/A', 'generated_search_query': 'N/A', 'response_text': f'Run {run_id} not found', 'hidden_queries': '', 'web_search_triggered': None, 'web_search_forced': None, 'items_count': 0, 'items_with_citations_count': 0, 'hidden_queries_json': '[]', 'search_result_groups_json': '[]', 'sources_cited_json': '[]', 'sources_all_json': '[]', 'simple_search_prob': 0, 'complex_search_prob': 0, 'no_search_prob': 0, 'rejected_sources': []}
 
         # Get citations with Bing rank AND which query it came from
         cit_rows = db.execute('''
@@ -412,37 +528,6 @@ def index():
         # Get unique queries for this run to power the checkboxes
         unique_queries = sorted(list(set(b['query'] for b in bing_results)))
 
-        # Get volatility cases for this prompt
-        if db_run:
-            volatility_cases = db.execute('''
-                SELECT c.url_normalized, c.domain, 
-                       GROUP_CONCAT(DISTINCT r.run_id) as cited_runs
-                FROM citations c
-                JOIN runs r ON c.run_id = r.run_id
-                WHERE c.prompt_id = ?
-                GROUP BY c.url_normalized
-                HAVING COUNT(DISTINCT c.run_id) >= 2
-            ''', (db_run['prompt_id'],)).fetchall()
-            
-            for case in volatility_cases:
-                url_norm = case['url_normalized']
-                bing_status = db.execute('''
-                    SELECT r.run_id, b.position, b.page_num
-                    FROM runs r
-                    LEFT JOIN bing_results b ON r.run_id = b.run_id AND b.url_normalized = ?
-                    WHERE r.prompt_id = ?
-                ''', (url_norm, db_run['prompt_id'])).fetchall()
-                
-                has_bing = [r for r in bing_status if r['position'] is not None]
-                no_bing = [r for r in bing_status if r['position'] is None]
-                
-                if has_bing and no_bing:
-                    prompt_volatility.append({
-                        'domain': case['domain'],
-                        'url_norm': url_norm,
-                        'in_bing': [f"{r['run_id']} (Rank #{r['position']} Pg {r['page_num']})" for r in has_bing],
-                        'not_in_bing': [r['run_id'] for r in no_bing]
-                    })
 
     return render_template_string(HTML_TEMPLATE, 
                                  run_ids=run_ids, 
@@ -451,8 +536,7 @@ def index():
                                  cit_db=cit_db,
                                  bing_results=bing_results,
                                  unique_queries=unique_queries if run_id else [],
-                                 items_raw=items_raw,
-                                 prompt_volatility=prompt_volatility)
+                                 items_raw=items_raw)
 
 @app.route('/dashboard')
 def dashboard():

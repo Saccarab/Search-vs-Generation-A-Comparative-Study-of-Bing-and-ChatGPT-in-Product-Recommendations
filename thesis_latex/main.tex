@@ -1,0 +1,85 @@
+\RequirePackage[l2tabu,orthodox]{nag}
+
+% One-sided layout for digital submission
+\documentclass[headsepline,footsepline,footinclude=false,oneside,fontsize=11pt,paper=a4,listof=totoc,bibliography=totoc,DIV=12]{scrbook}
+
+% Basic packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[acronym,toc]{glossaries}
+
+% Thesis Information
+\newcommand*{\getUniversity}{Technische Universität München}
+\newcommand*{\getFaculty}{Department of Informatics}
+\newcommand*{\getTitle}{From Ranking to Grounding: A Comparative Analysis of Information Retrieval in Search Engines and Generative AI}
+\newcommand*{\getAuthor}{Ali San Kaya}
+\newcommand*{\getDoctype}{Master's Thesis in Information Systems}
+\newcommand*{\getSupervisor}{Supervisor Name}
+\newcommand*{\getAdvisor}{Advisor Name}
+\newcommand*{\getSubmissionDate}{Submission Date}
+\newcommand*{\getSubmissionLocation}{Munich}
+
+\addbibresource{bibliography.bib}
+\makeglossaries
+
+\begin{document}
+
+\selectlanguage{english}
+\pagenumbering{alph}
+
+% Cover Page
+\begin{titlepage}
+	\centering
+	\includegraphics[width=4cm]{figures/tum_logo.png} \\ % Placeholder for logo
+	\vspace{1cm}
+	{\scshape\LARGE \getUniversity \par}
+	{\scshape\Large \getFaculty \par}
+	\vspace{1.5cm}
+	{\huge\bfseries \getTitle \par}
+	\vspace{2cm}
+	{\Large\itshape \getDoctype \par}
+	\vspace{0.5cm}
+	{\Large \getAuthor \par}
+	\vfill
+	supervised by\par
+	\getSupervisor \par
+	\vspace{0.5cm}
+	advised by\par
+	\getAdvisor \par
+	\vfill
+	{\large \getSubmissionLocation, \getSubmissionDate \par}
+\end{titlepage}
+
+\frontmatter
+
+\chapter*{Abstract}
+This thesis investigates the paradigm shift from information retrieval based on ranking (Search Engines) to information retrieval based on grounding (Generative AI). By analyzing 240 runs across 80 commercial product recommendation queries, we quantify the "Visibility Gap" between the content surfaced by Bing/Google and the content cited by ChatGPT/Gemini. Our findings reveal a significant "AI Search Filter," where generative models systematically reject high-ranking but "salesy" content in favor of information-dense sources, often bypassing the top search results entirely. This study provides empirical evidence for the transition from Search Engine Optimization (SEO) to Generative Engine Optimization (GEO).
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
+
+\input{chapters/01_introduction}
+\input{chapters/02_background}
+\input{chapters/03_methodology}
+\input{chapters/04_results}
+\input{chapters/05_discussion}
+\input{chapters/06_conclusion}
+
+\appendix
+
+\printglossaries
+\printbibliography
+
+\end{document}

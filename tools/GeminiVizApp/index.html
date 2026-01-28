@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Grounding Viz Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Gemini Grounding</h2>
+        </div>
+        <div class="sidebar-controls">
+            <button id="loadDataBtn" class="btn-primary">Load Latest Data</button>
+            <button id="showStatsBtn" class="btn-secondary" style="margin-top: 10px;">
+                <i class="fas fa-chart-pie"></i> View Global Stats
+            </button>
+        </div>
+        <div class="run-list-container">
+            <h3>Runs</h3>
+            <div id="runList" class="run-list">
+                <!-- Runs will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Stats Overlay -->
+        <div id="statsOverlay" class="stats-overlay" style="display: none;">
+            <div class="stats-modal">
+                <div class="modal-header">
+                    <h2><i class="fas fa-chart-bar"></i> Grounding Survival Dashboard</h2>
+                    <button id="closeStatsBtn" class="close-btn">&times;</button>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Total Runs</span>
+                        <span id="statTotalRuns" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Total Sources (Chunks)</span>
+                        <span id="statTotalChunks" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card highlight">
+                        <span class="stat-label">Global Survival Rate</span>
+                        <span id="statSurvivalRate" class="stat-value">0%</span>
+                        <small>Sources found in Top 20 SERPs</small>
+                    </div>
+                </div>
+                <div class="stats-table-container">
+                    <h3>Survival by Run</h3>
+                    <table id="statsTable">
+                        <thead>
+                            <tr>
+                                <th>Run ID</th>
+                                <th>Total Chunks</th>
+                                <th>Matched in SERP</th>
+                                <th>Survival %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="statsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="welcomeScreen" class="welcome-screen">
+            <i class="fas fa-chart-line fa-4x"></i>
+            <h1>Gemini Grounding Analysis</h1>
+            <p>Select a run from the sidebar to visualize grounding overlap.</p>
+        </div>
+
+        <div id="dashboard" class="dashboard" style="display: none;">
+            <div class="header-section">
+                <div class="query-info">
+                    <span class="label">Prompt:</span>
+                    <h1 id="displayPrompt">---</h1>
+                </div>
+                <div class="run-meta">
+                    <span id="displayRunId" class="badge">---</span>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Left Column: Gemini Response -->
+                <div class="column response-column">
+                    <div class="column-header">
+                        <i class="fas fa-robot"></i>
+                        <h2>Gemini Response</h2>
+                    </div>
+                    <div id="geminiResponse" class="gemini-response-container">
+                        <!-- Response text with citations will go here -->
+                    </div>
+
+                    <div class="column-header" style="margin-top: 20px; border-top: 1px solid var(--border);">
+                        <i class="fas fa-database"></i>
+                        <h2>Grounding Chunks (Sources)</h2>
+                    </div>
+                    <div id="groundingChunksList" class="grounding-chunks-list">
+                        <!-- List of all grounding chunks with resolved URLs -->
+                    </div>
+                </div>
+
+                <!-- Right Column: SERP Results -->
+                <div class="column serp-column">
+                    <div class="column-header">
+                        <i class="fas fa-search"></i>
+                        <h2>Fan-out Queries</h2>
+                    </div>
+                    <div id="fanOutQueries" class="fanout-list-container">
+                        <!-- List of all queries Gemini made -->
+                    </div>
+
+                    <div class="column-header" style="margin-top: 20px;">
+                        <i class="fas fa-list"></i>
+                        <h2>Triggered SERPs</h2>
+                        <div class="serp-tabs" id="serpTabs">
+                            <!-- Tabs for each webSearchQuery -->
+                        </div>
+                    </div>
+                    <div id="serpResults" class="serp-results-container">
+                        <!-- SERP results for selected query will go here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

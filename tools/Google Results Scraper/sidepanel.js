@@ -55,7 +55,7 @@ const downloadButton = document.getElementById('downloadButton');
 const newScrapingButton = document.getElementById('newScrapingButton');
 
 // defaults (UI can override)
-const DEFAULT_QUERY_DELAY_MS = 1500;
+const DEFAULT_QUERY_DELAY_MS = 5000; // Reduced from 15000 to 5000 (5 seconds)
 
 // state
 // Each entry is: { query: string, run_id?: string }
@@ -333,8 +333,9 @@ function processNextQuery() {
     const query = (typeof qObj === 'string') ? qObj : (qObj?.query || '');
     
     // Only navigate for first page; pagination is handled by clicking Next
-    const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-    console.log('Starting fresh search:', searchUrl);
+    // Force US results using gl=us, hl=en, and a US uule (location) parameter
+    const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}&gl=us&hl=en&uule=w+CAIQICIDVVNB`;
+    console.log('Starting fresh search (US Mode):', searchUrl);
 
     // NAVIGATE
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -494,14 +495,15 @@ function scheduleNext() {
     if (!scrapingState.isRunning) return;
     
     // Configurable delay between query navigations.
-    // Add small jitter to avoid looking perfectly robotic.
-    let delay = Math.max(0, parseInt(scrapingState.queryDelayMs || DEFAULT_QUERY_DELAY_MS, 10) || DEFAULT_QUERY_DELAY_MS);
-    delay += Math.floor(Math.random() * 750);
+    // Add moderate jitter (2-5 seconds)
+    let baseDelay = Math.max(2000, parseInt(scrapingState.queryDelayMs || DEFAULT_QUERY_DELAY_MS, 10) || DEFAULT_QUERY_DELAY_MS);
+    const jitter = Math.floor(Math.random() * 5000); // 0 to 5 seconds of random jitter
+    const totalDelay = baseDelay + jitter;
 
-    console.log(`Waiting ${delay}ms before next query...`);
+    console.log(`Waiting ${totalDelay}ms before next query (includes ${jitter}ms jitter)...`);
     setTimeout(() => {
         processNextQuery();
-    }, delay);
+    }, totalDelay);
 }
 
 function finishScraping() {

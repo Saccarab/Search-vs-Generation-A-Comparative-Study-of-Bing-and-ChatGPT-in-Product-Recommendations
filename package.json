@@ -5,11 +5,17 @@
   "description": "Local scripts for thesis data collection/ingestion/enrichment",
   "type": "commonjs",
   "dependencies": {
+    "@google-cloud/vertexai": "^1.10.0",
     "@google/genai": "^1.35.0",
+    "axios": "^1.13.3",
     "bottleneck": "^2.19.5",
     "cheerio": "^1.1.2",
     "csv-parse": "^5.6.0",
     "exceljs": "^4.4.0",
-    "openai": "^6.16.0"
+    "express": "^5.2.1",
+    "open": "^11.0.0",
+    "openai": "^6.16.0",
+    "puppeteer": "^24.36.0",
+    "serpapi": "^2.2.1"
   }
 }

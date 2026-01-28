@@ -1,0 +1,42 @@
+\chapter{Theoretical Background}
+\label{chap:background}
+
+This chapter establishes the theoretical framework for understanding the transition from traditional search engines to generative answer engines. It traces the evolution of information retrieval, defines the mechanics of Retrieval-Augmented Generation (RAG), and explores the economic and technical drivers behind the shift from SEO to GEO.
+
+\section{The Evolution of Search Optimization}
+For the past two decades, the information economy has been governed by the principles of Search Engine Optimization (SEO). In this paradigm, content creators optimized their digital assets to rank highly on Search Engine Result Pages (SERPs), primarily targeting a "10 blue links" interface.
+
+\subsection{Traditional SEO}
+Traditional SEO focuses on keyword density, backlink authority, and technical performance (e.g., load speeds, mobile responsiveness). The objective is visibility within a ranked list, where the user is expected to click through to the source to consume information.
+
+\subsection{The Emergence of AEO and GEO}
+With the rise of voice assistants and featured snippets, a new discipline emerged: Answer Engine Optimization (AEO), which focused on providing the "single best answer" for zero-click searches. This has now evolved into Generative Engine Optimization (GEO), where the goal is not merely to be ranked, but to be \textit{cited} and \textit{synthesized} by Large Language Models (LLMs) within conversational interfaces.
+
+\section{Retrieval-Augmented Generation (RAG)}
+Retrieval-Augmented Generation (RAG) represents the architectural backbone of modern AI search. It was developed to address the limitations of early LLMs, which relied purely on "parametric knowledge"—static information frozen at the time of training.
+
+\subsection{The "Stochastic Parrot" Problem}
+Early models were prone to "hallucinations" and could not access real-time data, leading to the "stale data" bottleneck. RAG decouples the reasoning capabilities of the LLM from its knowledge base, allowing the model to act as a reasoning engine rather than a database.
+
+\subsection{The RAG Workflow}
+The standard RAG workflow consists of three stages:
+\begin{enumerate}
+    \item \textbf{Retrieval:} The model identifies an information need and generates a search query to retrieve relevant documents (grounding chunks).
+    \item \textbf{Augmentation:} These documents are injected into the model's context window.
+    \item \textbf{Generation:} The model synthesizes a response based on the retrieved context, citing its sources to ensure factuality.
+\end{enumerate}
+
+\section{The Shift from Search to Grounding}
+A pivotal moment in this transition occurred on August 11, 2025, when Microsoft officially decommissioned its legacy Bing Search APIs in favor of "Grounding with Bing Search" as part of the Azure AI Agents ecosystem. This marked a formal recognition that the "Human Web" (optimized for ranking and engagement) is distinct from the "Agent Web" (optimized for grounding and information extraction).
+
+\subsection{Retrieval Asymmetry}
+This thesis posits that a "Retrieval Asymmetry" has emerged. Traditional search engines prioritize content based on human engagement signals, whereas grounding engines prioritize content based on information density and extraction potential. This divergence creates the "Search Filter" investigated in this study.
+
+\section{The Economic and Technical Necessity of Retrieval}
+The shift to RAG is driven not just by accuracy, but by fundamental economic constraints known as the "Compute Wall."
+
+\subsection{Inference vs. Retrieval Costs}
+Inference (the process of an LLM "thinking" or generating tokens) is exponentially more expensive than Retrieval (traditional database or index lookups). It is computationally infeasible to train a model frequently enough to keep up with the real-time web. Therefore, Retrieval becomes the only scalable solution for accessing dynamic data such as pricing, news, and product availability.
+
+\subsection{Sam Altman's "Tiny Model" Vision}
+This architectural shift aligns with the vision articulated by industry leaders. As Sam Altman noted, the ideal AI architecture may not be a massive model containing all knowledge, but a "very tiny model with superhuman reasoning" that relies on external tools to "think, search, simulate, and solve." In this framework, the web transforms from a destination for humans into a \textbf{distributed memory layer} for AI orchestrators.

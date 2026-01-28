@@ -13,17 +13,20 @@
 
 | Component            | Description                                                                      |
 | -------------------- | -------------------------------------------------------------------------------- |
-| **Queries**          | 50+ product recommendation queries × 4 runs each                                 |
+| **Queries**          | 80 product recommendation queries × 3 runs each (240 total runs)                 |
 | **ChatGPT Data**     | Full responses with inline citations, additional links, and recommended products |
 | **Bing Data**        | Top 30 results + Deep Hunt (Rank 31-150)                                         |
-| **Content Fetching** | Node.js fetcher + Browser extension for blocked pages                            |
+| **Gemini Data**      | Full `groundingMetadata` (Chunks vs. Supports) + Fan-out Queries                 |
+| **Google SERP**      | Top 20 Organic Results via SerpApi (for Gemini fan-out queries)                  |
+| **Content Fetching** | Node.js fetcher + Browser extension for blocked pages (Master Content Library)   |
 
 ## 1.2 The Analysis App (Data Viewer)
 
 *Include this as a "Methodology" section—it shows rigor in your research process.*
 
 ### What the app does:
-- Interactive comparison of ChatGPT responses vs. Bing results per query/run
+- Interactive comparison of ChatGPT/Gemini responses vs. Search results per query/run
+- **Gemini Mode:** Visualizes the "Search Filter" by comparing `groundingChunks` (AI Shortlist) vs. `groundingSupports` (Final Citations) vs. `Google SERP` (The Control Group).
 - Three viewing modes: Top 30 Only, Deep Hunt Only, Combined (All)
 - Visual indicators for Exact URL Match (Yellow) vs. Domain Match (Green)
 - Dashboard with aggregate statistics (Overlap %, Invisible Domains, etc.)
@@ -32,6 +35,7 @@
 - Enabled manual spot-checking of automated findings
 - Revealed the "Pagination Loop" and "Page 2 Cliff" problems in Bing
 - Proved the need for Deep Hunt methodology
+- **Gemini Insight:** Revealed that Gemini's `groundingChunks` are already pre-filtered (0% rejection rate vs. supports), necessitating a comparison against external SerpApi data to measure the *true* filter.
 
 ### 1.2.2 Methodological Evolution: From Top 30 to "Deep Hunt" (Rank 150)
 - **Initial Assumption:** Our study began with a standard retrieval depth of the **Top 30 Bing results**, assuming this would capture the vast majority of relevant citations used by ChatGPT.

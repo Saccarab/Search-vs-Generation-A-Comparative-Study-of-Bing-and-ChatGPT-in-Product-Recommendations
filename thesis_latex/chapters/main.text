@@ -1,0 +1,60 @@
+\RequirePackage[l2tabu,orthodox]{nag}
+
+% TODO: decide if one-sided/two-sided
+%\documentclass[headsepline,footsepline,footinclude=false,fontsize=11pt,paper=a4,listof=totoc,bibliography=totoc,BCOR=12mm,DIV=12]{scrbook} % two-sided % original source stated: BCOR=12mm,DIV=12
+\documentclass[headsepline,footsepline,footinclude=false,oneside,fontsize=11pt,paper=a4,listof=totoc,bibliography=totoc,DIV=12]{scrbook} % one-sided
+
+% TODO: change citation style in settings
+\input{settings}
+
+% TODO: change thesis information
+\newcommand*{\getUniversity}{Technische Universität München}
+\newcommand*{\getFaculty}{Department of Informatics}
+\newcommand*{\getTitle}{From Ranking to Grounding: A Comparative Analysis of Information Retrieval in Search Engines and Generative AI}
+\newcommand*{\getTitleGer}{}
+\newcommand*{\getAuthor}{Ali San Kaya}
+\newcommand*{\getDoctype}{Master's Thesis in Information Systems }
+\newcommand*{\getSupervisor}{Supervisor}
+\newcommand*{\getAdvisor}{Advisor}
+\newcommand*{\getSubmissionDate}{Submission date}
+\newcommand*{\getSubmissionLocation}{Munich}
+
+\begin{document}
+
+% TODO: decide on used language
+%\selectlanguage{ngerman}
+\selectlanguage{english}
+
+% Set page numbering to avoid "destination with the same identifier has been already used" warning for cover page.
+% (see https://en.wikibooks.org/wiki/LaTeX/Hyperlinks#Problems_with_Links_and_Pages).
+\pagenumbering{alph}
+\input{pages/cover}
+
+\frontmatter{}
+
+\input{pages/title}
+\input{pages/disclaimer}
+\input{pages/acknowledgements} % TODO: if you don't have anyone to thank for or don't wish to publish it, comment this line out.
+\input{pages/abstract}
+\microtypesetup{protrusion=false}
+\tableofcontents{}
+\microtypesetup{protrusion=true}
+
+\mainmatter{}
+
+\input{chapters/01_introduction}
+% TODO: add more chapters here
+
+\appendix{}
+
+% TODO: appendix chapter
+\input{pages/appendix}
+
+\microtypesetup{protrusion=false}
+\listoffigures{}
+\listoftables{}
+\microtypesetup{protrusion=true}
+\printglossaries
+\printbibliography{}
+
+\end{document}

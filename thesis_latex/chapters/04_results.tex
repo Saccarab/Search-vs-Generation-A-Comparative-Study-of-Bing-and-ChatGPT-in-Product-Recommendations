@@ -1,0 +1,64 @@
+\chapter{Results}
+\label{chap:results}
+
+This chapter presents the empirical findings of the comparative analysis between ChatGPT, Gemini, and traditional search engines. The results are derived from 240 independent runs across 80 commercial product recommendation queries.
+
+\section{Citation Overlap Analysis}
+The primary metric for measuring the divergence between Search and GenAI is the Citation Overlap Rate.
+
+\subsection{The Visibility Gap}
+Our analysis reveals a significant "Visibility Gap." Approximately 35\% of the sources cited by ChatGPT were not found in the top 30 results of Bing. Even when the retrieval depth was expanded to Rank 150 (the "Deep Hunt"), a substantial portion of citations remained "truly invisible," suggesting that Generative AI models access a different index or prioritize content differently than the public-facing SERP.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lc}
+        \toprule
+        \textbf{Metric} & \textbf{Value} \\
+        \midrule
+        Strict URL Match (Top 30 + Deep Hunt) & 64.93\% \\
+        Domain-Only Match & 79.20\% \\
+        Truly Invisible Citations & $\sim$35\% \\
+        \bottomrule
+    \end{tabular}
+    \caption{Citation Overlap Statistics between ChatGPT and Bing}
+    \label{tab:overlap_stats}
+\end{table}
+
+\subsection{The "Invisible Section" Finding}
+A key discovery of the "Deep Hunt" was the identification of citations that exist in the Bing index but are effectively suppressed by the user interface.
+\begin{itemize}
+    \item \textbf{Page 1 Instability:} Bing's results page often fluctuates, showing between 4 and 10 results, sometimes with "infinite scroll" mechanics that break traditional pagination.
+    \item \textbf{The "Page 2 Cliff":} Relevant results ranking between 11 and 15 often vanish entirely when a user navigates to the next page.
+    \item \textbf{Pagination Loops:} We observed instances where requesting subsequent pages (e.g., `\&first=5`) returned the same Top 10 results, creating a loop that prevents access to deeper content.
+\end{itemize}
+Despite these UI barriers, ChatGPT successfully retrieved and cited links found at Rank 11-30 (the "Hidden Page 1" zone), proving that its API access bypasses the limitations imposed on human users.
+
+\section{The "AI Search Filter"}
+For Google Gemini, the analysis focused on the "Rejection Rate"—the percentage of retrieved "grounding chunks" that were discarded in the final response.
+
+\subsection{The 0\% Rejection Anomaly}
+Contrary to expectations, Gemini displayed a near 0\% rejection rate between its \texttt{groundingChunks} and \texttt{groundingSupports}. This indicates that the \texttt{groundingChunks} exposed by the API are not the raw search results, but a pre-filtered "shortlist." The true filtering occurs upstream, between the Google SERP and the \texttt{groundingChunks}.
+
+\section{Analysis of ChatGPT Network Metadata}
+A significant methodological breakthrough in this study was the extraction of internal network responses from the ChatGPT conversational interface. This metadata provides a "behind-the-scenes" look at the retrieval process that is not visible in the standard UI.
+
+\subsection{Hidden Queries and Result Groups}
+The network data reveals that for a single user prompt, ChatGPT generates multiple "hidden" search queries. For example, the prompt \textit{"Which free AI would you recommend for translating my video?"} triggered internal searches for both \textit{"free AI tools for translating videos"} and \textit{"free AI video translation services"}. 
+
+Furthermore, the metadata includes a \texttt{search\_result\_groups\_json} field, which categorizes retrieved results by domain and provides snippets and attribution data before the final response is synthesized. This structure is remarkably similar to Gemini's \texttt{groundingMetadata}, suggesting a convergence in how major LLM providers handle web-grounding.
+
+\subsection{Cited vs. Additional Sources}
+The metadata explicitly distinguishes between \texttt{sources\_cited} (used inline) and \texttt{sources\_additional} (retrieved but only suggested).
+\begin{itemize}
+    \item \textbf{Citation Density:} In the analyzed run for P001, ChatGPT retrieved 15 unique domains but only cited 9 inline.
+    \item \textbf{The "Additional" Filter:} The 6 domains relegated to "Additional Sources" (e.g., \texttt{usefulai.com}, \texttt{unite.ai}) were primarily listicles or directories. This suggests an internal ranking mechanism that prioritizes direct tool providers (e.g., \texttt{aivideotranslator.ai}) for inline citations while keeping secondary aggregators as background context.
+\end{itemize}
+
+\section{Content DNA Analysis}
+To understand the criteria for this filtering, we analyzed the structural characteristics ("Content DNA") of cited versus rejected pages.
+
+\subsection{Tone and Structure}
+The data suggests a strong preference for "neutral\_informational" content over "salesy" content. Pages containing structured data, such as comparison tables and pros/cons lists, had a significantly higher probability of being cited than unstructured prose.
+
+\section{Stochasticity and Consistency}
+Analysis of cross-run consistency revealed that while core product recommendations remained relatively stable (appearing in 2+ runs), the specific citations used to support these recommendations varied significantly. This "Citation Churn" confirms the stochastic nature of the RAG retrieval process.
