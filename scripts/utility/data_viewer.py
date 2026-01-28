@@ -126,7 +126,7 @@ HTML_TEMPLATE = """
         </div>
         <h3 style="color:#888; font-size:12px;">RUNS ({{ run_ids|length }})</h3>
         {% for rid in run_ids %}
-        <a href="/?run_id={{ rid }}" style="text-decoration:none; color:inherit;" onclick="handleSidebarClick('{{ rid }}')">
+        <a href="/?run_id={{ rid }}" style="text-decoration:none; color:inherit;">
             <div class="prompt-item {{ 'active' if rid == active_run_id else '' }}">
                 {{ rid }}
             </div>
@@ -336,6 +336,7 @@ HTML_TEMPLATE = """
         </div>
 
         <script>
+            // Query toggle checkboxes
             document.querySelectorAll('.query-toggle').forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
                     const queryText = this.getAttribute('data-query');
@@ -346,6 +347,29 @@ HTML_TEMPLATE = """
                     });
                 });
             });
+
+            // Sidebar scroll persistence
+            (function() {
+                const sidebar = document.getElementById('sidebar');
+                const savedPos = localStorage.getItem('sidebarScrollPos');
+                
+                if (savedPos) {
+                    sidebar.scrollTop = parseInt(savedPos);
+                } else {
+                    // First load - scroll to active item
+                    const active = document.querySelector('.prompt-item.active');
+                    if (active) {
+                        active.scrollIntoView({ block: 'center' });
+                    }
+                }
+
+                // Save scroll on any sidebar link click
+                sidebar.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        localStorage.setItem('sidebarScrollPos', sidebar.scrollTop);
+                    });
+                });
+            })();
         </script>
         
         {% else %}
