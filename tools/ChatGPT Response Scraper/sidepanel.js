@@ -49,7 +49,9 @@ let scrapingState = {
     currentRun: 0,
     runsPerQuery: 1,
     csvData: null,
-    forceWebSearch: false
+    forceWebSearch: false,
+    checkpointCount: 0,
+    currentResults: []
 };
 
 // init
@@ -88,14 +90,21 @@ function setupEventListeners() {
     const midSessionDownloadBtn = document.getElementById('midSessionDownload');
     if (midSessionDownloadBtn) {
         midSessionDownloadBtn.addEventListener('click', () => {
+            console.log('[Sidepanel] Download Current Progress clicked, results:', scrapingState.currentResults?.length || 0);
             if (scrapingState.currentResults && scrapingState.currentResults.length > 0) {
                 const csvData = convertToCSV(scrapingState.currentResults);
                 const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-                downloadCSV(csvData, `chatgpt_partial_${timestamp}.csv`);
+                const filename = `chatgpt_partial_${timestamp}.csv`;
+                console.log(`[Sidepanel] Downloading ${scrapingState.currentResults.length} results as ${filename}`);
+                downloadCSV(csvData, filename);
+                showStatus(`Downloaded ${scrapingState.currentResults.length} results`, 'success');
             } else {
                 showStatus('No data collected yet to download', 'warning');
+                console.warn('[Sidepanel] No results to download yet');
             }
         });
+    } else {
+        console.error('[Sidepanel] midSessionDownload button not found!');
     }
     
     // footer events
@@ -455,7 +464,8 @@ function resetApp() {
         runsPerQuery: 1,
         csvData: null,
         forceWebSearch: false,
-        checkpointCount: 0
+        checkpointCount: 0,
+        currentResults: []
     };
     
     // reset UI
@@ -589,6 +599,37 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             break;
     }
 });
+
+// CSV conversion for mid-session downloads
+function convertToCSV(results) {
+    if (!results || results.length === 0) return '';
+    
+    // Get all unique keys from all results
+    const allKeys = new Set();
+    results.forEach(row => {
+        Object.keys(row).forEach(key => allKeys.add(key));
+    });
+    const headers = Array.from(allKeys);
+    
+    // Escape CSV values
+    const escapeCSV = (value) => {
+        if (value === null || value === undefined) return '';
+        const str = String(value);
+        if (str.includes(',') || str.includes('"') || str.includes('\n') || str.includes('\r')) {
+            return '"' + str.replace(/"/g, '""') + '"';
+        }
+        return str;
+    };
+    
+    // Build CSV
+    const csvRows = [headers.join(',')];
+    results.forEach(row => {
+        const values = headers.map(header => escapeCSV(row[header]));
+        csvRows.push(values.join(','));
+    });
+    
+    return csvRows.join('\n');
+}
 
 // helper functions
 function showHelp() {

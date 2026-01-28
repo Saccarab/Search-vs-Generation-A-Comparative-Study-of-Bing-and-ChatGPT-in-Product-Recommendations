@@ -1196,10 +1196,10 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true, 
           response_text: result.response_text,
           web_search_forced: result.web_search_forced,
           web_search_triggered: result.web_search_triggered,
-          items_json: (() => { try { return JSON.stringify(items); } catch { return '[]'; } })(),
-          items_count: Array.isArray(items) ? items.length : 0,
-          items_with_citations_count: Array.isArray(items)
-            ? items.filter(it => Array.isArray(it.chip_groups) && it.chip_groups.some(g => Array.isArray(g.links) && g.links.length > 0)).length
+          items_json: (() => { try { return JSON.stringify(result.items || []); } catch { return '[]'; } })(),
+          items_count: Array.isArray(result.items) ? result.items.length : 0,
+          items_with_citations_count: Array.isArray(result.items)
+            ? result.items.filter(it => Array.isArray(it.chip_groups) && it.chip_groups.some(g => Array.isArray(g.links) && g.links.length > 0)).length
             : 0,
           // Keep the existing URL-list columns for easy joins/overlap, but also provide JSON arrays of objects
           // so you can analyze which snippet/title ChatGPT showed per URL (and preserve ordering).
