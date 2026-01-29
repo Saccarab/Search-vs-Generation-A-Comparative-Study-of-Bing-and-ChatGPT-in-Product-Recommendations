@@ -4,6 +4,199 @@ from flask import Flask, render_template_string, request
 import json
 import os
 
+DOMAIN_EXPLORER_TEMPLATE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Domain Explorer - GEO Research</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f4f4f9; margin: 0; padding: 20px; }
+        .nav { margin-bottom: 20px; }
+        .nav a { text-decoration: none; color: #10a37f; font-weight: bold; margin-right: 20px; }
+        .filters { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+        .filters label { font-weight: bold; font-size: 13px; color: #555; }
+        .filters select, .filters input { padding: 8px 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 13px; }
+        .filters input[type=text] { width: 200px; }
+        .filters button { background: #10a37f; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .filters button:hover { background: #0d8a6a; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        h2 { margin-top: 0; color: #333; font-size: 16px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; }
+        th { background: #f8f8f8; font-weight: bold; }
+        .domain-link { color: #10a37f; text-decoration: none; font-weight: 500; }
+        .domain-link:hover { text-decoration: underline; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: bold; margin-left: 5px; }
+        .tag-cited { background: #dcfce7; color: #166534; }
+        .tag-additional { background: #fef3c7; color: #92400e; }
+        .tag-enterprise { background: #dbeafe; color: #1e40af; }
+        .tag-personal { background: #fef9c3; color: #854d0e; }
+        .tag-invisible { background: #fee2e2; color: #991b1b; }
+        .tag-visible { background: #d1fae5; color: #065f46; }
+        .tag-google-only { background: #fef3c7; color: #92400e; font-weight: bold; }
+        .tag-bing-only { background: #dbeafe; color: #1e40af; }
+        .tag-both { background: #d1fae5; color: #065f46; }
+        .tag-neither { background: #fee2e2; color: #991b1b; }
+        .drilldown { margin-top: 20px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .url-cell { max-width: 350px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .url-cell a { color: #0369a1; text-decoration: none; font-size: 11px; }
+        .url-cell a:hover { text-decoration: underline; }
+        .prompt-link { color: #6366f1; text-decoration: none; font-weight: 500; }
+        .prompt-link:hover { text-decoration: underline; }
+        .stats-row { display: flex; gap: 30px; margin-bottom: 20px; }
+        .stat-box { background: #f8f9fa; padding: 15px 20px; border-radius: 8px; text-align: center; }
+        .stat-num { font-size: 28px; font-weight: bold; color: #10a37f; }
+        .stat-label { font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">← Run Viewer</a>
+        <a href="/dashboard">📊 Dashboard</a>
+        <a href="/domains" style="color: #6366f1;">🔍 Domain Explorer</a>
+    </div>
+    <h1>🔍 Domain Explorer</h1>
+    
+    <div class="stats-row">
+        <div class="stat-box">
+            <div class="stat-num">{{ total_domains }}</div>
+            <div class="stat-label">Unique Domains</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-num">{{ total_citations }}</div>
+            <div class="stat-label">Total Citations</div>
+        </div>
+        <div class="stat-box" style="background: #fef3c7;">
+            <div class="stat-num" style="color: #92400e;">{{ google_only_count }}</div>
+            <div class="stat-label">Google-Only URLs</div>
+        </div>
+        <div class="stat-box" style="background: #dbeafe;">
+            <div class="stat-num" style="color: #1e40af;">{{ bing_only_count }}</div>
+            <div class="stat-label">Bing-Only URLs</div>
+        </div>
+        <div class="stat-box" style="background: #fee2e2;">
+            <div class="stat-num" style="color: #991b1b;">{{ neither_count }}</div>
+            <div class="stat-label">Truly Invisible</div>
+        </div>
+    </div>
+    
+    <form class="filters" method="GET" action="/domains">
+        <label>Search Domain:</label>
+        <input type="text" name="search" placeholder="e.g. reddit, arxiv..." value="{{ search_query }}">
+        
+        <label>Account:</label>
+        <select name="account">
+            <option value="all" {{ 'selected' if account_filter == 'all' else '' }}>All</option>
+            <option value="enterprise" {{ 'selected' if account_filter == 'enterprise' else '' }}>Enterprise</option>
+            <option value="personal" {{ 'selected' if account_filter == 'personal' else '' }}>Personal</option>
+        </select>
+        
+        <label>Type:</label>
+        <select name="type">
+            <option value="all" {{ 'selected' if type_filter == 'all' else '' }}>All</option>
+            <option value="cited" {{ 'selected' if type_filter == 'cited' else '' }}>Cited Only</option>
+            <option value="additional" {{ 'selected' if type_filter == 'additional' else '' }}>Additional Only</option>
+        </select>
+        
+        <label>Visibility:</label>
+        <select name="visibility">
+            <option value="all" {{ 'selected' if visibility_filter == 'all' else '' }}>All</option>
+            <option value="invisible" {{ 'selected' if visibility_filter == 'invisible' else '' }}>Invisible (Not in Bing)</option>
+            <option value="visible" {{ 'selected' if visibility_filter == 'visible' else '' }}>Visible (In Bing)</option>
+        </select>
+        
+        <label>Source:</label>
+        <select name="source">
+            <option value="all" {{ 'selected' if source_filter == 'all' else '' }}>All Sources</option>
+            <option value="google_only" {{ 'selected' if source_filter == 'google_only' else '' }}>Google Only (Not in Bing)</option>
+            <option value="bing_only" {{ 'selected' if source_filter == 'bing_only' else '' }}>Bing Only (Not in Google)</option>
+            <option value="both" {{ 'selected' if source_filter == 'both' else '' }}>Both Bing & Google</option>
+            <option value="neither" {{ 'selected' if source_filter == 'neither' else '' }}>Neither (Truly Invisible)</option>
+        </select>
+        
+        <button type="submit">Search</button>
+    </form>
+    
+    <div class="card">
+        <h2>Domain Results ({{ domains|length }} shown)</h2>
+        <table>
+            <tr>
+                <th>Domain</th>
+                <th>Source</th>
+                <th>Ent. Cited</th>
+                <th>Ent. Add.</th>
+                <th>Pers. Cited</th>
+                <th>Pers. Add.</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+            {% for d in domains %}
+            <tr>
+                <td><strong>{{ d.domain }}</strong></td>
+                <td>
+                    {% if d.in_google and d.in_bing %}
+                    <span class="tag tag-both">Bing+Google</span>
+                    {% elif d.in_google and not d.in_bing %}
+                    <span class="tag tag-google-only">GOOGLE ONLY</span>
+                    {% elif d.in_bing and not d.in_google %}
+                    <span class="tag tag-bing-only">Bing Only</span>
+                    {% else %}
+                    <span class="tag tag-neither">Neither</span>
+                    {% endif %}
+                </td>
+                <td>{{ d.ent_cited }}</td>
+                <td>{{ d.ent_additional }}</td>
+                <td>{{ d.pers_cited }}</td>
+                <td>{{ d.pers_additional }}</td>
+                <td><strong>{{ d.total }}</strong></td>
+                <td><a class="domain-link" href="/domains?search={{ d.domain }}&drilldown=1">View URLs</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    
+    {% if drilldown_domain %}
+    <div class="drilldown">
+        <h2>URLs for: <strong>{{ drilldown_domain }}</strong> ({{ drilldown_urls|length }} results)</h2>
+        <table>
+            <tr>
+                <th>Prompt</th>
+                <th>Run</th>
+                <th>Account</th>
+                <th>Type</th>
+                <th>Source</th>
+                <th>URL</th>
+                <th>Title</th>
+            </tr>
+            {% for u in drilldown_urls %}
+            <tr>
+                <td><a class="prompt-link" href="/?run_id={{ u.run_id }}&account={{ u.account_type }}">{{ u.prompt_id }}</a></td>
+                <td>{{ u.run_number }}</td>
+                <td><span class="tag tag-{{ u.account_type }}">{{ u.account_type }}</span></td>
+                <td><span class="tag tag-{{ u.citation_type }}">{{ u.citation_type }}</span></td>
+                <td>
+                    {% if u.in_google and u.in_bing %}
+                    <span class="tag tag-both">Both</span>
+                    {% elif u.in_google and not u.in_bing %}
+                    <span class="tag tag-google-only">Google</span>
+                    {% elif u.in_bing and not u.in_google %}
+                    <span class="tag tag-bing-only">Bing</span>
+                    {% else %}
+                    <span class="tag tag-neither">None</span>
+                    {% endif %}
+                </td>
+                <td class="url-cell"><a href="{{ u.url }}" target="_blank" title="{{ u.url }}">{{ u.url[:60] }}...</a></td>
+                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ u.title }}">{{ u.title[:40] if u.title else '-' }}...</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+</body>
+</html>
+"""
+
 DASHBOARD_TEMPLATE = """
 <!DOCTYPE html>
 <html>
@@ -15,9 +208,11 @@ DASHBOARD_TEMPLATE = """
         .nav a { text-decoration: none; color: #10a37f; font-weight: bold; margin-right: 20px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
         .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .full-width { grid-column: 1 / -1; }
         h2 { margin-top: 0; color: #333; font-size: 18px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
         .stat-big { font-size: 36px; font-weight: bold; }
         .stat-label { color: #666; font-size: 14px; }
+        .stat-sub { font-size: 11px; color: #888; margin-top: 4px; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 13px; }
         .enterprise { border-left: 4px solid #3b82f6; }
@@ -27,51 +222,113 @@ DASHBOARD_TEMPLATE = """
 <body>
     <div class="nav">
         <a href="/">← Back to Run Viewer</a>
+        <a href="/domains" style="color: #6366f1;">🔍 Domain Explorer</a>
     </div>
     <h1>GEO Research Dashboard</h1>
     
+    <!-- Global Stats -->
+    <div class="grid">
+        <div class="card full-width" style="display: flex; justify-content: space-around; background: #1e293b; color: white;">
+            <div style="text-align: center;">
+                <div class="stat-label" style="color: #cbd5e1;">Total Citations</div>
+                <div class="stat-big" style="color: #38bdf8;">{{ ent_total_main + pers_total_main }}</div>
+                <div class="stat-sub">Explicitly attributed</div>
+                </div>
+            <div style="text-align: center;">
+                <div class="stat-label" style="color: #cbd5e1;">Total Additional</div>
+                <div class="stat-big" style="color: #fbbf24;">{{ ent_total_add + pers_total_add }}</div>
+                <div class="stat-sub">Shortlisted but not cited</div>
+            </div>
+            <div style="text-align: center;">
+                <div class="stat-label" style="color: #cbd5e1;">Total Rejected</div>
+                <div class="stat-big" style="color: #fca5a5;">{{ total_rejected_global }}</div>
+                <div class="stat-sub">In Bing but ignored</div>
+            </div>
+            <div style="text-align: center; border-left: 1px solid #475569; padding-left: 40px;">
+                <div class="stat-label" style="color: #94a3b8; font-weight: bold;">TOTAL CONSIDERED</div>
+                <div class="stat-big" style="color: #ffffff;">{{ ent_total_main + pers_total_main + ent_total_add + pers_total_add + total_rejected_global }}</div>
+                <div class="stat-sub">Sum of all unique links</div>
+            </div>
+            <div style="text-align: center;">
+                <div class="stat-label" style="color: #cbd5e1;">Unique Domains</div>
+                <div class="stat-big" style="color: #34d399;">{{ total_unique_domains }}</div>
+                <div class="stat-sub">Across all runs</div>
+            </div>
+        </div>
+                </div>
+
     <div class="grid">
         <!-- Enterprise Stats -->
         <div class="card enterprise">
             <h2 style="color: #3b82f6;">🏢 Enterprise Account</h2>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; margin-bottom: 15px;">
                 <div style="background:#eff6ff; padding:15px; border-radius:8px; text-align:center;">
-                    <div class="stat-label">All Citations</div>
-                    <div class="stat-big" style="color:#3b82f6;">{{ "%.1f"|format(ent_matched_all / ent_total_all * 100 if ent_total_all > 0 else 0) }}%</div>
-                    <div style="font-size:11px; color:#666;">{{ ent_matched_all }} / {{ ent_total_all }}</div>
+                    <div class="stat-label">Cited</div>
+                    <div class="stat-big" style="color:#3b82f6;">{{ ent_total_main }}</div>
                 </div>
-                <div style="background:#dbeafe; padding:15px; border-radius:8px; text-align:center;">
-                    <div class="stat-label" style="font-weight:bold;">Cited Only</div>
-                    <div class="stat-big" style="color:#1d4ed8;">{{ "%.1f"|format(ent_matched_main / ent_total_main * 100 if ent_total_main > 0 else 0) }}%</div>
-                    <div style="font-size:11px; color:#1e40af;">{{ ent_matched_main }} / {{ ent_total_main }}</div>
+                <div style="background:#fef3c7; padding:15px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Additional</div>
+                    <div class="stat-big" style="color:#d97706;">{{ ent_total_add }}</div>
+                </div>
+                <div style="background:#fee2e2; padding:15px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Rejected</div>
+                    <div class="stat-big" style="color:#991b1b;">{{ ent_total_rejected }}</div>
+                </div>
+            </div>
+            <div style="background: #f8fafc; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 15px; border: 1px dashed #cbd5e1;">
+                <div class="stat-label" style="font-weight: bold; color: #475569;">TOTAL CONSIDERED: {{ ent_total_main + ent_total_add + ent_total_rejected }}</div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#f0f9ff; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Q1 Overlap</div>
+                    <div class="stat-big" style="color:#0369a1;">{{ "%.1f"|format(ent_q1_overlap_pct) }}%</div>
+                </div>
+                <div style="background:#f0fdf4; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Q2 Overlap</div>
+                    <div class="stat-big" style="color:#166534;">{{ "%.1f"|format(ent_q2_overlap_pct) }}%</div>
                 </div>
             </div>
             <div style="font-size: 12px; color: #666;">
                 <strong>Runs:</strong> {{ ent_runs }} | <strong>Bing Results:</strong> {{ ent_bing }}
+                </div>
             </div>
-        </div>
-        
+            
         <!-- Personal Stats -->
         <div class="card personal">
             <h2 style="color: #f59e0b;">👤 Personal Account</h2>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; margin-bottom: 15px;">
                 <div style="background:#fffbeb; padding:15px; border-radius:8px; text-align:center;">
-                    <div class="stat-label">All Citations</div>
-                    <div class="stat-big" style="color:#f59e0b;">{{ "%.1f"|format(pers_matched_all / pers_total_all * 100 if pers_total_all > 0 else 0) }}%</div>
-                    <div style="font-size:11px; color:#666;">{{ pers_matched_all }} / {{ pers_total_all }}</div>
+                    <div class="stat-label">Cited</div>
+                    <div class="stat-big" style="color:#f59e0b;">{{ pers_total_main }}</div>
+                    </div>
+                <div style="background:#fff7ed; padding:15px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Additional</div>
+                    <div class="stat-big" style="color:#c2410c;">{{ pers_total_add }}</div>
+                    </div>
+                <div style="background:#fef2f2; padding:15px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Rejected</div>
+                    <div class="stat-big" style="color:#b91c1c;">{{ pers_total_rejected }}</div>
                 </div>
-                <div style="background:#fef3c7; padding:15px; border-radius:8px; text-align:center;">
-                    <div class="stat-label" style="font-weight:bold;">Cited Only</div>
-                    <div class="stat-big" style="color:#d97706;">{{ "%.1f"|format(pers_matched_main / pers_total_main * 100 if pers_total_main > 0 else 0) }}%</div>
-                    <div style="font-size:11px; color:#92400e;">{{ pers_matched_main }} / {{ pers_total_main }}</div>
+            </div>
+            <div style="background: #fffaf5; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 15px; border: 1px dashed #fed7aa;">
+                <div class="stat-label" style="font-weight: bold; color: #9a3412;">TOTAL CONSIDERED: {{ pers_total_main + pers_total_add + pers_total_rejected }}</div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#fff7ed; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Q1 Overlap</div>
+                    <div class="stat-big" style="color:#c2410c;">{{ "%.1f"|format(pers_q1_overlap_pct) }}%</div>
+                </div>
+                <div style="background:#f0fdf4; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Q2 Overlap</div>
+                    <div class="stat-big" style="color:#166534;">{{ "%.1f"|format(pers_q2_overlap_pct) }}%</div>
                 </div>
             </div>
             <div style="font-size: 12px; color: #666;">
                 <strong>Runs:</strong> {{ pers_runs }} | <strong>Bing Results:</strong> {{ pers_bing }}
+                </div>
             </div>
         </div>
-    </div>
-    
+
     <div class="grid">
         <div class="card enterprise">
             <h2>Enterprise - Top Invisible Domains</h2>
@@ -81,7 +338,7 @@ DASHBOARD_TEMPLATE = """
                 <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
                 {% endfor %}
             </table>
-        </div>
+                            </div>
         
         <div class="card personal">
             <h2>Personal - Top Invisible Domains</h2>
@@ -89,21 +346,21 @@ DASHBOARD_TEMPLATE = """
                 <tr><th>Domain</th><th>Count</th></tr>
                 {% for row in pers_invisible[:10] %}
                 <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-                {% endfor %}
+                    {% endfor %}
             </table>
         </div>
-    </div>
-    
+        </div>
+
     <div class="grid">
         <div class="card enterprise">
             <h2>Enterprise - Page Distribution</h2>
-            <table>
+                <table>
                 <tr><th>Page</th><th>Matches</th></tr>
                 {% for row in ent_page_data %}
                 <tr><td>Page {{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-                {% endfor %}
-            </table>
-        </div>
+                        {% endfor %}
+                </table>
+            </div>
         
         <div class="card personal">
             <h2>Personal - Page Distribution</h2>
@@ -204,18 +461,13 @@ HTML_TEMPLATE = """
                 <div class="hidden-queries">🔍 Hidden Queries: {{ run_raw.hidden_queries }}</div>
                 {% endif %}
             </div>
-            
+
             <!-- Stats Bar -->
             <div style="display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
                 {% set search_triggered = run_raw.web_search_triggered in ['1', 'true', 'True', True, 1] %}
                 <div style="background: {{ '#d1fae5' if search_triggered else '#fee2e2' }}; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
                     <strong>Web Search:</strong> {{ '✓ Triggered' if search_triggered else '✗ Not Triggered' }}
                 </div>
-                {% if run_raw.web_search_forced %}
-                <div style="background: #fef3c7; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
-                    <strong>Forced:</strong> {{ run_raw.web_search_forced }}
-                </div>
-                {% endif %}
                 <div style="background: #e0e7ff; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
                     <strong>Items:</strong> {{ run_raw.items_count or 0 }}
                 </div>
@@ -239,6 +491,11 @@ HTML_TEMPLATE = """
                         {% endfor %}
                     </div>
                     {% endif %}
+                </div>
+                {% endif %}
+                {% if run_raw.double_overlap_cited is not none %}
+                <div style="background: #f5f3ff; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Double-overlap cited:</strong> {{ run_raw.double_overlap_cited }}
                 </div>
                 {% endif %}
                 <div style="background: #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
@@ -323,15 +580,19 @@ HTML_TEMPLATE = """
                                     <div style="font-size: 10px; background: {{ '#d1fae5' if cit.bing_rank else '#fee2e2' }}; color: {{ '#065f46' if cit.bing_rank else '#991b1b' }}; padding: 3px 8px; border-radius: 10px;">
                                         {{ cit.domain }} 🔗
                                         {% if cit.bing_rank %}
-                                        <span style="font-weight: bold;">#{{ cit.bing_rank }} Q{{ cit.bing_query_num }}</span>
+                                        <span style="font-weight: bold;">
+                                            #{{ cit.bing_rank }}
+                                            {% if cit.bing_query_nums_str %}{{ cit.bing_query_nums_str }}{% else %}Q{{ cit.bing_query_num }}{% endif %}
+                                            {% if cit.double_overlap %}<span style="margin-left:6px; background:#7c3aed; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">Q1+Q2</span>{% endif %}
+                                        </span>
                                         {% else %}
                                         <span style="font-weight: bold;">✗</span>
                                         {% endif %}
-                                    </div>
+                    </div>
                                 </a>
                             {% endfor %}
-                            </div>
-                            
+                </div>
+
                             {% if additional_sources %}
                             <div style="font-size: 11px; color: #6b7280; font-weight: bold; margin-bottom: 8px;">➕ ADDITIONAL SOURCES ({{ additional_sources|length }})</div>
                             <div style="display: flex; flex-wrap: wrap; gap: 4px;">
@@ -340,16 +601,20 @@ HTML_TEMPLATE = """
                                     <div style="font-size: 10px; background: {{ '#e0f2fe' if cit.bing_rank else '#f3f4f6' }}; color: {{ '#0369a1' if cit.bing_rank else '#6b7280' }}; padding: 3px 8px; border-radius: 10px;">
                                         {{ cit.domain }} 🔗
                                         {% if cit.bing_rank %}
-                                        <span style="font-weight: bold;">#{{ cit.bing_rank }}</span>
+                                        <span style="font-weight: bold;">
+                                            #{{ cit.bing_rank }}
+                                            {% if cit.bing_query_nums_str %}{{ cit.bing_query_nums_str }}{% else %}{% if cit.bing_query_num %}Q{{ cit.bing_query_num }}{% endif %}{% endif %}
+                                            {% if cit.double_overlap %}<span style="margin-left:6px; background:#7c3aed; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">Q1+Q2</span>{% endif %}
+                                        </span>
                                         {% else %}
                                         <span style="font-weight: bold;">✗</span>
-                                        {% endif %}
+                                    {% endif %}
                                     </div>
                                 </a>
-                            {% endfor %}
+                                {% endfor %}
                             </div>
-                            {% endif %}
-                        </div>
+                                {% endif %}
+                            </div>
                         
                         <!-- Rejected Sources (retrieved but not cited) -->
                         {% if run_raw.rejected_sources %}
@@ -363,11 +628,11 @@ HTML_TEMPLATE = """
                                 </div>
                                 <div style="font-size: 10px; color: #555;">{{ src.title[:60] }}{% if src.title|length > 60 %}...{% endif %}</div>
                                 <div style="font-size: 9px; color: #888; margin-top: 4px;">{{ src.snippet }}...</div>
-                            </div>
-                            {% endfor %}
                         </div>
-                        {% endif %}
+                        {% endfor %}
                     </div>
+                        {% endif %}
+                </div>
                     
                     <!-- Raw Network Data (collapsible) -->
                     <details style="margin-top: 15px;">
@@ -376,11 +641,11 @@ HTML_TEMPLATE = """
                             <div style="margin-bottom: 10px;">
                                 <strong style="font-size: 11px;">Hidden Queries:</strong>
                                 <pre style="background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 10px; overflow-x: auto; white-space: pre-wrap;">{{ run_raw.hidden_queries_json or '[]' }}</pre>
-                            </div>
+            </div>
                             <div style="margin-bottom: 10px;">
                                 <strong style="font-size: 11px;">Search Result Groups:</strong>
                                 <pre style="background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 10px; max-height: 200px; overflow: auto; white-space: pre-wrap;">{{ run_raw.search_result_groups_json or '[]' }}</pre>
-                            </div>
+        </div>
                             <div style="margin-bottom: 10px;">
                                 <strong style="font-size: 11px;">Sources Cited:</strong>
                                 <pre style="background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 10px; max-height: 150px; overflow: auto; white-space: pre-wrap;">{{ run_raw.sources_cited_json or '[]' }}</pre>
@@ -402,52 +667,128 @@ HTML_TEMPLATE = """
                         <div class="raw-text-box" style="margin-top: 10px;">{{ run_raw.response_text or 'No response text available' }}</div>
                     </details>
 
-                </div>
+            </div>
                 
-                <!-- RIGHT: Bing Results -->
+                <!-- RIGHT: SERP Results (Tabbed: Bing | Google) -->
                 <div>
-                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
-                        <span class="source-label" style="margin-bottom:0;">Bing Results ({{ bing_results|length }})</span>
-                        <div id="query-filters" style="font-size: 10px;">
+                    <!-- Tab Headers -->
+                    <div style="display: flex; gap: 0; margin-bottom: 10px; border-bottom: 2px solid #e5e7eb;">
+                        <button id="tab-bing" onclick="showTab('bing')" style="flex:1; padding: 8px 12px; border: none; background: #3b82f6; color: white; font-weight: bold; font-size: 12px; cursor: pointer; border-radius: 6px 6px 0 0;">
+                            Bing ({{ bing_results|length }})
+                        </button>
+                        <button id="tab-google" onclick="showTab('google')" style="flex:1; padding: 8px 12px; border: none; background: #e5e7eb; color: #666; font-weight: bold; font-size: 12px; cursor: pointer; border-radius: 6px 6px 0 0;">
+                            Google ({{ google_results|length }})
+                        </button>
+                    </div>
+                    
+                    <!-- BING TAB -->
+                    <div id="panel-bing">
+                        <div id="query-filters" style="font-size: 10px; margin-bottom: 8px;">
                             {% for q_text in unique_queries %}
                             <label style="cursor:pointer; display: flex; align-items: center; gap: 4px; background: #f3f4f6; padding: 3px 6px; border-radius: 4px; margin-bottom: 4px;">
                                 <input type="checkbox" class="query-toggle" data-query="{{ q_text }}" checked> 
                                 <strong style="color:#007bff;">Q{{ loop.index }}:</strong> <span style="color:#555;">{{ q_text[:40] }}...</span>
                             </label>
-                            {% endfor %}
+                    {% endfor %}
+                        </div>
+                        
+                        <div id="bing-results-container" style="max-height: 600px; overflow-y: auto;">
+                        {% for b in bing_results %}
+                        {% set q_num = '?' %}
+                        {% if b['query'] in unique_queries %}
+                            {% set q_num = unique_queries.index(b['query']) + 1 %}
+                        {% endif %}
+                        <div class="bing-item {{ 'matched' if b['is_cited'] else '' }}" data-query-text="{{ b['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px;">
+                            <span class="bing-rank-num" style="font-size: 10px;">#{{ b['position'] }}</span>
+                            <span style="background:#e0e7ff; color:#3730a3; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold;">Q{{ q_num }}</span>
+                            <span style="background:#f3f4f6; color:#666; padding:1px 4px; border-radius:3px; font-size:9px; margin-left:4px;">Pg {{ b['page_num'] or '?' }}</span>
+                            {% if b['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold;">CITED</span>{% endif %}
+                            <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">
+                                <a href="{{ b['url'] }}" target="_blank" style="text-decoration: none; color: #111;">{{ (b['title'] or 'No title')[:50] }}...</a>
+                            </div>
+                            <div style="font-size: 10px; color: #10a37f;">{{ b['domain'] }}</div>
+                        </div>
+                        {% endfor %}
                         </div>
                     </div>
                     
-                    <div id="bing-results-container" style="max-height: 700px; overflow-y: auto;">
-                    {% for b in bing_results %}
-                    {% set q_num = '?' %}
-                    {% if b['query'] in unique_queries %}
-                        {% set q_num = unique_queries.index(b['query']) + 1 %}
-                    {% endif %}
-                    <div class="bing-item {{ 'matched' if b['is_cited'] else '' }}" data-query-text="{{ b['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px;">
-                        <span class="bing-rank-num" style="font-size: 10px;">#{{ b['position'] }}</span>
-                        <span style="background:#e0e7ff; color:#3730a3; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold;">Q{{ q_num }}</span>
-                        <span style="background:#f3f4f6; color:#666; padding:1px 4px; border-radius:3px; font-size:9px; margin-left:4px;">Pg {{ b['page_num'] or '?' }}</span>
-                        {% if b['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold;">✓</span>{% endif %}
-                        <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">
-                            <a href="{{ b['url'] }}" target="_blank" style="text-decoration: none; color: #111;">{{ (b['title'] or 'No title')[:50] }}... 🔗</a>
+                    <!-- GOOGLE TAB -->
+                    <div id="panel-google" style="display: none;">
+                        {% if google_results %}
+                        <div style="font-size: 10px; margin-bottom: 8px; background: #fef3c7; padding: 6px 10px; border-radius: 4px; color: #92400e;">
+                            Google Top 20 for queries from this run (collected via SerpAPI)
                         </div>
-                        <div style="font-size: 10px; color: #10a37f;">{{ b['domain'] }}</div>
-                    </div>
-                    {% endfor %}
+                        <div id="google-query-filters" style="font-size: 10px; margin-bottom: 8px;">
+                            {% for q_text in google_unique_queries %}
+                            {% set q_num = loop.index %}
+                            <label style="cursor:pointer; display: flex; align-items: center; gap: 4px; background: #fff7ed; padding: 3px 6px; border-radius: 4px; margin-bottom: 4px;">
+                                <input type="checkbox" class="google-query-toggle" data-query="{{ q_text }}" checked>
+                                <strong style="color:#f97316;">Q{{ q_num }}:</strong> <span style="color:#92400e;">{{ q_text[:40] }}...</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                        <div id="google-results-container" style="max-height: 600px; overflow-y: auto;">
+                        {% for g in google_results %}
+                        <div class="google-item {{ 'matched' if g['is_cited'] else '' }}" data-query-text="{{ g['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; {{ 'background: #fef9c3;' if g['is_cited'] else '' }}">
+                            <span style="background: #f97316; color: white; padding:1px 6px; border-radius:3px; font-size: 10px; font-weight:bold;">#{{ g['position'] }}</span>
+                            <span style="background:#fef3c7; color:#92400e; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">{{ g['query_label'] }}</span>
+                            {% if g['result_type'] == 'video' %}
+                            <span style="background:#fde68a; color:#92400e; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">VIDEO</span>
+                            {% elif g['result_type'] == 'discussion' %}
+                            <span style="background:#e0e7ff; color:#3730a3; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">DISCUSSION</span>
+                            {% elif g['result_type'] == 'related_question' %}
+                            <span style="background:#dcfce7; color:#166534; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">PAA</span>
+                            {% endif %}
+                            {% if g['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold; margin-left:4px;">CITED</span>{% endif %}
+                            {% if g['is_cited'] and not g['in_bing'] %}<span style="background:#fef3c7; color:#92400e; font-size:9px; font-weight:bold; padding:1px 4px; border-radius:3px; margin-left:4px;">GOOGLE ONLY</span>{% endif %}
+                            <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">
+                                <a href="{{ g['url'] }}" target="_blank" style="text-decoration: none; color: #111;">{{ (g['title'] or 'No title')[:50] }}...</a>
+                            </div>
+                            <div style="font-size: 10px; color: #f97316;">{{ g['domain'] }}</div>
+                        </div>
+                        {% endfor %}
+                        </div>
+                        {% else %}
+                        <div style="padding: 20px; text-align: center; color: #888;">
+                            No Google results collected for this run yet.
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
 
         <script>
-            // Query toggle checkboxes
+            // Tab switching
+            function showTab(tab) {
+                document.getElementById('panel-bing').style.display = tab === 'bing' ? 'block' : 'none';
+                document.getElementById('panel-google').style.display = tab === 'google' ? 'block' : 'none';
+                
+                document.getElementById('tab-bing').style.background = tab === 'bing' ? '#3b82f6' : '#e5e7eb';
+                document.getElementById('tab-bing').style.color = tab === 'bing' ? 'white' : '#666';
+                document.getElementById('tab-google').style.background = tab === 'google' ? '#f97316' : '#e5e7eb';
+                document.getElementById('tab-google').style.color = tab === 'google' ? 'white' : '#666';
+            }
+            
+            // Query toggle checkboxes (Bing)
             document.querySelectorAll('.query-toggle').forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
                     const queryText = this.getAttribute('data-query');
                     const isVisible = this.checked;
                     
                     document.querySelectorAll(`.bing-item[data-query-text="${queryText}"]`).forEach(item => {
+                        item.style.display = isVisible ? 'block' : 'none';
+                    });
+                });
+            });
+
+            // Query toggle checkboxes (Google)
+            document.querySelectorAll('.google-query-toggle').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const queryText = this.getAttribute('data-query');
+                    const isVisible = this.checked;
+                    
+                    document.querySelectorAll(`.google-item[data-query-text="${queryText}"]`).forEach(item => {
                         item.style.display = isVisible ? 'block' : 'none';
                     });
                 });
@@ -569,7 +910,7 @@ def index():
     run_id = request.args.get('run_id')
     account_filter = request.args.get('filter', 'all')
     db = get_db()
-
+    
     import re
 
     def _estimate_counts_from_text(text: str):
@@ -616,6 +957,8 @@ def index():
     run_raw = None
     cit_db = []
     bing_results = []
+    google_results = []
+    google_unique_queries = []
     items_raw = []
     unique_queries = []
     
@@ -624,7 +967,7 @@ def index():
         db_run = db.execute('''
             SELECT p.prompt as query, r.generated_search_query, r.response_text, r.hidden_queries, r.items_json,
                    r.web_search_triggered, r.web_search_forced, r.items_count, r.items_with_citations_count,
-                   r.search_result_groups_json
+                   r.search_result_groups_json, r.account_type
             FROM runs r
             LEFT JOIN prompts p ON r.prompt_id = p.prompt_id
             WHERE r.run_id = ?
@@ -692,7 +1035,7 @@ def index():
                 items_raw = json.loads(db_run['items_json'] or '[]')
             except:
                 items_raw = []
-            
+
             # If no structured items, format response_text with inline citation chips
             if not items_raw and run_raw.get('response_text'):
                 import re
@@ -1079,6 +1422,43 @@ def index():
         ''', (run_id,)).fetchall()
         
         bing_results = [dict(row) for row in bing_rows]
+        
+        # Build set of Bing URL norms for quick lookup
+        bing_url_norms = set(b.get('url_normalized', '') for b in bing_results)
+        
+        # Get Google results for this run (via chatgpt_run_id link)
+        # Use account_type to avoid mixing personal/enterprise results
+        base_run_id = run_id.replace('_personal', '')
+        run_account_type = db_run['account_type'] if db_run and db_run['account_type'] else None
+        google_rows = db.execute('''
+            SELECT g.*,
+                   EXISTS(SELECT 1 FROM citations c WHERE c.run_id = ? AND c.url_normalized =
+                          LOWER(REPLACE(REPLACE(REPLACE(g.url, 'https://', ''), 'http://', ''), 'www.', ''))) as is_cited
+            FROM google_results g
+            WHERE g.chatgpt_run_id = ? AND (? IS NULL OR g.account_type = ?)
+            ORDER BY g.query_type, g.position ASC
+        ''', (run_id, base_run_id, run_account_type, run_account_type)).fetchall()
+        
+        google_results = []
+        for row in google_rows:
+            g = dict(row)
+            query_text = (g.get('query') or '').strip()
+            if not query_text or query_text.lower() == 'n/a':
+                continue
+            if g.get('query_type') == 'generated_search_query':
+                continue  # Only show Q1/Q2 (hidden queries) to match Bing
+            # Check if this Google URL is also in Bing
+            url_norm = (g.get('url') or '').lower().replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
+            g['in_bing'] = url_norm in bing_url_norms
+            google_results.append(g)
+
+        # Build Google query list (for toggles) and labels
+        google_unique_queries = list(dict.fromkeys([g.get('query') for g in google_results if g.get('query')]))
+        google_query_to_num = {q: i + 1 for i, q in enumerate(google_unique_queries)}
+        for g in google_results:
+            q_text = g.get('query') or ''
+            q_num = google_query_to_num.get(q_text, '?')
+            g['query_label'] = f"Q{q_num}" if q_num != '?' else 'Q?'
 
         # Get unique queries for this run to power the checkboxes
         # preserve order of appearance (matches how queries were executed)
@@ -1089,6 +1469,34 @@ def index():
         for cit in cit_db:
             if cit.get('bing_query'):
                 cit['bing_query_num'] = query_to_num.get(cit['bing_query'], '?')
+
+        # For each URL, track all query numbers where it appeared (to detect Q1+Q2 "double overlap")
+        url_norm_to_qnums = {}
+        for b in bing_results:
+            un = b.get('url_normalized')
+            q = b.get('query')
+            if not un or not q:
+                continue
+            qn = query_to_num.get(q)
+            if not qn:
+                continue
+            url_norm_to_qnums.setdefault(un, set()).add(qn)
+
+        double_overlap_cited = 0
+        for cit in cit_db:
+            qnums = sorted(list(url_norm_to_qnums.get(cit.get('url_normalized'), set())))
+            cit['bing_query_nums'] = qnums
+            if qnums:
+                cit['bing_query_nums_str'] = ''.join([f"Q{n}" if i == 0 else f"+Q{n}" for i, n in enumerate(qnums)])
+            else:
+                cit['bing_query_nums_str'] = ''
+
+            cit['double_overlap'] = (1 in qnums and 2 in qnums)
+            if cit.get('citation_type') == 'cited' and cit['double_overlap']:
+                double_overlap_cited += 1
+
+        if run_raw is not None:
+            run_raw['double_overlap_cited'] = double_overlap_cited
 
         # ---- Per-run Bing overlap (overall + by hidden query) ----
         if run_raw is not None:
@@ -1133,6 +1541,8 @@ def index():
                                  run_raw=run_raw,
                                  cit_db=cit_db,
                                  bing_results=bing_results,
+                                 google_results=google_results,
+                                 google_unique_queries=google_unique_queries,
                                  unique_queries=unique_queries if run_id else [],
                                  items_raw=items_raw,
                                  account_filter=account_filter)
@@ -1151,7 +1561,24 @@ def dashboard():
     ent_matched_all = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'enterprise' AND {match_sql}").fetchone()[0]
     
     ent_total_main = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'enterprise' AND citation_type = 'cited'").fetchone()[0]
+    ent_total_add = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'enterprise' AND citation_type = 'additional'").fetchone()[0]
     ent_matched_main = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'enterprise' AND citation_type = 'cited' AND {match_sql}").fetchone()[0]
+
+    # Calculate "Rejected" (Level 3: In Bing but not in Cited or Additional)
+    def _get_rejected_count(account_type: str):
+        return db.execute(f'''
+            SELECT COUNT(*) FROM (
+                SELECT DISTINCT b.run_id, b.url_normalized 
+                FROM bing_results b
+                WHERE b.account_type = ?
+                EXCEPT
+                SELECT DISTINCT c.run_id, c.url_normalized
+                FROM citations c
+                WHERE c.account_type = ?
+            )
+        ''', (account_type, account_type)).fetchone()[0]
+
+    ent_total_rejected = _get_rejected_count('enterprise')
     
     ent_invisible = db.execute('''
         SELECT domain, COUNT(*) as count
@@ -1169,6 +1596,63 @@ def dashboard():
         WHERE b.page_num IS NOT NULL AND b.account_type = 'enterprise'
         GROUP BY b.page_num ORDER BY b.page_num
     ''').fetchall()
+
+    def _aggregate_q_overlap(account_type: str):
+        """Aggregate Q1/Q2 overlap across runs using Bing query order (min bing_results.id per query)."""
+        run_ids = [r[0] for r in db.execute("SELECT run_id FROM runs WHERE account_type = ?", (account_type,)).fetchall()]
+        total_cited_urls = 0
+        q1_matched = 0
+        q2_matched = 0
+
+        for rid in run_ids:
+            cited_norms = set(
+                r[0]
+                for r in db.execute(
+                    "SELECT DISTINCT url_normalized FROM citations WHERE run_id = ? AND citation_type = 'cited' AND url_normalized != ''",
+                    (rid,),
+                ).fetchall()
+            )
+            if not cited_norms:
+                continue
+
+            # Determine query order for this run via insertion order in bing_results
+            q_rows = db.execute(
+                "SELECT query, MIN(id) as min_id FROM bing_results WHERE run_id = ? AND query IS NOT NULL GROUP BY query ORDER BY min_id",
+                (rid,),
+            ).fetchall()
+            queries = [qr[0] for qr in q_rows if qr[0]]
+            if not queries:
+                continue
+
+            q1_query = queries[0] if len(queries) >= 1 else None
+            q2_query = queries[1] if len(queries) >= 2 else None
+
+            q1_norms = set(
+                r[0]
+                for r in db.execute(
+                    "SELECT DISTINCT url_normalized FROM bing_results WHERE run_id = ? AND query = ? AND url_normalized != ''",
+                    (rid, q1_query),
+                ).fetchall()
+            ) if q1_query else set()
+            q2_norms = set(
+                r[0]
+                for r in db.execute(
+                    "SELECT DISTINCT url_normalized FROM bing_results WHERE run_id = ? AND query = ? AND url_normalized != ''",
+                    (rid, q2_query),
+                ).fetchall()
+            ) if q2_query else set()
+
+            total_cited_urls += len(cited_norms)
+            if q1_norms:
+                q1_matched += len(cited_norms & q1_norms)
+            if q2_norms:
+                q2_matched += len(cited_norms & q2_norms)
+
+        q1_pct = (q1_matched / total_cited_urls * 100.0) if total_cited_urls else 0.0
+        q2_pct = (q2_matched / total_cited_urls * 100.0) if total_cited_urls else 0.0
+        return total_cited_urls, q1_matched, q2_matched, q1_pct, q2_pct
+
+    ent_total_cited_urls, ent_q1_matched, ent_q2_matched, ent_q1_overlap_pct, ent_q2_overlap_pct = _aggregate_q_overlap('enterprise')
     
     # ===== PERSONAL STATS =====
     pers_runs = db.execute("SELECT COUNT(*) FROM runs WHERE account_type = 'personal'").fetchone()[0]
@@ -1178,8 +1662,13 @@ def dashboard():
     pers_matched_all = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal' AND {match_sql}").fetchone()[0]
     
     pers_total_main = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'personal' AND citation_type = 'cited'").fetchone()[0]
+    pers_total_add = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'personal' AND citation_type = 'additional'").fetchone()[0]
+    pers_total_rejected = _get_rejected_count('personal')
     pers_matched_main = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal' AND citation_type = 'cited' AND {match_sql}").fetchone()[0]
     
+    total_unique_domains = db.execute("SELECT COUNT(DISTINCT domain) FROM citations WHERE domain != ''").fetchone()[0]
+    total_rejected_global = ent_total_rejected + pers_total_rejected
+
     pers_invisible = db.execute('''
         SELECT domain, COUNT(*) as count
         FROM citations c
@@ -1197,15 +1686,194 @@ def dashboard():
         GROUP BY b.page_num ORDER BY b.page_num
     ''').fetchall()
 
-    return render_template_string(DASHBOARD_TEMPLATE,
+    pers_total_cited_urls, pers_q1_matched, pers_q2_matched, pers_q1_overlap_pct, pers_q2_overlap_pct = _aggregate_q_overlap('personal')
+
+    return render_template_string(DASHBOARD_TEMPLATE, 
                                  ent_runs=ent_runs, ent_bing=ent_bing,
                                  ent_total_all=ent_total_all, ent_matched_all=ent_matched_all,
-                                 ent_total_main=ent_total_main, ent_matched_main=ent_matched_main,
+                                 ent_total_main=ent_total_main, ent_total_add=ent_total_add,
+                                 ent_total_rejected=ent_total_rejected,
+                                 ent_matched_main=ent_matched_main,
                                  ent_invisible=ent_invisible, ent_page_data=ent_page_data,
+                                 ent_total_cited_urls=ent_total_cited_urls,
+                                 ent_q1_matched=ent_q1_matched, ent_q2_matched=ent_q2_matched,
+                                 ent_q1_overlap_pct=ent_q1_overlap_pct, ent_q2_overlap_pct=ent_q2_overlap_pct,
                                  pers_runs=pers_runs, pers_bing=pers_bing,
                                  pers_total_all=pers_total_all, pers_matched_all=pers_matched_all,
-                                 pers_total_main=pers_total_main, pers_matched_main=pers_matched_main,
-                                 pers_invisible=pers_invisible, pers_page_data=pers_page_data)
+                                 pers_total_main=pers_total_main, pers_total_add=pers_total_add,
+                                 pers_total_rejected=pers_total_rejected,
+                                 pers_matched_main=pers_matched_main,
+                                 total_unique_domains=total_unique_domains,
+                                 total_rejected_global=total_rejected_global,
+                                 pers_invisible=pers_invisible, pers_page_data=pers_page_data,
+                                 pers_total_cited_urls=pers_total_cited_urls,
+                                 pers_q1_matched=pers_q1_matched, pers_q2_matched=pers_q2_matched,
+                                 pers_q1_overlap_pct=pers_q1_overlap_pct, pers_q2_overlap_pct=pers_q2_overlap_pct)
+
+@app.route('/domains')
+def domain_explorer():
+    db = get_db()
+    
+    # Get filters from query params
+    search_query = request.args.get('search', '').strip().lower()
+    account_filter = request.args.get('account', 'all')
+    type_filter = request.args.get('type', 'all')
+    visibility_filter = request.args.get('visibility', 'all')
+    source_filter = request.args.get('source', 'all')
+    drilldown = request.args.get('drilldown', '0') == '1'
+    
+    # Build a set of all Google URLs (normalized) for quick lookup
+    google_urls = set()
+    try:
+        google_rows = db.execute('SELECT DISTINCT url FROM google_results WHERE url IS NOT NULL').fetchall()
+        for row in google_rows:
+            url = row[0]
+            if url:
+                # Normalize
+                url_norm = url.lower().replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
+                google_urls.add(url_norm)
+    except:
+        pass  # google_results table might not exist yet
+    
+    # Build domain aggregation query
+    domain_data = {}
+    
+    # Get all citations with their Bing match status
+    citations = db.execute('''
+        SELECT c.domain, c.account_type, c.citation_type, c.url, c.title, c.run_id, c.url_normalized,
+               EXISTS(SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized) as in_bing
+        FROM citations c
+        WHERE c.domain IS NOT NULL AND c.domain != ''
+    ''').fetchall()
+    
+    # Stats counters
+    google_only_count = 0
+    bing_only_count = 0
+    neither_count = 0
+    both_count = 0
+    
+    for row in citations:
+        domain, account, ctype, url, title, run_id, url_normalized, in_bing = row
+        domain_lower = domain.lower()
+        
+        # Check if URL is in Google results
+        url_norm_check = (url_normalized or '').lower()
+        in_google = url_norm_check in google_urls
+        
+        # Apply filters
+        if search_query and search_query not in domain_lower:
+            continue
+        if account_filter != 'all' and account != account_filter:
+            continue
+        if type_filter != 'all' and ctype != type_filter:
+            continue
+        if visibility_filter == 'invisible' and in_bing:
+            continue
+        if visibility_filter == 'visible' and not in_bing:
+            continue
+        
+        # Source filter
+        if source_filter == 'google_only' and not (in_google and not in_bing):
+            continue
+        if source_filter == 'bing_only' and not (in_bing and not in_google):
+            continue
+        if source_filter == 'both' and not (in_bing and in_google):
+            continue
+        if source_filter == 'neither' and not (not in_bing and not in_google):
+            continue
+        
+        if domain not in domain_data:
+            domain_data[domain] = {
+                'domain': domain,
+                'ent_cited': 0, 'ent_additional': 0,
+                'pers_cited': 0, 'pers_additional': 0,
+                'total': 0,
+                'in_bing': False,
+                'in_google': False,
+                'urls': []
+            }
+        
+        d = domain_data[domain]
+        d['total'] += 1
+        
+        # Track if any URL from this domain is in Bing or Google
+        if in_bing:
+            d['in_bing'] = True
+        if in_google:
+            d['in_google'] = True
+        
+        if account == 'enterprise':
+            if ctype == 'cited':
+                d['ent_cited'] += 1
+            else:
+                d['ent_additional'] += 1
+        else:
+            if ctype == 'cited':
+                d['pers_cited'] += 1
+            else:
+                d['pers_additional'] += 1
+        
+        # Parse run_id to get prompt_id and run_number
+        parts = run_id.split('_') if run_id else ['', '']
+        prompt_id = parts[0] if len(parts) > 0 else ''
+        run_number = parts[1] if len(parts) > 1 else ''
+        
+        d['urls'].append({
+            'url': url,
+            'title': title,
+            'account_type': account,
+            'citation_type': ctype,
+            'run_id': run_id,
+            'prompt_id': prompt_id,
+            'run_number': run_number,
+            'in_bing': in_bing,
+            'in_google': in_google
+        })
+    
+    # Sort by total count
+    domains = sorted(domain_data.values(), key=lambda x: x['total'], reverse=True)
+    
+    # Calculate stats (across ALL domains, not just filtered)
+    total_domains = len(domains)
+    total_citations = sum(d['total'] for d in domains)
+    
+    # Count unique URLs by source coverage
+    for d in domains:
+        for u in d['urls']:
+            if u['in_google'] and not u['in_bing']:
+                google_only_count += 1
+            elif u['in_bing'] and not u['in_google']:
+                bing_only_count += 1
+            elif u['in_bing'] and u['in_google']:
+                both_count += 1
+            else:
+                neither_count += 1
+    
+    # Drilldown data
+    drilldown_domain = None
+    drilldown_urls = []
+    if drilldown and search_query and len(domains) == 1:
+        drilldown_domain = domains[0]['domain']
+        drilldown_urls = domains[0]['urls']
+    
+    # Limit to top 100 for display
+    domains = domains[:100]
+    
+    return render_template_string(DOMAIN_EXPLORER_TEMPLATE,
+                                 domains=domains,
+                                 search_query=search_query,
+                                 account_filter=account_filter,
+                                 type_filter=type_filter,
+                                 visibility_filter=visibility_filter,
+                                 source_filter=source_filter,
+                                 total_domains=total_domains,
+                                 total_citations=total_citations,
+                                 google_only_count=google_only_count,
+                                 bing_only_count=bing_only_count,
+                                 neither_count=neither_count,
+                                 drilldown_domain=drilldown_domain,
+                                 drilldown_urls=drilldown_urls)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
