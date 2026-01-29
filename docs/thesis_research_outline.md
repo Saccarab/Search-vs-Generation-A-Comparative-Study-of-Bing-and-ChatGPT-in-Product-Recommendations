@@ -132,6 +132,21 @@
 - **Explicit Localization via Rewriting:** We observed that the model often injects geographical markers into the rewritten query based on implicit user context, even when the original prompt is global.
 - **The "Query Drift" Problem:** Across multiple runs of the same prompt, the rewritten queries can vary significantly. This "Query Drift" is a primary driver of the stochastic nature of GenAI search results—different queries lead to different grounding chunks, which lead to different recommendations.
 
+## 1.6 Citation Mapping & Claim-Level Attribution
+*How we precisely map ChatGPT's written claims to their retrieved sources.*
+
+### 1.6.1 The "Claim-to-Link" Forensic Pipeline
+- **The Challenge:** ChatGPT's final response text replaces internal citation tokens with generic `[URL]` tags. To understand *why* a link was cited, we must reconstruct the link between the **written claim** and the **retrieved source**.
+- **The Solution:** We developed a forensic mapping script that:
+    1. **Token Alignment:** Extracts raw citation tokens (e.g., `citeturn0search17`) from the network stream and aligns them with their final position in the response text.
+    2. **Block-Level Extraction:** Instead of simple keyword matching, the script identifies the **Full Claim Block** (the descriptive text between consecutive citation tags). This captures the complete product description or factual statement ChatGPT attributed to that source.
+    3. **Metadata Enrichment:** Maps each claim to its retrieved "Ground Truth" (the snippet, title, and URL from the search result groups).
+
+### 1.6.2 Multi-Chip Reconstruction (Synthesis Aggression)
+- **Defining Multi-Chips:** We observed cases where ChatGPT groups multiple sources under a single citation (e.g., "Vibe Voice+1"). 
+- **Forensic Discovery:** Our mapping revealed that these correspond to concatenated tokens (e.g., `turn0search8` + `search15`).
+- **Research Value:** This allows us to measure **Synthesis Aggression**—how ChatGPT merges facts from multiple distinct search results into a single cohesive claim.
+
 ---
 
 # Part 2: Core Findings

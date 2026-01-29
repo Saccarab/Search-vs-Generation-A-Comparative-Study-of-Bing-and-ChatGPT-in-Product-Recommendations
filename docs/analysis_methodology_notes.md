@@ -430,6 +430,26 @@ If ChatGPT has a freshness filter, it means:
 2. **"Evergreen" content may underperform** in AI citations
 3. **Bing rank alone doesn't predict AI visibility**
 
+## 17. Semantic Coverage & Fidelity Analysis (The "Extractive Proof")
+
+### Goal
+Quantify how much of the **cited claim** actually exists in the **source page content** (Semantic Coverage) and how accurately it reflects the source (Fidelity).
+
+### Methodology
+For each mapping in `datapass/citation_mappings/`:
+1.  **Retrieve Pair**: `claim_text` (what ChatGPT wrote) + `full_page_content` (from our Master Content Library).
+2.  **LLM Audit**: Use `gemini-2.5-flash-preview` (with thinking) to perform a semantic lookup.
+    - **Prompt**: "Does the following claim [CLAIM] appear semantically in this webpage text [CONTENT]? If yes, provide the exact matching snippet from the source."
+3.  **Metrics**:
+    - **Semantic Match Rate**: % of claims that can be traced back to the source text.
+    - **Extraction Efficiency**: (Character count of `claim_text`) / (Character count of `source_snippet`).
+    - **Hallucination Delta**: Identification of facts in the `claim_text` (e.g., a specific price or feature) that are missing from the source.
+
+### Key Research Questions
+1.  **Direct vs. Synthesized**: Does ChatGPT quote the source directly, or does it rephrase?
+2.  **Listicle Fidelity**: When citing a listicle, does ChatGPT use the listicle's "Notes" or does it hallucinate its own pros/cons?
+3.  **The "Plus One" Effect**: In multi-chip citations, does the claim contain facts from *both* sources or just one?
+
 ---
 
-*Last updated: January 28, 2026*
+*Last updated: January 29, 2026*

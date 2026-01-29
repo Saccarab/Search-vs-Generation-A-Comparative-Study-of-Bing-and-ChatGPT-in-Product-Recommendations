@@ -225,6 +225,22 @@ HTML_TEMPLATE = """
                 <div style="background: #f3f4f6; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
                     <strong>Total Sources:</strong> {{ cit_db|length }}
                 </div>
+                {% if run_raw.bing_overlap %}
+                <div style="background: #ecfeff; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Bing overlap:</strong>
+                    {{ "%.1f"|format(run_raw.bing_overlap.overall_pct) }}%
+                    ({{ run_raw.bing_overlap.overall_matched }}/{{ run_raw.bing_overlap.total_cited }} cited)
+                    {% if run_raw.bing_overlap.by_query %}
+                    <div style="font-size: 10px; color: #155e75; margin-top: 3px;">
+                        {% for q in run_raw.bing_overlap.by_query %}
+                            <span style="display:inline-block; margin-right:8px;">
+                                <strong>Q{{ q.q_num }}:</strong> {{ "%.0f"|format(q.pct) }}% ({{ q.matched }}/{{ q.total_cited }})
+                            </span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
                 <div style="background: #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
                     <strong>Search Prob:</strong> Simple {{ run_raw.simple_search_prob }}% | Complex {{ run_raw.complex_search_prob }}% | None {{ run_raw.no_search_prob }}%
                 </div>
@@ -518,6 +534,7 @@ def get_raw_network_data(run_id):
                     _raw_data_cache[rid] = {
                         'hidden_queries_json': row.get('hidden_queries_json', '[]'),
                         'search_result_groups_json': row.get('search_result_groups_json', '[]'),
+                        'content_references_json': row.get('content_references_json', '[]'),
                         'sources_cited_json': row.get('sources_cited_json', '[]'),
                         'sources_all_json': row.get('sources_all_json', '[]'),
                         'sources_additional_json': row.get('sources_additional_json', '[]'),
@@ -536,6 +553,7 @@ def get_raw_network_data(run_id):
                     _raw_data_cache[rid] = {
                         'hidden_queries_json': row.get('hidden_queries_json', '[]'),
                         'search_result_groups_json': row.get('search_result_groups_json', '[]'),
+                        'content_references_json': row.get('content_references_json', '[]'),
                         'sources_cited_json': row.get('sources_cited_json', '[]'),
                         'sources_all_json': row.get('sources_all_json', '[]'),
                         'sources_additional_json': row.get('sources_additional_json', '[]'),
@@ -551,6 +569,34 @@ def index():
     run_id = request.args.get('run_id')
     account_filter = request.args.get('filter', 'all')
     db = get_db()
+
+    import re
+
+    def _estimate_counts_from_text(text: str):
+        """Heuristic fallback when runs.items_count fields are missing/0."""
+        if not text:
+            return 0, 0
+        lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+
+        # Count list-like lines as "items" candidates
+        list_like = 0
+        for ln in lines:
+            if re.match(r'^(\d+[\.\)]|[-*•])\s+', ln):
+                list_like += 1
+
+        # Find [https://...] tags and count unique line buckets that contain at least one URL
+        url_matches = list(re.finditer(r'\[(https?:\/\/[^\]\s]+)\]', text))
+        if not url_matches:
+            return max(list_like, 0), 0
+
+        line_buckets = set()
+        for m in url_matches:
+            # Bucket by line number (0-based)
+            line_buckets.add(text.count('\n', 0, m.start()))
+
+        with_citations = len(line_buckets) if line_buckets else len(url_matches)
+        items = max(list_like, with_citations)
+        return items, with_citations
     
     # Get runs ordered: enterprise first (sorted by prompt_id, run_number), then personal
     if account_filter == 'enterprise':
@@ -600,6 +646,7 @@ def index():
                 'items_with_citations_count': db_run['items_with_citations_count'],
                 'hidden_queries_json': extra_data.get('hidden_queries_json', '[]'),
                 'search_result_groups_json': extra_data.get('search_result_groups_json', '[]'),
+                'content_references_json': extra_data.get('content_references_json', '[]'),
                 'sources_cited_json': extra_data.get('sources_cited_json', '[]'),
                 'sources_all_json': extra_data.get('sources_all_json', '[]'),
                 'sources_additional_json': extra_data.get('sources_additional_json', '[]'),
@@ -706,23 +753,58 @@ def index():
                     for ref in refs_json:
                         if isinstance(ref, dict) and ref.get('matched_text'):
                             matched = ref['matched_text']
-                            # Look for patterns like "citeturn0search3turn0search36" (multiple searchX)
+                            # Multi-chip heuristics:
+                            # - multiple turn0search indices in matched_text (classic "+1")
+                            # - OR multiple items with urls (sometimes matched_text only references one token, but items carry the rest)
                             search_indices = re.findall(r'turn0search(\d+)', matched)
-                            if len(search_indices) > 1:
-                                # This is a multi-chip!
-                                urls_for_chip = []
-                                for idx_str in search_indices:
+                            direct_items = ref.get('items', []) if isinstance(ref.get('items', []), list) else []
+
+                            is_multi = (len(search_indices) > 1) or (len([it for it in direct_items if isinstance(it, dict) and it.get('url')]) > 1)
+                            if not is_multi:
+                                continue
+
+                            urls_for_chip = []
+                            # 1) From turn0search indices -> search_result_groups lookup
+                            for idx_str in search_indices:
+                                try:
                                     idx = int(idx_str)
-                                    if idx in ref_index_to_url:
-                                        urls_for_chip.append(ref_index_to_url[idx])
-                                if urls_for_chip:
-                                    mc_data = {
-                                        'start_idx': ref.get('start_idx', 0),
-                                        'matched_text': matched,
-                                        'urls': urls_for_chip
-                                    }
-                                    multi_chips_list.append(mc_data)
-                                    multi_chips_map[ref.get('start_idx', 0)] = urls_for_chip
+                                except Exception:
+                                    continue
+                                if idx in ref_index_to_url and ref_index_to_url[idx].get('url'):
+                                    urls_for_chip.append(ref_index_to_url[idx])
+
+                            # 2) From direct items (as a fallback / supplement)
+                            for it in direct_items:
+                                if not isinstance(it, dict):
+                                    continue
+                                u = it.get('url')
+                                if u:
+                                    urls_for_chip.append({
+                                        'url': u,
+                                        'title': it.get('title', ''),
+                                        'domain': it.get('attribution', it.get('domain', ''))
+                                    })
+
+                            # Deduplicate by normalized URL
+                            dedup = []
+                            seen = set()
+                            for uinfo in urls_for_chip:
+                                u = uinfo.get('url', '')
+                                un = normalize_url(u)
+                                if not un or un in seen:
+                                    continue
+                                seen.add(un)
+                                dedup.append(uinfo)
+                            urls_for_chip = dedup
+
+                            if urls_for_chip:
+                                mc_data = {
+                                    'start_idx': ref.get('start_idx', 0),
+                                    'matched_text': matched,
+                                    'urls': urls_for_chip
+                                }
+                                multi_chips_list.append(mc_data)
+                                multi_chips_map[ref.get('start_idx', 0)] = urls_for_chip
                     print(f"DEBUG: Found {len(multi_chips_list)} multi-chip citations")
                 except Exception as e:
                     print(f"ERROR parsing content_references_json: {e}")
@@ -870,21 +952,21 @@ def index():
                 # 2. Find any cited URLs that weren't in the [URL] text and add them as chips
                 # This handles any remaining URLs that didn't get matched to a chip
                 remaining_chips = []
+                # Also avoid duplicating URLs that were already explained as part of a multi-chip
+                multi_chip_url_norms = set()
+                try:
+                    for urls in multi_chips_map.values():
+                        for uinfo in urls:
+                            multi_chip_url_norms.add(normalize_url(uinfo.get('url', '')))
+                except:
+                    pass
                 for url in all_cited_urls:
                     url_norm = normalize_url(url)
-                    if url_norm not in used_urls:
+                    if url_norm not in used_urls and url_norm not in multi_chip_url_norms:
                         clean_url = url.replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
                         domain = clean_url.split('/')[0] if '/' in clean_url else clean_url
                         bing_info = bing_lookup.get(url_norm, {})
                         bing_rank = bing_info.get('rank')
-                        
-                        chip_html = ""
-                        if bing_rank:
-                            chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>'
-                        else:
-                            chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>'
-                        remaining_chips.append(chip_html)
-                        used_urls.add(url_norm)
                         
                         chip_html = ""
                         if bing_rank:
@@ -944,6 +1026,42 @@ def index():
         ''', (run_id,)).fetchall()
         
         cit_db = [dict(row) for row in cit_rows]
+
+        # ---- Badge counts fallback (esp. personal runs) ----
+        # If the DB stored 0 for items_count fields, derive counts from items_json, citations, and/or response_text.
+        if run_raw:
+            try:
+                stored_items = int(run_raw.get('items_count') or 0)
+            except:
+                stored_items = 0
+            try:
+                stored_with = int(run_raw.get('items_with_citations_count') or 0)
+            except:
+                stored_with = 0
+
+            derived_items = stored_items
+            derived_with = stored_with
+
+            if derived_with <= 0:
+                derived_with = len([c for c in cit_db if c.get('citation_type') == 'cited'])
+                if derived_with <= 0:
+                    _, derived_with = _estimate_counts_from_text(run_raw.get('response_text') or '')
+
+            if derived_items <= 0:
+                if items_raw:
+                    derived_items = len(items_raw)
+                else:
+                    derived_items, _ = _estimate_counts_from_text(run_raw.get('response_text') or '')
+                if derived_items <= 0 and derived_with > 0:
+                    derived_items = derived_with
+            else:
+                # Common personal-run pattern: the whole answer is one "paragraph" (no newlines),
+                # but it contains many cited products. In that case, line-based heuristics undercount.
+                if stored_items <= 0 and not items_raw and derived_with > 0 and derived_items < derived_with:
+                    derived_items = derived_with
+
+            run_raw['items_count'] = derived_items
+            run_raw['items_with_citations_count'] = derived_with
         
         # Map query text to Q1/Q2 number
         query_to_num = {q: i+1 for i, q in enumerate(sorted(list(set(b['query'] for b in db.execute('SELECT DISTINCT query FROM bing_results WHERE run_id = ?', (run_id,)).fetchall()))))}
@@ -963,7 +1081,50 @@ def index():
         bing_results = [dict(row) for row in bing_rows]
 
         # Get unique queries for this run to power the checkboxes
-        unique_queries = sorted(list(set(b['query'] for b in bing_results)))
+        # preserve order of appearance (matches how queries were executed)
+        unique_queries = list(dict.fromkeys([b['query'] for b in bing_results if b.get('query')]))
+
+        # Map query text to Q1/Q2 number using this preserved order
+        query_to_num = {q: i + 1 for i, q in enumerate(unique_queries)}
+        for cit in cit_db:
+            if cit.get('bing_query'):
+                cit['bing_query_num'] = query_to_num.get(cit['bing_query'], '?')
+
+        # ---- Per-run Bing overlap (overall + by hidden query) ----
+        if run_raw is not None:
+            cited_norms = set(
+                c.get('url_normalized')
+                for c in cit_db
+                if c.get('citation_type') == 'cited' and c.get('url_normalized')
+            )
+            total_cited = len(cited_norms)
+            all_bing_norms = set(b.get('url_normalized') for b in bing_results if b.get('url_normalized'))
+            overall_matched = len(cited_norms & all_bing_norms) if total_cited else 0
+            overall_pct = (overall_matched / total_cited * 100.0) if total_cited else 0.0
+
+            by_query = []
+            for q in unique_queries:
+                q_norms = set(
+                    b.get('url_normalized')
+                    for b in bing_results
+                    if b.get('query') == q and b.get('url_normalized')
+                )
+                matched = len(cited_norms & q_norms) if total_cited else 0
+                pct = (matched / total_cited * 100.0) if total_cited else 0.0
+                by_query.append({
+                    'q_num': query_to_num.get(q, '?'),
+                    'query': q,
+                    'matched': matched,
+                    'total_cited': total_cited,
+                    'pct': pct
+                })
+
+            run_raw['bing_overlap'] = {
+                'overall_matched': overall_matched,
+                'total_cited': total_cited,
+                'overall_pct': overall_pct,
+                'by_query': by_query
+            }
 
 
     return render_template_string(HTML_TEMPLATE, 
