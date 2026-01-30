@@ -320,6 +320,12 @@ DASHBOARD_TEMPLATE = """
                     <div class="stat-big" style="color:#166534;">{{ "%.1f"|format(ent_q2_overlap_pct) }}%</div>
                 </div>
             </div>
+            <div style="background: #fff1f2; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 15px; border: 1px dashed #fecaca;">
+                <div class="stat-label" style="font-weight: bold; color: #991b1b;">REJECTED OVERLAP: 
+                    Bing {{ "%.1f"|format(ent_rejected_bing_overlap_pct) }}% | 
+                    Google {{ "%.1f"|format(ent_rejected_google_overlap_pct) }}% (control)
+                </div>
+            </div>
             <div style="font-size: 12px; color: #666;">
                 <strong>Runs:</strong> {{ ent_runs }} | <strong>Bing Results:</strong> {{ ent_bing }}
                 </div>
@@ -387,6 +393,12 @@ DASHBOARD_TEMPLATE = """
                 <div style="background:#f0fdf4; padding:12px; border-radius:8px; text-align:center;">
                     <div class="stat-label">Q2 Overlap</div>
                     <div class="stat-big" style="color:#166534;">{{ "%.1f"|format(pers_q2_overlap_pct) }}%</div>
+                </div>
+            </div>
+            <div style="background: #fff1f2; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 15px; border: 1px dashed #fecaca;">
+                <div class="stat-label" style="font-weight: bold; color: #991b1b;">REJECTED OVERLAP: 
+                    Bing {{ "%.1f"|format(pers_rejected_bing_overlap_pct) }}% | 
+                    Google {{ "%.1f"|format(pers_rejected_google_overlap_pct) }}%
                 </div>
             </div>
             <div style="font-size: 12px; color: #666;">
@@ -662,12 +674,18 @@ HTML_TEMPLATE = """
                                             {% if cit.bing_query_nums_str %}{{ cit.bing_query_nums_str }}{% else %}Q{{ cit.bing_query_num }}{% endif %}
                                             {% if cit.double_overlap %}<span style="margin-left:6px; background:#7c3aed; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">Q1+Q2</span>{% endif %}
                                         </span>
+                                        {% elif cit.google_rank %}
+                                        <span style="font-weight: bold;">
+                                            G#{{ cit.google_rank }}
+                                            {% if cit.google_query_num %}Q{{ cit.google_query_num }}{% endif %}
+                                        </span>
                                         {% elif cit.in_google %}
                                         <span style="font-weight: bold;">G</span>
                                         {% else %}
                                         <span style="font-weight: bold;">✗</span>
                                         {% endif %}
-                                        {% if cit.in_google %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G</span>{% endif %}
+                                        {% if cit.google_rank and cit.bing_rank %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G#{{ cit.google_rank }}</span>{% endif %}
+                                        {% if cit.in_google and not cit.google_rank %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G</span>{% endif %}
                     </div>
                                 </a>
                             {% endfor %}
@@ -686,12 +704,18 @@ HTML_TEMPLATE = """
                                             {% if cit.bing_query_nums_str %}{{ cit.bing_query_nums_str }}{% else %}{% if cit.bing_query_num %}Q{{ cit.bing_query_num }}{% endif %}{% endif %}
                                             {% if cit.double_overlap %}<span style="margin-left:6px; background:#7c3aed; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">Q1+Q2</span>{% endif %}
                                         </span>
+                                        {% elif cit.google_rank %}
+                                        <span style="font-weight: bold;">
+                                            G#{{ cit.google_rank }}
+                                            {% if cit.google_query_num %}Q{{ cit.google_query_num }}{% endif %}
+                                        </span>
                                         {% elif cit.in_google %}
                                         <span style="font-weight: bold;">G</span>
                                         {% else %}
                                         <span style="font-weight: bold;">✗</span>
                                     {% endif %}
-                                        {% if cit.in_google %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G</span>{% endif %}
+                                        {% if cit.google_rank and cit.bing_rank %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G#{{ cit.google_rank }}</span>{% endif %}
+                                        {% if cit.in_google and not cit.google_rank %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G</span>{% endif %}
                                     </div>
                                 </a>
                                 {% endfor %}
@@ -700,20 +724,54 @@ HTML_TEMPLATE = """
                             </div>
                         
                         <!-- Rejected Sources (retrieved but not cited) -->
-                        {% if run_raw.rejected_sources %}
+                        {% set rejected_sources = cit_db|selectattr('citation_type', 'equalto', 'rejected')|list %}
+                        {% if rejected_sources %}
                         <div style="border-top: 1px solid #fca5a5; margin-top: 15px; padding-top: 15px; background: #fef2f2; margin: 15px -15px -15px; padding: 15px; border-radius: 0 0 8px 8px;">
-                            <div style="font-size: 11px; color: #991b1b; font-weight: bold; margin-bottom: 8px;">🚫 REJECTED SOURCES ({{ run_raw.rejected_sources|length }})</div>
+                            <div style="font-size: 11px; color: #991b1b; font-weight: bold; margin-bottom: 8px;">🚫 REJECTED SOURCES ({{ rejected_sources|length }})</div>
                             <div style="font-size: 10px; color: #666; margin-bottom: 10px;">Retrieved by ChatGPT but NOT used in response</div>
-                            {% for src in run_raw.rejected_sources %}
-                            <div style="margin-bottom: 8px; padding: 8px; background: white; border-radius: 4px; border-left: 3px solid #ef4444;">
-                                <div style="font-weight: bold; font-size: 11px; color: #111;">
-                                    <a href="{{ src.url }}" target="_blank" style="text-decoration: none; color: #111;">{{ src.domain }} 🔗</a>
+                            
+                            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 15px;">
+                            {% for cit in rejected_sources %}
+                                <a href="{{ cit.url }}" target="_blank" style="text-decoration: none;">
+                                    <div style="font-size: 10px; background: {{ '#fee2e2' if cit.bing_rank else ('#fff1f2' if cit.in_google else '#f9fafb') }}; color: {{ '#991b1b' if cit.bing_rank else ('#be123c' if cit.in_google else '#6b7280') }}; padding: 3px 8px; border-radius: 10px;">
+                                        {{ cit.domain }} 🔗
+                                        {% if cit.bing_rank %}
+                                        <span style="font-weight: bold;">
+                                            #{{ cit.bing_rank }}
+                                            {% if cit.bing_query_nums_str %}{{ cit.bing_query_nums_str }}{% else %}Q{{ cit.bing_query_num }}{% endif %}
+                                        </span>
+                                        {% elif cit.google_rank %}
+                                        <span style="font-weight: bold;">
+                                            G#{{ cit.google_rank }}
+                                            {% if cit.google_query_num %}Q{{ cit.google_query_num }}{% endif %}
+                                        </span>
+                                        {% elif cit.in_google %}
+                                        <span style="font-weight: bold;">G</span>
+                                        {% else %}
+                                        <span style="font-weight: bold;">✗</span>
+                                        {% endif %}
+                                        {% if cit.google_rank and cit.bing_rank %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G#{{ cit.google_rank }}</span>{% endif %}
+                                        {% if cit.in_google and not cit.google_rank %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G</span>{% endif %}
+                                    </div>
+                                </a>
+                            {% endfor %}
+                            </div>
+
+                            <details>
+                                <summary style="font-size: 10px; color: #991b1b; cursor: pointer; font-weight: bold;">View Details (Snippets)</summary>
+                                <div style="margin-top: 10px;">
+                                    {% for src in run_raw.rejected_sources %}
+                                    <div style="margin-bottom: 8px; padding: 8px; background: white; border-radius: 4px; border-left: 3px solid #ef4444;">
+                                        <div style="font-weight: bold; font-size: 11px; color: #111;">
+                                            <a href="{{ src.url }}" target="_blank" style="text-decoration: none; color: #111;">{{ src.domain }} 🔗</a>
+                                        </div>
+                                        <div style="font-size: 10px; color: #555;">{{ src.title[:60] }}{% if src.title|length > 60 %}...{% endif %}</div>
+                                        <div style="font-size: 9px; color: #888; margin-top: 4px;">{{ src.snippet }}...</div>
+                                    </div>
+                                    {% endfor %}
                                 </div>
-                                <div style="font-size: 10px; color: #555;">{{ src.title[:60] }}{% if src.title|length > 60 %}...{% endif %}</div>
-                                <div style="font-size: 9px; color: #888; margin-top: 4px;">{{ src.snippet }}...</div>
+                            </details>
                         </div>
-                        {% endfor %}
-                    </div>
                         {% endif %}
                 </div>
                     
@@ -781,12 +839,14 @@ HTML_TEMPLATE = """
                         {% if b['query'] in unique_queries %}
                             {% set q_num = unique_queries.index(b['query']) + 1 %}
                         {% endif %}
-                        <div class="bing-item {{ 'matched' if b['is_cited'] else '' }}" data-query-text="{{ b['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px;">
+                        <div class="bing-item {{ 'matched' if b['is_used'] or b['is_rejected'] else '' }}" data-query-text="{{ b['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; {{ 'background: #dcfce7;' if b['is_cited'] else ('background: #e0f2fe;' if b['is_additional'] else ('background: #fef2f2;' if b['is_rejected'] else '')) }}">
                             <span class="bing-rank-num" style="font-size: 10px;">#{{ b['position'] }}</span>
                             <span style="background:#e0e7ff; color:#3730a3; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold;">Q{{ q_num }}</span>
                             <span style="background:#f3f4f6; color:#666; padding:1px 4px; border-radius:3px; font-size:9px; margin-left:4px;">Pg {{ b['page_num'] or '?' }}</span>
                             {% if b.get('in_google') %}<span style="background:#f97316; color:white; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">G</span>{% endif %}
                             {% if b['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold; margin-left:4px;">CITED</span>{% endif %}
+                            {% if b['is_additional'] %}<span style="color:#0369a1; font-size:10px; font-weight:bold; margin-left:4px;">ADDITIONAL</span>{% endif %}
+                            {% if b['is_rejected'] %}<span style="color:#dc2626; font-size:10px; font-weight:bold; margin-left:4px;">REJECTED</span>{% endif %}
                             <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">
                                 <a href="{{ b['url'] }}" target="_blank" style="text-decoration: none; color: #111;" title="{{ b['title'] or 'No title' }}">{{ (b['title'] or 'No title')[:50] }}...</a>
                             </div>
@@ -814,7 +874,7 @@ HTML_TEMPLATE = """
                         </div>
                         <div id="google-results-container" style="max-height: 600px; overflow-y: auto;">
                         {% for g in google_results %}
-                        <div class="google-item {{ 'matched' if g['is_used'] else '' }}" data-query-text="{{ g['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; {{ 'background: #fef9c3;' if g['is_used'] else '' }}">
+                        <div class="google-item {{ 'matched' if g['is_used'] or g['is_rejected'] else '' }}" data-query-text="{{ g['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; {{ 'background: #fef9c3;' if g['is_used'] else ('background: #fef2f2;' if g['is_rejected'] else '') }}">
                             <span style="background: #f97316; color: white; padding:1px 6px; border-radius:3px; font-size: 10px; font-weight:bold;">#{{ g['position'] }}{% if g['page_num'] and g['page_num'] > 1 %} (Pg {{ g['page_num'] }}){% endif %}</span>
                             <span style="background:#fef3c7; color:#92400e; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">{{ g['query_label'] }}</span>
                             {% if g['result_type'] == 'video' %}
@@ -826,6 +886,7 @@ HTML_TEMPLATE = """
                             {% endif %}
                             {% if g['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold; margin-left:4px;">CITED</span>{% endif %}
                             {% if g['is_additional'] %}<span style="color:#6b7280; font-size:10px; font-weight:bold; margin-left:4px;">ADDITIONAL</span>{% endif %}
+                            {% if g['is_rejected'] %}<span style="color:#dc2626; font-size:10px; font-weight:bold; margin-left:4px;">REJECTED</span>{% endif %}
                             {% if g['is_used'] and not g['in_bing'] %}<span style="background:#fef3c7; color:#92400e; font-size:9px; font-weight:bold; padding:1px 4px; border-radius:3px; margin-left:4px;">GOOGLE ONLY</span>{% endif %}
                             <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">
                                 <a href="{{ g['url'] }}" target="_blank" style="text-decoration: none; color: #111;" title="{{ g['title'] or 'No title' }}">{{ (g['title'] or 'No title')[:50] }}{% if (g['title'] or '')|length > 50 %}...{% endif %}</a>
@@ -1486,7 +1547,11 @@ def index():
         cit_rows = db.execute('''
             SELECT c.*, 
                    (SELECT MIN(b.position) FROM bing_results b WHERE b.url_normalized = c.url_normalized AND b.run_id = c.run_id) as bing_rank,
-                   (SELECT b.query FROM bing_results b WHERE b.url_normalized = c.url_normalized AND b.run_id = c.run_id ORDER BY b.position ASC LIMIT 1) as bing_query
+                   (SELECT b.query FROM bing_results b WHERE b.url_normalized = c.url_normalized AND b.run_id = c.run_id ORDER BY b.position ASC LIMIT 1) as bing_query,
+                   (SELECT MIN(g.position) FROM google_results g WHERE g.account_type = c.account_type AND 
+                        RTRIM(LOWER(REPLACE(REPLACE(REPLACE(SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END), 'https://', ''), 'http://', ''), 'www.', '')), '/') = c.url_normalized) as google_rank,
+                   (SELECT g.query FROM google_results g WHERE g.account_type = c.account_type AND 
+                        RTRIM(LOWER(REPLACE(REPLACE(REPLACE(SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END), 'https://', ''), 'http://', ''), 'www.', '')), '/') = c.url_normalized ORDER BY g.position ASC LIMIT 1) as google_query
             FROM citations c 
             WHERE c.run_id = ?
             ORDER BY c.citation_type, c.position
@@ -1532,9 +1597,16 @@ def index():
         
         # Map query text to Q1/Q2 number
         query_to_num = {q: i+1 for i, q in enumerate(sorted(list(set(b['query'] for b in db.execute('SELECT DISTINCT query FROM bing_results WHERE run_id = ?', (run_id,)).fetchall()))))}
+        
+        # Also map Google queries
+        google_unique_queries_all = list(dict.fromkeys([r[0] for r in db.execute("SELECT query FROM google_results WHERE account_type = ?", (db_run['account_type'] if db_run else 'personal',)).fetchall() if r[0]]))
+        google_query_to_num_all = {q: i+1 for i, q in enumerate(google_unique_queries_all)}
+
         for cit in cit_db:
             if cit.get('bing_query'):
                 cit['bing_query_num'] = query_to_num.get(cit['bing_query'], '?')
+            if cit.get('google_query'):
+                cit['google_query_num'] = google_query_to_num_all.get(cit['google_query'], '?')
         
         # Get Bing results with citation match flag
         bing_rows = db.execute('''
@@ -1571,6 +1643,11 @@ def index():
             for c in cit_db
             if c.get('citation_type') == 'additional' and c.get('url_normalized')
         )
+        rejected_url_norms = set(
+            (c.get('url_normalized') or '').lower()
+            for c in cit_db
+            if c.get('citation_type') == 'rejected' and c.get('url_normalized')
+        )
 
         google_results = []
         for row in google_rows:
@@ -1585,6 +1662,7 @@ def index():
             g['in_bing'] = url_norm in bing_url_norms
             g['is_cited'] = url_norm in cited_url_norms
             g['is_additional'] = url_norm in additional_url_norms
+            g['is_rejected'] = url_norm in rejected_url_norms
             g['is_used'] = g['is_cited'] or g['is_additional']
             google_results.append(g)
 
@@ -1607,6 +1685,10 @@ def index():
         for b in bing_results:
             b_url_norm = (b.get('url_normalized') or '').lower()
             b['in_google'] = b_url_norm in google_url_norms
+            b['is_cited'] = b_url_norm in cited_url_norms
+            b['is_additional'] = b_url_norm in additional_url_norms
+            b['is_rejected'] = b_url_norm in rejected_url_norms
+            b['is_used'] = b['is_cited'] or b['is_additional']
 
         # Get unique queries for this run to power the checkboxes
         # preserve order of appearance (matches how queries were executed)
@@ -1802,21 +1884,74 @@ def dashboard():
         ent_google_matched_add = 0
     ent_google_add_overlap_pct = (ent_google_matched_add / ent_total_add * 100.0) if ent_total_add else 0.0
 
-    # Calculate "Rejected" (Level 3: In Bing but not in Cited or Additional)
-    def _get_rejected_count(account_type: str):
-        return db.execute(f'''
-            SELECT COUNT(*) FROM (
-                SELECT DISTINCT b.run_id, b.url_normalized 
-                FROM bing_results b
-                WHERE b.account_type = ?
-                EXCEPT
-                SELECT DISTINCT c.run_id, c.url_normalized
+    # "Rejected" sources = sources_all - (cited ∪ additional)
+    # Stored as citations.citation_type = 'rejected' by build_db_from_csv.py
+    def _get_rejected_total(account_type: str) -> int:
+        try:
+            return db.execute(
+                "SELECT COUNT(*) FROM citations WHERE account_type = ? AND citation_type = 'rejected'",
+                (account_type,),
+            ).fetchone()[0]
+        except Exception:
+            return 0
+
+    def _get_rejected_bing_matched(account_type: str) -> int:
+        try:
+            return db.execute(
+                """
+                SELECT COUNT(DISTINCT c.id)
                 FROM citations c
                 WHERE c.account_type = ?
-            )
-        ''', (account_type, account_type)).fetchone()[0]
+                  AND c.citation_type = 'rejected'
+                  AND EXISTS (
+                    SELECT 1 FROM bing_results b
+                    WHERE b.run_id = c.run_id
+                      AND b.url_normalized = c.url_normalized
+                  )
+                """,
+                (account_type,),
+            ).fetchone()[0]
+        except Exception:
+            return 0
 
-    ent_total_rejected = _get_rejected_count('enterprise')
+    def _get_rejected_google_matched(account_type: str) -> int:
+        try:
+            return db.execute(
+                """
+                SELECT COUNT(DISTINCT c.id)
+                FROM citations c
+                WHERE c.account_type = ?
+                  AND c.citation_type = 'rejected'
+                  AND EXISTS (
+                    SELECT 1 FROM google_results g
+                    WHERE g.account_type = ?
+                      AND RTRIM(
+                            LOWER(
+                              REPLACE(
+                                REPLACE(
+                                  REPLACE(
+                                    SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
+                                    'https://', ''
+                                  ),
+                                  'http://', ''
+                                ),
+                                'www.', ''
+                              )
+                            ),
+                            '/'
+                          ) = c.url_normalized
+                  )
+                """,
+                (account_type, account_type),
+            ).fetchone()[0]
+        except Exception:
+            return 0
+
+    ent_total_rejected = _get_rejected_total('enterprise')
+    ent_rejected_bing_matched = _get_rejected_bing_matched('enterprise')
+    ent_rejected_google_matched = _get_rejected_google_matched('enterprise')
+    ent_rejected_bing_overlap_pct = (ent_rejected_bing_matched / ent_total_rejected * 100.0) if ent_total_rejected else 0.0
+    ent_rejected_google_overlap_pct = (ent_rejected_google_matched / ent_total_rejected * 100.0) if ent_total_rejected else 0.0
     
     ent_invisible = db.execute('''
         SELECT domain, COUNT(*) as count
@@ -1901,7 +2036,11 @@ def dashboard():
     
     pers_total_main = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'personal' AND citation_type = 'cited'").fetchone()[0]
     pers_total_add = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'personal' AND citation_type = 'additional'").fetchone()[0]
-    pers_total_rejected = _get_rejected_count('personal')
+    pers_total_rejected = _get_rejected_total('personal')
+    pers_rejected_bing_matched = _get_rejected_bing_matched('personal')
+    pers_rejected_google_matched = _get_rejected_google_matched('personal')
+    pers_rejected_bing_overlap_pct = (pers_rejected_bing_matched / pers_total_rejected * 100.0) if pers_total_rejected else 0.0
+    pers_rejected_google_overlap_pct = (pers_rejected_google_matched / pers_total_rejected * 100.0) if pers_total_rejected else 0.0
     pers_matched_main = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal' AND citation_type = 'cited' AND {match_sql}").fetchone()[0]
     pers_bing_overlap_pct = (pers_matched_main / pers_total_main * 100.0) if pers_total_main else 0.0
     
@@ -2106,6 +2245,8 @@ def dashboard():
                                  ent_total_all=ent_total_all, ent_matched_all=ent_matched_all,
                                  ent_total_main=ent_total_main, ent_total_add=ent_total_add,
                                  ent_total_rejected=ent_total_rejected,
+                                 ent_rejected_bing_overlap_pct=ent_rejected_bing_overlap_pct,
+                                 ent_rejected_google_overlap_pct=ent_rejected_google_overlap_pct,
                                  ent_matched_main=ent_matched_main,
                                  ent_bing_overlap_pct=ent_bing_overlap_pct,
                                  ent_bing_add_overlap_pct=ent_bing_add_overlap_pct,
@@ -2119,6 +2260,8 @@ def dashboard():
                                  pers_total_all=pers_total_all, pers_matched_all=pers_matched_all,
                                  pers_total_main=pers_total_main, pers_total_add=pers_total_add,
                                  pers_total_rejected=pers_total_rejected,
+                                 pers_rejected_bing_overlap_pct=pers_rejected_bing_overlap_pct,
+                                 pers_rejected_google_overlap_pct=pers_rejected_google_overlap_pct,
                                  pers_matched_main=pers_matched_main,
                                  pers_bing_overlap_pct=pers_bing_overlap_pct,
                                  pers_bing_add_overlap_pct=pers_bing_add_overlap_pct,
