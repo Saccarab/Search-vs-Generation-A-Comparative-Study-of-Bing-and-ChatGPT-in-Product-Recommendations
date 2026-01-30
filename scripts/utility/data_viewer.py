@@ -55,6 +55,7 @@ DOMAIN_EXPLORER_TEMPLATE = """
         <a href="/">← Run Viewer</a>
         <a href="/dashboard">📊 Dashboard</a>
         <a href="/domains" style="color: #6366f1;">🔍 Domain Explorer</a>
+        <a href="/invisible" style="color: #ef4444;">🕳️ Truly Invisible</a>
     </div>
     <h1>🔍 Domain Explorer</h1>
     
@@ -223,6 +224,7 @@ DASHBOARD_TEMPLATE = """
     <div class="nav">
         <a href="/">← Back to Run Viewer</a>
         <a href="/domains" style="color: #6366f1;">🔍 Domain Explorer</a>
+        <a href="/invisible" style="color: #ef4444;">🕳️ Truly Invisible</a>
     </div>
     <h1>GEO Research Dashboard</h1>
     
@@ -254,6 +256,16 @@ DASHBOARD_TEMPLATE = """
                 <div class="stat-big" style="color: #34d399;">{{ total_unique_domains }}</div>
                 <div class="stat-sub">Across all runs</div>
             </div>
+            <div style="text-align: center;">
+                <div class="stat-label" style="color: #cbd5e1;">Total Coverage (Cited)</div>
+                <div class="stat-big" style="color: #0f766e;">{{ "%.1f"|format(all_combined_cited_pct) }}%</div>
+                <div class="stat-sub">Bing ∪ Google (personal)</div>
+            </div>
+            <div style="text-align: center;">
+                <div class="stat-label" style="color: #cbd5e1;">Missing (Cited)</div>
+                <div class="stat-big" style="color: #fca5a5;">{{ "%.1f"|format(all_missing_cited_pct) }}%</div>
+                <div class="stat-sub">Not in either</div>
+            </div>
         </div>
                 </div>
 
@@ -277,6 +289,26 @@ DASHBOARD_TEMPLATE = """
             </div>
             <div style="background: #f8fafc; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 15px; border: 1px dashed #cbd5e1;">
                 <div class="stat-label" style="font-weight: bold; color: #475569;">TOTAL CONSIDERED: {{ ent_total_main + ent_total_add + ent_total_rejected }}</div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#eef2ff; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Bing Cited Overlap</div>
+                    <div class="stat-big" style="color:#4338ca;">{{ "%.1f"|format(ent_bing_overlap_pct) }}%</div>
+                </div>
+                <div style="background:#fef3c7; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Bing Add. Overlap</div>
+                    <div class="stat-big" style="color:#d97706;">{{ "%.1f"|format(ent_bing_add_overlap_pct) }}%</div>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#fff7ed; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Google Cited Overlap (control)</div>
+                    <div class="stat-big" style="color:#92400e;">{{ "%.1f"|format(ent_google_overlap_pct) }}%</div>
+                </div>
+                <div style="background:#fffaf0; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Google Add. Overlap (control)</div>
+                    <div class="stat-big" style="color:#c2410c;">{{ "%.1f"|format(ent_google_add_overlap_pct) }}%</div>
+                </div>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
                 <div style="background:#f0f9ff; padding:12px; border-radius:8px; text-align:center;">
@@ -312,6 +344,40 @@ DASHBOARD_TEMPLATE = """
             </div>
             <div style="background: #fffaf5; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 15px; border: 1px dashed #fed7aa;">
                 <div class="stat-label" style="font-weight: bold; color: #9a3412;">TOTAL CONSIDERED: {{ pers_total_main + pers_total_add + pers_total_rejected }}</div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#fff7ed; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Bing Cited Overlap</div>
+                    <div class="stat-big" style="color:#c2410c;">{{ "%.1f"|format(pers_bing_overlap_pct) }}%</div>
+                </div>
+                <div style="background:#fffbeb; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Bing Add. Overlap</div>
+                    <div class="stat-big" style="color:#f59e0b;">{{ "%.1f"|format(pers_bing_add_overlap_pct) }}%</div>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#fef3c7; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Google Cited Overlap</div>
+                    <div class="stat-big" style="color:#92400e;">{{ "%.1f"|format(pers_google_overlap_pct) }}%</div>
+                </div>
+                <div style="background:#fff7ed; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Google Add. Overlap</div>
+                    <div class="stat-big" style="color:#c2410c;">{{ "%.1f"|format(pers_google_add_overlap_pct) }}%</div>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#fffaf0; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Total Coverage (Bing+Google)</div>
+                    <div class="stat-big" style="color:#0f766e;">{{ "%.1f"|format(pers_combined_overlap_pct) }}%</div>
+                </div>
+                <div style="background:#fffbeb; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Google-only Coverage</div>
+                    <div class="stat-big" style="color:#f97316;">{{ "%.1f"|format(pers_google_only_overlap_pct) }}%</div>
+                </div>
+                <div style="background:#fef2f2; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Missing (not in either)</div>
+                    <div class="stat-big" style="color:#b91c1c;">{{ "%.1f"|format(pers_missing_overlap_pct) }}%</div>
+                </div>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
                 <div style="background:#fff7ed; padding:12px; border-radius:8px; text-align:center;">
@@ -506,6 +572,17 @@ HTML_TEMPLATE = """
                     <strong>Rejected:</strong> {{ run_raw.rejected_sources|length }} sources
                 </div>
                 {% endif %}
+                {% if run_raw.google_coverage %}
+                <div style="background: #fff7ed; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                    <strong>Google coverage:</strong> {{ "%.1f"|format(run_raw.google_coverage.google_pct) }}% ({{ run_raw.google_coverage.google_matched }}/{{ run_raw.google_coverage.total_cited }})
+                    &nbsp;|&nbsp;<strong>Total (Bing+Google):</strong> {{ "%.1f"|format(run_raw.google_coverage.combined_pct) }}%
+                    &nbsp;|&nbsp;<strong>Missing:</strong> {{ "%.1f"|format(run_raw.google_coverage.missing_pct) }}%
+                    <br>
+                    <span style="color:#92400e; font-size: 11px;">
+                        Google-only (not in Bing): {{ "%.1f"|format(run_raw.google_coverage.google_only_not_bing_pct) }}% ({{ run_raw.google_coverage.google_only_not_bing }})
+                    </span>
+                </div>
+                {% endif %}
             </div>
 
             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
@@ -577,7 +654,7 @@ HTML_TEMPLATE = """
                             <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 15px;">
                             {% for cit in cited_sources %}
                                 <a href="{{ cit.url }}" target="_blank" style="text-decoration: none;">
-                                    <div style="font-size: 10px; background: {{ '#d1fae5' if cit.bing_rank else '#fee2e2' }}; color: {{ '#065f46' if cit.bing_rank else '#991b1b' }}; padding: 3px 8px; border-radius: 10px;">
+                                    <div style="font-size: 10px; background: {{ '#d1fae5' if cit.bing_rank else ('#fef3c7' if cit.in_google else '#fee2e2') }}; color: {{ '#065f46' if cit.bing_rank else ('#92400e' if cit.in_google else '#991b1b') }}; padding: 3px 8px; border-radius: 10px;">
                                         {{ cit.domain }} 🔗
                                         {% if cit.bing_rank %}
                                         <span style="font-weight: bold;">
@@ -585,9 +662,12 @@ HTML_TEMPLATE = """
                                             {% if cit.bing_query_nums_str %}{{ cit.bing_query_nums_str }}{% else %}Q{{ cit.bing_query_num }}{% endif %}
                                             {% if cit.double_overlap %}<span style="margin-left:6px; background:#7c3aed; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">Q1+Q2</span>{% endif %}
                                         </span>
+                                        {% elif cit.in_google %}
+                                        <span style="font-weight: bold;">G</span>
                                         {% else %}
                                         <span style="font-weight: bold;">✗</span>
                                         {% endif %}
+                                        {% if cit.in_google %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G</span>{% endif %}
                     </div>
                                 </a>
                             {% endfor %}
@@ -598,7 +678,7 @@ HTML_TEMPLATE = """
                             <div style="display: flex; flex-wrap: wrap; gap: 4px;">
                             {% for cit in additional_sources %}
                                 <a href="{{ cit.url }}" target="_blank" style="text-decoration: none;">
-                                    <div style="font-size: 10px; background: {{ '#e0f2fe' if cit.bing_rank else '#f3f4f6' }}; color: {{ '#0369a1' if cit.bing_rank else '#6b7280' }}; padding: 3px 8px; border-radius: 10px;">
+                                    <div style="font-size: 10px; background: {{ '#e0f2fe' if cit.bing_rank else ('#fff7ed' if cit.in_google else '#f3f4f6') }}; color: {{ '#0369a1' if cit.bing_rank else ('#92400e' if cit.in_google else '#6b7280') }}; padding: 3px 8px; border-radius: 10px;">
                                         {{ cit.domain }} 🔗
                                         {% if cit.bing_rank %}
                                         <span style="font-weight: bold;">
@@ -606,9 +686,12 @@ HTML_TEMPLATE = """
                                             {% if cit.bing_query_nums_str %}{{ cit.bing_query_nums_str }}{% else %}{% if cit.bing_query_num %}Q{{ cit.bing_query_num }}{% endif %}{% endif %}
                                             {% if cit.double_overlap %}<span style="margin-left:6px; background:#7c3aed; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">Q1+Q2</span>{% endif %}
                                         </span>
+                                        {% elif cit.in_google %}
+                                        <span style="font-weight: bold;">G</span>
                                         {% else %}
                                         <span style="font-weight: bold;">✗</span>
                                     {% endif %}
+                                        {% if cit.in_google %}<span style="margin-left:4px; background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px;">G</span>{% endif %}
                                     </div>
                                 </a>
                                 {% endfor %}
@@ -702,9 +785,10 @@ HTML_TEMPLATE = """
                             <span class="bing-rank-num" style="font-size: 10px;">#{{ b['position'] }}</span>
                             <span style="background:#e0e7ff; color:#3730a3; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold;">Q{{ q_num }}</span>
                             <span style="background:#f3f4f6; color:#666; padding:1px 4px; border-radius:3px; font-size:9px; margin-left:4px;">Pg {{ b['page_num'] or '?' }}</span>
-                            {% if b['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold;">CITED</span>{% endif %}
+                            {% if b.get('in_google') %}<span style="background:#f97316; color:white; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">G</span>{% endif %}
+                            {% if b['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold; margin-left:4px;">CITED</span>{% endif %}
                             <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">
-                                <a href="{{ b['url'] }}" target="_blank" style="text-decoration: none; color: #111;">{{ (b['title'] or 'No title')[:50] }}...</a>
+                                <a href="{{ b['url'] }}" target="_blank" style="text-decoration: none; color: #111;" title="{{ b['title'] or 'No title' }}">{{ (b['title'] or 'No title')[:50] }}...</a>
                             </div>
                             <div style="font-size: 10px; color: #10a37f;">{{ b['domain'] }}</div>
                         </div>
@@ -723,14 +807,15 @@ HTML_TEMPLATE = """
                             {% set q_num = loop.index %}
                             <label style="cursor:pointer; display: flex; align-items: center; gap: 4px; background: #fff7ed; padding: 3px 6px; border-radius: 4px; margin-bottom: 4px;">
                                 <input type="checkbox" class="google-query-toggle" data-query="{{ q_text }}" checked>
-                                <strong style="color:#f97316;">Q{{ q_num }}:</strong> <span style="color:#92400e;">{{ q_text[:40] }}...</span>
+                                <strong style="color:#f97316;">Q{{ q_num }}:</strong>
+                                <span style="color:#92400e;" title="{{ q_text }}">{{ q_text[:40] }}{% if q_text|length > 40 %}...{% endif %}</span>
                             </label>
                             {% endfor %}
                         </div>
                         <div id="google-results-container" style="max-height: 600px; overflow-y: auto;">
                         {% for g in google_results %}
-                        <div class="google-item {{ 'matched' if g['is_cited'] else '' }}" data-query-text="{{ g['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; {{ 'background: #fef9c3;' if g['is_cited'] else '' }}">
-                            <span style="background: #f97316; color: white; padding:1px 6px; border-radius:3px; font-size: 10px; font-weight:bold;">#{{ g['position'] }}</span>
+                        <div class="google-item {{ 'matched' if g['is_used'] else '' }}" data-query-text="{{ g['query'] }}" style="padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; {{ 'background: #fef9c3;' if g['is_used'] else '' }}">
+                            <span style="background: #f97316; color: white; padding:1px 6px; border-radius:3px; font-size: 10px; font-weight:bold;">#{{ g['position'] }}{% if g['page_num'] and g['page_num'] > 1 %} (Pg {{ g['page_num'] }}){% endif %}</span>
                             <span style="background:#fef3c7; color:#92400e; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">{{ g['query_label'] }}</span>
                             {% if g['result_type'] == 'video' %}
                             <span style="background:#fde68a; color:#92400e; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">VIDEO</span>
@@ -740,9 +825,10 @@ HTML_TEMPLATE = """
                             <span style="background:#dcfce7; color:#166534; padding:1px 4px; border-radius:3px; font-size:9px; font-weight:bold; margin-left:4px;">PAA</span>
                             {% endif %}
                             {% if g['is_cited'] %}<span style="color:#10a37f; font-size:10px; font-weight:bold; margin-left:4px;">CITED</span>{% endif %}
-                            {% if g['is_cited'] and not g['in_bing'] %}<span style="background:#fef3c7; color:#92400e; font-size:9px; font-weight:bold; padding:1px 4px; border-radius:3px; margin-left:4px;">GOOGLE ONLY</span>{% endif %}
+                            {% if g['is_additional'] %}<span style="color:#6b7280; font-size:10px; font-weight:bold; margin-left:4px;">ADDITIONAL</span>{% endif %}
+                            {% if g['is_used'] and not g['in_bing'] %}<span style="background:#fef3c7; color:#92400e; font-size:9px; font-weight:bold; padding:1px 4px; border-radius:3px; margin-left:4px;">GOOGLE ONLY</span>{% endif %}
                             <div style="font-weight: bold; color: #111; font-size: 11px; margin-top: 2px;">
-                                <a href="{{ g['url'] }}" target="_blank" style="text-decoration: none; color: #111;">{{ (g['title'] or 'No title')[:50] }}...</a>
+                                <a href="{{ g['url'] }}" target="_blank" style="text-decoration: none; color: #111;" title="{{ g['title'] or 'No title' }}">{{ (g['title'] or 'No title')[:50] }}{% if (g['title'] or '')|length > 50 %}...{% endif %}</a>
                             </div>
                             <div style="font-size: 10px; color: #f97316;">{{ g['domain'] }}</div>
                         </div>
@@ -1054,6 +1140,20 @@ def index():
                 for br in bing_rows:
                     bing_lookup[br['url_normalized']] = {'rank': br['rank'], 'query': br['query']}
                 
+                # Build Google URL lookup for this run (for Google-only badges)
+                base_run_id_for_google = run_id.replace('_personal', '')
+                run_account_type_for_google = db_run['account_type'] if db_run and db_run['account_type'] else None
+                google_url_lookup = set()
+                google_rows_early = db.execute('''
+                    SELECT LOWER(REPLACE(REPLACE(REPLACE(url, 'https://', ''), 'http://', ''), 'www.', '')) as url_norm
+                    FROM google_results
+                    WHERE chatgpt_run_id = ? AND (? IS NULL OR account_type = ?)
+                ''', (base_run_id_for_google, run_account_type_for_google, run_account_type_for_google)).fetchall()
+                for gr in google_rows_early:
+                    url_norm = (gr['url_norm'] or '').split('?')[0].rstrip('/')
+                    if url_norm:
+                        google_url_lookup.add(url_norm)
+                
                 def normalize_url(url):
                     if not url: return ""
                     url = url.lower().replace('https://', '').replace('http://', '').replace('www.', '')
@@ -1208,8 +1308,12 @@ def index():
                             bing_info = bing_lookup.get(u_norm, {})
                             bing_rank = bing_info.get('rank')
                             
+                            in_google = u_norm in google_url_lookup
+                            g_badge = ' <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span>' if in_google else ''
                             if bing_rank:
-                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>')
+                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span>{g_badge}</a>')
+                            elif in_google:
+                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span></a>')
                             else:
                                 chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>')
                         return "".join(chips_html)
@@ -1221,9 +1325,13 @@ def index():
                     
                     bing_info = bing_lookup.get(url_norm, {})
                     bing_rank = bing_info.get('rank')
+                    in_google = url_norm in google_url_lookup
+                    g_badge = ' <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span>' if in_google else ''
                     
                     if bing_rank:
-                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>'
+                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span>{g_badge}</a>'
+                    elif in_google:
+                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span></a>'
                     else:
                         return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>'
                 
@@ -1261,9 +1369,13 @@ def index():
                             
                             bing_info = bing_lookup.get(u_norm, {})
                             bing_rank = bing_info.get('rank')
+                            in_google = u_norm in google_url_lookup
+                            g_badge = ' <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span>' if in_google else ''
                             
                             if bing_rank:
-                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>')
+                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span>{g_badge}</a>')
+                            elif in_google:
+                                chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span></a>')
                             else:
                                 chips_html.append(f'<a href="{html.escape(u)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 2px;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>')
                         
@@ -1284,9 +1396,13 @@ def index():
                     
                     bing_info = bing_lookup.get(url_norm, {})
                     bing_rank = bing_info.get('rank')
+                    in_google = url_norm in google_url_lookup
+                    g_badge = ' <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span>' if in_google else ''
                     
                     if bing_rank:
-                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>'
+                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span>{g_badge}</a>'
+                    elif in_google:
+                        return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span></a>'
                     else:
                         return f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>'
 
@@ -1310,10 +1426,14 @@ def index():
                         domain = clean_url.split('/')[0] if '/' in clean_url else clean_url
                         bing_info = bing_lookup.get(url_norm, {})
                         bing_rank = bing_info.get('rank')
+                        in_google = url_norm in google_url_lookup
+                        g_badge = ' <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span>' if in_google else ''
                         
                         chip_html = ""
                         if bing_rank:
-                            chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span></a>'
+                            chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">#{bing_rank}</span>{g_badge}</a>'
+                        elif in_google:
+                            chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="background:#f97316;color:white;padding:1px 4px;border-radius:6px;font-size:9px;font-weight:bold;">G</span></a>'
                         else:
                             chip_html = f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:11px; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:12px; text-decoration:none; margin:2px 0; margin-left:5px;">{html.escape(domain)} <span style="font-weight:bold;">✗</span></a>'
                         remaining_chips.append(chip_html)
@@ -1339,9 +1459,13 @@ def index():
                             domain = url_info['domain'] or url.split('/')[2] if '/' in url else url
                             bing_info = bing_lookup.get(url_norm, {})
                             bing_rank = bing_info.get('rank')
+                            in_google = url_norm in google_url_lookup
+                            g_badge = ' <span style="background:#f97316;color:white;padding:1px 3px;border-radius:4px;font-size:8px;font-weight:bold;">G</span>' if in_google else ''
                             
                             if bing_rank:
-                                multi_chip_html += f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:10px; background:#d1fae5; color:#065f46; padding:2px 6px; border-radius:10px; text-decoration:none; margin:2px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 3px;border-radius:4px;font-size:8px;font-weight:bold;">#{bing_rank}</span></a>'
+                                multi_chip_html += f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:10px; background:#d1fae5; color:#065f46; padding:2px 6px; border-radius:10px; text-decoration:none; margin:2px;">{html.escape(domain)} <span style="background:#10a37f;color:white;padding:1px 3px;border-radius:4px;font-size:8px;font-weight:bold;">#{bing_rank}</span>{g_badge}</a>'
+                            elif in_google:
+                                multi_chip_html += f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:10px; background:#fef3c7; color:#92400e; padding:2px 6px; border-radius:10px; text-decoration:none; margin:2px;">{html.escape(domain)} <span style="background:#f97316;color:white;padding:1px 3px;border-radius:4px;font-size:8px;font-weight:bold;">G</span></a>'
                             else:
                                 multi_chip_html += f'<a href="{html.escape(url)}" target="_blank" style="display:inline-block; font-size:10px; background:#fee2e2; color:#991b1b; padding:2px 6px; border-radius:10px; text-decoration:none; margin:2px;">{html.escape(domain)} ✗</a>'
                         
@@ -1431,14 +1555,23 @@ def index():
         base_run_id = run_id.replace('_personal', '')
         run_account_type = db_run['account_type'] if db_run and db_run['account_type'] else None
         google_rows = db.execute('''
-            SELECT g.*,
-                   EXISTS(SELECT 1 FROM citations c WHERE c.run_id = ? AND c.url_normalized =
-                          LOWER(REPLACE(REPLACE(REPLACE(g.url, 'https://', ''), 'http://', ''), 'www.', ''))) as is_cited
+            SELECT g.*
             FROM google_results g
             WHERE g.chatgpt_run_id = ? AND (? IS NULL OR g.account_type = ?)
-            ORDER BY g.query_type, g.position ASC
-        ''', (run_id, base_run_id, run_account_type, run_account_type)).fetchall()
+            ORDER BY g.query, g.result_type, g.page_num ASC, g.position ASC
+        ''', (base_run_id, run_account_type, run_account_type)).fetchall()
         
+        cited_url_norms = set(
+            (c.get('url_normalized') or '').lower()
+            for c in cit_db
+            if c.get('citation_type') == 'cited' and c.get('url_normalized')
+        )
+        additional_url_norms = set(
+            (c.get('url_normalized') or '').lower()
+            for c in cit_db
+            if c.get('citation_type') == 'additional' and c.get('url_normalized')
+        )
+
         google_results = []
         for row in google_rows:
             g = dict(row)
@@ -1450,6 +1583,9 @@ def index():
             # Check if this Google URL is also in Bing
             url_norm = (g.get('url') or '').lower().replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
             g['in_bing'] = url_norm in bing_url_norms
+            g['is_cited'] = url_norm in cited_url_norms
+            g['is_additional'] = url_norm in additional_url_norms
+            g['is_used'] = g['is_cited'] or g['is_additional']
             google_results.append(g)
 
         # Build Google query list (for toggles) and labels
@@ -1459,6 +1595,18 @@ def index():
             q_text = g.get('query') or ''
             q_num = google_query_to_num.get(q_text, '?')
             g['query_label'] = f"Q{q_num}" if q_num != '?' else 'Q?'
+
+        # Build Google URL norms for this run (for Google-only tagging on left panel)
+        google_url_norms = set()
+        for g in google_results:
+            gu = (g.get('url') or '').lower().replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
+            if gu:
+                google_url_norms.add(gu)
+
+        # Add in_google flag to Bing results
+        for b in bing_results:
+            b_url_norm = (b.get('url_normalized') or '').lower()
+            b['in_google'] = b_url_norm in google_url_norms
 
         # Get unique queries for this run to power the checkboxes
         # preserve order of appearance (matches how queries were executed)
@@ -1494,6 +1642,11 @@ def index():
             cit['double_overlap'] = (1 in qnums and 2 in qnums)
             if cit.get('citation_type') == 'cited' and cit['double_overlap']:
                 double_overlap_cited += 1
+
+            # Google-only tag: found in Google results but not in Bing
+            url_norm = (cit.get('url_normalized') or '').lower()
+            cit['in_google'] = url_norm in google_url_norms
+            cit['google_only'] = cit['in_google'] and not cit.get('bing_rank')
 
         if run_raw is not None:
             run_raw['double_overlap_cited'] = double_overlap_cited
@@ -1534,6 +1687,30 @@ def index():
                 'by_query': by_query
             }
 
+            # ---- Per-run Google coverage ----
+            # Note: "Google coverage" means "found in Google" (regardless of Bing).
+            # We also track "Google-only (not in Bing)" separately.
+            google_matched = len(cited_norms & google_url_norms) if total_cited else 0
+            google_pct = (google_matched / total_cited * 100.0) if total_cited else 0.0
+            google_only_not_bing = len((cited_norms & google_url_norms) - all_bing_norms) if total_cited else 0
+            google_only_not_bing_pct = (google_only_not_bing / total_cited * 100.0) if total_cited else 0.0
+            combined_matched = len(cited_norms & (all_bing_norms | google_url_norms)) if total_cited else 0
+            combined_pct = (combined_matched / total_cited * 100.0) if total_cited else 0.0
+            missing = (total_cited - combined_matched) if total_cited else 0
+            missing_pct = (missing / total_cited * 100.0) if total_cited else 0.0
+
+            run_raw['google_coverage'] = {
+                'google_matched': google_matched,
+                'total_cited': total_cited,
+                'google_pct': google_pct,
+                'google_only_not_bing': google_only_not_bing,
+                'google_only_not_bing_pct': google_only_not_bing_pct,
+                'combined_matched': combined_matched,
+                'combined_pct': combined_pct,
+                'missing': missing,
+                'missing_pct': missing_pct,
+            }
+
 
     return render_template_string(HTML_TEMPLATE, 
                                  run_ids=run_ids, 
@@ -1563,6 +1740,67 @@ def dashboard():
     ent_total_main = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'enterprise' AND citation_type = 'cited'").fetchone()[0]
     ent_total_add = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'enterprise' AND citation_type = 'additional'").fetchone()[0]
     ent_matched_main = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'enterprise' AND citation_type = 'cited' AND {match_sql}").fetchone()[0]
+    ent_bing_overlap_pct = (ent_matched_main / ent_total_main * 100.0) if ent_total_main else 0.0
+    
+    ent_matched_add = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'enterprise' AND citation_type = 'additional' AND {match_sql}").fetchone()[0]
+    ent_bing_add_overlap_pct = (ent_matched_add / ent_total_add * 100.0) if ent_total_add else 0.0
+
+    # Enterprise Google overlap (control group; depends on whether enterprise Google SERP was collected+ingested)
+    try:
+        ent_google_matched_main = db.execute('''
+            SELECT COUNT(DISTINCT c.id)
+            FROM citations c
+            WHERE c.account_type = 'enterprise' AND c.citation_type = 'cited' AND EXISTS (
+                SELECT 1 FROM google_results g
+                WHERE g.account_type = 'enterprise'
+                  AND RTRIM(
+                        LOWER(
+                          REPLACE(
+                            REPLACE(
+                              REPLACE(
+                                SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
+                                'https://', ''
+                              ),
+                              'http://', ''
+                            ),
+                            'www.', ''
+                          )
+                        ),
+                        '/'
+                      ) = c.url_normalized
+            )
+        ''').fetchone()[0]
+    except Exception:
+        ent_google_matched_main = 0
+    ent_google_overlap_pct = (ent_google_matched_main / ent_total_main * 100.0) if ent_total_main else 0.0
+
+    try:
+        ent_google_matched_add = db.execute('''
+            SELECT COUNT(DISTINCT c.id)
+            FROM citations c
+            WHERE c.account_type = 'enterprise' AND c.citation_type = 'additional' AND EXISTS (
+                SELECT 1 FROM google_results g
+                WHERE g.account_type = 'enterprise'
+                  AND RTRIM(
+                        LOWER(
+                          REPLACE(
+                            REPLACE(
+                              REPLACE(
+                                SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
+                                'https://', ''
+                              ),
+                              'http://', ''
+                            ),
+                            'www.', ''
+                          )
+                        ),
+                        '/'
+                      ) = c.url_normalized
+            )
+        ''').fetchone()[0]
+    except Exception:
+        ent_google_matched_add = 0
+    ent_google_add_overlap_pct = (ent_google_matched_add / ent_total_add * 100.0) if ent_total_add else 0.0
 
     # Calculate "Rejected" (Level 3: In Bing but not in Cited or Additional)
     def _get_rejected_count(account_type: str):
@@ -1665,6 +1903,181 @@ def dashboard():
     pers_total_add = db.execute("SELECT COUNT(*) FROM citations WHERE account_type = 'personal' AND citation_type = 'additional'").fetchone()[0]
     pers_total_rejected = _get_rejected_count('personal')
     pers_matched_main = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal' AND citation_type = 'cited' AND {match_sql}").fetchone()[0]
+    pers_bing_overlap_pct = (pers_matched_main / pers_total_main * 100.0) if pers_total_main else 0.0
+    
+    pers_matched_add = db.execute(f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal' AND citation_type = 'additional' AND {match_sql}").fetchone()[0]
+    pers_bing_add_overlap_pct = (pers_matched_add / pers_total_add * 100.0) if pers_total_add else 0.0
+
+    # Personal Google overlap (cited URLs found in Google results)
+    pers_google_matched_main = 0
+    try:
+        pers_google_matched_main = db.execute('''
+            SELECT COUNT(DISTINCT c.id)
+            FROM citations c
+            WHERE c.account_type = 'personal' AND c.citation_type = 'cited' AND EXISTS (
+                SELECT 1 FROM google_results g
+                WHERE g.account_type = 'personal'
+                  AND RTRIM(
+                        LOWER(
+                          REPLACE(
+                            REPLACE(
+                              REPLACE(
+                                SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
+                                'https://', ''
+                              ),
+                              'http://', ''
+                            ),
+                            'www.', ''
+                          )
+                        ),
+                        '/'
+                      ) = c.url_normalized
+            )
+        ''').fetchone()[0]
+    except Exception:
+        pers_google_matched_main = 0
+    pers_google_overlap_pct = (pers_google_matched_main / pers_total_main * 100.0) if pers_total_main else 0.0
+
+    # Personal Google overlap (additional URLs found in Google results)
+    pers_google_matched_add = 0
+    try:
+        pers_google_matched_add = db.execute('''
+            SELECT COUNT(DISTINCT c.id)
+            FROM citations c
+            WHERE c.account_type = 'personal' AND c.citation_type = 'additional' AND EXISTS (
+                SELECT 1 FROM google_results g
+                WHERE g.account_type = 'personal'
+                  AND RTRIM(
+                        LOWER(
+                          REPLACE(
+                            REPLACE(
+                              REPLACE(
+                                SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
+                                'https://', ''
+                              ),
+                              'http://', ''
+                            ),
+                            'www.', ''
+                          )
+                        ),
+                        '/'
+                      ) = c.url_normalized
+            )
+        ''').fetchone()[0]
+    except Exception:
+        pers_google_matched_add = 0
+    pers_google_add_overlap_pct = (pers_google_matched_add / pers_total_add * 100.0) if pers_total_add else 0.0
+
+    # Personal combined coverage (Bing OR Google) and Google-only
+    try:
+        pers_combined_matched_main = db.execute('''
+            SELECT COUNT(DISTINCT c.id)
+            FROM citations c
+            WHERE c.account_type = 'personal' AND c.citation_type = 'cited'
+              AND (
+                EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized)
+                OR EXISTS (
+                    SELECT 1 FROM google_results g
+                    WHERE g.account_type = 'personal'
+                      AND RTRIM(
+                            LOWER(
+                              REPLACE(
+                                REPLACE(
+                                  REPLACE(
+                                    SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
+                                    'https://', ''
+                                  ),
+                                  'http://', ''
+                                ),
+                                'www.', ''
+                              )
+                            ),
+                            '/'
+                          ) = c.url_normalized
+                )
+              )
+        ''').fetchone()[0]
+    except Exception:
+        pers_combined_matched_main = 0
+    pers_combined_overlap_pct = (pers_combined_matched_main / pers_total_main * 100.0) if pers_total_main else 0.0
+    pers_missing_overlap_pct = 100.0 - pers_combined_overlap_pct if pers_total_main else 0.0
+
+    try:
+        pers_google_only_matched_main = db.execute('''
+            SELECT COUNT(DISTINCT c.id)
+            FROM citations c
+            WHERE c.account_type = 'personal' AND c.citation_type = 'cited'
+              AND NOT EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized)
+              AND EXISTS (
+                    SELECT 1 FROM google_results g
+                    WHERE g.account_type = 'personal'
+                      AND RTRIM(
+                            LOWER(
+                              REPLACE(
+                                REPLACE(
+                                  REPLACE(
+                                    SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
+                                    'https://', ''
+                                  ),
+                                  'http://', ''
+                                ),
+                                'www.', ''
+                              )
+                            ),
+                            '/'
+                          ) = c.url_normalized
+              )
+        ''').fetchone()[0]
+    except Exception:
+        pers_google_only_matched_main = 0
+    pers_google_only_overlap_pct = (pers_google_only_matched_main / pers_total_main * 100.0) if pers_total_main else 0.0
+
+    # ===== OVERALL (ALL ACCOUNTS) CITED COVERAGE =====
+    total_cited_all = db.execute("SELECT COUNT(*) FROM citations WHERE citation_type = 'cited'").fetchone()[0]
+    # Bing coverage across all cited (enterprise + personal)
+    all_bing_matched_cited = db.execute(f"""
+        SELECT COUNT(DISTINCT c.id)
+        FROM citations c
+        WHERE c.citation_type = 'cited' AND {match_sql}
+    """).fetchone()[0]
+    all_bing_cited_pct = (all_bing_matched_cited / total_cited_all * 100.0) if total_cited_all else 0.0
+
+    # Combined coverage for ALL cited: (Bing) OR (Google for personal)
+    try:
+        all_combined_matched_cited = db.execute('''
+            SELECT COUNT(DISTINCT c.id)
+            FROM citations c
+            WHERE c.citation_type = 'cited'
+              AND (
+                EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized)
+                OR (
+                    c.account_type = 'personal'
+                    AND EXISTS (
+                        SELECT 1 FROM google_results g
+                        WHERE g.account_type = 'personal'
+                          AND RTRIM(
+                                LOWER(
+                                  REPLACE(
+                                    REPLACE(
+                                      REPLACE(
+                                        SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
+                                        'https://', ''
+                                      ),
+                                      'http://', ''
+                                    ),
+                                    'www.', ''
+                                  )
+                                ),
+                                '/'
+                              ) = c.url_normalized
+                    )
+                )
+              )
+        ''').fetchone()[0]
+    except Exception:
+        all_combined_matched_cited = 0
+    all_combined_cited_pct = (all_combined_matched_cited / total_cited_all * 100.0) if total_cited_all else 0.0
+    all_missing_cited_pct = 100.0 - all_combined_cited_pct if total_cited_all else 0.0
     
     total_unique_domains = db.execute("SELECT COUNT(DISTINCT domain) FROM citations WHERE domain != ''").fetchone()[0]
     total_rejected_global = ent_total_rejected + pers_total_rejected
@@ -1694,6 +2107,10 @@ def dashboard():
                                  ent_total_main=ent_total_main, ent_total_add=ent_total_add,
                                  ent_total_rejected=ent_total_rejected,
                                  ent_matched_main=ent_matched_main,
+                                 ent_bing_overlap_pct=ent_bing_overlap_pct,
+                                 ent_bing_add_overlap_pct=ent_bing_add_overlap_pct,
+                                 ent_google_overlap_pct=ent_google_overlap_pct,
+                                 ent_google_add_overlap_pct=ent_google_add_overlap_pct,
                                  ent_invisible=ent_invisible, ent_page_data=ent_page_data,
                                  ent_total_cited_urls=ent_total_cited_urls,
                                  ent_q1_matched=ent_q1_matched, ent_q2_matched=ent_q2_matched,
@@ -1703,6 +2120,17 @@ def dashboard():
                                  pers_total_main=pers_total_main, pers_total_add=pers_total_add,
                                  pers_total_rejected=pers_total_rejected,
                                  pers_matched_main=pers_matched_main,
+                                 pers_bing_overlap_pct=pers_bing_overlap_pct,
+                                 pers_bing_add_overlap_pct=pers_bing_add_overlap_pct,
+                                 pers_google_overlap_pct=pers_google_overlap_pct,
+                                 pers_google_add_overlap_pct=pers_google_add_overlap_pct,
+                                 pers_combined_overlap_pct=pers_combined_overlap_pct,
+                                 pers_missing_overlap_pct=pers_missing_overlap_pct,
+                                 pers_google_only_overlap_pct=pers_google_only_overlap_pct,
+                                 total_cited_all=total_cited_all,
+                                 all_bing_cited_pct=all_bing_cited_pct,
+                                 all_combined_cited_pct=all_combined_cited_pct,
+                                 all_missing_cited_pct=all_missing_cited_pct,
                                  total_unique_domains=total_unique_domains,
                                  total_rejected_global=total_rejected_global,
                                  pers_invisible=pers_invisible, pers_page_data=pers_page_data,
@@ -1722,16 +2150,17 @@ def domain_explorer():
     source_filter = request.args.get('source', 'all')
     drilldown = request.args.get('drilldown', '0') == '1'
     
-    # Build a set of all Google URLs (normalized) for quick lookup
-    google_urls = set()
+    # Build Google URL sets (normalized) for quick lookup, split by account_type
+    google_urls_by_account = {'personal': set(), 'enterprise': set()}
     try:
-        google_rows = db.execute('SELECT DISTINCT url FROM google_results WHERE url IS NOT NULL').fetchall()
+        google_rows = db.execute("SELECT DISTINCT account_type, url FROM google_results WHERE url IS NOT NULL").fetchall()
         for row in google_rows:
-            url = row[0]
-            if url:
-                # Normalize
+            acc = row[0] or 'personal'
+            url = row[1]
+            if url and acc in google_urls_by_account:
                 url_norm = url.lower().replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
-                google_urls.add(url_norm)
+                if url_norm:
+                    google_urls_by_account[acc].add(url_norm)
     except:
         pass  # google_results table might not exist yet
     
@@ -1758,7 +2187,8 @@ def domain_explorer():
         
         # Check if URL is in Google results
         url_norm_check = (url_normalized or '').lower()
-        in_google = url_norm_check in google_urls
+        acc = row['account_type']
+        in_google = url_norm_check in google_urls_by_account.get(acc, set())
         
         # Apply filters
         if search_query and search_query not in domain_lower:
@@ -1873,6 +2303,295 @@ def domain_explorer():
                                  neither_count=neither_count,
                                  drilldown_domain=drilldown_domain,
                                  drilldown_urls=drilldown_urls)
+
+
+# =========================
+# Truly Invisible (Bing+Google absent) - Personal only
+# =========================
+INVISIBLE_TEMPLATE = """
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Truly Invisible - GEO Research</title>
+  <style>
+    body { font-family: -apple-system, sans-serif; background: #f4f4f9; margin: 0; padding: 20px; }
+    .nav { margin-bottom: 18px; }
+    .nav a { margin-right: 12px; text-decoration: none; color: #111; font-weight: 600; }
+    .card { background: white; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; }
+    th { font-size: 11px; color: #555; }
+    .pill { display:inline-block; padding:2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .pill-red { background:#fee2e2; color:#991b1b; }
+    .pill-gray { background:#f3f4f6; color:#374151; }
+    .filters { display:flex; gap:10px; flex-wrap: wrap; margin: 10px 0 16px; }
+    select { padding: 6px 8px; border-radius: 8px; border: 1px solid #ddd; }
+    .muted { color:#666; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <a href="/">← Run Viewer</a>
+    <a href="/dashboard">📊 Dashboard</a>
+    <a href="/domains">🔍 Domain Explorer</a>
+    <a href="/invisible" style="color:#ef4444;">🕳️ Truly Invisible</a>
+  </div>
+
+  <h1 style="margin: 0 0 6px;">🕳️ Invisible Links (by engine)</h1>
+  <div class="muted">Filters are evaluated per-run using that run’s Bing results and (if collected) Google SERP for the same account type.</div>
+
+  <div class="card" style="margin-top:14px;">
+    <form method="get" class="filters">
+      <label class="muted">
+        Account:
+        <select name="account" onchange="this.form.submit()">
+          <option value="personal" {{ 'selected' if account_filter=='personal' else '' }}>Personal</option>
+          <option value="enterprise" {{ 'selected' if account_filter=='enterprise' else '' }}>Enterprise</option>
+          <option value="all" {{ 'selected' if account_filter=='all' else '' }}>All</option>
+        </select>
+      </label>
+      <label class="muted">
+        Type:
+        <select name="type" onchange="this.form.submit()">
+          <option value="cited" {{ 'selected' if type_filter=='cited' else '' }}>Cited</option>
+          <option value="additional" {{ 'selected' if type_filter=='additional' else '' }}>Additional</option>
+          <option value="all" {{ 'selected' if type_filter=='all' else '' }}>Cited + Additional</option>
+        </select>
+      </label>
+      <label class="muted">
+        Invisible on:
+        <select name="vis" onchange="this.form.submit()">
+          <option value="both" {{ 'selected' if vis_filter=='both' else '' }}>Bing + Google</option>
+          <option value="bing" {{ 'selected' if vis_filter=='bing' else '' }}>Bing</option>
+          <option value="google" {{ 'selected' if vis_filter=='google' else '' }}>Google</option>
+        </select>
+      </label>
+      <label class="muted">
+        Group by:
+        <select name="group" onchange="this.form.submit()">
+          <option value="url" {{ 'selected' if group_by=='url' else '' }}>URL</option>
+          <option value="domain" {{ 'selected' if group_by=='domain' else '' }}>Domain</option>
+        </select>
+      </label>
+      <label class="muted">
+        Limit:
+        <select name="limit" onchange="this.form.submit()">
+          <option value="100" {{ 'selected' if limit==100 else '' }}>100</option>
+          <option value="250" {{ 'selected' if limit==250 else '' }}>250</option>
+          <option value="500" {{ 'selected' if limit==500 else '' }}>500</option>
+          <option value="1000" {{ 'selected' if limit==1000 else '' }}>1000</option>
+        </select>
+      </label>
+    </form>
+
+    {% if vis_filter in ['google','both'] and google_data_count == 0 %}
+      <div style="background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; padding:10px 12px; border-radius:10px; font-size:12px; margin: 6px 0 12px;">
+        <strong>Note:</strong> No Google SERP data is currently ingested for <strong>{{ account_filter }}</strong>.
+        “Invisible on Google” will be misleading until you collect+ingest Google results for that account.
+      </div>
+    {% endif %}
+
+    <div style="display:flex; gap:14px; flex-wrap: wrap; margin: 8px 0 14px;">
+      <div class="pill pill-red">Invisible: {{ invisible_count }}</div>
+      <div class="pill pill-gray">Total {{ type_label }}: {{ total_count }}</div>
+      <div class="pill pill-gray">Invisible %: {{ "%.1f"|format(invisible_pct) }}%</div>
+    </div>
+
+    {% if group_by == 'domain' %}
+      <table>
+        <thead>
+          <tr><th>Domain</th><th>Count</th></tr>
+        </thead>
+        <tbody>
+          {% for r in rows %}
+          <tr>
+            <td>{{ r['domain'] }}</td>
+            <td>{{ r['cnt'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <table>
+        <thead>
+          <tr><th>Domain</th><th>URL</th><th>Runs</th></tr>
+        </thead>
+        <tbody>
+          {% for r in rows %}
+          <tr>
+            <td>{{ r['domain'] }}</td>
+            <td><a href="{{ r['url'] }}" target="_blank">{{ r['url'] }}</a></td>
+            <td class="muted">{{ r['run_count'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+</body>
+</html>
+"""
+
+
+@app.route('/invisible')
+def invisible_links():
+    db = get_db()
+    account_filter = request.args.get('account', 'personal')
+    type_filter = request.args.get('type', 'cited')
+    vis_filter = request.args.get('vis', 'both')
+    group_by = request.args.get('group', 'url')
+    try:
+        limit = int(request.args.get('limit', '250'))
+    except Exception:
+        limit = 250
+
+    if type_filter not in ('cited', 'additional', 'all'):
+        type_filter = 'cited'
+    if account_filter not in ('personal', 'enterprise', 'all'):
+        account_filter = 'personal'
+    if vis_filter not in ('both', 'bing', 'google'):
+        vis_filter = 'both'
+    if group_by not in ('url', 'domain'):
+        group_by = 'url'
+
+    account_where = "c.account_type = ?" if account_filter != 'all' else "1=1"
+    account_params = (account_filter,) if account_filter != 'all' else tuple()
+
+    # Google data availability (for warnings / interpreting "invisible on Google")
+    if account_filter == 'all':
+        google_data_count = db.execute("SELECT COUNT(*) FROM google_results").fetchone()[0]
+    else:
+        google_data_count = db.execute(
+            "SELECT COUNT(*) FROM google_results WHERE account_type = ?",
+            (account_filter,),
+        ).fetchone()[0]
+
+    if type_filter == 'all':
+        type_label = "Cited+Additional"
+        total_count = db.execute(
+            f"SELECT COUNT(*) FROM citations c WHERE {account_where} AND c.citation_type IN ('cited','additional')",
+            account_params,
+        ).fetchone()[0]
+    else:
+        type_label = type_filter.capitalize()
+        total_count = db.execute(
+            f"SELECT COUNT(*) FROM citations c WHERE {account_where} AND c.citation_type = ?",
+            account_params + (type_filter,),
+        ).fetchone()[0]
+
+    url_eq_sql = """
+      RTRIM(
+        LOWER(
+          REPLACE(
+            REPLACE(
+              REPLACE(
+                SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
+                'https://', ''
+              ),
+              'http://', ''
+            ),
+            'www.', ''
+          )
+        ),
+        '/'
+      ) = c.url_normalized
+    """
+
+    # Visibility predicate
+    bing_pred = """
+      NOT EXISTS (
+        SELECT 1 FROM bing_results b
+        WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized
+      )
+    """
+    google_pred = f"""
+      NOT EXISTS (
+        SELECT 1 FROM google_results g
+        WHERE g.account_type = c.account_type
+          AND g.chatgpt_run_id = REPLACE(c.run_id, '_personal', '')
+          AND {url_eq_sql}
+      )
+    """
+    if vis_filter == 'bing':
+        vis_sql = bing_pred
+    elif vis_filter == 'google':
+        vis_sql = google_pred
+    else:
+        vis_sql = f"({bing_pred}) AND ({google_pred})"
+
+    if group_by == 'domain':
+        if type_filter == 'all':
+            rows = db.execute(f'''
+                SELECT c.domain as domain, COUNT(*) as cnt
+                FROM citations c
+                WHERE {account_where}
+                  AND c.citation_type IN ('cited','additional')
+                  AND {vis_sql}
+                  AND c.domain IS NOT NULL AND c.domain != ''
+                GROUP BY c.domain
+                ORDER BY cnt DESC
+                LIMIT ?
+            ''', account_params + (limit,)).fetchall()
+        else:
+            rows = db.execute(f'''
+                SELECT c.domain as domain, COUNT(*) as cnt
+                FROM citations c
+                WHERE {account_where}
+                  AND c.citation_type = ?
+                  AND {vis_sql}
+                  AND c.domain IS NOT NULL AND c.domain != ''
+                GROUP BY c.domain
+                ORDER BY cnt DESC
+                LIMIT ?
+            ''', account_params + (type_filter, limit)).fetchall()
+
+        invisible_count = sum(int(r['cnt']) for r in rows) if rows else 0
+        invisible_pct = (invisible_count / total_count * 100.0) if total_count else 0.0
+
+    else:
+        if type_filter == 'all':
+            rows = db.execute(f'''
+                SELECT c.domain as domain, c.url as url, COUNT(DISTINCT c.run_id) as run_count
+                FROM citations c
+                WHERE {account_where}
+                  AND c.citation_type IN ('cited','additional')
+                  AND {vis_sql}
+                  AND c.url IS NOT NULL AND c.url != ''
+                GROUP BY c.url
+                ORDER BY run_count DESC
+                LIMIT ?
+            ''', account_params + (limit,)).fetchall()
+            invisible_count = len(rows)
+        else:
+            rows = db.execute(f'''
+                SELECT c.domain as domain, c.url as url, COUNT(DISTINCT c.run_id) as run_count
+                FROM citations c
+                WHERE {account_where}
+                  AND c.citation_type = ?
+                  AND {vis_sql}
+                  AND c.url IS NOT NULL AND c.url != ''
+                GROUP BY c.url
+                ORDER BY run_count DESC
+                LIMIT ?
+            ''', account_params + (type_filter, limit)).fetchall()
+            invisible_count = len(rows)
+
+        invisible_pct = (invisible_count / total_count * 100.0) if total_count else 0.0
+
+    return render_template_string(
+        INVISIBLE_TEMPLATE,
+        account_filter=account_filter,
+        type_filter=type_filter,
+        vis_filter=vis_filter,
+        group_by=group_by,
+        limit=limit,
+        rows=rows,
+        invisible_count=invisible_count,
+        total_count=total_count,
+        invisible_pct=invisible_pct,
+        type_label=type_label,
+        google_data_count=google_data_count,
+    )
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
