@@ -112,6 +112,80 @@ def get_domain(raw_url: str) -> str:
         return ""
 
 
+def _load_skip_domains(skip_domains: str, skip_domains_file: str) -> List[str]:
+    parts: List[str] = []
+    if skip_domains:
+        parts.extend([p.strip().lower() for p in skip_domains.split(",") if p.strip()])
+    if skip_domains_file:
+        with open(skip_domains_file, "r", encoding="utf-8") as f:
+            for line in f:
+                s = line.strip()
+                if not s or s.startswith("#"):
+                    continue
+                parts.append(s.lower())
+    # dedupe while preserving order
+    out: List[str] = []
+    seen = set()
+    for p in parts:
+        if p not in seen:
+            seen.add(p)
+            out.append(p)
+    return out
+
+
+def _domain_matches(domain: str, pattern: str) -> bool:
+    d = (domain or "").lower()
+    p = (pattern or "").lower().lstrip(".")
+    if not d or not p:
+        return False
+    return d == p or d.endswith("." + p)
+
+
+def _autotype_for_skipped_domain(domain: str) -> Dict[str, str]:
+    """
+    Optional deterministic labels for domains you choose to skip fetching.
+    We keep labels conservative and compatible with `gemini_classify()` schema.
+    """
+    d = (domain or "").lower()
+    # normalize to registrable-ish patterns
+    if _domain_matches(d, "wikipedia.org"):
+        return {
+            "type": "documentation",
+            "content_format": "reference",
+            "tone": "informational",
+            "promotional_intensity_score": "0",
+        }
+    if _domain_matches(d, "reddit.com"):
+        return {
+            "type": "forum",
+            "content_format": "forum_thread",
+            "tone": "opinionated",
+            "promotional_intensity_score": "0",
+        }
+    if _domain_matches(d, "arxiv.org") or _domain_matches(d, "semanticscholar.org"):
+        return {
+            "type": "other",
+            "content_format": "academic_paper",
+            "tone": "academic",
+            "promotional_intensity_score": "0",
+        }
+    if _domain_matches(d, "github.com"):
+        return {
+            "type": "documentation",
+            "content_format": "repository",
+            "tone": "informational",
+            "promotional_intensity_score": "0",
+        }
+    if _domain_matches(d, "youtube.com") or _domain_matches(d, "youtu.be"):
+        return {
+            "type": "other",
+            "content_format": "video",
+            "tone": "informational",
+            "promotional_intensity_score": "0",
+        }
+    return {}
+
+
 def short_hash(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
@@ -529,6 +603,21 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     p.add_argument("--max-rows", type=int, default=0, help="If set >0, only process first N rows.")
     p.add_argument("--cache-dir", default="data/url_cache", help="Cache directory for fetched HTML/text.")
     p.add_argument("--drop-html", action="store_true", help="Do not keep raw HTML in output rows.")
+    p.add_argument(
+        "--skip-domains",
+        default="",
+        help="Comma-separated domains to skip fetching (e.g. wikipedia.org,reddit.com,arxiv.org). Matches subdomains too.",
+    )
+    p.add_argument(
+        "--skip-domains-file",
+        default="",
+        help="Text file with one domain per line to skip fetching. Lines starting with # are ignored.",
+    )
+    p.add_argument(
+        "--autotype-skipped",
+        action="store_true",
+        help="If set, assigns simple deterministic labels for skipped domains (wikipedia/reddit/arxiv/etc).",
+    )
     p.add_argument("--use-gemini", action="store_true", help="Use Gemini to fill type/content_format/tone/promo.")
     p.add_argument(
         "--gemini-model",
@@ -551,6 +640,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
 
     os.makedirs(args.cache_dir, exist_ok=True)
+    skip_domains = _load_skip_domains(args.skip_domains, args.skip_domains_file)
 
     rows = read_csv(args.input)
     if args.max_rows and args.max_rows > 0:
@@ -565,6 +655,33 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         if not raw_url:
             row["fetch_status"] = "0"
             row["fetch_error"] = "missing url"
+            continue
+
+        # Optional: skip fetching for “obvious” domains (wikipedia/reddit/arxiv/etc)
+        if skip_domains and any(_domain_matches(row["domain"], sd) for sd in skip_domains):
+            row["fetch_status"] = "0"
+            row["fetch_error"] = "skipped_domain"
+            row["final_url"] = raw_url
+            row["fetched_at"] = datetime.utcnow().isoformat(timespec="seconds") + "Z"
+            row["content_word_count"] = "0"
+            row["has_table"] = "0"
+            row["has_comparison_table"] = "0"
+            row["comparison_table_score"] = "0.00"
+            row["has_pros_cons"] = "0"
+            row["pros_cons_score"] = "0.00"
+            row["has_schema_markup"] = "0"
+            row["freshness_date"] = ""
+            row["readability_score"] = "0.00"
+            row.setdefault("type", "")
+            row.setdefault("content_format", "")
+            row.setdefault("tone", "")
+            row.setdefault("promotional_intensity_score", "")
+            if args.autotype_skipped:
+                row.update({k: v for k, v in _autotype_for_skipped_domain(row["domain"]).items() if v})
+            if args.drop_html:
+                row.pop("html", None)
+            else:
+                row["html"] = ""
             continue
 
         cache_key = short_hash(row["url_key"] or raw_url)

@@ -126,11 +126,24 @@
 - **The "Salesforce of AI Search":** This funding round validated the concept of building a "generational company" centered on helping brands monitor and optimize for how they surface in AI-generated responses across models like ChatGPT, Gemini, and Claude.
 - **The Hype vs. Reality:** While the hype is centered on "killing search," our research suggests the reality is a **deeper integration** where search becomes the infrastructure for AI.
 
-### 1.4.6 The "Rewritten Query": The Orchestrator's Intent
-- **Defining the Rewritten Query:** ChatGPT does not simply pass the user's prompt to Bing. Instead, its internal orchestrator "rewrites" the prompt into one or more optimized search queries.
-- **Freshness Injection:** A key behavior observed is the **automatic injection of temporal markers** (e.g., appending "2025" or "2026" to a query like "best transcription software"). This proves the model's inherent bias toward freshness as a primary quality signal.
-- **Explicit Localization via Rewriting:** We observed that the model often injects geographical markers into the rewritten query based on implicit user context, even when the original prompt is global.
-- **The "Query Drift" Problem:** Across multiple runs of the same prompt, the rewritten queries can vary significantly. This "Query Drift" is a primary driver of the stochastic nature of GenAI search results—different queries lead to different grounding chunks, which lead to different recommendations.
+### 1.4.6 Fan-Out Queries (Hidden Query Sets)
+- **Definition (Fan-Out):** A single user prompt can result in **multiple retrieval queries** (parallel or sequential). We treat these as the model’s **fan-out query set** (often UI-hidden).
+- **Observed pattern:** Fan-out queries frequently include *operator-like* changes (e.g., adding a year such as "2025/2026", adding geo terms, adding “reviews/pricing/alternatives”), but we do not rely on a separate “rewriting” concept—only on what is observable in logged fan-out queries.
+- **The "Query Drift" Problem:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
+
+### 1.4.7 Fan-Out Queries (Cross-Model Instrumentation)
+- **Why it matters:** Fan-out query sets are a core degree of freedom that controls retrieval. Two systems can share the same index but diverge because they issue different query sets.
+
+#### Observables (what we can actually log)
+- **Gemini:** `groundingMetadata.webSearchQueries[]` (fan-out query list per run).
+- **ChatGPT (network-derived):** The internal search queries / triggers when present in the response payloads (treated as “hidden queries” even when not UI-visible).
+- **Bing baseline:** The original user prompt as a single query, plus (optional) a controlled query-variant policy we apply ourselves (e.g., add year/location) to test sensitivity.
+
+#### Metrics / analyses enabled
+- **Fan-out size:** number of fan-out queries per run; distribution by intent class.
+- **Query drift:** similarity of fan-out sets across runs (same prompt, different runs) and its correlation with citation churn.
+- **Fan-out operators:** frequency of year-injection, geo-injection, brand expansion, “alternatives” expansion, and “review/pricing” pivots (measured directly from the fan-out queries).
+- **Attribution to overlap:** whether higher Bing/Google overlap is driven by (a) different fan-out query sets, (b) deeper retrieval, or (c) different citation visibility rules.
 
 ## 1.6 Citation Mapping & Claim-Level Attribution
 *How we precisely map ChatGPT's written claims to their retrieved sources.*
@@ -336,10 +349,10 @@
    - Are there "always recommended" products vs. "sometimes recommended" products?
    - Does the ranking/order of products change between runs?
 
-3. **Query Rewriting Behavior:**
-   - What is the "rewritten query" that ChatGPT uses for search?
-   - Does the rewritten query change between runs?
-   - How does query rewriting affect which sources are found?
+3. **Fan-Out Query Behavior:**
+   - What fan-out queries are issued for a prompt (per run)?
+   - Do the fan-out queries change between runs (query drift)?
+   - How do changes in fan-out queries affect which sources are found?
 
 4. **Listicle Selection Patterns:**
    - If the same listicle is cited in multiple runs, does ChatGPT pick the same products from it?
@@ -354,7 +367,7 @@
 | **Product Overlap Rate (POR)**  | % of recommended products that appear in 2+ runs         |
 | **Stable Citation Count**       | Number of citations that appear in ALL 4 runs            |
 | **Citation Churn Rate**         | % of citations that are unique to a single run           |
-| **Query Rewrite Similarity**    | Cosine similarity between rewritten queries across runs  |
+| **Fan-Out Query Similarity**    | Similarity between fan-out query sets across runs        |
 
 ### 2.7.3 Expected Findings:
 
@@ -362,8 +375,8 @@
 - The top 3-5 product recommendations should be consistent (70%+ overlap)
 - Additional links and lower-ranked citations will have higher churn
 
-**Hypothesis 2:** Query rewriting introduces variability.
-- Different rewritten queries → different search results → different citations
+**Hypothesis 2:** Fan-out query drift introduces variability.
+- Different fan-out query sets → different search results → different citations
 - This explains why the same prompt can produce different outputs
 
 **Hypothesis 3:** Listicle extraction is deterministic, but listicle selection is not.
@@ -385,17 +398,79 @@
 | P001   | ?              | ?              | ?              | ?              | ?               | ?               |
 | ...    |                |                |                |                |                 |                 |
 
-**Table C: Rewritten Query Analysis**
-| Prompt | Original Query             | Rewritten Q (R1) | Rewritten Q (R2) | Rewritten Q (R3) | Rewritten Q (R4) | Similarity Score |
+**Table C: Fan-Out Query Analysis**
+| Prompt | Original Query             | Fan-out Qs (R1) | Fan-out Qs (R2) | Fan-out Qs (R3) | Fan-out Qs (R4) | Similarity Score |
 | ------ | -------------------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- |
 | P001   | "best AI video translator" | ?                | ?                | ?                | ?                | ?                |
 | ...    |                            |                  |                  |                  |                  |                  |
 
-### 2.7.5 Implications for Users:
+### 2.7.5 The Equivalence of Fan-Out Queries (Q1 vs Q2)
+*Both queries get "Equal Love" from the model.*
 
-- If recommendations are highly variable, users cannot trust a single ChatGPT response
-- If recommendations are stable, ChatGPT provides reliable product guidance
-- Understanding variability helps users know when to "re-roll" for better results
+**The Discovery:**
+We analyzed the overlap rates between ChatGPT citations and the results from each fan-out query (Q1 = first hidden query, Q2 = second hidden query). The results were strikingly similar:
+
+| Account    | Q1 Overlap | Q2 Overlap | Difference |
+|------------|------------|------------|------------|
+| Enterprise | **63.7%**  | **64.2%**  | 0.5%       |
+| Personal   | **54.1%**  | **52.4%**  | 1.7%       |
+
+**Key Findings:**
+- **No "Recency Bias":** The model does NOT prioritize links from its first search query over its second. Both queries contribute equally to the final citation pool.
+- **"Bulk Retrieval, Bulk Synthesis":** This proves the model performs a two-phase process:
+    1. **Phase 1 (Retrieval):** Issue all fan-out queries and collect all results into a flat pool.
+    2. **Phase 2 (Synthesis):** Reason over the combined pool to select citations.
+- **Account Variance in Quality, Not Distribution:**
+    - **Enterprise (~64%):** High fidelity to search results for both queries.
+    - **Personal (~53%):** Lower fidelity (more "hallucination" or parametric knowledge), but Q1/Q2 remain balanced.
+
+**Thesis Implication:**
+This finding justifies the architectural choice of "Fan-Out" searching. If Q2 had significantly lower overlap, one could argue that multi-query expansion is wasteful. The equal contribution proves that **every fan-out query is essential** for the model to reach its citation quota. The model treats the entire search pool as a single, unified knowledge base.
+
+### 2.7.6 The "Flip-Flop" Phenomenon: Additional → Cited Overlap Analysis
+*How consistently does the model filter its search results?*
+
+**The Discovery:**
+We analyzed the "Additional" URLs (sources found in search results but not cited) to see if they were truly "low quality" or just "stochastically ignored."
+
+**Key Findings:**
+- **The Global Constant (26.0% vs 25.9%):** Across the entire dataset, the "Flip-Flop" rate is nearly identical. 
+    - **Enterprise:** **26.0%** (337 cited elsewhere / 1,298 unique additional)
+    - **Personal:** **25.9%** (413 cited elsewhere / 1,594 unique additional)
+- **"Additional ≈ Citation-Worthy" (Equivalence Hypothesis):** Within this study’s topical coverage (AI/SaaS product recommendations), many sources labeled **Additional** behave like **citation-worthy candidates** that simply were not promoted to **Cited** in that particular run. The 26% flip-flop rate quantifies this “promotion potential.”
+- **Dataset Dependence (Important):** This global flip-flop metric is only meaningful when prompts share a **common source pool** (as is true in this study’s clustered topics). In a dataset of fully disjoint topics, cross-run URL reuse would be rare and the global flip-flop rate would shrink accordingly.
+- **Statistical Synchronization:** When splitting by category, the models move in perfect sync:
+    - **Business Queries (P041+):** Both accounts hit exactly **24.5%** overlap.
+
+**Thesis Implication:**
+The near-identical global overlap (0.1% difference) proves a **shared underlying architecture**. The "Grounding Filter" is a universal constant in the model's RAG pipeline, operating with a fixed ~26% "ambiguity margin" where sources are stochastically rotated between primary and secondary status.
+
+### 2.7.6 The "Conservation of Retrieval" Law: Systemic Intake Tendency
+*The discovery of the model's "Link Thirst" and aggregate convergence.*
+
+**The Discovery:**
+By quantifying the "Total Considered" universe (Cited + Additional + Rejected), we found a shocking symmetry in scale between account types, despite massive variance in individual runs.
+
+**Key Findings:**
+- **The "Link Thirst" Constant:** Across 240 runs, both models exhibit an almost identical "appetite" for information:
+    - **Enterprise:** **63,046** total links considered.
+    - **Personal:** **62,460** total links considered.
+    - **The Convergence:** A difference of only **0.9%**, proving a shared systemic mean for retrieval depth.
+- **High Per-Prompt Variance:** While the aggregate is identical, individual prompts show a high **"Variance Allowance"**:
+    - **P001 (Perfect Match):** 20.7 vs 20.7 avg links (**0.0% diff**).
+    - **P002 (High Divergence):** Personal (37.0) vs Enterprise (13.3) (**94.0% diff**).
+    - **P005 (Personal Dominance):** Personal (36.0) vs Enterprise (19.3) (**60.2% diff**).
+- **The "Balancing Act":** The model exhibits a stochastic "burstiness"—it may over-retrieve for one prompt and under-retrieve for another, but the **Aggregate Intake Tendency** remains a universal constant.
+
+**Thesis Implication:**
+This reveals that "Search" in ChatGPT is governed by a **Systemic Tendency** rather than a rigid per-prompt quota. The model has a specific "Link Thirst" (averaging ~260 links per run) that it satisfies stochastically. The identical aggregate totals prove that the **Intake Engine** is a shared commodity, while the **Fidelity Filter** (81% vs 67% match rate) is where account-level tuning (Enterprise vs. Personal) occurs.
+
+### 2.7.7 Methodological Limitations & Future Scaling
+*The case for longitudinal sampling.*
+
+- **Sample Depth vs. Breadth:** While this study utilized 3 runs per prompt to establish the existence of the "Flip-Flop Phenomenon," the total sample size of ~480 independent grounding events provides high statistical confidence in the "Ambiguity Floor" (~26%).
+- **Future Work (Same-Prompt Flip-Flop):** To separate “shared topical source pool” effects from true within-prompt stochasticity, future work should compute the **Same-Prompt Flip-Flop Rate**: Additional in Run A → Cited in Run B for the **same prompt_id**. This requires **10+ runs per prompt** to stabilize estimates and produce per-prompt distributions (not just a single global mean).
+- **Future Work (Controlled Topic Split):** Repeat the same analyses on intentionally **disjoint topic buckets** (e.g., “video translation” vs. “CRM software”) to quantify how much of the global flip-flop is explained by topic overlap vs. model randomness.
 
 ---
 
@@ -460,6 +535,16 @@
 ## 5.2 The Economic Moat of Retrieval
 - **Compute Efficiency:** We conclude that the future of AI is not larger models, but smarter **orchestrators**. By using the web as a "distributed memory," AI providers can reduce costs while increasing accuracy.
 - **The Relevance of Human-Centric Web:** SEO stays relevant because it provides the "Ground Truth" that AI requires to remain grounded and factual.
+
+---
+
+## 8. Future Work & Extensions
+
+### 8.1 Exhaustive SERP Depth Analysis
+Current findings indicate a high overlap with Bing's top results, but a tail of "invisible" citations remains (e.g., Wikipedia, niche tech blogs). A future extension should involve:
+- **Deep SERP Crawling**: Expanding Bing/Google search depth from top 30/50 to top 100+ results to determine if "invisible" citations are simply lower-ranked search results or truly independent LLM retrievals.
+- **Residual Source Isolation**: By programmatically "subtracting" all possible SERP matches (even at extreme depths), researchers can isolate the true "LLM-native" grounding set—sources ChatGPT/Gemini access via internal knowledge bases, direct partnerships, or non-public indices.
+- **Decay Rate of Attribution**: Analyzing if the probability of an LLM citing a source correlates with its SERP rank even beyond the first few pages, or if the LLM's "internal" prioritization overrides search engine ranking at depth.
 
 ---
 

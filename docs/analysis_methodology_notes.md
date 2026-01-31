@@ -9,6 +9,13 @@ This document captures all analysis approaches, metrics, and research questions 
 ### Goal
 Validate Dejan AI's finding that there's a **~2,000 word budget** per query.
 
+### Critical constraint (what we can and cannot validate)
+In our current Gemini dataset, `groundingMetadata.groundingSupports.segment.text` is **output text spans** that Gemini chose to attribute/cite in the final answer.
+That is **not guaranteed to equal** the *retrieved / injected* context text Dejan measures in Google AI Mode.
+
+So with Gemini API-style `groundingMetadata` alone, we should treat this as an **output-side proxy budget** (how much of the answer is citation-attributed),
+unless we separately log the retriever payload (e.g., via Vertex AI Search over an indexed corpus, or a DIY “search → fetch → inject” pipeline).
+
 ### Methodology
 ```javascript
 // For each Gemini response (run):
@@ -34,6 +41,10 @@ p25, p75, p95 = percentiles(allRunBudgets)
 ### Goal
 Determine how the fixed budget is **distributed** among sources.
 
+### Note
+This is a clean analysis **only** when the underlying “budget” is truly input-side (retrieved/injected text).
+If we use `groundingSupports.segment.text` as the numerator/denominator, we’re measuring **output-side attribution share**, which is still useful but should be labeled accordingly.
+
 ### Methodology
 ```javascript
 // For each URL in a run:
@@ -58,6 +69,10 @@ urlShare = urlGroundingChars / runTotalGroundingChars * 100
 
 ### Goal
 Measure what % of a source page gets used in grounding.
+
+### Note
+True “coverage” requires the actual retrieved/extracted snippet text (or injected chunks) per URL.
+If we only have the final answer + citations, we can still do coverage-style analysis, but it becomes a **claim→page** verification task (Section 17) rather than a direct retriever-coverage measurement.
 
 ### Methodology
 ```javascript
@@ -211,7 +226,7 @@ Compare grounding behaviors between platforms.
 | Rejection rate (sources retrieved but not cited) | ? | ? |
 
 ### Key Insight from Existing Data
-- Gemini: **0% rejection rate** (all groundingChunks appear in groundingSupports)
+- Gemini: **Pilot hypothesis to verify** — in some collected examples, `groundingChunks` appear heavily “pre-filtered”, and many chunks are referenced by `groundingSupports`. We must compute the true rejection rate by checking whether each chunk index is referenced by any support.
 - ChatGPT: Has `sources_all` vs `sources_cited` → measurable rejection rate
 
 ---
@@ -452,4 +467,117 @@ For each mapping in `datapass/citation_mappings/`:
 
 ---
 
-*Last updated: January 29, 2026*
+## 22. Comparison of Attribution Precision (ChatGPT vs. Gemini)
+
+### Goal
+Document the fundamental difference in how ChatGPT and Gemini handle citation indices and what that means for our audit.
+
+### Key Distinction
+1.  **ChatGPT (Reference-to-Token)**:
+    - **Data Source**: `content_references_json`
+    - **Mechanism**: Indices point to the **location of the citation tag** (e.g., the `[1]` or `[URL]` chip) in the response text.
+    - **Audit Impact**: We must **infer** the claim boundaries (the "claim text") by looking backward from the index. This introduces a heuristic layer (guessing if it covers one sentence or the whole paragraph).
+2.  **Gemini (Segment-to-Chunk)**:
+    - **Data Source**: `groundingMetadata.groundingSupports`
+    - **Mechanism**: Indices point to the **entire span of the claim** (the "segment").
+    - **Audit Impact**: The model explicitly defines the boundaries of its claims. This is a **native attribution** that removes the need for heuristic guessing of what text a citation supports.
+
+### Shared Limitation (The "Dejan" Gap)
+Neither model currently returns the **raw source snippet** (the specific text from the webpage that was fed into the prompt). 
+- **ChatGPT**: Discards the raw browsing text in the final response.
+- **Gemini**: Provides a pointer to a `groundingChunk` (URL), but not the text within that chunk.
+
+### Thesis Conclusion
+While Gemini provides a more precise **mapping** of claims to sources, both models remain "black boxes" regarding the **exact input text** they prioritized from those sources. Our methodology must bridge this gap by fetching the full page content and performing semantic overlap checks (Section 17).
+
+---
+
+*Last updated: January 31, 2026*
+
+---
+
+## 18. ChatGPT "Budget" Analysis (Proxy, Not True Context Budget)
+
+### Key Constraint (vs. Gemini / Google AIO)
+For Gemini (and Dejan’s Vertex AI Search examples), the system exposes **grounding snippet text** (the “trimmed versions” fed into the model) which enables true analysis of:
+- total injected grounding text per run, and
+- per-source share of that injected context.
+
+For ChatGPT, our network artifacts expose:
+- `search_result_groups_json` (SERP entries + snippets),
+- `content_references_json` (token→ref mapping),
+- `sources_*` lists,
+but **not** the full “grounding context” text actually injected into the model (if any), nor how much was trimmed per source.
+
+So: we *can* do a Dejan-style analysis, but only as a **proxy** based on *output evidence*, not true input budget.
+
+### What We *Can* Measure Reliably (Output-Side Budget)
+Define per run:
+- **\(B_{out}\)**: total characters (or tokens) in all extracted `claim_text` blocks that are attributed to citations (including multi-chip attribution splits if desired).
+- **Per-URL share**: \(share(url) = claimChars(url) / B_{out}\).
+- **Cited vs Additional split**: compare allocation across `sources_cited` and `sources_additional`.
+- **Multi-chip “synthesis aggression”**: how often one claim block maps to multiple URLs.
+
+This is analogous to “how much of the answer is grounded” rather than “how much context was fed in”.
+
+### What We *Can* Estimate (Input-Side Upper Bounds)
+Using `search_result_groups_json.entry.snippet` as a *lower-fidelity proxy* for grounding text:
+- **\(B_{snip}\)** = sum of snippet lengths for URLs that were actually used/cited (or for `sources_all`).
+
+This is noisy (snippets ≠ what the model saw), but it gives a comparable scale to Dejan’s “snippet budget” framing.
+
+### What We *Should Not* Claim for ChatGPT
+- a fixed “2,000-word grounding budget” like Dejan’s Vertex examples, unless we’re explicit it’s a **proxy** and validated only on snippet/claim lengths.
+
+### Recommended Reporting Language
+Use wording like:
+- “**Output-side grounding allocation**” (claim text share by URL),
+- “**Snippet-level budget proxy**” (SERP snippet totals),
+and keep “true grounding budget” reserved for Gemini/Vertex-style exposed chunk text.
+
+---
+
+## 19. Immediate Next Additions (Highest Signal / Feasibility)
+
+### 19.1 Google SERP Control Group (SerpApi)
+**High feasibility, high thesis value**:
+- Collect Google Top 20/30 for each ChatGPT rewritten query (Q1/Q2).
+- Compute: overlap(ChatGPT citations, Google SERP) vs overlap(ChatGPT citations, Bing SERP).
+- Identify “Google-only” citations (in Google top results but absent from Bing deep results), a direct test for the “Google Farm” hypothesis.
+
+### 19.2 Page DNA: Why Cited vs Additional vs Ignored
+**Feasible once content fetch coverage is good**:
+- Run Stage-1 DNA enrichment on all unique URLs in `sources_cited` + `sources_additional` (and optionally top Bing results that were *not* cited).
+- Compare feature distributions (tables, pros/cons, bylines, tone) to identify predictors of citation selection.
+
+### 19.3 Claim→Page Semantic Verification (Core “Extractive Proof”)
+**Most defensible, but costs more**:
+- For each mapping: verify `claim_text` is supported by the fetched page content.
+
+---
+
+## 20. ChatGPT Retrieval Anomalies & "Hallucinated" Queries
+
+### 20.1 Cross-Lingual Fan-out Queries
+**Discovery**: In several runs (e.g., P007, P018, P032, P044), ChatGPT generates fan-out queries in foreign languages (Chinese, Japanese, Spanish) even when the user prompt is entirely in English.
+
+**Hypothesis**: This is an intentional retrieval strategy where the model "pivots" to languages it associates with a specific technical domain (e.g., Chinese for real-time translation tech) to find primary sources or diverse perspectives.
+
+**Thesis Value**:
+- **Agentic Retrieval**: Demonstrates the LLM acting as a multi-lingual research agent rather than a passive keyword searcher.
+- **Invisible Links**: Explains why some citations may appear "out of nowhere" if they were found via a foreign-language search that our Bing/Google English control groups didn't capture.
+
+**Methodology**:
+1.  **Identify**: Flag runs where `hidden_queries_json` contains non-English characters or bilingual bridging (e.g., `实时翻译 Zoom Teams translation tools`).
+2.  **Correlate**: Check if these queries lead to citations that are absent from English SERPs.
+3.  **Contrast**: Compare with Gemini to see if it exhibits similar cross-lingual "pivot" behavior.
+
+---
+
+## 21. Methodological Notes & Validation Plans
+
+### 21.1 LLM Structural Labeling Validation
+- **Current Approach**: Structural features (e.g., `has_tables`, `has_numbered_lists`, `has_bullet_points`) are being extracted via LLM (Gemini) using scraped text content.
+- **Potential Issue**: Scraped text lacks HTML tags, which may lead to under-reporting of structural elements.
+- **Validation Plan**: After the full enrichment run, perform a manual or assisted audit on a small deterministic sample (e.g., 50-100 URLs). Compare LLM labels against original HTML or manual inspection to quantify the error rate for structural features.
+- Output match snippets + confidence, then aggregate match rate / hallucination delta.

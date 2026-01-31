@@ -3,48 +3,88 @@ import path from 'path';
 import { getJson } from 'serpapi';
 
 // --- CONFIGURATION ---
-const API_KEY = 'ecc3e49406d80dd9cdeb95aad55927f74164ef8b83bfbac2548786fb4f56bc16'; // Replace with your actual key
-const INPUT_CSV = './data/gemini_fanout_missing_only.csv';
-const OUTPUT_DIR = './data/serpapi_results';
-const CHECKPOINT_FILE = './data/serpapi_checkpoint.json';
+const API_KEY = "a2c9e987988d85a2d2995fec78857b83a5be43fdaeab8d69acaeb0bdbf0d6230"
+const STATUS_FILE = './serpapi_status_summary.txt';
+const MAPPINGS_DIR = './datapass/citation_mappings';
+const OUTPUT_DIR = './data/serpapi_google_results';
+const CHECKPOINT_FILE = './data/serpapi_google_checkpoint.json';
 
-// Ensure output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-async function fetchSerpApiResults() {
-    console.log('🚀 Starting SerpApi Collection (Target: Top 20 Organic)...');
+function loadMissingPersonalQueries() {
+    const content = fs.readFileSync(STATUS_FILE, 'utf-8');
+    const lines = content.split('\n');
+    const missingQueries = [];
+    
+    // Find the start of the detailed missing queries section
+    let startIndex = lines.findIndex(l => l.includes('=== DETAILED MISSING QUERIES ==='));
+    if (startIndex === -1) return [];
 
-    // 1. Load Queries
-    const fileContent = fs.readFileSync(INPUT_CSV, 'utf-8');
-    const lines = fileContent.split('\n').filter(l => l.trim());
-    const queries = lines.slice(1).map(line => {
-        const firstComma = line.indexOf(',');
-        const runId = line.substring(0, firstComma).trim();
-        let query = line.substring(firstComma + 1).trim();
-        if (query.startsWith('"') && query.endsWith('"')) {
-            query = query.substring(1, query.length - 1);
+    // Skip header lines
+    for (let i = startIndex + 2; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+
+        // Parse fixed-width columns from the status file
+        // Format: Run ID (0-7), Account (8-18), Type (19-24), Query (25+)
+        const runId = line.substring(0, 8).trim();
+        const account = line.substring(8, 19).trim();
+        const type = line.substring(19, 25).trim();
+        
+        if (account === 'personal') {
+            // Find the full query from the mapping files since the text file is truncated
+            const mappingFile = path.join(MAPPINGS_DIR, `${runId.split('_').slice(0,2).join('_')}_personal_mapping.json`);
+            let fullQuery = "";
+            
+            try {
+                const mappingData = JSON.parse(fs.readFileSync(mappingFile, 'utf-8'));
+                if (type === 'main') {
+                    fullQuery = mappingData.prompt;
+                } else {
+                    const idx = parseInt(type.replace('Q', '')) - 1;
+                    fullQuery = mappingData.metadata.hidden_queries[idx];
+                }
+
+                if (fullQuery && fullQuery !== 'n/a') {
+                    missingQueries.push({
+                        runId: `${runId}_personal_${type}`,
+                        query: fullQuery,
+                        _meta: {
+                            chatgpt_run_id: runId,
+                            account_type: 'personal',
+                            query_type: type === 'main' ? 'main' : 'hidden_query'
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error(`Could not find full query for ${runId} ${type} in ${mappingFile}`);
+            }
         }
-        return { runId, query };
-    });
+    }
+    return missingQueries;
+}
 
-    // 2. Load Checkpoint
+async function fetchSerpApiResults() {
+    console.log('🚀 Starting SerpApi Collection based on serpapi_status_summary.txt...');
+    
+    const queries = loadMissingPersonalQueries();
+    console.log(`Found ${queries.length} missing personal queries.`);
+
     let processed = new Set();
     if (fs.existsSync(CHECKPOINT_FILE)) {
         processed = new Set(JSON.parse(fs.readFileSync(CHECKPOINT_FILE, 'utf-8')));
     }
 
-    console.log(`Total queries: ${queries.length}. Already processed: ${processed.size}`);
-
-    // 3. Process Loop
     for (const item of queries) {
         const { runId, query } = item;
-        const storageKey = `${runId}_${query}`;
+        const storageKey = `${runId}::${query}`;
 
         if (processed.has(storageKey)) continue;
 
-        console.log(`\n🔍 Fetching [${runId}]: "${query}"`);
+        console.log(`\n🔍 Fetching [${runId}] | Account: personal`);
+        console.log(`   Query: "${query}"`);
 
         try {
             let allOrganicResults = [];
@@ -59,93 +99,89 @@ async function fetchSerpApiResults() {
             
             let pageCount = 0;
             let lastResponse = null;
+            let allInlineVideos = [];
+            let allRelatedQuestions = [];
+            let allDiscussions = [];
 
-            // Keep fetching until we have 20 organic results or hit 3 pages
             while (allOrganicResults.length < 20 && pageCount < 3) {
-                console.log(`   ...fetching page ${pageCount + 1} (Organic total: ${allOrganicResults.length})`);
                 const response = await getJson({
                     api_key: API_KEY,
                     ...currentParams
                 });
 
                 lastResponse = response;
-                
-                // 1. Collect Organic Results (Primary target)
-                const pageResults = response.organic_results || [];
-                pageResults.forEach(r => {
+                (response.organic_results || []).forEach(r => {
                     r.result_type = 'organic';
                     allOrganicResults.push(r);
                 });
 
-                // 2. Collect Inline Video Results (Extra data, but NOT in main array)
-                const pageVideos = [];
                 if (response.inline_videos) {
                     response.inline_videos.forEach(v => {
                         v.result_type = 'video';
-                        pageVideos.push(v);
+                        allInlineVideos.push(v);
                     });
                 }
 
-                // 3. Collect Discussions and Forums (Extra data, but NOT in main array)
-                const pageDiscussions = [];
+                if (response.related_questions) {
+                    response.related_questions.forEach(q => {
+                        q.result_type = 'related_question';
+                        q.has_link = !!(q.link || q.displayed_link);
+                        allRelatedQuestions.push(q);
+                    });
+                }
+
                 if (response.discussions_and_forums) {
                     response.discussions_and_forums.forEach(d => {
                         d.result_type = 'discussion';
-                        pageDiscussions.push(d);
+                        allDiscussions.push(d);
                     });
                 }
                 
-                console.log(`   Found ${pageResults.length} organic results on this page. Total Organic: ${allOrganicResults.length}`);
+                if (allOrganicResults.length >= 20) break;
 
-                // STOP only when we have 20 ORGANIC results
-                if (allOrganicResults.length >= 20) {
-                    console.log(`   ✅ Target of 20 Organic results reached.`);
-                    break;
-                }
-
-                // Check if there is a next page link in the response
                 if (response.serpapi_pagination && response.serpapi_pagination.next) {
-                    // FIX: Set start to exactly how many organic results we have so far
                     currentParams.start = allOrganicResults.length;
                     pageCount++;
-                } else {
-                    console.log(`   ℹ️ No more pages available according to Google.`);
-                    break; 
-                }
+                } else break;
             }
 
-            // Save the results
             const finalData = { 
-                ...lastResponse,
-                organic_results: allOrganicResults // This is now ONLY organic results
+                _query_info: {
+                    run_id: runId,
+                    query: query,
+                    collected_at: new Date().toISOString(),
+                    ...item._meta
+                },
+                _collection_stats: {
+                    organic_count: allOrganicResults.length,
+                    video_count: allInlineVideos.length,
+                    related_questions_count: allRelatedQuestions.length,
+                    discussions_count: allDiscussions.length
+                },
+                organic_results: allOrganicResults,
+                inline_videos: allInlineVideos,
+                related_questions: allRelatedQuestions,
+                discussions_and_forums: allDiscussions,
+                search_metadata: lastResponse?.search_metadata,
+                search_parameters: lastResponse?.search_parameters
             };
 
             const safeQuery = query.replace(/[^a-z0-9]/gi, '_').substring(0, 50);
             const fileName = `${runId}_${safeQuery}.json`;
             fs.writeFileSync(path.join(OUTPUT_DIR, fileName), JSON.stringify(finalData, null, 2));
 
-            // Update Checkpoint
             processed.add(storageKey);
             fs.writeFileSync(CHECKPOINT_FILE, JSON.stringify(Array.from(processed)));
 
-            // Be nice to the API/Rate limits
             await new Promise(r => setTimeout(r, 1000));
 
         } catch (error) {
-            const errorMsg = error.response?.data?.error || error.message || 'Unknown API Error';
-            console.error(`❌ Error fetching "${query}":`, errorMsg);
-            
-            // If it's a credit or key issue, stop the whole script
-            if (errorMsg.includes('credits') || errorMsg.includes('API key') || errorMsg.includes('unauthorized')) {
-                console.error('🛑 Stopping: Account issue detected.');
-                process.exit(1);
-            }
-            // Wait longer on other errors
+            console.error(`❌ Error fetching "${query}":`, error.message);
+            if (error.message&& error.emssage.includes('credits')) process.exit(1);
             await new Promise(r => setTimeout(r, 5000));
         }
     }
-
-    console.log('\n✨ All SerpApi requests complete!');
+    console.log('\n✨ Collection complete!');
 }
 
 fetchSerpApiResults();

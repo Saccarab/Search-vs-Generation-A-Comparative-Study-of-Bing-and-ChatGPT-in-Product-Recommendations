@@ -179,6 +179,8 @@ def main():
         ))
         
         # Extract citations
+        cited = []
+        additional = []
         try:
             cited = json.loads(row.get('sources_cited_json') or '[]')
             for i, src in enumerate(cited):
@@ -196,6 +198,43 @@ def main():
                     INSERT INTO citations (run_id, prompt_id, run_number, citation_type, position, url, url_normalized, title, domain, account_type)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (run_id, row['prompt_id'], row['run_number'], 'additional', i+1, src.get('url'), normalize_url(src.get('url')), src.get('title'), extract_domain(src.get('url')), 'enterprise'))
+        except:
+            pass
+
+        # Extract rejected sources: search_result_groups entries - (cited ∪ additional)
+        # This aligns with the UI meaning of "rejected": retrieved by ChatGPT but not used.
+        try:
+            srg = json.loads(row.get('search_result_groups_json') or '[]')
+            used_norms = set(normalize_url(s.get('url')) for s in (cited or []) if s.get('url'))
+            used_norms |= set(normalize_url(s.get('url')) for s in (additional or []) if s.get('url'))
+            seen_rej = set()
+            rejected_pos = 0
+            for group in (srg or []):
+                group_domain = group.get('domain') if isinstance(group, dict) else None
+                for entry in (group.get('entries', []) if isinstance(group, dict) else []):
+                    u = entry.get('url') if isinstance(entry, dict) else None
+                    if not u:
+                        continue
+                    n = normalize_url(u)
+                    if not n or n in used_norms or n in seen_rej:
+                        continue
+                    seen_rej.add(n)
+                    rejected_pos += 1
+                    cursor.execute('''
+                        INSERT INTO citations (run_id, prompt_id, run_number, citation_type, position, url, url_normalized, title, domain, account_type)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (
+                        run_id,
+                        row['prompt_id'],
+                        row['run_number'],
+                        'rejected',
+                        rejected_pos,
+                        u,
+                        n,
+                        (entry.get('title') if isinstance(entry, dict) else None),
+                        (group_domain or extract_domain(u)),
+                        'enterprise'
+                    ))
         except:
             pass
     
@@ -276,6 +315,8 @@ def main():
         ))
         
         # Extract citations
+        cited = []
+        additional = []
         try:
             cited = json.loads(row.get('sources_cited_json') or '[]')
             for i, src in enumerate(cited):
@@ -293,6 +334,42 @@ def main():
                     INSERT INTO citations (run_id, prompt_id, run_number, citation_type, position, url, url_normalized, title, domain, account_type)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ''', (run_id, row['prompt_id'], row['run_number'], 'additional', i+1, src.get('url'), normalize_url(src.get('url')), src.get('title'), extract_domain(src.get('url')), 'personal'))
+        except:
+            pass
+
+        # Extract rejected sources: search_result_groups entries - (cited ∪ additional)
+        try:
+            srg = json.loads(row.get('search_result_groups_json') or '[]')
+            used_norms = set(normalize_url(s.get('url')) for s in (cited or []) if s.get('url'))
+            used_norms |= set(normalize_url(s.get('url')) for s in (additional or []) if s.get('url'))
+            seen_rej = set()
+            rejected_pos = 0
+            for group in (srg or []):
+                group_domain = group.get('domain') if isinstance(group, dict) else None
+                for entry in (group.get('entries', []) if isinstance(group, dict) else []):
+                    u = entry.get('url') if isinstance(entry, dict) else None
+                    if not u:
+                        continue
+                    n = normalize_url(u)
+                    if not n or n in used_norms or n in seen_rej:
+                        continue
+                    seen_rej.add(n)
+                    rejected_pos += 1
+                    cursor.execute('''
+                        INSERT INTO citations (run_id, prompt_id, run_number, citation_type, position, url, url_normalized, title, domain, account_type)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (
+                        run_id,
+                        row['prompt_id'],
+                        row['run_number'],
+                        'rejected',
+                        rejected_pos,
+                        u,
+                        n,
+                        (entry.get('title') if isinstance(entry, dict) else None),
+                        (group_domain or extract_domain(u)),
+                        'personal'
+                    ))
         except:
             pass
     
