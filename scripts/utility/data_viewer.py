@@ -3,6 +3,7 @@ import pandas as pd
 from flask import Flask, render_template_string, request
 import json
 import os
+import html as html_module
 
 DOMAIN_EXPLORER_TEMPLATE = """
 <!DOCTYPE html>
@@ -11,7 +12,38 @@ DOMAIN_EXPLORER_TEMPLATE = """
     <title>Domain Explorer - GEO Research</title>
     <style>
         body { font-family: -apple-system, sans-serif; background: #f4f4f9; margin: 0; padding: 20px; }
-        .nav { margin-bottom: 20px; }
+        
+    .nav { 
+        display: flex; 
+        gap: 2px; 
+        margin-bottom: 20px; 
+        border-bottom: 1px solid #e5e7eb; 
+        padding-bottom: 0;
+    }
+    .nav a { 
+        text-decoration: none !important; 
+        color: #6b7280 !important; 
+        font-weight: 600 !important; 
+        padding: 10px 20px !important; 
+        border-radius: 8px 8px 0 0 !important;
+        font-size: 14px !important;
+        transition: all 0.2s !important;
+        border: 1px solid transparent !important;
+        border-bottom: none !important;
+        margin-bottom: -1px !important;
+        margin-right: 0 !important;
+    }
+    .nav a:hover { 
+        background: #f3f4f6 !important; 
+        color: #111827 !important; 
+    }
+    .nav a.active { 
+        background: white !important; 
+        color: #10a37f !important; 
+        border-color: #e5e7eb !important;
+        border-bottom: 1px solid white !important;
+    }
+
         .nav a { text-decoration: none; color: #10a37f; font-weight: bold; margin-right: 20px; }
         .filters { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
         .filters label { font-weight: bold; font-size: 13px; color: #555; }
@@ -51,12 +83,13 @@ DOMAIN_EXPLORER_TEMPLATE = """
     </style>
 </head>
 <body>
+    
     <div class="nav">
-        <a href="/">← Run Viewer</a>
-        <a href="/dashboard">📊 Dashboard</a>
-        <a href="/urls" style="color: #0f766e;">🔗 URL Breakdown</a>
-        <a href="/domains" style="color: #6366f1;">🔍 Domain Explorer</a>
-        <a href="/invisible" style="color: #ef4444;">🕳️ Truly Invisible</a>
+        <a href="/" class="{{ 'active' if active_tab == 'viewer' else '' }}">🤖 Run Viewer</a>
+        <a href="/dashboard" class="{{ 'active' if active_tab == 'dashboard' else '' }}">📊 Dashboard</a>
+        <a href="/urls" class="{{ 'active' if active_tab == 'urls' else '' }}">🔗 URL Breakdown</a>
+        <a href="/domains" class="{{ 'active' if active_tab == 'domains' else '' }}">🔍 Domain Explorer</a>
+        <a href="/invisible" class="{{ 'active' if active_tab == 'invisible' else '' }}">🕳️ Truly Invisible</a>
     </div>
     <h1>🔍 Domain Explorer</h1>
     
@@ -223,7 +256,38 @@ DASHBOARD_TEMPLATE = """
     <title>GEO Research Dashboard</title>
     <style>
         body { font-family: -apple-system, sans-serif; background: #f4f4f9; margin: 0; padding: 40px; }
-        .nav { margin-bottom: 30px; }
+        
+    .nav { 
+        display: flex; 
+        gap: 2px; 
+        margin-bottom: 20px; 
+        border-bottom: 1px solid #e5e7eb; 
+        padding-bottom: 0;
+    }
+    .nav a { 
+        text-decoration: none !important; 
+        color: #6b7280 !important; 
+        font-weight: 600 !important; 
+        padding: 10px 20px !important; 
+        border-radius: 8px 8px 0 0 !important;
+        font-size: 14px !important;
+        transition: all 0.2s !important;
+        border: 1px solid transparent !important;
+        border-bottom: none !important;
+        margin-bottom: -1px !important;
+        margin-right: 0 !important;
+    }
+    .nav a:hover { 
+        background: #f3f4f6 !important; 
+        color: #111827 !important; 
+    }
+    .nav a.active { 
+        background: white !important; 
+        color: #10a37f !important; 
+        border-color: #e5e7eb !important;
+        border-bottom: 1px solid white !important;
+    }
+
         .nav a { text-decoration: none; color: #10a37f; font-weight: bold; margin-right: 20px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
         .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -239,11 +303,13 @@ DASHBOARD_TEMPLATE = """
     </style>
 </head>
 <body>
+    
     <div class="nav">
-        <a href="/">← Back to Run Viewer</a>
-        <a href="/urls" style="color: #0f766e;">🔗 URL Breakdown</a>
-        <a href="/domains" style="color: #6366f1;">🔍 Domain Explorer</a>
-        <a href="/invisible" style="color: #ef4444;">🕳️ Truly Invisible</a>
+        <a href="/" class="{{ 'active' if active_tab == 'viewer' else '' }}">🤖 Run Viewer</a>
+        <a href="/dashboard" class="{{ 'active' if active_tab == 'dashboard' else '' }}">📊 Dashboard</a>
+        <a href="/urls" class="{{ 'active' if active_tab == 'urls' else '' }}">🔗 URL Breakdown</a>
+        <a href="/domains" class="{{ 'active' if active_tab == 'domains' else '' }}">🔍 Domain Explorer</a>
+        <a href="/invisible" class="{{ 'active' if active_tab == 'invisible' else '' }}">🕳️ Truly Invisible</a>
     </div>
     <div style="margin: 8px 0 18px; font-size: 12px;">
         <span class="stat-label" style="font-weight: bold;">Mode:</span>
@@ -696,12 +762,48 @@ HTML_TEMPLATE = """
         }
         a { color: #10a37f; text-decoration: none; }
         a:hover { text-decoration: underline; }
+    
+    .nav { 
+        display: flex; 
+        gap: 2px; 
+        margin-bottom: 20px; 
+        border-bottom: 1px solid #e5e7eb; 
+        padding-bottom: 0;
+    }
+    .nav a { 
+        text-decoration: none !important; 
+        color: #6b7280 !important; 
+        font-weight: 600 !important; 
+        padding: 10px 20px !important; 
+        border-radius: 8px 8px 0 0 !important;
+        font-size: 14px !important;
+        transition: all 0.2s !important;
+        border: 1px solid transparent !important;
+        border-bottom: none !important;
+        margin-bottom: -1px !important;
+        margin-right: 0 !important;
+    }
+    .nav a:hover { 
+        background: #f3f4f6 !important; 
+        color: #111827 !important; 
+    }
+    .nav a.active { 
+        background: white !important; 
+        color: #10a37f !important; 
+        border-color: #e5e7eb !important;
+        border-bottom: 1px solid white !important;
+    }
+
     </style>
 </head>
 <body>
     <div id="sidebar">
-        <div style="margin-bottom: 20px; padding: 10px; background: #10a37f; border-radius: 5px; text-align: center;">
-            <a href="/dashboard" style="text-decoration:none; color:white; font-weight:bold;">📊 VIEW DASHBOARD</a>
+        <div style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+            <a href="/" style="text-decoration:none; color:white; font-weight:bold; background: #10a37f; padding: 10px; border-radius: 5px; text-align: center;">🤖 RUN VIEWER</a>
+            <a href="/dashboard" style="text-decoration:none; color:white; font-weight:bold; background: #3b82f6; padding: 10px; border-radius: 5px; text-align: center;">📊 DASHBOARD</a>
+            <a href="/urls" style="text-decoration:none; color:white; font-weight:bold; background: #0f766e; padding: 10px; border-radius: 5px; text-align: center;">🔗 URL BREAKDOWN</a>
+            <a href="/domains" style="text-decoration:none; color:white; font-weight:bold; background: #6366f1; padding: 10px; border-radius: 5px; text-align: center;">🔍 DOMAIN EXPLORER</a>
+            <a href="/invisible" style="text-decoration:none; color:white; font-weight:bold; background: #ef4444; padding: 10px; border-radius: 5px; text-align: center;">🕳️ TRULY INVISIBLE</a>
         </div>
         
         <!-- Account Type Filter -->
@@ -870,7 +972,7 @@ HTML_TEMPLATE = """
                             <div style="color: #888; font-style: italic;">No response data available</div>
                             {% endif %}
                         {% endif %}
-                        
+
                         <!-- Cited Sources -->
                         <div style="border-top: 1px solid #ddd; margin-top: 15px; padding-top: 15px;">
                             {% set cited_sources = cit_db|selectattr('citation_type', 'equalto', 'cited')|list %}
@@ -1021,6 +1123,13 @@ HTML_TEMPLATE = """
                         <summary style="cursor: pointer; font-size: 12px; color: #666; font-weight: bold;">📝 RAW RESPONSE TEXT</summary>
                         <div class="raw-text-box" style="margin-top: 10px;">{{ run_raw.response_text or 'No response text available' }}</div>
                     </details>
+
+                    {% if run_raw.claim_segmentation_html %}
+                    <details style="margin-top: 15px;">
+                        <summary style="cursor:pointer; font-size: 12px; color:#444; font-weight: bold;">🎨 Claim segmentation (citation mapping)</summary>
+                        <div style="margin-top:10px;">{{ run_raw.claim_segmentation_html|safe }}</div>
+                    </details>
+                    {% endif %}
 
             </div>
                 
@@ -1371,6 +1480,156 @@ _raw_data_cache = None
 _render_cache = {}
 _CACHE_TTL_SEC = 20
 
+def _citation_mapping_path_candidates(run_id: str, account_type: str | None):
+    """Plausible mapping file paths for a run (best-effort; naming differs by account)."""
+    rid = (run_id or '').strip()
+    if not rid:
+        return []
+    base = rid
+    cands = [
+        os.path.join('datapass', 'citation_mappings', f'{base}_mapping.json'),
+        os.path.join('datapass', 'citation_mappings', f'{base}_personal_mapping.json'),
+        os.path.join('datapass', 'citation_mappings', f'{base}_enterprise_mapping.json'),
+    ]
+    if base.endswith('_personal'):
+        cands.extend([
+            os.path.join('datapass', 'citation_mappings', f'{base.replace("_personal","")}_personal_mapping.json'),
+            os.path.join('datapass', 'citation_mappings', f'{base.replace("_personal","")}_mapping.json'),
+        ])
+    if account_type == 'enterprise':
+        pref = [cands[2], cands[0], cands[1]] + cands[3:]
+        return pref
+    if account_type == 'personal':
+        pref = [cands[0], cands[1], cands[2]] + cands[3:]
+        return pref
+    return cands
+
+def _extract_claim_items_from_mapping_json(obj):
+    """Return list[dict] items containing claim_text + citation_token + inline_url from mapping JSON."""
+    if isinstance(obj, dict):
+        for key in ('citations', 'mappings', 'items'):
+            v = obj.get(key)
+            if isinstance(v, list) and v and isinstance(v[0], dict) and ('claim_text' in v[0]):
+                return v
+        for v in obj.values():
+            out = _extract_claim_items_from_mapping_json(v)
+            if out:
+                return out
+    if isinstance(obj, list):
+        if obj and isinstance(obj[0], dict) and ('claim_text' in obj[0]):
+            return obj
+        for v in obj:
+            out = _extract_claim_items_from_mapping_json(v)
+            if out:
+                return out
+    return []
+
+def build_claim_segmentation_html(run_id: str, account_type: str | None):
+    """
+    Inline visualization of pipeline-extracted claim_text segments per citation.
+    Note: this is *not* a native ChatGPT 'claim span' artifact; it is reconstructed.
+    """
+    for path in _citation_mapping_path_candidates(run_id, account_type):
+        if not path or not os.path.exists(path):
+            continue
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            items = _extract_claim_items_from_mapping_json(data) or []
+            if not items:
+                return ''
+
+            def _tok_start(it):
+                try:
+                    tp = it.get('token_position') or {}
+                    return int(tp.get('start_idx') or 0)
+                except Exception:
+                    return 0
+
+            items = sorted(items, key=_tok_start)
+            palette = [
+                ('#dcfce7', '#166534'),
+                ('#dbeafe', '#1e40af'),
+                ('#fef3c7', '#92400e'),
+                ('#f3e8ff', '#6b21a8'),
+                ('#fee2e2', '#991b1b'),
+                ('#ecfeff', '#155e75'),
+            ]
+
+            parts = []
+            parts.append(
+                '<div style="font-size:12px;color:#666;margin-bottom:8px;">'
+                '<strong>Note:</strong> segments are <em>pipeline-extracted</em> claim spans associated to citation markers.'
+                '</div>'
+            )
+            parts.append('<div style="line-height:1.9; white-space:pre-wrap; font-size:13px; background:#fafafa; border:1px solid #eee; padding:12px; border-radius:10px;">')
+            for i, it in enumerate(items):
+                claim = (it.get('claim_text') or '').strip()
+                token = (it.get('citation_token') or '').strip()
+                url = (it.get('inline_url') or '').strip()
+                if not claim:
+                    continue
+                bg, fg = palette[i % len(palette)]
+                safe_claim = html_module.escape(claim)
+                safe_url = html_module.escape(url)
+                safe_token = html_module.escape(token)
+                badge = (
+                    f'<span style="font-size:10px; vertical-align:super; margin-left:4px; padding:1px 5px; border-radius:6px; background:rgba(0,0,0,0.08); color:#333;">{safe_token}</span>'
+                    if safe_token else ''
+                )
+                link_open = (
+                    f'<a href="{safe_url}" target="_blank" style="text-decoration:none; color:inherit;" title="{safe_url}">'
+                    if safe_url else '<span>'
+                )
+                link_close = '</a>' if safe_url else '</span>'
+                parts.append(
+                    f'{link_open}<span style="display:inline; padding:2px 6px; border-radius:6px; background:{bg}; color:{fg};">{safe_claim}{badge}</span>{link_close} '
+                )
+            parts.append('</div>')
+
+            # Table view (the "Extraction Data" component)
+            parts.append(
+                '<details style="margin-top:12px;">'
+                '<summary style="cursor:pointer; font-size:12px; font-weight:700; color:#111;">Extraction Data (table)</summary>'
+                '<div style="margin-top:10px; overflow-x:auto;">'
+                '<table style="width:100%; border-collapse:collapse; font-size:12px;">'
+                '<thead><tr style="background:#f3f4f6;">'
+                '<th style="text-align:left; padding:8px; border:1px solid #e5e7eb;">#</th>'
+                '<th style="text-align:left; padding:8px; border:1px solid #e5e7eb;">Token</th>'
+                '<th style="text-align:left; padding:8px; border:1px solid #e5e7eb;">Claim Text (Extracted)</th>'
+                '<th style="text-align:left; padding:8px; border:1px solid #e5e7eb;">Target URL</th>'
+                '<th style="text-align:left; padding:8px; border:1px solid #e5e7eb;">start_idx</th>'
+                '<th style="text-align:left; padding:8px; border:1px solid #e5e7eb;">end_idx</th>'
+                '</tr></thead><tbody>'
+            )
+            for i, it in enumerate(items):
+                claim = (it.get('claim_text') or '').strip()
+                token = (it.get('citation_token') or '').strip()
+                url = (it.get('inline_url') or '').strip()
+                tp = it.get('token_position') or {}
+                sidx = tp.get('start_idx')
+                eidx = tp.get('end_idx')
+                safe_claim = html_module.escape(claim)
+                safe_token = html_module.escape(token)
+                safe_url = html_module.escape(url)
+                url_cell = f'<a href="{safe_url}" target="_blank">{safe_url}</a>' if safe_url else '—'
+                parts.append(
+                    '<tr>'
+                    f'<td style="padding:8px; border:1px solid #e5e7eb; color:#666;">{i+1}</td>'
+                    f'<td style="padding:8px; border:1px solid #e5e7eb;"><code style="background:#f3f4f6; padding:2px 4px; border-radius:4px;">{safe_token}</code></td>'
+                    f'<td style="padding:8px; border:1px solid #e5e7eb;">{safe_claim}</td>'
+                    f'<td style="padding:8px; border:1px solid #e5e7eb;">{url_cell}</td>'
+                    f'<td style="padding:8px; border:1px solid #e5e7eb; color:#666;">{html_module.escape(str(sidx)) if sidx is not None else "—"}</td>'
+                    f'<td style="padding:8px; border:1px solid #e5e7eb; color:#666;">{html_module.escape(str(eidx)) if eidx is not None else "—"}</td>'
+                    '</tr>'
+                )
+            parts.append('</tbody></table></div></details>')
+            parts.append(f'<div style="margin-top:8px;font-size:11px;color:#888;">Source: <code>{html_module.escape(path)}</code></div>')
+            return ''.join(parts)
+        except Exception:
+            return ''
+    return ''
+
 def _cache_get(key):
     try:
         import time
@@ -1540,7 +1799,8 @@ def index():
                 'sources_all_json': extra_data.get('sources_all_json', '[]'),
                 'sources_additional_json': extra_data.get('sources_additional_json', '[]'),
                 'sonic_classification_json': extra_data.get('sonic_classification_json', '{}'),
-                'raw_enabled': raw_enabled
+                'raw_enabled': raw_enabled,
+                'claim_segmentation_html': build_claim_segmentation_html(run_id, db_run['account_type']),
             }
             
             # Parse sonic classification for search probabilities
@@ -2210,7 +2470,7 @@ def index():
             }
 
 
-    html = render_template_string(HTML_TEMPLATE, 
+    html = render_template_string(HTML_TEMPLATE, active_tab='viewer', 
                                  run_ids=run_ids, 
                                  active_run_id=run_id,
                                  run_raw=run_raw,
@@ -2794,7 +3054,7 @@ def dashboard():
         label_type_rows_selected = _build_label_rows(label_type_counts_selected)
         label_tone_rows_selected = _build_label_rows(label_tone_counts_selected)
 
-    html = render_template_string(DASHBOARD_TEMPLATE, 
+    html = render_template_string(DASHBOARD_TEMPLATE, active_tab='dashboard', 
                                  ent_runs=ent_runs, ent_bing=ent_bing,
                                  ent_total_all=ent_total_all, ent_matched_all=ent_matched_all,
                                  ent_total_main=ent_total_main, ent_total_add=ent_total_add,
@@ -3020,7 +3280,7 @@ def domain_explorer():
     # Limit to top 100 for display
     domains = domains[:100]
     
-    return render_template_string(DOMAIN_EXPLORER_TEMPLATE,
+    return render_template_string(DOMAIN_EXPLORER_TEMPLATE, active_tab='domains',
                                  domains=domains,
                                  search_query=search_query,
                                  account_filter=account_filter,
@@ -3046,7 +3306,38 @@ INVISIBLE_TEMPLATE = """
   <title>Truly Invisible - GEO Research</title>
   <style>
     body { font-family: -apple-system, sans-serif; background: #f4f4f9; margin: 0; padding: 20px; }
-    .nav { margin-bottom: 18px; }
+    
+    .nav { 
+        display: flex; 
+        gap: 2px; 
+        margin-bottom: 20px; 
+        border-bottom: 1px solid #e5e7eb; 
+        padding-bottom: 0;
+    }
+    .nav a { 
+        text-decoration: none !important; 
+        color: #6b7280 !important; 
+        font-weight: 600 !important; 
+        padding: 10px 20px !important; 
+        border-radius: 8px 8px 0 0 !important;
+        font-size: 14px !important;
+        transition: all 0.2s !important;
+        border: 1px solid transparent !important;
+        border-bottom: none !important;
+        margin-bottom: -1px !important;
+        margin-right: 0 !important;
+    }
+    .nav a:hover { 
+        background: #f3f4f6 !important; 
+        color: #111827 !important; 
+    }
+    .nav a.active { 
+        background: white !important; 
+        color: #10a37f !important; 
+        border-color: #e5e7eb !important;
+        border-bottom: 1px solid white !important;
+    }
+
     .nav a { margin-right: 12px; text-decoration: none; color: #111; font-weight: 600; }
     .card { background: white; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
     table { width: 100%; border-collapse: collapse; }
@@ -3061,13 +3352,14 @@ INVISIBLE_TEMPLATE = """
   </style>
 </head>
 <body>
-  <div class="nav">
-    <a href="/">← Run Viewer</a>
-    <a href="/dashboard">📊 Dashboard</a>
-    <a href="/urls" style="color:#0f766e;">🔗 URL Breakdown</a>
-    <a href="/domains">🔍 Domain Explorer</a>
-    <a href="/invisible" style="color:#ef4444;">🕳️ Truly Invisible</a>
-  </div>
+  
+    <div class="nav">
+        <a href="/" class="{{ 'active' if active_tab == 'viewer' else '' }}">🤖 Run Viewer</a>
+        <a href="/dashboard" class="{{ 'active' if active_tab == 'dashboard' else '' }}">📊 Dashboard</a>
+        <a href="/urls" class="{{ 'active' if active_tab == 'urls' else '' }}">🔗 URL Breakdown</a>
+        <a href="/domains" class="{{ 'active' if active_tab == 'domains' else '' }}">🔍 Domain Explorer</a>
+        <a href="/invisible" class="{{ 'active' if active_tab == 'invisible' else '' }}">🕳️ Truly Invisible</a>
+    </div>
 
   <h1 style="margin: 0 0 6px;">🕳️ Invisible Links (by engine)</h1>
   <div class="muted">Filters are evaluated per-run using that run’s Bing results and (if collected) Google SERP for the same account type.</div>
@@ -3175,7 +3467,38 @@ URL_BREAKDOWN_TEMPLATE = """
   <title>URL Breakdown - GEO Research</title>
   <style>
     body { font-family: -apple-system, sans-serif; background: #f4f4f9; margin: 0; padding: 20px; }
-    .nav { margin-bottom: 18px; }
+    
+    .nav { 
+        display: flex; 
+        gap: 2px; 
+        margin-bottom: 20px; 
+        border-bottom: 1px solid #e5e7eb; 
+        padding-bottom: 0;
+    }
+    .nav a { 
+        text-decoration: none !important; 
+        color: #6b7280 !important; 
+        font-weight: 600 !important; 
+        padding: 10px 20px !important; 
+        border-radius: 8px 8px 0 0 !important;
+        font-size: 14px !important;
+        transition: all 0.2s !important;
+        border: 1px solid transparent !important;
+        border-bottom: none !important;
+        margin-bottom: -1px !important;
+        margin-right: 0 !important;
+    }
+    .nav a:hover { 
+        background: #f3f4f6 !important; 
+        color: #111827 !important; 
+    }
+    .nav a.active { 
+        background: white !important; 
+        color: #10a37f !important; 
+        border-color: #e5e7eb !important;
+        border-bottom: 1px solid white !important;
+    }
+
     .nav a { margin-right: 12px; text-decoration: none; color: #111; font-weight: 600; }
     .card { background: white; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
     table { width: 100%; border-collapse: collapse; }
@@ -3188,18 +3511,21 @@ URL_BREAKDOWN_TEMPLATE = """
     .pill-green { background:#dcfce7; color:#166534; }
     .pill-gray { background:#f3f4f6; color:#374151; }
     .pill-red { background:#fee2e2; color:#991b1b; }
+    .pill-amber { background:#fef3c7; color:#92400e; }
+    .pill-orange { background:#ffedd5; color:#9a3412; }
     a.url { color:#0369a1; text-decoration:none; }
     a.url:hover { text-decoration:underline; }
   </style>
 </head>
 <body>
-  <div class="nav">
-    <a href="/">← Run Viewer</a>
-    <a href="/dashboard">📊 Dashboard</a>
-    <a href="/urls" style="color:#0f766e;">🔗 URL Breakdown</a>
-    <a href="/domains">🔍 Domain Explorer</a>
-    <a href="/invisible" style="color:#ef4444;">🕳️ Truly Invisible</a>
-  </div>
+  
+    <div class="nav">
+        <a href="/" class="{{ 'active' if active_tab == 'viewer' else '' }}">🤖 Run Viewer</a>
+        <a href="/dashboard" class="{{ 'active' if active_tab == 'dashboard' else '' }}">📊 Dashboard</a>
+        <a href="/urls" class="{{ 'active' if active_tab == 'urls' else '' }}">🔗 URL Breakdown</a>
+        <a href="/domains" class="{{ 'active' if active_tab == 'domains' else '' }}">🔍 Domain Explorer</a>
+        <a href="/invisible" class="{{ 'active' if active_tab == 'invisible' else '' }}">🕳️ Truly Invisible</a>
+    </div>
 
   <h1 style="margin: 0 0 6px;">🔗 URL Breakdown</h1>
   <div class="muted">Filter to see which specific URLs are enriched vs unlabeled, split by citation group (cited/additional/rejected).</div>
@@ -3221,6 +3547,15 @@ URL_BREAKDOWN_TEMPLATE = """
           <option value="cited" {{ 'selected' if group_filter=='cited' else '' }}>Cited</option>
           <option value="additional" {{ 'selected' if group_filter=='additional' else '' }}>Additional</option>
           <option value="rejected" {{ 'selected' if group_filter=='rejected' else '' }}>Rejected</option>
+        </select>
+      </label>
+      <label class="muted">
+        Visibility:
+        <select name="vis">
+          <option value="all" {{ 'selected' if vis_filter=='all' else '' }}>All</option>
+          <option value="bing" {{ 'selected' if vis_filter=='bing' else '' }}>Invisible on Bing</option>
+          <option value="google" {{ 'selected' if vis_filter=='google' else '' }}>Invisible on Google</option>
+          <option value="both" {{ 'selected' if vis_filter=='both' else '' }}>Truly Invisible (Bing+Google)</option>
         </select>
       </label>
       <label class="muted">
@@ -3270,6 +3605,46 @@ URL_BREAKDOWN_TEMPLATE = """
       <div class="pill pill-red">Unlabeled URLs: {{ unlabeled_urls_count }}</div>
       <div class="pill pill-gray">Total URLs: {{ total_urls_count }}</div>
     </div>
+
+    <details style="margin: 10px 0 14px; padding: 10px 12px; border: 1px solid #eee; border-radius: 12px; background: #fafafa;">
+      <summary style="cursor:pointer; font-weight:700; color:#111; font-size: 12px;">🕳️ Invisible</summary>
+      <div class="muted" style="margin: 8px 0 10px;">
+        Visibility is evaluated <strong>per-run</strong>: a URL is “invisible on Bing/Google” if it does not appear in that run’s Bing/Google SERP capture.
+        <a href="/invisible?account={{ account_filter }}&type={{ invisible_type_param }}&vis={{ 'both' if vis_filter=='all' else vis_filter }}&group=url&limit=250" style="margin-left:6px; color:#ef4444; text-decoration:none; font-weight:600;">Open full invisible explorer →</a>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap: wrap; margin: 6px 0 10px;">
+        <div class="pill pill-amber">Invisible on Bing: {{ invisible_on_bing_urls_count }}</div>
+        <div class="pill pill-orange">Invisible on Google: {{ invisible_on_google_urls_count }}</div>
+        <div class="pill pill-red">Truly Invisible (Bing+Google): {{ truly_invisible_urls_count }}</div>
+      </div>
+      {% if truly_invisible_rows and truly_invisible_rows|length > 0 %}
+      <div class="muted" style="margin: 6px 0 8px; font-size: 11px;">Top truly-invisible URLs (by distinct run count) under the current filters:</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Domain</th>
+            <th>URL</th>
+            <th>Group</th>
+            <th>Runs</th>
+            <th>Occurrences</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in truly_invisible_rows %}
+          <tr>
+            <td>{{ r['domain'] }}</td>
+            <td><a class="url" href="{{ r['url'] }}" target="_blank">{{ r['url'] }}</a></td>
+            <td class="muted">{{ r['group'] }}</td>
+            <td class="muted">{{ r['run_count'] }}</td>
+            <td class="muted">{{ r['occurrences'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="muted" style="margin-top:8px; font-size: 11px;">No truly-invisible URLs under the current filters.</div>
+      {% endif %}
+    </details>
 
     <table>
       <thead>
@@ -3477,6 +3852,7 @@ def url_breakdown():
     account_filter = request.args.get('account', 'all')
     group_filter = request.args.get('group', 'all')
     labels_filter = request.args.get('labels', 'all')  # all | enriched | unlabeled
+    vis_filter = request.args.get('vis', 'all')  # all | bing | google | both
     efield = request.args.get('efield', '').strip()
     evalue = request.args.get('evalue', '').strip()
     try:
@@ -3490,6 +3866,8 @@ def url_breakdown():
         group_filter = 'all'
     if labels_filter not in ('all', 'enriched', 'unlabeled'):
         labels_filter = 'all'
+    if vis_filter not in ('all', 'bing', 'google', 'both'):
+        vis_filter = 'all'
     if limit not in (100, 250, 500, 1000):
         limit = 250
     if efield not in ('', '__source', 'type', 'tone', 'content_format', 'primary_intent'):
@@ -3542,6 +3920,30 @@ def url_breakdown():
     else:
         labels_where = "1=1"
 
+    # Visibility predicates (per-run)
+    bing_invis_pred = """
+      NOT EXISTS (
+        SELECT 1 FROM bing_results b
+        WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized
+      )
+    """
+    google_invis_pred = """
+      NOT EXISTS (
+        SELECT 1 FROM google_results g
+        WHERE g.account_type = c.account_type
+          AND g.chatgpt_run_id = REPLACE(c.run_id, '_personal', '')
+          AND g.url_normalized = c.url_normalized
+      )
+    """
+    if vis_filter == 'bing':
+        vis_where = f"({bing_invis_pred})"
+    elif vis_filter == 'google':
+        vis_where = f"({google_invis_pred})"
+    elif vis_filter == 'both':
+        vis_where = f"({bing_invis_pred}) AND ({google_invis_pred})"
+    else:
+        vis_where = "1=1"
+
     # Counts (unique URLs)
     total_urls_count = db.execute(
         f"""
@@ -3551,6 +3953,7 @@ def url_breakdown():
           AND {group_where}
           AND c.url_normalized != ''
           AND {labels_where}
+          AND {vis_where}
         """,
         params + group_params,
     ).fetchone()[0]
@@ -3563,6 +3966,7 @@ def url_breakdown():
           AND {group_where}
           AND c.url_normalized != ''
           AND EXISTS (SELECT 1 FROM temp_enriched_urls t WHERE t.url_normalized = c.url_normalized)
+          AND {vis_where}
         """,
         params + group_params,
     ).fetchone()[0]
@@ -3585,6 +3989,7 @@ def url_breakdown():
           AND {group_where}
           AND c.url_normalized != ''
           AND {labels_where}
+          AND {vis_where}
         GROUP BY c.url_normalized
         ORDER BY run_count DESC, occurrences DESC
         LIMIT ?
@@ -3620,11 +4025,108 @@ def url_breakdown():
             'is_auto_label': is_auto,
         })
 
+    # ---- Invisible section (per-run visibility, scoped to current selection) ----
+    # Note: This intentionally does NOT apply efield/evalue post-filters (those operate on labels after grouping).
+    # It is meant as a quick, directional view + link to /invisible for deeper exploration.
+    invisible_type_param = group_filter if group_filter != 'all' else 'all'
+
+    # (re-)use bing_invis_pred / google_invis_pred; counts below respect vis_where so section matches current filter context
+    try:
+        invisible_on_bing_urls_count = db.execute(
+            f"""
+            SELECT COUNT(DISTINCT c.url_normalized)
+            FROM citations c
+            WHERE {account_where}
+              AND {group_where}
+              AND c.url_normalized != ''
+              AND {labels_where}
+              AND {vis_where}
+              AND ({bing_invis_pred})
+            """,
+            params + group_params,
+        ).fetchone()[0]
+    except Exception:
+        invisible_on_bing_urls_count = 0
+
+    try:
+        invisible_on_google_urls_count = db.execute(
+            f"""
+            SELECT COUNT(DISTINCT c.url_normalized)
+            FROM citations c
+            WHERE {account_where}
+              AND {group_where}
+              AND c.url_normalized != ''
+              AND {labels_where}
+              AND {vis_where}
+              AND ({google_invis_pred})
+            """,
+            params + group_params,
+        ).fetchone()[0]
+    except Exception:
+        invisible_on_google_urls_count = 0
+
+    try:
+        truly_invisible_urls_count = db.execute(
+            f"""
+            SELECT COUNT(DISTINCT c.url_normalized)
+            FROM citations c
+            WHERE {account_where}
+              AND {group_where}
+              AND c.url_normalized != ''
+              AND {labels_where}
+              AND {vis_where}
+              AND ({bing_invis_pred}) AND ({google_invis_pred})
+            """,
+            params + group_params,
+        ).fetchone()[0]
+    except Exception:
+        truly_invisible_urls_count = 0
+
+    truly_invisible_rows_db = []
+    try:
+        truly_invisible_rows_db = db.execute(
+            f"""
+            SELECT
+              c.url_normalized as url_normalized,
+              MIN(c.url) as url,
+              MIN(c.domain) as domain,
+              GROUP_CONCAT(DISTINCT c.citation_type) as citation_types,
+              COUNT(DISTINCT c.run_id) as run_count,
+              COUNT(*) as occurrences
+            FROM citations c
+            WHERE {account_where}
+              AND {group_where}
+              AND c.url_normalized != ''
+              AND {labels_where}
+              AND {vis_where}
+              AND ({bing_invis_pred}) AND ({google_invis_pred})
+            GROUP BY c.url_normalized
+            ORDER BY run_count DESC, occurrences DESC
+            LIMIT 50
+            """,
+            params + group_params,
+        ).fetchall()
+    except Exception:
+        truly_invisible_rows_db = []
+
+    truly_invisible_rows = []
+    for r in truly_invisible_rows_db:
+        ct = (r['citation_types'] or '').strip()
+        group_disp = ct if ct else (r['url_normalized'] or '')
+        truly_invisible_rows.append({
+            'url': r['url'],
+            'domain': r['domain'] or '',
+            'group': group_disp,
+            'run_count': int(r['run_count'] or 0),
+            'occurrences': int(r['occurrences'] or 0),
+        })
+
     return render_template_string(
         URL_BREAKDOWN_TEMPLATE,
         account_filter=account_filter,
         group_filter=group_filter,
         labels_filter=labels_filter,
+        vis_filter=vis_filter,
         efield=efield,
         evalue=evalue,
         evalue_options=evalue_options,
@@ -3633,6 +4135,11 @@ def url_breakdown():
         total_urls_count=total_urls_count,
         enriched_urls_count=enriched_urls_count if labels_filter != 'unlabeled' else 0,
         unlabeled_urls_count=unlabeled_urls_count,
+        invisible_type_param=invisible_type_param,
+        invisible_on_bing_urls_count=invisible_on_bing_urls_count,
+        invisible_on_google_urls_count=invisible_on_google_urls_count,
+        truly_invisible_urls_count=truly_invisible_urls_count,
+        truly_invisible_rows=truly_invisible_rows,
     )
 
 if __name__ == '__main__':
