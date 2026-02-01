@@ -572,6 +572,21 @@ and keep “true grounding budget” reserved for Gemini/Vertex-style exposed ch
 2.  **Correlate**: Check if these queries lead to citations that are absent from English SERPs.
 3.  **Contrast**: Compare with Gemini to see if it exhibits similar cross-lingual "pivot" behavior.
 
+### 20.2 Multi-Turn Fan-Out (Split Query Batches)
+**Discovery**: In some runs, ChatGPT emits fan-out queries in **multiple batches** across search turns (i.e., `search_turns_count` increments and `search_model_queries.queries` appears more than once in the raw network stream).
+
+- **Why this matters**: If we only read the *first* `search_model_queries.queries` block, we will undercount fan-out size and incorrectly label later queries as “unexpected.”
+- **Operational rule for our pipeline**: Treat the fan-out query set as the **union of all** `search_model_queries.queries` lists observed in the run’s raw network stream.
+- **Additional observable (sanity check)**: `search_tool_call_count` (from the run-level metadata near the end of the stream) correlates with multi-turn behavior:
+  - Typical single-turn runs: `search_tool_call_count = 1`
+  - Multi-turn runs: `search_tool_call_count` matches the number of turns (e.g., 2 or 3)
+
+**Example (Enterprise)**:
+- `P053_r2_enterprise`: 2 fan-out queries at `search_turns_count = 1`, then 2 more at `search_turns_count = 2` (4 total).
+  - Observed `search_tool_call_count = 2`
+ - `P073_r3_enterprise`: 2 fan-out queries at each of `search_turns_count = 1,2,3` (6 total).
+  - Observed `search_tool_call_count = 3`
+
 ---
 
 ## 21. Methodological Notes & Validation Plans

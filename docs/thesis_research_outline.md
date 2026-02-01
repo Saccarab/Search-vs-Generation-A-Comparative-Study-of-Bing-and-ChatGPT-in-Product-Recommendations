@@ -130,6 +130,7 @@
 - **Definition (Fan-Out):** A single user prompt can result in **multiple retrieval queries** (parallel or sequential). We treat these as the model’s **fan-out query set** (often UI-hidden).
 - **Observed pattern:** Fan-out queries frequently include *operator-like* changes (e.g., adding a year such as "2025/2026", adding geo terms, adding “reviews/pricing/alternatives”), but we do not rely on a separate “rewriting” concept—only on what is observable in logged fan-out queries.
 - **The "Query Drift" Problem:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
+- **Important nuance (multi-turn fan-out):** Fan-out queries may be emitted in **multiple batches** across search turns; the “fan-out set” for a run is the **union** of all observed batches (not just the first).
 
 ### 1.4.7 Fan-Out Queries (Cross-Model Instrumentation)
 - **Why it matters:** Fan-out query sets are a core degree of freedom that controls retrieval. Two systems can share the same index but diverge because they issue different query sets.
@@ -159,6 +160,100 @@
 - **Defining Multi-Chips:** We observed cases where ChatGPT groups multiple sources under a single citation (e.g., "Vibe Voice+1"). 
 - **Forensic Discovery:** Our mapping revealed that these correspond to concatenated tokens (e.g., `turn0search8` + `search15`).
 - **Research Value:** This allows us to measure **Synthesis Aggression**—how ChatGPT merges facts from multiple distinct search results into a single cohesive claim.
+
+## 1.7 Anatomy of a ChatGPT Response (Network-Instrumented)
+*What exactly we can observe about ChatGPT’s retrieval + citation pipeline from captured network payloads.*
+
+### 1.7.1 The high-level “agent loop” (as observed)
+1. **User prompt received**
+2. **Search decision**: the system decides whether to call web search (probabilistic trigger)
+3. **Fan-out query generation** (often hidden): multiple search queries issued for the same prompt
+4. **Retrieval**: a pool of search results is returned (grouped lists of candidate sources)
+5. **Selection**: the model promotes some sources to be cited inline, and may also attach extra sources
+6. **Generation**: answer text is streamed + citations are inserted/merged (“multi-chip”)
+
+### 1.7.2 Source categories we use (scope)
+- **Cited**: sources referenced inline in the generated answer.
+- **Additional**: sources retrieved and attached but not referenced inline (still “considered”).
+- **Rejected**: sources that appeared in the retrieved pool but did not survive selection (not cited, not attached).
+
+### 1.7.3 Search trigger instrumentation (the “decision” fields)
+We log the system’s search-decision artifacts where present (Enterprise streams are richest):
+- `sonic_classification_result`: the classifier output used to decide search (e.g., `simple_search_prob`, `complex_search_prob`, thresholds).
+- `web_search_triggered`: whether search actually ran.
+- `web_search_forced`: whether search was forced (if present).
+
+### 1.7.4 Fan-out queries (“hidden queries”)
+- **Definition**: multiple search queries issued for one user prompt; these expand/reshape retrieval scope.
+- **Why it matters**: fan-out sets control which sources are even eligible to be cited.
+- **Observable field (network-derived)**: `search_model_queries.queries` (stored as `hidden_queries_json` in our extracted CSV/DB pipeline).
+- **Typical vs. exception**: Many runs have **two** fan-out queries (Q1/Q2), but some runs have **4+**; these can appear as **2 queries in search turn 1** and **2 more in search turn 2** (e.g., `P053_r2`).
+- **How it appears in the raw network stream (multi-turn fan-out signature)**:
+  - The response arrives as an event stream (patch/append style) containing repeated tool messages (commonly `role="tool"`, `name="web.run"`).
+  - Each search “turn” can include a `metadata.search_model_queries` object with a `queries[]` list, plus a `search_turns_count` counter.
+  - When multi-turn fan-out happens, **multiple** `metadata.search_model_queries` blocks appear in the same run with **increasing** `search_turns_count` (e.g., 1 → 2 → 3). The run’s fan-out set is the **union** of all `queries[]` lists across these blocks.
+  - A useful corroborating field in the run-level metadata is `search_tool_call_count`, which tends to equal the number of search turns (typical single-turn runs: `1`; multi-turn runs: `2+`).
+  - Example patterns observed:
+    - `P053_r2` (Enterprise): 2 queries at `search_turns_count=1` + 2 queries at `search_turns_count=2` → 4 total.
+    - `P073_r3` (Enterprise): 2 queries at each of `search_turns_count=1,2,3` → 6 total.
+
+### 1.7.5 Retrieved candidate pool (what the model could have used)
+We capture the retrieved candidates and their metadata:
+- `search_result_groups`: grouped search entries containing `url`, `title`, `snippet`, and `ref_id` (turn/ref index keys).
+- **Interpretation**: this is the model’s “shortlist menu” prior to selection.
+
+### 1.7.6 Citation tokens & claim mapping (how we attach sources to text)
+Two key payload elements enable claim→source reconstruction:
+- `content_references`: token spans / citation tokens with `start_idx` / `end_idx` (where citations appear in the output stream).
+- `response_text`: the generated text (often streamed via patch/append events).
+
+From these, we build:
+- **Claim blocks**: the text segments preceding each citation token (our `claim_text` extraction).
+- **Mapped sources**: resolved URLs/titles/snippets by matching `ref_id` keys to `search_result_groups`.
+
+### 1.7.7 What the network does *not* reveal (critical limitation)
+- It does **not** include the exact on-page snippets/chunks that were fetched/inserted into the model context.
+- Therefore: our ChatGPT-side “grounding budget” analyses are **output-side proxies** (claim-attributed text), not true input-side snippet budgets.
+
+### 1.7.8 What happens next (how this section feeds the thesis)
+This “anatomy” motivates the next analytic layers:
+- **Overlap & visibility**: compare cited/additional/rejected pools against Bing Top 30 + Deep Hunt and Google SERP controls.
+- **Selection bias**: compare Content DNA of Cited vs Additional vs Rejected.
+- **Stochasticity**: quantify fan-out drift across runs and resulting citation churn.
+
+### 1.7.9 Network Parameter Glossary (ChatGPT, Network-Instrumented)
+*A practical glossary of the recurring fields we use when decoding the raw event stream. This is intentionally limited to parameters we directly observed in captured payloads.*
+
+#### Identifiers / linkage
+- **`conversation_id`**: conversation session identifier (useful for grouping, not analysis).
+- **`message.id`**: unique message identifier in the stream.
+- **`parent_id`**: links a message to its parent; helps follow the chain of events.
+- **`request_id`**: correlates events belonging to the same request; often shared across tool calls and patches for that run.
+- **`turn_exchange_id` / `turn_trace_id`**: internal tracing IDs for a single turn; useful for debugging continuity across events.
+
+#### Search trigger & decision
+- **`sonic_classification_result`**: the search trigger classifier output (probabilities + thresholds).
+- **`web_search_triggered` / `web_search_forced`**: whether search ran / was forced (when present).
+- **`message_marker`**: markers like `search_start` that indicate when retrieval begins.
+
+#### Fan-out queries & search turns
+- **`metadata.search_model_queries.queries[]`**: the model-generated fan-out query list for a search turn (our “hidden queries”).
+- **`search_turns_count`**: which search turn we are in (1, 2, 3…); multi-turn fan-out appears as repeated query batches with increasing counts.
+- **`search_tool_call_count`**: run-level count of search tool invocations; typically correlates with `max(search_turns_count)` (single-turn: 1; multi-turn: 2+).
+- **`search_source` / `client_reported_search_source`**: indicates the origin mode (often `composer_auto`); useful for auditing when behavior changes.
+
+#### Retrieved candidates (what came back from search)
+- **`metadata.search_result_groups`**: the grouped retrieval pool (URLs, titles, snippets).
+- **`ref_id`**: the key (turn/ref indices) we use to map candidates to citations (`turn_index`, `ref_type`, `ref_index`).
+- **`debug_sonic_thread_id`**: internal identifier for the search thread (debugging/trace only).
+
+#### Citation / attribution artifacts
+- **`content_references`**: citation token spans inserted into the streamed response; indices point to the citation token location, not the claim boundary.
+- **`safe_urls`** and **`url_moderation` events**: safety/allow-list decisions for URLs that show up in citations and link cards.
+
+#### Completion / response framing
+- **`finish_details`**: how generation ended (stop reason / tokens).
+- **`model_slug` / `default_model_slug`**: the model variant used for the run.
 
 ---
 

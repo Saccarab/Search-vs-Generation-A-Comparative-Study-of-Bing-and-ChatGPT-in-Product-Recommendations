@@ -54,6 +54,7 @@ DOMAIN_EXPLORER_TEMPLATE = """
     <div class="nav">
         <a href="/">← Run Viewer</a>
         <a href="/dashboard">📊 Dashboard</a>
+        <a href="/urls" style="color: #0f766e;">🔗 URL Breakdown</a>
         <a href="/domains" style="color: #6366f1;">🔍 Domain Explorer</a>
         <a href="/invisible" style="color: #ef4444;">🕳️ Truly Invisible</a>
     </div>
@@ -98,6 +99,7 @@ DOMAIN_EXPLORER_TEMPLATE = """
             <option value="all" {{ 'selected' if type_filter == 'all' else '' }}>All</option>
             <option value="cited" {{ 'selected' if type_filter == 'cited' else '' }}>Cited Only</option>
             <option value="additional" {{ 'selected' if type_filter == 'additional' else '' }}>Additional Only</option>
+            <option value="rejected" {{ 'selected' if type_filter == 'rejected' else '' }}>Rejected Only</option>
         </select>
         
         <label>Visibility:</label>
@@ -126,9 +128,17 @@ DOMAIN_EXPLORER_TEMPLATE = """
                 <th>Domain</th>
                 <th>Source</th>
                 <th>Ent. Cited</th>
+                {% if type_filter == 'rejected' %}
+                <th>Ent. Rej.</th>
+                {% else %}
                 <th>Ent. Add.</th>
+                {% endif %}
                 <th>Pers. Cited</th>
+                {% if type_filter == 'rejected' %}
+                <th>Pers. Rej.</th>
+                {% else %}
                 <th>Pers. Add.</th>
+                {% endif %}
                 <th>Total</th>
                 <th>Actions</th>
             </tr>
@@ -147,9 +157,17 @@ DOMAIN_EXPLORER_TEMPLATE = """
                     {% endif %}
                 </td>
                 <td>{{ d.ent_cited }}</td>
+                {% if type_filter == 'rejected' %}
+                <td>{{ d.ent_rejected }}</td>
+                {% else %}
                 <td>{{ d.ent_additional }}</td>
+                {% endif %}
                 <td>{{ d.pers_cited }}</td>
+                {% if type_filter == 'rejected' %}
+                <td>{{ d.pers_rejected }}</td>
+                {% else %}
                 <td>{{ d.pers_additional }}</td>
+                {% endif %}
                 <td><strong>{{ d.total }}</strong></td>
                 <td><a class="domain-link" href="/domains?search={{ d.domain }}&drilldown=1">View URLs</a></td>
             </tr>
@@ -223,6 +241,7 @@ DASHBOARD_TEMPLATE = """
 <body>
     <div class="nav">
         <a href="/">← Back to Run Viewer</a>
+        <a href="/urls" style="color: #0f766e;">🔗 URL Breakdown</a>
         <a href="/domains" style="color: #6366f1;">🔍 Domain Explorer</a>
         <a href="/invisible" style="color: #ef4444;">🕳️ Truly Invisible</a>
     </div>
@@ -285,13 +304,29 @@ DASHBOARD_TEMPLATE = """
     {% if show_labels %}
     <div class="grid">
         <div class="card full-width">
-            <h2>Enrichment Coverage & Label Distribution</h2>
-            <div style="display:flex; gap:20px; flex-wrap:wrap;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h2 style="margin:0;">Enrichment Coverage & Label Distribution</h2>
+                <form method="get" style="display:inline-flex; gap:8px; align-items:center;">
+                    <input type="hidden" name="labels" value="1">
+                    <label style="font-size:12px; color:#666;">Filter:</label>
+                    <select name="breakdown_account" onchange="this.form.submit()" style="padding:4px 8px; border-radius:6px; border:1px solid #ddd; font-size:12px;">
+                        <option value="all" {{ 'selected' if breakdown_account=='all' else '' }}>All Accounts</option>
+                        <option value="enterprise" {{ 'selected' if breakdown_account=='enterprise' else '' }}>Enterprise</option>
+                        <option value="personal" {{ 'selected' if breakdown_account=='personal' else '' }}>Personal</option>
+                    </select>
+                </form>
+            </div>
+            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:10px;">
                 <div class="stat-label">
                     Enriched URLs: <strong>{{ enriched_citation_count }}</strong> / {{ enrichment_total_citations }}
                     ({{ "%.1f"|format(enrichment_pct) }}%)
                 </div>
                 <div class="stat-label">Unlabeled URLs: <strong>{{ unlabeled_citation_count }}</strong></div>
+                {% if breakdown_account != 'all' %}
+                <div class="stat-label" style="color:#f97316; font-weight:bold;">
+                    Filtered: {{ breakdown_account|title }}
+                </div>
+                {% endif %}
             </div>
             <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: 10px;">
                 <div>
@@ -326,51 +361,84 @@ DASHBOARD_TEMPLATE = """
 
     <div class="grid">
         <div class="card full-width">
-            <h2>Cited vs Additional vs Rejected (Enriched-only breakdown)</h2>
-            <div class="stat-sub" style="margin-bottom: 10px;">
-                This helps answer “what gets selected vs shortlisted vs filtered out?”
-            </div>
-
-            <div class="grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
-                {% for grp in ['cited','additional','rejected'] %}
-                <div style="background:#f8fafc; border:1px solid #e5e7eb; padding:12px; border-radius:10px;">
-                    <div style="font-weight: 800; margin-bottom: 6px; text-transform: capitalize;">{{ grp }}</div>
-                    <div class="stat-label" style="margin-bottom: 10px;">
-                        Enriched: <strong>{{ enriched_counts_by_group.get(grp, 0) }}</strong> / {{ totals_by_group.get(grp, 0) }}
-                        ({{ "%.1f"|format(enrichment_pct_by_group.get(grp, 0.0)) }}%) ·
-                        Unlabeled: <strong>{{ unlabeled_by_group.get(grp, 0) }}</strong>
-                    </div>
-
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <div>
-                            <div style="font-size: 12px; font-weight: 700; margin-bottom: 4px;">Type</div>
-                            <table>
-                                <tr><th>Type</th><th>Count</th><th>%</th></tr>
-                                {% for row in label_type_counts_by_group.get(grp, []) %}
-                                <tr>
-                                    <td>{{ row.label }}</td>
-                                    <td>{{ row.count }}</td>
-                                    <td>{{ "%.1f"|format(row.pct) }}%</td>
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                        <div>
-                            <div style="font-size: 12px; font-weight: 700; margin-bottom: 4px;">Tone</div>
-                            <table>
-                                <tr><th>Tone</th><th>Count</th><th>%</th></tr>
-                                {% for row in label_tone_counts_by_group.get(grp, []) %}
-                                <tr>
-                                    <td>{{ row.label }}</td>
-                                    <td>{{ row.count }}</td>
-                                    <td>{{ "%.1f"|format(row.pct) }}%</td>
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
+                <div>
+                    <h2 style="margin:0;">Cited / Additional / Rejected (Enriched-only breakdown)</h2>
+                    <div class="stat-sub" style="margin-top:6px;">
+                        Select which citation groups to include in the distribution (reduces layout bloat vs three separate tables).
                     </div>
                 </div>
-                {% endfor %}
+                <form method="get" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                    <input type="hidden" name="labels" value="1">
+                    {% if enriched_only %}
+                    <input type="hidden" name="enriched_only" value="1">
+                    {% endif %}
+                    <input type="hidden" name="group_filter" value="1">
+
+                    <label style="font-size:12px; color:#666;">Account:</label>
+                    <select name="breakdown_account" style="padding:4px 8px; border-radius:6px; border:1px solid #ddd; font-size:12px;">
+                        <option value="all" {{ 'selected' if breakdown_account=='all' else '' }}>All</option>
+                        <option value="enterprise" {{ 'selected' if breakdown_account=='enterprise' else '' }}>Enterprise</option>
+                        <option value="personal" {{ 'selected' if breakdown_account=='personal' else '' }}>Personal</option>
+                    </select>
+
+                    <label style="font-size:12px; color:#666; margin-left:6px;">Include:</label>
+                    <label style="font-size:12px; color:#111;">
+                        <input type="checkbox" name="inc_cited" value="1" {{ 'checked' if inc_cited else '' }}>
+                        cited
+                    </label>
+                    <label style="font-size:12px; color:#111;">
+                        <input type="checkbox" name="inc_additional" value="1" {{ 'checked' if inc_additional else '' }}>
+                        additional
+                    </label>
+                    <label style="font-size:12px; color:#111;">
+                        <input type="checkbox" name="inc_rejected" value="1" {{ 'checked' if inc_rejected else '' }}>
+                        rejected
+                    </label>
+
+                    <button type="submit" style="margin-left:6px; padding:6px 10px; border-radius:8px; border:1px solid #ddd; background:#111827; color:#fff; font-size:12px; cursor:pointer;">
+                        Apply
+                    </button>
+                </form>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e5e7eb; padding:12px; border-radius:10px; margin-bottom: 12px;">
+                <div class="stat-label">
+                    Selected groups:
+                    <strong>{{ selected_groups|join(', ') if selected_groups else 'none' }}</strong> ·
+                    Enriched: <strong>{{ selected_enriched }}</strong> / {{ selected_total }}
+                    ({{ "%.1f"|format(selected_enrichment_pct) }}%) ·
+                    Unlabeled: <strong>{{ selected_unlabeled }}</strong>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div style="min-width: 0;">
+                    <h3 style="font-size: 14px; margin: 0 0 8px 0;">Type (Selected Groups)</h3>
+                    <table>
+                        <tr><th>Type</th><th>Count</th><th>%</th></tr>
+                        {% for row in label_type_counts_selected %}
+                        <tr>
+                            <td>{{ row.label }}</td>
+                            <td>{{ row.count }}</td>
+                            <td>{{ "%.1f"|format(row.pct) }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div style="min-width: 0;">
+                    <h3 style="font-size: 14px; margin: 0 0 8px 0;">Tone (Selected Groups)</h3>
+                    <table>
+                        <tr><th>Tone</th><th>Count</th><th>%</th></tr>
+                        {% for row in label_tone_counts_selected %}
+                        <tr>
+                            <td>{{ row.label }}</td>
+                            <td>{{ row.count }}</td>
+                            <td>{{ "%.1f"|format(row.pct) }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -557,6 +625,28 @@ DASHBOARD_TEMPLATE = """
             </table>
         </div>
     </div>
+
+    <div class="grid">
+        <div class="card enterprise">
+            <h2>Enterprise - Google Position Distribution</h2>
+            <table>
+                <tr><th>Bucket</th><th>Matches</th></tr>
+                {% for row in ent_google_pos_data %}
+                <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="card personal">
+            <h2>Personal - Google Position Distribution</h2>
+            <table>
+                <tr><th>Bucket</th><th>Matches</th></tr>
+                {% for row in pers_google_pos_data %}
+                <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 </body>
 </html>
 """
@@ -646,12 +736,7 @@ HTML_TEMPLATE = """
                 <div class="hidden-queries">🔍 Hidden Queries: {{ run_raw.hidden_queries }}</div>
                 {% endif %}
                 <div style="margin-top: 8px; font-size: 11px;">
-                    <strong>Raw details:</strong>
-                    {% if run_raw.raw_enabled %}
-                        ON (slower) · <a href="/?run_id={{ active_run_id }}&filter={{ account_filter }}">Switch to fast view</a>
-                    {% else %}
-                        OFF (fast) · <a href="/?run_id={{ active_run_id }}&filter={{ account_filter }}&raw=1">Load raw details</a>
-                    {% endif %}
+                    <strong>Raw details:</strong> ON
                 </div>
             </div>
 
@@ -737,22 +822,36 @@ HTML_TEMPLATE = """
                                     {% for group in item.chip_groups %}
                                         {% for link in group.links %}
                                         {% set clean_url = link.replace('?utm_source=chatgpt.com', '').replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/') %}
-                                        {% set bing_match = namespace(found=false, rank=None, q_num=None) %}
+                                        {% set m = namespace(bing_found=false, bing_rank=None, bing_q_num=None, google_found=false, google_rank=None, google_q_num=None) %}
                                         {% for cit in cit_db %}
                                             {% set cit_url_clean = (cit.url or '').replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/') %}
                                             {% if clean_url == cit_url_clean or clean_url in cit_url_clean or cit_url_clean in clean_url %}
                                                 {% if cit.bing_rank %}
-                                                    {% set bing_match.found = true %}
-                                                    {% set bing_match.rank = cit.bing_rank %}
-                                                    {% set bing_match.q_num = cit.bing_query_num %}
+                                                    {% set m.bing_found = true %}
+                                                    {% set m.bing_rank = cit.bing_rank %}
+                                                    {% set m.bing_q_num = cit.bing_query_num %}
+                                                {% endif %}
+                                                {% if cit.google_rank %}
+                                                    {% set m.google_found = true %}
+                                                    {% set m.google_rank = cit.google_rank %}
+                                                    {% set m.google_q_num = cit.google_query_num %}
+                                                {% elif cit.in_google %}
+                                                    {% set m.google_found = true %}
+                                                    {% set m.google_rank = None %}
+                                                    {% set m.google_q_num = cit.google_query_num %}
                                                 {% endif %}
                                             {% endif %}
                                         {% endfor %}
-                                        <a href="{{ link }}" target="_blank" style="font-size: 11px; background: {{ '#d1fae5' if bing_match.found else '#fee2e2' }}; color: {{ '#065f46' if bing_match.found else '#991b1b' }}; padding: 4px 10px; border-radius: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                        <a href="{{ link }}" target="_blank" style="font-size: 11px; background: {{ '#d1fae5' if m.bing_found else ('#fef3c7' if m.google_found else '#fee2e2') }}; color: {{ '#065f46' if m.bing_found else ('#92400e' if m.google_found else '#991b1b') }}; padding: 4px 10px; border-radius: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                                             {{ clean_url[:35] }}{% if clean_url|length > 35 %}...{% endif %}
-                                            {% if bing_match.found %}
+                                            {% if m.bing_found %}
                                             <span style="background: #10a37f; color: white; padding: 1px 5px; border-radius: 8px; font-size: 9px; font-weight: bold;">
-                                                #{{ bing_match.rank }} Q{{ bing_match.q_num }}
+                                                #{{ m.bing_rank }} Q{{ m.bing_q_num }}
+                                            </span>
+                                            {% endif %}
+                                            {% if m.google_found %}
+                                            <span style="background:#f97316; color:white; padding:1px 5px; border-radius:8px; font-size:9px; font-weight:bold;">
+                                                G{% if m.google_rank %}#{{ m.google_rank }}{% endif %}{% if m.google_q_num %} Q{{ m.google_q_num }}{% endif %}
                                             </span>
                                             {% endif %}
                                         </a>
@@ -1105,16 +1204,57 @@ DB_PATH = 'geo_fresh.db'
 print(f"Loading raw data from {DB_PATH} (Database Only Mode)...")
 df_raw = pd.DataFrame() # We are using the DB for everything now
 
+_db_initialized = False
+
 def get_db():
+    global _db_initialized
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
+
+    # Speed up read-heavy workload (safe for local analytics viewer)
+    try:
+        conn.execute("PRAGMA journal_mode=WAL;")
+        conn.execute("PRAGMA synchronous=NORMAL;")
+        conn.execute("PRAGMA temp_store=MEMORY;")
+        conn.execute("PRAGMA cache_size=-20000;")  # ~20MB
+    except Exception:
+        pass
+
+    # One-time indexes to keep UI fast (does not change data semantics)
+    if not _db_initialized:
+        try:
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_citations_run_url ON citations(run_id, url_normalized);")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_citations_account_type_type ON citations(account_type, citation_type);")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_bing_run_url ON bing_results(run_id, url_normalized);")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_bing_account_type ON bing_results(account_type);")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_runs_account_type ON runs(account_type);")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_google_acc_run ON google_results(account_type, chatgpt_run_id);")
+            
+            # Pre-calculate normalized URLs for Google results to speed up overlap checks
+            try:
+                conn.execute("ALTER TABLE google_results ADD COLUMN url_normalized TEXT;")
+            except Exception:
+                pass # Already exists
+            
+            conn.execute("""
+                UPDATE google_results 
+                SET url_normalized = RTRIM(LOWER(REPLACE(REPLACE(REPLACE(
+                    SUBSTR(url, 1, CASE WHEN INSTR(url, '?') > 0 THEN INSTR(url, '?') - 1 ELSE LENGTH(url) END),
+                    'https://', ''), 'http://', ''), 'www.', '')), '/')
+                WHERE url_normalized IS NULL;
+            """)
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_google_url_norm ON google_results(url_normalized);")
+            
+            conn.commit()
+        except Exception:
+            pass
+        _db_initialized = True
     return conn
 
 # Enrichment cache (LLM labels)
 _enriched_url_norms = None
 _enriched_label_index = None
 _enriched_sources = [
-    'datapass/page_labels_gemini.jsonl',
     'datapass/page_labels_gemini_v2.5.jsonl',
 ]
 
@@ -1164,6 +1304,53 @@ def _load_enrichment_index():
     _enriched_label_index = labels
     return norms, labels
 
+# Deterministic labels for known domains (used when LLM labels not available)
+_DETERMINISTIC_DOMAIN_LABELS = {
+    'wikipedia.org': {'type': 'reference', 'tone': 'neutral_informational', 'content_format': 'wiki', 'primary_intent': 'informational', '_auto': True},
+    'en.wikipedia.org': {'type': 'reference', 'tone': 'neutral_informational', 'content_format': 'wiki', 'primary_intent': 'informational', '_auto': True},
+    'arxiv.org': {'type': 'reference', 'tone': 'academic_technical', 'content_format': 'academic_paper', 'primary_intent': 'informational', '_auto': True},
+    'reddit.com': {'type': 'forum_ugc', 'tone': 'opinionated', 'content_format': 'discussion_thread', 'primary_intent': 'informational', '_auto': True},
+    'apps.apple.com': {'type': 'app_store_listing', 'tone': 'promotional', 'content_format': 'product_listing', 'primary_intent': 'transactional', '_auto': True},
+    'play.google.com': {'type': 'app_store_listing', 'tone': 'promotional', 'content_format': 'product_listing', 'primary_intent': 'transactional', '_auto': True},
+    'github.com': {'type': 'repository', 'tone': 'neutral_informational', 'content_format': 'code_repo', 'primary_intent': 'informational', '_auto': True},
+    'youtube.com': {'type': 'video', 'tone': 'promotional', 'content_format': 'video', 'primary_intent': 'commercial', '_auto': True},
+    'facebook.com': {'type': 'forum_ugc', 'tone': 'promotional', 'content_format': 'social_post', 'primary_intent': 'commercial', '_auto': True},
+    'twitter.com': {'type': 'forum_ugc', 'tone': 'opinionated', 'content_format': 'social_post', 'primary_intent': 'informational', '_auto': True},
+    'x.com': {'type': 'forum_ugc', 'tone': 'opinionated', 'content_format': 'social_post', 'primary_intent': 'informational', '_auto': True},
+    'linkedin.com': {'type': 'forum_ugc', 'tone': 'promotional', 'content_format': 'social_post', 'primary_intent': 'commercial', '_auto': True},
+    'medium.com': {'type': 'editorial_article', 'tone': 'opinionated', 'content_format': 'blog_post', 'primary_intent': 'informational', '_auto': True},
+    'quora.com': {'type': 'forum_ugc', 'tone': 'neutral_informational', 'content_format': 'q_and_a', 'primary_intent': 'informational', '_auto': True},
+    'stackoverflow.com': {'type': 'forum_ugc', 'tone': 'academic_technical', 'content_format': 'q_and_a', 'primary_intent': 'informational', '_auto': True},
+    'support.microsoft.com': {'type': 'documentation', 'tone': 'neutral_informational', 'content_format': 'help_article', 'primary_intent': 'informational', '_auto': True},
+    'support.google.com': {'type': 'documentation', 'tone': 'neutral_informational', 'content_format': 'help_article', 'primary_intent': 'informational', '_auto': True},
+    'support.apple.com': {'type': 'documentation', 'tone': 'neutral_informational', 'content_format': 'help_article', 'primary_intent': 'informational', '_auto': True},
+    'docs.google.com': {'type': 'documentation', 'tone': 'neutral_informational', 'content_format': 'help_article', 'primary_intent': 'informational', '_auto': True},
+    'learn.microsoft.com': {'type': 'documentation', 'tone': 'neutral_informational', 'content_format': 'help_article', 'primary_intent': 'informational', '_auto': True},
+}
+
+def _get_deterministic_label(url_norm):
+    """Return deterministic label for known domains, or None."""
+    if not url_norm:
+        return None
+    # Extract domain from normalized URL
+    domain = url_norm.split('/')[0] if '/' in url_norm else url_norm
+    # Check exact domain match first
+    if domain in _DETERMINISTIC_DOMAIN_LABELS:
+        return _DETERMINISTIC_DOMAIN_LABELS[domain]
+    # Check parent domain (e.g., en.wikipedia.org -> wikipedia.org)
+    parts = domain.split('.')
+    if len(parts) >= 2:
+        parent = '.'.join(parts[-2:])
+        if parent in _DETERMINISTIC_DOMAIN_LABELS:
+            return _DETERMINISTIC_DOMAIN_LABELS[parent]
+    return None
+
+def get_label_for_url(url_norm, label_index=None):
+    """Get label for URL - first from LLM labels, then deterministic."""
+    if label_index and url_norm in label_index:
+        return label_index[url_norm]
+    return _get_deterministic_label(url_norm)
+
 def _ensure_enriched_temp_table(db, url_norms):
     db.execute("DROP TABLE IF EXISTS temp_enriched_urls")
     db.execute("CREATE TEMP TABLE temp_enriched_urls (url_normalized TEXT PRIMARY KEY)")
@@ -1179,6 +1366,31 @@ def _ensure_enriched_temp_table(db, url_norms):
 
 # Cache for raw network data
 _raw_data_cache = None
+
+# Cache expensive render outputs (keeps UI responsive on refresh / navigation)
+_render_cache = {}
+_CACHE_TTL_SEC = 20
+
+def _cache_get(key):
+    try:
+        import time
+        entry = _render_cache.get(key)
+        if not entry:
+            return None
+        ts, val = entry
+        if time.time() - ts > _CACHE_TTL_SEC:
+            _render_cache.pop(key, None)
+            return None
+        return val
+    except Exception:
+        return None
+
+def _cache_set(key, val):
+    try:
+        import time
+        _render_cache[key] = (time.time(), val)
+    except Exception:
+        pass
 
 def get_raw_network_data(run_id):
     """Load raw network data from CSV/JSON for a specific run."""
@@ -1236,6 +1448,10 @@ def get_raw_network_data(run_id):
 
 @app.route('/')
 def index():
+    cache_key = ('run', request.query_string.decode('utf-8', errors='ignore'))
+    cached = _cache_get(cache_key)
+    if cached is not None:
+        return cached
     run_id = request.args.get('run_id')
     account_filter = request.args.get('filter', 'all')
     db = get_db()
@@ -1292,7 +1508,8 @@ def index():
     unique_queries = []
     
     if run_id:
-        raw_enabled = request.args.get('raw', '0') in ('1', 'true', 'yes', 'on')
+        # Always load full detail (fast-view toggle removed)
+        raw_enabled = True
         # Get run data from database
         db_run = db.execute('''
             SELECT p.prompt as query, r.generated_search_query, r.response_text, r.hidden_queries, r.items_json,
@@ -1304,8 +1521,8 @@ def index():
         ''', (run_id,)).fetchone()
         
         if db_run:
-            # Load extra raw data from CSV (optional; expensive)
-            extra_data = get_raw_network_data(run_id) if raw_enabled else {}
+            # Load extra raw data from CSV (required for "complete" view)
+            extra_data = get_raw_network_data(run_id) or {}
             
             run_raw = {
                 'query': db_run['query'] or 'N/A',
@@ -1338,27 +1555,24 @@ def index():
                 run_raw['no_search_prob'] = 0
             
             # Calculate rejected sources (retrieved but not cited/additional)
-            if raw_enabled:
-                try:
-                    srg = json.loads(run_raw['search_result_groups_json'] or '[]')
-                    cited = set(s['url'] for s in json.loads(run_raw['sources_cited_json'] or '[]'))
-                    additional = set(s['url'] for s in json.loads(run_raw['sources_additional_json'] or '[]'))
-                    all_used = cited | additional
-                    
-                    rejected = []
-                    for group in srg:
-                        for entry in group.get('entries', []):
-                            if entry.get('url') and entry['url'] not in all_used:
-                                rejected.append({
-                                    'url': entry['url'],
-                                    'title': entry.get('title', ''),
-                                    'domain': group.get('domain', ''),
-                                    'snippet': (entry.get('snippet') or '')[:100]
-                                })
-                    run_raw['rejected_sources'] = rejected
-                except Exception:
-                    run_raw['rejected_sources'] = []
-            else:
+            try:
+                srg = json.loads(run_raw['search_result_groups_json'] or '[]')
+                cited = set(s['url'] for s in json.loads(run_raw['sources_cited_json'] or '[]'))
+                additional = set(s['url'] for s in json.loads(run_raw['sources_additional_json'] or '[]'))
+                all_used = cited | additional
+                
+                rejected = []
+                for group in srg:
+                    for entry in group.get('entries', []):
+                        if entry.get('url') and entry['url'] not in all_used:
+                            rejected.append({
+                                'url': entry['url'],
+                                'title': entry.get('title', ''),
+                                'domain': group.get('domain', ''),
+                                'snippet': (entry.get('snippet') or '')[:100]
+                            })
+                run_raw['rejected_sources'] = rejected
+            except Exception:
                 run_raw['rejected_sources'] = []
             
             # Parse items_json for structured display
@@ -1368,7 +1582,8 @@ def index():
                 items_raw = []
 
             # If no structured items, format response_text with inline citation chips
-            if not items_raw and run_raw.get('response_text') and raw_enabled:
+            # Always run this - basic formatting uses DB lookups; advanced multi-chip uses extra_data (optional)
+            if not items_raw and run_raw.get('response_text'):
                 import re
                 import html
                 
@@ -1731,18 +1946,21 @@ def index():
             run_raw = {'query': 'N/A', 'generated_search_query': 'N/A', 'response_text': f'Run {run_id} not found', 'hidden_queries': '', 'web_search_triggered': None, 'web_search_forced': None, 'items_count': 0, 'items_with_citations_count': 0, 'hidden_queries_json': '[]', 'search_result_groups_json': '[]', 'sources_cited_json': '[]', 'sources_all_json': '[]', 'simple_search_prob': 0, 'complex_search_prob': 0, 'no_search_prob': 0, 'rejected_sources': []}
 
         # Get citations with Bing rank AND which query it came from
+        # NOTE: google rank/query must be computed per-run (chatgpt_run_id), otherwise it will drift / appear to disappear.
+        base_run_id = run_id.replace('_personal', '')
         cit_rows = db.execute('''
             SELECT c.*, 
                    (SELECT MIN(b.position) FROM bing_results b WHERE b.url_normalized = c.url_normalized AND b.run_id = c.run_id) as bing_rank,
                    (SELECT b.query FROM bing_results b WHERE b.url_normalized = c.url_normalized AND b.run_id = c.run_id ORDER BY b.position ASC LIMIT 1) as bing_query,
-                   (SELECT MIN(g.position) FROM google_results g WHERE g.account_type = c.account_type AND 
-                        RTRIM(LOWER(REPLACE(REPLACE(REPLACE(SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END), 'https://', ''), 'http://', ''), 'www.', '')), '/') = c.url_normalized) as google_rank,
-                   (SELECT g.query FROM google_results g WHERE g.account_type = c.account_type AND 
-                        RTRIM(LOWER(REPLACE(REPLACE(REPLACE(SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END), 'https://', ''), 'http://', ''), 'www.', '')), '/') = c.url_normalized ORDER BY g.position ASC LIMIT 1) as google_query
+                   (SELECT MIN(g.position) FROM google_results g
+                        WHERE g.chatgpt_run_id = ? AND g.account_type = c.account_type AND g.url_normalized = c.url_normalized) as google_rank,
+                   (SELECT g.query FROM google_results g
+                        WHERE g.chatgpt_run_id = ? AND g.account_type = c.account_type AND g.url_normalized = c.url_normalized
+                        ORDER BY g.position ASC LIMIT 1) as google_query
             FROM citations c 
             WHERE c.run_id = ?
             ORDER BY c.citation_type, c.position
-        ''', (run_id,)).fetchall()
+        ''', (base_run_id, base_run_id, run_id)).fetchall()
         
         cit_db = [dict(row) for row in cit_rows]
 
@@ -1785,8 +2003,13 @@ def index():
         # Map query text to Q1/Q2 number
         query_to_num = {q: i+1 for i, q in enumerate(sorted(list(set(b['query'] for b in db.execute('SELECT DISTINCT query FROM bing_results WHERE run_id = ?', (run_id,)).fetchall()))))}
         
-        # Also map Google queries
-        google_unique_queries_all = list(dict.fromkeys([r[0] for r in db.execute("SELECT query FROM google_results WHERE account_type = ?", (db_run['account_type'] if db_run else 'personal',)).fetchall() if r[0]]))
+        # Also map Google queries (per-run, Q1/Q2 only, preserve order of appearance)
+        google_unique_queries_all = list(dict.fromkeys([
+            r[0] for r in db.execute(
+                "SELECT query FROM google_results WHERE chatgpt_run_id = ? AND account_type = ? AND query IS NOT NULL AND query != '' AND query_type != 'generated_search_query' ORDER BY id ASC",
+                (base_run_id, db_run['account_type'] if db_run else 'personal')
+            ).fetchall() if r[0]
+        ]))
         google_query_to_num_all = {q: i+1 for i, q in enumerate(google_unique_queries_all)}
 
         for cit in cit_db:
@@ -1811,7 +2034,6 @@ def index():
         
         # Get Google results for this run (via chatgpt_run_id link)
         # Use account_type to avoid mixing personal/enterprise results
-        base_run_id = run_id.replace('_personal', '')
         run_account_type = db_run['account_type'] if db_run and db_run['account_type'] else None
         google_rows = db.execute('''
             SELECT g.*
@@ -1836,6 +2058,14 @@ def index():
             if c.get('citation_type') == 'rejected' and c.get('url_normalized')
         )
 
+        # Build "in Google" set from the full per-run set (do NOT depend on UI filtering)
+        google_url_norms_all = set()
+        for row in google_rows:
+            g = dict(row)
+            un = (g.get('url_normalized') or '').strip().lower()
+            if un:
+                google_url_norms_all.add(un)
+
         google_results = []
         for row in google_rows:
             g = dict(row)
@@ -1845,7 +2075,9 @@ def index():
             if g.get('query_type') == 'generated_search_query':
                 continue  # Only show Q1/Q2 (hidden queries) to match Bing
             # Check if this Google URL is also in Bing
-            url_norm = (g.get('url') or '').lower().replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
+            url_norm = (g.get('url_normalized') or '').lower()
+            if not url_norm:
+                url_norm = (g.get('url') or '').lower().replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
             g['in_bing'] = url_norm in bing_url_norms
             g['is_cited'] = url_norm in cited_url_norms
             g['is_additional'] = url_norm in additional_url_norms
@@ -1862,11 +2094,8 @@ def index():
             g['query_label'] = f"Q{q_num}" if q_num != '?' else 'Q?'
 
         # Build Google URL norms for this run (for Google-only tagging on left panel)
-        google_url_norms = set()
-        for g in google_results:
-            gu = (g.get('url') or '').lower().replace('https://', '').replace('http://', '').replace('www.', '').split('?')[0].rstrip('/')
-            if gu:
-                google_url_norms.add(gu)
+        # Use the full set, not UI-filtered subset, so badges never "disappear" due to view filters.
+        google_url_norms = google_url_norms_all
 
         # Add in_google flag to Bing results
         for b in bing_results:
@@ -1981,7 +2210,7 @@ def index():
             }
 
 
-    return render_template_string(HTML_TEMPLATE, 
+    html = render_template_string(HTML_TEMPLATE, 
                                  run_ids=run_ids, 
                                  active_run_id=run_id,
                                  run_raw=run_raw,
@@ -1992,9 +2221,15 @@ def index():
                                  unique_queries=unique_queries if run_id else [],
                                  items_raw=items_raw,
                                  account_filter=account_filter)
+    _cache_set(cache_key, html)
+    return html
 
 @app.route('/dashboard')
 def dashboard():
+    cache_key = ('dashboard', request.query_string.decode('utf-8', errors='ignore'))
+    cached = _cache_get(cache_key)
+    if cached is not None:
+        return cached
     db = get_db()
     enriched_only = request.args.get('enriched', '0') in ('1', 'true', 'yes', 'enriched')
     show_labels = request.args.get('labels', '0') in ('1', 'true', 'yes') or enriched_only
@@ -2013,11 +2248,12 @@ def dashboard():
     ent_runs = db.execute("SELECT COUNT(*) FROM runs WHERE account_type = 'enterprise'").fetchone()[0]
     ent_bing = db.execute("SELECT COUNT(*) FROM bing_results WHERE account_type = 'enterprise'").fetchone()[0]
     
+    # Use faster count queries
     ent_total_all = db.execute(
         f"SELECT COUNT(*) FROM citations WHERE account_type = 'enterprise'{citations_enriched_clause_no_alias}"
     ).fetchone()[0]
     ent_matched_all = db.execute(
-        f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'enterprise'{citations_enriched_clause} AND {match_sql}"
+        f"SELECT COUNT(*) FROM citations c WHERE account_type = 'enterprise'{citations_enriched_clause} AND {match_sql}"
     ).fetchone()[0]
     
     ent_total_main = db.execute(
@@ -2027,38 +2263,24 @@ def dashboard():
         f"SELECT COUNT(*) FROM citations WHERE account_type = 'enterprise' AND citation_type = 'additional'{citations_enriched_clause_no_alias}"
     ).fetchone()[0]
     ent_matched_main = db.execute(
-        f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'enterprise' AND citation_type = 'cited'{citations_enriched_clause} AND {match_sql}"
+        f"SELECT COUNT(*) FROM citations c WHERE account_type = 'enterprise' AND citation_type = 'cited'{citations_enriched_clause} AND {match_sql}"
     ).fetchone()[0]
     ent_bing_overlap_pct = (ent_matched_main / ent_total_main * 100.0) if ent_total_main else 0.0
     
     ent_matched_add = db.execute(
-        f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'enterprise' AND citation_type = 'additional'{citations_enriched_clause} AND {match_sql}"
+        f"SELECT COUNT(*) FROM citations c WHERE account_type = 'enterprise' AND citation_type = 'additional'{citations_enriched_clause} AND {match_sql}"
     ).fetchone()[0]
     ent_bing_add_overlap_pct = (ent_matched_add / ent_total_add * 100.0) if ent_total_add else 0.0
 
     # Enterprise Google overlap (control group; depends on whether enterprise Google SERP was collected+ingested)
     try:
         ent_google_matched_main = db.execute(f'''
-            SELECT COUNT(DISTINCT c.id)
+            SELECT COUNT(*)
             FROM citations c
             WHERE c.account_type = 'enterprise' AND c.citation_type = 'cited'{citations_enriched_clause} AND EXISTS (
                 SELECT 1 FROM google_results g
                 WHERE g.account_type = 'enterprise'
-                  AND RTRIM(
-                        LOWER(
-                          REPLACE(
-                            REPLACE(
-                              REPLACE(
-                                SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
-                                'https://', ''
-                              ),
-                              'http://', ''
-                            ),
-                            'www.', ''
-                          )
-                        ),
-                        '/'
-                      ) = c.url_normalized
+                  AND g.url_normalized = c.url_normalized
             )
         ''').fetchone()[0]
     except Exception:
@@ -2067,26 +2289,12 @@ def dashboard():
 
     try:
         ent_google_matched_add = db.execute(f'''
-            SELECT COUNT(DISTINCT c.id)
+            SELECT COUNT(*)
             FROM citations c
             WHERE c.account_type = 'enterprise' AND c.citation_type = 'additional'{citations_enriched_clause} AND EXISTS (
                 SELECT 1 FROM google_results g
                 WHERE g.account_type = 'enterprise'
-                  AND RTRIM(
-                        LOWER(
-                          REPLACE(
-                            REPLACE(
-                              REPLACE(
-                                SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
-                                'https://', ''
-                              ),
-                              'http://', ''
-                            ),
-                            'www.', ''
-                          )
-                        ),
-                        '/'
-                      ) = c.url_normalized
+                  AND g.url_normalized = c.url_normalized
             )
         ''').fetchone()[0]
     except Exception:
@@ -2108,7 +2316,7 @@ def dashboard():
         try:
             return db.execute(
                 f"""
-                SELECT COUNT(DISTINCT c.id)
+                SELECT COUNT(*)
                 FROM citations c
                 WHERE c.account_type = ?
                   AND c.citation_type = 'rejected'
@@ -2128,7 +2336,7 @@ def dashboard():
         try:
             return db.execute(
                 f"""
-                SELECT COUNT(DISTINCT c.id)
+                SELECT COUNT(*)
                 FROM citations c
                 WHERE c.account_type = ?
                   AND c.citation_type = 'rejected'
@@ -2136,25 +2344,13 @@ def dashboard():
                   AND EXISTS (
                     SELECT 1 FROM google_results g
                     WHERE g.account_type = ?
-                      AND RTRIM(
-                            LOWER(
-                              REPLACE(
-                                REPLACE(
-                                  REPLACE(
-                                    SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
-                                    'https://', ''
-                                  ),
-                                  'http://', ''
-                                ),
-                                'www.', ''
-                              )
-                            ),
-                            '/'
-                          ) = c.url_normalized
+                      AND g.url_normalized = c.url_normalized
                   )
                 """,
                 (account_type, account_type),
             ).fetchone()[0]
+        except Exception:
+            return 0
         except Exception:
             return 0
 
@@ -2182,6 +2378,78 @@ def dashboard():
           {citations_enriched_clause}
         GROUP BY b.page_num ORDER BY b.page_num
     ''').fetchall()
+
+    def _get_google_pos_data(account_type: str):
+        # Dynamic WHERE clause based on checkboxes
+        g_selected_groups = []
+        if request.args.get('inc_cited') == '1': g_selected_groups.append('cited')
+        if request.args.get('inc_additional') == '1': g_selected_groups.append('additional')
+        if request.args.get('inc_rejected') == '1': g_selected_groups.append('rejected')
+        
+        if not g_selected_groups:
+            # If nothing selected, default to 'cited' for this specific view to avoid empty tables on first load
+            # unless the form was actually submitted with nothing.
+            if request.args.get('group_filter') == '1':
+                return []
+            g_selected_groups = ['cited']
+
+        placeholders = ', '.join(['?'] * len(g_selected_groups))
+        
+        rows = db.execute(f'''
+            SELECT
+              g.result_type as result_type,
+              CASE WHEN g.result_type = 'organic' THEN g.page_num ELSE NULL END as page_key,
+              g.position as position,
+              COUNT(DISTINCT c.id) as match_count
+            FROM google_results g
+            JOIN citations c
+              ON c.run_id = g.chatgpt_run_id
+             AND c.url_normalized = g.url_normalized
+            WHERE g.account_type = ?
+              AND g.result_type IN ('organic', 'video', 'discussion', 'related_question')
+              AND g.position IS NOT NULL
+              AND g.position > 0
+              AND c.citation_type IN ({placeholders})
+              {citations_enriched_clause}
+            GROUP BY g.result_type, page_key, g.position
+        ''', (account_type, *g_selected_groups)).fetchall()
+
+        # Aggregate into buckets (single total for the selected citation types)
+        buckets = {}  # bucket -> total_count
+        order_map = {}
+        
+        for rt, page_key, pos, cnt in rows:
+            try: pos_i = int(pos or 0)
+            except: pos_i = 0
+            
+            if rt == 'organic':
+                try: page_i = int(page_key or 0)
+                except: page_i = 0
+                bucket = f"organic_p{page_i}_{pos_i}"
+                order_key = (0, page_i, pos_i)
+            elif rt == 'related_question':
+                bucket = f"paa{pos_i}"
+                order_key = (1, 0, pos_i)
+            elif rt == 'video':
+                bucket = f"video{pos_i}"
+                order_key = (2, 0, pos_i)
+            elif rt == 'discussion':
+                bucket = f"discussion{pos_i}"
+                order_key = (3, 0, pos_i)
+            else:
+                bucket = f"{rt}{pos_i}"
+                order_key = (9, 0, pos_i)
+            
+            if bucket not in buckets:
+                buckets[bucket] = 0
+                order_map[bucket] = order_key
+            
+            buckets[bucket] += int(cnt or 0)
+
+        sorted_buckets = sorted(buckets.keys(), key=lambda x: order_map[x])
+        return [(b, buckets[b]) for b in sorted_buckets]
+
+    ent_google_pos_data = _get_google_pos_data('enterprise')
 
     def _aggregate_q_overlap(account_type: str):
         """Aggregate Q1/Q2 overlap across runs using Bing query order (min bing_results.id per query)."""
@@ -2248,7 +2516,7 @@ def dashboard():
         f"SELECT COUNT(*) FROM citations WHERE account_type = 'personal'{citations_enriched_clause_no_alias}"
     ).fetchone()[0]
     pers_matched_all = db.execute(
-        f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal'{citations_enriched_clause} AND {match_sql}"
+        f"SELECT COUNT(*) FROM citations c WHERE account_type = 'personal'{citations_enriched_clause} AND {match_sql}"
     ).fetchone()[0]
     
     pers_total_main = db.execute(
@@ -2263,12 +2531,12 @@ def dashboard():
     pers_rejected_bing_overlap_pct = (pers_rejected_bing_matched / pers_total_rejected * 100.0) if pers_total_rejected else 0.0
     pers_rejected_google_overlap_pct = (pers_rejected_google_matched / pers_total_rejected * 100.0) if pers_total_rejected else 0.0
     pers_matched_main = db.execute(
-        f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal' AND citation_type = 'cited'{citations_enriched_clause} AND {match_sql}"
+        f"SELECT COUNT(*) FROM citations c WHERE account_type = 'personal' AND citation_type = 'cited'{citations_enriched_clause} AND {match_sql}"
     ).fetchone()[0]
     pers_bing_overlap_pct = (pers_matched_main / pers_total_main * 100.0) if pers_total_main else 0.0
     
     pers_matched_add = db.execute(
-        f"SELECT COUNT(DISTINCT c.id) FROM citations c WHERE account_type = 'personal' AND citation_type = 'additional'{citations_enriched_clause} AND {match_sql}"
+        f"SELECT COUNT(*) FROM citations c WHERE account_type = 'personal' AND citation_type = 'additional'{citations_enriched_clause} AND {match_sql}"
     ).fetchone()[0]
     pers_bing_add_overlap_pct = (pers_matched_add / pers_total_add * 100.0) if pers_total_add else 0.0
 
@@ -2276,26 +2544,12 @@ def dashboard():
     pers_google_matched_main = 0
     try:
         pers_google_matched_main = db.execute(f'''
-            SELECT COUNT(DISTINCT c.id)
+            SELECT COUNT(*)
             FROM citations c
             WHERE c.account_type = 'personal' AND c.citation_type = 'cited'{citations_enriched_clause} AND EXISTS (
                 SELECT 1 FROM google_results g
                 WHERE g.account_type = 'personal'
-                  AND RTRIM(
-                        LOWER(
-                          REPLACE(
-                            REPLACE(
-                              REPLACE(
-                                SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
-                                'https://', ''
-                              ),
-                              'http://', ''
-                            ),
-                            'www.', ''
-                          )
-                        ),
-                        '/'
-                      ) = c.url_normalized
+                  AND g.url_normalized = c.url_normalized
             )
         ''').fetchone()[0]
     except Exception:
@@ -2306,26 +2560,12 @@ def dashboard():
     pers_google_matched_add = 0
     try:
         pers_google_matched_add = db.execute(f'''
-            SELECT COUNT(DISTINCT c.id)
+            SELECT COUNT(*)
             FROM citations c
             WHERE c.account_type = 'personal' AND c.citation_type = 'additional'{citations_enriched_clause} AND EXISTS (
                 SELECT 1 FROM google_results g
                 WHERE g.account_type = 'personal'
-                  AND RTRIM(
-                        LOWER(
-                          REPLACE(
-                            REPLACE(
-                              REPLACE(
-                                SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
-                                'https://', ''
-                              ),
-                              'http://', ''
-                            ),
-                            'www.', ''
-                          )
-                        ),
-                        '/'
-                      ) = c.url_normalized
+                  AND g.url_normalized = c.url_normalized
             )
         ''').fetchone()[0]
     except Exception:
@@ -2335,7 +2575,7 @@ def dashboard():
     # Personal combined coverage (Bing OR Google) and Google-only
     try:
         pers_combined_matched_main = db.execute(f'''
-            SELECT COUNT(DISTINCT c.id)
+            SELECT COUNT(*)
             FROM citations c
             WHERE c.account_type = 'personal' AND c.citation_type = 'cited'{citations_enriched_clause}
               AND (
@@ -2343,21 +2583,7 @@ def dashboard():
                 OR EXISTS (
                     SELECT 1 FROM google_results g
                     WHERE g.account_type = 'personal'
-                      AND RTRIM(
-                            LOWER(
-                              REPLACE(
-                                REPLACE(
-                                  REPLACE(
-                                    SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
-                                    'https://', ''
-                                  ),
-                                  'http://', ''
-                                ),
-                                'www.', ''
-                              )
-                            ),
-                            '/'
-                          ) = c.url_normalized
+                      AND g.url_normalized = c.url_normalized
                 )
               )
         ''').fetchone()[0]
@@ -2368,29 +2594,15 @@ def dashboard():
 
     try:
         pers_google_only_matched_main = db.execute(f'''
-            SELECT COUNT(DISTINCT c.id)
+            SELECT COUNT(*)
             FROM citations c
             WHERE c.account_type = 'personal' AND c.citation_type = 'cited'{citations_enriched_clause}
               AND NOT EXISTS (SELECT 1 FROM bing_results b WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized)
               AND EXISTS (
                     SELECT 1 FROM google_results g
                     WHERE g.account_type = 'personal'
-                      AND RTRIM(
-                            LOWER(
-                              REPLACE(
-                                REPLACE(
-                                  REPLACE(
-                                    SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
-                                    'https://', ''
-                                  ),
-                                  'http://', ''
-                                ),
-                                'www.', ''
-                              )
-                            ),
-                            '/'
-                          ) = c.url_normalized
-              )
+                      AND g.url_normalized = c.url_normalized
+                )
         ''').fetchone()[0]
     except Exception:
         pers_google_only_matched_main = 0
@@ -2469,9 +2681,34 @@ def dashboard():
         GROUP BY b.page_num ORDER BY b.page_num
     ''').fetchall()
 
+    pers_google_pos_data = _get_google_pos_data('personal')
+
     pers_total_cited_urls, pers_q1_matched, pers_q2_matched, pers_q1_overlap_pct, pers_q2_overlap_pct = _aggregate_q_overlap('personal')
 
     # ===== ENRICHMENT COVERAGE & LABEL DISTRIBUTION =====
+    breakdown_account = request.args.get('breakdown_account', 'all')
+    if breakdown_account not in ('all', 'enterprise', 'personal'):
+        breakdown_account = 'all'
+
+    # Citation group filters for the "Cited / Additional / Rejected" breakdown
+    # Default: include all on first load. Once the form is submitted (group_filter=1),
+    # treat unchecked boxes as False (even if all are unchecked).
+    group_filter_active = (request.args.get('group_filter') == '1')
+    if group_filter_active:
+        inc_cited = (request.args.get('inc_cited') == '1')
+        inc_additional = (request.args.get('inc_additional') == '1')
+        inc_rejected = (request.args.get('inc_rejected') == '1')
+    else:
+        inc_cited = True
+        inc_additional = True
+        inc_rejected = True
+    selected_groups = []
+    if inc_cited:
+        selected_groups.append('cited')
+    if inc_additional:
+        selected_groups.append('additional')
+    if inc_rejected:
+        selected_groups.append('rejected')
     enrichment_total_citations = 0
     enriched_citation_count = 0
     unlabeled_citation_count = 0
@@ -2481,12 +2718,18 @@ def dashboard():
     if show_labels:
         if not enriched_only:
             enriched_url_norms, label_index = _load_enrichment_index()
+        breakdown_account_clause = f" AND c.account_type = '{breakdown_account}'" if breakdown_account != 'all' else ""
         citation_rows = db.execute(
-            f"SELECT c.url_normalized, c.citation_type FROM citations c WHERE c.url_normalized != ''{citations_enriched_clause}"
+            f"SELECT c.url_normalized, c.citation_type FROM citations c WHERE c.url_normalized != ''{citations_enriched_clause}{breakdown_account_clause}"
         ).fetchall()
         enrichment_total_citations = len(citation_rows)
         label_type_counts = {}
         label_tone_counts = {}
+        # Selected-group counts (checkbox-driven)
+        label_type_counts_selected = {}
+        label_tone_counts_selected = {}
+        selected_total = 0
+        selected_enriched = 0
         # Per-group breakdowns (by citation_type)
         label_type_counts_by_group = {'cited': {}, 'additional': {}, 'rejected': {}}
         label_tone_counts_by_group = {'cited': {}, 'additional': {}, 'rejected': {}}
@@ -2497,15 +2740,24 @@ def dashboard():
             ctype = row[1] or ''
             if ctype in totals_by_group:
                 totals_by_group[ctype] += 1
+            if ctype in selected_groups:
+                selected_total += 1
             if not url_norm:
                 continue
-            if url_norm in enriched_url_norms:
+            # Use LLM label first, fallback to deterministic label for known domains
+            label = get_label_for_url(url_norm, label_index)
+            has_label = url_norm in enriched_url_norms or (label is not None)
+            if has_label:
                 enriched_citation_count += 1
-                label = label_index.get(url_norm, {})
+                label = label or {}
                 label_type = label.get('type') or 'unknown'
                 label_tone = label.get('tone') or 'unknown'
                 label_type_counts[label_type] = label_type_counts.get(label_type, 0) + 1
                 label_tone_counts[label_tone] = label_tone_counts.get(label_tone, 0) + 1
+                if ctype in selected_groups:
+                    selected_enriched += 1
+                    label_type_counts_selected[label_type] = label_type_counts_selected.get(label_type, 0) + 1
+                    label_tone_counts_selected[label_tone] = label_tone_counts_selected.get(label_tone, 0) + 1
                 if ctype in enriched_counts_by_group:
                     enriched_counts_by_group[ctype] += 1
                     d1 = label_type_counts_by_group[ctype]
@@ -2536,7 +2788,13 @@ def dashboard():
             enrichment_pct_by_group[g] = (enr / tot * 100.0) if tot else 0.0
             unlabeled_by_group[g] = max(tot - enr, 0)
 
-    return render_template_string(DASHBOARD_TEMPLATE, 
+        # Selected-group summary for the combined breakdown
+        selected_unlabeled = max(selected_total - selected_enriched, 0)
+        selected_enrichment_pct = (selected_enriched / selected_total * 100.0) if selected_total else 0.0
+        label_type_rows_selected = _build_label_rows(label_type_counts_selected)
+        label_tone_rows_selected = _build_label_rows(label_tone_counts_selected)
+
+    html = render_template_string(DASHBOARD_TEMPLATE, 
                                  ent_runs=ent_runs, ent_bing=ent_bing,
                                  ent_total_all=ent_total_all, ent_matched_all=ent_matched_all,
                                  ent_total_main=ent_total_main, ent_total_add=ent_total_add,
@@ -2573,6 +2831,8 @@ def dashboard():
                                  total_unique_domains=total_unique_domains,
                                  total_rejected_global=total_rejected_global,
                                  pers_invisible=pers_invisible, pers_page_data=pers_page_data,
+                                 ent_google_pos_data=ent_google_pos_data,
+                                 pers_google_pos_data=pers_google_pos_data,
                                  pers_total_cited_urls=pers_total_cited_urls,
                                  pers_q1_matched=pers_q1_matched, pers_q2_matched=pers_q2_matched,
                                  pers_q1_overlap_pct=pers_q1_overlap_pct, pers_q2_overlap_pct=pers_q2_overlap_pct,
@@ -2589,7 +2849,21 @@ def dashboard():
                                  enrichment_pct_by_group=enrichment_pct_by_group if show_labels else {},
                                  unlabeled_by_group=unlabeled_by_group if show_labels else {},
                                  totals_by_group=totals_by_group if show_labels else {},
-                                 enriched_counts_by_group=enriched_counts_by_group if show_labels else {})
+                                 enriched_counts_by_group=enriched_counts_by_group if show_labels else {},
+                                 breakdown_account=breakdown_account,
+                                 # Checkbox state + selected-group outputs
+                                 inc_cited=inc_cited,
+                                 inc_additional=inc_additional,
+                                 inc_rejected=inc_rejected,
+                                 selected_groups=selected_groups,
+                                 selected_total=selected_total if show_labels else 0,
+                                 selected_enriched=selected_enriched if show_labels else 0,
+                                 selected_unlabeled=selected_unlabeled if show_labels else 0,
+                                 selected_enrichment_pct=selected_enrichment_pct if show_labels else 0.0,
+                                 label_type_counts_selected=label_type_rows_selected if show_labels else [],
+                                 label_tone_counts_selected=label_tone_rows_selected if show_labels else [])
+    _cache_set(cache_key, html)
+    return html
 
 @app.route('/domains')
 def domain_explorer():
@@ -2668,8 +2942,8 @@ def domain_explorer():
         if domain not in domain_data:
             domain_data[domain] = {
                 'domain': domain,
-                'ent_cited': 0, 'ent_additional': 0,
-                'pers_cited': 0, 'pers_additional': 0,
+                'ent_cited': 0, 'ent_additional': 0, 'ent_rejected': 0,
+                'pers_cited': 0, 'pers_additional': 0, 'pers_rejected': 0,
                 'total': 0,
                 'in_bing': False,
                 'in_google': False,
@@ -2688,13 +2962,17 @@ def domain_explorer():
         if account == 'enterprise':
             if ctype == 'cited':
                 d['ent_cited'] += 1
-            else:
+            elif ctype == 'additional':
                 d['ent_additional'] += 1
+            elif ctype == 'rejected':
+                d['ent_rejected'] += 1
         else:
             if ctype == 'cited':
                 d['pers_cited'] += 1
-            else:
+            elif ctype == 'additional':
                 d['pers_additional'] += 1
+            elif ctype == 'rejected':
+                d['pers_rejected'] += 1
         
         # Parse run_id to get prompt_id and run_number
         parts = run_id.split('_') if run_id else ['', '']
@@ -2786,6 +3064,7 @@ INVISIBLE_TEMPLATE = """
   <div class="nav">
     <a href="/">← Run Viewer</a>
     <a href="/dashboard">📊 Dashboard</a>
+    <a href="/urls" style="color:#0f766e;">🔗 URL Breakdown</a>
     <a href="/domains">🔍 Domain Explorer</a>
     <a href="/invisible" style="color:#ef4444;">🕳️ Truly Invisible</a>
   </div>
@@ -2808,6 +3087,7 @@ INVISIBLE_TEMPLATE = """
         <select name="type" onchange="this.form.submit()">
           <option value="cited" {{ 'selected' if type_filter=='cited' else '' }}>Cited</option>
           <option value="additional" {{ 'selected' if type_filter=='additional' else '' }}>Additional</option>
+          <option value="rejected" {{ 'selected' if type_filter=='rejected' else '' }}>Rejected</option>
           <option value="all" {{ 'selected' if type_filter=='all' else '' }}>Cited + Additional</option>
         </select>
       </label>
@@ -2885,6 +3165,150 @@ INVISIBLE_TEMPLATE = """
 </html>
 """
 
+# =========================
+# URL Breakdown (Enriched vs Unlabeled, by cited/additional/rejected)
+# =========================
+URL_BREAKDOWN_TEMPLATE = """
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URL Breakdown - GEO Research</title>
+  <style>
+    body { font-family: -apple-system, sans-serif; background: #f4f4f9; margin: 0; padding: 20px; }
+    .nav { margin-bottom: 18px; }
+    .nav a { margin-right: 12px; text-decoration: none; color: #111; font-weight: 600; }
+    .card { background: white; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; }
+    th { font-size: 11px; color: #555; }
+    .filters { display:flex; gap:10px; flex-wrap: wrap; margin: 10px 0 16px; align-items: end; }
+    select { padding: 6px 8px; border-radius: 8px; border: 1px solid #ddd; }
+    .muted { color:#666; font-size: 12px; }
+    .pill { display:inline-block; padding:2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .pill-green { background:#dcfce7; color:#166534; }
+    .pill-gray { background:#f3f4f6; color:#374151; }
+    .pill-red { background:#fee2e2; color:#991b1b; }
+    a.url { color:#0369a1; text-decoration:none; }
+    a.url:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <a href="/">← Run Viewer</a>
+    <a href="/dashboard">📊 Dashboard</a>
+    <a href="/urls" style="color:#0f766e;">🔗 URL Breakdown</a>
+    <a href="/domains">🔍 Domain Explorer</a>
+    <a href="/invisible" style="color:#ef4444;">🕳️ Truly Invisible</a>
+  </div>
+
+  <h1 style="margin: 0 0 6px;">🔗 URL Breakdown</h1>
+  <div class="muted">Filter to see which specific URLs are enriched vs unlabeled, split by citation group (cited/additional/rejected).</div>
+
+  <div class="card" style="margin-top:14px;">
+    <form method="get" class="filters">
+      <label class="muted">
+        Account:
+        <select name="account">
+          <option value="all" {{ 'selected' if account_filter=='all' else '' }}>All</option>
+          <option value="personal" {{ 'selected' if account_filter=='personal' else '' }}>Personal</option>
+          <option value="enterprise" {{ 'selected' if account_filter=='enterprise' else '' }}>Enterprise</option>
+        </select>
+      </label>
+      <label class="muted">
+        Group:
+        <select name="group">
+          <option value="all" {{ 'selected' if group_filter=='all' else '' }}>All</option>
+          <option value="cited" {{ 'selected' if group_filter=='cited' else '' }}>Cited</option>
+          <option value="additional" {{ 'selected' if group_filter=='additional' else '' }}>Additional</option>
+          <option value="rejected" {{ 'selected' if group_filter=='rejected' else '' }}>Rejected</option>
+        </select>
+      </label>
+      <label class="muted">
+        Labels:
+        <select name="labels">
+          <option value="all" {{ 'selected' if labels_filter=='all' else '' }}>All</option>
+          <option value="enriched" {{ 'selected' if labels_filter=='enriched' else '' }}>Enriched only</option>
+          <option value="unlabeled" {{ 'selected' if labels_filter=='unlabeled' else '' }}>Unlabeled only</option>
+        </select>
+      </label>
+      <label class="muted">
+        Enrichment field:
+        <select name="efield">
+          <option value="" {{ 'selected' if not efield else '' }}>—</option>
+          <option value="__source" {{ 'selected' if efield=='__source' else '' }}>label_source (llm/auto/unlabeled)</option>
+          <option value="type" {{ 'selected' if efield=='type' else '' }}>type</option>
+          <option value="tone" {{ 'selected' if efield=='tone' else '' }}>tone</option>
+          <option value="content_format" {{ 'selected' if efield=='content_format' else '' }}>content_format</option>
+          <option value="primary_intent" {{ 'selected' if efield=='primary_intent' else '' }}>primary_intent</option>
+        </select>
+      </label>
+      <label class="muted">
+        Value:
+        <select name="evalue">
+          <option value="" {{ 'selected' if not evalue else '' }}>—</option>
+          {% for v in evalue_options %}
+          <option value="{{ v }}" {{ 'selected' if evalue==v else '' }}>{{ v }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="muted">
+        Limit:
+        <select name="limit">
+          <option value="100" {{ 'selected' if limit==100 else '' }}>100</option>
+          <option value="250" {{ 'selected' if limit==250 else '' }}>250</option>
+          <option value="500" {{ 'selected' if limit==500 else '' }}>500</option>
+          <option value="1000" {{ 'selected' if limit==1000 else '' }}>1000</option>
+        </select>
+      </label>
+      <button type="submit" style="padding:7px 10px; border-radius:10px; border:1px solid #ddd; background:#111827; color:#fff; font-size:12px; cursor:pointer;">
+        Apply
+      </button>
+    </form>
+
+    <div style="display:flex; gap:14px; flex-wrap: wrap; margin: 8px 0 14px;">
+      <div class="pill pill-green">Enriched URLs: {{ enriched_urls_count }}</div>
+      <div class="pill pill-red">Unlabeled URLs: {{ unlabeled_urls_count }}</div>
+      <div class="pill pill-gray">Total URLs: {{ total_urls_count }}</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>URL</th>
+          <th>Group</th>
+          <th>Runs</th>
+          <th>Occurrences</th>
+          <th>Type</th>
+          <th>Tone</th>
+          <th>Format</th>
+          <th>Intent</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r['domain'] }}</td>
+          <td><a class="url" href="{{ r['url'] }}" target="_blank">{{ r['url'] }}</a></td>
+          <td>{{ r['group'] }}</td>
+          <td class="muted">{{ r['run_count'] }}</td>
+          <td class="muted">{{ r['occurrences'] }}</td>
+          <td>{{ r.get('label_type','') }}{% if r.get('is_auto_label') %}<span style="color:#f97316;font-size:9px;margin-left:2px;">⚡</span>{% endif %}</td>
+          <td>{{ r.get('label_tone','') }}</td>
+          <td>{{ r.get('label_content_format','') }}</td>
+          <td>{{ r.get('label_primary_intent','') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="muted" style="margin-top:12px;font-size:11px;">
+    <span style="color:#f97316;">⚡</span> = auto-labeled (known domain, not LLM enriched)
+  </div>
+</body>
+</html>
+"""
+
 
 @app.route('/invisible')
 def invisible_links():
@@ -2898,7 +3322,7 @@ def invisible_links():
     except Exception:
         limit = 250
 
-    if type_filter not in ('cited', 'additional', 'all'):
+    if type_filter not in ('cited', 'additional', 'rejected', 'all'):
         type_filter = 'cited'
     if account_filter not in ('personal', 'enterprise', 'all'):
         account_filter = 'personal'
@@ -3044,6 +3468,171 @@ def invisible_links():
         invisible_pct=invisible_pct,
         type_label=type_label,
         google_data_count=google_data_count,
+    )
+
+
+@app.route('/urls')
+def url_breakdown():
+    db = get_db()
+    account_filter = request.args.get('account', 'all')
+    group_filter = request.args.get('group', 'all')
+    labels_filter = request.args.get('labels', 'all')  # all | enriched | unlabeled
+    efield = request.args.get('efield', '').strip()
+    evalue = request.args.get('evalue', '').strip()
+    try:
+        limit = int(request.args.get('limit', '250'))
+    except Exception:
+        limit = 250
+
+    if account_filter not in ('personal', 'enterprise', 'all'):
+        account_filter = 'all'
+    if group_filter not in ('cited', 'additional', 'rejected', 'all'):
+        group_filter = 'all'
+    if labels_filter not in ('all', 'enriched', 'unlabeled'):
+        labels_filter = 'all'
+    if limit not in (100, 250, 500, 1000):
+        limit = 250
+    if efield not in ('', '__source', 'type', 'tone', 'content_format', 'primary_intent'):
+        efield = ''
+    if not efield:
+        evalue = ''
+
+    enriched_url_norms, label_index = _load_enrichment_index()
+    _ensure_enriched_temp_table(db, enriched_url_norms)
+
+    def _get_evalue_options(field: str):
+        if not field:
+            return []
+        if field == '__source':
+            return ['llm', 'auto', 'unlabeled']
+        # collect unique categorical values from LLM labels + deterministic labels
+        vals = set()
+        for lbl in (label_index or {}).values():
+            try:
+                v = (lbl or {}).get(field)
+                if v:
+                    vals.add(str(v))
+            except Exception:
+                pass
+        for lbl in _DETERMINISTIC_DOMAIN_LABELS.values():
+            try:
+                v = (lbl or {}).get(field)
+                if v:
+                    vals.add(str(v))
+            except Exception:
+                pass
+        return sorted(vals)
+
+    evalue_options = _get_evalue_options(efield)
+
+    account_where = "c.account_type = ?" if account_filter != 'all' else "1=1"
+    params = (account_filter,) if account_filter != 'all' else tuple()
+
+    if group_filter == 'all':
+        group_where = "c.citation_type IN ('cited','additional','rejected')"
+        group_params = tuple()
+    else:
+        group_where = "c.citation_type = ?"
+        group_params = (group_filter,)
+
+    if labels_filter == 'enriched':
+        labels_where = "EXISTS (SELECT 1 FROM temp_enriched_urls t WHERE t.url_normalized = c.url_normalized)"
+    elif labels_filter == 'unlabeled':
+        labels_where = "NOT EXISTS (SELECT 1 FROM temp_enriched_urls t WHERE t.url_normalized = c.url_normalized)"
+    else:
+        labels_where = "1=1"
+
+    # Counts (unique URLs)
+    total_urls_count = db.execute(
+        f"""
+        SELECT COUNT(DISTINCT c.url_normalized)
+        FROM citations c
+        WHERE {account_where}
+          AND {group_where}
+          AND c.url_normalized != ''
+          AND {labels_where}
+        """,
+        params + group_params,
+    ).fetchone()[0]
+
+    enriched_urls_count = db.execute(
+        f"""
+        SELECT COUNT(DISTINCT c.url_normalized)
+        FROM citations c
+        WHERE {account_where}
+          AND {group_where}
+          AND c.url_normalized != ''
+          AND EXISTS (SELECT 1 FROM temp_enriched_urls t WHERE t.url_normalized = c.url_normalized)
+        """,
+        params + group_params,
+    ).fetchone()[0]
+    unlabeled_urls_count = max(total_urls_count - enriched_urls_count, 0) if labels_filter == 'all' else (
+        total_urls_count if labels_filter == 'unlabeled' else 0
+    )
+
+    # Rows
+    rows = db.execute(
+        f"""
+        SELECT
+          c.url_normalized as url_normalized,
+          MIN(c.url) as url,
+          MIN(c.domain) as domain,
+          MIN(c.citation_type) as citation_type,
+          COUNT(DISTINCT c.run_id) as run_count,
+          COUNT(*) as occurrences
+        FROM citations c
+        WHERE {account_where}
+          AND {group_where}
+          AND c.url_normalized != ''
+          AND {labels_where}
+        GROUP BY c.url_normalized
+        ORDER BY run_count DESC, occurrences DESC
+        LIMIT ?
+        """,
+        params + group_params + (limit,),
+    ).fetchall()
+
+    out = []
+    for r in rows:
+        url_norm = r['url_normalized']
+        # Use LLM label first, fallback to deterministic label for known domains
+        label = get_label_for_url(url_norm, label_index)
+        is_auto = label.get('_auto', False) if label else False
+        # Optional enrichment filtering (applied after DB grouping)
+        if efield and evalue:
+            if efield == '__source':
+                source = 'llm' if url_norm in enriched_url_norms else ('auto' if is_auto else 'unlabeled')
+                if source != evalue:
+                    continue
+            else:
+                if not label or str(label.get(efield, '')) != evalue:
+                    continue
+        out.append({
+            'url': r['url'],
+            'domain': r['domain'] or '',
+            'group': r['citation_type'] or '',
+            'run_count': int(r['run_count'] or 0),
+            'occurrences': int(r['occurrences'] or 0),
+            'label_type': label.get('type', '') if label else '',
+            'label_tone': label.get('tone', '') if label else '',
+            'label_content_format': label.get('content_format', '') if label else '',
+            'label_primary_intent': label.get('primary_intent', '') if label else '',
+            'is_auto_label': is_auto,
+        })
+
+    return render_template_string(
+        URL_BREAKDOWN_TEMPLATE,
+        account_filter=account_filter,
+        group_filter=group_filter,
+        labels_filter=labels_filter,
+        efield=efield,
+        evalue=evalue,
+        evalue_options=evalue_options,
+        limit=limit,
+        rows=out,
+        total_urls_count=total_urls_count,
+        enriched_urls_count=enriched_urls_count if labels_filter != 'unlabeled' else 0,
+        unlabeled_urls_count=unlabeled_urls_count,
     )
 
 if __name__ == '__main__':
