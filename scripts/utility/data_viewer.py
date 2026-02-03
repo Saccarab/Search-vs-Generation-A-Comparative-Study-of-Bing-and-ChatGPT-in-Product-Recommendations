@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-from flask import Flask, render_template_string, request
+from flask import Flask, render_template_string, request, send_from_directory, abort
 import json
 import os
 import html as html_module
@@ -762,6 +762,50 @@ HTML_TEMPLATE = """
         }
         a { color: #10a37f; text-decoration: none; }
         a:hover { text-decoration: underline; }
+
+        /* Mic toggle (looping background audio) */
+        #mic-toggle {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            z-index: 9999;
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            border: 1px solid rgba(0,0,0,0.12);
+            background: rgba(255,255,255,0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            user-select: none;
+        }
+        #mic-toggle:hover { filter: brightness(0.98); }
+        #mic-toggle svg { width: 18px; height: 18px; }
+        #mic-toggle .muted-slash {
+            stroke: #ef4444;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            display: none;
+        }
+        #mic-toggle.off .muted-slash { display: block; }
+
+        #mic-status {
+            position: fixed;
+            top: 60px;
+            right: 14px;
+            z-index: 9999;
+            max-width: 260px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(17,24,39,0.92);
+            color: #fff;
+            font-size: 11px;
+            line-height: 1.35;
+            display: none;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+        }
     
     .nav { 
         display: flex; 
@@ -797,6 +841,18 @@ HTML_TEMPLATE = """
     </style>
 </head>
 <body>
+    <!-- Looping audio (starts on user click due to browser autoplay policy) -->
+    <audio id="bg-audio" src="/media/Sheer_Belly_Dancin_128k.mp3" loop preload="none"></audio>
+    <div id="mic-toggle" class="off" title="Toggle background audio">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Z" stroke="#111827" stroke-width="1.6"/>
+            <path d="M5 11a7 7 0 0 0 14 0" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M12 18v3" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M8.5 21h7" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+            <path class="muted-slash" d="M6 6l12 12"/>
+        </svg>
+    </div>
+    <div id="mic-status"></div>
     <div id="sidebar">
         <div style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
             <a href="/" style="text-decoration:none; color:white; font-weight:bold; background: #10a37f; padding: 10px; border-radius: 5px; text-align: center;">🤖 RUN VIEWER</a>
@@ -1089,6 +1145,13 @@ HTML_TEMPLATE = """
                             </details>
                         </div>
                         {% endif %}
+
+                        {% if run_raw.claim_segmentation_html %}
+                        <details open style="margin-top: 15px;">
+                            <summary style="cursor:pointer; font-size: 12px; color:#444; font-weight: bold;">🎨 Claim segmentation + extraction</summary>
+                            <div style="margin-top:10px;">{{ run_raw.claim_segmentation_html|safe }}</div>
+                        </details>
+                        {% endif %}
                 </div>
                     
                     <!-- Raw Network Data (collapsible) -->
@@ -1123,13 +1186,6 @@ HTML_TEMPLATE = """
                         <summary style="cursor: pointer; font-size: 12px; color: #666; font-weight: bold;">📝 RAW RESPONSE TEXT</summary>
                         <div class="raw-text-box" style="margin-top: 10px;">{{ run_raw.response_text or 'No response text available' }}</div>
                     </details>
-
-                    {% if run_raw.claim_segmentation_html %}
-                    <details style="margin-top: 15px;">
-                        <summary style="cursor:pointer; font-size: 12px; color:#444; font-weight: bold;">🎨 Claim segmentation (citation mapping)</summary>
-                        <div style="margin-top:10px;">{{ run_raw.claim_segmentation_html|safe }}</div>
-                    </details>
-                    {% endif %}
 
             </div>
                 
@@ -1301,11 +1357,81 @@ HTML_TEMPLATE = """
         </div>
         {% endif %}
     </div>
+
+    <script>
+        (function () {
+            const audio = document.getElementById('bg-audio');
+            const btn = document.getElementById('mic-toggle');
+            const status = document.getElementById('mic-status');
+            if (!audio || !btn) return;
+
+            function setStatus(msg, isError) {
+                if (!status) return;
+                status.textContent = msg || '';
+                status.style.display = msg ? 'block' : 'none';
+                status.style.background = isError ? 'rgba(127,29,29,0.92)' : 'rgba(17,24,39,0.92)';
+                if (msg) window.setTimeout(() => { status.style.display = 'none'; }, 3500);
+            }
+
+            async function toggle() {
+                // If already playing: just mute/unmute (do NOT reset time)
+                if (!audio.paused && !audio.ended) {
+                    audio.muted = !audio.muted;
+                    btn.classList.toggle('off', audio.muted);
+                    setStatus(audio.muted ? 'Muted' : 'Playing (loop)', false);
+                    return;
+                }
+
+                // If paused: start playback (loop attribute is set on the <audio>)
+                try {
+                    audio.loop = true;
+                    audio.muted = false;
+                    audio.volume = 1.0;
+                    await audio.play();
+                    btn.classList.remove('off');
+                    setStatus('Playing (loop)', false);
+                } catch (e) {
+                    btn.classList.add('off');
+                    const msg = (e && (e.name || e.message)) ? (e.name || e.message) : String(e);
+                    setStatus('Could not start audio: ' + msg + '. Open DevTools Console for details.', true);
+                    try { console.error('Audio play failed', e); } catch (err) {}
+                }
+            }
+
+            // Helpful error visibility if the file 404s or can’t decode
+            audio.addEventListener('error', function () {
+                const code = audio.error ? audio.error.code : 0;
+                setStatus('Audio load/decode error (code ' + code + '). Check that /media/Sheer_Belly_Dancin_128k.mp3 returns 200.', true);
+            });
+
+            btn.addEventListener('click', toggle);
+        })();
+    </script>
 </body>
 </html>
 """
 
 app = Flask(__name__)
+
+# --- Local media serving (restricted) ---
+@app.route('/media/<path:filename>')
+def media(filename: str):
+    # Only allow a known-safe file (absolute path so it works regardless of cwd)
+    if filename != 'Sheer_Belly_Dancin_128k.mp3':
+        abort(404)
+
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    candidate_dirs = [
+        os.path.join(repo_root, 'src', 'media'),
+        os.path.join(repo_root, 'data'),
+    ]
+    for d in candidate_dirs:
+        try:
+            if os.path.exists(os.path.join(d, filename)):
+                return send_from_directory(d, filename)
+        except Exception:
+            continue
+    abort(404)
 
 DB_PATH = 'geo_fresh.db'
 
@@ -1539,6 +1665,40 @@ def build_claim_segmentation_html(run_id: str, account_type: str | None):
             if not items:
                 return ''
 
+            # Build a ref_index -> url lookup from this run's raw search_result_groups_json,
+            # so we can recover missing "+1" links when mapping JSON only stored one URL.
+            ref_index_to_url = {}
+            try:
+                import re
+                extra = get_raw_network_data(run_id) or {}
+                srg_str = (extra.get('search_result_groups_json') or '[]') if isinstance(extra, dict) else '[]'
+                srg = json.loads(srg_str) if isinstance(srg_str, str) else []
+                if isinstance(srg, list):
+                    for group in srg:
+                        if isinstance(group, dict) and 'entries' in group and isinstance(group.get('entries'), list):
+                            for entry in group.get('entries', []):
+                                if not isinstance(entry, dict):
+                                    continue
+                                ref_id = entry.get('ref_id') or {}
+                                try:
+                                    idx = int(ref_id.get('ref_index')) if isinstance(ref_id, dict) else None
+                                except Exception:
+                                    idx = None
+                                url = entry.get('url')
+                                if idx is not None and url:
+                                    ref_index_to_url[idx] = url
+                        elif isinstance(group, dict):
+                            ref_id = group.get('ref_id') or {}
+                            try:
+                                idx = int(ref_id.get('ref_index')) if isinstance(ref_id, dict) else None
+                            except Exception:
+                                idx = None
+                            url = group.get('url')
+                            if idx is not None and url:
+                                ref_index_to_url[idx] = url
+            except Exception:
+                ref_index_to_url = {}
+
             def _tok_start(it):
                 try:
                     tp = it.get('token_position') or {}
@@ -1589,7 +1749,7 @@ def build_claim_segmentation_html(run_id: str, account_type: str | None):
 
             # Table view (the "Extraction Data" component)
             parts.append(
-                '<details style="margin-top:12px;">'
+                '<details open style="margin-top:12px;">'
                 '<summary style="cursor:pointer; font-size:12px; font-weight:700; color:#111;">Extraction Data (table)</summary>'
                 '<div style="margin-top:10px; overflow-x:auto;">'
                 '<table style="width:100%; border-collapse:collapse; font-size:12px;">'
@@ -1605,14 +1765,55 @@ def build_claim_segmentation_html(run_id: str, account_type: str | None):
             for i, it in enumerate(items):
                 claim = (it.get('claim_text') or '').strip()
                 token = (it.get('citation_token') or '').strip()
-                url = (it.get('inline_url') or '').strip()
+                # Multi-chip: prefer all URLs in chip when present
+                urls = []
+                try:
+                    raw_all = it.get('all_urls_in_chip')
+                    if isinstance(raw_all, list):
+                        urls = [u for u in raw_all if isinstance(u, str) and u.strip()]
+                except Exception:
+                    urls = []
+                if not urls:
+                    try:
+                        srcs = it.get('sources')
+                        if isinstance(srcs, list):
+                            urls = [s.get('url') for s in srcs if isinstance(s, dict) and s.get('url')]
+                    except Exception:
+                        urls = []
+                if not urls:
+                    u = (it.get('inline_url') or '').strip()
+                    if u:
+                        urls = [u]
+
+                # If token indicates multiple refs but mapping only provided one URL, try to infer the missing ones.
+                # Example: token contains "turn0search10 turn0search23" but sources list only has one URL.
+                try:
+                    import re
+                    search_idxs = re.findall(r'turn\d+search(\d+)', token)
+                    for idx_str in search_idxs:
+                        try:
+                            idx = int(idx_str)
+                        except Exception:
+                            continue
+                        inferred = ref_index_to_url.get(idx)
+                        if inferred and inferred not in urls:
+                            urls.append(inferred)
+                except Exception:
+                    pass
+
                 tp = it.get('token_position') or {}
                 sidx = tp.get('start_idx')
                 eidx = tp.get('end_idx')
                 safe_claim = html_module.escape(claim)
                 safe_token = html_module.escape(token)
-                safe_url = html_module.escape(url)
-                url_cell = f'<a href="{safe_url}" target="_blank">{safe_url}</a>' if safe_url else '—'
+                if urls:
+                    url_links = []
+                    for u in urls:
+                        su = html_module.escape(u)
+                        url_links.append(f'<a href="{su}" target="_blank">{su}</a>')
+                    url_cell = '<br>'.join(url_links)
+                else:
+                    url_cell = '—'
                 parts.append(
                     '<tr>'
                     f'<td style="padding:8px; border:1px solid #e5e7eb; color:#666;">{i+1}</td>'
@@ -2492,7 +2693,8 @@ def dashboard():
         return cached
     db = get_db()
     enriched_only = request.args.get('enriched', '0') in ('1', 'true', 'yes', 'enriched')
-    show_labels = request.args.get('labels', '0') in ('1', 'true', 'yes') or enriched_only
+    # Default ON: labels are shown unless explicitly disabled (labels=0/false/no/off)
+    show_labels = request.args.get('labels', '1') in ('1', 'true', 'yes', 'on') or enriched_only
     enriched_url_norms = set()
     label_index = {}
     if enriched_only:
