@@ -1493,7 +1493,9 @@ def get_db():
 _enriched_url_norms = None
 _enriched_label_index = None
 _enriched_sources = [
+    'datapass/page_labels_combined_v2.5.jsonl',
     'datapass/page_labels_gemini_v2.5.jsonl',
+    'datapass/page_labels_control_gpt5_mini.jsonl',
 ]
 
 def _normalize_url_basic(url: str) -> str:
@@ -3780,6 +3782,15 @@ URL_BREAKDOWN_TEMPLATE = """
           <option value="tone" {{ 'selected' if efield=='tone' else '' }}>tone</option>
           <option value="content_format" {{ 'selected' if efield=='content_format' else '' }}>content_format</option>
           <option value="primary_intent" {{ 'selected' if efield=='primary_intent' else '' }}>primary_intent</option>
+          <option value="has_tables" {{ 'selected' if efield=='has_tables' else '' }}>has_tables</option>
+          <option value="has_numbered_lists" {{ 'selected' if efield=='has_numbered_lists' else '' }}>has_numbered_lists</option>
+          <option value="has_bullet_points" {{ 'selected' if efield=='has_bullet_points' else '' }}>has_bullet_points</option>
+          <option value="has_pros_cons" {{ 'selected' if efield=='has_pros_cons' else '' }}>has_pros_cons</option>
+          <option value="is_vendor_owned" {{ 'selected' if efield=='is_vendor_owned' else '' }}>is_vendor_owned</option>
+          <option value="is_current_year_2026" {{ 'selected' if efield=='is_current_year_2026' else '' }}>is_current_year_2026</option>
+          <option value="expertise_signal_score" {{ 'selected' if efield=='expertise_signal_score' else '' }}>expertise_signal_score</option>
+          <option value="freshness_cue_strength" {{ 'selected' if efield=='freshness_cue_strength' else '' }}>freshness_cue_strength</option>
+          <option value="readability_score" {{ 'selected' if efield=='readability_score' else '' }}>readability_score</option>
         </select>
       </label>
       <label class="muted">
@@ -3863,6 +3874,8 @@ URL_BREAKDOWN_TEMPLATE = """
           <th>Tone</th>
           <th>Format</th>
           <th>Intent</th>
+          <th>Features</th>
+          <th>Scores</th>
         </tr>
       </thead>
       <tbody>
@@ -3877,6 +3890,19 @@ URL_BREAKDOWN_TEMPLATE = """
           <td>{{ r.get('label_tone','') }}</td>
           <td>{{ r.get('label_content_format','') }}</td>
           <td>{{ r.get('label_primary_intent','') }}</td>
+          <td>
+            <div style="display:flex; flex-wrap:wrap; gap:2px; max-width:150px;">
+              {% if r.get('label_has_tables') %}<span class="pill pill-gray" style="font-size:9px; padding:1px 4px;">📊 Table</span>{% endif %}
+              {% if r.get('label_has_numbered_lists') %}<span class="pill pill-gray" style="font-size:9px; padding:1px 4px;">1. List</span>{% endif %}
+              {% if r.get('label_has_pros_cons') %}<span class="pill pill-gray" style="font-size:9px; padding:1px 4px;">⚖️ Pros</span>{% endif %}
+              {% if r.get('label_is_vendor_owned') %}<span class="pill pill-gray" style="font-size:9px; padding:1px 4px;">🏢 Vend</span>{% endif %}
+              {% if r.get('label_is_current_year_2026') %}<span class="pill pill-gray" style="font-size:9px; padding:1px 4px;">📅 2026</span>{% endif %}
+            </div>
+          </td>
+          <td class="muted" style="font-size:10px;">
+            Exp: {{ r.get('label_expertise_signal_score','-') }}<br>
+            Frsh: {{ r.get('label_freshness_cue_strength','-') }}
+          </td>
         </tr>
         {% endfor %}
       </tbody>
