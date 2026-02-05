@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Grounding Stats | Gemini Analysis</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { display: block; overflow-y: auto; padding: 40px; }
+        .stats-container { max-width: 1200px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .back-link { text-decoration: none; color: var(--primary); font-weight: bold; }
+        
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .summary-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border); text-align: center; }
+        .summary-card.highlight { border-top: 5px solid var(--primary); }
+        .summary-val { font-size: 2.5rem; font-weight: bold; display: block; color: var(--bg-sidebar); }
+        .summary-label { color: #666; text-transform: uppercase; font-size: 0.9rem; margin-top: 10px; }
+
+        .chart-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border); margin-bottom: 40px; }
+        .rank-bars-container { height: 300px; align-items: flex-end; gap: 6px; margin-top: 40px; padding-bottom: 10px; border-bottom: 2px solid #333; }
+        .rank-bar-wrapper { flex: 1; }
+        .rank-bar { width: 100%; min-width: 15px; }
+        .rank-label { font-size: 0.75rem; }
+        .rank-bar-value { font-size: 0.75rem; }
+
+        .data-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+        .data-table th { background: #f8f9fa; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); }
+        .data-table td { padding: 15px; border-bottom: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+    <div class="stats-container">
+        <div class="header">
+            <div>
+                <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+                <h1>Global Grounding Behavior Analysis</h1>
+            </div>
+            <button id="exportCsvBtn" class="btn-secondary" style="width: auto; padding: 10px 20px;">
+                <i class="fas fa-download"></i> Export Data (CSV)
+            </button>
+        </div>
+
+        <div class="summary-grid" id="summaryGrid">
+            <div class="summary-card">
+                <span id="totalRuns" class="summary-val">0</span>
+                <span class="summary-label">Total Runs Analyzed</span>
+            </div>
+            <div class="summary-card">
+                <span id="totalChunks" class="summary-val">0</span>
+                <span class="summary-label">Total Citations</span>
+            </div>
+            <div class="summary-card highlight">
+                <span id="globalSurvival" class="summary-val">0%</span>
+                <span class="summary-label">SERP Overlap Rate</span>
+            </div>
+            <!-- Query sequence cards will be injected here -->
+        </div>
+
+        <div class="chart-section">
+            <h3>Global Citation DNA Distribution</h3>
+            <p>Distribution of DNA features across all citations in the Gemini dataset.</p>
+            <div class="summary-grid" style="grid-template-columns: 1fr 1fr; gap: 30px; background: none; padding: 0;">
+                <div>
+                    <h4>Type (Selected Groups)</h4>
+                    <table class="data-table" id="typeDistributionTable">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Count</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody id="typeDistributionBody"></tbody>
+                    </table>
+                </div>
+                <div>
+                    <h4>Tone (Selected Groups)</h4>
+                    <table class="data-table" id="toneDistributionTable">
+                        <thead>
+                            <tr>
+                                <th>Tone</th>
+                                <th>Count</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody id="toneDistributionBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h3>Selection Drift Analysis (DNA Distribution)</h3>
+            <p>Comparing the DNA of <strong>Cited</strong> links vs. the overall <strong>SERP</strong> links. Positive lift indicates a preference for that feature.</p>
+            <table class="data-table" id="driftTable">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>SERP %</th>
+                        <th>Cited %</th>
+                        <th>Lift (pp)</th>
+                    </tr>
+                </thead>
+                <tbody id="driftTableBody">
+                    <!-- JS Populated -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-section">
+            <h3>Citation Density & Rank Drift</h3>
+            <p>Comparing <strong>Availability</strong> (how often a rank appears in SERP) vs. <strong>Selection</strong> (how often Gemini cites it).</p>
+            
+            <div class="drift-explanation" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; border-left: 4px solid #3498db;">
+                <strong>What is Rank Drift?</strong><br>
+                If Gemini picked links randomly, the "Cited %" would match the "SERP %" (approx 3.3% for each rank). 
+                A positive <strong>Drift</strong> (e.g., +40%) means Gemini is "over-indexing" on that rank, showing a strong positional preference.
+            </div>
+
+            <div id="rankDistributionChart" class="rank-bars-container">
+                <!-- JS Populated -->
+            </div>
+
+            <table class="data-table" style="margin-top: 20px;">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Citations</th>
+                        <th>Cited %</th>
+                        <th>SERP %</th>
+                        <th>Drift (Lift)</th>
+                    </tr>
+                </thead>
+                <tbody id="rankDriftTableBody">
+                    <!-- JS Populated -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-section">
+            <h3>Detailed Survival by Run</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Run ID</th>
+                        <th>Total Chunks</th>
+                        <th>Matched (Top 20)</th>
+                        <th>Survival %</th>
+                    </tr>
+                </thead>
+                <tbody id="runTableBody">
+                    <!-- JS Populated -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function init() {
+            const resp = await fetch('/api/bundle');
+            const data = await resp.json();
+            
+            // Stats Calculation
+            let totalChunks = 0;
+            let totalMatches = 0;
+            let q1Citations = 0;
+            let fanoutCitations = 0;
+            const runStats = [];
+
+            data.runs.forEach(run => {
+                const allSerpUrls = new Set();
+                const queries = run.webSearchQueries || [];
+                const q1 = queries[0];
+                const q1SerpUrls = new Set((run.serps[q1] || []).map(r => normalizeUrl(r.link)));
+                
+                const fanoutSerpUrls = new Set();
+                queries.slice(1).forEach(q => {
+                    (run.serps[q] || []).forEach(r => fanoutSerpUrls.add(normalizeUrl(r.link)));
+                });
+
+                Object.values(run.serps || {}).forEach(results => {
+                    results.forEach(r => allSerpUrls.add(normalizeUrl(r.link)));
+                });
+                
+                const chunks = run.groundingChunks || [];
+                const matches = chunks.filter(c => allSerpUrls.has(normalizeUrl(c.web?.resolvedUri || c.web?.uri))).length;
+                
+                totalChunks += chunks.length;
+                totalMatches += matches;
+
+                chunks.forEach(chunk => {
+                    const url = normalizeUrl(chunk.web?.resolvedUri || chunk.web?.uri);
+                    if (q1SerpUrls.has(url)) q1Citations++;
+                    if (fanoutSerpUrls.has(url)) fanoutCitations++;
+                });
+                
+                runStats.push({
+                    id: run.runId,
+                    total: chunks.length,
+                    matched: matches,
+                    rate: chunks.length > 0 ? (matches / chunks.length * 100) : 0
+                });
+            });
+
+            // Populate Summary
+            document.getElementById('totalRuns').textContent = data.runs.length;
+            document.getElementById('totalChunks').textContent = totalChunks;
+            document.getElementById('globalSurvival').textContent = (totalMatches / totalChunks * 100).toFixed(1) + '%';
+
+            // DYNAMICALLY GENERATE QUERY SEQUENCE CARDS
+            const summaryGrid = document.getElementById('summaryGrid');
+            const queryPositionCounts = {}; // index -> count
+            let totalCitForSequence = 0;
+
+            data.runs.forEach(run => {
+                const chunks = run.groundingChunks || [];
+                const queries = run.webSearchQueries || [];
+                if (queries.length === 0) return;
+
+                const urlToFirstQueryIdx = {};
+                queries.forEach((q, idx) => {
+                    (run.serps[q] || []).forEach(r => {
+                        const norm = normalizeUrl(r.link);
+                        if (!(norm in urlToFirstQueryIdx)) {
+                            urlToFirstQueryIdx[norm] = idx;
+                        }
+                    });
+                });
+
+                chunks.forEach(chunk => {
+                    const url = normalizeUrl(chunk.web?.resolvedUri || chunk.web?.uri);
+                    totalCitForSequence++;
+                    const firstIdx = urlToFirstQueryIdx[url];
+                    if (firstIdx !== undefined) {
+                        queryPositionCounts[firstIdx] = (queryPositionCounts[firstIdx] || 0) + 1;
+                    }
+                });
+            });
+
+            const sortedIndices = Object.keys(queryPositionCounts).map(Number).sort((a, b) => a - b);
+            const maxIdx = sortedIndices.length > 0 ? Math.max(...sortedIndices) : 0;
+
+            for (let i = 0; i <= Math.max(maxIdx, 2); i++) {
+                const count = queryPositionCounts[i] || 0;
+                const rate = totalCitForSequence > 0 ? (count / totalCitForSequence * 100) : 0;
+                
+                const card = document.createElement('div');
+                card.className = 'summary-card';
+                card.innerHTML = `
+                    <span class="summary-val">${rate.toFixed(1)}%</span>
+                    <span class="summary-label">Query Q${i + 1} Overlap</span>
+                    <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">${count} citations</div>
+                `;
+                summaryGrid.appendChild(card);
+            }
+
+            // Populate Table
+            const tbody = document.getElementById('runTableBody');
+            runStats.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${s.id}</strong></td>
+                    <td>${s.total}</td>
+                    <td>${s.matched}</td>
+                    <td>
+                        <div class="survival-bar-bg"><div class="survival-bar-fill" style="width: ${s.rate}%"></div></div>
+                        ${s.rate.toFixed(1)}%
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Populate Chart & Table
+            const chart = document.getElementById('rankDistributionChart');
+            const driftTableBody = document.getElementById('rankDriftTableBody');
+            const dist = data.rankDistribution || [];
+            const maxCount = Math.max(...dist.map(d => d.count));
+            
+            chart.innerHTML = dist.slice(0, 30).map(d => {
+                const height = maxCount > 0 ? (d.count / maxCount * 100) : 0;
+                const driftClass = parseFloat(d.drift) > 0 ? 'drift-pos' : 'drift-neg';
+                return `
+                    <div class="rank-bar-wrapper">
+                        <div class="rank-bar-value">${d.count}</div>
+                        <div class="rank-bar" style="height: ${height}%" title="Rank ${d.rank}: ${d.count} citations (${d.citedPercentage}%)"></div>
+                        <div class="rank-label">${d.rank}</div>
+                        <div class="rank-drift-small ${driftClass}">${parseFloat(d.drift) > 0 ? '+' : ''}${d.drift}%</div>
+                    </div>
+                `;
+            }).join('');
+
+            driftTableBody.innerHTML = dist.slice(0, 30).map(d => {
+                const drift = parseFloat(d.drift);
+                const driftColor = drift > 0 ? '#27ae60' : (drift < -1 ? '#e74c3c' : '#7f8c8d');
+                return `
+                    <tr>
+                        <td><strong>Rank ${d.rank}</strong></td>
+                        <td>${d.count}</td>
+                        <td>${d.citedPercentage}%</td>
+                        <td>${d.serpPercentage}%</td>
+                        <td style="color: ${driftColor}; font-weight: bold;">${drift > 0 ? '+' : ''}${d.drift}%</td>
+                    </tr>
+                `;
+            }).join('');
+
+            // DRIFT ANALYSIS
+            renderDriftAnalysis(data);
+            
+            // GLOBAL DNA BREAKDOWN
+            renderGlobalDNABreakdown(data);
+
+            // Export logic
+            document.getElementById('exportCsvBtn').onclick = () => {
+                let csv = "rank,count,percentage\n";
+                dist.forEach(d => csv += `${d.rank},${d.count},${d.percentage}\n`);
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'gemini_rank_distribution.csv';
+                a.click();
+            };
+        }
+
+        function normalizeUrl(url) {
+            try {
+                const u = new URL(url);
+                return (u.hostname.replace('www.', '') + u.pathname.replace(/\/$/, '')).toLowerCase();
+            } catch (e) { return (url || '').toLowerCase(); }
+        }
+
+        function normalizeUrlKey(rawUrl) {
+            if (!rawUrl) return "";
+            let url = rawUrl.trim();
+            if (!url.includes("://")) url = `https://${url}`;
+            try {
+                const p = new URL(url);
+                let host = (p.hostname || "").toLowerCase();
+                if (host.startsWith("www.")) host = host.slice(4);
+                let pathname = p.pathname || "/";
+                if (pathname.length > 1 && pathname.endsWith("/")) pathname = pathname.slice(0, -1);
+                const dropExact = new Set(["gclid", "fbclid", "msclkid", "yclid", "mc_cid", "mc_eid", "igshid"]);
+                const kept = [];
+                for (const [k, v] of p.searchParams.entries()) {
+                    const lk = k.toLowerCase();
+                    if (lk.startsWith("utm_") || dropExact.has(lk)) continue;
+                    kept.push([k, v]);
+                }
+                const q = new URLSearchParams(kept).toString();
+                return `${host}${pathname}${q ? `?${q}` : ""}`;
+            } catch {
+                return rawUrl.toLowerCase();
+            }
+        }
+
+        function renderGlobalDNABreakdown(data) {
+            const typeBody = document.getElementById('typeDistributionBody');
+            const toneBody = document.getElementById('toneDistributionBody');
+            const enriched = data.enrichedData || {};
+            
+            const typeCounts = {};
+            const toneCounts = {};
+            let totalCitations = 0;
+
+            data.runs.forEach(run => {
+                (run.groundingChunks || []).forEach(chunk => {
+                    const norm = normalizeUrlKey(chunk.web?.resolvedUri || chunk.web?.uri);
+                    const dnaRaw = enriched[norm];
+                    if (dnaRaw) {
+                        const dna = dnaRaw.urls || dnaRaw;
+                        totalCitations++;
+                        
+                        const type = dna.type || dna.content_format || 'unknown';
+                        const tone = dna.tone || 'unknown';
+                        
+                        typeCounts[type] = (typeCounts[type] || 0) + 1;
+                        toneCounts[tone] = (toneCounts[tone] || 0) + 1;
+                    }
+                });
+            });
+
+            if (totalCitations === 0) {
+                typeBody.innerHTML = '<tr><td colspan="3">No DNA data found.</td></tr>';
+                toneBody.innerHTML = '<tr><td colspan="3">No DNA data found.</td></tr>';
+                return;
+            }
+
+            const renderTable = (counts, body) => {
+                const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+                body.innerHTML = sorted.map(([key, val]) => `
+                    <tr>
+                        <td>${key}</td>
+                        <td>${val}</td>
+                        <td>${(val / totalCitations * 100).toFixed(1)}%</td>
+                    </tr>
+                `).join('');
+            };
+
+            renderTable(typeCounts, typeBody);
+            renderTable(toneCounts, toneBody);
+        }
+
+        function renderDriftAnalysis(data) {
+            const driftBody = document.getElementById('driftTableBody');
+            const enriched = data.enrichedData || {};
+            
+            const serpCounts = {}; // feature -> count
+            const citedCounts = {}; // feature -> count
+            let totalSerpLinks = 0;
+            let totalCitedLinks = 0;
+
+            // 1. Count SERP DNA
+            data.runs.forEach(run => {
+                Object.values(run.serps || {}).forEach(results => {
+                    results.forEach(res => {
+                        const norm = normalizeUrlKey(res.link);
+                        const dnaRaw = enriched[norm];
+                        if (dnaRaw) {
+                            const dna = dnaRaw.urls || dnaRaw;
+                            totalSerpLinks++;
+                            const features = [
+                                `Intent: ${dna.primary_intent}`,
+                                `Format: ${dna.content_format}`,
+                                `Tone: ${dna.tone}`,
+                                `Freshness: ${dna.freshness_cue_strength ? dna.freshness_cue_strength + '/5' : (dna.freshness || 'N/A')}`
+                            ];
+                            features.forEach(f => serpCounts[f] = (serpCounts[f] || 0) + 1);
+                        }
+                    });
+                });
+            });
+
+            // 2. Count Cited DNA
+            data.runs.forEach(run => {
+                (run.groundingChunks || []).forEach(chunk => {
+                    const norm = normalizeUrlKey(chunk.web?.resolvedUri || chunk.web?.uri);
+                    const dnaRaw = enriched[norm];
+                    if (dnaRaw) {
+                        const dna = dnaRaw.urls || dnaRaw;
+                        totalCitedLinks++;
+                        const features = [
+                            `Intent: ${dna.primary_intent}`,
+                            `Format: ${dna.content_format}`,
+                            `Tone: ${dna.tone}`,
+                            `Freshness: ${dna.freshness_cue_strength ? dna.freshness_cue_strength + '/5' : (dna.freshness || 'N/A')}`
+                        ];
+                        features.forEach(f => citedCounts[f] = (citedCounts[f] || 0) + 1);
+                    }
+                });
+            });
+
+            if (totalSerpLinks === 0 || totalCitedLinks === 0) {
+                driftBody.innerHTML = '<tr><td colspan="4">Insufficient DNA data for drift analysis.</td></tr>';
+                return;
+            }
+
+            // 3. Calculate Lift
+            const allFeatures = Array.from(new Set([...Object.keys(serpCounts), ...Object.keys(citedCounts)]));
+            const driftData = allFeatures.map(f => {
+                const serpPct = (serpCounts[f] || 0) / totalSerpLinks * 100;
+                const citedPct = (citedCounts[f] || 0) / totalCitedLinks * 100;
+                return {
+                    feature: f,
+                    serpPct,
+                    citedPct,
+                    lift: citedPct - serpPct
+                };
+            }).sort((a, b) => b.lift - a.lift);
+
+            // 4. Render
+            driftBody.innerHTML = driftData.map(d => `
+                <tr>
+                    <td>${d.feature}</td>
+                    <td>${d.serpPct.toFixed(1)}%</td>
+                    <td>${d.citedPct.toFixed(1)}%</td>
+                    <td style="color: ${d.lift > 0 ? 'green' : 'red'}; font-weight: bold;">
+                        ${d.lift > 0 ? '+' : ''}${d.lift.toFixed(1)} pp
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        init();
+    </script>
+</body>
+</html>

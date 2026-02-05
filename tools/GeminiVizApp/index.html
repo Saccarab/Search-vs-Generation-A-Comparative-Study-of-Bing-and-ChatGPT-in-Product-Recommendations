@@ -14,8 +14,11 @@
         </div>
         <div class="sidebar-controls">
             <button id="loadDataBtn" class="btn-primary">Load Latest Data</button>
-            <button id="showStatsBtn" class="btn-secondary" style="margin-top: 10px;">
+            <a href="pages/stats.html" class="btn-secondary">
                 <i class="fas fa-chart-pie"></i> View Global Stats
+            </a>
+            <button id="showUrlExplorerBtn" class="btn-secondary">
+                <i class="fas fa-search"></i> URL Explorer
             </button>
         </div>
         <div class="run-list-container">
@@ -27,6 +30,134 @@
     </div>
 
     <div class="main-content">
+        <script src="data/master_bundle.js"></script>
+        <!-- URL Explorer Overlay -->
+        <div id="urlExplorerOverlay" class="stats-overlay" style="display: none;">
+            <div class="stats-modal" style="max-width: 1200px; width: 95%;">
+                <div class="modal-header">
+                    <h2><i class="fas fa-search"></i> URL DNA Explorer</h2>
+                    <button id="closeUrlExplorerBtn" class="close-btn">&times;</button>
+                </div>
+                <div class="explorer-filters" style="padding: 15px 25px; background: #f8f9fa; border-bottom: 1px solid var(--border); display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                    <div class="filter-group">
+                        <label style="font-size: 0.8rem; font-weight: bold; margin-right: 8px;">Type:</label>
+                        <select id="filterType" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="all">All Types</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label style="font-size: 0.8rem; font-weight: bold; margin-right: 8px;">Tone:</label>
+                        <select id="filterTone" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="all">All Tones</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label style="font-size: 0.8rem; font-weight: bold; margin-right: 8px;">Feature:</label>
+                        <select id="filterFeature" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="all">Any Feature</option>
+                            <option value="has_tables">Has Tables</option>
+                            <option value="has_numbered_lists">Has Numbered Lists</option>
+                            <option value="has_bullet_points">Has Bullet Points</option>
+                            <option value="has_pros_cons">Has Pros/Cons</option>
+                            <option value="is_vendor_owned">Vendor Owned</option>
+                            <option value="is_current_year_2026">Current Year (2026)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label style="font-size: 0.8rem; font-weight: bold; margin-right: 8px;">Score:</label>
+                        <select id="filterScoreKey" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="none">None</option>
+                            <option value="expertise_signal_score">Expertise</option>
+                            <option value="freshness_cue_strength">Freshness</option>
+                            <option value="readability_score">Readability</option>
+                        </select>
+                        <select id="filterScoreValue" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="1">1+</option>
+                            <option value="2">2+</option>
+                            <option value="3">3+</option>
+                            <option value="4">4+</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label style="font-size: 0.8rem; font-weight: bold; margin-right: 8px;">Feature:</label>
+                        <select id="filterFeature" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="all">Any Feature</option>
+                            <option value="has_tables">Has Tables</option>
+                            <option value="has_numbered_lists">Has Numbered Lists</option>
+                            <option value="has_bullet_points">Has Bullet Points</option>
+                            <option value="has_pros_cons">Has Pros/Cons</option>
+                            <option value="is_vendor_owned">Vendor Owned</option>
+                            <option value="is_current_year_2026">Current Year (2026)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label style="font-size: 0.8rem; font-weight: bold; margin-right: 8px;">Score:</label>
+                        <select id="filterScoreKey" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="none">None</option>
+                            <option value="expertise_signal_score">Expertise</option>
+                            <option value="freshness_cue_strength">Freshness</option>
+                            <option value="readability_score">Readability</option>
+                        </select>
+                        <select id="filterScoreValue" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="1">1+</option>
+                            <option value="2">2+</option>
+                            <option value="3">3+</option>
+                            <option value="4">4+</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label style="font-size: 0.8rem; font-weight: bold; margin-right: 8px;">Search:</label>
+                        <input type="text" id="filterSearch" placeholder="Search URLs..." style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; width: 200px;">
+                    </div>
+                    <div id="explorerCount" style="font-size: 0.85rem; color: #666; margin-left: auto;">
+                        Showing 0 URLs
+                    </div>
+                </div>
+                <div class="stats-table-container" style="flex: 1; overflow-y: auto;">
+                    <table class="data-table" id="explorerTable">
+                        <thead style="position: sticky; top: 0; background: #eee; z-index: 10;">
+                            <tr>
+                                <th>URL</th>
+                                <th>Type</th>
+                                <th>Tone</th>
+                                <th>Features</th>
+                                <th>Scores</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="explorerTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invisible Explorer Overlay -->
+        <div id="invisibleExplorerOverlay" class="stats-overlay" style="display: none;">
+            <div class="stats-modal">
+                <div class="modal-header">
+                    <h2><i class="fas fa-ghost"></i> Invisible Explorer: Shadow Grounding</h2>
+                    <button id="closeInvisibleBtn" class="close-btn">&times;</button>
+                </div>
+                <div class="stats-description" style="padding: 15px 25px; background: #fff5f5; border-bottom: 1px solid #ffe3e3; font-size: 0.9rem;">
+                    Analyzing citations that were <strong>not found</strong> in any collected SERP for this run. These represent "Shadow Grounding" — knowledge extracted from training data, deep ranks (>100), or geo-outliers.
+                </div>
+                <div class="stats-table-container">
+                    <table id="invisibleTable">
+                        <thead>
+                            <tr>
+                                <th>Source Title</th>
+                                <th>Resolved URL</th>
+                                <th>Content DNA (If Available)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invisibleTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- Stats Overlay -->
         <div id="statsOverlay" class="stats-overlay" style="display: none;">
             <div class="stats-modal">
@@ -63,6 +194,9 @@
                         <tbody id="statsTableBody"></tbody>
                     </table>
                 </div>
+                <div id="rankDistributionChart" class="rank-chart-container">
+                    <!-- Rank distribution chart will be rendered here -->
+                </div>
             </div>
         </div>
 
@@ -70,6 +204,25 @@
             <i class="fas fa-chart-line fa-4x"></i>
             <h1>Gemini Grounding Analysis</h1>
             <p>Select a run from the sidebar to visualize grounding overlap.</p>
+            
+            <div class="comparison-summary" style="margin-top: 40px; width: 80%; max-width: 600px;">
+                <h3 style="margin-bottom: 20px; color: #555; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px;">Model Parity Overview</h3>
+                <div class="stats-grid" style="grid-template-columns: 1fr 1fr; background: none; padding: 0;">
+                    <div class="stat-card">
+                        <span class="stat-label">ChatGPT DNA Labels</span>
+                        <span class="stat-value">3,445</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Gemini DNA Labels</span>
+                        <span class="stat-value">3,191</span>
+                    </div>
+                </div>
+                <div class="stat-card highlight" style="margin-top: 20px;">
+                    <span class="stat-label">Gemini SERP Overlap</span>
+                    <span class="stat-value">69.5%</span>
+                    <small>Citations found in search results</small>
+                </div>
+            </div>
         </div>
 
         <div id="dashboard" class="dashboard" style="display: none;">
@@ -97,6 +250,7 @@
                     <div class="column-header" style="margin-top: 20px; border-top: 1px solid var(--border);">
                         <i class="fas fa-database"></i>
                         <h2>Grounding Chunks (Sources)</h2>
+                        <button id="invisibleExplorerBtn" class="btn-mini"><i class="fas fa-ghost"></i> Invisible Explorer</button>
                     </div>
                     <div id="groundingChunksList" class="grounding-chunks-list">
                         <!-- List of all grounding chunks with resolved URLs -->

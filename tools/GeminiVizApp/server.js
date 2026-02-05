@@ -1,0 +1,38 @@
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+const PORT = 3000;
+
+const server = http.createServer((req, res) => {
+    let filePath = '';
+    let contentType = 'text/html';
+
+    if (req.url === '/' || req.url === '/index.html') {
+        filePath = path.join(__dirname, 'index.html');
+    } else if (req.url === '/pages/stats.html') {
+        filePath = path.join(__dirname, 'pages', 'stats.html');
+    } else if (req.url === '/api/bundle') {
+        filePath = path.join(__dirname, 'data', 'master_bundle.json');
+        contentType = 'application/json';
+    } else {
+        filePath = path.join(__dirname, req.url);
+        if (req.url.endsWith('.js')) contentType = 'text/javascript';
+        else if (req.url.endsWith('.css')) contentType = 'text/css';
+        else if (req.url.endsWith('.json')) contentType = 'application/json';
+    }
+
+    fs.readFile(filePath, (err, content) => {
+        if (err) {
+            res.writeHead(404);
+            res.end(`File not found: ${req.url}`);
+            return;
+        }
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.end(content);
+    });
+});
+
+server.listen(PORT, () => {
+    console.log(`🚀 GeminiVizApp running at http://localhost:${PORT}`);
+});

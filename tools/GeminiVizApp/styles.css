@@ -38,6 +38,18 @@ body {
 
 .sidebar-controls {
     padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-controls a.btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 .run-list-container {
@@ -76,7 +88,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto; /* Allow the whole main content area to scroll */
 }
 
 .welcome-screen {
@@ -93,7 +105,6 @@ body {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    overflow: hidden;
 }
 
 .header-section {
@@ -126,11 +137,9 @@ body {
 
 /* Content Grid - Resizable */
 .content-grid {
-    flex: 1;
     display: flex;
-    gap: 10px;
-    overflow: hidden;
-    min-height: 0;
+    gap: 20px;
+    align-items: flex-start;
 }
 
 .column {
@@ -145,28 +154,20 @@ body {
     background-color: var(--bg-card);
     border-radius: 8px;
     border: 1px solid var(--border);
-    overflow: hidden;
-    min-height: 0;
     flex: 1;
-    min-width: 350px;
+    min-width: 450px;
 }
 
 .response-column {
-    resize: horizontal;
-    overflow: auto;
     position: relative;
 }
 
 .serp-column {
-    flex: 1;
-    overflow-y: auto;
+    /* flex: 1; */
 }
 
 .serp-results-container {
-    flex: 1;
-    overflow-y: auto;
     padding: 15px;
-    min-height: 300px;
 }
 
 /* Resize handle hint */
@@ -203,17 +204,10 @@ body {
 .gemini-response-container {
     padding: 20px;
     line-height: 1.6;
-    height: 400px;
-    overflow-y: auto;
-    resize: vertical;
     border-bottom: 2px solid var(--border);
-    min-height: 100px;
-    max-height: 80vh;
 }
 
 .grounding-chunks-list {
-    flex: 1;
-    overflow-y: auto;
     padding: 15px;
     background: #fcfcfc;
 }
@@ -289,6 +283,10 @@ body {
     border-radius: 10px;
     margin-left: auto;
     font-weight: bold;
+}
+
+.serp-match-badge.serp-match-badge--weak {
+    background: #607d8b;
 }
 
 .match-details {
@@ -523,18 +521,30 @@ body {
     width: 100%;
 }
 
-.btn-secondary {
-    background-color: #455a64;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+.btn-mini {
+    background: #f1f3f4;
+    border: 1px solid #dadce0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
     cursor: pointer;
-    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
+    gap: 4px;
+    color: #3c4043;
+    margin-left: auto;
+}
+
+.btn-mini:hover {
+    background: #e8eaed;
+}
+
+.btn-mini i {
+    font-size: 0.8rem;
+}
+
+.stats-description {
+    line-height: 1.4;
 }
 
 /* Stats Overlay */
@@ -655,6 +665,103 @@ body {
     border-radius: 4px;
 }
 
+/* Rank Distribution Chart */
+.rank-chart-container {
+    padding: 25px;
+    border-top: 1px solid var(--border);
+    background: #fff;
+}
+
+.rank-chart-header {
+    margin-bottom: 20px;
+}
+
+.rank-chart-header h4 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.rank-chart-header p {
+    margin: 5px 0 0 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.rank-bars-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 150px;
+    padding-top: 20px;
+    border-bottom: 2px solid #333;
+}
+
+.rank-bar-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    min-width: 30px;
+    gap: 5px;
+}
+
+.rank-drift-small {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.drift-pos { color: #27ae60; }
+.drift-neg { color: #e74c3c; }
+
+.rank-bar {
+    width: 100%;
+    background-color: var(--primary);
+    border-radius: 3px 3px 0 0;
+    transition: height 0.3s, background-color 0.2s;
+}
+
+.rank-bar:hover {
+    background-color: var(--primary-hover);
+}
+
+.rank-label {
+    font-size: 0.65rem;
+    margin-top: 5px;
+    color: #666;
+    font-weight: bold;
+}
+
+.rank-bar-value {
+    font-size: 0.65rem;
+    margin-bottom: 2px;
+    color: #333;
+    font-weight: bold;
+}
+
+.feature-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: 250px;
+}
+
+.feat-tag {
+    display: inline-block;
+    background: #e1f5fe;
+    color: #0288d1;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #b3e5fc;
+}
+
+.score-mini {
+    font-size: 0.75rem;
+    color: #555;
+    white-space: nowrap;
+}
+
 /* Gemini Citation Style */
 .citation {
     display: inline-block;
@@ -681,4 +788,49 @@ body {
 .gemini-link:hover {
     background-color: #f1f8ff;
     border-bottom-style: solid;
+}
+
+/* DNA BOX STYLES */
+.dna-box {
+    margin-top: 12px;
+    background: #fdf2f2;
+    border: 1px solid #f9d5d5;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 0.8rem;
+}
+
+.dna-header {
+    font-weight: bold;
+    color: #c62828;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dna-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+}
+
+.dna-item {
+    color: #555;
+}
+
+.dna-item strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.dna-listicle {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #f9d5d5;
+    color: #c62828;
+    font-weight: 500;
 }

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grounding Analytics | Gemini Study</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .analytics-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .analytics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+        }
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .chart-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        .rank-bars-container {
+            height: 300px; /* Taller for dedicated page */
+        }
+        .nav-back {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .stat-big {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--bg-sidebar);
+            display: block;
+        }
+        .stat-desc {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="analytics-container">
+        <a href="index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        
+        <div class="analytics-header">
+            <div>
+                <h1>Grounding Behavior Analytics</h1>
+                <p>Deep dive into citation survival and ranking bias for Gemini 2.5</p>
+            </div>
+            <button id="exportDataBtn" class="btn-secondary" style="width: auto;">
+                <i class="fas fa-download"></i> Export CSV
+            </button>
+        </div>
+
+        <div class="analytics-grid">
+            <div class="chart-section">
+                <span id="totalMatches" class="stat-big">0</span>
+                <span class="stat-desc">Total Citations Matched</span>
+            </div>
+            <div class="chart-section">
+                <span id="globalSurvival" class="stat-big">0%</span>
+                <span class="stat-desc">Global Survival (Top 20)</span>
+            </div>
+            <div class="chart-section">
+                <span id="avgRank" class="stat-big">0.0</span>
+                <span class="stat-desc">Average Citation Rank</span>
+            </div>
+        </div>
+
+        <div class="chart-section full-width">
+            <div id="rankDistributionChart">
+                <!-- Reusing the chart logic from app.js -->
+            </div>
+        </div>
+
+        <div class="chart-section full-width" style="margin-top: 40px;">
+            <h3>Survival Breakdown by Run</h3>
+            <table id="statsTable" style="width: 100%; margin-top: 20px;">
+                <thead>
+                    <tr>
+                        <th>Run ID</th>
+                        <th>Total Chunks</th>
+                        <th>Matched (Any)</th>
+                        <th>Survival (Top 20)</th>
+                        <th>Survival %</th>
+                    </tr>
+                </thead>
+                <tbody id="statsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Minimal version of app.js logic for the dedicated page
+        let masterBundle = null;
+        const SURVIVAL_TOP_N = 20;
+
+        async function init() {
+            const response = await fetch('/api/bundle');
+            masterBundle = await response.json();
+            renderAnalytics();
+        }
+
+        function normalizeUrl(url) {
+            try {
+                const u = new URL(url);
+                return (u.hostname.replace('www.', '') + u.pathname.replace(/\/$/, '')).toLowerCase();
+            } catch (e) { return url.toLowerCase(); }
+        }
+
+        function renderAnalytics() {
+            if (!masterBundle) return;
+
+            let totalChunks = 0;
+            let totalMatchesAny = 0;
+            let totalMatchesTopN = 0;
+            let rankSum = 0;
+
+            const tableBody = document.getElementById('statsTableBody');
+            
+            masterBundle.runs.forEach(run => {
+                const allSerpUrls = {}; // norm -> rank
+                const topNSerpUrls = new Set();
+                
+                Object.values(run.serps || {}).forEach(results => {
+                    results.forEach((r, idx) => {
+                        const norm = normalizeUrl(r.link);
+                        const rank = idx + 1;
+                        if (!allSerpUrls[norm] || rank < allSerpUrls[norm]) allSerpUrls[norm] = rank;
+                        if (rank <= SURVIVAL_TOP_N) topNSerpUrls.add(norm);
+                    });
+                });
+
+                const chunks = run.groundingChunks || [];
+                const matchedAny = chunks.filter(c => allSerpUrls[normalizeUrl(c.web?.resolvedUri || c.web?.uri)]);
+                const matchesTopN = chunks.filter(c => topNSerpUrls.has(normalizeUrl(c.web?.resolvedUri || c.web?.uri))).length;
+                
+                totalChunks += chunks.length;
+                totalMatchesAny += matchedAny.length;
+                totalMatchesTopN += matchesTopN;
+
+                matchedAny.forEach(c => {
+                    rankSum += allSerpUrls[normalizeUrl(c.web?.resolvedUri || c.web?.uri)];
+                });
+
+                const rate = chunks.length > 0 ? (matchesTopN / chunks.length * 100) : 0;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${run.runId}</strong></td>
+                    <td>${chunks.length}</td>
+                    <td>${matchedAny.length}</td>
+                    <td>${matchesTopN}</td>
+                    <td>${rate.toFixed(1)}%</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            document.getElementById('totalMatches').textContent = totalMatchesAny;
+            document.getElementById('globalSurvival').textContent = (totalChunks > 0 ? (totalMatchesTopN / totalChunks * 100) : 0).toFixed(1) + '%';
+            document.getElementById('avgRank').textContent = totalMatchesAny > 0 ? (rankSum / totalMatchesAny).toFixed(1) : '0.0';
+
+            renderRankChart();
+        }
+
+        function renderRankChart() {
+            const container = document.getElementById('rankDistributionChart');
+            const dist = masterBundle.rankDistribution;
+            if (!container || !dist) return;
+
+            const maxCount = Math.max(...dist.map(d => d.count));
+            const displayLimit = 30;
+
+            container.innerHTML = `
+                <div class="rank-chart-header">
+                    <h3>Citation Frequency by Search Rank</h3>
+                    <p>Distribution of citations across the first 30 search results (aggregated across all runs).</p>
+                </div>
+                <div class="rank-bars-container">
+                    ${dist.slice(0, displayLimit).map(d => {
+                        const height = maxCount > 0 ? (d.count / maxCount * 100) : 0;
+                        return `
+                            <div class="rank-bar-wrapper">
+                                <div class="rank-bar-value">${d.count}</div>
+                                <div class="rank-bar" style="height: ${height}%" title="Rank ${d.rank}: ${d.count} citations"></div>
+                                <div class="rank-label">${d.rank}</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        document.getElementById('exportDataBtn').addEventListener('click', () => {
+            let csv = "rank,count,percentage\n";
+            masterBundle.rankDistribution.forEach(d => {
+                csv += `${d.rank},${d.count},${d.percentage}%\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'gemini_grounding_ranks.csv');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
+        init();
+    </script>
+</body>
+</html>
