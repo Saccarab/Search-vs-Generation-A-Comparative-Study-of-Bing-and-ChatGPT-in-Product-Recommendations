@@ -73,6 +73,7 @@ has_pros_cons: 1 if the page clearly contains a Pros/Cons section or equivalent.
 has_clear_authorship: 1 if explicit author/editor attribution exists.
 has_sources_or_citations: 1 if the page text indicates sources/references/citations.
 listicle_has_ranked_order: 1 if the listicle uses rankings.
+is_current_year_2026: 1 if the page explicitly mentions "2026" in the title or text as the current/target year for the content.
 
 ## Definitions
 readability_score (0–5): How easy the page is to scan and understand based on the text structure (clear headings, concise paragraphs, simple language). 5 = exceptionally readable.
@@ -112,6 +113,7 @@ tone definitions (to disambiguate):
     "tone": "",
     "promotional_intensity_score": 0,
     "freshness_cue_strength": 0,
+    "is_current_year_2026": 0,
     "readability_score": 0,
     "heading_density": 0,
     "has_tables": 0,
