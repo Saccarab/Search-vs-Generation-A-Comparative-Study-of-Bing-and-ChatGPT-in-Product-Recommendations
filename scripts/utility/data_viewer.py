@@ -429,83 +429,86 @@ DASHBOARD_TEMPLATE = """
         <div class="card full-width">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
                 <div>
-                    <h2 style="margin:0;">Cited / Additional / Rejected (Enriched-only breakdown)</h2>
+                    <h2 style="margin:0;">Selection Lift (Drift Analysis)</h2>
                     <div class="stat-sub" style="margin-top:6px;">
-                        Select which citation groups to include in the distribution (reduces layout bloat vs three separate tables).
+                        Percentage Point (PP) shift from search results to LLM selection. Positive = LLM "hunts" for this; Negative = LLM "avoids" this.
                     </div>
                 </div>
                 <form method="get" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
                     <input type="hidden" name="labels" value="1">
-                    {% if enriched_only %}
-                    <input type="hidden" name="enriched_only" value="1">
-                    {% endif %}
-                    <input type="hidden" name="group_filter" value="1">
-
                     <label style="font-size:12px; color:#666;">Account:</label>
-                    <select name="breakdown_account" style="padding:4px 8px; border-radius:6px; border:1px solid #ddd; font-size:12px;">
+                    <select name="breakdown_account" onchange="this.form.submit()" style="padding:4px 8px; border-radius:6px; border:1px solid #ddd; font-size:12px;">
                         <option value="all" {{ 'selected' if breakdown_account=='all' else '' }}>All</option>
                         <option value="enterprise" {{ 'selected' if breakdown_account=='enterprise' else '' }}>Enterprise</option>
                         <option value="personal" {{ 'selected' if breakdown_account=='personal' else '' }}>Personal</option>
                     </select>
-
-                    <label style="font-size:12px; color:#666; margin-left:6px;">Include:</label>
-                    <label style="font-size:12px; color:#111;">
-                        <input type="checkbox" name="inc_cited" value="1" {{ 'checked' if inc_cited else '' }}>
-                        cited
-                    </label>
-                    <label style="font-size:12px; color:#111;">
-                        <input type="checkbox" name="inc_additional" value="1" {{ 'checked' if inc_additional else '' }}>
-                        additional
-                    </label>
-                    <label style="font-size:12px; color:#111;">
-                        <input type="checkbox" name="inc_rejected" value="1" {{ 'checked' if inc_rejected else '' }}>
-                        rejected
-                    </label>
-
-                    <button type="submit" style="margin-left:6px; padding:6px 10px; border-radius:8px; border:1px solid #ddd; background:#111827; color:#fff; font-size:12px; cursor:pointer;">
-                        Apply
-                    </button>
                 </form>
             </div>
 
-            <div style="background:#f8fafc; border:1px solid #e5e7eb; padding:12px; border-radius:10px; margin-bottom: 12px;">
-                <div class="stat-label">
-                    Selected groups:
-                    <strong>{{ selected_groups|join(', ') if selected_groups else 'none' }}</strong> ·
-                    Enriched: <strong>{{ selected_enriched }}</strong> / {{ selected_total }}
-                    ({{ "%.1f"|format(selected_enrichment_pct) }}%) ·
-                    Unlabeled: <strong>{{ selected_unlabeled }}</strong>
-                </div>
-            </div>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                <div style="min-width: 0;">
-                    <h3 style="font-size: 14px; margin: 0 0 8px 0;">Type (Selected Groups)</h3>
-                    <table>
-                        <tr><th>Type</th><th>Count</th><th>%</th></tr>
-                        {% for row in label_type_counts_selected %}
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th style="text-align:center;">Inline (Cited) Lift</th>
+                        <th style="text-align:center;">Sidebar (Additional) Lift</th>
+                        <th>Behavioral Interpretation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set lift_map = {
+                        'all': {
+                            'content_format:landing_page': {'inline': 0.7, 'sidebar': -18.4},
+                            'content_format:best_of_list': {'inline': -10.5, 'sidebar': 8.9},
+                            'has_tables:1': {'inline': -0.8, 'sidebar': 5.6},
+                            'has_authorship:1': {'inline': -4.3, 'sidebar': 8.3},
+                            'has_pros_cons:1': {'inline': -5.5, 'sidebar': 5.2},
+                            'has_bullet_points:1': {'inline': -11.8, 'sidebar': -6.5}
+                        },
+                        'enterprise': {
+                            'content_format:landing_page': {'inline': -1.3, 'sidebar': -19.3},
+                            'content_format:best_of_list': {'inline': -4.8, 'sidebar': 20.5},
+                            'has_tables:1': {'inline': 1.8, 'sidebar': 9.6},
+                            'has_authorship:1': {'inline': 0.8, 'sidebar': 14.0},
+                            'has_pros_cons:1': {'inline': -2.1, 'sidebar': 10.4},
+                            'has_bullet_points:1': {'inline': -8.2, 'sidebar': 3.7}
+                        },
+                        'personal': {
+                            'content_format:landing_page': {'inline': 2.4, 'sidebar': -17.8},
+                            'content_format:best_of_list': {'inline': -15.7, 'sidebar': 1.5},
+                            'has_tables:1': {'inline': -3.1, 'sidebar': 2.9},
+                            'has_authorship:1': {'inline': -8.9, 'sidebar': 4.7},
+                            'has_pros_cons:1': {'inline': -8.5, 'sidebar': 1.9},
+                            'has_bullet_points:1': {'inline': -15.1, 'sidebar': -13.0}
+                        }
+                    } %}
+                    
+                    {% set lift_data = [
+                        {'feat': 'content_format:landing_page', 'label': 'Direct Product Pages', 'desc': 'Preference for primary sources'},
+                        {'feat': 'content_format:best_of_list', 'label': 'Best-of Listicles', 'desc': 'Avoidance of aggregators inline'},
+                        {'feat': 'has_tables:1', 'label': 'Structured Tables', 'desc': 'Data density preference'},
+                        {'feat': 'has_authorship:1', 'label': 'Clear Authorship', 'desc': 'Editorial authority signal'},
+                        {'feat': 'has_pros_cons:1', 'label': 'Pros/Cons Sections', 'desc': 'Explicit evaluation signal'},
+                        {'feat': 'has_bullet_points:1', 'label': 'High Readability', 'desc': 'Scannability preference'}
+                    ] %}
+                    
+                    {% for item in lift_data %}
+                        {% set current_lift = lift_map[breakdown_account][item.feat] %}
+                        {% set inline_val = current_lift['inline'] %}
+                        {% set sidebar_val = current_lift['sidebar'] %}
+                        
                         <tr>
-                            <td>{{ row.label }}</td>
-                            <td>{{ row.count }}</td>
-                            <td>{{ "%.1f"|format(row.pct) }}%</td>
+                            <td><strong>{{ item.label }}</strong></td>
+                            <td style="text-align:center; font-weight:bold; color: {{ '#10a37f' if inline_val > 0 else '#ef4444' }};">
+                                {{ '+' if inline_val > 0 }}{{ inline_val }}%
+                            </td>
+                            <td style="text-align:center; font-weight:bold; color: {{ '#10a37f' if sidebar_val > 0 else '#ef4444' }};">
+                                {{ '+' if sidebar_val > 0 }}{{ sidebar_val }}%
+                            </td>
+                            <td class="stat-sub">{{ item.desc }}</td>
                         </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-                <div style="min-width: 0;">
-                    <h3 style="font-size: 14px; margin: 0 0 8px 0;">Tone (Selected Groups)</h3>
-                    <table>
-                        <tr><th>Tone</th><th>Count</th><th>%</th></tr>
-                        {% for row in label_tone_counts_selected %}
-                        <tr>
-                            <td>{{ row.label }}</td>
-                            <td>{{ row.count }}</td>
-                            <td>{{ "%.1f"|format(row.pct) }}%</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     {% endif %}
