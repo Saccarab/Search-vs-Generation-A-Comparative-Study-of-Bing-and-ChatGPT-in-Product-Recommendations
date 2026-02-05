@@ -103,17 +103,6 @@ tone definitions (to disambiguate):
 - promotional: marketing-leaning but still informational; highlights benefits/features; limited pressure; few/no aggressive CTAs.
 - salesy: high conversion pressure; repeated CTAs ("buy", "sign up", "start free trial"), urgency/scarcity ("limited time"), discounts/pricing emphasis, lead-capture funnels.
 
-## Listicle & Directory extraction rules (only if type == "listicle" OR type == "marketplace_directory")
-- Extract up to 25 items into listicle_products.
-- Only include items clearly recommended/compared in the provided text.
-- position_in_listicle: use explicit numbering if present; else order of appearance (start at 1).
-- product_domain: ONLY set this if an explicit URL or domain for that item appears in the provided extracted text. Otherwise leave as empty string (do NOT infer domains from product/brand names).
-- is_host_domain: 1 if product_domain == listicle_domain, else 0.
-- notes: MUST include a short snippet from the provided text showing the item mention (for auditability). If you found an explicit URL/domain for the item, include it in notes as well.
-
-## Bias definition (0/1)
-bias (0/1): Set bias=1 ONLY if the host's own domain is listed as an item AND it is ranked #1.
-
 ## REQUIRED OUTPUT JSON (MUST match keys exactly)
 {
   "urls": {
@@ -131,41 +120,20 @@ bias (0/1): Set bias=1 ONLY if the host's own domain is listed as an item AND it
     "has_pros_cons": 0,
     "has_clear_authorship": 0,
     "has_sources_or_citations": 0,
+    "listicle_has_ranked_order": 0,
     "expertise_signal_score": 0,
     "spamminess_score": 0,
     "primary_intent": "",
     "is_vendor_owned": 0
   },
-  "listicles": null,
-  "listicle_products": []
 }
 
-## If type == "listicle" OR type == "marketplace_directory", set listicles object to:
-{
-  "listicle_url": "{URL}",
-  "listicle_domain": "{URL_DOMAIN}",
-  "title": "{TITLE}",
-  "category": "",
-  "collected_from": "",
-  "date_captured": "",
-  "n_products_listed": 0,
-  "run_id_seen_in": "",
-  "manual_verified": "",
-  "bias": 0,
-  "listicle_has_ranked_order": 0
-}
-
-## And listicle_products array objects must be:
-{
-  "product_name": "",
-  "listicle_url": "{URL}",
-  "product_url": "",
-  "product_domain": "",
-  "position_in_listicle": 0,
-  "mention_type": "",
-  "is_host_domain": 0,
-  "notes": ""
-}
+## Critical Heuristics (MANDATORY)
+1. URL Analysis: If the URL contains "/blog/", "/articles/", or "/news/", the type is almost certainly "listicle" or "news_article", NOT "marketplace_directory".
+2. Vendor Detection: If the domain of the URL (e.g., taption.com) is also one of the products being recommended or discussed on the page, set "is_vendor_owned": 1 and the tone MUST be "promotional" or "salesy".
+3. Directory vs Listicle: A "marketplace_directory" is a site-wide database (G2, Capterra). A single page with a "Top 10" list is a "listicle". Do NOT use "marketplace_directory" for blog posts.
+4. Format vs Type: Do not let the presence of a list force you into "directory". Most lists are "listicles".
+5. NO PRODUCT EXTRACTION: Do NOT list individual products in listicle_products. Focus ONLY on the page-level DNA.
 
 ## Inputs
 URL: {URL}
