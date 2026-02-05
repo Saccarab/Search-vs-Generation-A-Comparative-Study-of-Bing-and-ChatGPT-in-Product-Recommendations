@@ -21,7 +21,7 @@ const CONFIG = {
     promptPath: 'prompts/page_label_prompt_v1.txt',
     concurrency: 5,
     minTime: 500,
-    model: 'gemini-1.5-flash', // Using Flash for speed/cost
+    model: 'gemini-2.5-flash', // Using Flash for speed/cost
     max: 0, // set to > 0 to limit
     skipDomains: [
         "wikipedia.org", "reddit.com", "arxiv.org", "github.com", "youtube.com", "youtu.be",
