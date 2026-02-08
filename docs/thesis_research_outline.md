@@ -1,5 +1,5 @@
 # Thesis Research Outline
-## Search vs. Generation: A Comparative Study of Bing and ChatGPT in Product Recommendations
+## Grounding Behavior in LLM‑Mediated Commercial Search: Citation Patterns and Selection Bias
 
 **Author:** [Your Name]  
 **Date:** January 2026  
@@ -30,7 +30,11 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 - **Source-to-output fidelity**: whether products mentioned in retrieved listicles are carried into the final recommendations
 
 ### Primary measurement idea: “Menu vs Order” (selection drift)
-We quantify grounding-related selection bias by comparing the **DNA distribution of the Menu** (Top‑N SERP results) against the **DNA distribution of the Order** (the URLs the model actually cites), optionally **rank-stratified** (Rank 1..N) to control for position bias.
+We quantify grounding-related selection bias by comparing the **DNA distribution of the Menu** (Top‑N SERP results / retrieved candidate set) against the **DNA distribution of the Order** (the URLs the model actually cites), optionally **rank-stratified** (Rank 1..N) to control for position bias.
+
+**Evidence hierarchy (how we present results):**
+- **Highest-confidence**: SERP position / visibility findings (rank distributions, “deep” vs “invisible” citations). These are based on direct URL/domain matching + observed rank positions.
+- **Secondary (more measurement noise)**: DNA-based Menu vs Order comparisons (e.g., `has_tables`, `has_pros_cons`, structure/format labels). These are still useful to characterize selection behavior, but depend on enrichment/labeling fidelity and page-template variance.
 
 ## Sub-questions (decompositions of RQ1, not separate topics)
 - **RQ1a (selection + visibility)**: How do **cited vs additional vs rejected/invisible** sources differ in domain/type, and how does this differ by **enterprise vs personal** runs?
@@ -560,6 +564,21 @@ This is operationalized in the drift outputs under `data/enrichment_compound_eff
   - **Gemini**: **29.5%** (108/366)
   - **GPT**: **27.9%** (166/596)
 - **Interpretation**: models frequently **re-rank** listicle items in the final response. The listicle’s “#1–#10” order is not preserved as the model’s “top picks” order.
+
+**Listicle rank bias (top-item skew):** Do models preferentially pick items that are near the top of the cited listicle?
+- **Data used**: product roster items only where `present_in_listicle=="yes"` and `listicle_rank` and `total_products_in_listicle>1` are available.
+  - **GPT Enterprise**: **n=391** (mean listicle size **10.95**)
+  - **GPT Personal**: **n=205** (mean listicle size **8.57**)
+  - **Gemini**: **n=365** (mean listicle size **8.56**)
+- **Observed share of selected items coming from top ranks**:
+  - **GPT Enterprise**: #1 **18.9%**, Top‑3 **50.9%**, Top‑5 **76.0%**
+  - **GPT Personal**: #1 **31.7%**, Top‑3 **60.5%**, Top‑5 **81.0%**
+  - **Gemini**: #1 **34.8%**, Top‑3 **61.1%**, Top‑5 **79.5%**
+- **Lift vs uniform baseline** (expected Top‑K share under random pick from a listicle of that size; computed per-item as \(K/N\), capped at 1.0):
+  - **GPT Enterprise**: #1 **1.73×**, Top‑3 **1.55×**, Top‑5 **1.40×**
+  - **GPT Personal**: #1 **2.34×**, Top‑3 **1.49×**, Top‑5 **1.22×**
+  - **Gemini**: #1 **2.53×**, Top‑3 **1.48×**, Top‑5 **1.18×**
+- **Interpretation**: when a listicle has a recoverable internal ranking signal, models **over-select higher-ranked items** (especially the #1 entry), but still **re-rank** them in the final response order (weak correlation between response product order and listicle rank).
 
 ### 2.5.3 Semantic Fidelity: Reading Comprehension vs. Attribution
 - **The "Two-Layer" Grounding Problem:** We decompose "Fidelity" into two distinct measurable phenomena:

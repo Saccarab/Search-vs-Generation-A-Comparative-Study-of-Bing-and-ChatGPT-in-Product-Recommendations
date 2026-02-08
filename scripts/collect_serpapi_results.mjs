@@ -212,35 +212,35 @@ function loadMissingQueries() {
         const account = line.substring(8, 19).trim();
         const type = line.substring(19, 25).trim();
         
-        // Find the full query from the mapping files since the text file is truncated
+            // Find the full query from the mapping files since the text file is truncated
         const mappingFile = path.join(MAPPINGS_DIR, `${runId.split('_').slice(0,2).join('_')}_${account}_mapping.json`);
-        let fullQuery = "";
-        
-        try {
+            let fullQuery = "";
+            
+            try {
             if (!fs.existsSync(mappingFile)) {
                 console.error(`Mapping file not found: ${mappingFile}`);
                 continue;
             }
-            const mappingData = JSON.parse(fs.readFileSync(mappingFile, 'utf-8'));
-            if (type === 'main') {
-                fullQuery = mappingData.prompt;
-            } else {
-                const idx = parseInt(type.replace('Q', '')) - 1;
-                fullQuery = mappingData.metadata.hidden_queries[idx];
-            }
+                const mappingData = JSON.parse(fs.readFileSync(mappingFile, 'utf-8'));
+                if (type === 'main') {
+                    fullQuery = mappingData.prompt;
+                } else {
+                    const idx = parseInt(type.replace('Q', '')) - 1;
+                    fullQuery = mappingData.metadata.hidden_queries[idx];
+                }
 
-            if (fullQuery && fullQuery !== 'n/a') {
-                missingQueries.push({
+                if (fullQuery && fullQuery !== 'n/a') {
+                    missingQueries.push({
                     runId: `${runId}_${account}_${type}`,
-                    query: fullQuery,
-                    _meta: {
-                        chatgpt_run_id: runId,
+                        query: fullQuery,
+                        _meta: {
+                            chatgpt_run_id: runId,
                         account_type: account,
-                        query_type: type === 'main' ? 'main' : 'hidden_query'
-                    }
-                });
-            }
-        } catch (e) {
+                            query_type: type === 'main' ? 'main' : 'hidden_query'
+                        }
+                    });
+                }
+            } catch (e) {
             console.error(`Could not find full query for ${runId} ${type} in ${mappingFile}: ${e.message}`);
         }
     }
@@ -259,7 +259,7 @@ async function fetchSerpApiResults() {
     if (isGemini) {
         console.log(`🚀 Starting SerpApi Collection (Gemini mode) from: ${cfg.geminiRespDir}`);
     } else {
-        console.log('🚀 Starting SerpApi Collection based on serpapi_status_summary.txt...');
+    console.log('🚀 Starting SerpApi Collection based on serpapi_status_summary.txt...');
     }
     console.log(`📦 Output directory: ${OUTPUT_DIR}`);
     console.log(`🧾 Checkpoint file: ${CHECKPOINT_FILE}`);
