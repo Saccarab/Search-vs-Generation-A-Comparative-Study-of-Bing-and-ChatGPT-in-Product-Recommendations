@@ -442,20 +442,26 @@ This “anatomy” motivates the next analytic layers:
 
 ## 2.1 Citation Overlap Analysis
 
-### 2.1.1 The Numbers (Global Overlap)
-We analyzed the overlap between LLM citations and the underlying search index (Bing/Google) across 237 runs.
+### 2.1.1 The Numbers (Global Overlap & Provider Discrepancy)
+We analyzed the overlap between LLM citations and the underlying search index (Bing/Google) across 237 runs. This analysis reveals a significant discrepancy in search provider usage between account types, aligning with OpenAI's official documentation.
 
-| Metric | GPT Enterprise | GPT Personal | Gemini |
+| Metric | GPT Enterprise (Bing-centric) | GPT Personal (Multi-provider) | Gemini (Google-centric) |
 | :--- | :--- | :--- | :--- |
-| **Total Citations** | 1,637 | 1,839 | 1,651 |
-| **Search Index Overlap (Total Coverage)** | **81.3%** (Bing) | **88.5%** (Bing+Google) | **77.7%** (SERP) |
-| **Query Q1 Overlap** | 63.7% | 54.1% | 37.1% |
-| **Query Q2 Overlap** | 64.2% | 52.4% | 18.1% |
-| **Missing (Not in Index)** | ~18.7% | **11.5%** | **22.3%** |
+| **Total Cited Links** | 1,637 | 1,839 | 1,651 |
+| **Total Additional Links** | 2,820 | 4,506 | - |
+| **Bing Overlap (Cited)** | **81.3%** | 67.6% | - |
+| **Bing Overlap (Additional)** | 86.3% | 56.3% | - |
+| **Google Overlap (Cited)** | 46.3% (Control) | **84.8%** | **77.7%** |
+| **Google Overlap (Additional)** | 41.3% (Control) | 81.6% | - |
+| **Total Index Coverage** | 81.3% (Bing) | **88.5%** (Bing+Google) | 77.7% (Google) |
+| **"Invisible" (Missing)** | ~18.7% | **11.5%** | **22.3%** |
 
-- **The "Visibility Gap" Resolution**: By expanding our search depth to **Rank 200 (Deep Hunt)**, we reduced the "Invisible Citation" rate from ~35% down to **11-22%**.
+#### Key Observations on Provider Strategy:
+- **GPT Enterprise: The Bing Standard**: Consistent with OpenAI's [Enterprise documentation](https://help.openai.com/en/articles/10093903-chatgpt-search-for-enterprise-and-edu), which explicitly names Bing as the search provider, we see an **81.3% overlap** with the Bing index. We used Google SERP as a **control group** here, which only yielded a 46.3% overlap, confirming that Enterprise retrieval is heavily optimized for Bing.
+- **GPT Personal: The Multi-Provider Shift**: OpenAI's [general documentation](https://openai.com/index/introducing-chatgpt-search/) describes ChatGPT search as leveraging "third-party search providers" (plural). Our data confirms this: GPT Personal shows a much higher affinity for **Google (84.8%)** than Bing (67.6%), and achieves its highest coverage (**88.5%**) only when combining both indices.
+- **The "Google Jump" (Enterprise vs. Personal)**: We observe a massive **38.5 percentage-point increase** in Google SERP overlap when moving from Enterprise (46.3%) to Personal (84.8%) accounts. This suggests that while Enterprise is "locked" to the Bing index for compliance/contractual reasons, the Personal account type has shifted to a Google-primary or multi-index retrieval strategy, significantly altering the "Menu" of available sources.
+- **The "Visibility Gap" Resolution**: By expanding our search depth to **Rank 200 (Deep Hunt)**, we reduced the "Invisible Citation" rate from ~35% down to **11-22%**, proving that most "missing" citations are simply buried deep in the SERP.
 - **First-Query Bias**: Gemini exhibits a massive dependency on the **first fan-out query (37.1%)**, with a steep drop-off for subsequent queries (Q2: 18.1%, Q3: 11.6%). GPT shows a more balanced distribution across its 50/50 fan-out split.
-- **Account Type Variance**: GPT Enterprise shows a tighter alignment with Bing (81.3%), whereas GPT Personal relies more on a mixture of sources, achieving 88.5% total coverage only when combining Bing and Google results.
 
 ### 2.1.2 The "Visibility Gap" & Retrieval Depth
 - **The "Invisible" Citation Problem**: Initial observations suggested that ~35% of citations were "invisible" to search. However, our **Deep Hunt (Rank 200)** analysis proved that the majority of these are present in the index but buried deep within the SERP.
