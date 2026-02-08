@@ -430,22 +430,40 @@ To quantify "selection drift," we needed to move beyond URLs and domains. We dev
     *   **Qualitative Scores**: `promotional_intensity_score`, `expertise_signal_score`, `readability_score`.
 3.  **Validation**: A subset of labels was manually audited to ensure the LLM labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
 
-### 1.9.2 Global DNA Composition (The "Menu" Baseline)
-Before measuring selection bias, we quantified the composition of our labeled dataset (N=3,444 unique URLs). This represents the "Menu" of available information across all search queries.
+### 1.9.2 Enrichment Coverage & Label Distribution (Study URL Universe)
+To make the drift analyses defensible, we first measured how much of the URL universe was successfully enriched.
 
-| Page Type | Count | Share (%) |
-| :--- | :--- | :--- |
-| **Product Page** | 1,046 | **30.4%** |
-| **Listicle** | 1,018 | **29.6%** |
-| **App Store Listing** | 234 | 6.8% |
-| **Editorial Article** | 204 | 5.9% |
-| **Forum / UGC** | 164 | 4.8% |
-| **News Article** | 146 | 4.2% |
-| **Reference / Wiki** | 145 | 4.2% |
-| **Documentation** | 142 | 4.1% |
+- **Enriched URLs:** 11,925 / 11,929 (**~100%**)  
+- **Unlabeled URLs:** 4
 
-- **The Listicle-Product Dominance**: Listicles and Product Pages together make up **60%** of the candidate pool. This confirms that commercial product recommendation queries are primarily served by these two DNA types.
-- **The Platform Tail**: A significant portion (~15%) of the menu consists of platform-specific content (App Stores, Forums, Directories), which LLMs frequently target for "Invisible" citations.
+**Type distribution (enriched URLs):**
+
+| Type | Count | Share (%) |
+| :--- | ---: | ---: |
+| **product_page** | 4,125 | **34.6%** |
+| **listicle** | 3,994 | **33.5%** |
+| app_store_listing | 779 | 6.5% |
+| news_article | 609 | 5.1% |
+| editorial_article | 547 | 4.6% |
+| forum_ugc | 458 | 3.8% |
+| other | 422 | 3.5% |
+| reference | 391 | 3.3% |
+| documentation | 252 | 2.1% |
+| marketplace_directory | 213 | 1.8% |
+
+**Tone distribution (enriched URLs):**
+
+| Tone | Count | Share (%) |
+| :--- | ---: | ---: |
+| **promotional** | 8,193 | **68.7%** |
+| **neutral_informational** | 2,410 | **20.2%** |
+| salesy | 636 | 5.3% |
+| opinionated | 494 | 4.1% |
+| academic_technical | 186 | 1.6% |
+
+**Interpretation**:
+- The candidate pool is dominated by **product pages + listicles** (~68% combined), so any “listicle uptake” vs “de‑listicling” behavior is operating on a realistically listicle-heavy menu.
+- The web’s commercial surface for these prompts is overwhelmingly **promotional**; this motivates our later tone/structure drift analysis (what gets cited vs merely available).
 
 ---
 
@@ -466,6 +484,25 @@ We analyzed the overlap between LLM citations and the underlying search index (B
 | **Google Overlap (Additional)** | 41.3% (Control) | 81.6% | - |
 | **Total Index Coverage** | 81.3% (Bing) | **88.5%** (Bing+Google) | 77.7% (Google) |
 | **"Invisible" (Missing)** | ~18.7% | **11.5%** | **22.3%** |
+
+#### Gemini: Global Citation DNA Distribution (Cited set only)
+To connect overlap/visibility to content selection, we also summarize the DNA distribution of **Gemini’s cited URLs**:
+
+| Type | Count | Share (%) |
+| :--- | ---: | ---: |
+| **listicle** | 886 | **56.0%** |
+| **product_page** | 355 | **22.4%** |
+| other | 151 | 9.5% |
+| news_article | 53 | 3.4% |
+| documentation | 33 | 2.1% |
+| comparison_article | 32 | 2.0% |
+| marketplace_directory | 31 | 2.0% |
+
+| Tone | Count | Share (%) |
+| :--- | ---: | ---: |
+| **promotional** | 1,058 | **66.9%** |
+| **neutral_informational** | 518 | **32.7%** |
+| opinionated | 6 | 0.4% |
 
 #### Key Observations on Provider Strategy:
 - **GPT Enterprise: The Bing Standard**: Consistent with OpenAI's [Enterprise documentation](https://help.openai.com/en/articles/10093903-chatgpt-search-for-enterprise-and-edu), which explicitly names Bing as the search provider, we see an **81.3% overlap** with the Bing index. We used Google SERP as a **control group** here, which only yielded a 46.3% overlap, confirming that Enterprise retrieval is heavily optimized for Bing.
@@ -547,7 +584,7 @@ Even within Page 1, there is a massive bias toward the very first organic result
    - This shows consistency vs. randomness in ChatGPT's citation selection
 
 3. **Page 1 Ignored Links:**
-   - Links in Bing Page 1 (Rank 1-10) that ChatGPT did NOT cite
+   - Links in **Bing Page 1** (variable-size SERP page; see `2.2.1`) that ChatGPT did NOT cite
    - Compare their DNA to cited links
    - Hypothesis: Ignored links are more `salesy`, lower `expertise_signal_score`
 
@@ -555,16 +592,18 @@ Even within Page 1, there is a massive bias toward the very first organic result
 
 | Field                         | Cited Links | Additional Links | Page 1 Ignored |
 | ----------------------------- | ----------- | ---------------- | -------------- |
-| `has_tables`                  | ?           | ?                | ?              |
-| `has_numbered_lists`          | ?           | ?                | ?              |
-| `has_bullet_points`           | ?           | ?                | ?              |
-| `heading_density`             | ?           | ?                | ?              |
-| `tone`                        | ?           | ?                | ?              |
-| `promotional_intensity_score` | ?           | ?                | ?              |
-| `expertise_signal_score`      | ?           | ?                | ?              |
-| `spamminess_score`            | ?           | ?                | ?              |
-| `readability_score`           | ?           | ?                | ?              |
-| `type`                        | ?           | ?                | ?              |
+| `has_tables` (pct)            | 21.0% / 19.9% | 23.9% / 22.9%   | 23.0% / 23.9%  |
+| `has_numbered_lists` (pct)    | 56.4% / 45.5% | 61.5% / 46.8%   | 57.5% / 59.7%  |
+| `has_bullet_points` (pct)     | 74.7% / 69.4% | 81.4% / 69.1%   | 80.7% / 82.4%  |
+| `has_pros_cons` (pct)         | 17.7% / 19.3% | 25.3% / 22.4%   | 23.3% / 24.7%  |
+| `tone` (top)                  | promo (70.4%) / promo (72.1%) | promo (70.9%) / promo (66.5%) | promo (72.7%) / promo (74.2%) |
+| `promotional_intensity_score` (mean) | 3.28 / 3.32 | 3.11 / 3.15 | 3.20 / 3.23 |
+| `expertise_signal_score` (mean)      | 3.58 / 3.78 | 3.57 / 3.72 | 3.65 / 3.61 |
+| `spamminess_score` (mean)            | 0.26 / 0.26 | 0.33 / 0.33 | 0.29 / 0.30 |
+| `readability_score` (mean)           | 4.05 / 4.06 | 4.03 / 3.98 | 4.05 / 4.05 |
+| `type` (top)                  | product_page (45.4%) / product_page (42.2%) | listicle (40.8%) / listicle (34.2%) | product_page (40.8%) / product_page (42.1%) |
+
+*Format note:* values are shown as **Enterprise / Personal**. “Page 1 ignored” is computed on **unique URLs** on Bing `page_num=1` that are **not cited** (per run, de-duplicated across runs). In our dataset, this bucket has substantial missing DNA labels because not all Bing Page‑1 results were fetched/labelled (Enterprise: 812/1660 labelled; Personal: 648/1394 labelled).
 
 ---
 
@@ -628,20 +667,48 @@ This is operationalized in the drift outputs under `data/enrichment_compound_eff
 
 ### Proof that ChatGPT Gets These "Hidden" Links:
 
-- X% of ChatGPT citations were found at Rank 11-30 (the "Hidden Page 1" zone)
+- **Operational definition (“hidden zone”)**: a **cited URL** that appears in Bing, but only at **Rank 11–30** (beyond what many users treat as “Page 1”).  
+- **GPT Enterprise**: **388 / 1,637 (23.7%)** of cited occurrences were found in Bing **Rank 11–30**.  
+- **GPT Personal**: **326 / 1,839 (17.7%)** of cited occurrences were found in Bing **Rank 11–30**.
 - These links were **not visible** to a human scrolling through Bing normally
 - ChatGPT's API access bypasses the UI limitations
 
 ### Type Distribution of Invisible Citations:
 
-| Type                  | Count | % of Invisible |
-| --------------------- | ----- | -------------- |
-| listicle              | ?     | ?              |
-| review_article        | ?     | ?              |
-| product_page          | ?     | ?              |
-| marketplace_directory | ?     | ?              |
-| reference (Wikipedia) | ?     | ?              |
-| other                 | ?     | ?              |
+We define “invisible” here as: **cited URLs not found in Bing ≤ 200** (our Rank‑200 cap), computed on **unique cited URLs** (not occurrences).
+
+**GPT Enterprise invisible cited URLs (N=176):**
+
+| Type | Count | % of Invisible |
+| :--- | ---: | ---: |
+| product_page | 52 | 29.5% |
+| reference | 44 | 25.0% |
+| listicle | 29 | 16.5% |
+| news_article | 21 | 11.9% |
+| editorial_article | 14 | 8.0% |
+| documentation | 6 | 3.4% |
+| app_store_listing | 4 | 2.3% |
+| other | 3 | 1.7% |
+| marketplace_directory | 1 | 0.6% |
+| forum_ugc | 1 | 0.6% |
+| review_article | 1 | 0.6% |
+
+**GPT Personal invisible cited URLs (N=316):**
+
+| Type | Count | % of Invisible |
+| :--- | ---: | ---: |
+| product_page | 97 | 30.7% |
+| listicle | 94 | 29.7% |
+| app_store_listing | 36 | 11.4% |
+| reference | 26 | 8.2% |
+| news_article | 17 | 5.4% |
+| editorial_article | 16 | 5.1% |
+| forum_ugc | 11 | 3.5% |
+| documentation | 6 | 1.9% |
+| other | 6 | 1.9% |
+| marketplace_directory | 5 | 1.6% |
+| comparison_article | 1 | 0.3% |
+| review_article | 1 | 0.3% |
 
 ---
 
