@@ -349,7 +349,7 @@ Categorize sources and correlate with Content DNA.
 ### Sample Size
 - Dejan: 7,060 queries, 2,275 pages
 - Our pilot: ~12 runs (P004-P007 × 3)
-- Full run: 240 runs (80 prompts × 3)
+- Full run: 237 runs (79 prompts × 3)
 
 ### Variance Reporting
 Always report:
@@ -372,8 +372,8 @@ Despite the Microsoft partnership, ChatGPT may be using **Google** (via SerpApi 
 
 ### Test Methodology
 For each ChatGPT citation:
-1. Check if URL exists in **Bing Top 30** (or Deep Hunt Top 150)
-2. Check if URL exists in **Google Top 20**
+1. Check if URL exists in **Bing Top 30** (or Deep Hunt Top 200)
+2. Check if URL exists in **Google Organic ≥20** (SerpApi paginated until ≥20 organic results)
 3. Calculate overlap percentages
 
 ```javascript
@@ -390,7 +390,7 @@ googleOverlap = citationsFoundInGoogle / totalCitations * 100
 | Both similar | Inconclusive (SERPs often overlap) |
 
 ### Additional Analysis
-- Check for **Google-exclusive** citations (in Google Top 20 but NOT in Bing Top 150)
+- Check for **Google-exclusive** citations (in Google Organic ≥20 but NOT in Bing Top 200)
 - Check for **Bing-exclusive** citations (in Bing but NOT in Google)
 - Look for patterns in which domains appear in one but not the other
 
@@ -587,7 +587,7 @@ and keep “true grounding budget” reserved for Gemini/Vertex-style exposed ch
 
 ### 19.1 Google SERP Control Group (SerpApi)
 **High feasibility, high thesis value**:
-- Collect Google Top 20/30 for each ChatGPT rewritten query (Q1/Q2).
+- Collect Google SERP via SerpApi for each ChatGPT rewritten query (Q1/Q2), paginating until **≥20 Organic** results are collected (often ~3 pages), while retaining non-organic blocks (Video/PAA/Discussions) as diagnostic buckets.
 - Compute: overlap(ChatGPT citations, Google SERP) vs overlap(ChatGPT citations, Bing SERP).
 - Identify “Google-only” citations (in Google top results but absent from Bing deep results), a direct test for the “Google Farm” hypothesis.
 

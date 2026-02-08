@@ -43,8 +43,8 @@ We quantify grounding-related selection bias by comparing the **DNA distribution
 - **RQ1d (claim-level grounding)**: At claim span level, how tightly do claims align to specific sources (and where do “multi-chip” merges occur)?
 
 ## Role of external systems (clarify scope)
-- **Bing**: baseline “human web” retrieval/ranking surface; used to measure overlap/coverage and “visibility gaps” (Top‑30 vs Deep Hunt).
-- **Google (SerpApi)**: control baseline for Gemini fan-out queries and sensitivity checks (organic-only vs organic+video/PAA).
+- **Bing**: baseline “human web” retrieval/ranking surface used as a **measurement instrument** for rank/visibility and “visibility gaps” (**Top‑30 vs Deep Hunt to Top‑200**).
+- **Google (SerpApi)**: control baseline for Gemini fan-out queries and sensitivity checks (**Organic-only** vs including non-organic result types like **Video/PAA/Discussions**).
 - **Gemini**: optional cross-model baseline for grounding mechanics (has explicit `groundingMetadata` and claim-support mapping); not an enterprise/personal split unless we create our own conditions.
 
 # Part 1: Methodology & Tools
@@ -53,11 +53,11 @@ We quantify grounding-related selection bias by comparing the **DNA distribution
 
 | Component            | Description                                                                      |
 | -------------------- | -------------------------------------------------------------------------------- |
-| **Queries**          | 80 product recommendation queries × 3 runs each (240 total runs)                 |
+| **Queries**          | 79 product recommendation queries × 3 runs each (237 total runs)                 |
 | **ChatGPT Data**     | Full responses with inline citations, additional links, and recommended products |
-| **Bing Data**        | Top 30 results + Deep Hunt (Rank 31-150)                                         |
+| **Bing Data**        | Top 30 results + Deep Hunt (Rank 31-200)                                         |
 | **Gemini Data**      | Full `groundingMetadata` (Chunks vs. Supports) + Fan-out Queries                 |
-| **Google SERP**      | Top 20 Organic Results via SerpApi (for Gemini fan-out queries)                  |
+| **Google SERP**      | SerpApi pagination until **≥20 Organic** results are collected (often ~3 pages), with Video/PAA/Discussions retained as diagnostic buckets |
 | **Content Fetching** | Node.js fetcher + Browser extension for blocked pages (Master Content Library)   |
 
 ### 1.1.1 Google SERP result types (SerpApi): Organic vs Video vs PAA
@@ -66,10 +66,12 @@ SerpApi returns Google results in multiple **result_type** buckets (not just “
 - **Organic results**: standard web results (our primary control-group baseline).
 - **Video results**: often YouTube-heavy; can appear in top positions and inflate “coverage” for topics where ChatGPT cites YouTube.
 - **PAA (People Also Ask)**: question-card expansions; these are not directly comparable to Bing organic ranks and can introduce additional URLs.
+- **Discussions / forums blocks**: SerpApi often surfaces forum-like “discussions” sections; we retain them as a separate diagnostic bucket.
 
 **Method rule (comparability)**:
 - For overlap metrics, we default to **Organic-only** (and treat Video/PAA as separate diagnostic buckets), unless explicitly stated otherwise.
 - We keep the non-organic buckets available as a **discussion point** (e.g., “Google surfaces YouTube via Video blocks earlier than Bing”), and as a sensitivity analysis (“organic-only vs organic+video”).
+- **Pagination rule (how we collected the “Top‑20 Organic” baseline)**: we paginate SerpApi until we have **≥20 Organic** results (not necessarily only the first page). In practice this is often the first ~3 pages, alongside non-organic blocks.
 
 ### 1.1.2 Content-size context (listicles vs product pages)
 We report page-length as **context** (not a grounding budget claim): listicles are longer and more heterogeneous than vendor pages, which can influence extractability and selection behavior.
@@ -106,10 +108,10 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 - Proved the need for Deep Hunt methodology
 - **Gemini Insight:** Revealed that Gemini's `groundingChunks` are already pre-filtered (0% rejection rate vs. supports), necessitating a comparison against external SerpApi data to measure the *true* filter.
 
-### 1.2.2 Methodological Evolution: From Top 30 to "Deep Hunt" (Rank 150)
+### 1.2.2 Methodological Evolution: From Top 30 to "Deep Hunt" (Rank 200)
 - **Initial Assumption:** Our study began with a standard retrieval depth of the **Top 30 Bing results**, assuming this would capture the vast majority of relevant citations used by ChatGPT.
 - **The Discovery of "UI Erasure":** Upon qualitative review using our custom Data Viewer, we observed a significant "Visibility Gap." ChatGPT was citing high-quality, relevant pages that were completely missing from the Top 30 human-facing results.
-- **The Pivot to Rank 150:** To test whether these citations were truly "invisible" or merely "buried," we expanded our methodology to a **"Deep Hunt" (Rank 150)**. 
+- **The Pivot to Rank 200:** To test whether these citations were truly "invisible" or merely "buried," we expanded our methodology to a **"Deep Hunt" (Rank 200)**. 
 - **Key Finding of the Pivot:** We discovered that Bing often surfaces the exact pages ChatGPT cites, but hides them deep within pagination loops or beyond the "Page 2 Cliff" (Rank 11+). This methodological shift allowed us to prove that the difference between Search and GenAI is often a **UI and Ranking problem**, not just an indexing one.
 
 ## 1.3 Localization & Retrieval Environment
@@ -120,6 +122,14 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 - **Explicit Localization:** When the user query contains a location (e.g., "Best pizza in New York").
 - **Implicit Localization:** When the query is general (e.g., "Best laptop"), but the search engine uses the user's IP, browser language, and search history to localize results.
 - **The Research Problem:** Traditional search engines (Bing) are aggressively localized. Generative AI (ChatGPT) often provides a more "Global/US-centric" baseline unless explicitly prompted otherwise.
+- **Observed instrumentation signal (foreign-language prompts):** In our logged **fan-out query sets** (Gemini `groundingMetadata.webSearchQueries[]`, ChatGPT network-derived hidden queries), implicit localization often manifests as **one of the fan-out queries being rewritten into the prompt’s local language**, which then steers retrieval toward localized sources.
+- **Concrete example (why we used a proxy):** When issuing an English prompt from **Munich, Germany**, we observed a two-query fan-out where one query remained English while the other was rewritten into German:
+  - Q1: `"free website or program to translate video and add subtitles"`
+  - Q2: `"kostenlos video übersetzen und Untertitel automatisch hinzufügen ..."`
+  
+  This yielded German-language results despite an English user prompt, demonstrating how implicit localization can enter via fan-out rewriting. (Redacted network excerpt saved at `datapass/raw_network_responses/examples/implicit_localization_fanout_query_rewritten_de_redacted.txt`.)
+
+- **Publisher/SEO→GEO implication:** Even if users in non‑English-speaking countries **search in English**, IP/locale-driven fan‑out rewriting can route part of retrieval toward **localized-language SERPs**. Publishers without localized pages may lose visibility (and therefore citations/traffic) in these retrieval paths.
 
 ### 1.3.2 The Proxy Requirement (US-Centric Baseline)
 - To ensure a fair "apples-to-apples" comparison, we standardized our retrieval environment using a **US-based Proxy**.
@@ -130,7 +140,7 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 
 ### 1.3.4 The "Invisible" Citation Problem vs. Empirical Evidence
 - **The Observation:** A significant portion (~35%) of ChatGPT's citations were not found in the standard Top 30 Bing results.
-- **The "Deep Hunt" Resolution:** Our expanded methodology (Rank 150) proved that many of these "invisible" citations are actually present in the Bing index, but buried deep within the SERP (Rank 100+).
+- **The "Deep Hunt" Resolution:** Our expanded methodology (Rank 200) proved that many of these "invisible" citations are actually present in the Bing index, but buried deep within the SERP (Rank 100+).
 - **Key Conclusion:** The "Visibility Gap" is primarily a **retrieval depth and UI issue**. ChatGPT's API access allows it to surface high-quality content that Bing's human-facing UI suppresses or fails to paginate correctly. This reinforces the argument that Search and GenAI are accessing the same index but through different "visibility filters."
 
 ## 1.4 Theoretical Framework: From SEO to GEO
@@ -170,7 +180,7 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 - **Retrieval Asymmetry:** This shift codifies the "Two-Web" reality:
     1. **The Human Web (Ranking):** Optimized for SEO, ads, and engagement.
     2. **The Agent Web (Grounding):** Optimized for information density, extraction potential, and factual synthesis.
-- **Thesis Connection:** Our discovery that ChatGPT citations are often buried at **Rank 31-150** in the Human Web proves that the "Grounding" engine uses a different set of priorities than the "Ranking" engine.
+- **Thesis Connection:** Our discovery that ChatGPT citations are often buried at **Rank 31-200** in the Human Web proves that the "Grounding" engine uses a different set of priorities than the "Ranking" engine.
 
 ## 1.5 The Commercial Catalyst for RAG
 
@@ -181,13 +191,13 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 - **The "Winnable" Arena:** Because commercial intent requires real-time data (pricing, availability, reviews), it is the primary driver for RAG adoption. This makes product recommendations the most critical area for studying the shift from SEO to GEO.
 
 ### 1.5.2 Selection of the Research Query Set
-- **High-Volume Real-World Prompts:** Our dataset consists of **80 unique product recommendation prompts** (e.g., "Best AI video translators", "Top-rated transcription software").
+- **High-Volume Real-World Prompts:** Our dataset consists of **79 unique product recommendation prompts** (e.g., "Best AI video translators", "Top-rated transcription software").
 - **Methodology for Selection:**
     - **Keyword Clustering:** Using tools like **Ahrefs** to identify high-intent clusters.
     - **Prompt Volume Analysis:** Leveraging **Profound's** database to select real-world prompts actually used by consumers.
     - **Deliberate Intent Filtering:** From the broad set of available user prompts, we **deliberately filtered for high commercial intent**. This ensures the study reflects the specific segment of search where AI synthesis is most active and where the "Extractive Nature" of the model is most visible.
     - **Domain Expertise:** Queries were focused on the **AI and Software-as-a-Service (SaaS)** sectors—a domain where the author has significant professional expertise—allowing for more nuanced qualitative analysis of the "Signal vs. Noise" in results.
-- **Experimental Rigor:** Each of the 80 prompts was executed in **3 independent runs** (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
+- **Experimental Rigor:** Each of the 79 prompts was executed in **3 independent runs** (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
 
 ### 1.5.3 The GEO Industry Landscape
 - **The "Gold Rush" of AEO/GEO:** The rapid rise of companies like **Profound** and **Perplexity AI** underscores the industry's recognition that the "Answer Engine" is the next multi-billion dollar shift in tech.
@@ -396,11 +406,11 @@ This “anatomy” motivates the next analytic layers:
 | Strict URL Match (Top 30 + Deep Hunt)         | **64.93%** |
 | Domain-Only Match (Same site, different page) | 79.20%     |
 | "The Gap" (Domain noise)                      | 14.26%     |
-| **Truly Invisible (Never found at Rank 150)** | **~35%**   |
+| **Truly Invisible (Never found at Rank 200)** | **~35%**   |
 
 ### 2.1.2 The "Invisible" Citation Problem
 
-- ~35% of ChatGPT's citations were **never found** in Bing, even searching 150 results deep
+- ~35% of ChatGPT's citations were **never found** in Bing, even searching 200 results deep
 - This proves ChatGPT has access to a different index/cache than Bing's public UI
 - **Hypothesis:** These are newer pages, niche expert sites, or pages Bing deprioritizes
 
@@ -526,7 +536,7 @@ This is operationalized in the drift outputs under `data/enrichment_compound_eff
 
 ### Histogram: Where ChatGPT Citations Appear in Bing
 
-- X-axis: Bing Rank (1-150+)
+- X-axis: Bing Rank (1-200+)
 - Y-axis: Number of Citations Found
 
 ### Expected Findings:
@@ -538,8 +548,8 @@ This is operationalized in the drift outputs under `data/enrichment_compound_eff
 
 ### Limitations Section:
 
-- We stopped at Rank 150 for practical reasons
-- Based on the uniform distribution pattern, we estimate X% more citations would be found at Rank 151-300
+- We stopped at Rank 200 for practical reasons
+- Based on the uniform distribution pattern, we estimate X% more citations would be found at Rank 201-300
 - This strengthens the "UI Suppression" argument—relevant content is scattered infinitely deep
 
 ---
@@ -779,7 +789,7 @@ This reveals that "Search" in ChatGPT is governed by a **Systemic Tendency** rat
 ## 3.2 Deep Hunt Specific Analysis
 
 - Filter by `is_grounded_deep = TRUE`
-- These are the "Buried Truth" links (ChatGPT cited, Bing hid at Rank 31-150)
+- These are the "Buried Truth" links (ChatGPT cited, Bing hid at Rank 31-200)
 - Compare their DNA to:
   1. Top 10 cited links
   2. Top 10 ignored links
@@ -788,7 +798,7 @@ This reveals that "Search" in ChatGPT is governed by a **Systemic Tendency** rat
 
 # Part 4: Research Gaps & Future Work
 
-1. **Deeper Crawling:** We stopped at Rank 150; going to 300+ might find more matches.
+1. **Deeper Crawling:** We stopped at Rank 200; going to 300+ might find more matches.
 2. **Longitudinal Consistency (Expanded Runs):** While this study used 3-4 runs per prompt, future work should expand this to 10+ runs to achieve statistical significance in "stochastic retrieval" patterns and to better map the "long tail" of citations that appear only in rare instances.
 3. **Temporal Analysis:** How do results change over time? (Run the same queries in 3 months).
 3. **Query Category Segmentation:** Do certain product categories have better/worse overlap?
@@ -842,7 +852,7 @@ Current findings indicate a high overlap with Bing's top results, but a tail of 
 | `has_sources_or_citations`    | 0/1  | References other sources                             |
 | `has_schema_markup`           | 0/1  | Structured data                                      |
 | `primary_intent`              | enum | informational, commercial, transactional             |
-| `is_grounded_deep`            | bool | Found in Deep Hunt (Rank 31-150)                     |
+| `is_grounded_deep`            | bool | Found in Deep Hunt (Rank 31-200)                     |
 | `is_strict_match`             | bool | Exact URL match to citation                          |
 
 ---
@@ -855,8 +865,8 @@ Current findings indicate a high overlap with Bing's top results, but a tail of 
 | **UI Suppression**     | Bing's interface hiding relevant results behind pagination loops, inconsistent result counts, and UI clutter                                        |
 | **Page 2 Cliff**       | The sharp drop in result relevance and visibility after Bing's Top 10                                                                               |
 | **Linearity Collapse** | The breakdown of meaningful page numbering in Bing results (Page 2 ≠ Rank 11-20)                                                                    |
-| **Grounded Deep**      | Citations that ChatGPT used which were found in Bing but only at Rank 31-150                                                                        |
-| **Truly Invisible**    | Citations that ChatGPT used which were never found in Bing even at Rank 150                                                                         |
+| **Grounded Deep**      | Citations that ChatGPT used which were found in Bing but only at Rank 31-200                                                                        |
+| **Truly Invisible**    | Citations that ChatGPT used which were never found in Bing even at Rank 200                                                                         |
 | **Content DNA**        | The structural characteristics of a page (tables, lists, headings) that make it "extractable"                                                       |
 | **Domain Match**       | When Bing found a page from the same domain but different URL than what ChatGPT cited                                                               |
 | **Strict Match**       | When Bing found the exact same URL that ChatGPT cited                                                                                               |
