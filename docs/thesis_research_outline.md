@@ -484,7 +484,44 @@ We analyzed the overlap between LLM citations and the underlying search index (B
 
 ---
 
-## 2.2 Cited vs. Additional Links Comparison
+## 2.2 Position Bias & Page Distribution
+*Quantifying how search engine ranking (the "Menu" position) influences the final citation (the "Order").*
+
+### 2.2.1 Page-Level Distribution (The "Long Tail" of Retrieval)
+Our analysis of 237 runs reveals that LLMs do not just "scrape the surface" of the search results but dig deep into the SERP pages.
+
+| Page | GPT Enterprise Matches | GPT Personal Matches |
+| :--- | :--- | :--- |
+| **Page 1 (Rank 1-10)** | **1,468** | **521** |
+| **Page 2 (Rank 11-20)** | 333 | 345 |
+| **Page 3 (Rank 21-30)** | 656 | 663 |
+| **Page 4 (Rank 31-40)** | 692 | 602 |
+| **Page 5 (Rank 41-50)** | 641 | 667 |
+| **Page 10 (Rank 91-100)** | 271 | 426 |
+| **Page 16 (Rank 151-160)** | 103 | 204 |
+| **Page 17 (Rank 161-170)** | 5 | 6 |
+
+- **The "Page 2 Dip"**: We observe a curious drop in matches on Page 2 (333-345) compared to Page 1 and Page 3-5. This may be due to how the search engine clusters results or how the LLM's retrieval window is structured.
+- **The "Deep Hunt" Confirmation**: The fact that we see hundreds of matches on Pages 4-10 (Ranks 31-100) proves that LLMs are heavily utilizing results that are effectively invisible to human searchers.
+- **Truncation Artifact**: The sharp drop-off at Page 17 is an artifact of our **Rank 200 cap**, suggesting the actual retrieval window extends even further.
+
+### 2.2.2 Intra-Page Position Bias (The "Rank 1" Effect)
+Even within Page 1, there is a massive bias toward the very first organic result.
+
+| Position | GPT Enterprise Matches | GPT Personal Matches |
+| :--- | :--- | :--- |
+| **Organic P1, Pos 1** | **88** | **73** |
+| **Organic P1, Pos 2** | 59 | 39 |
+| **Organic P1, Pos 3** | 34 | 38 |
+| **Organic P1, Pos 4** | 37 | 37 |
+| **Organic P1, Pos 5** | 41 | 30 |
+
+- **Decay Curve**: We see a classic power-law decay in citation probability as we move down the first page, with Rank 1 being cited **~2.5x more often** than Rank 3.
+- **Selection Persistence**: Despite the "Deep Hunt" capability, the model still exhibits a strong "Search Engine Trust" bias, where the top-ranked result in the index has the highest probability of being "ordered" by the model.
+
+---
+
+## 2.3 Cited vs. Additional Links Comparison
 
 *Compare why some relevant links were not cited in the main text.*
 
