@@ -162,10 +162,12 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
   2. **Avoiding "Regional Noise":** Prevents Bing from surfacing local retailers or regional blogs that ChatGPT would never see, which would artificially lower the overlap percentage.
   3. **Global Tech Standard:** Most product recommendations in the "AI/Software" category (our primary focus) are global in nature, making the US SERP the most relevant "Ground Truth."
 
-### 1.3.4 The "Invisible" Citation Problem vs. Empirical Evidence
-- **The Observation:** A significant portion (~35%) of ChatGPT's citations were not found in the standard Top 30 Bing results.
-- **The "Deep Hunt" Resolution:** Our expanded methodology (Rank 200) proved that many of these "invisible" citations are actually present in the Bing index, but buried deep within the SERP (Rank 100+).
-- **Key Conclusion:** The "Visibility Gap" is primarily a **retrieval depth and UI issue**. ChatGPT's API access allows it to surface high-quality content that Bing's human-facing UI suppresses or fails to paginate correctly. This reinforces the argument that Search and GenAI are accessing the same index but through different "visibility filters."
+### 1.3.4 Ethical and Legal Constraints in Retrieval Instrumentation
+- **The "Data Access" Bottleneck**: A significant challenge in RAG research is the increasing difficulty of accessing "raw" search indices. 
+- **Google vs. SerpApi (Dec 2025)**: On December 19, 2025, Google filed a lawsuit against **SerpApi**, alleging "unlawful scraping" and circumvention of security measures ([Google Blog, 2025](https://blog.google/innovation-and-ai/technology/safety-security/serpapi-lawsuit/)). 
+- **The "Customer List" Paradox**: Interestingly, the SerpApi homepage has historically listed major AI players like **Perplexity** and **OpenAI** (the latter was subsequently removed) as customers ([SerpApi, 2026](https://serpapi.com/)). This suggests a complex ecosystem where the very companies building RAG systems may rely on third-party scrapers to bridge the "Visibility Gap" between their models and the live web.
+- **Impact on Methodology**: This legal pressure has led to technical restrictions in the SEO/GEO tool ecosystem, such as the removal of high-volume parameters (e.g., `num=100`). 
+- **Research Justification**: These constraints further justify our **Deep Hunt (Rank 200)** methodology. As traditional scraping becomes more restricted, the "Visibility Gap" between what an LLM can see (via direct API access) and what a researcher can see (via public search UIs) will likely widen, making the LLM a primary—and increasingly exclusive—gateway to the deep web.
 
 ## 1.4 Theoretical Framework: From SEO to GEO
 
@@ -463,9 +465,22 @@ We analyzed the overlap between LLM citations and the underlying search index (B
 - **The "Visibility Gap" Resolution**: By expanding our search depth to **Rank 200 (Deep Hunt)**, we reduced the "Invisible Citation" rate from ~35% down to **11-22%**, proving that most "missing" citations are simply buried deep in the SERP.
 - **First-Query Bias**: Gemini exhibits a massive dependency on the **first fan-out query (37.1%)**, with a steep drop-off for subsequent queries (Q2: 18.1%, Q3: 11.6%). GPT shows a more balanced distribution across its 50/50 fan-out split.
 
-### 2.1.2 The "Visibility Gap" & Retrieval Depth
-- **The "Invisible" Citation Problem**: Initial observations suggested that ~35% of citations were "invisible" to search. However, our **Deep Hunt (Rank 200)** analysis proved that the majority of these are present in the index but buried deep within the SERP.
-- **Key Conclusion**: The "Visibility Gap" is primarily a **retrieval depth and UI issue**. LLMs have high-throughput access to search indices that allow them to surface content that traditional search UIs suppress or fail to paginate correctly.
+### 2.1.2 The "Visibility Gap" & The Nature of Invisible Links
+- **The "Invisible" Citation Problem**: Despite our **Deep Hunt (Rank 200)** methodology, a persistent subset of citations remains "invisible" to both Bing and Google search indices.
+    - **GPT Enterprise**: ~18.7% invisible.
+    - **GPT Personal**: **11.5%** invisible.
+    - **Gemini**: **22.3%** invisible.
+- **The "Long Tail" of Retrieval**: Our page distribution analysis shows that citations are not just concentrated on Page 1. We observe a significant "Long Tail" where matches continue deep into the SERP (Page 10-16). 
+    - **Truncation Artifact**: The sharp drop-off at Page 17 (only 5-6 matches) is an artifact of our **Rank 200 cap**. This suggests that if we had searched even deeper (e.g., Rank 500), the "Invisible" rate would likely drop even further, potentially below 5-10%.
+- **Top Invisible Domains (GPT Enterprise)**: Dominated by high-authority reference and news sites:
+    - `en.wikipedia.org` (116)
+    - `arxiv.org` (83)
+    - `theverge.com` (48)
+- **Top Invisible Domains (GPT Personal)**: Shows a shift toward community and platform-specific content:
+    - `reddit.com` (216)
+    - `apps.apple.com` (139)
+    - `chromewebstore.google.com` (54)
+- **Key Conclusion**: The "Visibility Gap" is primarily a **retrieval depth and UI issue**. LLMs have high-throughput access to search indices that allow them to surface content that traditional search UIs suppress. The fact that we still find matches at Rank 190+ proves that ChatGPT is "hunting" in the deep tail of the web, far beyond where any human user would paginate.
 
 ---
 
