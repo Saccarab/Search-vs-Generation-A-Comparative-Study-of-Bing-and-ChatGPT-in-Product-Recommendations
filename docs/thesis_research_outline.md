@@ -43,7 +43,7 @@ We quantify grounding-related selection bias by comparing the **DNA distribution
 - **RQ1d (claim-level grounding)**: At claim span level, how tightly do claims align to specific sources (and where do “multi-chip” merges occur)?
 
 ## Role of external systems (clarify scope)
-- **Bing**: baseline “human web” retrieval/ranking surface used as a **measurement instrument** for rank/visibility and “visibility gaps” (**Top‑30 vs Deep Hunt to Top‑200**).
+- **Bing**: baseline “human web” retrieval/ranking surface used as a **measurement instrument** for rank/visibility and “visibility gaps” (**Top‑200**).
 - **Google (SerpApi)**: control baseline for Gemini fan-out queries and sensitivity checks (**Organic-only** vs including non-organic result types like **Video/PAA/Discussions**).
 - **Gemini**: optional cross-model baseline for grounding mechanics (has explicit `groundingMetadata` and claim-support mapping); not an enterprise/personal split unless we create our own conditions.
 
@@ -55,7 +55,7 @@ We quantify grounding-related selection bias by comparing the **DNA distribution
 | -------------------- | -------------------------------------------------------------------------------- |
 | **Queries**          | 79 product recommendation queries × 3 runs each (237 total runs)                 |
 | **ChatGPT Data**     | Full responses with inline citations, additional links, and recommended products |
-| **Bing Data**        | Top 30 results + Deep Hunt (Rank 31-200)                                         |
+| **Bing Data**        | Top 200 results                                                                  |
 | **Gemini Data**      | Full `groundingMetadata` (Chunks vs. Supports) + Fan-out Queries                 |
 | **Google SERP**      | SerpApi pagination until **≥20 Organic** results are collected (often ~3 pages), with Video/PAA/Discussions retained as diagnostic buckets |
 | **Content Fetching** | Node.js fetcher + Browser extension for blocked pages (Master Content Library)   |
@@ -145,7 +145,6 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 - **Concrete example (explicit localization via fan-out):** A location-free prompt like `"what is the best bakery"` can trigger fan-out queries that inject a specific place (e.g., `"best bakery near Munich Germany"`), effectively converting an implicit prompt into an explicitly localized retrieval task. (Redacted network excerpt saved at `datapass/raw_network_responses/examples/explicit_localization_bakery_munich_redacted.txt`.)
 
 ### 1.3.2 Freshness Steering (Explicit vs. Implicit)
-- **Definition (Fan-Out):** A single user prompt can result in multiple retrieval queries (parallel or sequential). We treat these as the model’s fan-out query set (often UI-hidden).
 - **Gemini: Explicit Freshness Obsession**
     - **93.4% of Gemini runs** explicitly inject a year (2025 or 2026) into their fan-out queries.
     - **71.7% of Gemini runs** place this freshness signal in the **very first query (Index 0)**.
@@ -153,7 +152,7 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 - **GPT: Implicit Recency Reliance**
     - Only **5.1% of GPT runs** use explicit year signals in their fan-out queries.
     - **Impact**: GPT relies almost entirely on the search index's (Bing's) internal recency ranking. It does not "hunt" for listicles as aggressively as Gemini, leading to a more diverse (though still listicle-leaning) grounding pool.
-- **The "Query Drift" Problem:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
+- **Note:** Definition + drift mechanics are described in `1.7.4 Fan-out queries (“hidden queries”)` (instrumentation section); we focus here on the freshness operator specifically.
 
 ### 1.3.3 The Proxy Requirement (US-Centric Baseline)
 - To ensure a fair "apples-to-apples" comparison, we standardized our retrieval environment using a **US-based Proxy**.
@@ -237,25 +236,7 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
     - **Evidence of High Quality**: Comparative analysis of referral traffic (e.g., `utm_source=chatgpt.com` across multiple landing pages such as `live.maestra.ai` and `maestra.ai/tools/web-captioner`) shows that ChatGPT-referred users often exhibit a **~10x higher conversion rate** compared to the site-wide organic average (e.g., ~12% vs ~1.2%). Furthermore, the **Average Order Value (AOV)** from these referrals is observed to be nearly **3x higher**, suggesting that LLM-referred users are not only more likely to convert but also represent higher-value transactions.
     - **Implication**: This suggests that LLM citations act as a "pre-qualified" lead source, making the mechanics of selection (which we study here) commercially critical.
 
-### 1.4.6 Fan-Out Queries (Hidden Query Sets)
-- **Definition (Fan-Out):** A single user prompt can result in **multiple retrieval queries** (parallel or sequential). We treat these as the model’s **fan-out query set** (often UI-hidden).
-- **Observed pattern:** Fan-out queries frequently include *operator-like* changes (e.g., adding a year such as "2025/2026", adding geo terms, adding “reviews/pricing/alternatives”), but we do not rely on a separate “rewriting” concept—only on what is observable in logged fan-out queries.
-- **The "Query Drift" Problem:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
-- **Important nuance (multi-turn fan-out):** Fan-out queries may be emitted in **multiple batches** across search turns; the “fan-out set” for a run is the **union** of all observed batches (not just the first).
-
-### 1.4.7 Fan-Out Queries (Cross-Model Instrumentation)
-- **Why it matters:** Fan-out query sets are a core degree of freedom that controls retrieval. Two systems can share the same index but diverge because they issue different query sets.
-
-#### Observables (what we can actually log)
-- **Gemini:** `groundingMetadata.webSearchQueries[]` (fan-out query list per run).
-- **ChatGPT (network-derived):** The internal search queries / triggers when present in the response payloads (treated as “hidden queries” even when not UI-visible).
-- **Bing baseline:** The original user prompt as a single query, plus (optional) a controlled query-variant policy we apply ourselves (e.g., add year/location) to test sensitivity.
-
-#### Metrics / analyses enabled
-- **Fan-out size:** number of fan-out queries per run; distribution by intent class.
-- **Query drift:** similarity of fan-out sets across runs (same prompt, different runs) and its correlation with citation churn.
-- **Fan-out operators:** frequency of year-injection, geo-injection, brand expansion, “alternatives” expansion, and “review/pricing” pivots (measured directly from the fan-out queries).
-- **Attribution to overlap:** whether higher Bing/Google overlap is driven by (a) different fan-out query sets, (b) deeper retrieval, or (c) different citation visibility rules.
+<!-- NOTE: Fan-out definition/instrumentation moved to 1.7.4 to avoid duplication. -->
 
 ## 1.6 Citation Mapping & Claim-Level Attribution
 *How we precisely map ChatGPT's written claims to their retrieved sources.*
@@ -350,6 +331,8 @@ We log the system’s search-decision artifacts where present (Enterprise stream
 - **Why it matters**: fan-out sets control which sources are even eligible to be cited.
 - **Observable field (network-derived)**: `search_model_queries.queries` (stored as `hidden_queries_json` in our extracted CSV/DB pipeline).
 - **Typical vs. exception**: Many runs have **two** fan-out queries (Q1/Q2), but some runs have **4+**; these can appear as **2 queries in search turn 1** and **2 more in search turn 2** (e.g., `P053_r2`).
+- **Important nuance (multi-turn fan-out):** Fan-out queries may be emitted in **multiple batches** across search turns; the run’s fan-out set is the **union** of all observed batches (not just the first).
+- **Query drift:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
 - **How it appears in the raw network stream (multi-turn fan-out signature)**:
   - The response arrives as an event stream (patch/append style) containing repeated tool messages (commonly `role="tool"`, `name="web.run"`).
 
@@ -366,12 +349,6 @@ Unlike ChatGPT, where we must "scrape" the network stream, Gemini provides struc
 - **Transparency**: Gemini is "Grounding-First"—it exposes the raw chunks it read, whereas ChatGPT only exposes the final URL and a snippet.
 - **Segment-Level Attribution**: Gemini attributes every sentence/segment to a specific chunk index, allowing for a much higher resolution of fidelity analysis.
 - **Vertex Redirects**: Gemini uses internal redirect URLs (e.g., `vertexaisearch.cloud.google.com/...`) which must be resolved to find the original domain, a step we automated in our pipeline.
-  - Each search “turn” can include a `metadata.search_model_queries` object with a `queries[]` list, plus a `search_turns_count` counter.
-  - When multi-turn fan-out happens, **multiple** `metadata.search_model_queries` blocks appear in the same run with **increasing** `search_turns_count` (e.g., 1 → 2 → 3). The run’s fan-out set is the **union** of all `queries[]` lists across these blocks.
-  - A useful corroborating field in the run-level metadata is `search_tool_call_count`, which tends to equal the number of search turns (typical single-turn runs: `1`; multi-turn runs: `2+`).
-  - Example patterns observed:
-    - `P053_r2` (Enterprise): 2 queries at `search_turns_count=1` + 2 queries at `search_turns_count=2` → 4 total.
-    - `P073_r3` (Enterprise): 2 queries at each of `search_turns_count=1,2,3` → 6 total.
 
 ### 1.7.5 Retrieved candidate pool (what the model could have used)
 We capture the retrieved candidates and their metadata:
@@ -440,6 +417,38 @@ This “anatomy” motivates the next analytic layers:
 - **The Research Opportunity:** While macro traffic to AI assistants is currently low, the **competition for user attention** is intensifying (e.g., Gemini's 31.7% growth in Dec '25).
 - **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition: how these AI assistants "ground" their answers in the very search results that currently dominate the market. We measure the *dependency* of generation on search.
 
+## 1.9 Content DNA Enrichment (LLM-as-a-Labeler)
+*How we transformed raw URLs into structured data for selection bias analysis.*
+
+### 1.9.1 The Labeling Pipeline
+To quantify "selection drift," we needed to move beyond URLs and domains. We developed an automated enrichment pipeline using **GPT-5-mini** as a structured labeler:
+1.  **Content Extraction**: Raw HTML was fetched and converted to clean markdown/text.
+2.  **Schema-Driven Labeling**: The LLM was prompted to evaluate each page against a strict 20-field schema, including:
+    *   **Page Type**: `listicle`, `product_page`, `documentation`, `forum_ugc`, etc.
+    *   **Content Format**: `best_of_list`, `landing_page`, `comparison_matrix`, etc.
+    *   **Structural Features**: `has_tables`, `has_numbered_lists`, `has_pros_cons`.
+    *   **Qualitative Scores**: `promotional_intensity_score`, `expertise_signal_score`, `readability_score`.
+3.  **Validation**: A subset of labels was manually audited to ensure the LLM labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
+
+### 1.9.2 Global DNA Composition (The "Menu" Baseline)
+Before measuring selection bias, we quantified the composition of our labeled dataset (N=3,444 unique URLs). This represents the "Menu" of available information across all search queries.
+
+| Page Type | Count | Share (%) |
+| :--- | :--- | :--- |
+| **Product Page** | 1,046 | **30.4%** |
+| **Listicle** | 1,018 | **29.6%** |
+| **App Store Listing** | 234 | 6.8% |
+| **Editorial Article** | 204 | 5.9% |
+| **Forum / UGC** | 164 | 4.8% |
+| **News Article** | 146 | 4.2% |
+| **Reference / Wiki** | 145 | 4.2% |
+| **Documentation** | 142 | 4.1% |
+
+- **The Listicle-Product Dominance**: Listicles and Product Pages together make up **60%** of the candidate pool. This confirms that commercial product recommendation queries are primarily served by these two DNA types.
+- **The Platform Tail**: A significant portion (~15%) of the menu consists of platform-specific content (App Stores, Forums, Directories), which LLMs frequently target for "Invisible" citations.
+
+---
+
 # Part 2: Core Findings
 
 ## 2.1 Citation Overlap Analysis
@@ -490,19 +499,20 @@ We analyzed the overlap between LLM citations and the underlying search index (B
 ### 2.2.1 Page-Level Distribution (The "Long Tail" of Retrieval)
 Our analysis of 237 runs reveals that LLMs do not just "scrape the surface" of the search results but dig deep into the SERP pages.
 
-| Page | GPT Enterprise Matches | GPT Personal Matches |
+| Page Index | GPT Enterprise Matches | GPT Personal Matches |
 | :--- | :--- | :--- |
-| **Page 1 (Rank 1-10)** | **1,468** | **521** |
-| **Page 2 (Rank 11-20)** | 333 | 345 |
-| **Page 3 (Rank 21-30)** | 656 | 663 |
-| **Page 4 (Rank 31-40)** | 692 | 602 |
-| **Page 5 (Rank 41-50)** | 641 | 667 |
-| **Page 10 (Rank 91-100)** | 271 | 426 |
-| **Page 16 (Rank 151-160)** | 103 | 204 |
-| **Page 17 (Rank 161-170)** | 5 | 6 |
+| **Page 1** | **1,468** | **521** |
+| **Page 2** | 333 | 345 |
+| **Page 3** | 656 | 663 |
+| **Page 4** | 692 | 602 |
+| **Page 5** | 641 | 667 |
+| **Page 10** | 271 | 426 |
+| **Page 16** | 103 | 204 |
+| **Page 17** | 5 | 6 |
 
-- **The "Page 2 Dip"**: We observe a curious drop in matches on Page 2 (333-345) compared to Page 1 and Page 3-5. This may be due to how the search engine clusters results or how the LLM's retrieval window is structured.
-- **The "Deep Hunt" Confirmation**: The fact that we see hundreds of matches on Pages 4-10 (Ranks 31-100) proves that LLMs are heavily utilizing results that are effectively invisible to human searchers.
+- **The "Page 1" Elasticity Problem**: We explicitly avoid defining Page 1 as a fixed "Rank 1-10" range. In modern search engines (especially Bing), the length of the first page is highly variable, often truncated or expanded based on the presence of rich snippets, ads, and vertical blocks.
+- **The "Page 2 Dip" & Index Volatility**: We observe a curious drop in matches on Page 2 (333-345 matches) compared to Page 1 and Pages 3-5. This is likely an artifact of **Bing index volatility** rather than a deliberate model preference. Qualitative inspection of Bing's "deep" results reveals significant "noise" and irrelevant content across all pages, but Page 2 appears particularly inconsistent in our dataset, often containing transitional or low-signal results that the model bypasses in favor of more stable "deep" candidates found on subsequent pages.
+- **The "Deep Hunt" Confirmation**: The fact that we see hundreds of matches on Pages 4-10 proves that LLMs are heavily utilizing results that are effectively invisible to human searchers who rarely paginate past the first elastic page.
 - **Truncation Artifact**: The sharp drop-off at Page 17 is an artifact of our **Rank 200 cap**, suggesting the actual retrieval window extends even further.
 
 ### 2.2.2 Intra-Page Position Bias (The "Rank 1" Effect)
