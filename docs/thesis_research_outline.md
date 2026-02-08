@@ -119,10 +119,16 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 *How geographical context affects the comparison between Search and GenAI.*
 
 ### 1.3.1 Implicit vs. Explicit Localization
+- **Prompt Language Distribution**: Our dataset consists of **74 English prompts** and **5 foreign-language prompts** (French, Chinese, Turkish, Italian, Spanish).
 - **Explicit Localization:** When the user query contains a location (e.g., "Best pizza in New York").
 - **Implicit Localization:** When the query is general (e.g., "Best laptop"), but the search engine uses the user's IP, browser language, and search history to localize results.
+    - **Occurrence Rates:** We observe implicit localization signals (non-English fan-out queries) in **13.1%** of GPT runs and **4.6%** of Gemini runs.
 - **The Research Problem:** Traditional search engines (Bing) are aggressively localized. Generative AI (ChatGPT) often provides a more "Global/US-centric" baseline unless explicitly prompted otherwise.
-- **Observed instrumentation signal (foreign-language prompts):** In our logged **fan-out query sets** (Gemini `groundingMetadata.webSearchQueries[]`, ChatGPT network-derived hidden queries), implicit localization often manifests as **one of the fan-out queries being rewritten into the prompt’s local language**, which then steers retrieval toward localized sources.
+- **Observed instrumentation signal (Fan-Out Queries):** In our logged **fan-out query sets** (Gemini `groundingMetadata.webSearchQueries[]`, ChatGPT network-derived hidden queries), implicit localization often manifests as **one of the fan-out queries being rewritten into the prompt’s local language**, which then steers retrieval toward localized sources.
+- **The "English Anchor" Effect (Gemini-specific):**
+    - Even for foreign-language prompts, Gemini **always** reserves the first fan-out slot (Index 0) for an English translation of the prompt.
+    - Due to the **First-Query Bias** (where models preferentially cite results from the first search query), the English-language search results dominate the final response.
+    - **Finding**: In 100% of our localized Gemini runs, the cited sources were primarily global/English SaaS platforms and tech publications (e.g., `pcmag.com`, `techradar.com`), effectively creating a "Global Information Bubble" even for non-English users.
 - **Concrete example (why we used a proxy):** When issuing an English prompt from **Munich, Germany**, we observed a two-query fan-out where one query remained English while the other was rewritten into German:
   - Q1: `"free website or program to translate video and add subtitles"`
   - Q2: `"kostenlos video übersetzen und Untertitel automatisch hinzufügen ..."`
@@ -131,7 +137,25 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 
 - **Publisher/SEO→GEO implication:** Even if users in non‑English-speaking countries **search in English**, IP/locale-driven fan‑out rewriting can route part of retrieval toward **localized-language SERPs**. Publishers without localized pages may lose visibility (and therefore citations/traffic) in these retrieval paths.
 
-### 1.3.2 The Proxy Requirement (US-Centric Baseline)
+- **Observed fan-out localization patterns (3 cases we saw):**
+  1. **Prompt is foreign-language**: the system may still emit at least one **English** fan-out query alongside the local-language query (mixed-language retrieval).
+  2. **Prompt is English + user in non‑English region**: one fan-out query may be rewritten into the region’s language (example above: Munich → German).
+  3. **Prompt is English + unexpected non‑English fan-out**: occasionally, a fan-out query appears in another language for unclear reasons (observed in both GPT and Gemini; e.g., Gemini searching in French for a TTS query). This is treated as an anomaly / potential hallucination or hidden locale signal.
+
+- **Concrete example (explicit localization via fan-out):** A location-free prompt like `"what is the best bakery"` can trigger fan-out queries that inject a specific place (e.g., `"best bakery near Munich Germany"`), effectively converting an implicit prompt into an explicitly localized retrieval task. (Redacted network excerpt saved at `datapass/raw_network_responses/examples/explicit_localization_bakery_munich_redacted.txt`.)
+
+### 1.3.2 Freshness Steering (Explicit vs. Implicit)
+- **Definition (Fan-Out):** A single user prompt can result in multiple retrieval queries (parallel or sequential). We treat these as the model’s fan-out query set (often UI-hidden).
+- **Gemini: Explicit Freshness Obsession**
+    - **93.4% of Gemini runs** explicitly inject a year (2025 or 2026) into their fan-out queries.
+    - **71.7% of Gemini runs** place this freshness signal in the **very first query (Index 0)**.
+    - **Impact**: This explains Gemini's extreme "Listicle Uptake" rate. By explicitly searching for "Best [Product] 2025," the model forces the retrieval of listicles, which then dominate its grounding.
+- **GPT: Implicit Recency Reliance**
+    - Only **5.1% of GPT runs** use explicit year signals in their fan-out queries.
+    - **Impact**: GPT relies almost entirely on the search index's (Bing's) internal recency ranking. It does not "hunt" for listicles as aggressively as Gemini, leading to a more diverse (though still listicle-leaning) grounding pool.
+- **The "Query Drift" Problem:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
+
+### 1.3.3 The Proxy Requirement (US-Centric Baseline)
 - To ensure a fair "apples-to-apples" comparison, we standardized our retrieval environment using a **US-based Proxy**.
 - **Why US Proxy?**
   1. **Baseline Consistency:** ChatGPT's primary training data and search behaviors are heavily weighted toward US-English web content.
@@ -199,11 +223,17 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
     - **Domain Expertise:** Queries were focused on the **AI and Software-as-a-Service (SaaS)** sectors—a domain where the author has significant professional expertise—allowing for more nuanced qualitative analysis of the "Signal vs. Noise" in results.
 - **Experimental Rigor:** Each of the 79 prompts was executed in **3 independent runs** (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
 
-### 1.5.3 The GEO Industry Landscape
+### 1.5.3 The GEO Industry Landscape: Citation Tracking & "Share of Model"
+- **The Rise of GEO Analytics**: Emerging platforms (e.g., **Profound**, **Peec.ai**) are shifting the industry from "Share of Voice" (traditional search) to "Share of Model" (generative search).
+- **The Listicle as the "Critical Node"**: Our research places extreme emphasis on listicles because they are the primary "on-ramp" for product citations. In the GEO ecosystem, being cited in a top-tier listicle is no longer just about referral traffic; it is a prerequisite for being "seen" by the RAG orchestrator.
+- **Quantifying the Value of a Citation**: By measuring the **Bias Multiplier** (how much more likely a cited product is to be selected vs. a random one) and **Host Exclusion** (the risk of being ignored if you are the host), we provide the first empirical framework for what these citation-tracking tools are actually measuring.
 - **The "Gold Rush" of AEO/GEO:** The rapid rise of companies like **Profound** and **Perplexity AI** underscores the industry's recognition that the "Answer Engine" is the next multi-billion dollar shift in tech.
 - **Venture Capital Validation:** A landmark moment occurred on August 12, 2025, when **Profound raised $35 million in a Series B round led by Sequoia Capital**, bringing its total funding to $58.5 million ([Fortune, 2025](https://fortune.com/2025/08/12/ai-search-startup-profound-raises-35-million-series-b-sequoia/)).
 - **The "Salesforce of AI Search":** This funding round validated the concept of building a "generational company" centered on helping brands monitor and optimize for how they surface in AI-generated responses across models like ChatGPT, Gemini, and Claude.
 - **The Hype vs. Reality:** While the hype is centered on "killing search," our research suggests the reality is a **deeper integration** where search becomes the infrastructure for AI.
+- **The High-Intent Conversion Hypothesis**: Preliminary industry observations (e.g., internal data from Maestra AI) suggest that while AI-driven traffic volume is currently lower than traditional search, the **conversion rate** and **purchase intent** of LLM-referred users can be significantly higher. 
+    - **Evidence of High Quality**: Comparative analysis of referral traffic (e.g., `utm_source=chatgpt.com` across multiple landing pages such as `live.maestra.ai` and `maestra.ai/tools/web-captioner`) shows that ChatGPT-referred users often exhibit a **~10x higher conversion rate** compared to the site-wide organic average (e.g., ~12% vs ~1.2%). Furthermore, the **Average Order Value (AOV)** from these referrals is observed to be nearly **3x higher**, suggesting that LLM-referred users are not only more likely to convert but also represent higher-value transactions.
+    - **Implication**: This suggests that LLM citations act as a "pre-qualified" lead source, making the mechanics of selection (which we study here) commercially critical.
 
 ### 1.4.6 Fan-Out Queries (Hidden Query Sets)
 - **Definition (Fan-Out):** A single user prompt can result in **multiple retrieval queries** (parallel or sequential). We treat these as the model’s **fan-out query set** (often UI-hidden).
@@ -230,7 +260,7 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 
 ### 1.6.1 The "Claim-to-Link" Forensic Pipeline
 - **The Challenge:** ChatGPT's final response text replaces internal citation tokens with generic `[URL]` tags. To understand *why* a link was cited, we must reconstruct the link between the **written claim** and the **retrieved source**.
-- **The Solution:** We developed a forensic mapping script that:
+- **The Solution:** We developed a forensic mapping script (or as Gemini calls them, **grounding supports**) that:
     1. **Token Alignment:** Extracts raw citation tokens (e.g., `citeturn0search17`) from the network stream and aligns them with their final position in the response text.
     2. **Block-Level Extraction:** Instead of simple keyword matching, the script identifies the **Full Claim Block** (the descriptive text between consecutive citation tags). This captures the complete product description or factual statement ChatGPT attributed to that source.
     3. **Metadata Enrichment:** Maps each claim to its retrieved "Ground Truth" (the snippet, title, and URL from the search result groups).
@@ -320,6 +350,20 @@ We log the system’s search-decision artifacts where present (Enterprise stream
 - **Typical vs. exception**: Many runs have **two** fan-out queries (Q1/Q2), but some runs have **4+**; these can appear as **2 queries in search turn 1** and **2 more in search turn 2** (e.g., `P053_r2`).
 - **How it appears in the raw network stream (multi-turn fan-out signature)**:
   - The response arrives as an event stream (patch/append style) containing repeated tool messages (commonly `role="tool"`, `name="web.run"`).
+
+## 1.8 Anatomy of a Gemini Response (API-Instrumented)
+*How the Gemini Vertex AI API exposes grounding metadata compared to ChatGPT’s hidden network stream.*
+
+### 1.8.1 The `groundingMetadata` Schema
+Unlike ChatGPT, where we must "scrape" the network stream, Gemini provides structured grounding data in the API response:
+- **`webSearchQueries`**: The explicit fan-out query set generated by the model.
+- **`groundingChunks`**: The raw snippets of text retrieved from the web (the "injected context").
+- **`groundingSupports`**: The precise mapping between specific segments of the response and the `groundingChunks` (the "paper trail").
+
+### 1.8.2 Key Differences in Instrumentation
+- **Transparency**: Gemini is "Grounding-First"—it exposes the raw chunks it read, whereas ChatGPT only exposes the final URL and a snippet.
+- **Segment-Level Attribution**: Gemini attributes every sentence/segment to a specific chunk index, allowing for a much higher resolution of fidelity analysis.
+- **Vertex Redirects**: Gemini uses internal redirect URLs (e.g., `vertexaisearch.cloud.google.com/...`) which must be resolved to find the original domain, a step we automated in our pipeline.
   - Each search “turn” can include a `metadata.search_model_queries` object with a `queries[]` list, plus a `search_turns_count` counter.
   - When multi-turn fan-out happens, **multiple** `metadata.search_model_queries` blocks appear in the same run with **increasing** `search_turns_count` (e.g., 1 → 2 → 3). The run’s fan-out set is the **union** of all `queries[]` lists across these blocks.
   - A useful corroborating field in the run-level metadata is `search_tool_call_count`, which tends to equal the number of search turns (typical single-turn runs: `1`; multi-turn runs: `2+`).
@@ -398,21 +442,24 @@ This “anatomy” motivates the next analytic layers:
 
 ## 2.1 Citation Overlap Analysis
 
-### 2.1.1 The Numbers
+### 2.1.1 The Numbers (Global Overlap)
+We analyzed the overlap between LLM citations and the underlying search index (Bing/Google) across 237 runs.
 
-| Metric                                        | Value      |
-| --------------------------------------------- | ---------- |
-| Total ChatGPT Citations                       | ~6,667     |
-| Strict URL Match (Top 30 + Deep Hunt)         | **64.93%** |
-| Domain-Only Match (Same site, different page) | 79.20%     |
-| "The Gap" (Domain noise)                      | 14.26%     |
-| **Truly Invisible (Never found at Rank 200)** | **~35%**   |
+| Metric | GPT Enterprise | GPT Personal | Gemini |
+| :--- | :--- | :--- | :--- |
+| **Total Citations** | 1,637 | 1,839 | 1,651 |
+| **Search Index Overlap (Total Coverage)** | **81.3%** (Bing) | **88.5%** (Bing+Google) | **77.7%** (SERP) |
+| **Query Q1 Overlap** | 63.7% | 54.1% | 37.1% |
+| **Query Q2 Overlap** | 64.2% | 52.4% | 18.1% |
+| **Missing (Not in Index)** | ~18.7% | **11.5%** | **22.3%** |
 
-### 2.1.2 The "Invisible" Citation Problem
+- **The "Visibility Gap" Resolution**: By expanding our search depth to **Rank 200 (Deep Hunt)**, we reduced the "Invisible Citation" rate from ~35% down to **11-22%**.
+- **First-Query Bias**: Gemini exhibits a massive dependency on the **first fan-out query (37.1%)**, with a steep drop-off for subsequent queries (Q2: 18.1%, Q3: 11.6%). GPT shows a more balanced distribution across its 50/50 fan-out split.
+- **Account Type Variance**: GPT Enterprise shows a tighter alignment with Bing (81.3%), whereas GPT Personal relies more on a mixture of sources, achieving 88.5% total coverage only when combining Bing and Google results.
 
-- ~35% of ChatGPT's citations were **never found** in Bing, even searching 200 results deep
-- This proves ChatGPT has access to a different index/cache than Bing's public UI
-- **Hypothesis:** These are newer pages, niche expert sites, or pages Bing deprioritizes
+### 2.1.2 The "Visibility Gap" & Retrieval Depth
+- **The "Invisible" Citation Problem**: Initial observations suggested that ~35% of citations were "invisible" to search. However, our **Deep Hunt (Rank 200)** analysis proved that the majority of these are present in the index but buried deep within the SERP.
+- **Key Conclusion**: The "Visibility Gap" is primarily a **retrieval depth and UI issue**. LLMs have high-throughput access to search indices that allow them to surface content that traditional search UIs suppress or fail to paginate correctly.
 
 ---
 
