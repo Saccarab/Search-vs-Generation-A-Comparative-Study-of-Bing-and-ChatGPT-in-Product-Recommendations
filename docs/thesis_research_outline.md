@@ -7,6 +7,42 @@
 
 ---
 
+# Framing: “Grounding Behavior” as the Core Research Spine
+
+This thesis is not “Bing vs ChatGPT” as competing products; **Bing/Google are measurement instruments** used to quantify *grounding behavior* in LLM-generated product recommendations.
+
+**What we empirically observe and measure (high-level):**
+- **Cross-model grounding**: Gemini vs. ChatGPT
+- **Cross-deployment grounding**: ChatGPT **Personal vs Enterprise**
+- **Rank effects**: how grounding/citation choices relate to **SERP position distributions** (position bias)
+- **Selection bias in sources**: differences between the **available menu** (Top‑N SERP) vs the **selected order** (cited set), measured via **Content DNA enrichment** of cited and non-cited URLs
+- **Visibility gaps**: “invisible/shadow” citations (cited URLs missing from the defined Top‑N baseline), analyzed separately from within-SERP drift
+
+## Core Research Question (single spine)
+**RQ1:** *How does grounding behavior manifest in LLM-generated product recommendations, and how does it vary across conditions we can observe (deployment context and/or model)?*
+
+### Operational definition (what “grounding behavior” means in this thesis)
+Grounding behavior is the measurable pipeline from **retrieval → selection → citation → final text**, using observable artifacts:
+- **Retrieved candidate set** (where available): sources the system pulled/considered
+- **Selected set**: sources that “survive” selection (cited/attached)
+- **Claim linkage**: which textual claims map to which sources (claim-to-link mapping)
+- **SERP support**: whether selected sources are actually present in external SERPs (Bing/Google)
+- **Source-to-output fidelity**: whether products mentioned in retrieved listicles are carried into the final recommendations
+
+### Primary measurement idea: “Menu vs Order” (selection drift)
+We quantify grounding-related selection bias by comparing the **DNA distribution of the Menu** (Top‑N SERP results) against the **DNA distribution of the Order** (the URLs the model actually cites), optionally **rank-stratified** (Rank 1..N) to control for position bias.
+
+## Sub-questions (decompositions of RQ1, not separate topics)
+- **RQ1a (selection + visibility)**: How do **cited vs additional vs rejected/invisible** sources differ in domain/type, and how does this differ by **enterprise vs personal** runs?
+- **RQ1b (external support)**: How often do selected sources appear in **Top‑N SERPs** (Bing/Google overlap; Gemini “survival” in Top‑20), and what are the failure modes (pagination cliff, deep-rank burial, etc.)?
+- **RQ1c (listicle uptake / fidelity)**: When listicles are retrieved, which listicle-mentioned products are **selected vs ignored** in the final response (uptake rate, rank bias, host-bias), and how does this differ by run type?
+- **RQ1d (claim-level grounding)**: At claim span level, how tightly do claims align to specific sources (and where do “multi-chip” merges occur)?
+
+## Role of external systems (clarify scope)
+- **Bing**: baseline “human web” retrieval/ranking surface; used to measure overlap/coverage and “visibility gaps” (Top‑30 vs Deep Hunt).
+- **Google (SerpApi)**: control baseline for Gemini fan-out queries and sensitivity checks (organic-only vs organic+video/PAA).
+- **Gemini**: optional cross-model baseline for grounding mechanics (has explicit `groundingMetadata` and claim-support mapping); not an enterprise/personal split unless we create our own conditions.
+
 # Part 1: Methodology & Tools
 
 ## 1.1 Data Collection Pipeline
@@ -19,6 +55,35 @@
 | **Gemini Data**      | Full `groundingMetadata` (Chunks vs. Supports) + Fan-out Queries                 |
 | **Google SERP**      | Top 20 Organic Results via SerpApi (for Gemini fan-out queries)                  |
 | **Content Fetching** | Node.js fetcher + Browser extension for blocked pages (Master Content Library)   |
+
+### 1.1.1 Google SERP result types (SerpApi): Organic vs Video vs PAA
+SerpApi returns Google results in multiple **result_type** buckets (not just “10 blue links”). This matters because overlap numbers can shift depending on what we count as “the SERP.”
+
+- **Organic results**: standard web results (our primary control-group baseline).
+- **Video results**: often YouTube-heavy; can appear in top positions and inflate “coverage” for topics where ChatGPT cites YouTube.
+- **PAA (People Also Ask)**: question-card expansions; these are not directly comparable to Bing organic ranks and can introduce additional URLs.
+
+**Method rule (comparability)**:
+- For overlap metrics, we default to **Organic-only** (and treat Video/PAA as separate diagnostic buckets), unless explicitly stated otherwise.
+- We keep the non-organic buckets available as a **discussion point** (e.g., “Google surfaces YouTube via Video blocks earlier than Bing”), and as a sensitivity analysis (“organic-only vs organic+video”).
+
+### 1.1.2 Content-size context (listicles vs product pages)
+We report page-length as **context** (not a grounding budget claim): listicles are longer and more heterogeneous than vendor pages, which can influence extractability and selection behavior.
+
+Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enrichment/content_size_stats_raw.csv`).
+
+| Bucket | Median words | Median bytes | Coverage |
+| --- | ---: | ---: | ---: |
+| `all::listicle` | 2,094 | 14,645 | 99.7% |
+| `all::product_page` | 927 | 6,593 | 97.7% |
+| `menu_any::listicle` | 2,111 | 14,747 | 99.8% |
+| `menu_any::product_page` | 930 | 6,614 | 98.0% |
+| `cited_any::listicle` | 2,182 | 15,343 | 99.5% |
+| `cited_any::product_page` | 925 | 6,563 | 96.1% |
+
+**Interpretation**: listicles are ~2× longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
+
+**Connection to Dejan (“grounding budget”)**: Dejan’s analysis of Google AI Overviews discusses a roughly fixed per-query *grounding/snippet budget* (on the order of ~2k words). Our table above is **not** measuring an injected-context budget; it measures **full page length** of the candidate/cited sources we fetched. We include it as context for extractability and selection behavior, not as a budget validation.
 
 ## 1.2 The Analysis App (Data Viewer)
 
@@ -161,6 +226,57 @@
 - **Forensic Discovery:** Our mapping revealed that these correspond to concatenated tokens (e.g., `turn0search8` + `search15`).
 - **Research Value:** This allows us to measure **Synthesis Aggression**—how ChatGPT merges facts from multiple distinct search results into a single cohesive claim.
 
+### 1.6.3 Multi-source claim support rate (single claim/segment cites >1 URL)
+**Definition (operational):** a claim/segment is “multi-cited” if it has **2+ distinct cited URLs**.
+
+Computed by `scripts/analysis/multi_source_claim_support.py` (artifacts in `data/enrichment/`).
+
+**All claim/segment occurrences:**
+- **GPT**: 458 / 4296 (**10.7%**) multi-cited
+- **Gemini**: 788 / 2287 (**34.5%**) multi-cited
+
+**Listicle-cited occurrences only (at least one cited URL has `type=listicle`):**
+- **GPT**: 194 / 1363 (**14.2%**) multi-cited
+- **Gemini**: 664 / 1519 (**43.7%**) multi-cited
+
+### 1.6.4 Mixed listicle + product-page citations (within a single claim/segment)
+**Definition (operational):** among **multi-cited** claims/segments, label a case “mixed” if the cited URL set contains **≥1** `type=listicle` and **≥1** `type=product_page`.
+
+**All multi-cited occurrences:**
+- **GPT**: 41 / 458 (**9.0%**) mixed listicle+product-page
+- **Gemini**: 130 / 788 (**16.5%**) mixed listicle+product-page
+
+**What are the “rest” of multi-cited claims? (type-mix buckets)**
+When we say “multi-cited”, we partition each multi-cited claim/segment into **exactly one** bucket:
+- **mixed listicle+product**: at least one `listicle` and at least one `product_page`
+- **listicle-only**: at least one `listicle` and **no** `product_page`
+- **product-only**: at least one `product_page` and **no** `listicle`
+- **neither**: **no** `listicle` and **no** `product_page` cited (i.e., multiple citations drawn from other page types such as directories, docs, news, etc., or “unknown” when a URL lacks a DNA label)
+
+**GPT multi-cited (N=458) bucket breakdown:**
+- mixed listicle+product: **41 (9.0%)**
+- listicle-only: **153 (33.4%)**
+- product-only: **168 (36.7%)**
+- neither (no listicle/product_page): **96 (21.0%)**
+
+**Gemini multi-cited (N=788) bucket breakdown:**
+- mixed listicle+product: **130 (16.5%)**
+- listicle-only: **534 (67.8%)**
+- product-only: **84 (10.7%)**
+- neither (no listicle/product_page): **40 (5.1%)**
+
+**What does “neither” look like? (examples of multi-cited type-sets)**
+- **GPT neither (N=96)** is dominated by `unknown` (unlabeled URLs) plus small tails like `news_article`, `documentation`, `editorial_article`, `forum_ugc`, `marketplace_directory`, and combinations (see `multi_type_sets_by_bucket.neither_listicle_nor_product` in `data/enrichment/multi_source_claim_support_stats.json`).
+- **Gemini neither (N=40)** is mostly `other` / `unknown` mixtures plus a tail of `documentation`, `marketplace_directory`, `forum_ugc`, `editorial_article`, etc. (same JSON).
+
+**Listicle-cited multi-cited occurrences only:**
+- **GPT**: 41 / 194 (**21.1%**) mixed listicle+product-page
+- **Gemini**: 130 / 664 (**19.6%**) mixed listicle+product-page
+
+**Mixed-case lists (for qualitative inspection):**
+- `data/enrichment/mixed_listicle_plus_product_citations_gpt.csv` (41 rows)
+- `data/enrichment/mixed_listicle_plus_product_citations_gemini.csv` (130 rows)
+
 ## 1.7 Anatomy of a ChatGPT Response (Network-Instrumented)
 *What exactly we can observe about ChatGPT’s retrieval + citation pipeline from captured network payloads.*
 
@@ -257,6 +373,13 @@ This “anatomy” motivates the next analytic layers:
 
 ---
 
+## 1.7 Market Context & Motivation (Ahrefs Benchmark)
+*To motivate the study, we anchor the "Search vs. Generation" transition in macro-level traffic data.*
+
+- **The Macro Baseline:** According to [Ahrefs (ChatGPT vs. Google)](https://chatgpt-vs-google.com/), as of December 2025, traditional search engines still dominate web traffic (~41.68% share), while AI Assistants hold a much smaller but highly volatile share (~0.24%).
+- **The Research Opportunity:** While macro traffic to AI assistants is currently low, the **competition for user attention** is intensifying (e.g., Gemini's 31.7% growth in Dec '25).
+- **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition: how these AI assistants "ground" their answers in the very search results that currently dominate the market. We measure the *dependency* of generation on search.
+
 # Part 2: Core Findings
 
 ## 2.1 Citation Overlap Analysis
@@ -316,6 +439,54 @@ This “anatomy” motivates the next analytic layers:
 
 ---
 
+## 2.2.1 Content DNA “Drift” (Cited vs. All Retrieved Candidates)
+*Early enrichment results (from `geo_fresh.db` + `page_labels_combined_v2.5.jsonl`). These quantify the “selection filter” stage: what gets **cited** vs what was merely available.*
+
+### Key finding A: citations drift toward product landing pages (de‑listicling)
+Across both account types, the cited set is strongly enriched for **`type=product_page` / `content_format=landing_page`**, while listicle formats are under-selected.
+
+- **Enterprise** (cited vs all candidates):
+  - `type=product_page`: **+16.5 pp** selection lift
+  - `content_format=landing_page`: **+17.3 pp** selection lift
+  - `content_format=best_of_list`: **-8.5 pp** selection lift
+- **Personal** (cited vs all candidates):
+  - `type=product_page`: **+18.5 pp** selection lift
+  - `content_format=landing_page`: **+17.8 pp** selection lift
+  - `content_format=best_of_list`: **-9.4 pp** selection lift
+
+**Interpretation**: listicles are frequently retrieved in purchase-intent SERPs, but the model often “graduates” citations to primary vendor pages at selection time.
+
+### Key finding B: within listicles, “extractable structure” increases citation odds
+Conditioning on `type=listicle` (so this is not confounded by “product pages don’t have authorship”), the strongest positive drifts are:
+- **Tables**: listicles with `has_tables=1` are more likely to be cited (largest lift within listicles).
+- **Pros/cons**: `has_pros_cons=1` is also positively associated with being cited.
+
+**Interpretation**: listicles that present structured, scannable evidence (tables, pros/cons blocks) are more “citation-ready.”
+
+### Key finding C: authorship is ambiguous and needs targeted audit
+Authorship signals (`has_clear_authorship`) do **not** cleanly predict citation selection once we control for type:
+- Enterprise: near-zero effect within listicles.
+- Personal: slight negative drift within listicles.
+
+**Action item**: treat authorship as a **candidate confounded signal** (publisher style / affiliate patterns / extraction noise) and validate with a targeted audit (see “Future Work” notes below).
+
+### Key finding D: page-depth and “invisible in Bing” behave differently for listicles vs product pages
+Using Bing `page_num` (Page 1 vs Page 2+ vs not found in Bing within our snapshot), we observe:
+- **Listicle citations** are more often found on **Bing Page 1**, especially in Enterprise.
+- **Product-page citations** are disproportionately “not found in Bing,” especially in Personal.
+
+**Interpretation**: the “invisible URL” phenomenon is not uniform; it clusters by page type and varies by account context.
+
+### Note (investigate next): drift for additional enrichment fields
+We should compute and report drift/lift for fields where it is plausibly meaningful:
+- `freshness_cue_strength` (recency bias / “current-year” listicles)
+- `has_bullet_points`, `has_numbered_lists`, `heading_density` (extractability)
+- `readability_score` (scanability)
+- `expertise_signal_score` and `has_sources_or_citations` (credibility proxies)
+- `promotional_intensity_score` / `spamminess_score` (marketing pressure)
+
+This is operationalized in the drift outputs under `data/enrichment_compound_effects/`, including a listicle-only drift table (`selection_lift_univariate_listicle_only.csv`).
+
 ## 2.3 The "Invisible Section" Finding
 
 *Links that don't fit on Page 1 and then vanish.*
@@ -373,54 +544,40 @@ This “anatomy” motivates the next analytic layers:
 
 *Self-promotion, product text comparison, accuracy.*
 
-### 2.5.1 Self-Promotion Bias Detection
+### 2.5.1 Self-Promotion Bias & Host Exclusion
+- **Host exclusion (empirical)**: In the listicle semantic-fidelity audit (solo-cited listicles), models **often omit** the host’s own product even when it is present in the listicle.
+  - **Gemini**: host present in **405** listicles; host **missing** in **71.9%** (291/405), **included** in **28.1%** (114/405)
+  - **GPT**: host present in **431** listicles; host **missing** in **63.6%** (274/431), **included** in **36.4%** (157/431)
+- **Bias multiplier (selection advantage)**: “Missing most of the time” does **not** imply “no bias.” When host is present, it is still selected at a rate far above a random item on the page.
+  - **Avg listicle size (in this audited subset)**: Gemini **8.1** products/page; GPT **9.3** products/page
+  - **Host selection rate**: Gemini **28.15%**; GPT **36.43%**
+  - **Random baseline** (approx \(1/\)avg products): Gemini **12.41%**; GPT **10.70%**
+  - **Bias multiplier**: Gemini **2.27×**; GPT **3.40×**
+- **Interpretation**: LLMs exhibit a mixed behavior: an “anti-self-promo” tendency (frequent host omission) combined with a measurable host selection advantage when they do pick items from host-authored listicles.
 
-- **Definition:** A listicle where `is_host_domain = 1` AND `position_in_listicle = 1` (the host ranks themselves #1)
+### 2.5.2 Selection Order vs. Listicle Rank (The "Re-Ranking" Effect)
+- **Rank alignment**: how often **Chat response order** matches the **listicle’s internal rank** for the same product (only when `listicle_rank` is recoverable).
+  - **Gemini**: **29.5%** (108/366)
+  - **GPT**: **27.9%** (166/596)
+- **Interpretation**: models frequently **re-rank** listicle items in the final response. The listicle’s “#1–#10” order is not preserved as the model’s “top picks” order.
 
-**Research Questions:**
-1. How many listicles in our dataset have self-promotion bias?
-2. Does ChatGPT cite these biased listicles?
-3. Does ChatGPT's final recommendation match the biased #1 product?
-4. **Is bias a positive or negative effect?** (Does the self-promoted product actually deserve #1?)
-
-### 2.5.2 Listicle Product Text Analysis
-
-*This is the "Extractive Nature" proof.*
-
-**Methodology:**
-1. For each ChatGPT citation of a listicle:
-   - Extract the `listicle_products` and their `notes` (the text snippet from the source)
-   - Match ChatGPT's recommended products to products in the listicle
-2. Compare:
-   - Does ChatGPT's description match the `notes` from the listicle?
-   - Does ChatGPT mention pros/cons that appear in the source?
-   - Does ChatGPT change the ranking order?
-
-**Research Questions:**
-- Which products from a listicle does ChatGPT pick? (#1? #3? Random?)
-- Does ChatGPT quote/paraphrase the listicle's product descriptions?
-- Does ChatGPT synthesize from multiple listicles?
+### 2.5.3 Semantic Fidelity: Reading Comprehension vs. Attribution
+- **The "Two-Layer" Grounding Problem:** We decompose "Fidelity" into two distinct measurable phenomena:
+    1.  **Attribution Accuracy:** Does the cited source actually contain the product?
+    2.  **Reading Comprehension (Pure Fidelity):** When the product is present, how accurately does the model extract its details?
+- **Key Findings (Solo-Cited Listicles):**
+    - **Pure Fidelity (Comprehension):** Both models exhibit near-perfect scores when the product is present (**Gemini: 4.81/5.0**, **GPT: 4.75/5.0**).
+    - **Attribution Failure:** Some “solo-cited” product claims still point to listicles where the product is not present (mis-attribution).
+      - **Gemini**: **7.36%** (31/421 product roster items)
+      - **GPT**: **1.89%** (13/689 product roster items)
+- **Thesis Implication:** The "hallucination problem" in modern RAG systems is increasingly an **attribution/linkage problem**, not a "reading" or "understanding" problem. The models "know" the facts but "forget" which specific tab they were looking at when they found them.
 
 ---
 
-## 2.6 Tone & Intent Comparison
+## 2.6 Tone & Intent Comparison — Dropped (not part of final thesis)
 
-*Compare Additional vs. Cited links.*
-
-### Research Questions:
-
-1. Are Additional links more `promotional` or `salesy` than Cited links?
-2. Are Cited links more `neutral_informational`?
-3. What is the `primary_intent` distribution?
-
-| Metric                              | Cited Links | Additional Links |
-| ----------------------------------- | ----------- | ---------------- |
-| `tone = neutral_informational`      | ?%          | ?%               |
-| `tone = promotional`                | ?%          | ?%               |
-| `tone = salesy`                     | ?%          | ?%               |
-| `promotional_intensity_score` (avg) | ?           | ?                |
-| `primary_intent = informational`    | ?%          | ?%               |
-| `primary_intent = commercial`       | ?%          | ?%               |
+We originally considered a sentiment/tone-oriented study, but dropped it to keep the thesis spine focused on **grounding mechanics**:
+retrieval → selection → citation → claim-level fidelity. Tone remains available as a descriptive label in the enrichment dataset, but is not a core claim in the final narrative.
 
 ---
 
