@@ -563,16 +563,70 @@ Our analysis of 237 runs reveals that LLMs do not just "scrape the surface" of t
 ### 2.2.2 Intra-Page Position Bias (The "Rank 1" Effect)
 Even within Page 1, there is a massive bias toward the very first organic result.
 
-| Position | GPT Enterprise Matches | GPT Personal Matches |
-| :--- | :--- | :--- |
-| **Organic P1, Pos 1** | **88** | **73** |
-| **Organic P1, Pos 2** | 59 | 39 |
-| **Organic P1, Pos 3** | 34 | 38 |
-| **Organic P1, Pos 4** | 37 | 37 |
-| **Organic P1, Pos 5** | 41 | 30 |
+#### GPT Personal: Google Match Distribution (Prompt-Scoped)
+Analysis of where GPT Personal citations appear in the prompt's specific Google SERP.
 
-- **Decay Curve**: We see a classic power-law decay in citation probability as we move down the first page, with Rank 1 being cited **~2.5x more often** than Rank 3.
-- **Selection Persistence**: Despite the "Deep Hunt" capability, the model still exhibits a strong "Search Engine Trust" bias, where the top-ranked result in the index has the highest probability of being "ordered" by the model.
+| Result Type | Page | Position | Matches |
+| :--- | :--- | :--- | :--- |
+| **organic** | **1** | **1** | **241** |
+| organic | 1 | 2 | 167 |
+| organic | 1 | 3 | 183 |
+| organic | 1 | 4 | 144 |
+| organic | 1 | 5 | 142 |
+| organic | 1 | 6 | 143 |
+| organic | 1 | 7 | 129 |
+| organic | 1 | 8 | 123 |
+| organic | 1 | 9 | 68 |
+| organic | 1 | 10 | 51 |
+| organic | 2 | 1 | 72 |
+| organic | 2 | 2 | 80 |
+| organic | 2 | 3 | 82 |
+| organic | 2 | 4 | 59 |
+| organic | 2 | 5 | 68 |
+| organic | 2 | 6 | 68 |
+| organic | 2 | 7 | 51 |
+| organic | 2 | 8 | 61 |
+| organic | 2 | 9 | 35 |
+| organic | 2 | 10 | 44 |
+| related_question | 2 | 1 | 29 |
+| related_question | 2 | 2 | 17 |
+| video | 2 | 1 | 4 |
+| discussion | 2 | 2 | 1 |
+
+#### Gemini: Google Match Distribution (Grounding Chunks)
+Analysis of where Gemini citations appear in the prompt's specific Google fan-out query results.
+
+| Result Type | Page | Position | Matches |
+| :--- | :--- | :--- | :--- |
+| **organic** | **1** | **1** | **124** |
+| organic | 1 | 2 | 123 |
+| organic | 1 | 3 | 96 |
+| organic | 1 | 4 | 102 |
+| organic | 1 | 5 | 89 |
+| organic | 1 | 6 | 80 |
+| organic | 1 | 7 | 87 |
+| organic | 1 | 8 | 79 |
+| organic | 1 | 9 | 57 |
+| organic | 1 | 10 | 37 |
+| organic | 2 | 1 | 25 |
+| organic | 2 | 2 | 16 |
+| organic | 2 | 3 | 17 |
+| organic | 2 | 4 | 14 |
+| organic | 2 | 5 | 23 |
+| organic | 2 | 6 | 17 |
+| organic | 2 | 7 | 22 |
+| organic | 2 | 8 | 24 |
+| organic | 2 | 9 | 18 |
+| organic | 2 | 10 | 13 |
+| **video** | **1** | **1** | **40** |
+| video | 1 | 2 | 21 |
+| video | 1 | 3 | 13 |
+| related_question | 1 | 0 | 9 |
+| discussion | 1 | 0 | 2 |
+
+- **The "Rank 1" Dominance**: Both models show a distinct peak at Organic Rank 1.
+- **Gemini's Video Affinity**: Gemini shows a significant number of matches in **Video** results (**40 matches at Rank 1**), which is almost entirely absent in GPT's grounding.
+- **PAA (Related Questions) Integration**: Both models occasionally ground in "People Also Ask" blocks, though it remains a minor source compared to organic links.
 
 ---
 
@@ -725,8 +779,37 @@ Below we report **Truly invisible (Bing+Google control)**, computed on **unique 
 
 ---
 
-## 2.4 Rank Distribution Analysis
+### 2.4 Selection Drift: The "Menu vs. Order" Problem
+Analysis of why certain results are selected from the "Menu" (retrieved set) while others are ignored.
 
+#### 2.4.1 Intra-Listicle Selection Drift (Feature Lift)
+When the model retrieves multiple listicles, it exhibits a measurable preference for specific structural and content features. The following table summarizes the **Weighted Average Drift (percentage point lift)** for listicles only, as reported in `data/enrichment/listicle_drift_report.txt`.
+
+| Feature | Gemini (Google T10) | GPT Personal (Google T10) | GPT Personal (Bing P1) | GPT Enterprise (Bing P1) |
+| :--- | :---: | :---: | :---: | :---: |
+| `has_tables` | +2.35pp | **+12.23pp** | +2.25pp | +3.64pp |
+| `is_current_year_2026` | -4.01pp | **+4.48pp** | **+8.58pp** | -4.64pp |
+| `has_numbered_lists` | +1.85pp | +2.20pp | -2.90pp | +7.34pp |
+| `has_bullet_points` | +1.74pp | +5.74pp | -8.82pp | +3.29pp |
+| `has_pros_cons` | +1.46pp | +3.38pp | -9.17pp | -0.60pp |
+| `has_clear_authorship` | **+6.16pp** | +1.83pp | +2.20pp | -3.57pp |
+| `freshness_cue_strength`| +1.44pp | **+6.31pp** | **+11.97pp** | +2.15pp |
+
+- **The "Table Premium"**: GPT Personal shows a massive **+12.2pp lift** for listicles containing tables when selecting from Google results.
+- **Freshness Steering**: GPT Personal is highly sensitive to freshness cues (**+11.9pp lift** on Bing), while Gemini and Enterprise show much lower or even negative affinity for these markers globally.
+- **Authorship as a Gemini Signal**: Gemini shows the strongest preference for listicles with clear authorship (**+6.16pp lift**), a signal that is much weaker or negative in GPT models.
+
+#### 2.4.2 Global Type Drift (De-Listicling)
+Across all retrieved links, we observe a consistent "graduation" effect where models prefer primary product pages over the listicles that may have recommended them.
+
+| Account Type | `type=product_page` Lift | `type=listicle` Lift |
+| :--- | :---: | :---: |
+| **GPT Enterprise** | **+16.5 pp** | -8.5 pp |
+| **GPT Personal** | **+18.5 pp** | -9.4 pp |
+
+- **Interpretation**: Listicles serve as the "discovery layer" in retrieval, but the model's selection filter heavily favors citing the **primary vendor page** (Product Page) in the final response.
+
+### 2.4.3 Rank Distribution Analysis
 *Talk about links below 150, show distribution.*
 
 ### 2.4.1 Histogram: Where ChatGPT Citations Appear in Bing
