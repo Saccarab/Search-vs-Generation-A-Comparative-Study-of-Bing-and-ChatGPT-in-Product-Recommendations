@@ -47,6 +47,20 @@ We quantify grounding-related selection bias by comparing the **DNA distribution
 - **Google (SerpApi)**: control baseline for Gemini fan-out queries and sensitivity checks (**Organic-only** vs including non-organic result types like **Video/PAA/Discussions**).
 - **Gemini**: optional cross-model baseline for grounding mechanics (has explicit `groundingMetadata` and claim-support mapping); not an enterprise/personal split unless we create our own conditions.
 
+## Recommended narrative order (chapter flow)
+The outline contains all the necessary pieces, but the cleanest reading order is:
+
+- **Context & motivation**: `Market Context & Motivation (Ahrefs Benchmark)` → `1.5 The Commercial Catalyst for RAG` → `1.4 Theoretical Framework: From SEO to GEO`
+- **Instrumentation & data**: `1.1 Data Collection Pipeline` → `1.2 The Analysis App` → `1.6 Citation Mapping & Claim-Level Attribution` → `1.7/1.8 Anatomy (ChatGPT/Gemini)` → `1.9 Content DNA Enrichment`
+- **Findings (in dependency order)**: `2.1 Overlap / Provider Strategy` → `2.2 Position Bias & Page Distribution` → `2.3 Cited vs Additional` → `2.3 Invisible Section (Rank 11–30 hidden zone)` → `2.4 Selection Drift (Menu vs Order)` → `2.5 Listicle Bias & Fidelity`
+
+## Market Context & Motivation (Ahrefs Benchmark)
+*To motivate the study, we anchor the "Search vs. Generation" transition in macro-level traffic data.*
+
+- **The Macro Baseline:** According to [Ahrefs (ChatGPT vs. Google)](https://chatgpt-vs-google.com/), as of December 2025, traditional search engines still dominate web traffic (~41.68% share), while AI Assistants hold a much smaller but highly volatile share (~0.24%).
+- **The Research Opportunity:** While macro traffic to AI assistants is currently low, the **competition for user attention** is intensifying (e.g., Gemini's 31.7% growth in Dec '25).
+- **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition: how these AI assistants "ground" their answers in the very search results that currently dominate the market. We measure the *dependency* of generation on search.
+
 # Part 1: Methodology & Tools
 
 ## 1.1 Data Collection Pipeline
@@ -410,13 +424,6 @@ This “anatomy” motivates the next analytic layers:
 
 ---
 
-## 1.7 Market Context & Motivation (Ahrefs Benchmark)
-*To motivate the study, we anchor the "Search vs. Generation" transition in macro-level traffic data.*
-
-- **The Macro Baseline:** According to [Ahrefs (ChatGPT vs. Google)](https://chatgpt-vs-google.com/), as of December 2025, traditional search engines still dominate web traffic (~41.68% share), while AI Assistants hold a much smaller but highly volatile share (~0.24%).
-- **The Research Opportunity:** While macro traffic to AI assistants is currently low, the **competition for user attention** is intensifying (e.g., Gemini's 31.7% growth in Dec '25).
-- **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition: how these AI assistants "ground" their answers in the very search results that currently dominate the market. We measure the *dependency* of generation on search.
-
 ## 1.9 Content DNA Enrichment (LLM-as-a-Labeler)
 *How we transformed raw URLs into structured data for selection bias analysis.*
 
@@ -563,25 +570,21 @@ To connect overlap/visibility to content selection, we also summarize the DNA di
 - **GPT Enterprise: The Bing Standard**: Consistent with OpenAI's [Enterprise documentation](https://help.openai.com/en/articles/10093903-chatgpt-search-for-enterprise-and-edu), which explicitly names Bing as the search provider, we see an **81.3% overlap** with the Bing index. We used Google SERP as a **control group** here, which only yielded a 46.3% overlap, confirming that Enterprise retrieval is heavily optimized for Bing.
 - **GPT Personal: The Multi-Provider Shift**: OpenAI's [general documentation](https://openai.com/index/introducing-chatgpt-search/) describes ChatGPT search as leveraging "third-party search providers" (plural). Our data confirms this: GPT Personal shows a much higher affinity for **Google (84.8%)** than Bing (67.6%), and achieves its highest coverage (**88.5%**) only when combining both indices.
 - **The "Google Jump" (Enterprise vs. Personal)**: We observe a massive **38.5 percentage-point increase** in Google SERP overlap when moving from Enterprise (46.3%) to Personal (84.8%) accounts. This suggests that while Enterprise is "locked" to the Bing index for compliance/contractual reasons, the Personal account type has shifted to a Google-primary or multi-index retrieval strategy, significantly altering the "Menu" of available sources.
-- **The "Visibility Gap" Resolution**: By expanding our search depth to **Rank 200 (Deep Hunt)**, we reduced the "Invisible Citation" rate from ~35% down to **11-22%**, proving that most "missing" citations are simply buried deep in the SERP.
 - **First-Query Bias**: Gemini exhibits a massive dependency on the **first fan-out query (37.1%)**, with a steep drop-off for subsequent queries (Q2: 18.1%, Q3: 11.6%). GPT shows a more balanced distribution across its 50/50 fan-out split.
 
 ### 2.1.2 The "Visibility Gap" & The Nature of Invisible Links
-- **The "Invisible" Citation Problem**: Despite our **Deep Hunt (Rank 200)** methodology, a persistent subset of citations remains "invisible" to both Bing and Google search indices.
-    - **GPT Enterprise**: ~18.7% invisible.
-    - **GPT Personal**: **11.5%** invisible.
-    - **Gemini**: **22.3%** invisible.
-- **The "Long Tail" of Retrieval**: Our page distribution analysis shows that citations are not just concentrated on Page 1. We observe a significant "Long Tail" where matches continue deep into the SERP (Page 10-16). 
-    - **Truncation Artifact**: The sharp drop-off at Page 17 (only 5-6 matches) is an artifact of our **Rank 200 cap**. This suggests that if we had searched even deeper (e.g., Rank 500), the "Invisible" rate would likely drop even further, potentially below 5-10%.
-- **Top Invisible Domains (GPT Enterprise)**: Dominated by high-authority reference and news sites:
-    - `en.wikipedia.org` (116)
-    - `arxiv.org` (83)
-    - `theverge.com` (48)
-- **Top Invisible Domains (GPT Personal)**: Shows a shift toward community and platform-specific content:
-    - `reddit.com` (216)
-    - `apps.apple.com` (139)
-    - `chromewebstore.google.com` (54)
-- **Key Conclusion**: The "Visibility Gap" is primarily a **retrieval depth and UI issue**. LLMs have high-throughput access to search indices that allow them to surface content that traditional search UIs suppress. The fact that we still find matches at Rank 190+ proves that ChatGPT is "hunting" in the deep tail of the web, far beyond where any human user would paginate.
+We use **Visibility Gap** as the empirical gap between what is **cited** and what is visible in conventional SERP UX. The methodological pivot (Top‑30 → Deep Hunt Rank‑200) is defined once in **`1.2.2`**; here we report the **residual unmatched** set and what it looks like.
+
+- **Invisible rate (headline)**: use the **“Invisible (Missing)”** row in **`2.1.1`** as the canonical rate; avoid restating multiple, slightly different definitions here.
+- **Long tail context**: page‑level depth evidence is quantified in **`2.2.1`** (Bing Pages 1–16).
+- **Top invisible domains (GPT Enterprise)**: dominated by high‑authority reference/news sites:
+  - `en.wikipedia.org` (116)
+  - `arxiv.org` (83)
+  - `theverge.com` (48)
+- **Top invisible domains (GPT Personal)**: shift toward community/platform content:
+  - `reddit.com` (216)
+  - `apps.apple.com` (139)
+  - `chromewebstore.google.com` (54)
 
 ---
 
@@ -614,7 +617,7 @@ Analysis of where citations appear in the Bing index (up to Rank 200).
 | Page 16 | 103 | 204 |
 
 #### Google Page Distribution 
-Analysis of where citations appear in the prompt's specific Google SERP capture.
+Analysis of where citations appear in the **per-run** Google SERP capture.
 
 - **The "Page 1" Elasticity Problem**: We explicitly avoid defining Page 1 as a fixed "Rank 1-10" range. In modern search engines (especially Bing), the length of the first page is highly variable, often truncated or expanded based on the presence of rich snippets, ads, and vertical blocks.
 - **The "Page 2 Dip" & Index Volatility**: We observe a curious drop in matches on Page 2 compared to Page 1 and Pages 3-5. This is likely an artifact of **Bing index volatility** rather than a deliberate model preference. Qualitative inspection of Bing's "deep" results reveals significant "noise" and irrelevant content across all pages, but Page 2 appears particularly inconsistent in our dataset, often containing transitional or low-signal results that the model bypasses in favor of more stable "deep" candidates found on subsequent pages.
@@ -624,7 +627,7 @@ Analysis of where citations appear in the prompt's specific Google SERP capture.
 Even within Page 1, there is a massive bias toward the very first organic result.
 
 #### GPT Personal: Google Match Distribution 
-Analysis of where GPT Personal citations appear in the prompt's specific Google SERP.
+Analysis of where GPT Personal citations appear in the **per-run** Google SERP.
 
 | Result Type | Page | Position | Matches |
 | :--- | :--- | :--- | :--- |
@@ -654,7 +657,7 @@ Analysis of where GPT Personal citations appear in the prompt's specific Google 
 | discussion | 2 | 2 | 1 |
 
 #### Gemini: Google Match Distribution & Position Bias
-Analysis of where Gemini citations appear in the prompt's specific Google fan-out query results, including the "Lift" (Drift) over the baseline SERP distribution.
+Analysis of where Gemini citations appear in the **per-run** Google fan-out query results.
 
 | Rank | Citations | Cited % |
 | :--- | :--- | :--- |
@@ -725,19 +728,12 @@ Analysis of where Gemini citations appear in the prompt's specific Google fan-ou
 
 *Links that don't fit on Page 1 and then vanish.*
 
-### The "Bing UI Suppression" Argument:
-
-1. **Page 1 Instability:** Sometimes Bing shows 4 results, sometimes 10, sometimes with "infinite scroll" that breaks pagination.
-2. **The "Page 2 Cliff":** Relevant results at Rank 11-15 often vanish entirely when you click "Next."
-3. **Pagination Loops:** We observed `&first=5` and no parameter returning the same Top 10.
-
-### Proof that ChatGPT Gets These "Hidden" Links:
+### Operationalization (avoid re-defining the Visibility Gap)
+This section focuses on the **“hidden zone”** just beyond common human scrolling behavior. For the overarching **Visibility Gap / Deep Hunt** framing, see **`1.2.2`** and the residual “Invisible” discussion in **`2.1.2`**.
 
 - **Operational definition (“hidden zone”)**: a **cited URL** that appears in Bing, but only at **Rank 11–30** (beyond what many users treat as “Page 1”).  
 - **GPT Enterprise**: **388 / 1,637 (23.7%)** of cited occurrences were found in Bing **Rank 11–30**.  
 - **GPT Personal**: **326 / 1,839 (17.7%)** of cited occurrences were found in Bing **Rank 11–30**.
-- These links were **not visible** to a human scrolling through Bing normally
-- ChatGPT's API access bypasses the UI limitations
 
 ### Type Distribution of Invisible Citations:
 
