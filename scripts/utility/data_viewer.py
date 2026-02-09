@@ -310,15 +310,15 @@ DASHBOARD_TEMPLATE = """
     }
 
         .nav a { text-decoration: none; color: #10a37f; font-weight: bold; margin-right: 20px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
-        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .full-width { grid-column: 1 / -1; }
-        h2 { margin-top: 0; color: #333; font-size: 18px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
-        .stat-big { font-size: 36px; font-weight: bold; }
-        .stat-label { color: #666; font-size: 14px; }
-        .stat-sub { font-size: 11px; color: #888; margin-top: 4px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 13px; }
+        h2 { margin-top: 0; color: #333; font-size: 16px; border-bottom: 2px solid #f0f0f0; padding-bottom: 5px; margin-bottom: 10px; }
+        .stat-big { font-size: 28px; font-weight: bold; }
+        .stat-label { color: #666; font-size: 12px; }
+        .stat-sub { font-size: 10px; color: #888; margin-top: 2px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid #eee; font-size: 12px; }
         .enterprise { border-left: 4px solid #3b82f6; }
         .personal { border-left: 4px solid #f59e0b; }
     </style>
@@ -387,229 +387,6 @@ DASHBOARD_TEMPLATE = """
             </div>
         </div>
                 </div>
-
-    {% if show_labels %}
-    <div class="grid">
-        <div class="card full-width">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <h2 style="margin:0;">Enrichment Coverage & Label Distribution</h2>
-                <form method="get" style="display:inline-flex; gap:8px; align-items:center;">
-                    <input type="hidden" name="labels" value="1">
-                    <label style="font-size:12px; color:#666;">Filter:</label>
-                    <select name="breakdown_account" onchange="this.form.submit()" style="padding:4px 8px; border-radius:6px; border:1px solid #ddd; font-size:12px;">
-                        <option value="all" {{ 'selected' if breakdown_account=='all' else '' }}>All Accounts</option>
-                        <option value="enterprise" {{ 'selected' if breakdown_account=='enterprise' else '' }}>Enterprise</option>
-                        <option value="personal" {{ 'selected' if breakdown_account=='personal' else '' }}>Personal</option>
-                    </select>
-                </form>
-            </div>
-            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:10px;">
-                <div class="stat-label">
-                    Enriched URLs: <strong>{{ enriched_citation_count }}</strong> / {{ enrichment_total_citations }}
-                    ({{ "%.1f"|format(enrichment_pct) }}%)
-                </div>
-                <div class="stat-label">Unlabeled URLs: <strong>{{ unlabeled_citation_count }}</strong></div>
-                {% if breakdown_account != 'all' %}
-                <div class="stat-label" style="color:#f97316; font-weight:bold;">
-                    Filtered: {{ breakdown_account|title }}
-                </div>
-                {% endif %}
-            </div>
-            <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: 10px;">
-                <div>
-                    <h2 style="font-size: 14px;">Type (Enriched)</h2>
-                    <div class="view-toggle" data-toggle-group="labelType">
-                        <button class="btn active" data-view="table" onclick="toggleView('labelType',this)">Table</button>
-                        <button class="btn" data-view="chart" onclick="toggleView('labelType',this)">Pie</button>
-                    </div>
-                    <div class="chart-wrap active" data-group="labelType" data-view="table">
-                        <table>
-                            <tr><th>Type</th><th>Count</th><th>%</th></tr>
-                            {% for row in label_type_counts %}
-                            <tr>
-                                <td>{{ row.label }}</td>
-                                <td>{{ row.count }}</td>
-                                <td>{{ "%.1f"|format(row.pct) }}%</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="chart-wrap" data-group="labelType" data-view="chart">
-                        <canvas id="typePieChart" class="chart-canvas"></canvas>
-                    </div>
-                </div>
-                <div>
-                    <h2 style="font-size: 14px;">Tone (Enriched)</h2>
-                    <div class="view-toggle" data-toggle-group="labelTone">
-                        <button class="btn active" data-view="table" onclick="toggleView('labelTone',this)">Table</button>
-                        <button class="btn" data-view="chart" onclick="toggleView('labelTone',this)">Pie</button>
-                    </div>
-                    <div class="chart-wrap active" data-group="labelTone" data-view="table">
-                        <table>
-                            <tr><th>Tone</th><th>Count</th><th>%</th></tr>
-                            {% for row in label_tone_counts %}
-                            <tr>
-                                <td>{{ row.label }}</td>
-                                <td>{{ row.count }}</td>
-                                <td>{{ "%.1f"|format(row.pct) }}%</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="chart-wrap" data-group="labelTone" data-view="chart">
-                        <canvas id="tonePieChart" class="chart-canvas"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="grid">
-        <div class="card full-width">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
-                <div>
-                    <h2 style="margin:0;">Selection Lift (Drift Analysis)</h2>
-                    <div class="stat-sub" style="margin-top:6px;">
-                        Percentage Point (PP) shift from search results to LLM selection. Positive = LLM "hunts" for this; Negative = LLM "avoids" this.
-                    </div>
-                </div>
-                <div class="view-toggle" data-toggle-group="driftView">
-                    <button class="btn active" data-view="selection" onclick="toggleDriftView(this)">Selection Drift (B)</button>
-                    <button class="btn" data-view="attachment" onclick="toggleDriftView(this)">Attachment Drift (C)</button>
-                </div>
-            </div>
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; margin-bottom:16px; font-size:12px; line-height:1.6;">
-                <strong style="color:#334155;">Drift types explained:</strong>
-                <div style="display:grid; grid-template-columns:auto 1fr; gap:4px 12px; margin-top:6px;">
-                    <span style="color:#3b82f6; font-weight:700;">A) Visibility Gap</span>
-                    <span style="color:#475569;">Cited URL is <em>not found</em> anywhere in the SERP/index (invisible citation)</span>
-                    <span style="color:#10a37f; font-weight:700;">B) Selection Drift</span>
-                    <span style="color:#475569;">Feature lift when comparing <em>cited</em> URLs vs the full SERP menu (Menu &rarr; Order).</span>
-                    <span style="color:#f59e0b; font-weight:700;">C) Attachment Drift</span>
-                    <span style="color:#475569;">Feature difference between <em>cited</em> and <em>additional</em> (context-only) links.</span>
-                </div>
-            </div>
-
-            <div id="selection-drift-container">
-            {% if drift_split %}
-            <div class="stat-sub" style="margin: 6px 0 12px;">
-                Showing thesis-grade <strong>Selection Drift (B)</strong> tables (Listicles vs Product Pages). {{ drift_split.methodology.enterprise_note }}
-            </div>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
-                <div>
-                    <h2 style="font-size: 14px; margin-top:0;">Listicles only</h2>
-                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)'] %}
-                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
-                        <table>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Top 1-5</th>
-                                <th>Bot 6-10</th>
-                                <th>Weighted</th>
-                            </tr>
-                            {% for row in (drift_split.tables.listicle.get(study_label) or []) %}
-                            <tr>
-                                <td>{{ row.feature }}</td>
-                                <td>{{ "%.2f"|format(row.top_1_5_drift_pp) }}pp</td>
-                                <td>
-                                    {% if row.bot_6_10_drift_pp is none %}N/A{% else %}{{ "%.2f"|format(row.bot_6_10_drift_pp) }}pp{% endif %}
-                                </td>
-                                <td>{{ "%.2f"|format(row.weighted_avg_drift_pp) }}pp</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endfor %}
-                </div>
-
-                <div>
-                    <h2 style="font-size: 14px; margin-top:0;">Product pages only</h2>
-                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)'] %}
-                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
-                        <table>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Top 1-5</th>
-                                <th>Bot 6-10</th>
-                                <th>Weighted</th>
-                            </tr>
-                            {% for row in (drift_split.tables.product_page.get(study_label) or []) %}
-                            <tr>
-                                <td>{{ row.feature }}</td>
-                                <td>{{ "%.2f"|format(row.top_1_5_drift_pp) }}pp</td>
-                                <td>
-                                    {% if row.bot_6_10_drift_pp is none %}N/A{% else %}{{ "%.2f"|format(row.bot_6_10_drift_pp) }}pp{% endif %}
-                                </td>
-                                <td>{{ "%.2f"|format(row.weighted_avg_drift_pp) }}pp</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endfor %}
-                </div>
-            </div>
-            {% else %}
-            <div style="padding: 20px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
-                <div style="font-weight: bold; color: #9a3412;">Selection Drift tables not found.</div>
-            </div>
-            {% endif %}
-            </div>
-
-            <div id="attachment-drift-container" style="display:none;">
-            {% if attachment_drift %}
-            <div class="stat-sub" style="margin: 6px 0 12px;">
-                Showing <strong>Attachment Drift (C)</strong> tables (Cited vs Additional links). Positive = LLM prefers citing this feature when it's in its context.
-            </div>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
-                <div>
-                    <h2 style="font-size: 14px; margin-top:0;">Listicles only</h2>
-                    {% for study_label in ['GPT Personal', 'GPT Enterprise'] %}
-                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
-                        <table>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Drift (pp)</th>
-                            </tr>
-                            {% for row in (attachment_drift.tables.listicle.get(study_label) or []) %}
-                            <tr>
-                                <td>{{ row.feature }}</td>
-                                <td>{{ "%.2f"|format(row.drift_pp) }}pp</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endfor %}
-                </div>
-
-                <div>
-                    <h2 style="font-size: 14px; margin-top:0;">Product pages only</h2>
-                    {% for study_label in ['GPT Personal', 'GPT Enterprise'] %}
-                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
-                        <table>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Drift (pp)</th>
-                            </tr>
-                            {% for row in (attachment_drift.tables.product_page.get(study_label) or []) %}
-                            <tr>
-                                <td>{{ row.feature }}</td>
-                                <td>{{ "%.2f"|format(row.drift_pp) }}pp</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endfor %}
-                </div>
-            </div>
-            {% else %}
-            <div style="padding: 20px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
-                <div style="font-weight: bold; color: #9a3412;">Attachment Drift data not found.</div>
-            </div>
-            {% endif %}
-            </div>
-        </div>
-    </div>
-        </div>
-    </div>
-    {% endif %}
 
     <div class="grid">
         <!-- Enterprise Stats -->
@@ -704,13 +481,33 @@ DASHBOARD_TEMPLATE = """
                 </div>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
-                <div style="background:#fef3c7; padding:12px; border-radius:8px; text-align:center;">
+                <div style="background:#fff7ed; padding:12px; border-radius:8px; text-align:center;">
                     <div class="stat-label">Google Cited Overlap</div>
                     <div class="stat-big" style="color:#92400e;">{{ "%.1f"|format(pers_google_overlap_pct) }}%</div>
                 </div>
                 <div style="background:#fff7ed; padding:12px; border-radius:8px; text-align:center;">
                     <div class="stat-label">Google Add. Overlap</div>
                     <div class="stat-big" style="color:#c2410c;">{{ "%.1f"|format(pers_google_add_overlap_pct) }}%</div>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#f0f9ff; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Bing Query 1 Overlap</div>
+                    <div class="stat-big" style="color:#0369a1;">{{ "%.1f"|format(pers_q1_overlap_pct_bing) }}%</div>
+                </div>
+                <div style="background:#f0fdf4; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Bing Query 2 Overlap</div>
+                    <div class="stat-big" style="color:#166534;">{{ "%.1f"|format(pers_q2_overlap_pct_bing) }}%</div>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom: 15px;">
+                <div style="background:#fefce8; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Google Query 1 Overlap</div>
+                    <div class="stat-big" style="color:#854d0e;">{{ "%.1f"|format(pers_q1_overlap_pct_google) }}%</div>
+                </div>
+                <div style="background:#fdf2f8; padding:12px; border-radius:8px; text-align:center;">
+                    <div class="stat-label">Google Query 2 Overlap</div>
+                    <div class="stat-big" style="color:#9d174d;">{{ "%.1f"|format(pers_q2_overlap_pct_google) }}%</div>
                 </div>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; margin-bottom: 15px;">
@@ -749,6 +546,163 @@ DASHBOARD_TEMPLATE = """
             </div>
         </div>
 
+    {% if show_labels %}
+    <div class="grid">
+        <div class="card full-width">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h2 style="margin:0;">Enrichment Coverage & Label Distribution</h2>
+                <form method="get" style="display:inline-flex; gap:8px; align-items:center;">
+                    <input type="hidden" name="labels" value="1">
+                    <label style="font-size:12px; color:#666;">Filter:</label>
+                    <select name="breakdown_account" onchange="this.form.submit()" style="padding:4px 8px; border-radius:6px; border:1px solid #ddd; font-size:12px;">
+                        <option value="all" {{ 'selected' if breakdown_account=='all' else '' }}>All Accounts</option>
+                        <option value="enterprise" {{ 'selected' if breakdown_account=='enterprise' else '' }}>Enterprise</option>
+                        <option value="personal" {{ 'selected' if breakdown_account=='personal' else '' }}>Personal</option>
+                    </select>
+                </form>
+            </div>
+            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:10px; align-items:center;">
+                <div class="stat-label">
+                    Enriched URLs: <strong>{{ enriched_citation_count }}</strong> / {{ enrichment_total_citations }}
+                    ({{ "%.1f"|format(enrichment_pct) }}%)
+                </div>
+                <div class="stat-label">Unlabeled URLs: <strong>{{ unlabeled_citation_count }}</strong></div>
+                <div style="display:flex; gap:12px; border-left:1px solid #e2e8f0; padding-left:20px; margin-left:10px;">
+                    <div class="stat-label" title="Agreement on objective structural features (has_tables, has_pros_cons, etc.)">
+                        Structural Fidelity: <strong style="color:#10a37f;">93.1%</strong>
+                    </div>
+                    <div class="stat-label" title="Agreement on categorical classification (Type, Format)">
+                        Categorical Fidelity: <strong style="color:#10a37f;">89.6%</strong>
+                    </div>
+                    <div class="stat-label" title="Pearson correlation for subjective quality scores (Freshness, Expertise)">
+                        Trend Correlation (r): <strong style="color:#10a37f;">0.84</strong>
+                    </div>
+                </div>
+                {% if breakdown_account != 'all' %}
+                <div class="stat-label" style="color:#f97316; font-weight:bold; margin-left:auto;">
+                    Filtered: {{ breakdown_account|title }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: 5px; gap: 10px;">
+                <div style="display: flex; flex-direction: column;">
+                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <h2 style="font-size: 14px; margin:0; border:none; padding:0;">Type (Enriched)</h2>
+                        <div class="view-toggle" data-toggle-group="labelType">
+                            <button class="btn" data-view="table" onclick="toggleView('labelType',this)">Table</button>
+                            <button class="btn active" data-view="chart" onclick="toggleView('labelType',this)">Pie</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrap" data-group="labelType" data-view="table">
+                        <table>
+                            <tr><th>Type</th><th>Count</th><th>%</th></tr>
+                            {% for row in label_type_counts %}
+                            <tr>
+                                <td>{{ row['label'] }}</td>
+                                <td>{{ row['count'] }}</td>
+                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="chart-wrap active" data-group="labelType" data-view="chart" style="height: 220px; width: 100%;">
+                        <canvas id="typePieChart"></canvas>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <h2 style="font-size: 14px; margin:0; border:none; padding:0;">Tone (Enriched)</h2>
+                        <div class="view-toggle" data-toggle-group="labelTone">
+                            <button class="btn" data-view="table" onclick="toggleView('labelTone',this)">Table</button>
+                            <button class="btn active" data-view="chart" onclick="toggleView('labelTone',this)">Pie</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrap" data-group="labelTone" data-view="table">
+                        <table>
+                            <tr><th>Tone</th><th>Count</th><th>%</th></tr>
+                            {% for row in label_tone_counts %}
+                            <tr>
+                                <td>{{ row['label'] }}</td>
+                                <td>{{ row['count'] }}</td>
+                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="chart-wrap active" data-group="labelTone" data-view="chart" style="height: 220px; width: 100%;">
+                        <canvas id="tonePieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card full-width">
+            <h2 style="margin:0; margin-bottom:15px;">Enterprise Dataset Profile (Content DNA)</h2>
+            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:10px;">
+                <div class="stat-label">
+                    Enriched URLs: <strong>{{ enriched_counts_by_group.cited + enriched_counts_by_group.additional + enriched_counts_by_group.rejected }}</strong>
+                </div>
+                <div class="stat-label">Unlabeled URLs: <strong>{{ unlabeled_by_group.cited + unlabeled_by_group.additional + unlabeled_by_group.rejected }}</strong></div>
+            </div>
+            <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: 5px; gap: 10px;">
+                <div style="display: flex; flex-direction: column;">
+                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <h2 style="font-size: 14px; margin:0; border:none; padding:0;">Type (Enterprise)</h2>
+                        <div class="view-toggle" data-toggle-group="entType">
+                            <button class="btn" data-view="table" onclick="toggleView('entType',this)">Table</button>
+                            <button class="btn active" data-view="chart" onclick="toggleView('entType',this)">Pie</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrap" data-group="entType" data-view="table">
+                        <table>
+                            <tr><th>Type</th><th>Count</th><th>%</th></tr>
+                            {% for row in label_type_counts_by_group.cited %}
+                            <tr>
+                                <td>{{ row['label'] }}</td>
+                                <td>{{ row['count'] }}</td>
+                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="chart-wrap active" data-group="entType" data-view="chart" style="height: 220px; width: 100%;">
+                        <canvas id="entTypePieChart"></canvas>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <h2 style="font-size: 14px; margin:0; border:none; padding:0;">Tone (Enterprise)</h2>
+                        <div class="view-toggle" data-toggle-group="entTone">
+                            <button class="btn" data-view="table" onclick="toggleView('entTone',this)">Table</button>
+                            <button class="btn active" data-view="chart" onclick="toggleView('entTone',this)">Pie</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrap" data-group="entTone" data-view="table">
+                        <table>
+                            <tr><th>Tone</th><th>Count</th><th>%</th></tr>
+                            {% for row in label_tone_counts_by_group.cited %}
+                            <tr>
+                                <td>{{ row['label'] }}</td>
+                                <td>{{ row['count'] }}</td>
+                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="chart-wrap active" data-group="entTone" data-view="chart" style="height: 220px; width: 100%;">
+                        <canvas id="entTonePieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    {% endif %}
+
     <div class="grid">
         <div class="card enterprise">
             <h2>Enterprise - Top Invisible Domains</h2>
@@ -775,10 +729,10 @@ DASHBOARD_TEMPLATE = """
         <div class="card enterprise">
             <h2>Enterprise - Bing Page Distribution</h2>
             <div class="view-toggle" data-toggle-group="entPage">
-                <button class="btn active" data-view="table" onclick="toggleView('entPage',this)">Table</button>
-                <button class="btn" data-view="chart" onclick="toggleView('entPage',this)">Histogram</button>
+                <button class="btn" data-view="table" onclick="toggleView('entPage',this)">Table</button>
+                <button class="btn active" data-view="chart" onclick="toggleView('entPage',this)">Histogram</button>
             </div>
-            <div class="chart-wrap active" data-group="entPage" data-view="table">
+            <div class="chart-wrap" data-group="entPage" data-view="table">
                 <table>
                     <tr><th>Page</th><th>Matches</th></tr>
                     {% for row in ent_page_data %}
@@ -786,7 +740,7 @@ DASHBOARD_TEMPLATE = """
                     {% endfor %}
                 </table>
             </div>
-            <div class="chart-wrap" data-group="entPage" data-view="chart">
+            <div class="chart-wrap active" data-group="entPage" data-view="chart">
                 <canvas id="entPageChart" class="chart-canvas"></canvas>
             </div>
         </div>
@@ -794,10 +748,10 @@ DASHBOARD_TEMPLATE = """
         <div class="card personal">
             <h2>Personal - Bing Page Distribution</h2>
             <div class="view-toggle" data-toggle-group="persPage">
-                <button class="btn active" data-view="table" onclick="toggleView('persPage',this)">Table</button>
-                <button class="btn" data-view="chart" onclick="toggleView('persPage',this)">Histogram</button>
+                <button class="btn" data-view="table" onclick="toggleView('persPage',this)">Table</button>
+                <button class="btn active" data-view="chart" onclick="toggleView('persPage',this)">Histogram</button>
             </div>
-            <div class="chart-wrap active" data-group="persPage" data-view="table">
+            <div class="chart-wrap" data-group="persPage" data-view="table">
                 <table>
                     <tr><th>Page</th><th>Matches</th></tr>
                     {% for row in pers_page_data %}
@@ -805,7 +759,7 @@ DASHBOARD_TEMPLATE = """
                     {% endfor %}
                 </table>
             </div>
-            <div class="chart-wrap" data-group="persPage" data-view="chart">
+            <div class="chart-wrap active" data-group="persPage" data-view="chart">
                 <canvas id="persPageChart" class="chart-canvas"></canvas>
             </div>
         </div>
@@ -815,10 +769,10 @@ DASHBOARD_TEMPLATE = """
         <div class="card enterprise">
             <h2>Enterprise - Google Position Distribution</h2>
             <div class="view-toggle" data-toggle-group="entGoogle">
-                <button class="btn active" data-view="table" onclick="toggleView('entGoogle',this)">Table</button>
-                <button class="btn" data-view="chart" onclick="toggleView('entGoogle',this)">Histogram</button>
+                <button class="btn" data-view="table" onclick="toggleView('entGoogle',this)">Table</button>
+                <button class="btn active" data-view="chart" onclick="toggleView('entGoogle',this)">Histogram</button>
             </div>
-            <div class="chart-wrap active" data-group="entGoogle" data-view="table">
+            <div class="chart-wrap" data-group="entGoogle" data-view="table">
                 <table>
                     <tr><th>Bucket</th><th>Matches</th></tr>
                     {% for row in ent_google_pos_data %}
@@ -826,7 +780,7 @@ DASHBOARD_TEMPLATE = """
                     {% endfor %}
                 </table>
             </div>
-            <div class="chart-wrap" data-group="entGoogle" data-view="chart">
+            <div class="chart-wrap active" data-group="entGoogle" data-view="chart">
                 <canvas id="entGoogleChart" class="chart-canvas"></canvas>
             </div>
         </div>
@@ -834,10 +788,10 @@ DASHBOARD_TEMPLATE = """
         <div class="card personal">
             <h2>Personal - Google Position Distribution</h2>
             <div class="view-toggle" data-toggle-group="persGoogle">
-                <button class="btn active" data-view="table" onclick="toggleView('persGoogle',this)">Table</button>
-                <button class="btn" data-view="chart" onclick="toggleView('persGoogle',this)">Histogram</button>
+                <button class="btn" data-view="table" onclick="toggleView('persGoogle',this)">Table</button>
+                <button class="btn active" data-view="chart" onclick="toggleView('persGoogle',this)">Histogram</button>
             </div>
-            <div class="chart-wrap active" data-group="persGoogle" data-view="table">
+            <div class="chart-wrap" data-group="persGoogle" data-view="table">
                 <table>
                     <tr><th>Bucket</th><th>Matches</th></tr>
                     {% for row in pers_google_pos_data %}
@@ -845,64 +799,57 @@ DASHBOARD_TEMPLATE = """
                     {% endfor %}
                 </table>
             </div>
-            <div class="chart-wrap" data-group="persGoogle" data-view="chart">
+            <div class="chart-wrap active" data-group="persGoogle" data-view="chart">
                 <canvas id="persGoogleChart" class="chart-canvas"></canvas>
             </div>
         </div>
+        </div>
     </div>
 
-    <div class="grid">
+    {% if show_labels %}
+    <div class="grid" id="drift-analysis-section">
         <div class="card full-width">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
                 <div>
-                    <h2 style="margin:0;">Selection Lift (Drift Analysis)</h2>
+                    <h2 style="margin:0;">Selection & Attachment Drift Analysis</h2>
                     <div class="stat-sub" style="margin-top:6px;">
                         Percentage Point (PP) shift from search results to LLM selection. Positive = LLM "hunts" for this; Negative = LLM "avoids" this.
                     </div>
-                </div>
-                <div class="view-toggle" data-toggle-group="driftView">
-                    <button class="btn active" data-view="selection" onclick="toggleDriftView(this)">Selection Drift (B)</button>
-                    <button class="btn" data-view="attachment" onclick="toggleDriftView(this)">Attachment Drift (C)</button>
                 </div>
             </div>
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; margin-bottom:16px; font-size:12px; line-height:1.6;">
                 <strong style="color:#334155;">Drift types explained:</strong>
                 <div style="display:grid; grid-template-columns:auto 1fr; gap:4px 12px; margin-top:6px;">
-                    <span style="color:#3b82f6; font-weight:700;">A) Visibility Gap</span>
-                    <span style="color:#475569;">Cited URL is <em>not found</em> anywhere in the SERP/index (invisible citation)</span>
-                    <span style="color:#10a37f; font-weight:700;">B) Selection Drift</span>
+                    <span style="color:#10a37f; font-weight:700;">Selection Drift</span>
                     <span style="color:#475569;">Feature lift when comparing <em>cited</em> URLs vs the full SERP menu (Menu &rarr; Order).</span>
-                    <span style="color:#f59e0b; font-weight:700;">C) Attachment Drift</span>
+                    <span style="color:#f59e0b; font-weight:700;">Attachment Drift</span>
                     <span style="color:#475569;">Feature difference between <em>cited</em> and <em>additional</em> (context-only) links.</span>
                 </div>
             </div>
 
             <div id="selection-drift-container">
+            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Selection Drift (Menu &rarr; Cited, within SERP)</h3>
             {% if drift_split %}
             <div class="stat-sub" style="margin: 6px 0 12px;">
-                Showing thesis-grade <strong>Selection Drift (B)</strong> tables (Listicles vs Product Pages). {{ drift_split.methodology.enterprise_note }}
+                Showing thesis-grade <strong>Selection Drift</strong> (Weighted Average Lift). {{ drift_split.methodology.enterprise_note }}
             </div>
 
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
                 <div>
                     <h2 style="font-size: 14px; margin-top:0;">Listicles only</h2>
-                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)'] %}
+                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)', 'Gemini (Google T10)'] %}
                         <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
                         <table>
                             <tr>
                                 <th>Feature</th>
-                                <th>Top 1-5</th>
-                                <th>Bot 6-10</th>
-                                <th>Weighted</th>
+                                <th style="text-align:right;">Weighted Lift</th>
                             </tr>
                             {% for row in (drift_split.tables.listicle.get(study_label) or []) %}
                             <tr>
                                 <td>{{ row.feature }}</td>
-                                <td>{{ "%.2f"|format(row.top_1_5_drift_pp) }}pp</td>
-                                <td>
-                                    {% if row.bot_6_10_drift_pp is none %}N/A{% else %}{{ "%.2f"|format(row.bot_6_10_drift_pp) }}pp{% endif %}
+                                <td style="text-align:right; color: {{ '#16a34a' if row.weighted_avg_drift_pp > 0 else '#dc2626' if row.weighted_avg_drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.weighted_avg_drift_pp) }}pp
                                 </td>
-                                <td>{{ "%.2f"|format(row.weighted_avg_drift_pp) }}pp</td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -911,23 +858,19 @@ DASHBOARD_TEMPLATE = """
 
                 <div>
                     <h2 style="font-size: 14px; margin-top:0;">Product pages only</h2>
-                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)'] %}
+                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)', 'Gemini (Google T10)'] %}
                         <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
                         <table>
                             <tr>
                                 <th>Feature</th>
-                                <th>Top 1-5</th>
-                                <th>Bot 6-10</th>
-                                <th>Weighted</th>
+                                <th style="text-align:right;">Weighted Lift</th>
                             </tr>
                             {% for row in (drift_split.tables.product_page.get(study_label) or []) %}
                             <tr>
                                 <td>{{ row.feature }}</td>
-                                <td>{{ "%.2f"|format(row.top_1_5_drift_pp) }}pp</td>
-                                <td>
-                                    {% if row.bot_6_10_drift_pp is none %}N/A{% else %}{{ "%.2f"|format(row.bot_6_10_drift_pp) }}pp{% endif %}
+                                <td style="text-align:right; color: {{ '#16a34a' if row.weighted_avg_drift_pp > 0 else '#dc2626' if row.weighted_avg_drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.weighted_avg_drift_pp) }}pp
                                 </td>
-                                <td>{{ "%.2f"|format(row.weighted_avg_drift_pp) }}pp</td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -941,10 +884,11 @@ DASHBOARD_TEMPLATE = """
             {% endif %}
             </div>
 
-            <div id="attachment-drift-container" style="display:none;">
+            <div id="attachment-drift-container" style="margin-top:40px;">
+            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Attachment Drift (Cited vs Additional)</h3>
             {% if attachment_drift %}
             <div class="stat-sub" style="margin: 6px 0 12px;">
-                Showing <strong>Attachment Drift (C)</strong> tables (Cited vs Additional links). Positive = LLM prefers citing this feature when it's in its context.
+                Showing <strong>Attachment Drift</strong> (Preference for citation from context).
             </div>
 
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
@@ -955,12 +899,14 @@ DASHBOARD_TEMPLATE = """
                         <table>
                             <tr>
                                 <th>Feature</th>
-                                <th>Drift (pp)</th>
+                                <th style="text-align:right;">Drift</th>
                             </tr>
                             {% for row in (attachment_drift.tables.listicle.get(study_label) or []) %}
                             <tr>
                                 <td>{{ row.feature }}</td>
-                                <td>{{ "%.2f"|format(row.drift_pp) }}pp</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.drift_pp > 0 else '#dc2626' if row.drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.drift_pp) }}pp
+                                </td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -974,12 +920,14 @@ DASHBOARD_TEMPLATE = """
                         <table>
                             <tr>
                                 <th>Feature</th>
-                                <th>Drift (pp)</th>
+                                <th style="text-align:right;">Drift</th>
                             </tr>
                             {% for row in (attachment_drift.tables.product_page.get(study_label) or []) %}
                             <tr>
                                 <td>{{ row.feature }}</td>
-                                <td>{{ "%.2f"|format(row.drift_pp) }}pp</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.drift_pp > 0 else '#dc2626' if row.drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.drift_pp) }}pp
+                                </td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -992,6 +940,233 @@ DASHBOARD_TEMPLATE = """
             </div>
             {% endif %}
             </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    {% if loc_summary %}
+    <div class="grid">
+        <div class="card full-width">
+            <h2>Fan-Out Localization Patterns (GPT)</h2>
+            <div class="stat-sub" style="margin-bottom:12px;">
+                Three observed patterns where fan-out queries contain non-English language signals.
+                <strong>{{ loc_summary.case1.count + loc_summary.case2.count + loc_summary.case3.count }}</strong> of <strong>{{ loc_summary.total_runs }}</strong> runs ({{ "%.1f"|format((loc_summary.case1.count + loc_summary.case2.count + loc_summary.case3.count) / loc_summary.total_runs * 100) }}%) show localization signals.
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-bottom:18px;">
+                <div style="background:#eef2ff; padding:12px; border-radius:8px; text-align:center; border-left:4px solid #6366f1;">
+                    <div class="stat-label" style="font-weight:700; color:#4338ca;">Case 1: Foreign Prompt</div>
+                    <div style="font-size:10px; color:#64748b; margin:4px 0;">Prompt is non-English; system adds English fanout</div>
+                    <div class="stat-big" style="color:#4338ca; font-size:24px;">{{ loc_summary.case1.count }}</div>
+                    <div class="stat-sub">{{ loc_summary.case1.pct }}% of runs</div>
+                </div>
+                <div style="background:#fef2f2; padding:12px; border-radius:8px; text-align:center; border-left:4px solid #ef4444;">
+                    <div class="stat-label" style="font-weight:700; color:#dc2626;">Case 2: Anomalies (Context-Triggered)</div>
+                    <div style="font-size:10px; color:#64748b; margin:4px 0;">English prompt mentions foreign lang/region</div>
+                    <div class="stat-big" style="color:#dc2626; font-size:24px;">{{ loc_summary.case2.count }}</div>
+                    <div class="stat-sub">{{ loc_summary.case2.pct }}% of runs</div>
+                </div>
+                <div style="background:#fef2f2; padding:12px; border-radius:8px; text-align:center; border-left:4px solid #ef4444;">
+                    <div class="stat-label" style="font-weight:700; color:#dc2626;">Case 3: Anomalies (Untriggered)</div>
+                    <div style="font-size:10px; color:#64748b; margin:4px 0;">English prompt, no foreign context → unexpected fanout</div>
+                    <div class="stat-big" style="color:#dc2626; font-size:24px;">{{ loc_summary.case3.count }}</div>
+                    <div class="stat-sub">{{ loc_summary.case3.pct }}% of runs</div>
+                </div>
+            </div>
+
+            <!-- Case 1 runs -->
+            <details style="margin-bottom:10px;">
+                <summary style="cursor:pointer; font-weight:700; font-size:13px; color:#4338ca;">
+                    Case 1: Foreign-Language Prompts ({{ loc_summary.case1.count }} runs) ▸
+                </summary>
+                <table style="margin-top:6px;">
+                    <tr><th>Run</th><th>Account</th><th>Prompt</th></tr>
+                    {% for r in loc_summary.case1.runs %}
+                    <tr>
+                        <td><a href="/?run_id={{ r.run_id }}" style="font-weight:600;">{{ r.run_id }}</a></td>
+                        <td>{{ r.account }}</td>
+                        <td style="font-size:11px; max-width:500px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.prompt }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </details>
+
+            <!-- Case 2 runs -->
+            <details style="margin-bottom:10px;">
+                <summary style="cursor:pointer; font-weight:700; font-size:13px; color:#dc2626;">
+                    Case 2: Anomalies (Context-Triggered) ({{ loc_summary.case2.count }} runs) ▸
+                </summary>
+                <table style="margin-top:6px;">
+                    <tr><th>Run</th><th>Account</th><th>Prompt</th><th>Non-English Query</th></tr>
+                    {% for r in loc_summary.case2.runs %}
+                    <tr>
+                        <td><a href="/?run_id={{ r.run_id }}" style="font-weight:600;">{{ r.run_id }}</a></td>
+                        <td>{{ r.account }}</td>
+                        <td style="font-size:11px; max-width:350px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.prompt }}</td>
+                        <td style="font-size:10px; color:#64748b; max-width:350px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.non_en_queries[0][:80] if r.non_en_queries else '' }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </details>
+
+            <!-- Case 3 runs -->
+            <details style="margin-bottom:10px;">
+                <summary style="cursor:pointer; font-weight:700; font-size:13px; color:#dc2626;">
+                    Case 3: Anomalies (Untriggered) ({{ loc_summary.case3.count }} runs) ▸
+                </summary>
+                <table style="margin-top:6px;">
+                    <tr><th>Run</th><th>Account</th><th>Prompt</th><th>Non-English Query</th></tr>
+                    {% for r in loc_summary.case3.runs %}
+                    <tr>
+                        <td><a href="/?run_id={{ r.run_id }}" style="font-weight:600;">{{ r.run_id }}</a></td>
+                        <td>{{ r.account }}</td>
+                        <td style="font-size:11px; max-width:350px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.prompt }}</td>
+                        <td style="font-size:10px; color:#64748b; max-width:350px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.non_en_queries[0][:80] if r.non_en_queries else '' }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </details>
+        </div>
+    </div>
+    {% endif %}
+
+    {% endif %}
+
+    <div class="grid" id="drift-analysis-section">
+        <div class="card full-width">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
+                <div>
+                    <h2 style="margin:0;">Selection & Attachment Drift Analysis</h2>
+                    <div class="stat-sub" style="margin-top:6px;">
+                        Percentage Point (PP) shift from search results to LLM selection. Positive = LLM "hunts" for this; Negative = LLM "avoids" this.
+                    </div>
+                </div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; margin-bottom:16px; font-size:12px; line-height:1.6;">
+                <strong style="color:#334155;">Drift types explained:</strong>
+                <div style="display:grid; grid-template-columns:auto 1fr; gap:4px 12px; margin-top:6px;">
+                    <span style="color:#10a37f; font-weight:700;">Selection Drift</span>
+                    <span style="color:#475569;">Feature lift when comparing <em>cited</em> URLs vs the full SERP menu (Menu &rarr; Order).</span>
+                    <span style="color:#f59e0b; font-weight:700;">Attachment Drift</span>
+                    <span style="color:#475569;">Feature difference between <em>cited</em> and <em>additional</em> (context-only) links.</span>
+                </div>
+            </div>
+
+            <div id="selection-drift-container">
+            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Selection Drift (Menu &rarr; Cited, within SERP)</h3>
+            {% if drift_split %}
+            <div class="stat-sub" style="margin: 6px 0 12px;">
+                Showing thesis-grade <strong>Selection Drift</strong> (Weighted Average Lift). {{ drift_split.methodology.enterprise_note }}
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Listicles only</h2>
+                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)', 'Gemini (Google T10)'] %}
+                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
+                        <table>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align:right;">Weighted Lift</th>
+                            </tr>
+                            {% for row in (drift_split.tables.listicle.get(study_label) or []) %}
+                            <tr>
+                                <td>{{ row.feature }}</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.weighted_avg_drift_pp > 0 else '#dc2626' if row.weighted_avg_drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.weighted_avg_drift_pp) }}pp
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Product pages only</h2>
+                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)', 'Gemini (Google T10)'] %}
+                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
+                        <table>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align:right;">Weighted Lift</th>
+                            </tr>
+                            {% for row in (drift_split.tables.product_page.get(study_label) or []) %}
+                            <tr>
+                                <td>{{ row.feature }}</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.weighted_avg_drift_pp > 0 else '#dc2626' if row.weighted_avg_drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.weighted_avg_drift_pp) }}pp
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <div style="padding: 20px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
+                <div style="font-weight: bold; color: #9a3412;">Selection Drift tables not found.</div>
+            </div>
+            {% endif %}
+            </div>
+
+            <div id="attachment-drift-container" style="margin-top:40px;">
+            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Attachment Drift (Cited vs Additional)</h3>
+            {% if attachment_drift %}
+            <div class="stat-sub" style="margin: 6px 0 12px;">
+                Showing <strong>Attachment Drift</strong> (Preference for citation from context).
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Listicles only</h2>
+                    {% for study_label in ['GPT Personal', 'GPT Enterprise'] %}
+                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
+                        <table>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align:right;">Drift</th>
+                            </tr>
+                            {% for row in (attachment_drift.tables.listicle.get(study_label) or []) %}
+                            <tr>
+                                <td>{{ row.feature }}</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.drift_pp > 0 else '#dc2626' if row.drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.drift_pp) }}pp
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Product pages only</h2>
+                    {% for study_label in ['GPT Personal', 'GPT Enterprise'] %}
+                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
+                        <table>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align:right;">Drift</th>
+                            </tr>
+                            {% for row in (attachment_drift.tables.product_page.get(study_label) or []) %}
+                            <tr>
+                                <td>{{ row.feature }}</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.drift_pp > 0 else '#dc2626' if row.drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.drift_pp) }}pp
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <div style="padding: 20px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
+                <div style="font-weight: bold; color: #9a3412;">Attachment Drift data not found.</div>
+            </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
         </div>
     </div>
 <script>
@@ -1033,16 +1208,30 @@ function makeBar(canvasId, labels, values, color) {
     });
 }
 
-/* ---- Helper: pie chart ---- */
-function makePie(canvasId, labels, values) {
-    var el = document.getElementById(canvasId);
-    if (!el) return;
-    new Chart(el, {
-        type: 'pie',
-        data: { labels: labels, datasets: [{data:values, backgroundColor:PALETTE.slice(0,labels.length)}] },
-        options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'right',labels:{font:{size:11}}}} }
-    });
-}
+    function makePie(canvasId, labels, values) {
+        var el = document.getElementById(canvasId);
+        if (!el) return;
+        new Chart(el, {
+            type: 'pie',
+            data: { labels: labels, datasets: [{data:values, backgroundColor:PALETTE.slice(0,labels.length)}] },
+            options: { 
+                responsive:true, 
+                maintainAspectRatio:false, 
+                layout: { padding: 0 },
+                plugins:{
+                    legend:{
+                        position:'right',
+                        align: 'center',
+                        labels:{
+                            boxWidth: 12,
+                            padding: 10,
+                            font:{size:11}
+                        }
+                    }
+                } 
+            }
+        });
+    }
 
 /* ---- Build charts on load ---- */
 document.addEventListener('DOMContentLoaded', function() {
@@ -1066,14 +1255,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     {% if show_labels %}
     /* Type pie */
-    var typeLabels = [{% for r in label_type_counts %}'{{r.label}}'{% if not loop.last %},{% endif %}{% endfor %}];
-    var typeValues = [{% for r in label_type_counts %}{{r.count}}{% if not loop.last %},{% endif %}{% endfor %}];
+    var typeLabels = [{% for r in label_type_counts %}'{{r["label"]}}'{% if not loop.last %},{% endif %}{% endfor %}];
+    var typeValues = [{% for r in label_type_counts %}{{r["count"]}}{% if not loop.last %},{% endif %}{% endfor %}];
     makePie('typePieChart', typeLabels, typeValues);
 
     /* Tone pie */
-    var toneLabels = [{% for r in label_tone_counts %}'{{r.label}}'{% if not loop.last %},{% endif %}{% endfor %}];
-    var toneValues = [{% for r in label_tone_counts %}{{r.count}}{% if not loop.last %},{% endif %}{% endfor %}];
+    var toneLabels = [{% for r in label_tone_counts %}'{{r["label"]}}'{% if not loop.last %},{% endif %}{% endfor %}];
+    var toneValues = [{% for r in label_tone_counts %}{{r["count"]}}{% if not loop.last %},{% endif %}{% endfor %}];
     makePie('tonePieChart', toneLabels, toneValues);
+
+    /* Enterprise Type pie */
+    var entTypeLabels = [{% for r in label_type_counts_by_group.cited %}'{{r["label"]}}'{% if not loop.last %},{% endif %}{% endfor %}];
+    var entTypeValues = [{% for r in label_type_counts_by_group.cited %}{{r["count"]}}{% if not loop.last %},{% endif %}{% endfor %}];
+    makePie('entTypePieChart', entTypeLabels, entTypeValues);
+
+    /* Enterprise Tone pie */
+    var entToneLabels = [{% for r in label_tone_counts_by_group.cited %}'{{r["label"]}}'{% if not loop.last %},{% endif %}{% endfor %}];
+    var entToneValues = [{% for r in label_tone_counts_by_group.cited %}{{r["count"]}}{% if not loop.last %},{% endif %}{% endfor %}];
+    makePie('entTonePieChart', entToneLabels, entToneValues);
     {% endif %}
 });
 </script>
@@ -1252,7 +1451,14 @@ HTML_TEMPLATE = """
         {% if run_raw %}
         <div class="card">
             <div class="header">
-                <h2 style="margin:0 0 10px 0;">{{ active_run_id }}</h2>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <h2 style="margin:0 0 10px 0;">{{ active_run_id }}</h2>
+                    <div style="display:flex; gap:8px; font-size:10px; color:#666;">
+                        <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; background:#d1fae5; border:1px solid #10a37f; border-radius:2px;"></span> Cited</div>
+                        <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; background:#f3f4f6; border:1px solid #6b7280; border-radius:2px;"></span> Additional</div>
+                        <div style="display:flex; align-items:center; gap:4px;"><span style="width:10px; height:10px; background:#fef9c3; border:1px solid #eab308; border-radius:2px;"></span> SERP Match</div>
+                    </div>
+                </div>
                 <div class="query-pill">Prompt: {{ run_raw.query }}</div>
                 {% if run_raw.hidden_queries %}
                 <div class="hidden-queries">🔍 Hidden Queries: {{ run_raw.hidden_queries }}</div>
@@ -3283,8 +3489,8 @@ def dashboard():
 
     ent_google_pos_data = _get_google_pos_data('enterprise')
 
-    def _aggregate_q_overlap(account_type: str):
-        """Aggregate Q1/Q2 overlap across runs using Bing query order (min bing_results.id per query)."""
+    def _aggregate_q_overlap(account_type: str, engine: str = 'bing'):
+        """Aggregate Q1/Q2 overlap across runs using query order."""
         run_ids = [r[0] for r in db.execute("SELECT run_id FROM runs WHERE account_type = ?", (account_type,)).fetchall()]
         total_cited_urls = 0
         q1_matched = 0
@@ -3301,11 +3507,24 @@ def dashboard():
             if not cited_norms:
                 continue
 
-            # Determine query order for this run via insertion order in bing_results
-            q_rows = db.execute(
-                "SELECT query, MIN(id) as min_id FROM bing_results WHERE run_id = ? AND query IS NOT NULL GROUP BY query ORDER BY min_id",
-                (rid,),
-            ).fetchall()
+            # Determine query order for this run
+            if engine == 'bing':
+                q_rows = db.execute(
+                    "SELECT query, MIN(id) as min_id FROM bing_results WHERE run_id = ? AND query IS NOT NULL GROUP BY query ORDER BY min_id",
+                    (rid,),
+                ).fetchall()
+                table_name = "bing_results"
+                rid_filter = rid
+            else:
+                # Google results use the base run_id (personal citations are suffixed with _personal)
+                base_rid = rid.replace('_personal', '')
+                q_rows = db.execute(
+                    "SELECT query, MIN(id) as min_id FROM google_results WHERE chatgpt_run_id = ? AND query IS NOT NULL GROUP BY query ORDER BY min_id",
+                    (base_rid,),
+                ).fetchall()
+                table_name = "google_results"
+                rid_filter = base_rid
+
             queries = [qr[0] for qr in q_rows if qr[0]]
             if not queries:
                 continue
@@ -3313,20 +3532,36 @@ def dashboard():
             q1_query = queries[0] if len(queries) >= 1 else None
             q2_query = queries[1] if len(queries) >= 2 else None
 
-            q1_norms = set(
-                r[0]
-                for r in db.execute(
-                    "SELECT DISTINCT url_normalized FROM bing_results WHERE run_id = ? AND query = ? AND url_normalized != ''",
-                    (rid, q1_query),
-                ).fetchall()
-            ) if q1_query else set()
-            q2_norms = set(
-                r[0]
-                for r in db.execute(
-                    "SELECT DISTINCT url_normalized FROM bing_results WHERE run_id = ? AND query = ? AND url_normalized != ''",
-                    (rid, q2_query),
-                ).fetchall()
-            ) if q2_query else set()
+            if engine == 'bing':
+                q1_norms = set(
+                    r[0]
+                    for r in db.execute(
+                        f"SELECT DISTINCT url_normalized FROM {table_name} WHERE run_id = ? AND query = ? AND url_normalized != ''",
+                        (rid_filter, q1_query),
+                    ).fetchall()
+                ) if q1_query else set()
+                q2_norms = set(
+                    r[0]
+                    for r in db.execute(
+                        f"SELECT DISTINCT url_normalized FROM {table_name} WHERE run_id = ? AND query = ? AND url_normalized != ''",
+                        (rid_filter, q2_query),
+                    ).fetchall()
+                ) if q2_query else set()
+            else:
+                q1_norms = set(
+                    r[0]
+                    for r in db.execute(
+                        f"SELECT DISTINCT url_normalized FROM {table_name} WHERE chatgpt_run_id = ? AND query = ? AND url_normalized != ''",
+                        (rid_filter, q1_query),
+                    ).fetchall()
+                ) if q1_query else set()
+                q2_norms = set(
+                    r[0]
+                    for r in db.execute(
+                        f"SELECT DISTINCT url_normalized FROM {table_name} WHERE chatgpt_run_id = ? AND query = ? AND url_normalized != ''",
+                        (rid_filter, q2_query),
+                    ).fetchall()
+                ) if q2_query else set()
 
             total_cited_urls += len(cited_norms)
             if q1_norms:
@@ -3338,7 +3573,9 @@ def dashboard():
         q2_pct = (q2_matched / total_cited_urls * 100.0) if total_cited_urls else 0.0
         return total_cited_urls, q1_matched, q2_matched, q1_pct, q2_pct
 
-    ent_total_cited_urls, ent_q1_matched, ent_q2_matched, ent_q1_overlap_pct, ent_q2_overlap_pct = _aggregate_q_overlap('enterprise')
+    ent_total_cited_urls, ent_q1_matched, ent_q2_matched, ent_q1_overlap_pct, ent_q2_overlap_pct = _aggregate_q_overlap('enterprise', 'bing')
+    pers_total_cited_urls_bing, pers_q1_matched_bing, pers_q2_matched_bing, pers_q1_overlap_pct_bing, pers_q2_overlap_pct_bing = _aggregate_q_overlap('personal', 'bing')
+    pers_total_cited_urls_google, pers_q1_matched_google, pers_q2_matched_google, pers_q1_overlap_pct_google, pers_q2_overlap_pct_google = _aggregate_q_overlap('personal', 'google')
     
     # ===== PERSONAL STATS =====
     pers_runs = db.execute("SELECT COUNT(*) FROM runs WHERE account_type = 'personal'").fetchone()[0]
@@ -3511,9 +3748,9 @@ def dashboard():
     pers_total_cited_urls, pers_q1_matched, pers_q2_matched, pers_q1_overlap_pct, pers_q2_overlap_pct = _aggregate_q_overlap('personal')
 
     # ===== ENRICHMENT COVERAGE & LABEL DISTRIBUTION =====
-    breakdown_account = request.args.get('breakdown_account', 'all')
+    breakdown_account = request.args.get('breakdown_account', 'personal')
     if breakdown_account not in ('all', 'enterprise', 'personal'):
-        breakdown_account = 'all'
+        breakdown_account = 'personal'
 
     # Citation group filters for the "Cited / Additional / Rejected" breakdown
     # Default: include all on first load. Once the form is submitted (group_filter=1),
@@ -3626,6 +3863,20 @@ def dashboard():
         except:
             return None
 
+    def load_listicle_bias():
+        try:
+            with open('data/enrichment/listicle_rank_bias_summary_v4.1.json', 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except:
+            return None
+
+    def load_localization_data():
+        try:
+            with open('data/enrichment/localization_cases.json', 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return None
+
     html = render_template_string(DASHBOARD_TEMPLATE, active_tab='dashboard', 
                                  ent_runs=ent_runs, ent_bing=ent_bing,
                                  ent_total_all=ent_total_all, ent_matched_all=ent_matched_all,
@@ -3653,6 +3904,10 @@ def dashboard():
                                  pers_bing_add_overlap_pct=pers_bing_add_overlap_pct,
                                  pers_google_overlap_pct=pers_google_overlap_pct,
                                  pers_google_add_overlap_pct=pers_google_add_overlap_pct,
+                                 pers_q1_overlap_pct_bing=pers_q1_overlap_pct_bing,
+                                 pers_q2_overlap_pct_bing=pers_q2_overlap_pct_bing,
+                                 pers_q1_overlap_pct_google=pers_q1_overlap_pct_google,
+                                 pers_q2_overlap_pct_google=pers_q2_overlap_pct_google,
                                  pers_combined_overlap_pct=pers_combined_overlap_pct,
                                  pers_missing_overlap_pct=pers_missing_overlap_pct,
                                  pers_google_only_overlap_pct=pers_google_only_overlap_pct,
@@ -3683,7 +3938,6 @@ def dashboard():
                                  totals_by_group=totals_by_group if show_labels else {},
                                  enriched_counts_by_group=enriched_counts_by_group if show_labels else {},
                                  breakdown_account=breakdown_account,
-                                 # Checkbox state + selected-group outputs
                                  inc_cited=inc_cited,
                                  inc_additional=inc_additional,
                                  inc_rejected=inc_rejected,
@@ -3695,7 +3949,9 @@ def dashboard():
                                  label_type_counts_selected=label_type_rows_selected if show_labels else [],
                                  label_tone_counts_selected=label_tone_rows_selected if show_labels else [],
                                  drift_split=load_drift_split_tables() if show_labels else None,
-                                 attachment_drift=load_attachment_drift() if show_labels else None)
+                                 attachment_drift=load_attachment_drift() if show_labels else None,
+                                 listicle_bias=load_listicle_bias() if show_labels else None,
+                                 loc_summary=load_localization_data())
     _cache_set(cache_key, html)
     return html
 
