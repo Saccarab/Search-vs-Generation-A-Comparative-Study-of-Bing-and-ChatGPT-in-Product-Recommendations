@@ -460,6 +460,15 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 | **listicle** | 589 | 36.5% | neutral_info | 390 | 24.2% |
 | news_article | 104 | 6.4% | salesy | 95 | 5.9% |
 
+**Intra-Listicle Feature Drift (GPT Enterprise vs. Bing P1 Baseline):**
+| Feature | Top 1-5 Drift | Weighted Avg Drift |
+| :--- | :---: | :---: |
+| `has_numbered_lists` | +7.27pp | +5.66pp |
+| `has_tables` | +3.63pp | +2.48pp |
+| `has_bullet_points` | +3.40pp | +1.99pp |
+| `freshness_cue_strength` | +2.19pp | +1.28pp |
+| `is_current_year_2026` | -4.81pp | -4.10pp |
+
 ##### GPT Personal (Cited Set, N=1,444)
 | Category | Type Count | Type % | Tone Count | Tone % |
 | :--- | :---: | :---: | :---: | :---: |
@@ -467,12 +476,30 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 | **product_page** | 523 | 36.2% | neutral_info | 329 | 22.8% |
 | news_article | 98 | 6.8% | salesy | 82 | 5.7% |
 
+**Intra-Listicle Feature Drift (GPT Personal vs. Google T10 Baseline):**
+| Feature | Top 1-5 Drift | Weighted Avg Drift |
+| :--- | :---: | :---: |
+| `has_tables` | +13.47pp | +12.23pp |
+| `freshness_cue_strength` | +3.74pp | +6.31pp |
+| `has_bullet_points` | +5.50pp | +5.74pp |
+| `is_current_year_2026` | +3.03pp | +4.48pp |
+| `has_pros_cons` | +4.74pp | +3.38pp |
+
 ##### Gemini (Cited Set, N=653)
 | Category | Type Count | Type % | Tone Count | Tone % |
 | :--- | :---: | :---: | :---: | :---: |
 | **listicle** | 371 | 56.8% | **promotional** | 467 | 71.5% |
 | **product_page** | 148 | 22.7% | neutral_info | 181 | 27.7% |
 | comparison | 26 | 4.0% | opinionated | 5 | 0.8% |
+
+**Intra-Listicle Feature Drift (Gemini vs. Google T10 Baseline):**
+| Feature | Top 1-5 Drift | Weighted Avg Drift |
+| :--- | :---: | :---: |
+| `has_clear_authorship` | +7.57pp | +6.16pp |
+| `has_pros_cons` | +3.65pp | +1.46pp |
+| `has_tables` | +2.30pp | +2.35pp |
+| `freshness_cue_strength` | +3.34pp | +1.44pp |
+| `is_current_year_2026` | -6.50pp | -4.01pp |
 
 - **The "Listicle Bias" in Gemini**: Gemini cites listicles at a significantly higher rate (**56.8%**) than GPT models (~37%), suggesting a retrieval strategy that prioritizes curated recommendation content.
 - **Tone Consistency**: Across all models, approximately **70%** of cited content is labeled as `promotional`, reflecting the commercial nature of the product-recommendation prompts.
@@ -575,28 +602,6 @@ Analysis of where citations appear in the Bing index (up to Rank 200).
 #### Google Page Distribution (Prompt-Scoped)
 Analysis of where citations appear in the prompt's specific Google SERP capture.
 
-#### 2.2.3 Index Alignment: Bing Page 1 URLs on Google
-To understand the "Menu" consistency across providers, we measured where URLs found on **Bing Page 1** (the primary retrieval source for GPT Enterprise) appear in the **Google SERP**.
-
-| Google Rank | GPT Enterprise (Bing P1 Match) | GPT Personal (Bing P1 Match) |
-| :--- | ---: | ---: |
-| **Rank 1** | 221 | 437 |
-| **Rank 2** | 157 | 125 |
-| **Rank 3** | 205 | 126 |
-| **Rank 4** | 94 | 155 |
-| **Rank 5** | 134 | 100 |
-| **Rank 6** | 102 | 136 |
-| **Rank 7** | 89 | 85 |
-| **Rank 8** | 66 | 59 |
-| **Rank 9** | 60 | 93 |
-| **Rank 10** | 89 | 68 |
-| **Rank 11-20** | 561 | 794 |
-| **Rank 21-30** | 309 | 405 |
-
-- **High Top-3 Alignment**: A significant portion of Bing's Page 1 results are also Google's Top 3 results, particularly for GPT Personal (**437 matches at Rank 1**).
-- **The "Menu" Overlap**: This confirms that while the indices differ, the "Top Shelf" of the web is relatively consistent across providers. GPT Personal's higher alignment suggests its fan-out queries might be more "Google-friendly" or that the Personal account's multi-provider strategy naturally gravitates toward the intersection of both indices.
-- **Retrieval Redundancy**: The fact that hundreds of Bing Page 1 links are found in Google's Top 10 proves that "switching" from Bing to Google (as seen in the Personal account) doesn't just change the links—it changes the *priority* and *visibility* of the same high-authority links.
-
 - **The "Page 1" Elasticity Problem**: We explicitly avoid defining Page 1 as a fixed "Rank 1-10" range. In modern search engines (especially Bing), the length of the first page is highly variable, often truncated or expanded based on the presence of rich snippets, ads, and vertical blocks.
 - **The "Page 2 Dip" & Index Volatility**: We observe a curious drop in matches on Page 2 compared to Page 1 and Pages 3-5. This is likely an artifact of **Bing index volatility** rather than a deliberate model preference. Qualitative inspection of Bing's "deep" results reveals significant "noise" and irrelevant content across all pages, but Page 2 appears particularly inconsistent in our dataset, often containing transitional or low-signal results that the model bypasses in favor of more stable "deep" candidates found on subsequent pages.
 - **The "Deep Hunt" Confirmation**: The fact that we see hundreds of matches on Pages 4-10 proves that LLMs are heavily utilizing results that are effectively invisible to human searchers who rarely paginate past the first elastic page.
@@ -609,55 +614,55 @@ Analysis of where GPT Personal citations appear in the prompt's specific Google 
 
 | Result Type | Page | Position | Matches |
 | :--- | :--- | :--- | :--- |
-| **organic** | **1** | **1** | **241** |
-| organic | 1 | 2 | 167 |
-| organic | 1 | 3 | 183 |
-| organic | 1 | 4 | 144 |
-| organic | 1 | 5 | 142 |
-| organic | 1 | 6 | 143 |
-| organic | 1 | 7 | 129 |
-| organic | 1 | 8 | 123 |
-| organic | 1 | 9 | 68 |
-| organic | 1 | 10 | 51 |
-| organic | 2 | 1 | 72 |
-| organic | 2 | 2 | 80 |
-| organic | 2 | 3 | 82 |
-| organic | 2 | 4 | 59 |
-| organic | 2 | 5 | 68 |
-| organic | 2 | 6 | 68 |
-| organic | 2 | 7 | 51 |
-| organic | 2 | 8 | 61 |
-| organic | 2 | 9 | 35 |
-| organic | 2 | 10 | 44 |
-| related_question | 2 | 1 | 29 |
-| related_question | 2 | 2 | 17 |
-| video | 2 | 1 | 4 |
+| **organic** | **1** | **1** | **168** |
+| organic | 1 | 2 | 128 |
+| organic | 1 | 3 | 145 |
+| organic | 1 | 4 | 107 |
+| organic | 1 | 5 | 112 |
+| organic | 1 | 6 | 113 |
+| organic | 1 | 7 | 103 |
+| organic | 1 | 8 | 92 |
+| organic | 1 | 9 | 48 |
+| organic | 1 | 10 | 38 |
+| organic | 2 | 1 | 58 |
+| organic | 2 | 2 | 57 |
+| organic | 2 | 3 | 65 |
+| organic | 2 | 4 | 41 |
+| organic | 2 | 5 | 48 |
+| organic | 2 | 6 | 50 |
+| organic | 2 | 7 | 38 |
+| organic | 2 | 8 | 46 |
+| organic | 2 | 9 | 23 |
+| organic | 2 | 10 | 29 |
+| related_question | 2 | 1 | 15 |
+| related_question | 2 | 2 | 12 |
+| video | 2 | 1 | 1 |
 | discussion | 2 | 2 | 1 |
 
 #### Gemini: Google Match Distribution & Position Bias
 Analysis of where Gemini citations appear in the prompt's specific Google fan-out query results, including the "Lift" (Drift) over the baseline SERP distribution.
 
-| Rank | Citations | Cited % | SERP % | Drift (Lift) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Rank 1** | **181** | **15.7%** | 3.5% | **+12.1%** |
-| Rank 2 | 105 | 9.1% | 3.5% | +5.6% |
-| Rank 3 | 93 | 8.1% | 3.5% | +4.5% |
-| Rank 4 | 92 | 8.0% | 3.5% | +4.4% |
-| Rank 5 | 70 | 6.1% | 3.5% | +2.5% |
-| Rank 6 | 62 | 5.4% | 3.5% | +1.8% |
-| Rank 7 | 72 | 6.2% | 3.5% | +2.7% |
-| Rank 8 | 53 | 4.6% | 3.5% | +1.1% |
-| Rank 9 | 49 | 4.2% | 3.5% | +0.7% |
-| Rank 10 | 33 | 2.9% | 3.5% | -0.7% |
-| Rank 11 | 27 | 2.3% | 3.5% | -1.2% |
-| Rank 12 | 30 | 2.6% | 3.5% | -0.9% |
-| Rank 13 | 23 | 2.0% | 3.5% | -1.5% |
-| Rank 14 | 18 | 1.6% | 3.5% | -2.0% |
-| Rank 15 | 27 | 2.3% | 3.5% | -1.2% |
+| Rank | Citations | Cited % |
+| :--- | :--- | :--- |
+| **Rank 1** | **181** | **15.7%** |
+| Rank 2 | 105 | 9.1% |
+| Rank 3 | 93 | 8.1% |
+| Rank 4 | 92 | 8.0% |
+| Rank 5 | 70 | 6.1% |
+| Rank 6 | 62 | 5.4% |
+| Rank 7 | 72 | 6.2% |
+| Rank 8 | 51 | 4.4% |
+| Rank 9 | 39 | 3.4% |
+| Rank 10 | 21 | 1.8% |
+| Rank 11 | 24 | 2.1% |
+| Rank 12 | 26 | 2.3% |
+| Rank 13 | 22 | 1.9% |
+| Rank 14 | 23 | 2.0% |
+| Rank 15 | 21 | 1.8% |
 
-- **The "Rank 1" Dominance**: Gemini shows a massive **+12.1% lift** for the first organic result.
-- **Selection Decay**: The positive drift (preference) persists through Rank 9, but turns negative starting at Rank 10, confirming that Gemini's "Order" is heavily biased toward the top of the "Menu."
-- **Visibility Threshold**: The sharp transition to negative drift at Rank 10 suggests a psychological or algorithmic "fold" where results become significantly less likely to be cited.
+- **The "Rank 1" Dominance**: Gemini shows a massive concentration of citations at the first organic result.
+- **Selection Decay**: Citations persist through Rank 9, but drop off significantly starting at Rank 10, confirming that Gemini's "Order" is heavily biased toward the top of the "Menu."
+- **Visibility Threshold**: The sharp drop at Rank 10 suggests a psychological or algorithmic "fold" where results become significantly less likely to be cited.
 
 ---
 
@@ -943,29 +948,6 @@ Analysis of why certain results are selected from the "Menu" (retrieved set) whi
       - **Gemini**: **7.36%** (31/421 product roster items)
       - **GPT**: **1.89%** (13/689 product roster items)
 - **Thesis Implication:** The "hallucination problem" in modern RAG systems is increasingly an **attribution/linkage problem**, not a "reading" or "understanding" problem. The models "know" the facts but "forget" which specific tab they were looking at when they found them.
-
-# Part 3: Additional Analyses (Using All Fields)
-
-## 3.1 Content Quality Indicators
-
-| Field                      | What it measures              | Hypothesis            |
-| -------------------------- | ----------------------------- | --------------------- |
-| `has_pros_cons`            | Structured evaluation content | Higher in Cited links |
-| `has_clear_authorship`     | Credibility signal            | Higher in Cited links |
-| `has_sources_or_citations` | Research-backed content       | Higher in Cited links |
-| `expertise_signal_score`   | Author/site authority         | Higher in Cited links |
-| `spamminess_score`         | SEO junk indicators           | Lower in Cited links  |
-| `readability_score`        | Ease of extraction            | Higher in Cited links |
-| `content_word_count`       | Content depth                 | Compare distributions |
-| `has_schema_markup`        | Technical SEO maturity        | Compare distributions |
-
-## 3.2 Deep Hunt Specific Analysis
-
-- Filter by `is_grounded_deep = TRUE`
-- These are the "Buried Truth" links (ChatGPT cited, Bing hid at Rank 31-200)
-- Compare their DNA to:
-  1. Top 10 cited links
-  2. Top 10 ignored links
 
 ---
 

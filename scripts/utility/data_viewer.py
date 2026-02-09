@@ -2947,16 +2947,17 @@ def dashboard():
               COUNT(DISTINCT c.id) as match_count
             FROM google_results g
             JOIN citations c
-              ON c.run_id = g.chatgpt_run_id
-             AND c.url_normalized = g.url_normalized
+              ON c.url_normalized = g.url_normalized
+             AND g.chatgpt_run_id = (CASE WHEN c.account_type = 'personal' THEN REPLACE(c.run_id, '_personal', '') ELSE c.run_id END)
             WHERE g.account_type = ?
+              AND c.account_type = ?
               AND g.result_type IN ('organic', 'video', 'discussion', 'related_question')
               AND g.position IS NOT NULL
               AND g.position > 0
               AND c.citation_type IN ({placeholders})
               {citations_enriched_clause}
             GROUP BY g.result_type, page_key, g.position
-        ''', (account_type, *g_selected_groups)).fetchall()
+        ''', (account_type, account_type, *g_selected_groups)).fetchall()
 
         # Aggregate into buckets (single total for the selected citation types)
         buckets = {}  # bucket -> total_count
