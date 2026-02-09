@@ -362,7 +362,7 @@ This “anatomy” motivates the next analytic layers:
 *How we transformed raw URLs into structured data for selection bias analysis.*
 
 ### 1.9.1 The Labeling Pipeline
-To quantify "selection drift," we needed to move beyond URLs and domains. We developed an automated enrichment pipeline using **GPT-5-mini** as a structured labeler:
+To quantify selection effects (what gets cited vs. what was available), we needed to move beyond URLs and domains. We developed an automated enrichment pipeline using **GPT-5-mini** and **Gemini Flash** as structured labelers:
 1.  **Content Extraction**: Raw HTML was fetched and converted to clean markdown/text.
 2.  **Schema-Driven Labeling**: The LLM was prompted to evaluate each page against a strict 20-field schema, including:
     *   **Page Type**: `listicle`, `product_page`, `documentation`, `forum_ugc`, etc.
@@ -371,8 +371,15 @@ To quantify "selection drift," we needed to move beyond URLs and domains. We dev
     *   **Qualitative Scores**: `promotional_intensity_score`, `expertise_signal_score`, `readability_score`.
 3.  **Validation**: A subset of labels was manually audited to ensure the LLM labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
 
+#### Labeler fidelity (cross-model agreement)
+To test whether Content DNA is model-dependent, we ran a direct agreement audit between **Gemini 2.5 Flash** and **GPT-5-mini** on **2,660 overlapping URLs** (`docs/inter_model_fidelity_report.md`).
+
+- **Structural fields (agreement)**: `has_pros_cons` **94.6%**, `has_sources_or_citations` **93.8%**, `has_clear_authorship` **93.3%**, `has_tables` **92.9%**, `has_numbered_lists` **91.1%**
+- **Categorical fields (agreement)**: `content_format` **92.1%**, `type` **87.7%**, `tone` **77.7%**
+- **Score consistency (correlation)**: `freshness_cue_strength` **r = 0.841** (strong trend agreement, different absolute thresholds)
+
 ### 1.9.2 Enrichment Coverage & Label Distribution (Study URL Universe)
-To make the drift analyses defensible, we first measured how much of the URL universe was successfully enriched.
+To make downstream analyses defensible, we first measured how much of the URL universe was successfully enriched.
 
 - **Enriched URLs:** 11,925 / 11,929 (**~100%**)  
 - **Unlabeled URLs:** 4
@@ -436,7 +443,7 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 | comparison | 26 | 4.0% | opinionated | 5 | 0.8% |
 
 **Where the “why” lives**:
-- Listicle-only feature drift is reported under **`2.4.1 Intra-Listicle Selection Drift`**.
+- Listicle-only feature drift is reported under **`2.2.2.1 Intra-Listicle Selection Drift`**.
 - Host bias / listicle rank bias / semantic fidelity are reported under **`2.5`**.
 
 ## 2.1 Citation Overlap Analysis
@@ -464,26 +471,131 @@ Study-set and cited-set DNA composition tables live in **`2.0 Dataset Profile (C
 - **The "Google Jump" (Enterprise vs. Personal)**: We observe a massive **38.5 percentage-point increase** in Google SERP overlap when moving from Enterprise (46.3%) to Personal (84.8%) accounts. This suggests that while Enterprise is "locked" to the Bing index for compliance/contractual reasons, the Personal account type has shifted to a Google-primary or multi-index retrieval strategy, significantly altering the "Menu" of available sources.
 - **First-Query Bias**: Gemini exhibits a massive dependency on the **first fan-out query (37.1%)**, with a steep drop-off for subsequent queries (Q2: 18.1%, Q3: 11.6%). GPT shows a more balanced distribution across its 50/50 fan-out split.
 
-### 2.1.2 The "Visibility Gap" & The Nature of Invisible Links
+## 2.2 Drift Analyses (Two Notions)
+Readers often (reasonably) interpret “drift” as one thing. In this thesis we use two distinct notions, reported back-to-back to prevent confusion:
+
+### 2.2.1 Drift A — Visibility Gap (“Invisible” = not found in baseline index)
 We use **Visibility Gap** as the empirical gap between what is **cited** and what is visible in conventional SERP UX. The methodological pivot (Top‑30 → Deep Hunt Rank‑200) is defined once in **`1.2.2`**; here we report the **residual unmatched** set and what it looks like.
 
-- **Invisible rate (headline)**: use the **“Invisible (Missing)”** row in **`2.1.1`** as the canonical rate; avoid restating multiple, slightly different definitions here.
-- **Long tail context**: page‑level depth evidence is quantified in **`2.2.1`** (Bing Pages 1–16).
-- **Top invisible domains (GPT Enterprise)**: dominated by high‑authority reference/news sites:
-  - `en.wikipedia.org` (116)
-  - `arxiv.org` (83)
-  - `theverge.com` (48)
-- **Top invisible domains (GPT Personal)**: shift toward community/platform content:
-  - `reddit.com` (216)
-  - `apps.apple.com` (139)
-  - `chromewebstore.google.com` (54)
+- **What is being compared**: **cited URLs** vs **presence/absence** in the *per-run* SERP snapshot (and/or Bing Deep Hunt ≤200).
+- **Output**: **matched** vs **invisible** (unmatched).
+- **Invisible rate (headline)**: use the **“Invisible (Missing)”** row in **`2.1.1`** as the canonical rate.
+- **Long tail context** (how deep “matched” links are): see **`2.3.1`** (Bing Pages 1–16).
+
+#### Operationalization: “hidden zone” vs “truly invisible”
+We separate notions that are easy to conflate:
+- **Hidden zone (Bing Rank 11–30)**: a cited URL that is present, but beyond typical human scrolling.
+  - **GPT Enterprise**: **388 / 1,637 (23.7%)** of cited occurrences were found in Bing **Rank 11–30**.
+  - **GPT Personal**: **326 / 1,839 (17.7%)** of cited occurrences were found in Bing **Rank 11–30**.
+- **Truly invisible (Bing+Google control)**: cited URLs **not found in Bing ≤ 200** **and** **not found in Google** (SerpApi control for the same run).
+  - This matters for GPT Personal, which shows strong Google affinity; otherwise a Bing-only “invisible” count can overstate what is missing from the combined index surface.
+
+Below we report **Truly invisible (Bing+Google control)**, computed on **unique cited URLs** (not occurrences).
+
+**GPT Enterprise truly invisible cited URLs (N=147):**
+
+| Type | Count | % of Invisible |
+| :--- | ---: | ---: |
+| reference | 44 | 29.9% |
+| product_page | 37 | 25.2% |
+| news_article | 21 | 14.3% |
+| listicle | 21 | 14.3% |
+| editorial_article | 13 | 8.8% |
+| documentation | 4 | 2.7% |
+| app_store_listing | 4 | 2.7% |
+| review_article | 1 | 0.7% |
+| forum_ugc | 1 | 0.7% |
+| other | 1 | 0.7% |
+
+**GPT Personal truly invisible cited URLs (N=218):**
+
+| Type | Count | % of Invisible |
+| :--- | ---: | ---: |
+| listicle | 65 | 29.8% |
+| product_page | 59 | 27.1% |
+| reference | 26 | 11.9% |
+| app_store_listing | 24 | 11.0% |
+| news_article | 17 | 7.8% |
+| editorial_article | 14 | 6.4% |
+| documentation | 4 | 1.8% |
+| other | 3 | 1.4% |
+| forum_ugc | 3 | 1.4% |
+| review_article | 1 | 0.5% |
+| marketplace_directory | 1 | 0.5% |
+| comparison_article | 1 | 0.5% |
+
+#### Top invisible domains (examples)
+- **GPT Enterprise**: `en.wikipedia.org` (116), `arxiv.org` (83), `theverge.com` (48)
+- **GPT Personal**: `reddit.com` (216), `apps.apple.com` (139), `chromewebstore.google.com` (54)
+
+### 2.2.2 Drift B — Selection Drift (“Menu” → “Order” within the found set)
+Selection drift is a **within-menu** preference: given a retrieved candidate set (“Menu”), what gets cited (“Order”)? This analysis is **conditional on a defined baseline slice** (e.g., Google Top‑10 listicles), so it is not about “invisible vs visible.”
+
+**Operational definitions** (matches `data/enrichment/full_stratified_drift_report.txt`):
+- **Menu% (feature at rank R)** = % of retrieved candidates (for the baseline slice) at rank R with feature F.
+- **Order% (feature at rank R)** = % of cited URLs that match into that same baseline slice at rank R with feature F.
+- **Drift\(_R\)** = Order% − Menu% (percentage points).
+- **Volume‑weighted drift** = \(\sum_R Drift_R \cdot N^{order}_R \; / \; \sum_R N^{order}_R\).
+
+#### 2.2.2.1 Intra-Listicle Selection Drift (Feature Lift)
+When the model retrieves multiple listicles, it exhibits a measurable preference for specific structural and content features. The following tables summarize the **weighted-average lift (percentage point drift)** for listicles only, reported in `data/enrichment/listicle_drift_report.txt`.
+
+##### GPT Enterprise (Bing-centric)
+*Retrieved from Bing Page 1 (Top 5).*
+
+| Feature | Weighted Avg Lift |
+| :--- | :---: |
+| `has_numbered_lists` | **+7.34pp** |
+| `has_tables` | +3.64pp |
+| `has_bullet_points` | +3.29pp |
+| `freshness_cue_strength`| +2.15pp |
+| `has_pros_cons` | -0.60pp |
+| `has_clear_authorship` | -3.57pp |
+| `is_current_year_2026` | -4.64pp |
+
+##### GPT Personal (Multi-provider)
+*Comparing selection from Google (Top 10) vs. Bing (Page 1, Top 5).*
+
+| Feature | Google T10 Lift | Bing P1 Lift |
+| :--- | :---: | :---: |
+| `has_tables` | **+12.23pp** | +2.25pp |
+| `freshness_cue_strength`| **+6.31pp** | **+11.97pp** |
+| `has_bullet_points` | +5.74pp | -8.82pp |
+| `is_current_year_2026` | +4.48pp | **+8.58pp** |
+| `has_pros_cons` | +3.38pp | -9.17pp |
+| `has_numbered_lists` | +2.20pp | -2.90pp |
+| `has_clear_authorship` | +1.83pp | +2.20pp |
+
+##### Gemini (Google-centric)
+*Retrieved from Google fan-out queries (Top 10).*
+
+| Feature | Weighted Avg Lift |
+| :--- | :---: |
+| `has_clear_authorship` | **+6.16pp** |
+| `has_tables` | +2.35pp |
+| `has_numbered_lists` | +1.85pp |
+| `has_bullet_points` | +1.74pp |
+| `has_pros_cons` | +1.46pp |
+| `freshness_cue_strength`| +1.44pp |
+| `is_current_year_2026` | -4.01pp |
+
+#### 2.2.2.2 Global Type Drift (De-Listicling)
+Across all retrieved links, we observe a consistent "graduation" effect where models prefer primary product pages over the listicles that may have recommended them.
+
+| Account Type | `type=product_page` Lift | `type=listicle` Lift |
+| :--- | :---: | :---: |
+| **GPT Enterprise** | **+16.5 pp** | -8.5 pp |
+| **GPT Personal** | **+18.5 pp** | -9.4 pp |
+
+#### 2.2.2.3 Freshness paradox (selection drift, stratified)
+We analyze how freshness cues influence selection. The key pattern is that freshness signals can look weak or negative in aggregate due to **type confounding** (product pages vs listicles), but become positive when conditioning on listicles only (see `data/enrichment/full_stratified_drift_report.txt`).
 
 ---
 
-## 2.2 Position Bias & Page Distribution
+## 2.3 Position Bias & Page Distribution
 *Quantifying how search engine ranking (the "Menu" position) influences the final citation (the "Order").*
 
-### 2.2.1 Page-Level Distribution (The "Long Tail" of Retrieval)
+### 2.3.1 Page-Level Distribution (The "Long Tail" of Retrieval)
 Our analysis of 237 runs reveals that LLMs do not just "scrape the surface" of the search results but dig deep into the SERP pages.
 
 #### Bing Page Distribution (Deep Hunt)
@@ -515,7 +627,7 @@ Analysis of where citations appear in the **per-run** Google SERP capture.
 - **The "Page 2 Dip" & Index Volatility**: We observe a curious drop in matches on Page 2 compared to Page 1 and Pages 3-5. This is likely an artifact of **Bing index volatility** rather than a deliberate model preference. Qualitative inspection of Bing's "deep" results reveals significant "noise" and irrelevant content across all pages, but Page 2 appears particularly inconsistent in our dataset, often containing transitional or low-signal results that the model bypasses in favor of more stable "deep" candidates found on subsequent pages.
 - **The "Deep Hunt" Confirmation**: The fact that we see hundreds of matches on Pages 4-10 proves that LLMs are heavily utilizing results that are effectively invisible to human searchers who rarely paginate past the first elastic page.
 
-### 2.2.2 Intra-Page Position Bias (The "Rank 1" Effect)
+### 2.3.2 Intra-Page Position Bias (The "Rank 1" Effect)
 Even within Page 1, there is a massive bias toward the very first organic result.
 
 #### GPT Personal: Google Match Distribution 
@@ -575,7 +687,7 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 
 ---
 
-## 2.3 Cited vs. Additional Links Comparison
+## 2.4 Cited vs. Additional Links Comparison
 
 *Compare why some relevant links were not cited in the main text.*
 
@@ -591,7 +703,7 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
    - This shows consistency vs. randomness in ChatGPT's citation selection
 
 3. **Page 1 Ignored Links:**
-   - Links in **Bing Page 1** (variable-size SERP page; see `2.2.1`) that ChatGPT did NOT cite
+   - Links in **Bing Page 1** (variable-size SERP page; see `2.3.1`) that ChatGPT did NOT cite
    - Compare their DNA to cited links
    - Hypothesis: Ignored links are more `salesy`, lower `expertise_signal_score`
 
@@ -611,152 +723,6 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 | `type` (top)                  | product_page (45.4%) / product_page (42.2%) | listicle (40.8%) / listicle (34.2%) | product_page (40.8%) / product_page (42.1%) |
 
 *Format note:* values are shown as **Enterprise / Personal**. “Page 1 ignored” is computed on **unique URLs** on Bing `page_num=1` that are **not cited** (per run, de-duplicated across runs). In our dataset, this bucket has substantial missing DNA labels because not all Bing Page‑1 results were fetched/labelled (Enterprise: 812/1660 labelled; Personal: 648/1394 labelled).
-
----
-
----
-
-## 2.3 The "Invisible Section" Finding
-
-*Links that don't fit on Page 1 and then vanish.*
-
-### Operationalization (avoid re-defining the Visibility Gap)
-This section focuses on the **“hidden zone”** just beyond common human scrolling behavior. For the overarching **Visibility Gap / Deep Hunt** framing, see **`1.2.2`** and the residual “Invisible” discussion in **`2.1.2`**.
-
-- **Operational definition (“hidden zone”)**: a **cited URL** that appears in Bing, but only at **Rank 11–30** (beyond what many users treat as “Page 1”).  
-- **GPT Enterprise**: **388 / 1,637 (23.7%)** of cited occurrences were found in Bing **Rank 11–30**.  
-- **GPT Personal**: **326 / 1,839 (17.7%)** of cited occurrences were found in Bing **Rank 11–30**.
-
-### Type Distribution of Invisible Citations:
-
-We separate two notions that are easy to conflate:
-
-- **Bing‑invisible (Bing-only)**: cited URLs **not found in Bing ≤ 200** (our Rank‑200 cap).
-- **Truly invisible (Bing+Google control)**: cited URLs **not found in Bing ≤ 200** **and** **not found in Google** (SerpApi control for the same run).  
-  *This matters for GPT Personal, which shows high Google affinity; otherwise “Bing‑invisible” overstates how much is actually missing from the combined index surface.*
-
-Below we report **Truly invisible (Bing+Google control)**, computed on **unique cited URLs** (not occurrences).
-
-**GPT Enterprise truly invisible cited URLs (N=147):**
-
-| Type | Count | % of Invisible |
-| :--- | ---: | ---: |
-| reference | 44 | 29.9% |
-| product_page | 37 | 25.2% |
-| news_article | 21 | 14.3% |
-| listicle | 21 | 14.3% |
-| editorial_article | 13 | 8.8% |
-| documentation | 4 | 2.7% |
-| app_store_listing | 4 | 2.7% |
-| review_article | 1 | 0.7% |
-| forum_ugc | 1 | 0.7% |
-| other | 1 | 0.7% |
-
-**GPT Personal truly invisible cited URLs (N=218):**
-
-| Type | Count | % of Invisible |
-| :--- | ---: | ---: |
-| listicle | 65 | 29.8% |
-| product_page | 59 | 27.1% |
-| reference | 26 | 11.9% |
-| app_store_listing | 24 | 11.0% |
-| news_article | 17 | 7.8% |
-| editorial_article | 14 | 6.4% |
-| documentation | 4 | 1.8% |
-| other | 3 | 1.4% |
-| forum_ugc | 3 | 1.4% |
-| review_article | 1 | 0.5% |
-| marketplace_directory | 1 | 0.5% |
-| comparison_article | 1 | 0.5% |
-
----
-
-### 2.4 Selection Drift: The "Menu vs. Order" Problem
-Analysis of why certain results are selected from the "Menu" (retrieved set) while others are ignored.
-
-#### 2.4.1 Intra-Listicle Selection Drift (Feature Lift)
-When the model retrieves multiple listicles, it exhibits a measurable preference for specific structural and content features. The following tables summarize the **Weighted Average Drift (percentage point lift)** for listicles only, as reported in the corrected analysis (`listicle_drift_report.txt`).
-
-##### GPT Enterprise (Bing-centric)
-*Retrieved from Bing Page 1 (Top 5).*
-
-| Feature | Weighted Avg Lift |
-| :--- | :---: |
-| `has_numbered_lists` | **+7.34pp** |
-| `has_tables` | +3.64pp |
-| `has_bullet_points` | +3.29pp |
-| `freshness_cue_strength`| +2.15pp |
-| `has_pros_cons` | -0.60pp |
-| `has_clear_authorship` | -3.57pp |
-| `is_current_year_2026` | -4.64pp |
-
-##### GPT Personal (Multi-provider)
-*Comparing selection from Google (Top 10) vs. Bing (Page 1, Top 5).*
-
-| Feature | Google T10 Lift | Bing P1 Lift |
-| :--- | :---: | :---: |
-| `has_tables` | **+12.23pp** | +2.25pp |
-| `freshness_cue_strength`| **+6.31pp** | **+11.97pp** |
-| `has_bullet_points` | +5.74pp | -8.82pp |
-| `is_current_year_2026` | +4.48pp | **+8.58pp** |
-| `has_pros_cons` | +3.38pp | -9.17pp |
-| `has_numbered_lists` | +2.20pp | -2.90pp |
-| `has_clear_authorship` | +1.83pp | +2.20pp |
-
-##### Gemini (Google-centric)
-*Retrieved from Google fan-out queries (Top 10).*
-
-| Feature | Weighted Avg Lift |
-| :--- | :---: |
-| `has_clear_authorship` | **+6.16pp** |
-| `has_tables` | +2.35pp |
-| `has_numbered_lists` | +1.85pp |
-| `has_bullet_points` | +1.74pp |
-| `has_pros_cons` | +1.46pp |
-| `freshness_cue_strength`| +1.44pp |
-| `is_current_year_2026` | -4.01pp |
-
-- **Key Observation: The "Table Premium"**: GPT Personal shows a massive **+12.23pp lift** for listicles containing tables when selecting from Google results.
-- **Key Observation: Freshness Steering**: GPT Personal is highly sensitive to freshness cues (**+11.97pp lift** on Bing), while Gemini and Enterprise show much lower or even negative affinity for these markers globally.
-- **Key Observation: Authorship as a Gemini Signal**: Gemini shows the strongest preference for listicles with clear authorship (**+6.16pp lift**), a signal that is much weaker in GPT models.
-
-#### 2.4.2 Global Type Drift (De-Listicling)
-Across all retrieved links, we observe a consistent "graduation" effect where models prefer primary product pages over the listicles that may have recommended them.
-
-| Account Type | `type=product_page` Lift | `type=listicle` Lift |
-| :--- | :---: | :---: |
-| **GPT Enterprise** | **+16.5 pp** | -8.5 pp |
-| **GPT Personal** | **+18.5 pp** | -9.4 pp |
-
-- **Interpretation**: Listicles serve as the "discovery layer" in retrieval, but the model's selection filter heavily favors citing the **primary vendor page** (Product Page) in the final response.
-
-### 2.4.3 Rank Distribution Analysis
-*Talk about links below 150, show distribution.*
-
-### 2.4.1 Histogram: Where ChatGPT Citations Appear in Bing
-- X-axis: Bing Rank (1-200+)
-- Y-axis: Number of Citations Found
-
-### 2.4.2 Expected Findings:
-- Peak at Rank 1-5 (some overlap)
-- Sharp drop at Rank 10 (the "Page 1 Cliff")
-- Flat, uniform distribution from Rank 11-150 ("Linearity Collapse")
-- **Long tail beyond 150** (we acknowledge we didn't go deeper)
-
-### 2.4.3 Selection Drift: The "Freshness Paradox"
-Analysis of why certain results are selected from the "Menu" (retrieved set) while others are ignored. We analyzed how "Freshness" (years, update cues, explicit dates) influences selection.
-
-- **Global Anti-Freshness Bias**: Across all retrieved links, "Fresh" pages (those with explicit dates or 2024+ years) actually show a **negative lift** in selection (Enterprise: -9.2pp for explicit dates).
-- **The Listicle Confound**: This is primarily because Listicles (which are cited less than Product Pages) are the most likely to have freshness markers.
-- **Intra-Listicle Freshness**: When looking *only* at listicles, the bias disappears or reverses. For Enterprise listicles, an "Updated" cue provides a **+7.5pp lift** in selection probability.
-- **Implication**: The model values freshness within a category (e.g., choosing the most recent listicle), but its primary selection driver remains **Type** (Product Page > Listicle).
-
-### 2.4.4 Limitations Section:
-- We stopped at Rank 200 for practical reasons
-- Based on the uniform distribution pattern, we estimate X% more citations would be found at Rank 201-300
-- This strengthens the "UI Suppression" argument—relevant content is scattered infinitely deep
-
----
 
 ## 1.6 Citation Mapping & Claim-Level Attribution
 *How we precisely map ChatGPT's written claims to their retrieved sources.*
