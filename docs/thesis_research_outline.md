@@ -436,34 +436,48 @@ To make the drift analyses defensible, we first measured how much of the URL uni
 - **Enriched URLs:** 11,925 / 11,929 (**~100%**)  
 - **Unlabeled URLs:** 4
 
-**Type distribution (enriched URLs):**
+#### Global DNA Composition (The URL Universe)
+Distribution of categories across the entire study URL universe (Cited + Additional + Page 1 Ignored).
 
-| Type | Count | Share (%) |
-| :--- | ---: | ---: |
-| **product_page** | 4,125 | **34.6%** |
-| **listicle** | 3,994 | **33.5%** |
-| app_store_listing | 779 | 6.5% |
-| news_article | 609 | 5.1% |
-| editorial_article | 547 | 4.6% |
-| forum_ugc | 458 | 3.8% |
-| other | 422 | 3.5% |
-| reference | 391 | 3.3% |
-| documentation | 252 | 2.1% |
-| marketplace_directory | 213 | 1.8% |
+| Type | Count | Share (%) | Tone | Count | Share (%) |
+| :--- | ---: | ---: | :--- | ---: | ---: |
+| **product_page** | 4,125 | 34.6% | **promotional** | 8,193 | 68.7% |
+| **listicle** | 3,994 | 33.5% | neutral_info | 2,410 | 20.2% |
+| app_store | 779 | 6.5% | salesy | 636 | 5.3% |
+| news_article | 609 | 5.1% | opinionated | 494 | 4.1% |
+| editorial | 547 | 4.6% | academic | 186 | 1.6% |
+| forum_ugc | 458 | 3.8% | - | - | - |
 
-**Tone distribution (enriched URLs):**
+---
 
-| Tone | Count | Share (%) |
-| :--- | ---: | ---: |
-| **promotional** | 8,193 | **68.7%** |
-| **neutral_informational** | 2,410 | **20.2%** |
-| salesy | 636 | 5.3% |
-| opinionated | 494 | 4.1% |
-| academic_technical | 186 | 1.6% |
+#### Citation DNA Distribution (By Model/Account)
+Distribution of DNA categories for the URLs actually **cited** in the final responses.
 
-**Interpretation**:
-- The candidate pool is dominated by **product pages + listicles** (~68% combined), so any “listicle uptake” vs “de‑listicling” behavior is operating on a realistically listicle-heavy menu.
-- The web’s commercial surface for these prompts is overwhelmingly **promotional**; this motivates our later tone/structure drift analysis (what gets cited vs merely available).
+##### GPT Enterprise (Cited Set, N=1,614)
+| Category | Type Count | Type % | Tone Count | Tone % |
+| :--- | :---: | :---: | :---: | :---: |
+| **product_page** | 649 | 40.2% | **promotional** | 1,105 | 68.5% |
+| **listicle** | 589 | 36.5% | neutral_info | 390 | 24.2% |
+| news_article | 104 | 6.4% | salesy | 95 | 5.9% |
+
+##### GPT Personal (Cited Set, N=1,444)
+| Category | Type Count | Type % | Tone Count | Tone % |
+| :--- | :---: | :---: | :---: | :---: |
+| **listicle** | 544 | 37.7% | **promotional** | 998 | 69.1% |
+| **product_page** | 523 | 36.2% | neutral_info | 329 | 22.8% |
+| news_article | 98 | 6.8% | salesy | 82 | 5.7% |
+
+##### Gemini (Cited Set, N=653)
+| Category | Type Count | Type % | Tone Count | Tone % |
+| :--- | :---: | :---: | :---: | :---: |
+| **listicle** | 371 | 56.8% | **promotional** | 467 | 71.5% |
+| **product_page** | 148 | 22.7% | neutral_info | 181 | 27.7% |
+| comparison | 26 | 4.0% | opinionated | 5 | 0.8% |
+
+- **The "Listicle Bias" in Gemini**: Gemini cites listicles at a significantly higher rate (**56.8%**) than GPT models (~37%), suggesting a retrieval strategy that prioritizes curated recommendation content.
+- **Tone Consistency**: Across all models, approximately **70%** of cited content is labeled as `promotional`, reflecting the commercial nature of the product-recommendation prompts.
+
+---
 
 ---
 
@@ -561,11 +575,27 @@ Analysis of where citations appear in the Bing index (up to Rank 200).
 #### Google Page Distribution (Prompt-Scoped)
 Analysis of where citations appear in the prompt's specific Google SERP capture.
 
-| Google Page | GPT Enterprise Matches | GPT Personal Matches |
-| :--- | :--- | :--- |
-| **Page 1** | **319** | **1,096** |
-| Page 2 | 134 | 564 |
-| Page 3 | 50 | 269 |
+#### 2.2.3 Index Alignment: Bing Page 1 URLs on Google
+To understand the "Menu" consistency across providers, we measured where URLs found on **Bing Page 1** (the primary retrieval source for GPT Enterprise) appear in the **Google SERP**.
+
+| Google Rank | GPT Enterprise (Bing P1 Match) | GPT Personal (Bing P1 Match) |
+| :--- | ---: | ---: |
+| **Rank 1** | 221 | 437 |
+| **Rank 2** | 157 | 125 |
+| **Rank 3** | 205 | 126 |
+| **Rank 4** | 94 | 155 |
+| **Rank 5** | 134 | 100 |
+| **Rank 6** | 102 | 136 |
+| **Rank 7** | 89 | 85 |
+| **Rank 8** | 66 | 59 |
+| **Rank 9** | 60 | 93 |
+| **Rank 10** | 89 | 68 |
+| **Rank 11-20** | 561 | 794 |
+| **Rank 21-30** | 309 | 405 |
+
+- **High Top-3 Alignment**: A significant portion of Bing's Page 1 results are also Google's Top 3 results, particularly for GPT Personal (**437 matches at Rank 1**).
+- **The "Menu" Overlap**: This confirms that while the indices differ, the "Top Shelf" of the web is relatively consistent across providers. GPT Personal's higher alignment suggests its fan-out queries might be more "Google-friendly" or that the Personal account's multi-provider strategy naturally gravitates toward the intersection of both indices.
+- **Retrieval Redundancy**: The fact that hundreds of Bing Page 1 links are found in Google's Top 10 proves that "switching" from Bing to Google (as seen in the Personal account) doesn't just change the links—it changes the *priority* and *visibility* of the same high-authority links.
 
 - **The "Page 1" Elasticity Problem**: We explicitly avoid defining Page 1 as a fixed "Rank 1-10" range. In modern search engines (especially Bing), the length of the first page is highly variable, often truncated or expanded based on the presence of rich snippets, ads, and vertical blocks.
 - **The "Page 2 Dip" & Index Volatility**: We observe a curious drop in matches on Page 2 compared to Page 1 and Pages 3-5. This is likely an artifact of **Bing index volatility** rather than a deliberate model preference. Qualitative inspection of Bing's "deep" results reveals significant "noise" and irrelevant content across all pages, but Page 2 appears particularly inconsistent in our dataset, often containing transitional or low-signal results that the model bypasses in favor of more stable "deep" candidates found on subsequent pages.
