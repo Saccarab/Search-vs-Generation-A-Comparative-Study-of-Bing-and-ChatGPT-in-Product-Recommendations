@@ -437,17 +437,31 @@ To make the drift analyses defensible, we first measured how much of the URL uni
 - **Unlabeled URLs:** 4
 
 #### Global DNA Composition (The URL Universe)
-Distribution of categories across the entire study URL universe (Cited + Additional + Page 1 Ignored).
+Distribution of categories across the entire study URL universe (Cited + Additional + Page 1 Ignored), shown separately for each study angle.
 
-| Type | Count | Share (%) | Tone | Count | Share (%) |
+##### GPT Enterprise Universe (Bing-centric, N=2,858)
+| Type | Count | % | Tone | Count | % |
 | :--- | ---: | ---: | :--- | ---: | ---: |
-| **product_page** | 4,125 | 34.6% | **promotional** | 8,193 | 68.7% |
-| **listicle** | 3,994 | 33.5% | neutral_info | 2,410 | 20.2% |
-| app_store | 779 | 6.5% | salesy | 636 | 5.3% |
-| news_article | 609 | 5.1% | opinionated | 494 | 4.1% |
-| editorial | 547 | 4.6% | academic | 186 | 1.6% |
-| forum_ugc | 458 | 3.8% | - | - | - |
+| **product_page** | 1,159 | 40.6% | **promotional** | 2,002 | 70.0% |
+| **listicle** | 989 | 34.6% | neutral_info | 699 | 24.5% |
+| editorial | 161 | 5.6% | salesy | 115 | 4.0% |
+| news | 156 | 5.5% | opinionated | 26 | 0.9% |
 
+##### GPT Personal Universe (Multi-provider, N=2,194)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
+| **listicle** | 885 | 40.3% | **promotional** | 1,559 | 71.1% |
+| **product_page** | 808 | 36.8% | neutral_info | 495 | 22.6% |
+| editorial | 121 | 5.5% | salesy | 100 | 4.6% |
+| news | 105 | 4.8% | opinionated | 26 | 1.2% |
+
+##### Gemini Universe (Google-centric, N=2,939)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
+| **listicle** | 1,296 | 44.1% | **promotional** | 2,076 | 70.6% |
+| **product_page** | 709 | 24.1% | neutral_info | 768 | 26.1% |
+| news | 165 | 5.6% | salesy | 52 | 1.8% |
+| marketplace | 150 | 5.1% | opinionated | 37 | 1.3% |
 ---
 
 #### Citation DNA Distribution (By Model/Account)
@@ -599,7 +613,7 @@ Analysis of where citations appear in the Bing index (up to Rank 200).
 | Page 15 | 140 | 264 |
 | Page 16 | 103 | 204 |
 
-#### Google Page Distribution (Prompt-Scoped)
+#### Google Page Distribution 
 Analysis of where citations appear in the prompt's specific Google SERP capture.
 
 - **The "Page 1" Elasticity Problem**: We explicitly avoid defining Page 1 as a fixed "Rank 1-10" range. In modern search engines (especially Bing), the length of the first page is highly variable, often truncated or expanded based on the presence of rich snippets, ads, and vertical blocks.
@@ -609,7 +623,7 @@ Analysis of where citations appear in the prompt's specific Google SERP capture.
 ### 2.2.2 Intra-Page Position Bias (The "Rank 1" Effect)
 Even within Page 1, there is a massive bias toward the very first organic result.
 
-#### GPT Personal: Google Match Distribution (Prompt-Scoped)
+#### GPT Personal: Google Match Distribution 
 Analysis of where GPT Personal citations appear in the prompt's specific Google SERP.
 
 | Result Type | Page | Position | Matches |
@@ -705,53 +719,7 @@ Analysis of where Gemini citations appear in the prompt's specific Google fan-ou
 
 ---
 
-## 2.2.1 Content DNA “Drift” (Cited vs. All Retrieved Candidates)
-*Early enrichment results (from `geo_fresh.db` + `page_labels_combined_v2.5.jsonl`). These quantify the “selection filter” stage: what gets **cited** vs what was merely available.*
-
-### Key finding A: citations drift toward product landing pages (de‑listicling)
-Across both account types, the cited set is strongly enriched for **`type=product_page` / `content_format=landing_page`**, while listicle formats are under-selected.
-
-- **Enterprise** (cited vs all candidates):
-  - `type=product_page`: **+16.5 pp** selection lift
-  - `content_format=landing_page`: **+17.3 pp** selection lift
-  - `content_format=best_of_list`: **-8.5 pp** selection lift
-- **Personal** (cited vs all candidates):
-  - `type=product_page`: **+18.5 pp** selection lift
-  - `content_format=landing_page`: **+17.8 pp** selection lift
-  - `content_format=best_of_list`: **-9.4 pp** selection lift
-
-**Interpretation**: listicles are frequently retrieved in purchase-intent SERPs, but the model often “graduates” citations to primary vendor pages at selection time.
-
-### Key finding B: within listicles, “extractable structure” increases citation odds
-Conditioning on `type=listicle` (so this is not confounded by “product pages don’t have authorship”), the strongest positive drifts are:
-- **Tables**: listicles with `has_tables=1` are more likely to be cited (largest lift within listicles).
-- **Pros/cons**: `has_pros_cons=1` is also positively associated with being cited.
-
-**Interpretation**: listicles that present structured, scannable evidence (tables, pros/cons blocks) are more “citation-ready.”
-
-### Key finding C: authorship is ambiguous and needs targeted audit
-Authorship signals (`has_clear_authorship`) do **not** cleanly predict citation selection once we control for type:
-- Enterprise: near-zero effect within listicles.
-- Personal: slight negative drift within listicles.
-
-**Action item**: treat authorship as a **candidate confounded signal** (publisher style / affiliate patterns / extraction noise) and validate with a targeted audit (see “Future Work” notes below).
-
-### Key finding D: page-depth and “invisible in Bing” behave differently for listicles vs product pages
-Using Bing `page_num` (Page 1 vs Page 2+ vs not found in Bing within our snapshot), we observe:
-- **Listicle citations** are more often found on **Bing Page 1**, especially in Enterprise.
-- **Product-page citations** are disproportionately “not found in Bing,” especially in Personal.
-
-**Interpretation**: the “invisible URL” phenomenon is not uniform; it clusters by page type and varies by account context.
-
-### Note (investigate next): drift for additional enrichment fields
-We should compute and report drift/lift for fields where it is plausibly meaningful:
-- `freshness_cue_strength` (recency bias / “current-year” listicles)
-- `has_bullet_points`, `has_numbered_lists`, `heading_density` (extractability)
-- `readability_score` (scanability)
-- `expertise_signal_score` and `has_sources_or_citations` (credibility proxies)
-- `promotional_intensity_score` / `spamminess_score` (marketing pressure)
-
-This is operationalized in the drift outputs under `data/enrichment_compound_effects/`, including a listicle-only drift table (`selection_lift_univariate_listicle_only.csv`).
+---
 
 ## 2.3 The "Invisible Section" Finding
 
