@@ -252,72 +252,6 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 
 <!-- NOTE: Fan-out definition/instrumentation moved to 1.7.4 to avoid duplication. -->
 
-## 1.6 Citation Mapping & Claim-Level Attribution
-*How we precisely map ChatGPT's written claims to their retrieved sources.*
-
-### 1.6.1 The "Claim-to-Link" Forensic Pipeline
-- **The Challenge:** ChatGPT's final response text replaces internal citation tokens with generic `[URL]` tags. To understand *why* a link was cited, we must reconstruct the link between the **written claim** and the **retrieved source**.
-- **The Solution:** We developed a forensic mapping script (or as Gemini calls them, **grounding supports**) that:
-    1. **Token Alignment:** Extracts raw citation tokens (e.g., `citeturn0search17`) from the network stream and aligns them with their final position in the response text.
-    2. **Block-Level Extraction:** Instead of simple keyword matching, the script identifies the **Full Claim Block** (the descriptive text between consecutive citation tags). This captures the complete product description or factual statement ChatGPT attributed to that source.
-    3. **Metadata Enrichment:** Maps each claim to its retrieved "Ground Truth" (the snippet, title, and URL from the search result groups).
-
-### 1.6.2 Multi-Chip Reconstruction (Synthesis Aggression)
-- **Defining Multi-Chips:** We observed cases where ChatGPT groups multiple sources under a single citation (e.g., "Vibe Voice+1"). 
-- **Forensic Discovery:** Our mapping revealed that these correspond to concatenated tokens (e.g., `turn0search8` + `search15`).
-- **Research Value:** This allows us to measure **Synthesis Aggression**—how ChatGPT merges facts from multiple distinct search results into a single cohesive claim.
-
-### 1.6.3 Multi-source claim support rate (single claim/segment cites >1 URL)
-**Definition (operational):** a claim/segment is “multi-cited” if it has **2+ distinct cited URLs**.
-
-Computed by `scripts/analysis/multi_source_claim_support.py` (artifacts in `data/enrichment/`).
-
-**All claim/segment occurrences:**
-- **GPT**: 458 / 4296 (**10.7%**) multi-cited
-- **Gemini**: 788 / 2287 (**34.5%**) multi-cited
-
-**Listicle-cited occurrences only (at least one cited URL has `type=listicle`):**
-- **GPT**: 194 / 1363 (**14.2%**) multi-cited
-- **Gemini**: 664 / 1519 (**43.7%**) multi-cited
-
-### 1.6.4 Mixed listicle + product-page citations (within a single claim/segment)
-**Definition (operational):** among **multi-cited** claims/segments, label a case “mixed” if the cited URL set contains **≥1** `type=listicle` and **≥1** `type=product_page`.
-
-**All multi-cited occurrences:**
-- **GPT**: 41 / 458 (**9.0%**) mixed listicle+product-page
-- **Gemini**: 130 / 788 (**16.5%**) mixed listicle+product-page
-
-**What are the “rest” of multi-cited claims? (type-mix buckets)**
-When we say “multi-cited”, we partition each multi-cited claim/segment into **exactly one** bucket:
-- **mixed listicle+product**: at least one `listicle` and at least one `product_page`
-- **listicle-only**: at least one `listicle` and **no** `product_page`
-- **product-only**: at least one `product_page` and **no** `listicle`
-- **neither**: **no** `listicle` and **no** `product_page` cited (i.e., multiple citations drawn from other page types such as directories, docs, news, etc., or “unknown” when a URL lacks a DNA label)
-
-**GPT multi-cited (N=458) bucket breakdown:**
-- mixed listicle+product: **41 (9.0%)**
-- listicle-only: **153 (33.4%)**
-- product-only: **168 (36.7%)**
-- neither (no listicle/product_page): **96 (21.0%)**
-
-**Gemini multi-cited (N=788) bucket breakdown:**
-- mixed listicle+product: **130 (16.5%)**
-- listicle-only: **534 (67.8%)**
-- product-only: **84 (10.7%)**
-- neither (no listicle/product_page): **40 (5.1%)**
-
-**What does “neither” look like? (examples of multi-cited type-sets)**
-- **GPT neither (N=96)** is dominated by `unknown` (unlabeled URLs) plus small tails like `news_article`, `documentation`, `editorial_article`, `forum_ugc`, `marketplace_directory`, and combinations (see `multi_type_sets_by_bucket.neither_listicle_nor_product` in `data/enrichment/multi_source_claim_support_stats.json`).
-- **Gemini neither (N=40)** is mostly `other` / `unknown` mixtures plus a tail of `documentation`, `marketplace_directory`, `forum_ugc`, `editorial_article`, etc. (same JSON).
-
-**Listicle-cited multi-cited occurrences only:**
-- **GPT**: 41 / 194 (**21.1%**) mixed listicle+product-page
-- **Gemini**: 130 / 664 (**19.6%**) mixed listicle+product-page
-
-**Mixed-case lists (for qualitative inspection):**
-- `data/enrichment/mixed_listicle_plus_product_citations_gpt.csv` (41 rows)
-- `data/enrichment/mixed_listicle_plus_product_citations_gemini.csv` (130 rows)
-
 ## 1.7 Anatomy of a ChatGPT Response (Network-Instrumented)
 *What exactly we can observe about ChatGPT’s retrieval + citation pipeline from captured network payloads.*
 
@@ -443,10 +377,17 @@ To make the drift analyses defensible, we first measured how much of the URL uni
 - **Enriched URLs:** 11,925 / 11,929 (**~100%**)  
 - **Unlabeled URLs:** 4
 
-#### Global DNA Composition (The URL Universe)
-Distribution of categories across the entire study URL universe (Cited + Additional + Page 1 Ignored), shown separately for each study angle.
+**Note on structure**: The **descriptive DNA distributions** (study set composition + cited set composition) are reported once in **Part 2** under **`2.0 Dataset Profile (Content DNA)`**, to avoid making Part 1 read like “findings” before the Core Findings section.
 
-##### GPT Enterprise Universe (Bing-centric, N=2,858)
+# Part 2: Core Findings
+
+## 2.0 Dataset Profile (Content DNA)
+*Descriptive statistics about the study URL pool and the cited sets. This is not a “finding” section; it’s the baseline menu/context for interpreting Sections 2.1–2.5.*
+
+### 2.0.1 Study set composition (Cited + Additional + Page 1 Ignored)
+Distribution across the **study set**, shown separately for each study angle.
+
+#### GPT Enterprise study set (Bing-centric, N=2,858)
 | Type | Count | % | Tone | Count | % |
 | :--- | ---: | ---: | :--- | ---: | ---: |
 | **product_page** | 1,159 | 40.6% | **promotional** | 2,002 | 70.0% |
@@ -454,7 +395,7 @@ Distribution of categories across the entire study URL universe (Cited + Additio
 | editorial | 161 | 5.6% | salesy | 115 | 4.0% |
 | news | 156 | 5.5% | opinionated | 26 | 0.9% |
 
-##### GPT Personal Universe (Multi-provider, N=2,194)
+#### GPT Personal study set (Multi-provider, N=2,194)
 | Type | Count | % | Tone | Count | % |
 | :--- | ---: | ---: | :--- | ---: | ---: |
 | **listicle** | 885 | 40.3% | **promotional** | 1,559 | 71.1% |
@@ -462,74 +403,41 @@ Distribution of categories across the entire study URL universe (Cited + Additio
 | editorial | 121 | 5.5% | salesy | 100 | 4.6% |
 | news | 105 | 4.8% | opinionated | 26 | 1.2% |
 
-##### Gemini Universe (Google-centric, N=2,939)
+#### Gemini study set (Google-centric, N=2,939)
 | Type | Count | % | Tone | Count | % |
 | :--- | ---: | ---: | :--- | ---: | ---: |
 | **listicle** | 1,296 | 44.1% | **promotional** | 2,076 | 70.6% |
 | **product_page** | 709 | 24.1% | neutral_info | 768 | 26.1% |
 | news | 165 | 5.6% | salesy | 52 | 1.8% |
 | marketplace | 150 | 5.1% | opinionated | 37 | 1.3% |
----
 
-#### Citation DNA Distribution (By Model/Account)
+### 2.0.2 Cited set composition (Type + Tone)
 Distribution of DNA categories for the URLs actually **cited** in the final responses.
 
-##### GPT Enterprise (Cited Set, N=1,614)
-| Category | Type Count | Type % | Tone Count | Tone % |
-| :--- | :---: | :---: | :---: | :---: |
+#### GPT Enterprise cited set (N=1,614)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
 | **product_page** | 649 | 40.2% | **promotional** | 1,105 | 68.5% |
 | **listicle** | 589 | 36.5% | neutral_info | 390 | 24.2% |
 | news_article | 104 | 6.4% | salesy | 95 | 5.9% |
 
-**Intra-Listicle Feature Drift (GPT Enterprise vs. Bing P1 Baseline):**
-| Feature | Top 1-5 Drift | Weighted Avg Drift |
-| :--- | :---: | :---: |
-| `has_numbered_lists` | +7.27pp | +5.66pp |
-| `has_tables` | +3.63pp | +2.48pp |
-| `has_bullet_points` | +3.40pp | +1.99pp |
-| `freshness_cue_strength` | +2.19pp | +1.28pp |
-| `is_current_year_2026` | -4.81pp | -4.10pp |
-
-##### GPT Personal (Cited Set, N=1,444)
-| Category | Type Count | Type % | Tone Count | Tone % |
-| :--- | :---: | :---: | :---: | :---: |
+#### GPT Personal cited set (N=1,444)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
 | **listicle** | 544 | 37.7% | **promotional** | 998 | 69.1% |
 | **product_page** | 523 | 36.2% | neutral_info | 329 | 22.8% |
 | news_article | 98 | 6.8% | salesy | 82 | 5.7% |
 
-**Intra-Listicle Feature Drift (GPT Personal vs. Google T10 Baseline):**
-| Feature | Top 1-5 Drift | Weighted Avg Drift |
-| :--- | :---: | :---: |
-| `has_tables` | +13.47pp | +12.23pp |
-| `freshness_cue_strength` | +3.74pp | +6.31pp |
-| `has_bullet_points` | +5.50pp | +5.74pp |
-| `is_current_year_2026` | +3.03pp | +4.48pp |
-| `has_pros_cons` | +4.74pp | +3.38pp |
-
-##### Gemini (Cited Set, N=653)
-| Category | Type Count | Type % | Tone Count | Tone % |
-| :--- | :---: | :---: | :---: | :---: |
+#### Gemini cited set (N=653)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
 | **listicle** | 371 | 56.8% | **promotional** | 467 | 71.5% |
 | **product_page** | 148 | 22.7% | neutral_info | 181 | 27.7% |
 | comparison | 26 | 4.0% | opinionated | 5 | 0.8% |
 
-**Intra-Listicle Feature Drift (Gemini vs. Google T10 Baseline):**
-| Feature | Top 1-5 Drift | Weighted Avg Drift |
-| :--- | :---: | :---: |
-| `has_clear_authorship` | +7.57pp | +6.16pp |
-| `has_pros_cons` | +3.65pp | +1.46pp |
-| `has_tables` | +2.30pp | +2.35pp |
-| `freshness_cue_strength` | +3.34pp | +1.44pp |
-| `is_current_year_2026` | -6.50pp | -4.01pp |
-
-- **The "Listicle Bias" in Gemini**: Gemini cites listicles at a significantly higher rate (**56.8%**) than GPT models (~37%), suggesting a retrieval strategy that prioritizes curated recommendation content.
-- **Tone Consistency**: Across all models, approximately **70%** of cited content is labeled as `promotional`, reflecting the commercial nature of the product-recommendation prompts.
-
----
-
----
-
-# Part 2: Core Findings
+**Where the “why” lives**:
+- Listicle-only feature drift is reported under **`2.4.1 Intra-Listicle Selection Drift`**.
+- Host bias / listicle rank bias / semantic fidelity are reported under **`2.5`**.
 
 ## 2.1 Citation Overlap Analysis
 
@@ -547,24 +455,8 @@ We analyzed the overlap between LLM citations and the underlying search index (B
 | **Total Index Coverage** | **83.7%** (Bing+Google) | **80.6%** (Bing+Google) | **77.7%** (Google) |
 | **"Invisible" (Missing)** | **16.3%** | **19.4%** | **22.3%** |
 
-#### Gemini: Global Citation DNA Distribution (Cited set only)
-To connect overlap/visibility to content selection, we also summarize the DNA distribution of **Gemini’s cited URLs**:
-
-| Type | Count | Share (%) |
-| :--- | ---: | ---: |
-| **listicle** | 886 | **56.0%** |
-| **product_page** | 355 | **22.4%** |
-| other | 151 | 9.5% |
-| news_article | 53 | 3.4% |
-| documentation | 33 | 2.1% |
-| comparison_article | 32 | 2.0% |
-| marketplace_directory | 31 | 2.0% |
-
-| Tone | Count | Share (%) |
-| :--- | ---: | ---: |
-| **promotional** | 1,058 | **66.9%** |
-| **neutral_informational** | 518 | **32.7%** |
-| opinionated | 6 | 0.4% |
+#### Note on Content DNA tables
+Study-set and cited-set DNA composition tables live in **`2.0 Dataset Profile (Content DNA)`** to avoid repeating descriptive distributions in multiple findings sections.
 
 #### Key Observations on Provider Strategy:
 - **GPT Enterprise: The Bing Standard**: Consistent with OpenAI's [Enterprise documentation](https://help.openai.com/en/articles/10093903-chatgpt-search-for-enterprise-and-edu), which explicitly names Bing as the search provider, we see an **81.3% overlap** with the Bing index. We used Google SERP as a **control group** here, which only yielded a 46.3% overlap, confirming that Enterprise retrieval is heavily optimized for Bing.
@@ -865,6 +757,72 @@ Analysis of why certain results are selected from the "Menu" (retrieved set) whi
 - This strengthens the "UI Suppression" argument—relevant content is scattered infinitely deep
 
 ---
+
+## 1.6 Citation Mapping & Claim-Level Attribution
+*How we precisely map ChatGPT's written claims to their retrieved sources.*
+
+### 1.6.1 The "Claim-to-Link" Forensic Pipeline
+- **The Challenge:** ChatGPT's final response text replaces internal citation tokens with generic `[URL]` tags. To understand *why* a link was cited, we must reconstruct the link between the **written claim** and the **retrieved source**.
+- **The Solution:** We developed a forensic mapping script (or as Gemini calls them, **grounding supports**) that:
+    1. **Token Alignment:** Extracts raw citation tokens (e.g., `citeturn0search17`) from the network stream and aligns them with their final position in the response text.
+    2. **Block-Level Extraction:** Instead of simple keyword matching, the script identifies the **Full Claim Block** (the descriptive text between consecutive citation tags). This captures the complete product description or factual statement ChatGPT attributed to that source.
+    3. **Metadata Enrichment:** Maps each claim to its retrieved "Ground Truth" (the snippet, title, and URL from the search result groups).
+
+### 1.6.2 Multi-Chip Reconstruction (Synthesis Aggression)
+- **Defining Multi-Chips:** We observed cases where ChatGPT groups multiple sources under a single citation (e.g., "Vibe Voice+1"). 
+- **Forensic Discovery:** Our mapping revealed that these correspond to concatenated tokens (e.g., `turn0search8` + `search15`).
+- **Research Value:** This allows us to measure **Synthesis Aggression**—how ChatGPT merges facts from multiple distinct search results into a single cohesive claim.
+
+### 1.6.3 Multi-source claim support rate (single claim/segment cites >1 URL)
+**Definition (operational):** a claim/segment is “multi-cited” if it has **2+ distinct cited URLs**.
+
+Computed by `scripts/analysis/multi_source_claim_support.py` (artifacts in `data/enrichment/`).
+
+**All claim/segment occurrences:**
+- **GPT**: 458 / 4296 (**10.7%**) multi-cited
+- **Gemini**: 788 / 2287 (**34.5%**) multi-cited
+
+**Listicle-cited occurrences only (at least one cited URL has `type=listicle`):**
+- **GPT**: 194 / 1363 (**14.2%**) multi-cited
+- **Gemini**: 664 / 1519 (**43.7%**) multi-cited
+
+### 1.6.4 Mixed listicle + product-page citations (within a single claim/segment)
+**Definition (operational):** among **multi-cited** claims/segments, label a case “mixed” if the cited URL set contains **≥1** `type=listicle` and **≥1** `type=product_page`.
+
+**All multi-cited occurrences:**
+- **GPT**: 41 / 458 (**9.0%**) mixed listicle+product-page
+- **Gemini**: 130 / 788 (**16.5%**) mixed listicle+product-page
+
+**What are the “rest” of multi-cited claims? (type-mix buckets)**
+When we say “multi-cited”, we partition each multi-cited claim/segment into **exactly one** bucket:
+- **mixed listicle+product**: at least one `listicle` and at least one `product_page`
+- **listicle-only**: at least one `listicle` and **no** `product_page`
+- **product-only**: at least one `product_page` and **no** `listicle`
+- **neither**: **no** `listicle` and **no** `product_page` cited (i.e., multiple citations drawn from other page types such as directories, docs, news, etc., or “unknown” when a URL lacks a DNA label)
+
+**GPT multi-cited (N=458) bucket breakdown:**
+- mixed listicle+product: **41 (9.0%)**
+- listicle-only: **153 (33.4%)**
+- product-only: **168 (36.7%)**
+- neither (no listicle/product_page): **96 (21.0%)**
+
+**Gemini multi-cited (N=788) bucket breakdown:**
+- mixed listicle+product: **130 (16.5%)**
+- listicle-only: **534 (67.8%)**
+- product-only: **84 (10.7%)**
+- neither (no listicle/product_page): **40 (5.1%)**
+
+**What does “neither” look like? (examples of multi-cited type-sets)**
+- **GPT neither (N=96)** is dominated by `unknown` (unlabeled URLs) plus small tails like `news_article`, `documentation`, `editorial_article`, `forum_ugc`, `marketplace_directory`, and combinations (see `multi_type_sets_by_bucket.neither_listicle_nor_product` in `data/enrichment/multi_source_claim_support_stats.json`).
+- **Gemini neither (N=40)** is mostly `other` / `unknown` mixtures plus a tail of `documentation`, `marketplace_directory`, `forum_ugc`, `editorial_article`, etc. (same JSON).
+
+**Listicle-cited multi-cited occurrences only:**
+- **GPT**: 41 / 194 (**21.1%**) mixed listicle+product-page
+- **Gemini**: 130 / 664 (**19.6%**) mixed listicle+product-page
+
+**Mixed-case lists (for qualitative inspection):**
+- `data/enrichment/mixed_listicle_plus_product_citations_gpt.csv` (41 rows)
+- `data/enrichment/mixed_listicle_plus_product_citations_gemini.csv` (130 rows)
 
 ## 2.5 Listicle Extraction & Bias Analysis
 
