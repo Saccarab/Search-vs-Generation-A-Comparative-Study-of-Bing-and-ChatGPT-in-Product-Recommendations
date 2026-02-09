@@ -675,40 +675,45 @@ This is operationalized in the drift outputs under `data/enrichment_compound_eff
 
 ### Type Distribution of Invisible Citations:
 
-We define “invisible” here as: **cited URLs not found in Bing ≤ 200** (our Rank‑200 cap), computed on **unique cited URLs** (not occurrences).
+We separate two notions that are easy to conflate:
 
-**GPT Enterprise invisible cited URLs (N=176):**
+- **Bing‑invisible (Bing-only)**: cited URLs **not found in Bing ≤ 200** (our Rank‑200 cap).
+- **Truly invisible (Bing+Google control)**: cited URLs **not found in Bing ≤ 200** **and** **not found in Google** (SerpApi control for the same run).  
+  *This matters for GPT Personal, which shows high Google affinity; otherwise “Bing‑invisible” overstates how much is actually missing from the combined index surface.*
 
-| Type | Count | % of Invisible |
-| :--- | ---: | ---: |
-| product_page | 52 | 29.5% |
-| reference | 44 | 25.0% |
-| listicle | 29 | 16.5% |
-| news_article | 21 | 11.9% |
-| editorial_article | 14 | 8.0% |
-| documentation | 6 | 3.4% |
-| app_store_listing | 4 | 2.3% |
-| other | 3 | 1.7% |
-| marketplace_directory | 1 | 0.6% |
-| forum_ugc | 1 | 0.6% |
-| review_article | 1 | 0.6% |
+Below we report **Truly invisible (Bing+Google control)**, computed on **unique cited URLs** (not occurrences).
 
-**GPT Personal invisible cited URLs (N=316):**
+**GPT Enterprise truly invisible cited URLs (N=147):**
 
 | Type | Count | % of Invisible |
 | :--- | ---: | ---: |
-| product_page | 97 | 30.7% |
-| listicle | 94 | 29.7% |
-| app_store_listing | 36 | 11.4% |
-| reference | 26 | 8.2% |
-| news_article | 17 | 5.4% |
-| editorial_article | 16 | 5.1% |
-| forum_ugc | 11 | 3.5% |
-| documentation | 6 | 1.9% |
-| other | 6 | 1.9% |
-| marketplace_directory | 5 | 1.6% |
-| comparison_article | 1 | 0.3% |
-| review_article | 1 | 0.3% |
+| reference | 44 | 29.9% |
+| product_page | 37 | 25.2% |
+| news_article | 21 | 14.3% |
+| listicle | 21 | 14.3% |
+| editorial_article | 13 | 8.8% |
+| documentation | 4 | 2.7% |
+| app_store_listing | 4 | 2.7% |
+| review_article | 1 | 0.7% |
+| forum_ugc | 1 | 0.7% |
+| other | 1 | 0.7% |
+
+**GPT Personal truly invisible cited URLs (N=218):**
+
+| Type | Count | % of Invisible |
+| :--- | ---: | ---: |
+| listicle | 65 | 29.8% |
+| product_page | 59 | 27.1% |
+| reference | 26 | 11.9% |
+| app_store_listing | 24 | 11.0% |
+| news_article | 17 | 7.8% |
+| editorial_article | 14 | 6.4% |
+| documentation | 4 | 1.8% |
+| other | 3 | 1.4% |
+| forum_ugc | 3 | 1.4% |
+| review_article | 1 | 0.5% |
+| marketplace_directory | 1 | 0.5% |
+| comparison_article | 1 | 0.5% |
 
 ---
 
@@ -716,20 +721,25 @@ We define “invisible” here as: **cited URLs not found in Bing ≤ 200** (our
 
 *Talk about links below 150, show distribution.*
 
-### Histogram: Where ChatGPT Citations Appear in Bing
-
+### 2.4.1 Histogram: Where ChatGPT Citations Appear in Bing
 - X-axis: Bing Rank (1-200+)
 - Y-axis: Number of Citations Found
 
-### Expected Findings:
-
+### 2.4.2 Expected Findings:
 - Peak at Rank 1-5 (some overlap)
 - Sharp drop at Rank 10 (the "Page 1 Cliff")
 - Flat, uniform distribution from Rank 11-150 ("Linearity Collapse")
 - **Long tail beyond 150** (we acknowledge we didn't go deeper)
 
-### Limitations Section:
+### 2.4.3 Selection Drift: The "Freshness Paradox"
+Analysis of why certain results are selected from the "Menu" (retrieved set) while others are ignored. We analyzed how "Freshness" (years, update cues, explicit dates) influences selection.
 
+- **Global Anti-Freshness Bias**: Across all retrieved links, "Fresh" pages (those with explicit dates or 2024+ years) actually show a **negative lift** in selection (Enterprise: -9.2pp for explicit dates).
+- **The Listicle Confound**: This is primarily because Listicles (which are cited less than Product Pages) are the most likely to have freshness markers.
+- **Intra-Listicle Freshness**: When looking *only* at listicles, the bias disappears or reverses. For Enterprise listicles, an "Updated" cue provides a **+7.5pp lift** in selection probability.
+- **Implication**: The model values freshness within a category (e.g., choosing the most recent listicle), but its primary selection driver remains **Type** (Product Page > Listicle).
+
+### 2.4.4 Limitations Section:
 - We stopped at Rank 200 for practical reasons
 - Based on the uniform distribution pattern, we estimate X% more citations would be found at Rank 201-300
 - This strengthens the "UI Suppression" argument—relevant content is scattered infinitely deep
@@ -782,176 +792,6 @@ We define “invisible” here as: **cited URLs not found in Bing ≤ 200** (our
       - **Gemini**: **7.36%** (31/421 product roster items)
       - **GPT**: **1.89%** (13/689 product roster items)
 - **Thesis Implication:** The "hallucination problem" in modern RAG systems is increasingly an **attribution/linkage problem**, not a "reading" or "understanding" problem. The models "know" the facts but "forget" which specific tab they were looking at when they found them.
-
----
-
-## 2.6 Tone & Intent Comparison — Dropped (not part of final thesis)
-
-We originally considered a sentiment/tone-oriented study, but dropped it to keep the thesis spine focused on **grounding mechanics**:
-retrieval → selection → citation → claim-level fidelity. Tone remains available as a descriptive label in the enrichment dataset, but is not a core claim in the final narrative.
-
----
-
-## 2.7 Cross-Run Consistency Analysis
-
-*How do ChatGPT's responses change across 4 runs of the same prompt?*
-
-### 2.7.1 Research Questions:
-
-1. **RAG Trigger Variability:**
-   - **The "Stochastic RAG" Phenomenon:** We observed that for the exact same prompt, RAG (web search) may trigger in Run 1 and Run 2, but fail to trigger in Run 3, resulting in a response based purely on parametric knowledge.
-   - **Thesis Implication:** This highlights the instability of the LLM orchestrator. A user's chance of receiving a grounded, up-to-date answer is stochastic, even when the intent is clearly commercial.
-
-2. **Citation Stability:**
-   - If ChatGPT cites a source in Run 1, does it cite the same source in Run 2/3/4?
-   - What % of citations are "stable" (appear in 3+ runs)?
-   - What % are "one-off" (appear in only 1 run)?
-
-2. **Product Recommendation Consistency:**
-   - If ChatGPT recommends Product X in Run 1, does it recommend it again in Run 2/3/4?
-   - Are there "always recommended" products vs. "sometimes recommended" products?
-   - Does the ranking/order of products change between runs?
-
-3. **Fan-Out Query Behavior:**
-   - What fan-out queries are issued for a prompt (per run)?
-   - Do the fan-out queries change between runs (query drift)?
-   - How do changes in fan-out queries affect which sources are found?
-
-4. **Listicle Selection Patterns:**
-   - If the same listicle is cited in multiple runs, does ChatGPT pick the same products from it?
-   - Or does it pick different products each time?
-   - Does it change which position (#1 vs #3 vs #7) it extracts from?
-
-### 2.7.2 Metrics to Calculate:
-
-| Metric                          | Definition                                               |
-| ------------------------------- | -------------------------------------------------------- |
-| **Citation Overlap Rate (COR)** | % of citations that appear in 2+ runs of the same prompt |
-| **Product Overlap Rate (POR)**  | % of recommended products that appear in 2+ runs         |
-| **Stable Citation Count**       | Number of citations that appear in ALL 4 runs            |
-| **Citation Churn Rate**         | % of citations that are unique to a single run           |
-| **Fan-Out Query Similarity**    | Similarity between fan-out query sets across runs        |
-
-### 2.7.3 Expected Findings:
-
-**Hypothesis 1:** Core recommendations are stable, but peripheral citations vary.
-- The top 3-5 product recommendations should be consistent (70%+ overlap)
-- Additional links and lower-ranked citations will have higher churn
-
-**Hypothesis 2:** Fan-out query drift introduces variability.
-- Different fan-out query sets → different search results → different citations
-- This explains why the same prompt can produce different outputs
-
-**Hypothesis 3:** Listicle extraction is deterministic, but listicle selection is not.
-- Once ChatGPT picks a listicle, it extracts products consistently
-- But which listicle it picks may vary between runs
-
-### 2.7.4 Data Tables to Generate:
-
-**Table A: Citation Stability by Run**
-| Prompt | Citations in R1 | Citations in R2 | Citations in R3 | Citations in R4 | Overlap (All 4) | Overlap (Any 2+) |
-| ------ | --------------- | --------------- | --------------- | --------------- | --------------- | ---------------- |
-| P001   | ?               | ?               | ?               | ?               | ?               | ?                |
-| P002   | ?               | ?               | ?               | ?               | ?               | ?                |
-| ...    |                 |                 |                 |                 |                 |                  |
-
-**Table B: Product Recommendation Consistency**
-| Prompt | Products in R1 | Products in R2 | Products in R3 | Products in R4 | Stable Products | Unique Products |
-| ------ | -------------- | -------------- | -------------- | -------------- | --------------- | --------------- |
-| P001   | ?              | ?              | ?              | ?              | ?               | ?               |
-| ...    |                |                |                |                |                 |                 |
-
-**Table C: Fan-Out Query Analysis**
-| Prompt | Original Query             | Fan-out Qs (R1) | Fan-out Qs (R2) | Fan-out Qs (R3) | Fan-out Qs (R4) | Similarity Score |
-| ------ | -------------------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- |
-| P001   | "best AI video translator" | ?                | ?                | ?                | ?                | ?                |
-| ...    |                            |                  |                  |                  |                  |                  |
-
-### 2.7.5 The Equivalence of Fan-Out Queries (Q1 vs Q2)
-*Both queries get "Equal Love" from the model.*
-
-**The Discovery:**
-We analyzed the overlap rates between ChatGPT citations and the results from each fan-out query (Q1 = first hidden query, Q2 = second hidden query). The results were strikingly similar:
-
-| Account    | Q1 Overlap | Q2 Overlap | Difference |
-|------------|------------|------------|------------|
-| Enterprise | **63.7%**  | **64.2%**  | 0.5%       |
-| Personal   | **54.1%**  | **52.4%**  | 1.7%       |
-
-**Key Findings:**
-- **No "Recency Bias":** The model does NOT prioritize links from its first search query over its second. Both queries contribute equally to the final citation pool.
-- **"Bulk Retrieval, Bulk Synthesis":** This proves the model performs a two-phase process:
-    1. **Phase 1 (Retrieval):** Issue all fan-out queries and collect all results into a flat pool.
-    2. **Phase 2 (Synthesis):** Reason over the combined pool to select citations.
-- **Account Variance in Quality, Not Distribution:**
-    - **Enterprise (~64%):** High fidelity to search results for both queries.
-    - **Personal (~53%):** Lower fidelity (more "hallucination" or parametric knowledge), but Q1/Q2 remain balanced.
-
-**Thesis Implication:**
-This finding justifies the architectural choice of "Fan-Out" searching. If Q2 had significantly lower overlap, one could argue that multi-query expansion is wasteful. The equal contribution proves that **every fan-out query is essential** for the model to reach its citation quota. The model treats the entire search pool as a single, unified knowledge base.
-
-### 2.7.6 The "Flip-Flop" Phenomenon: Additional → Cited Overlap Analysis
-*How consistently does the model filter its search results?*
-
-**The Discovery:**
-We analyzed the "Additional" URLs (sources found in search results but not cited) to see if they were truly "low quality" or just "stochastically ignored."
-
-**Key Findings:**
-- **The Global Constant (26.0% vs 25.9%):** Across the entire dataset, the "Flip-Flop" rate is nearly identical. 
-    - **Enterprise:** **26.0%** (337 cited elsewhere / 1,298 unique additional)
-    - **Personal:** **25.9%** (413 cited elsewhere / 1,594 unique additional)
-- **"Additional ≈ Citation-Worthy" (Equivalence Hypothesis):** Within this study’s topical coverage (AI/SaaS product recommendations), many sources labeled **Additional** behave like **citation-worthy candidates** that simply were not promoted to **Cited** in that particular run. The 26% flip-flop rate quantifies this “promotion potential.”
-- **Dataset Dependence (Important):** This global flip-flop metric is only meaningful when prompts share a **common source pool** (as is true in this study’s clustered topics). In a dataset of fully disjoint topics, cross-run URL reuse would be rare and the global flip-flop rate would shrink accordingly.
-- **Statistical Synchronization:** When splitting by category, the models move in perfect sync:
-    - **Business Queries (P041+):** Both accounts hit exactly **24.5%** overlap.
-
-**Thesis Implication:**
-The near-identical global overlap (0.1% difference) proves a **shared underlying architecture**. The "Grounding Filter" is a universal constant in the model's RAG pipeline, operating with a fixed ~26% "ambiguity margin" where sources are stochastically rotated between primary and secondary status.
-
-### 2.7.6 The "Conservation of Retrieval" Law: Systemic Intake Tendency
-*The discovery of the model's "Link Thirst" and aggregate convergence.*
-
-**The Discovery:**
-By quantifying the "Total Considered" universe (Cited + Additional + Rejected), we found a shocking symmetry in scale between account types, despite massive variance in individual runs.
-
-**Key Findings:**
-- **The "Link Thirst" Constant:** Across 240 runs, both models exhibit an almost identical "appetite" for information:
-    - **Enterprise:** **63,046** total links considered.
-    - **Personal:** **62,460** total links considered.
-    - **The Convergence:** A difference of only **0.9%**, proving a shared systemic mean for retrieval depth.
-- **High Per-Prompt Variance:** While the aggregate is identical, individual prompts show a high **"Variance Allowance"**:
-    - **P001 (Perfect Match):** 20.7 vs 20.7 avg links (**0.0% diff**).
-    - **P002 (High Divergence):** Personal (37.0) vs Enterprise (13.3) (**94.0% diff**).
-    - **P005 (Personal Dominance):** Personal (36.0) vs Enterprise (19.3) (**60.2% diff**).
-- **The "Balancing Act":** The model exhibits a stochastic "burstiness"—it may over-retrieve for one prompt and under-retrieve for another, but the **Aggregate Intake Tendency** remains a universal constant.
-
-**Thesis Implication:**
-This reveals that "Search" in ChatGPT is governed by a **Systemic Tendency** rather than a rigid per-prompt quota. The model has a specific "Link Thirst" (averaging ~260 links per run) that it satisfies stochastically. The identical aggregate totals prove that the **Intake Engine** is a shared commodity, while the **Fidelity Filter** (81% vs 67% match rate) is where account-level tuning (Enterprise vs. Personal) occurs.
-
-### 2.7.7 Methodological Limitations & Future Scaling
-*The case for longitudinal sampling.*
-
-- **Sample Depth vs. Breadth:** While this study utilized 3 runs per prompt to establish the existence of the "Flip-Flop Phenomenon," the total sample size of ~480 independent grounding events provides high statistical confidence in the "Ambiguity Floor" (~26%).
-- **Future Work (Same-Prompt Flip-Flop):** To separate “shared topical source pool” effects from true within-prompt stochasticity, future work should compute the **Same-Prompt Flip-Flop Rate**: Additional in Run A → Cited in Run B for the **same prompt_id**. This requires **10+ runs per prompt** to stabilize estimates and produce per-prompt distributions (not just a single global mean).
-- **Future Work (Controlled Topic Split):** Repeat the same analyses on intentionally **disjoint topic buckets** (e.g., “video translation” vs. “CRM software”) to quantify how much of the global flip-flop is explained by topic overlap vs. model randomness.
-
----
-
-## 2.8 Freshness Analysis
-
-### Research Questions:
-
-1. Does ChatGPT prefer more recently updated content?
-2. Are Bing Top 10 results "stale" compared to ChatGPT citations?
-
-| Metric                         | ChatGPT Citations | Bing Top 10 | Additional Links |
-| ------------------------------ | ----------------- | ----------- | ---------------- |
-| `freshness_cue_strength` (avg) | ?                 | ?           | ?                |
-| Has `published_date`           | ?%                | ?%          | ?%               |
-| Has `modified_date`            | ?%                | ?%          | ?%               |
-| Published in 2025-2026         | ?%                | ?%          | ?%               |
-
----
 
 # Part 3: Additional Analyses (Using All Fields)
 

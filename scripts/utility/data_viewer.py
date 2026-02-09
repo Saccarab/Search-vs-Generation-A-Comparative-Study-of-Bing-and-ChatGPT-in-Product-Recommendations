@@ -2813,7 +2813,7 @@ def dashboard():
     ).fetchone()[0]
     ent_bing_add_overlap_pct = (ent_matched_add / ent_total_add * 100.0) if ent_total_add else 0.0
 
-    # Enterprise Google overlap (control group; depends on whether enterprise Google SERP was collected+ingested)
+    # Enterprise Google overlap (control group; prompt-scoped: match only within the SAME prompt/run)
     try:
         ent_google_matched_main = db.execute(f'''
             SELECT COUNT(*)
@@ -2821,6 +2821,7 @@ def dashboard():
             WHERE c.account_type = 'enterprise' AND c.citation_type = 'cited'{citations_enriched_clause} AND EXISTS (
                 SELECT 1 FROM google_results g
                 WHERE g.account_type = 'enterprise'
+                  AND g.chatgpt_run_id = c.run_id
                   AND g.url_normalized = c.url_normalized
             )
         ''').fetchone()[0]
@@ -2835,6 +2836,7 @@ def dashboard():
             WHERE c.account_type = 'enterprise' AND c.citation_type = 'additional'{citations_enriched_clause} AND EXISTS (
                 SELECT 1 FROM google_results g
                 WHERE g.account_type = 'enterprise'
+                  AND g.chatgpt_run_id = c.run_id
                   AND g.url_normalized = c.url_normalized
             )
         ''').fetchone()[0]
@@ -2885,6 +2887,7 @@ def dashboard():
                   AND EXISTS (
                     SELECT 1 FROM google_results g
                     WHERE g.account_type = ?
+                      AND g.chatgpt_run_id = c.run_id
                       AND g.url_normalized = c.url_normalized
                   )
                 """,
@@ -3081,7 +3084,8 @@ def dashboard():
     ).fetchone()[0]
     pers_bing_add_overlap_pct = (pers_matched_add / pers_total_add * 100.0) if pers_total_add else 0.0
 
-    # Personal Google overlap (cited URLs found in Google results)
+    # Personal Google overlap (prompt-scoped: match only within the SAME prompt/run).
+    # Note: personal citations.run_id is suffixed with "_personal"; google_results.chatgpt_run_id uses the base run_id.
     pers_google_matched_main = 0
     try:
         pers_google_matched_main = db.execute(f'''
@@ -3090,6 +3094,7 @@ def dashboard():
             WHERE c.account_type = 'personal' AND c.citation_type = 'cited'{citations_enriched_clause} AND EXISTS (
                 SELECT 1 FROM google_results g
                 WHERE g.account_type = 'personal'
+                  AND g.chatgpt_run_id = REPLACE(c.run_id, '_personal', '')
                   AND g.url_normalized = c.url_normalized
             )
         ''').fetchone()[0]
@@ -3097,7 +3102,7 @@ def dashboard():
         pers_google_matched_main = 0
     pers_google_overlap_pct = (pers_google_matched_main / pers_total_main * 100.0) if pers_total_main else 0.0
 
-    # Personal Google overlap (additional URLs found in Google results)
+    # Personal Google overlap (additional URLs found in Google results; prompt-scoped)
     pers_google_matched_add = 0
     try:
         pers_google_matched_add = db.execute(f'''
@@ -3106,6 +3111,7 @@ def dashboard():
             WHERE c.account_type = 'personal' AND c.citation_type = 'additional'{citations_enriched_clause} AND EXISTS (
                 SELECT 1 FROM google_results g
                 WHERE g.account_type = 'personal'
+                  AND g.chatgpt_run_id = REPLACE(c.run_id, '_personal', '')
                   AND g.url_normalized = c.url_normalized
             )
         ''').fetchone()[0]
@@ -3113,7 +3119,7 @@ def dashboard():
         pers_google_matched_add = 0
     pers_google_add_overlap_pct = (pers_google_matched_add / pers_total_add * 100.0) if pers_total_add else 0.0
 
-    # Personal combined coverage (Bing OR Google) and Google-only
+    # Personal combined coverage (Bing OR Google) and Google-only (prompt-scoped)
     try:
         pers_combined_matched_main = db.execute(f'''
             SELECT COUNT(*)
@@ -3124,6 +3130,7 @@ def dashboard():
                 OR EXISTS (
                     SELECT 1 FROM google_results g
                     WHERE g.account_type = 'personal'
+                      AND g.chatgpt_run_id = REPLACE(c.run_id, '_personal', '')
                       AND g.url_normalized = c.url_normalized
                 )
               )
@@ -3142,6 +3149,7 @@ def dashboard():
               AND EXISTS (
                     SELECT 1 FROM google_results g
                     WHERE g.account_type = 'personal'
+                      AND g.chatgpt_run_id = REPLACE(c.run_id, '_personal', '')
                       AND g.url_normalized = c.url_normalized
                 )
         ''').fetchone()[0]
@@ -3161,7 +3169,8 @@ def dashboard():
     """).fetchone()[0]
     all_bing_cited_pct = (all_bing_matched_cited / total_cited_all * 100.0) if total_cited_all else 0.0
 
-    # Combined coverage for ALL cited: (Bing) OR (Google for personal)
+    # Combined coverage for ALL cited: (Bing) OR (Google for personal).
+    # Prompt-scoped for Google: g.chatgpt_run_id matches base run_id (personal citations are suffixed).
     try:
         all_combined_matched_cited = db.execute(f'''
             SELECT COUNT(DISTINCT c.id)
@@ -3174,21 +3183,8 @@ def dashboard():
                     AND EXISTS (
                         SELECT 1 FROM google_results g
                         WHERE g.account_type = 'personal'
-                          AND RTRIM(
-                                LOWER(
-                                  REPLACE(
-                                    REPLACE(
-                                      REPLACE(
-                                        SUBSTR(g.url, 1, CASE WHEN INSTR(g.url, '?') > 0 THEN INSTR(g.url, '?') - 1 ELSE LENGTH(g.url) END),
-                                        'https://', ''
-                                      ),
-                                      'http://', ''
-                                    ),
-                                    'www.', ''
-                                  )
-                                ),
-                                '/'
-                              ) = c.url_normalized
+                          AND g.chatgpt_run_id = REPLACE(c.run_id, '_personal', '')
+                          AND g.url_normalized = c.url_normalized
                     )
                 )
               )
