@@ -478,12 +478,12 @@ We analyzed the overlap between LLM citations and the underlying search index (B
 | :--- | :--- | :--- | :--- |
 | **Total Cited Links** | 1,637 | 1,839 | 1,651 |
 | **Total Additional Links** | 2,820 | 4,506 | - |
-| **Bing Overlap (Cited)** | **81.3%** | 67.6% | - |
-| **Bing Overlap (Additional)** | 86.3% | 56.3% | - |
-| **Google Overlap (Cited)** | 46.3% (Control) | **84.8%** | **77.7%** |
-| **Google Overlap (Additional)** | 41.3% (Control) | 81.6% | - |
-| **Total Index Coverage** | 81.3% (Bing) | **88.5%** (Bing+Google) | 77.7% (Google) |
-| **"Invisible" (Missing)** | ~18.7% | **11.5%** | **22.3%** |
+| **Bing Overlap (Cited)** | **81.3%** | **67.6%** | - |
+| **Bing Overlap (Additional)** | **86.3%** | **56.3%** | - |
+| **Google Overlap (Cited)** | **27.8%** (Control) | **64.6%** | **77.7%** |
+| **Google Overlap (Additional)** | **20.7%** (Control) | **52.1%** | - |
+| **Total Index Coverage** | **83.7%** (Bing+Google) | **80.6%** (Bing+Google) | **77.7%** (Google) |
+| **"Invisible" (Missing)** | **16.3%** | **19.4%** | **22.3%** |
 
 #### Gemini: Global Citation DNA Distribution (Cited set only)
 To connect overlap/visibility to content selection, we also summarize the DNA distribution of **Gemini’s cited URLs**:
@@ -539,13 +539,21 @@ Our analysis of 237 runs reveals that LLMs do not just "scrape the surface" of t
 | Page Index | GPT Enterprise Matches | GPT Personal Matches |
 | :--- | :--- | :--- |
 | **Page 1** | **1,468** | **521** |
-| **Page 2** | 333 | 345 |
-| **Page 3** | 656 | 663 |
-| **Page 4** | 692 | 602 |
-| **Page 5** | 641 | 667 |
-| **Page 10** | 271 | 426 |
-| **Page 16** | 103 | 204 |
-| **Page 17** | 5 | 6 |
+| Page 2 | 333 | 345 |
+| Page 3 | 656 | 663 |
+| Page 4 | 692 | 602 |
+| Page 5 | 641 | 667 |
+| Page 6 | 560 | 579 |
+| Page 7 | 453 | 590 |
+| Page 8 | 437 | 480 |
+| Page 9 | 312 | 433 |
+| Page 10 | 271 | 426 |
+| Page 11 | 248 | 391 |
+| Page 12 | 202 | 327 |
+| Page 13 | 191 | 293 |
+| Page 14 | 166 | 286 |
+| Page 15 | 140 | 264 |
+| Page 16 | 103 | 204 |
 
 - **The "Page 1" Elasticity Problem**: We explicitly avoid defining Page 1 as a fixed "Rank 1-10" range. In modern search engines (especially Bing), the length of the first page is highly variable, often truncated or expanded based on the presence of rich snippets, ads, and vertical blocks.
 - **The "Page 2 Dip" & Index Volatility**: We observe a curious drop in matches on Page 2 (333-345 matches) compared to Page 1 and Pages 3-5. This is likely an artifact of **Bing index volatility** rather than a deliberate model preference. Qualitative inspection of Bing's "deep" results reveals significant "noise" and irrelevant content across all pages, but Page 2 appears particularly inconsistent in our dataset, often containing transitional or low-signal results that the model bypasses in favor of more stable "deep" candidates found on subsequent pages.
