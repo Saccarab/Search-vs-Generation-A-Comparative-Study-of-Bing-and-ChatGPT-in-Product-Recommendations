@@ -45,22 +45,15 @@ We quantify grounding-related selection bias by comparing the **DNA distribution
 - **Secondary (more measurement noise)**: DNA-based Menu vs Order comparisons (e.g., `has_tables`, `has_pros_cons`, structure/format labels). These are still useful to characterize selection behavior, but depend on enrichment/labeling fidelity and page-template variance.
 
 ## Sub-questions (decompositions of RQ1, not separate topics)
-- **RQ1a (selection + visibility)**: How do **cited vs additional vs rejected/invisible** sources differ in domain/type, and how does this differ by **enterprise vs personal** runs?
-- **RQ1b (external support)**: How often do selected sources appear in **Top‑N SERPs** (Bing/Google overlap; Gemini “survival” in Top‑20), and what are the failure modes (pagination cliff, deep-rank burial, etc.)?
-- **RQ1c (listicle uptake / fidelity)**: When listicles are retrieved, which listicle-mentioned products are **selected vs ignored** in the final response (uptake rate, rank bias, host-bias), and how does this differ by run type?
-- **RQ1d (claim-level grounding)**: At claim span level, how tightly do claims align to specific sources (and where do “multi-chip” merges occur)?
+- **RQ1a (selection + visibility)**: How do **cited vs additional vs rejected/invisible** sources differ in domain/type, and how does this differ by **enterprise vs personal** runs on chatGPT results?
+- **RQ1b (external support)**: How often do selected citations appear in **Top‑N SERPs** (Bing/Google overlap; Gemini “survival” in Top‑20)?
+- **RQ1c (selection bias & DNA)**: Does the model exhibit a statistically significant preference for specific **Content DNA features** (e.g., tables, numbered lists, freshness) when selecting from the retrieved "Menu," and how does this preference vary between **GPT Personal, GPT Enterprise and Gemini**?
+- **RQ1d (listicle uptake / fidelity)**: When listicles are retrieved, which listicle-mentioned products are **selected vs ignored** in the final response (uptake rate, rank bias, host-bias), and how does this differ by run type?
 
 ## Role of external systems (clarify scope)
 - **Bing**: baseline “human web” retrieval/ranking surface used as a **measurement instrument** for rank/visibility and “visibility gaps” (**Top‑200**).
 - **Google (SerpApi)**: control baseline for Gemini fan-out queries and sensitivity checks (**Organic-only** vs including non-organic result types like **Video/PAA/Discussions**).
 - **Gemini**: optional cross-model baseline for grounding mechanics (has explicit `groundingMetadata` and claim-support mapping); not an enterprise/personal split unless we create our own conditions.
-
-## Recommended narrative order (chapter flow)
-The outline contains all the necessary pieces, but the cleanest reading order is:
-
-- **Context & motivation**: `Market Context & Motivation (Ahrefs Benchmark)` → `1.5 The Commercial Catalyst for RAG` → `1.4 Theoretical Framework: From SEO to GEO`
-- **Instrumentation & data**: `1.1 Data Collection Pipeline` → `1.2 The Analysis App` → `1.6 Citation Mapping & Claim-Level Attribution` → `1.7/1.8 Anatomy (ChatGPT/Gemini)` → `1.9 Content DNA Enrichment`
-- **Findings (in dependency order)**: `2.1 Overlap / Provider Strategy` → `2.2 Position Bias & Page Distribution` → `2.3 Cited vs Additional` → `2.3 Invisible Section (Rank 11–30 hidden zone)` → `2.4 Selection Drift (Menu vs Order)` → `2.5 Listicle Bias & Fidelity`
 
 ## 1.2 Theoretical Framework: From SEO to GEO
 
