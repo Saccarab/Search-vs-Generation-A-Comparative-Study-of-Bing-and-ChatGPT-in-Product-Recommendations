@@ -5,11 +5,7 @@
 **Date:** January 2026  
 **Status:** Research Notes / Working Draft
 
----
-
-# Framing: “Grounding Behavior” as the Core Research Spine
-
-This thesis is not “Bing vs ChatGPT” as competing products; **Bing/Google are measurement instruments** used to quantify *grounding behavior* in LLM-generated product recommendations.
+---.
 
 **What we empirically observe and measure (high-level):**
 - **Cross-model grounding**: Gemini vs. ChatGPT
@@ -18,7 +14,7 @@ This thesis is not “Bing vs ChatGPT” as competing products; **Bing/Google ar
 - **Selection bias in sources**: differences between the **available menu** (Top‑N SERP) vs the **selected order** (cited set), measured via **Content DNA enrichment** of cited and non-cited URLs
 - **Visibility gaps**: “invisible/shadow” citations (cited URLs missing from the defined Top‑N baseline), analyzed separately from within-SERP drift
 
-## Core Research Question (single spine)
+## Core Research Question
 **RQ1:** *How does grounding behavior manifest in LLM-generated product recommendations, and how does it vary across conditions we can observe (deployment context and/or model)?*
 
 ### Operational definition (what “grounding behavior” means in this thesis)
@@ -28,9 +24,6 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 - **Claim linkage**: which textual claims map to which sources (claim-to-link mapping)
 - **SERP support**: whether selected sources are actually present in external SERPs (Bing/Google)
 - **Source-to-output fidelity**: whether products mentioned in retrieved listicles are carried into the final recommendations
-
-### Primary measurement idea: “Menu vs Order” (selection drift)
-We quantify grounding-related selection bias by comparing the **DNA distribution of the Menu** (Top‑N SERP results / retrieved candidate set) against the **DNA distribution of the Order** (the URLs the model actually cites), optionally **rank-stratified** (Rank 1..N) to control for position bias.
 
 ## Market Context & Motivation (Ahrefs Benchmark)
 
