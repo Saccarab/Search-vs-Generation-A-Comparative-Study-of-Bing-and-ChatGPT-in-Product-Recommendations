@@ -354,6 +354,15 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 *   **Listicle Uptake & Host Bias:** LLMs exhibit a "graduation" effect, preferentially citing the primary product pages recommended within retrieved listicles, but this is tempered by a measurable "Host Exclusion" bias where certain domains are systematically ignored despite being present in the "Menu."
 
 
+
+## 2.0 Retrieval Strategy & Fan-Out Analysis
+*Before analyzing citation overlap, we examine the retrieval phase: how the models reshape the user prompt into multiple search queries.*
+
+*   **The "Fan-Out Strategy" (Implicit vs. Explicit Retrieval):**
+    *   **Gemini's Freshness Obsession:** 93.4% of Gemini runs explicitly inject a year (2025 or 2026) into their fan-out queries, with 71.7% placing this signal in the very first query (Index 0). This drives Gemini's aggressive "Listicle Uptake."
+    *   **GPT's Multi-Turn Expansion:** While GPT only uses explicit years in 5.1% of runs, it exhibits a "Multi-Turn Fan-Out" phenomenon where it issues secondary and tertiary queries (3+ queries) in response to initial results, effectively "hunting" for specific citations before finalizing the response.
+    *   **Implicit Localization Bias:** Implicit localization signals (non-English fan-out queries from English prompts) were observed in 13.1% of GPT runs and 4.6% of Gemini runs, demonstrating how retrieval environment (IP/locale) can steer grounding even without user intent.
+
 ## 2.1 Citation Overlap Analysis
 
 ## 2.2 Position Bias & Page Distribution
