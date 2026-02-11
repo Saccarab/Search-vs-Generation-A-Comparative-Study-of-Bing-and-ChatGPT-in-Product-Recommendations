@@ -235,106 +235,6 @@ This “anatomy” motivates the next analytic layers:
 
 ---
 
-## 1.11 Content DNA Enrichment (LLM-as-a-Labeler)
-*How we transformed raw URLs into structured data for selection bias analysis.*
-
-
-### 1.11.3 Enrichment Logic & Static Overrides
-*To ensure efficiency and accuracy, the labeling pipeline uses a hybrid approach of LLM-labeling and static rules for high-volume, well-known domains.*
-
-- **LLM-Labeling (GPT-4o-mini)**: Used for general web pages, blogs, and niche product sites to determine structural features (`has_tables`, `has_pros_cons`, etc.).
-- **Static Domain Overrides (Skipped Enrichment)**: Known platforms with consistent structural patterns were assigned "pre-made" labels to save quota and ensure consistency:
-    - **`reddit.com`**: Automatically labeled as `type=forum_ugc`, `content_format=discussion_thread`, `tone=opinionated`.
-    - **`en.wikipedia.org`**: Automatically labeled as `type=reference`, `content_format=encyclopedic`, `tone=neutral_informational`.
-    - **`arxiv.org`**: Labeled as `type=reference`, `content_format=academic_paper`.
-    - **App Stores (`apps.apple.com`, `play.google.com`)**: Labeled as `type=app_store_listing`, `primary_intent=transactional`.
-- **The "Invisible" Domain Strategy**: Many of the top "invisible" domains (like `reddit.com` and `wikipedia.org`) were handled via these static overrides because their structure is fixed and does not require per-page LLM analysis.
-
-### 1.9.1 The Labeling Pipeline
-To quantify selection effects (what gets cited vs. what was available), we needed to move beyond URLs and domains. We developed an automated enrichment pipeline using **GPT-5-mini** and **Gemini Flash** as structured labelers:
-1.  **Content Extraction**: Raw HTML was fetched and converted to clean markdown/text.
-2.  **Schema-Driven Labeling**: The LLM was prompted to evaluate each page against a strict 20-field schema, including:
-    *   **Page Type**: `listicle`, `product_page`, `documentation`, `forum_ugc`, etc.
-    *   **Content Format**: `best_of_list`, `landing_page`, `comparison_matrix`, etc.
-    *   **Structural Features**: `has_tables`, `has_numbered_lists`, `has_pros_cons`.
-    *   **Qualitative Scores**: `promotional_intensity_score`, `expertise_signal_score`, `readability_score`.
-3.  **Validation**: A subset of labels was manually audited to ensure the LLM labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
-
-#### Labeler fidelity (cross-model agreement)
-To test whether Content DNA is model-dependent, we ran a direct agreement audit between **Gemini 2.5 Flash** and **GPT-5-mini** on **2,660 overlapping URLs** (`docs/inter_model_fidelity_report.md`).
-
-- **Structural fields (agreement)**: `has_pros_cons` **94.6%**, `has_sources_or_citations` **93.8%**, `has_clear_authorship` **93.3%**, `has_tables` **92.9%**, `has_numbered_lists` **91.1%**
-- **Categorical fields (agreement)**: `content_format` **92.1%**, `type` **87.7%**, `tone` **77.7%**
-- **Score consistency (correlation)**: `freshness_cue_strength` **r = 0.841** (strong trend agreement, different absolute thresholds)
-
-### 1.9.2 Enrichment Coverage & Label Distribution (Study URL Universe)
-To make downstream analyses defensible, we first measured how much of the URL universe was successfully enriched.
-
-- **Enriched URLs:** 11,925 / 11,929 (**~100%**)  
-- **Unlabeled URLs:** 4
-
-**Note on structure**: The **descriptive DNA distributions** (study set composition + cited set composition) are reported once in **Part 2** under **`2.0 Dataset Profile (Content DNA)`**, to avoid making Part 1 read like “findings” before the Core Findings section.
-
-# Part 2: Core Findings
-
-## 2.0 Dataset Profile (Content DNA)
-*Descriptive statistics about the study URL pool and the cited sets. This is not a “finding” section; it’s the baseline menu/context for interpreting Sections 2.1–2.5.*
-
-### 2.0.1 Study set composition (Cited + Additional + Page 1 Ignored)
-Distribution across the **study set**, shown separately for each study angle.
-
-#### GPT Enterprise study set (Bing-centric, N=2,858)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **product_page** | 1,159 | 40.6% | **promotional** | 2,002 | 70.0% |
-| **listicle** | 989 | 34.6% | neutral_info | 699 | 24.5% |
-| editorial | 161 | 5.6% | salesy | 115 | 4.0% |
-| news | 156 | 5.5% | opinionated | 26 | 0.9% |
-
-#### GPT Personal study set (Multi-provider, N=2,194)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 885 | 40.3% | **promotional** | 1,559 | 71.1% |
-| **product_page** | 808 | 36.8% | neutral_info | 495 | 22.6% |
-| editorial | 121 | 5.5% | salesy | 100 | 4.6% |
-| news | 105 | 4.8% | opinionated | 26 | 1.2% |
-
-#### Gemini study set (Google-centric, N=2,939)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 1,296 | 44.1% | **promotional** | 2,076 | 70.6% |
-| **product_page** | 709 | 24.1% | neutral_info | 768 | 26.1% |
-| news | 165 | 5.6% | salesy | 52 | 1.8% |
-| marketplace | 150 | 5.1% | opinionated | 37 | 1.3% |
-
-### 2.0.2 Cited set composition (Type + Tone)
-Distribution of DNA categories for the URLs actually **cited** in the final responses.
-
-#### GPT Enterprise cited set (N=1,614)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **product_page** | 649 | 40.2% | **promotional** | 1,105 | 68.5% |
-| **listicle** | 589 | 36.5% | neutral_info | 390 | 24.2% |
-| news_article | 104 | 6.4% | salesy | 95 | 5.9% |
-
-#### GPT Personal cited set (N=1,444)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 544 | 37.7% | **promotional** | 998 | 69.1% |
-| **product_page** | 523 | 36.2% | neutral_info | 329 | 22.8% |
-| news_article | 98 | 6.8% | salesy | 82 | 5.7% |
-
-#### Gemini cited set (N=653)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 371 | 56.8% | **promotional** | 467 | 71.5% |
-| **product_page** | 148 | 22.7% | neutral_info | 181 | 27.7% |
-| comparison | 26 | 4.0% | opinionated | 5 | 0.8% |
-
-**Where the “why” lives**:
-- Listicle-only feature drift is reported under **`2.2.2.1 Intra-Listicle Selection Drift`**.
-- Host bias / listicle rank bias / semantic fidelity are reported under **`2.5`**.
-
 # Part 2: Findings & Analysis
 
 ### Executive Summary of Key Findings
@@ -442,7 +342,108 @@ Below we report **Truly invisible (Bing+Google control)**, computed on **unique 
 | marketplace_directory | 1 | 0.5% |
 | comparison_article | 1 | 0.5% |
 
-## 2.3 Selection Drift Analysis (Menu vs. Order) — Selection Drift (“Menu” → “Order” within the found set)
+
+## 2.3 Content DNA Enrichment (Methodology & Profile) (LLM-as-a-Labeler)
+*How we transformed raw URLs into structured data for selection bias analysis.*
+
+
+### 1.11.3 Enrichment Logic & Static Overrides
+*To ensure efficiency and accuracy, the labeling pipeline uses a hybrid approach of LLM-labeling and static rules for high-volume, well-known domains.*
+
+- **LLM-Labeling (GPT-4o-mini)**: Used for general web pages, blogs, and niche product sites to determine structural features (`has_tables`, `has_pros_cons`, etc.).
+- **Static Domain Overrides (Skipped Enrichment)**: Known platforms with consistent structural patterns were assigned "pre-made" labels to save quota and ensure consistency:
+    - **`reddit.com`**: Automatically labeled as `type=forum_ugc`, `content_format=discussion_thread`, `tone=opinionated`.
+    - **`en.wikipedia.org`**: Automatically labeled as `type=reference`, `content_format=encyclopedic`, `tone=neutral_informational`.
+    - **`arxiv.org`**: Labeled as `type=reference`, `content_format=academic_paper`.
+    - **App Stores (`apps.apple.com`, `play.google.com`)**: Labeled as `type=app_store_listing`, `primary_intent=transactional`.
+- **The "Invisible" Domain Strategy**: Many of the top "invisible" domains (like `reddit.com` and `wikipedia.org`) were handled via these static overrides because their structure is fixed and does not require per-page LLM analysis.
+
+### 1.9.1 The Labeling Pipeline
+To quantify selection effects (what gets cited vs. what was available), we needed to move beyond URLs and domains. We developed an automated enrichment pipeline using **GPT-5-mini** and **Gemini Flash** as structured labelers:
+1.  **Content Extraction**: Raw HTML was fetched and converted to clean markdown/text.
+2.  **Schema-Driven Labeling**: The LLM was prompted to evaluate each page against a strict 20-field schema, including:
+    *   **Page Type**: `listicle`, `product_page`, `documentation`, `forum_ugc`, etc.
+    *   **Content Format**: `best_of_list`, `landing_page`, `comparison_matrix`, etc.
+    *   **Structural Features**: `has_tables`, `has_numbered_lists`, `has_pros_cons`.
+    *   **Qualitative Scores**: `promotional_intensity_score`, `expertise_signal_score`, `readability_score`.
+3.  **Validation**: A subset of labels was manually audited to ensure the LLM labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
+
+#### Labeler fidelity (cross-model agreement)
+To test whether Content DNA is model-dependent, we ran a direct agreement audit between **Gemini 2.5 Flash** and **GPT-5-mini** on **2,660 overlapping URLs** (`docs/inter_model_fidelity_report.md`).
+
+- **Structural fields (agreement)**: `has_pros_cons` **94.6%**, `has_sources_or_citations` **93.8%**, `has_clear_authorship` **93.3%**, `has_tables` **92.9%**, `has_numbered_lists` **91.1%**
+- **Categorical fields (agreement)**: `content_format` **92.1%**, `type` **87.7%**, `tone` **77.7%**
+- **Score consistency (correlation)**: `freshness_cue_strength` **r = 0.841** (strong trend agreement, different absolute thresholds)
+
+### 1.9.2 Enrichment Coverage & Label Distribution (Study URL Universe)
+To make downstream analyses defensible, we first measured how much of the URL universe was successfully enriched.
+
+- **Enriched URLs:** 11,925 / 11,929 (**~100%**)  
+- **Unlabeled URLs:** 4
+
+**Note on structure**: The **descriptive DNA distributions** (study set composition + cited set composition) are reported once in **Part 2** under **`2.0 Dataset Profile (Content DNA)`**, to avoid making Part 1 read like “findings” before the Core Findings section.
+
+# Part 2: Core Findings
+
+## 2.0 Dataset Profile (Content DNA)
+*Descriptive statistics about the study URL pool and the cited sets. This is not a “finding” section; it’s the baseline menu/context for interpreting Sections 2.1–2.5.*
+
+### 2.0.1 Study set composition (Cited + Additional + Page 1 Ignored)
+Distribution across the **study set**, shown separately for each study angle.
+
+#### GPT Enterprise study set (Bing-centric, N=2,858)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
+| **product_page** | 1,159 | 40.6% | **promotional** | 2,002 | 70.0% |
+| **listicle** | 989 | 34.6% | neutral_info | 699 | 24.5% |
+| editorial | 161 | 5.6% | salesy | 115 | 4.0% |
+| news | 156 | 5.5% | opinionated | 26 | 0.9% |
+
+#### GPT Personal study set (Multi-provider, N=2,194)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
+| **listicle** | 885 | 40.3% | **promotional** | 1,559 | 71.1% |
+| **product_page** | 808 | 36.8% | neutral_info | 495 | 22.6% |
+| editorial | 121 | 5.5% | salesy | 100 | 4.6% |
+| news | 105 | 4.8% | opinionated | 26 | 1.2% |
+
+#### Gemini study set (Google-centric, N=2,939)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
+| **listicle** | 1,296 | 44.1% | **promotional** | 2,076 | 70.6% |
+| **product_page** | 709 | 24.1% | neutral_info | 768 | 26.1% |
+| news | 165 | 5.6% | salesy | 52 | 1.8% |
+| marketplace | 150 | 5.1% | opinionated | 37 | 1.3% |
+
+### 2.0.2 Cited set composition (Type + Tone)
+Distribution of DNA categories for the URLs actually **cited** in the final responses.
+
+#### GPT Enterprise cited set (N=1,614)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
+| **product_page** | 649 | 40.2% | **promotional** | 1,105 | 68.5% |
+| **listicle** | 589 | 36.5% | neutral_info | 390 | 24.2% |
+| news_article | 104 | 6.4% | salesy | 95 | 5.9% |
+
+#### GPT Personal cited set (N=1,444)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
+| **listicle** | 544 | 37.7% | **promotional** | 998 | 69.1% |
+| **product_page** | 523 | 36.2% | neutral_info | 329 | 22.8% |
+| news_article | 98 | 6.8% | salesy | 82 | 5.7% |
+
+#### Gemini cited set (N=653)
+| Type | Count | % | Tone | Count | % |
+| :--- | ---: | ---: | :--- | ---: | ---: |
+| **listicle** | 371 | 56.8% | **promotional** | 467 | 71.5% |
+| **product_page** | 148 | 22.7% | neutral_info | 181 | 27.7% |
+| comparison | 26 | 4.0% | opinionated | 5 | 0.8% |
+
+**Where the “why” lives**:
+- Listicle-only feature drift is reported under **`2.2.2.1 Intra-Listicle Selection Drift`**.
+- Host bias / listicle rank bias / semantic fidelity are reported under **`2.5`**.
+
+## 2.4 Selection Drift Analysis (Menu vs. Order) — Selection Drift (“Menu” → “Order” within the found set)
 Selection drift is a **within-menu** preference: given a retrieved candidate set (“Menu”), what gets cited (“Order”)? This analysis is **conditional on a defined baseline slice** (e.g., Google Top‑10 listicles), so it is not about “invisible vs visible.”
 
 **Operational definitions** (matches `data/enrichment/full_stratified_drift_report.txt`):
@@ -912,7 +913,7 @@ This “anatomy” motivates the next analytic layers:
 
 ---
 
-## 1.11 Content DNA Enrichment (LLM-as-a-Labeler)
+## 2.3 Content DNA Enrichment (Methodology & Profile) (LLM-as-a-Labeler)
 *How we transformed raw URLs into structured data for selection bias analysis.*
 
 ### 1.9.1 The Labeling Pipeline
@@ -1078,7 +1079,7 @@ Below we report **Truly invisible (Bing+Google control)**, computed on **unique 
 | marketplace_directory | 1 | 0.5% |
 | comparison_article | 1 | 0.5% |
 
-## 2.3 Selection Drift Analysis (Menu vs. Order) — Selection Drift (“Menu” → “Order” within the found set)
+## 2.4 Selection Drift Analysis (Menu vs. Order) — Selection Drift (“Menu” → “Order” within the found set)
 Selection drift is a **within-menu** preference: given a retrieved candidate set (“Menu”), what gets cited (“Order”)? This analysis is **conditional on a defined baseline slice** (e.g., Google Top‑10 listicles), so it is not about “invisible vs visible.”
 
 **Operational definitions** (matches `data/enrichment/full_stratified_drift_report.txt`):
