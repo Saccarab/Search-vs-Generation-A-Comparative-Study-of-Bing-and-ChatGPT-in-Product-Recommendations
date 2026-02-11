@@ -102,15 +102,6 @@ We quantify grounding-related selection bias by comparing the **DNA distribution
 - **The Commercial Dominance:** Research (e.g., Profound, 2026) indicates that **Commercial Queries** trigger a web search in **53.51%** of ChatGPT conversations—nearly 3x the rate of Informational queries (18.73%).
 - **The "Winnable" Arena:** Because commercial intent requires real-time data (pricing, availability, reviews), it is the primary driver for RAG adoption. This makes product recommendations the most critical area for studying the shift from SEO to GEO.
 
-### 1.5.2 Selection of the Research Query Set
-- **High-Volume Real-World Prompts:** Our dataset consists of **79 unique product recommendation prompts** (e.g., "Best AI video translators", "Top-rated transcription software").
-- **Methodology for Selection:**
-    - **Keyword Clustering:** Using tools like **Ahrefs** to identify high-intent clusters.
-    - **Prompt Volume Analysis:** Leveraging **Profound's** database to select real-world prompts actually used by consumers.
-    - **Deliberate Intent Filtering:** From the broad set of available user prompts, we **deliberately filtered for high commercial intent**. This ensures the study reflects the specific segment of search where AI synthesis is most active and where the "Extractive Nature" of the model is most visible.
-    - **Domain Expertise:** Queries were focused on the **AI and Software-as-a-Service (SaaS)** sectors—a domain where the author has significant professional expertise—allowing for more nuanced qualitative analysis of the "Signal vs. Noise" in results.
-- **Experimental Rigor:** Each of the 79 prompts was executed in **3 independent runs** (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
-
 ### 1.5.3 The GEO Industry Landscape: Citation Tracking & "Share of Model"
 - **The Rise of GEO Analytics**: Emerging platforms (e.g., **Profound**, **Peec.ai**) are shifting the industry from "Share of Voice" (traditional search) to "Share of Model" (generative search).
 - **The Listicle as the "Critical Node"**: Our research places extreme emphasis on listicles because they are the primary "on-ramp" for product citations. In the GEO ecosystem, being cited in a top-tier listicle is no longer just about referral traffic; it is a prerequisite for being "seen" by the RAG orchestrator.
@@ -125,7 +116,23 @@ We quantify grounding-related selection bias by comparing the **DNA distribution
 
 <!-- NOTE: Fan-out definition/instrumentation moved to 1.7.4 to avoid duplication. -->
 
-## 1.7 Anatomy of a ChatGPT Response (Network-Instrumented)
+
+## 1.6 Retrieval Environments & Deployment Contexts
+*Defining the specific interfaces and constraints of the models under study.*
+
+### 1.6.1 ChatGPT: UI-Based Network Instrumentation (Personal vs. Enterprise)
+- **Deployment Context**: We study ChatGPT as a consumer-facing product accessed via the standard web interface (`chatgpt.com`).
+- **Instrumentation Method**: Because OpenAI does not expose grounding metadata (fan-out queries, retrieved snippets) via its public API, we used **Network Payload Inspection** (Chrome DevTools protocol) to capture the raw event stream of the production UI.
+- **Personal vs. Enterprise**: 
+    - **Personal**: Standard consumer account; exhibits more 'elastic' retrieval and higher overlap with Google.
+    - **Enterprise**: Corporate-tier account; restricted to Azure/Bing-centric grounding, providing a more 'controlled' corporate retrieval baseline.
+
+### 1.6.2 Gemini: API-Based Grounding (Vertex AI)
+- **Deployment Context**: Unlike ChatGPT, Gemini was studied via the **Vertex AI / Google AI Studio API** (Gemini 1.5 Pro/Flash).
+- **Instrumentation Method**: We utilized the API specifically to access the **`groundingMetadata`** object, which is not fully transparent in the consumer UI.
+- **Reliability of Data**: The API provides a 'cleaner' laboratory environment, exposing the exact `groundingChunks` (retrieved snippets) and `groundingSupports` (segment-to-chunk mapping) required for high-fidelity grounding analysis.
+
+## 1.8 Anatomy of a ChatGPT Response (Network-Instrumented)
 *What exactly we can observe about ChatGPT’s retrieval + citation pipeline from captured network payloads.*
 
 ### 1.7.1 The high-level “agent loop” (as observed)
@@ -157,7 +164,7 @@ We log the system’s search-decision artifacts where present (Enterprise stream
 - **How it appears in the raw network stream (multi-turn fan-out signature)**:
   - The response arrives as an event stream (patch/append style) containing repeated tool messages (commonly `role="tool"`, `name="web.run"`).
 
-## 1.8 Anatomy of a Gemini Response (API-Instrumented)
+## 1.9 Anatomy of a Gemini Response (API-Instrumented)
 *How the Gemini Vertex AI API exposes grounding metadata compared to ChatGPT’s hidden network stream.*
 
 ### 1.8.1 The `groundingMetadata` Schema
@@ -231,8 +238,20 @@ This “anatomy” motivates the next analytic layers:
 
 ---
 
-## 1.10 Content DNA Enrichment (LLM-as-a-Labeler)
+## 1.11 Content DNA Enrichment (LLM-as-a-Labeler)
 *How we transformed raw URLs into structured data for selection bias analysis.*
+
+
+### 1.11.3 Enrichment Logic & Static Overrides
+*To ensure efficiency and accuracy, the labeling pipeline uses a hybrid approach of LLM-labeling and static rules for high-volume, well-known domains.*
+
+- **LLM-Labeling (GPT-4o-mini)**: Used for general web pages, blogs, and niche product sites to determine structural features (`has_tables`, `has_pros_cons`, etc.).
+- **Static Domain Overrides (Skipped Enrichment)**: Known platforms with consistent structural patterns were assigned "pre-made" labels to save quota and ensure consistency:
+    - **`reddit.com`**: Automatically labeled as `type=forum_ugc`, `content_format=discussion_thread`, `tone=opinionated`.
+    - **`en.wikipedia.org`**: Automatically labeled as `type=reference`, `content_format=encyclopedic`, `tone=neutral_informational`.
+    - **`arxiv.org`**: Labeled as `type=reference`, `content_format=academic_paper`.
+    - **App Stores (`apps.apple.com`, `play.google.com`)**: Labeled as `type=app_store_listing`, `primary_intent=transactional`.
+- **The "Invisible" Domain Strategy**: Many of the top "invisible" domains (like `reddit.com` and `wikipedia.org`) were handled via these static overrides because their structure is fixed and does not require per-page LLM analysis.
 
 ### 1.9.1 The Labeling Pipeline
 To quantify selection effects (what gets cited vs. what was available), we needed to move beyond URLs and domains. We developed an automated enrichment pipeline using **GPT-5-mini** and **Gemini Flash** as structured labelers:
@@ -322,6 +341,12 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 # Part 2: Findings & Analysis
 
 ### Executive Summary of Key Findings
+
+*   **The "Fan-Out Strategy" (Implicit vs. Explicit Retrieval):**
+    *   **Gemini's Freshness Obsession:** 93.4% of Gemini runs explicitly inject a year (2025 or 2026) into their fan-out queries, with 71.7% placing this signal in the very first query (Index 0). This drives Gemini's aggressive "Listicle Uptake."
+    *   **GPT's Multi-Turn Expansion:** While GPT only uses explicit years in 5.1% of runs, it exhibits a "Multi-Turn Fan-Out" phenomenon where it issues secondary and tertiary queries (3+ queries) in response to initial results, effectively "hunting" for specific citations before finalizing the response.
+    *   **Implicit Localization Bias:** Implicit localization signals (non-English fan-out queries from English prompts) were observed in 13.1% of GPT runs and 4.6% of Gemini runs, demonstrating how retrieval environment (IP/locale) can steer grounding even without user intent.
+
 *   **The "Provider Pivot" (Enterprise vs. Personal):** GPT Personal shows significantly higher overlap with Google (~65%) than GPT Enterprise (~28%), suggesting a deployment-specific retrieval strategy where Personal runs are likely multi-provider (Bing + Google) while Enterprise is restricted to the Bing/Azure ecosystem.
 *   **The "UI Erasure" & Invisible Citations:** By expanding retrieval depth to Rank 200, we discovered that a significant portion of LLM citations are "invisible" to human searchers (Rank 11–30+). This proves LLMs act as "Deep Hunters," extracting high-quality content that search engine UIs have effectively buried.
 *   **The "Page 2 Cliff" & Position Bias:** Despite the ability to "Deep Hunt," citation density exhibits a violent drop-off after Rank 10 (the "Page 2 Cliff"). This confirms that position bias remains the dominant factor in GenAI grounding, creating a "Winner-Take-All" dynamic for the first elastic page.
@@ -331,6 +356,10 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 
 ## 2.1 Citation Overlap Analysis
 
+## 2.2 Position Bias & Page Distribution
+*Quantifying how search engine ranking (the "Menu" position) influences the final citation (the "Order").*
+
+#
 ### 2.1.1 The Numbers (Global Overlap & Provider Discrepancy)
 We analyzed the overlap between LLM citations and the underlying search index (Bing/Google) across 237 runs. This analysis reveals a significant discrepancy in search provider usage between account types, aligning with OpenAI's official documentation.
 
@@ -407,11 +436,7 @@ Below we report **Truly invisible (Bing+Google control)**, computed on **unique 
 | marketplace_directory | 1 | 0.5% |
 | comparison_article | 1 | 0.5% |
 
-#### Top invisible domains (examples)
-- **GPT Enterprise**: `en.wikipedia.org` (116), `arxiv.org` (83), `theverge.com` (48)
-- **GPT Personal**: `reddit.com` (216), `apps.apple.com` (139), `chromewebstore.google.com` (54)
-
-### 2.2.2 Drift B — Selection Drift (“Menu” → “Order” within the found set)
+## 2.3 Selection Drift Analysis (Menu vs. Order) — Selection Drift (“Menu” → “Order” within the found set)
 Selection drift is a **within-menu** preference: given a retrieved candidate set (“Menu”), what gets cited (“Order”)? This analysis is **conditional on a defined baseline slice** (e.g., Google Top‑10 listicles), so it is not about “invisible vs visible.”
 
 **Operational definitions** (matches `data/enrichment/full_stratified_drift_report.txt`):
@@ -497,10 +522,7 @@ To validate whether observed selection drifts are statistically significant, we 
 
 ---
 
-## 2.3 Position Bias & Page Distribution
-*Quantifying how search engine ranking (the "Menu" position) influences the final citation (the "Order").*
-
-### 2.3.1 Page-Level Distribution (The "Long Tail" of Retrieval)
+## 2.3.1 Page-Level Distribution (The "Long Tail" of Retrieval)
 Our analysis of 237 runs reveals that LLMs do not just "scrape the surface" of the search results but dig deep into the SERP pages.
 
 #### Bing Page Distribution (Deep Hunt)
@@ -537,6 +559,13 @@ Even within Page 1, there is a massive bias toward the very first organic result
 
 #### GPT Personal: Google Match Distribution 
 Analysis of where GPT Personal citations appear in the **per-run** Google SERP.
+
+#### Top invisible domains (examples)
+- **GPT Enterprise**: `en.wikipedia.org` (116), `arxiv.org` (83), `theverge.com` (48)
+- **GPT Personal**: `reddit.com` (216), `apps.apple.com` (139), `chromewebstore.google.com` (54)
+
+
+
 
 | Result Type | Page | Position | Matches |
 | :--- | :--- | :--- | :--- |
@@ -642,6 +671,17 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 | **Gemini Data**      | Full `groundingMetadata` (Chunks vs. Supports) + Fan-out Queries                 |
 | **Google SERP**      | SerpApi pagination until **≥20 Organic** results are collected (often ~3 pages), with Video/PAA/Discussions retained as diagnostic buckets |
 | **Content Fetching** | Node.js fetcher + Browser extension for blocked pages (Master Content Library)   |
+
+### 1.4.1 Selection of the Research Query Set
+- **High-Volume Real-World Prompts:** Our dataset consists of **79 unique product recommendation prompts** (e.g., "Best AI video translators", "Top-rated transcription software").
+- **Methodology for Selection:**
+    - **Keyword Clustering:** Using tools like **Ahrefs** to identify high-intent clusters.
+    - **Prompt Volume Analysis:** Leveraging **Profound's** database to select real-world prompts actually used by consumers.
+    - **Deliberate Intent Filtering:** From the broad set of available user prompts, we **deliberately filtered for high commercial intent**. This ensures the study reflects the specific segment of search where AI synthesis is most active and where the "Extractive Nature" of the model is most visible.
+    - **Domain Expertise:** Queries were focused on the **AI and Software-as-a-Service (SaaS)** sectors—a domain where the author has significant professional expertise—allowing for more nuanced qualitative analysis of the "Signal vs. Noise" in results.
+- **Experimental Rigor:** Each of the 79 prompts was executed in **3 independent runs** (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
+
+
 
 ### 1.1.1 Google SERP result types (SerpApi): Organic vs Video vs PAA
 SerpApi returns Google results in multiple **result_type** buckets (not just “10 blue links”). This matters because overlap numbers can shift depending on what we count as “the SERP.”
@@ -737,7 +777,7 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 - **The Commercial Dominance:** Research (e.g., Profound, 2026) indicates that **Commercial Queries** trigger a web search in **53.51%** of ChatGPT conversations—nearly 3x the rate of Informational queries (18.73%).
 - **The "Winnable" Arena:** Because commercial intent requires real-time data (pricing, availability, reviews), it is the primary driver for RAG adoption. This makes product recommendations the most critical area for studying the shift from SEO to GEO.
 
-### 1.5.2 Selection of the Research Query Set
+### 1.4.1 Selection of the Research Query Set
 - **High-Volume Real-World Prompts:** Our dataset consists of **79 unique product recommendation prompts** (e.g., "Best AI video translators", "Top-rated transcription software").
 - **Methodology for Selection:**
     - **Keyword Clustering:** Using tools like **Ahrefs** to identify high-intent clusters.
@@ -760,7 +800,7 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 
 <!-- NOTE: Fan-out definition/instrumentation moved to 1.7.4 to avoid duplication. -->
 
-## 1.7 Anatomy of a ChatGPT Response (Network-Instrumented)
+## 1.8 Anatomy of a ChatGPT Response (Network-Instrumented)
 *What exactly we can observe about ChatGPT’s retrieval + citation pipeline from captured network payloads.*
 
 ### 1.7.1 The high-level “agent loop” (as observed)
@@ -792,7 +832,7 @@ We log the system’s search-decision artifacts where present (Enterprise stream
 - **How it appears in the raw network stream (multi-turn fan-out signature)**:
   - The response arrives as an event stream (patch/append style) containing repeated tool messages (commonly `role="tool"`, `name="web.run"`).
 
-## 1.8 Anatomy of a Gemini Response (API-Instrumented)
+## 1.9 Anatomy of a Gemini Response (API-Instrumented)
 *How the Gemini Vertex AI API exposes grounding metadata compared to ChatGPT’s hidden network stream.*
 
 ### 1.8.1 The `groundingMetadata` Schema
@@ -866,7 +906,7 @@ This “anatomy” motivates the next analytic layers:
 
 ---
 
-## 1.10 Content DNA Enrichment (LLM-as-a-Labeler)
+## 1.11 Content DNA Enrichment (LLM-as-a-Labeler)
 *How we transformed raw URLs into structured data for selection bias analysis.*
 
 ### 1.9.1 The Labeling Pipeline
@@ -1032,11 +1072,7 @@ Below we report **Truly invisible (Bing+Google control)**, computed on **unique 
 | marketplace_directory | 1 | 0.5% |
 | comparison_article | 1 | 0.5% |
 
-#### Top invisible domains (examples)
-- **GPT Enterprise**: `en.wikipedia.org` (116), `arxiv.org` (83), `theverge.com` (48)
-- **GPT Personal**: `reddit.com` (216), `apps.apple.com` (139), `chromewebstore.google.com` (54)
-
-### 2.2.2 Drift B — Selection Drift (“Menu” → “Order” within the found set)
+## 2.3 Selection Drift Analysis (Menu vs. Order) — Selection Drift (“Menu” → “Order” within the found set)
 Selection drift is a **within-menu** preference: given a retrieved candidate set (“Menu”), what gets cited (“Order”)? This analysis is **conditional on a defined baseline slice** (e.g., Google Top‑10 listicles), so it is not about “invisible vs visible.”
 
 **Operational definitions** (matches `data/enrichment/full_stratified_drift_report.txt`):
@@ -1122,10 +1158,7 @@ To validate whether observed selection drifts are statistically significant, we 
 
 ---
 
-## 2.3 Position Bias & Page Distribution
-*Quantifying how search engine ranking (the "Menu" position) influences the final citation (the "Order").*
-
-### 2.3.1 Page-Level Distribution (The "Long Tail" of Retrieval)
+## 2.3.1 Page-Level Distribution (The "Long Tail" of Retrieval)
 Our analysis of 237 runs reveals that LLMs do not just "scrape the surface" of the search results but dig deep into the SERP pages.
 
 #### Bing Page Distribution (Deep Hunt)
@@ -1315,7 +1348,7 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 - **The Pivot to Rank 200:** To test whether these citations were truly "invisible" or merely "buried," we expanded our methodology to a **"Deep Hunt" (Rank 200)**. 
 - **Key Finding of the Pivot:** We discovered that Bing often surfaces the exact pages ChatGPT cites, but hides them deep within pagination loops or beyond the "Page 2 Cliff" (Rank 11+). This methodological shift allowed us to prove that the difference between Search and GenAI is often a **UI and Ranking problem**, not just an indexing one.
 
-## 1.8 Localization & Retrieval Environment
+## 1.13 Localization & Retrieval Environment
 
 *How geographical context affects the comparison between Search and GenAI.*
 
@@ -1369,7 +1402,7 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 - **Impact on Methodology**: This legal pressure has led to technical restrictions in the SEO/GEO tool ecosystem, such as the removal of high-volume parameters (e.g., `num=100`). 
 - **Research Justification**: These constraints further justify our **Deep Hunt (Rank 200)** methodology. As traditional scraping becomes more restricted, the "Visibility Gap" between what an LLM can see (via direct API access) and what a researcher can see (via public search UIs) will likely widen, making the LLM a primary—and increasingly exclusive—gateway to the deep web.
 
-## 1.9 Citation Mapping & Claim-Level Attribution
+## 1.10 Citation Mapping & Claim-Level Attribution
 *How we precisely map ChatGPT's written claims to their retrieved sources.*
 
 ### 1.6.1 The "Claim-to-Link" Forensic Pipeline
