@@ -33,7 +33,6 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 We quantify grounding-related selection bias by comparing the **DNA distribution of the Menu** (Top‑N SERP results / retrieved candidate set) against the **DNA distribution of the Order** (the URLs the model actually cites), optionally **rank-stratified** (Rank 1..N) to control for position bias.
 
 ## Market Context & Motivation (Ahrefs Benchmark)
-*To motivate the study, we anchor the "Search vs. Generation" transition in macro-level traffic data.*
 
 - **The Macro Baseline:** According to [Ahrefs (ChatGPT vs. Google)](https://chatgpt-vs-google.com/), as of December 2025, traditional search engines still dominate web traffic (~41.68% share), while AI Assistants hold a much smaller but highly volatile share (~0.24%).
 - **The Research Opportunity:** While macro traffic to AI assistants is currently low, the **competition for user attention** is intensifying (e.g., Gemini's 31.7% growth in Dec '25).
