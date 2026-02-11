@@ -38,11 +38,6 @@ We quantify grounding-related selection bias by comparing the **DNA distribution
 - **The Research Opportunity:** While macro traffic to AI assistants is currently low, the **competition for user attention** is intensifying (e.g., Gemini's 31.7% growth in Dec '25).
 - **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition: how these AI assistants "ground" their answers in the very search results that currently dominate the market. We measure the *dependency* of generation on search.
 
-
-**Evidence hierarchy (how we present results):**
-- **Highest-confidence**: SERP position / visibility findings (rank distributions, “deep” vs “invisible” citations). These are based on direct URL/domain matching + observed rank positions.
-- **Secondary (more measurement noise)**: DNA-based Menu vs Order comparisons (e.g., `has_tables`, `has_pros_cons`, structure/format labels). These are still useful to characterize selection behavior, but depend on enrichment/labeling fidelity and page-template variance.
-
 ## Sub-questions (decompositions of RQ1, not separate topics)
 - **RQ1a (selection + visibility)**: How do **cited vs additional vs rejected/invisible** sources differ in domain/type, and how does this differ by **enterprise vs personal** runs on chatGPT results?
 - **RQ1b (external support)**: How often do selected citations appear in **Top‑N SERPs** (Bing/Google overlap; Gemini “survival” in Top‑20)?
