@@ -68,7 +68,7 @@ The outline contains all the necessary pieces, but the cleanest reading order is
 | Component            | Description                                                                      |
 | -------------------- | -------------------------------------------------------------------------------- |
 | **Queries**          | 79 product recommendation queries × 3 runs each (237 total runs)                 |
-| **ChatGPT Data**     | Full responses with inline citations, additional links, and recommended products |
+| **ChatGPT Data**     | Full responses with inline citations, additional links, and recommended products through chrome dev tool network packet inspection |
 | **Bing Data**        | Top 200 results                                                                  |
 | **Gemini Data**      | Full `groundingMetadata` (Chunks vs. Supports) + Fan-out Queries                 |
 | **Google SERP**      | SerpApi pagination until **≥20 Organic** results are collected (often ~3 pages), with Video/PAA/Discussions retained as diagnostic buckets |
@@ -79,8 +79,7 @@ SerpApi returns Google results in multiple **result_type** buckets (not just “
 
 - **Organic results**: standard web results (our primary control-group baseline).
 - **Video results**: often YouTube-heavy; can appear in top positions and inflate “coverage” for topics where ChatGPT cites YouTube.
-- **PAA (People Also Ask)**: question-card expansions; these are not directly comparable to Bing organic ranks and can introduce additional URLs.
-- **Discussions / forums blocks**: SerpApi often surfaces forum-like “discussions” sections; we retain them as a separate diagnostic bucket.
+- **Discussions / forums blocks**: SerpApi often surfaces forum-like “discussions” sections; we retain them as a separate diagnostic bucket (forums / quota etc..).
 
 **Method rule (comparability)**:
 - For overlap metrics, we default to **Organic-only** (and treat Video/PAA as separate diagnostic buckets), unless explicitly stated otherwise.
@@ -107,20 +106,14 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 
 ## 1.2 The Analysis App (Data Viewer)
 
-*Include this as a "Methodology" section—it shows rigor in your research process.*
-
 ### What the app does:
 - Interactive comparison of ChatGPT/Gemini responses vs. Search results per query/run
 - **Gemini Mode:** Visualizes the "Search Filter" by comparing `groundingChunks` (AI Shortlist) vs. `groundingSupports` (Final Citations) vs. `Google SERP` (The Control Group).
-- Three viewing modes: Top 30 Only, Deep Hunt Only, Combined (All)
-- Visual indicators for Exact URL Match (Yellow) vs. Domain Match (Green)
 - Dashboard with aggregate statistics (Overlap %, Invisible Domains, etc.)
 
 ### Why it matters for the thesis:
 - Enabled manual spot-checking of automated findings
 - Revealed the "Pagination Loop" and "Page 2 Cliff" problems in Bing
-- Proved the need for Deep Hunt methodology
-- **Gemini Insight:** Revealed that Gemini's `groundingChunks` are already pre-filtered (0% rejection rate vs. supports), necessitating a comparison against external SerpApi data to measure the *true* filter.
 
 ### 1.2.2 Methodological Evolution: From Top 30 to "Deep Hunt" (Rank 200)
 - **Initial Assumption:** Our study began with a standard retrieval depth of the **Top 30 Bing results**, assuming this would capture the vast majority of relevant citations used by ChatGPT.
@@ -589,6 +582,28 @@ Across all retrieved links, we observe a consistent "graduation" effect where mo
 
 #### 2.2.2.3 Freshness paradox (selection drift, stratified)
 We analyze how freshness cues influence selection. The key pattern is that freshness signals can look weak or negative in aggregate due to **type confounding** (product pages vs listicles), but become positive when conditioning on listicles only (see `data/enrichment/full_stratified_drift_report.txt`).
+
+#### 2.2.2.4 Statistical Significance of Content DNA Preferences (T-Test)
+To validate whether observed selection drifts are statistically significant, we performed a two-sample T-test (Welch’s T-test) comparing the prevalence of content DNA features across models.
+
+##### GPT Enterprise vs. Personal (Citations)
+| Feature | Ent % | Pers % | Diff | Sig |
+| :--- | :---: | :---: | :---: | :---: |
+| tables | 21.3% | 19.1% | 2.2% | p<0.01 |
+| numbered lists | 50.3% | 35.1% | 15.2% | p<0.01 |
+| bullet points | 35.4% | 29.0% | 6.4% | p<0.01 |
+| is current year 2026 | 15.1% | 17.8% | -2.7% | p<0.01 |
+| clear authorship | 33.6% | 28.7% | 4.9% | p<0.01 |
+
+##### Gemini Selection Preference (Order vs. Menu)
+| Feature | Order % | Menu % | Drift | Sig |
+| :--- | :---: | :---: | :---: | :---: |
+| bullet points | 74.5% | 78.7% | -4.2% | p<0.01 |
+| numbered lists | 52.8% | 48.9% | 3.9% | p<0.05 |
+| pros cons | 38.1% | 38.8% | -0.8% | ns |
+| tables | 33.4% | 35.8% | -2.4% | ns |
+| is current year 2026 | 17.0% | 15.7% | 1.3% | ns |
+| is vendor owned | 23.1% | 24.8% | -1.7% | ns |
 
 ---
 
