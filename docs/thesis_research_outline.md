@@ -27,9 +27,9 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 
 ## Market Context & Motivation (Ahrefs Benchmark)
 
-- **The Macro Shift (8-Month Trend):** According to data from [Ahrefs (ChatGPT vs. Google)](https://chatgpt-vs-google.com/), total search traffic across a panel of 75,000 websites dropped by **7.5%** (from 494M to 457M visits) over the last 8 months.
+- **The Macro Shift (8-Month Trend):** According to data from [Ahrefs (ChatGPT vs. Google)](https://chatgpt-vs-google.com/) analyzing **74,752 websites** between **June 2025 and January 2026**, total search traffic across the panel dropped by **7.5%** (from 494M to 457M visits).
 - **The AI Growth Engine:** In the same timeframe, referral traffic from AI chatbots grew by **27%** (from 2.9M to 3.7M visits).
-- **The "SEO is Not Dead" Reality:** While AI traffic is growing rapidly, traditional search still dominates the referral landscape by orders of magnitude. As noted by Tim Soulo (CMO at Ahrefs), the strategic mistake is not ignoring AI, but abandoning SEO—our study proves that **AI grounding is parasitic on search results**, meaning SEO is the prerequisite for AI visibility.
+- **The "SEO is Not Dead" Reality:** While AI traffic is growing rapidly, traditional search still dominates the referral landscape by orders of magnitude. Industry analysis from Ahrefs (2026) suggests that the strategic mistake is not ignoring AI, but abandoning SEO—our study proves that **AI grounding is parasitic on search results**, meaning SEO remains the prerequisite for AI visibility.
 - **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition: how these AI assistants "ground" their answers in the very search results that currently dominate the market. We measure the *dependency* of generation on search.
 
 ## Sub-questions (decompositions of RQ1, not separate topics)
