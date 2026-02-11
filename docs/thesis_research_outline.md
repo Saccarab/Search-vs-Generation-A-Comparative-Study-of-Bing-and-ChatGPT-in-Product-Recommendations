@@ -85,6 +85,16 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 
 *Why product recommendations are the "Front Line" of Generative Search.*
 
+
+### 1.3.1 Industry Benchmark: ChatGPT Web Search Trigger Rates (Profound Analysis)
+*To contextualize our study, we refer to industry-wide telemetry from **Profound** (captured as of Jan 6, 2026), which analyzes trigger rates across 667,000 real-user conversations.*
+
+![ChatGPT Web Search Trigger Rate (by Intent)](1767882183827.jpg)
+
+- **Commercial Intent as the Primary Driver**: Web search is triggered in **53.51% of Commercial queries**, compared to only 18.73% for Informational and 8.88% for Generative queries.
+- **Overall Trigger Rate**: Across all intents, the baseline trigger rate is **17.41%**.
+- **Thesis Alignment**: Our decision to filter for **high commercial intent** (product recommendations) aligns with this industry data, as this is the segment where RAG/Grounding is most active and commercially impactful.
+
 ### 1.5.1 Search Trigger Rates by Intent
 - **The Commercial Dominance:** Research (e.g., Profound, 2026) indicates that **Commercial Queries** trigger a web search in **53.51%** of ChatGPT conversations—nearly 3x the rate of Informational queries (18.73%).
 - **The "Winnable" Arena:** Because commercial intent requires real-time data (pricing, availability, reviews), it is the primary driver for RAG adoption. This makes product recommendations the most critical area for studying the shift from SEO to GEO.
