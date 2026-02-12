@@ -145,10 +145,10 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 | **Content Fetching** | Node.js fetcher + Browser extension for blocked pages (Master Content Library)   |
 
 ### 2.1.1 Selection of the Research Query Set
-- **High-Volume Real-World Prompts:** Our dataset consists of **79 unique product recommendation prompts** (e.g., "Best AI video translators", "Top-rated transcription software").
+- **High-Volume Real-World Prompts:** Our dataset consists of **79 unique product recommendation prompts** (e.g., "Best AI video translators", "Top-rated transcription software"), sourced from two platforms: **65 prompts from Profound** (real user conversations with ChatGPT) and **14 prompts from Ahrefs** (high-volume keyword clusters).
 - **Methodology for Selection:**
-    - **Keyword Clustering:** Using tools like **Ahrefs** to identify high-intent clusters.
-    - **Prompt Volume Analysis:** Leveraging **Profound's** database to select real-world prompts actually used by consumers.
+    - **Keyword Clustering:** Using **Ahrefs** to identify high-intent keyword clusters and derive 14 representative prompts from search volume data.
+    - **Prompt Volume Analysis:** Leveraging **Profound's** Prompt Volumes feature to select 65 prompts derived from real user conversations with ChatGPT. Note: Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent rather than verbatim transcripts.
     - **Deliberate Intent Filtering:** From the broad set of available user prompts, we **deliberately filtered for high commercial intent**. This ensures the study reflects the specific segment of search where AI synthesis is most active and where the "Extractive Nature" of the model is most visible.
     - **Domain Expertise:** Queries were focused on the **AI and Software-as-a-Service (SaaS)** sectors—a domain where the author has significant professional expertise—allowing for more nuanced qualitative analysis of the "Signal vs. Noise" in results.
 - **Experimental Rigor:** Each of the 79 prompts was executed in **3 independent runs** (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
@@ -368,7 +368,7 @@ To make downstream analyses defensible, we first measured how much of the URL un
 *How geographical context affects the comparison between Search and GenAI.*
 
 ### 2.7.1 Implicit vs. Explicit Localization (Definitions & Instrumentation)
-- **Prompt Language Distribution**: Our dataset consists of **74 English prompts** and **5 foreign-language prompts** (French, Chinese, Turkish, Italian, Spanish).
+- **Prompt Language Distribution**: Our dataset consists of **72 English prompts** and **7 foreign-language prompts** (1 French, 1 Chinese, 2 Turkish, 1 German, 1 Italian, 1 Spanish). All 7 foreign-language prompts originated from **Ahrefs** keyword clusters; the **Profound**-sourced prompts were exclusively English.
 - **Explicit Localization:** When the user query contains a location (e.g., "Best pizza in New York").
 - **Implicit Localization:** When the query is general (e.g., "Best laptop"), but the search engine uses the user's IP, browser language, and search history to localize results.
 - **The Research Problem:** Traditional search engines (Bing) are aggressively localized. Generative AI (ChatGPT) often provides a more "Global/US-centric" baseline unless explicitly prompted otherwise.
