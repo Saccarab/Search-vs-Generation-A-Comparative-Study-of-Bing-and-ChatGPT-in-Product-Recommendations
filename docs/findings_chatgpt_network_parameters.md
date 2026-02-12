@@ -708,9 +708,7 @@ A complete reference of the parameters captured from the ChatGPT WebSocket strea
 
 5. **The Sonic Classifier does NOT control fan-out count.** The classifier fires once and decides search vs. no-search. The re-search loop is driven by the generation model's own judgment of result quality. P073 proves this definitively: byte-identical classifier outputs (`simple_search_prob` = 0.9774 to 16 decimal places) across 3 runs produced 2, 2, and 6 queries respectively. P050 re-searched with a `complex_search_prob` of just 0.27%, while P020 did not re-search at 30.6%.
 
-6. **Enterprise accounts re-search 3x more often** (4.1% vs 1.4%), suggesting different Sonicberry orchestration behavior across deployment tiers.
-
-6. **Enterprise accounts search more consistently** (91.1% vs 86.9%), potentially due to the absence of the speculative prefetch mechanism and a more deterministic tool-routing pipeline.
+6. **Enterprise accounts behave differently at both layers.** Enterprise searches more consistently (91.1% vs 86.9%) and re-searches 3x more often (4.1% vs 1.4%), while Personal accounts have the speculative prefetch mechanism (0.55 threshold) and more frequent post-classifier suppression.
 
 7. **~68% of retrieved sources never reach the user.** The system retrieves ~23 sources per run but only surfaces ~7 as visible citations. The "Additional" and "Hidden" tiers represent a substantial editorial filter that shapes what information users actually see.
 
