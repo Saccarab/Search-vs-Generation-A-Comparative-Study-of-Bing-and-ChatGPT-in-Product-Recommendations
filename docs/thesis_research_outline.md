@@ -198,7 +198,7 @@ A critical methodological challenge arose from Bing's inconsistent UI pagination
     1. **Lost overlap (conservative bias):** If our Bing scrape for a given run captured a truncated Page 1, we may have missed legitimate top-ranking results that ChatGPT's retrieval system almost certainly had access to. This means our reported overlap percentages are likely **underestimates** — some citations we classified as "invisible" may have been present in Bing's index at high ranks but absent from our specific scrape due to pagination instability.
     2. **Why Top 200 was necessary:** Because everything after Page 1 is loosely indexed and inconsistent, we needed to scrape deep (Rank 200) not because ChatGPT is truly "deep hunting" at those ranks, but to **compensate for Bing's UI-layer instability** and recover matches that a stable API would have returned in the Top 10–30.
 - **The API vs. UI Divergence Hypothesis:** We strongly suspect that ChatGPT does **not** receive the same noisy, truncated pagination that Bing's web UI serves to human users. OpenAI's integration with Bing is via a **backend API** (the "Grounding with Bing Search" endpoint), which likely returns a clean, stable ranked list without ads, carousels, or pagination artifacts. This means our Bing-UI-scraped baseline is a **degraded proxy** for what ChatGPT actually sees — further supporting the interpretation that our overlap figures are conservative lower bounds.
-- **Possible Correlation with the Bing Search API Retirement:** This UI-layer degradation may not be coincidental. As noted in **`1.2.5`**, Microsoft officially decommissioned the legacy Bing Search APIs on **August 11, 2025**, migrating all programmatic access to the **"Grounding with Bing Search"** endpoint within the Azure AI Agents ecosystem. With the public search API retired and Microsoft's strategic focus shifting toward serving AI agents (the "Agent Web") rather than human searchers (the "Human Web"), there is less commercial incentive to maintain a high-quality, stable pagination experience in the consumer-facing Bing UI. The pagination instability we observe — truncated first pages, noisy deep results, inconsistent rank ordering across scrapes — may be an early symptom of this structural deprioritization. If correct, this reinforces our "Two-Web" thesis: the same index is being served through two increasingly divergent interfaces, one optimized for machine consumption (stable, clean, API-driven) and one for human browsing (ad-heavy, unstable, deprioritized).
+- **What This Implies About ChatGPT's Retrieval:** Given that ChatGPT consistently cites high-quality, relevant sources, one of two things must be true: either ChatGPT receives a **cleaner, more stable ranking** from Bing's backend API than what the consumer UI exposes, or the model is doing substantial work to **filter through the same noisy index** and extract signal from noise. Either interpretation underscores the divergence between the human-facing and agent-facing search experiences described in **`1.2.5`**.
 - **Contrast with Google (SerpApi):** This instability was not observed in our Google SERP data collected via SerpApi, which returned consistent, stable organic rankings across paginated requests. This asymmetry between Bing's UI instability and Google's API stability is itself a noteworthy finding for researchers attempting to replicate grounding studies.
 
 ## 2.3 Anatomy of a ChatGPT Response (Network-Instrumented)
@@ -321,7 +321,7 @@ To quantify selection effects (what gets cited vs. what was available), we neede
 ### 2.5.2 Enrichment Logic & Static Overrides
 *To ensure efficiency and accuracy, the labeling pipeline uses a hybrid approach of LLM-labeling and static rules for high-volume, well-known domains.*
 
-- **LLM-Labeling (GPT-4o-mini)**: Used for general web pages, blogs, and niche product sites to determine structural features (`has_tables`, `has_pros_cons`, etc.).
+- **LLM-Labeling (GPT-5-mini)**: Used for general web pages, blogs, and niche product sites to determine structural features (`has_tables`, `has_pros_cons`, etc.).
 - **Static Domain Overrides (Skipped Enrichment)**: Known platforms with consistent structural patterns were assigned "pre-made" labels to save quota and ensure consistency:
     - **`reddit.com`**: Automatically labeled as `type=forum_ugc`, `content_format=discussion_thread`, `tone=opinionated`.
     - **`en.wikipedia.org`**: Automatically labeled as `type=reference`, `content_format=encyclopedic`, `tone=neutral_informational`.
@@ -357,96 +357,41 @@ To make downstream analyses defensible, we first measured how much of the URL un
 - **Forensic Discovery:** Our mapping revealed that these correspond to concatenated tokens (e.g., `turn0search8` + `search15`).
 - **Research Value:** This allows us to measure **Synthesis Aggression**—how ChatGPT merges facts from multiple distinct search results into a single cohesive claim.
 
-### 2.6.3 Multi-Source Claim Support Rate (single claim/segment cites >1 URL)
-**Definition (operational):** a claim/segment is "multi-cited" if it has **2+ distinct cited URLs**.
-
-Computed by `scripts/analysis/multi_source_claim_support.py` (artifacts in `data/enrichment/`).
-
-**All claim/segment occurrences:**
-- **GPT**: 458 / 4296 (**10.7%**) multi-cited
-- **Gemini**: 788 / 2287 (**34.5%**) multi-cited
-
-**Listicle-cited occurrences only (at least one cited URL has `type=listicle`):**
-- **GPT**: 194 / 1363 (**14.2%**) multi-cited
-- **Gemini**: 664 / 1519 (**43.7%**) multi-cited
-
-### 2.6.4 Mixed Listicle + Product-Page Citations (within a single claim/segment)
-**Definition (operational):** among **multi-cited** claims/segments, label a case "mixed" if the cited URL set contains **≥1** `type=listicle` and **≥1** `type=product_page`.
-
-**All multi-cited occurrences:**
-- **GPT**: 41 / 458 (**9.0%**) mixed listicle+product-page
-- **Gemini**: 130 / 788 (**16.5%**) mixed listicle+product-page
-
-**What are the "rest" of multi-cited claims? (type-mix buckets)**
-When we say "multi-cited", we partition each multi-cited claim/segment into **exactly one** bucket:
-- **mixed listicle+product**: at least one `listicle` and at least one `product_page`
-- **listicle-only**: at least one `listicle` and **no** `product_page`
-- **product-only**: at least one `product_page` and **no** `listicle`
-- **neither**: **no** `listicle` and **no** `product_page` cited (i.e., multiple citations drawn from other page types such as directories, docs, news, etc., or "unknown" when a URL lacks a DNA label)
-
-**GPT multi-cited (N=458) bucket breakdown:**
-- mixed listicle+product: **41 (9.0%)**
-- listicle-only: **153 (33.4%)**
-- product-only: **168 (36.7%)**
-- neither (no listicle/product_page): **96 (21.0%)**
-
-**Gemini multi-cited (N=788) bucket breakdown:**
-- mixed listicle+product: **130 (16.5%)**
-- listicle-only: **534 (67.8%)**
-- product-only: **84 (10.7%)**
-- neither (no listicle/product_page): **40 (5.1%)**
-
-**What does "neither" look like? (examples of multi-cited type-sets)**
-- **GPT neither (N=96)** is dominated by `unknown` (unlabeled URLs) plus small tails like `news_article`, `documentation`, `editorial_article`, `forum_ugc`, `marketplace_directory`, and combinations (see `multi_type_sets_by_bucket.neither_listicle_nor_product` in `data/enrichment/multi_source_claim_support_stats.json`).
-- **Gemini neither (N=40)** is mostly `other` / `unknown` mixtures plus a tail of `documentation`, `marketplace_directory`, `forum_ugc`, `editorial_article`, etc. (same JSON).
-
-**Listicle-cited multi-cited occurrences only:**
-- **GPT**: 41 / 194 (**21.1%**) mixed listicle+product-page
-- **Gemini**: 130 / 664 (**19.6%**) mixed listicle+product-page
-
-**Mixed-case lists (for qualitative inspection):**
-- `data/enrichment/mixed_listicle_plus_product_citations_gpt.csv` (41 rows)
-- `data/enrichment/mixed_listicle_plus_product_citations_gemini.csv` (130 rows)
+### 2.6.3 Definitions for Multi-Source & Mixed Citation Analysis
+- **Multi-cited claim/segment:** a claim/segment with **2+ distinct cited URLs**. Computed by `scripts/analysis/multi_source_claim_support.py`.
+- **Mixed listicle+product citation:** among multi-cited claims, a case where the cited URL set contains **≥1** `type=listicle` and **≥1** `type=product_page`.
+- **Type-mix buckets:** each multi-cited claim is partitioned into exactly one bucket: *mixed listicle+product*, *listicle-only*, *product-only*, or *neither* (other page types / unknown).
+- **Quantitative results** for these metrics are reported in **`3.7`**.
 
 ## 2.7 Localization & Retrieval Environment
 
 *How geographical context affects the comparison between Search and GenAI.*
 
-### 2.7.1 Implicit vs. Explicit Localization
+### 2.7.1 Implicit vs. Explicit Localization (Definitions & Instrumentation)
 - **Prompt Language Distribution**: Our dataset consists of **74 English prompts** and **5 foreign-language prompts** (French, Chinese, Turkish, Italian, Spanish).
 - **Explicit Localization:** When the user query contains a location (e.g., "Best pizza in New York").
 - **Implicit Localization:** When the query is general (e.g., "Best laptop"), but the search engine uses the user's IP, browser language, and search history to localize results.
-    - **Occurrence Rates:** We observe implicit localization signals (non-English fan-out queries) in **13.1%** of GPT runs and **4.6%** of Gemini runs.
 - **The Research Problem:** Traditional search engines (Bing) are aggressively localized. Generative AI (ChatGPT) often provides a more "Global/US-centric" baseline unless explicitly prompted otherwise.
 - **Observed instrumentation signal (Fan-Out Queries):** In our logged **fan-out query sets** (Gemini `groundingMetadata.webSearchQueries[]`, ChatGPT network-derived hidden queries), implicit localization often manifests as **one of the fan-out queries being rewritten into the prompt's local language**, which then steers retrieval toward localized sources.
-- **The "English Anchor" Effect (Gemini-specific):**
-    - Even for foreign-language prompts, Gemini **always** reserves the first fan-out slot (Index 0) for an English translation of the prompt.
-    - Due to the **First-Query Bias** (where models preferentially cite results from the first search query), the English-language search results dominate the final response.
-    - **Finding**: In 100% of our localized Gemini runs, the cited sources were primarily global/English SaaS platforms and tech publications (e.g., `pcmag.com`, `techradar.com`), effectively creating a "Global Information Bubble" even for non-English users.
-- **Concrete example (why we used a proxy):** When issuing an English prompt from **Munich, Germany**, we observed a two-query fan-out where one query remained English while the other was rewritten into German:
+- **Concrete example (implicit localization via fan-out):** When issuing an English prompt from **Munich, Germany**, we observed a two-query fan-out where one query remained English while the other was rewritten into German:
   - Q1: `"free website or program to translate video and add subtitles"`
   - Q2: `"kostenlos video übersetzen und Untertitel automatisch hinzufügen ..."`
 
-  This yielded German-language results despite an English user prompt, demonstrating how implicit localization can enter via fan-out rewriting. (Redacted network excerpt saved at `datapass/raw_network_responses/examples/implicit_localization_fanout_query_rewritten_de_redacted.txt`.)
+  This yielded German-language results despite an English user prompt. (Redacted network excerpt saved at `datapass/raw_network_responses/examples/implicit_localization_fanout_query_rewritten_de_redacted.txt`.)
 
-- **Publisher/SEO→GEO implication:** Even if users in non‑English-speaking countries **search in English**, IP/locale-driven fan‑out rewriting can route part of retrieval toward **localized-language SERPs**. Publishers without localized pages may lose visibility (and therefore citations/traffic) in these retrieval paths.
+- **Concrete example (explicit localization via fan-out):** A location-free prompt like `"what is the best bakery"` can trigger fan-out queries that inject a specific place (e.g., `"best bakery near Munich Germany"`), effectively converting an implicit prompt into an explicitly localized retrieval task. (Redacted network excerpt saved at `datapass/raw_network_responses/examples/explicit_localization_bakery_munich_redacted.txt`.)
 
-- **Observed fan-out localization patterns (3 cases we saw):**
+- **Observed fan-out localization patterns (3 cases we instrumented):**
   1. **Prompt is foreign-language**: the system may still emit at least one **English** fan-out query alongside the local-language query (mixed-language retrieval).
   2. **Prompt is English + user in non‑English region**: one fan-out query may be rewritten into the region's language (example above: Munich → German).
   3. **Prompt is English + unexpected non‑English fan-out**: occasionally, a fan-out query appears in another language for unclear reasons (observed in both GPT and Gemini; e.g., Gemini searching in French for a TTS query). This is treated as an anomaly / potential hallucination or hidden locale signal.
 
-- **Concrete example (explicit localization via fan-out):** A location-free prompt like `"what is the best bakery"` can trigger fan-out queries that inject a specific place (e.g., `"best bakery near Munich Germany"`), effectively converting an implicit prompt into an explicitly localized retrieval task. (Redacted network excerpt saved at `datapass/raw_network_responses/examples/explicit_localization_bakery_munich_redacted.txt`.)
+- **Findings** (occurrence rates, "English Anchor" effect, freshness steering stats) are reported in **`3.1`**.
 
-### 2.7.2 Freshness Steering (Explicit vs. Implicit)
-- **Gemini: Explicit Freshness Obsession**
-    - **93.4% of Gemini runs** explicitly inject a year (2025 or 2026) into their fan-out queries.
-    - **71.7% of Gemini runs** place this freshness signal in the **very first query (Index 0)**.
-    - **Impact**: This explains Gemini's extreme "Listicle Uptake" rate. By explicitly searching for "Best [Product] 2025," the model forces the retrieval of listicles, which then dominate its grounding.
-- **GPT: Implicit Recency Reliance**
-    - Only **5.1% of GPT runs** use explicit year signals in their fan-out queries.
-    - **Impact**: GPT relies almost entirely on the search index's (Bing's) internal recency ranking. It does not "hunt" for listicles as aggressively as Gemini, leading to a more diverse (though still listicle-leaning) grounding pool.
-- **Note:** Definition + drift mechanics are described in `2.3.4 Fan-out queries ("hidden queries")` (instrumentation section); we focus here on the freshness operator specifically.
+### 2.7.2 Freshness Steering (Methodology)
+- **What we measure:** Whether fan-out queries contain explicit year signals (e.g., "2025", "2026") and at which query index they appear.
+- **Why it matters:** Explicit year injection steers retrieval toward time-stamped listicles, which changes the composition of the grounding pool.
+- **Findings** (Gemini vs. GPT freshness rates) are reported in **`3.1`**.
 
 ### 2.7.3 The Proxy Requirement (US-Centric Baseline)
 - To ensure a fair "apples-to-apples" comparison, we standardized our retrieval environment using a **US-based Proxy**.
@@ -549,12 +494,20 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 - Host bias / listicle rank bias / semantic fidelity are reported under **`3.6`**.
 
 ## 3.1 Retrieval Strategy & Fan-Out Analysis
-*Before analyzing citation overlap, we examine the retrieval phase: how the models reshape the user prompt into multiple search queries.*
+*Before analyzing citation overlap, we examine the retrieval phase: how the models reshape the user prompt into multiple search queries. Methodology and instrumentation are defined in `2.3.4`, `2.7.1`, and `2.7.2`.*
 
-*   **The "Fan-Out Strategy" (Implicit vs. Explicit Retrieval):**
-    *   **Gemini's Freshness Obsession:** 93.4% of Gemini runs explicitly inject a year (2025 or 2026) into their fan-out queries, with 71.7% placing this signal in the very first query (Index 0). This drives Gemini's aggressive "Listicle Uptake."
-    *   **GPT's Multi-Turn Expansion:** While GPT only uses explicit years in 5.1% of runs, it exhibits a "Multi-Turn Fan-Out" phenomenon where it issues secondary and tertiary queries (3+ queries) in response to initial results, effectively "hunting" for specific citations before finalizing the response.
-    *   **Implicit Localization Bias:** Implicit localization signals (non-English fan-out queries from English prompts) were observed in 13.1% of GPT runs and 4.6% of Gemini runs, demonstrating how retrieval environment (IP/locale) can steer grounding even without user intent.
+### 3.1.1 Freshness Steering
+- **Gemini: Explicit Freshness Obsession:** **93.4%** of Gemini runs explicitly inject a year (2025 or 2026) into their fan-out queries, with **71.7%** placing this signal in the very first query (Index 0). This drives Gemini's aggressive "Listicle Uptake" — by explicitly searching for "Best [Product] 2025," the model forces the retrieval of time-stamped listicles, which then dominate its grounding.
+- **GPT: Implicit Recency Reliance:** Only **5.1%** of GPT runs use explicit year signals in their fan-out queries. GPT relies almost entirely on the search index's (Bing's) internal recency ranking, leading to a more diverse (though still listicle-leaning) grounding pool.
+- **GPT's Multi-Turn Expansion:** GPT exhibits a "Multi-Turn Fan-Out" phenomenon where it issues secondary and tertiary queries (3+ queries) in response to initial results, effectively "hunting" for specific citations before finalizing the response.
+
+### 3.1.2 Implicit Localization Bias
+- **Occurrence Rates:** Implicit localization signals (non-English fan-out queries from English prompts) were observed in **13.1%** of GPT runs and **4.6%** of Gemini runs, demonstrating how retrieval environment (IP/locale) can steer grounding even without user intent.
+- **The "English Anchor" Effect (Gemini-specific):**
+    - Even for foreign-language prompts, Gemini **always** reserves the first fan-out slot (Index 0) for an English translation of the prompt.
+    - Due to the **First-Query Bias** (where models preferentially cite results from the first search query), the English-language search results dominate the final response.
+    - In 100% of our localized Gemini runs, the cited sources were primarily global/English SaaS platforms and tech publications (e.g., `pcmag.com`, `techradar.com`), effectively creating a "Global Information Bubble" even for non-English users.
+- **Publisher/SEO→GEO implication:** Even if users in non‑English-speaking countries **search in English**, IP/locale-driven fan‑out rewriting can route part of retrieval toward **localized-language SERPs**. Publishers without localized pages may lose visibility (and therefore citations/traffic) in these retrieval paths.
 
 ## 3.2 Citation Overlap Analysis
 
@@ -898,6 +851,48 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
       - **Gemini**: **7.36%** (31/421 product roster items)
       - **GPT**: **1.89%** (13/689 product roster items)
 - **Thesis Implication:** The "hallucination problem" in modern RAG systems is increasingly an **attribution/linkage problem**, not a "reading" or "understanding" problem. The models "know" the facts but "forget" which specific tab they were looking at when they found them.
+
+## 3.7 Multi-Source Citation Analysis
+*How often do models cite multiple sources for a single claim, and what type combinations appear? Definitions in `2.6.3`.*
+
+### 3.7.1 Multi-Source Claim Support Rate
+**All claim/segment occurrences:**
+- **GPT**: 458 / 4296 (**10.7%**) multi-cited
+- **Gemini**: 788 / 2287 (**34.5%**) multi-cited
+
+**Listicle-cited occurrences only (at least one cited URL has `type=listicle`):**
+- **GPT**: 194 / 1363 (**14.2%**) multi-cited
+- **Gemini**: 664 / 1519 (**43.7%**) multi-cited
+
+### 3.7.2 Mixed Listicle + Product-Page Citations
+
+**All multi-cited occurrences:**
+- **GPT**: 41 / 458 (**9.0%**) mixed listicle+product-page
+- **Gemini**: 130 / 788 (**16.5%**) mixed listicle+product-page
+
+**GPT multi-cited (N=458) bucket breakdown:**
+- mixed listicle+product: **41 (9.0%)**
+- listicle-only: **153 (33.4%)**
+- product-only: **168 (36.7%)**
+- neither (no listicle/product_page): **96 (21.0%)**
+
+**Gemini multi-cited (N=788) bucket breakdown:**
+- mixed listicle+product: **130 (16.5%)**
+- listicle-only: **534 (67.8%)**
+- product-only: **84 (10.7%)**
+- neither (no listicle/product_page): **40 (5.1%)**
+
+**What does "neither" look like? (examples of multi-cited type-sets)**
+- **GPT neither (N=96)** is dominated by `unknown` (unlabeled URLs) plus small tails like `news_article`, `documentation`, `editorial_article`, `forum_ugc`, `marketplace_directory`, and combinations (see `multi_type_sets_by_bucket.neither_listicle_nor_product` in `data/enrichment/multi_source_claim_support_stats.json`).
+- **Gemini neither (N=40)** is mostly `other` / `unknown` mixtures plus a tail of `documentation`, `marketplace_directory`, `forum_ugc`, `editorial_article`, etc. (same JSON).
+
+**Listicle-cited multi-cited occurrences only:**
+- **GPT**: 41 / 194 (**21.1%**) mixed listicle+product-page
+- **Gemini**: 130 / 664 (**19.6%**) mixed listicle+product-page
+
+**Mixed-case lists (for qualitative inspection):**
+- `data/enrichment/mixed_listicle_plus_product_citations_gpt.csv` (41 rows)
+- `data/enrichment/mixed_listicle_plus_product_citations_gemini.csv` (130 rows)
 
 ---
 
