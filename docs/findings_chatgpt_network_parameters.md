@@ -61,6 +61,28 @@ A notable structural difference exists between deployment types:
 
 The **prefetch_threshold** (0.55) on Personal accounts allows ChatGPT to begin fetching search results *before* the classifier fully resolves — a speculative prefetch optimization absent from Enterprise. Enterprise accounts instead have access to a broader set of **passthrough tools** (calendar, contacts, email), reflecting the workspace integration layer.
 
+### 1.4 The "65% Search Probability" Claim vs. Our Data
+
+Independent reverse-engineering research by [Resoneo](https://think.resoneo.com/chatgpt/) documents a `force_search_threshold` of **65%**, describing it as the primary activation trigger — if `search_prob` exceeds 65%, web search fires. This has been widely cited in online discussions of ChatGPT's search mechanics.
+
+**Our data tells a different story.** The classifier configuration captured in our 474 runs uses a **three-class threshold system** rather than a single probability cutoff:
+
+| Approach | Resoneo / Community Claim | Our Observed Configuration |
+|----------|--------------------------|---------------------------|
+| **Threshold model** | Single `force_search_threshold` = 65% | Three thresholds evaluated in order: `no_search` (17.5%), `complex` (40%), `simple` (0%) |
+| **Decision logic** | If search_prob > 65% → search | If `no_search_prob` < 17.5% → search (effectively) |
+| **Probability framing** | One score: "probability search is needed" | Three scores summing to 1.0 |
+
+We cannot directly confirm or refute the 65% claim because the systems may differ:
+
+1. **Different classifier versions.** Resoneo's observations may reflect an older or A/B-variant classifier. Our data captures `sonic_classifier_5p2_3cls_ev3` (snapshot `wli-searchdb-model5-2025-09-23-20-17`). The "65%" may correspond to a different `classifier_config_name` or an earlier 2-class model that used a single threshold.
+
+2. **The 55% prefetch threshold is close.** Our Personal accounts show `prefetch_threshold: 0.55` — which is in the same ballpark as 65%. It is possible that the "65%" figure conflates the search *decision* threshold with the speculative *prefetch* threshold, or that the prefetch threshold was 65% in an earlier version and has since been lowered to 55%.
+
+3. **Our runs were overwhelmingly high-confidence.** The median `simple_search_prob` in our data is **96.8%** — far above any plausible threshold. Only 2 runs fell below 70% (`simple_search_prob`), and those were the atypical P045 runs with high `complex_search_prob`. We simply don't have enough runs in the 50–70% zone to test where the effective boundary lies.
+
+**What we can confirm:** In our data, the effective search-trigger boundary is controlled by `no_search_prob ≥ 0.175` (if no-search probability exceeds 17.5%, search is suppressed). The highest `no_search_prob` we observed was 17.37% — just barely below this gate — and that run *did* trigger search. This threshold-first architecture is functionally different from a "if search_prob > X" model, because it evaluates the *no-search* class first rather than the search class.
+
 ---
 
 ## 2. Search Trigger Rates: When Does ChatGPT Actually Search?
@@ -225,85 +247,136 @@ These runs produced **fully sourced citations without any live search**, meaning
 
 When search is triggered, ChatGPT does not send the user's exact prompt to its search provider. Instead, the system generates **hidden queries** (`hidden_queries` / `search_model_queries`) — reformulated, keyword-optimized search strings invisible to the user. This reformulation step mirrors traditional search-engine query rewriting but occurs entirely within ChatGPT's pipeline.
 
-### 4.1 Fan-Out Distribution
+### 4.1 The `web.run` Tool-Call Chain: How Fan-Out Actually Works
 
-The fan-out system operates in **discrete modes** — it does not generate arbitrary numbers of queries:
+Inspecting the raw WebSocket stream reveals that fan-out is not a single event where N queries are dispatched at once. It is an **iterative agentic loop** built on a tool called `web.run`. The generation model (gpt-5-2, orchestrated through the Sonicberry layer `alpha.sonic_thinky_v1_paid`) calls `web.run` as a tool, receives results, and then *decides whether to call it again*. Each `web.run` invocation always dispatches exactly **2 queries** (a fixed pair-generation strategy). The key network field is `search_turns_count`, which increments with each successive round:
 
-| Fan-Out Count | Runs | Percentage | Classification |
-|---------------|------|------------|----------------|
-| **0 queries** | 14 | 3.2% | No search / null classification |
-| **1 query** | 0 | 0.0% | *Never observed* |
-| **2 queries** | 409 | **94.0%** | Standard simple search |
-| **3 queries** | 0 | 0.0% | *Never observed* |
-| **4 queries** | 11 | 2.5% | Extended fan-out |
-| **6 queries** | 1 | 0.2% | Maximum observed fan-out |
+**Standard run (2 queries) — 1 `web.run` call:**
+```
+web.run #1  →  2 queries  →  search_turns_count: 1  →  model proceeds to generate response
+```
 
-The absence of 1-query and 3-query runs is striking: the system uses a **fixed pair-generation strategy** for its default mode, always producing exactly 2 reformulated queries — typically one close paraphrase and one structural rephrase. There is no "single query" mode.
+**Extended run (4 queries) — 2 `web.run` calls:**
+```
+web.run #1  →  2 queries  →  search_turns_count: 1  →  model evaluates results
+                                                       →  decides: "not enough"
+web.run #2  →  2 queries  →  search_turns_count: 2  →  model proceeds to generate response
+```
+
+**Maximum observed (6 queries) — 3 `web.run` calls:**
+```
+web.run #1  →  2 queries  →  search_turns_count: 1  →  model evaluates results
+                                                       →  decides: "not enough"
+web.run #2  →  2 queries  →  search_turns_count: 2  →  model evaluates results
+                                                       →  decides: "still not enough"
+web.run #3  →  2 queries  →  search_turns_count: 3  →  model proceeds to generate response
+```
+
+This means there is no upfront "plan 6 queries" decision. The model issues a standard 2-query search, sees the results in its context, and makes a real-time judgment call on whether to search again. The Sonic Classifier plays no role in this loop — it fires once at the start to decide *whether* to search at all. Everything after that is the generation model's own agentic behavior.
+
+### 4.2 Evidence from Raw Network Responses
+
+The `web.run` tool calls appear as separate message objects in the WebSocket stream, each authored by `tool:web` with metadata from the Sonicberry orchestration layer. Key fields per call:
+
+| Field | Description |
+|-------|-------------|
+| `author.name` | Always `"web.run"` |
+| `author.metadata.sonicberry_model_id` | `"alpha.sonic_thinky_v1_paid"` — the orchestration layer that decides whether to re-search |
+| `author.metadata.source` | `"sonic_tool"` |
+| `search_model_queries.queries` | Array of exactly 2 reformulated search strings |
+| `search_turns_count` | Incremental counter: 1, 2, 3... per successive call |
+| `search_source` | `"composer_auto"` — indicates the search was auto-triggered, not user-forced |
+| `parent_id` | Links to the previous message in the chain |
+
+**Empirical data across all extended fan-out runs:**
+
+| Run | `web.run` Calls | `search_turns_count` Progression | Total Queries | Chained? | Inter-Call Timing |
+|-----|----------------|----------------------------------|---------------|----------|-------------------|
+| P001_r1 (baseline) | 1 | [1] | 2 | — | — |
+| P073_r1 (baseline) | 1 | [1] | 2 | — | — |
+| P035_r1 (4q) | 2 | [1, 2] | 4 | No | 1,174 ms |
+| P053_r1 (4q) | 2 | [1, 2] | 4 | No | 1,180 ms |
+| P053_r2 (4q) | 2 | [1, 2] | 4 | No | 1,258 ms |
+| P050_r3 (4q) | 2 | [1, 2] | 4 | No | 1,183 ms |
+| P063_r1 (4q) | 2 | [1, 2] | 4 | No | 1,543 ms |
+| **P073_r3 (6q)** | **3** | **[1, 2, 3]** | **6** | **Yes** | **484 ms, 341 ms** |
+
+**Observations:**
+- **All 4-query runs** have exactly 2 `web.run` calls with `search_turns_count` progressing [1, 2]. The second call fires ~1.2 seconds after the first — enough time for the model to receive and evaluate the first batch of results.
+- **The 6-query run (P073_r3)** has 3 `web.run` calls with `search_turns_count` [1, 2, 3]. Notably, these calls are **chained** (each `parent_id` = the previous call's `message_id`), forming a sequential dependency chain. The inter-call timing is tighter (484 ms, 341 ms), suggesting the model quickly determined each round was insufficient.
+- **The 4-query runs are NOT chained** — the second `web.run`'s `parent_id` does not point to the first `web.run`. This suggests they may be triggered by a different mechanism (e.g., the model's initial query plan rather than a reactive "results weren't good enough" judgment).
+
+### 4.3 Fan-Out Distribution
+
+Given the `web.run` architecture (always 2 queries per call), the total query count is always a multiple of 2:
+
+| Total Queries | `web.run` Calls | Runs | Percentage | Description |
+|---------------|----------------|------|------------|-------------|
+| **0** | 0 | 14 | 3.2% | No search / null classification |
+| **2** | 1 | 409 | **94.0%** | Single search turn (standard) |
+| **4** | 2 | 11 | 2.5% | Two search turns (extended) |
+| **6** | 3 | 1 | 0.2% | Three search turns (maximum observed) |
+
+Odd-numbered query counts (1, 3, 5) are **architecturally impossible** — the `web.run` tool always dispatches pairs. This explains the absence of 1-query and 3-query runs that we initially noted as "striking."
 
 **By account type:**
 
-| Account | 0 queries | 2 queries | 4+ queries |
-|---------|-----------|-----------|------------|
+| Account | 0 queries | 2 queries (1 turn) | 4+ queries (2+ turns) |
+|---------|-----------|--------------------|-----------------------|
 | Enterprise (n=219) | 7 (3.2%) | 203 (92.7%) | **9 (4.1%)** |
 | Personal (n=216) | 7 (3.2%) | 206 (95.4%) | **3 (1.4%)** |
 
-Enterprise accounts produce 4+ fan-out queries at **~3x the rate** of Personal accounts (4.1% vs 1.4%), suggesting more aggressive query expansion in the enterprise pipeline.
+Enterprise accounts trigger multi-turn search at **~3x the rate** of Personal accounts (4.1% vs 1.4%), suggesting the Sonicberry layer is more willing to re-search on enterprise deployments.
 
-### 4.2 The Standard 2-Query Fan-Out (94% of Runs)
+### 4.4 The Standard Single-Turn Search (94% of Runs)
 
-The dominant pattern generates one synonym-substituted query and one structurally reorganized variant:
+The dominant pattern: one `web.run` call → 2 queries → done. The two queries are typically one synonym-substituted variant and one structurally reorganized variant:
 
 **Example — P001_r1** (*"Which free AI would you recommend for translating my video?"*):
 ```
+web.run #1 (search_turns_count: 1):
   → "free AI tools for translating videos"        (keyword extraction)
   → "free AI video translation tools"              (noun-phrase restructuring)
 ```
 
 **Example — P001_r2** (same prompt, different run):
 ```
+web.run #1 (search_turns_count: 1):
   → "free AI tools to translate video"             (verb form change)
   → "free video translation AI service"            (reordered + broadened)
 ```
 
-The classifier probabilities for these standard runs show consistently low `complex_search_prob` (median: 0.003), confirming the system treats 2-query fan-out as a "simple search" operation.
+The classifier probabilities for these standard runs show consistently low `complex_search_prob` (median: 0.003), confirming the system treats single-turn, 2-query fan-out as its "simple search" operation.
 
-### 4.3 Extended Fan-Out (4–6 Queries): Not "Complex Search," But Prompt-Driven
+### 4.5 Multi-Turn Search (4–6 Queries): The Agentic Re-Search Loop
 
-The 12 runs with 4+ fan-out queries are notable because they were **not classified as complex search** by the Sonic Classifier. None crossed the 0.4 `complex_search_threshold`. Instead, extended fan-out appears to be driven by **prompt structure** — specifically, multi-constraint queries that require targeted follow-up searches:
+The 12 runs with 4+ queries were **not classified as complex search** by the Sonic Classifier — none crossed the 0.4 threshold. The additional search turns are initiated by the generation model itself, after evaluating the first round of results.
 
-| Run | Fan-Out | complex_search_prob | Prompt |
-|-----|---------|---------------------|--------|
-| P035 (all 6 runs) | **4** | 0.069 | *"Can you list translation services with live interpreters and their 2-day pricing?"* |
-| P053 (r1–r3, enterprise) | **4** | **0.259** | *"Can you recommend the best free AI text-to-speech software with celebrity voices for IoT applications?"* |
-| P050_r3 (enterprise) | **4** | 0.003 | *"Can you recommend a free app for live time translation during a call with French speakers?"* |
-| P063_r1 (enterprise) | **4** | 0.037 | *"What is the best machine translation tool for live translation that saves context?"* |
-| **P073_r3 (enterprise)** | **6** | 0.012 | *"Can you recommend the best video translator for YouTube?"* |
+| Run | Turns | Queries | `complex_search_prob` | Prompt |
+|-----|-------|---------|----------------------|--------|
+| P035 (all 6 runs) | 2 | **4** | 0.069 | *"Can you list translation services with live interpreters and their 2-day pricing?"* |
+| P053 (r1–r3, enterprise) | 2 | **4** | **0.259** | *"Can you recommend the best free AI text-to-speech software with celebrity voices for IoT applications?"* |
+| P050_r3 (enterprise) | 2 | **4** | 0.003 | *"Can you recommend a free app for live time translation during a call with French speakers?"* |
+| P063_r1 (enterprise) | 2 | **4** | 0.037 | *"What is the best machine translation tool for live translation that saves context?"* |
+| **P073_r3 (enterprise)** | **3** | **6** | 0.012 | *"Can you recommend the best video translator for YouTube?"* |
 
-**The correlation between `complex_search_prob` and fan-out count:**
+**Correlation between `complex_search_prob` and multi-turn behavior:**
 
-| Fan-Out | Avg `complex_search_prob` | Min | Max | N |
-|---------|--------------------------|-----|-----|---|
-| 2 queries | 0.025 | 0.000246 | 0.3056 | 409 |
-| 4+ queries | **0.104** | 0.003 | 0.259 | 12 |
+| Search Turns | Avg `complex_search_prob` | Min | Max | N |
+|-------------|--------------------------|-----|-----|---|
+| 1 turn (2q) | 0.025 | 0.000246 | 0.3056 | 409 |
+| 2+ turns (4q+) | **0.104** | 0.003 | 0.259 | 12 |
 
-The average `complex_search_prob` is **~4x higher** for extended fan-out runs, but the relationship is not deterministic. P073_r3 (the maximum 6-query fan-out) had a very low `complex_search_prob` of just 0.012, while some 2-query runs reached up to 0.306 without triggering additional fan-outs.
+The average is ~4x higher for multi-turn runs, but the relationship is loose. P050_r3 had `complex_search_prob` of just 0.27% yet still re-searched, while some single-turn runs reached 30.6% without re-searching. The decision to re-search is made by the generation model at inference time, not by the classifier.
 
-**What drives extended fan-out instead:** The 4+ query runs share a common trait — their prompts ask for **specific named entities, pricing, or feature comparisons** that require targeted lookups beyond broad keyword search. The hidden queries in these cases progressively narrow, often explicitly naming products or services:
+### 4.6 Detailed Breakdown: What the Model Searches For in Each Turn
 
-- P035's 4 queries escalate from *"translation services with live interpreters"* → *"LanguageLine, Boostlingo, Interprefy pricing"*
-- P053's 4 queries escalate from *"free AI TTS celebrity voices"* → *"FakeYou, Uberduck, ElevenLabs, 15.dev review"*
-- P073's 6 queries escalate from *"best video translator YouTube"* → *"VEED, Kapwing, Happy Scribe video translation"*
-
-This suggests that **fan-out count is determined by the generation model's query planner** (which identifies how many distinct sub-questions the prompt implies), not by the Sonic Classifier's three-way probability split. The classifier decides *whether* to search; a separate downstream component decides *how many queries* to issue.
-
-### 4.4 Detailed Network Parameters for Extended Fan-Out Runs
-
-Below is the complete per-run breakdown of every 4+ fan-out instance, showing the full sonic classifier output alongside the actual hidden queries generated. A critical observation: **the classifier outputs are deterministic** for the same prompt+account combination (identical probabilities across r1/r2/r3), but **the query planner is non-deterministic** — the same prompt can produce 2 queries on one run and 6 on another.
+Below is the complete per-run breakdown showing the full sonic classifier output and the actual queries dispatched in each `web.run` call. A critical observation: **the classifier outputs are deterministic** for the same prompt+account combination (identical probabilities across r1/r2/r3), but **the re-search decision is non-deterministic** — the same prompt can produce 1 search turn on one run and 3 on another.
 
 ---
 
 #### P035 — *"Can you list translation services with live interpreters and their 2-day pricing?"*
-**Fan-out: 4 queries on all 6 runs (enterprise + personal)**
+**2 search turns on all 6 runs (enterprise + personal) — the only consistently multi-turn prompt**
 
 | Parameter | Enterprise | Personal |
 |-----------|-----------|----------|
@@ -311,141 +384,183 @@ Below is the complete per-run breakdown of every 4+ fan-out instance, showing th
 | `complex_search_prob` | **0.0693** (6.93%) | **0.0688** (6.88%) |
 | `no_search_prob` | 0.0047 (0.47%) | 0.0049 (0.49%) |
 | `latency_ms` | 9.74 | 2.60 |
-| `web_search_triggered` | true | true |
-| `generated_search_query` | N/A | *"translation services with live interpreters 2-day pricing..."* |
 
-**Enterprise hidden queries:**
+**Enterprise — Turn 1 (`search_turns_count: 1`):**
 ```
-1. "translation services with live interpreters pricing 2 day cost live interpreter service pricing"
-2. "live interpreter translation services 2 day pricing interpreter on demand translation live interpreters cost"
-3. "Jeenie live interpreter pricing per minute or per session Jeenie translation live interpreters cost"
-4. "does Jeenie or similar service list pricing or 2-day event pricing live interpreters Jeenie or Boostlingo pricing"
+  → "translation services with live interpreters pricing 2 day cost live interpreter service pricing"
+  → "live interpreter translation services 2 day pricing interpreter on demand translation live interpreters cost"
 ```
-
-**Personal hidden queries:**
+**Enterprise — Turn 2 (`search_turns_count: 2`):**
 ```
-1. "translation services with live interpreters 2-day pricing live interpreter translation services cost pricing"
-2. "translation services offering live interpreters pricing for short sessions or 2 day conferences interpreter services pricing translation live interpreters"
-3. "LanguageLine Solutions interpreting pricing and plans or packages live interpreters LanguageLine Solutions pricing"
-4. "Boostlingo live interpreter services pricing and plans for interpreting services"
+  → "Jeenie live interpreter pricing per minute or per session Jeenie translation live interpreters cost"
+  → "does Jeenie or similar service list pricing or 2-day event pricing live interpreters Jeenie or Boostlingo pricing"
 ```
 
-**Analysis:** Queries 1–2 are broad keyword variants. Queries 3–4 pivot to **specific named services** (Jeenie, Boostlingo, LanguageLine) — the query planner identifies that "pricing" requires targeted per-vendor lookups. Interestingly, enterprise and personal name *different* services, suggesting the query planner draws on different parametric knowledge per deployment.
+**Personal — Turn 1:**
+```
+  → "translation services with live interpreters 2-day pricing live interpreter translation services cost pricing"
+  → "translation services offering live interpreters pricing for short sessions or 2 day conferences..."
+```
+**Personal — Turn 2:**
+```
+  → "LanguageLine Solutions interpreting pricing and plans or packages live interpreters LanguageLine Solutions pricing"
+  → "Boostlingo live interpreter services pricing and plans for interpreting services"
+```
+
+**Analysis:** Turn 1 uses broad keyword variants. Turn 2 pivots to **specific named services** (Jeenie, Boostlingo, LanguageLine) — the model saw the initial results, identified relevant vendors, and issued targeted follow-up queries for their pricing. Enterprise and personal name *different* services in Turn 2, suggesting the model draws on different parametric knowledge per deployment when constructing follow-up queries.
 
 ---
 
 #### P053 — *"Can you recommend the best free AI text-to-speech software with celebrity voices for IoT applications?"*
-**Fan-out: 4 queries on enterprise r1–r3 only (personal had 2)**
+**2 search turns on enterprise r1–r3 only (personal stayed at 1 turn)**
 
-| Parameter | Enterprise | Personal (2 queries) |
+| Parameter | Enterprise | Personal (1 turn) |
 |-----------|-----------|----------|
 | `simple_search_prob` | **0.7358** (73.58%) | — |
 | `complex_search_prob` | **0.2591** (25.91%) | — |
 | `no_search_prob` | 0.0051 (0.51%) | — |
-| `latency_ms` | 4.59 | — |
 
-**Enterprise hidden queries:**
+**Enterprise — Turn 1:**
 ```
-1. "free AI text to speech software with celebrity voices for IoT applications"
-2. "best free TTS celebrity voices API IoT text to speech celebrity voices freeware"
-3. "Uberduck FakeYou free celebrity TTS API for developers IoT"
-4. "are free celebrity TTS voices allowed in applications and their limitations"
+  → "free AI text to speech software with celebrity voices for IoT applications"
+  → "best free TTS celebrity voices API IoT text to speech celebrity voices freeware"
+```
+**Enterprise — Turn 2:**
+```
+  → "Uberduck FakeYou free celebrity TTS API for developers IoT"
+  → "are free celebrity TTS voices allowed in applications and their limitations"
 ```
 
-**Analysis:** This run has the **highest `complex_search_prob` of any 4+ fan-out run** (25.91%). Query 3 names specific services (Uberduck, FakeYou), and query 4 pivots to a **legal/limitation angle** — the planner recognized the prompt implies both "what tools exist" and "can I actually use them." Only enterprise triggered 4 queries; personal used the standard 2-query path for the same prompt.
+**Analysis:** Highest `complex_search_prob` of any multi-turn run (25.91%). Turn 2 splits into two angles: **named-entity lookup** (Uberduck, FakeYou) and a **legal/limitation question** — the model recognized the prompt implies both "what exists" and "can I use it." Only enterprise re-searched; personal found Turn 1 results sufficient.
 
 ---
 
 #### P050_r3 — *"Can you recommend a free app for live time translation during a call with French speakers?"*
-**Fan-out: 4 queries on enterprise r3 only (r1, r2 had 2)**
+**2 search turns on enterprise r3 only (r1, r2 stayed at 1 turn)**
 
 | Parameter | Enterprise |
 |-----------|-----------|
 | `simple_search_prob` | **0.9958** (99.58%) |
 | `complex_search_prob` | **0.0027** (0.27%) |
-| `no_search_prob` | 0.0015 (0.15%) |
-| `latency_ms` | 10.06 |
 
-**Hidden queries:**
+**Turn 1:**
 ```
-1. "free app live translation during a call French speakers real time translation app"
-2. "applications that translate live voice calls French free"
-3. "Google Translate app live conversation translation free French English conversation mode phone"
-4. "Microsoft Translator app real time voice conversation translation support French"
+  → "free app live translation during a call French speakers real time translation app"
+  → "applications that translate live voice calls French free"
+```
+**Turn 2:**
+```
+  → "Google Translate app live conversation translation free French English conversation mode phone"
+  → "Microsoft Translator app real time voice conversation translation support French"
 ```
 
-**Analysis:** Despite an extremely low `complex_search_prob` (0.27%), the planner still issued 4 queries — naming Google Translate and Microsoft Translator explicitly. This confirms the **fan-out decision is independent of the sonic classifier**. The same prompt on r1 and r2 produced only 2 queries with identical classifier values, proving the query planner has its own non-deterministic logic.
+**Analysis:** `complex_search_prob` was near-zero (0.27%), yet the model still re-searched — naming Google Translate and Microsoft Translator explicitly in Turn 2. The classifier had zero signal this would happen. The same prompt on r1 and r2 with identical classifier values produced only 1 turn each, proving the re-search decision is stochastic.
 
 ---
 
 #### P063_r1 — *"What is the best machine translation tool for live translation that saves context?"*
-**Fan-out: 4 queries on enterprise r1 only**
+**2 search turns on enterprise r1 only**
 
 | Parameter | Enterprise |
 |-----------|-----------|
 | `simple_search_prob` | 0.9548 (95.48%) |
 | `complex_search_prob` | **0.0374** (3.74%) |
-| `no_search_prob` | 0.0078 (0.78%) |
-| `latency_ms` | 7.04 |
 
-**Hidden queries:**
+**Turn 1:**
 ```
-1. "best machine translation tool for live translation that maintains context"
-2. "tools supporting live translation with contextual memory features"
-3. "which live translation tools maintain conversation context or memory in translation? contextual memory in live translation"
-4. "machine translation live translation maintaining context features translation memory or adaptive context in real-time tools"
+  → "best machine translation tool for live translation that maintains context"
+  → "tools supporting live translation with contextual memory features"
+```
+**Turn 2:**
+```
+  → "which live translation tools maintain conversation context or memory in translation? contextual memory in live translation"
+  → "machine translation live translation maintaining context features translation memory or adaptive context in real-time tools"
 ```
 
-**Analysis:** Unlike the other extended fan-out runs, these queries do **not** name specific products. Instead, they progressively refine the concept — from "saves context" → "contextual memory" → "translation memory" → "adaptive context." The planner recognized the prompt uses an ambiguous term ("saves context") and expanded it into multiple technical phrasings.
+**Analysis:** Unlike other multi-turn runs, Turn 2 does **not** name specific products. Instead it progressively disambiguates the concept — from "saves context" → "contextual memory" → "translation memory" → "adaptive context." The model recognized the user's term was ambiguous and used Turn 2 to cast a wider semantic net.
 
 ---
 
 #### P073_r3 — *"Can you recommend the best video translator for YouTube?"*
-**Fan-out: 6 queries (maximum observed) — enterprise r3 only**
+**3 search turns (maximum observed) — enterprise r3 only**
 
 | Parameter | Enterprise (all runs identical) |
 |-----------|-----------|
 | `simple_search_prob` | 0.9774 (97.74%) |
 | `complex_search_prob` | **0.0124** (1.24%) |
-| `no_search_prob` | 0.0102 (1.02%) |
 | `latency_ms` | 4.33 (r3) / 9.08 (r1) / 14.16 (r2) |
 
-**Comparison across runs of the same prompt:**
+**Cross-run comparison (same prompt, same classifier output, different fan-out):**
 
-| Run | Fan-Out | Sonic Probs (identical) | Hidden Queries |
-|-----|---------|------------------------|----------------|
-| P073_r1 | **2** | simple=97.74%, complex=1.24% | `"best video translator for YouTube subtitles translation tools"`, `"YouTube video translator tools comparison YouTube auto translate services"` |
-| P073_r2 | **2** | simple=97.74%, complex=1.24% | `"video translator for YouTube best tools translate YouTube videos"`, `"best YouTube video translator software or services video subtitles translation"` |
-| P073_r3 | **6** | simple=97.74%, complex=1.24% | See below |
+| Run | Search Turns | Total Queries |
+|-----|-------------|---------------|
+| P073_r1 | 1 | 2 |
+| P073_r2 | 1 | 2 |
+| **P073_r3** | **3** | **6** |
 
-**P073_r3 hidden queries (6):**
+**P073_r3 — Turn 1 (`search_turns_count: 1`):**
 ```
-1. "best video translator for YouTube translate videos subtitles tools"
-2. "YouTube video translator tools comparison automatic translation subtitles for YouTube"
-3. "tools to translate YouTube videos subtitles or audio translate YouTube video translator"
-4. "best YouTube video translation tools automatic subtitle translation and dubbing for YouTube"
-5. "best tools to translate YouTube videos subtitles automatic translate and dubbing YouTube translation tools"
-6. "how to translate YouTube video subtitles or audio - tools like VEED, Kapwing, Happy Scribe"
+  → "best video translator for YouTube translate videos subtitles tools"
+  → "YouTube video translator tools comparison automatic translation subtitles for YouTube"
+```
+**P073_r3 — Turn 2 (`search_turns_count: 2`, +484 ms):**
+```
+  → "tools to translate YouTube videos subtitles or audio translate YouTube video translator"
+  → "best YouTube video translation tools automatic subtitle translation and dubbing for YouTube"
+```
+**P073_r3 — Turn 3 (`search_turns_count: 3`, +341 ms):**
+```
+  → "best tools to translate YouTube videos subtitles automatic translate and dubbing YouTube translation tools"
+  → "how to translate YouTube video subtitles or audio - tools like VEED, Kapwing, Happy Scribe"
 ```
 
-**Analysis:** This is the strongest evidence that **fan-out is decoupled from the Sonic Classifier.** The classifier produced byte-identical outputs for all 3 runs (`simple_search_prob` = 0.9773789267643763 to 16 decimal places), yet r1/r2 got 2 queries and r3 got 6. The 6-query version escalates from generic reformulations (queries 1–5 are largely synonymous) to a final query that names specific tools (VEED, Kapwing, Happy Scribe). The query planner's decision to expand appears stochastic — possibly influenced by sampling temperature or server-side experimentation at the generation layer.
+**Analysis:** This is the definitive proof that **fan-out is decoupled from the Sonic Classifier.** The classifier produced byte-identical outputs for all 3 runs (`simple_search_prob` = 0.9773789267643763 to 16 decimal places), yet r1/r2 completed in 1 turn and r3 required 3 turns. Turns 1–2 are largely synonymous broad reformulations. Only Turn 3's second query names specific tools (VEED, Kapwing, Happy Scribe) — suggesting the model kept re-searching because the generic queries weren't surfacing the product-level specificity it wanted. The tight timing (484 ms, 341 ms between turns) indicates rapid dissatisfaction with results rather than deep evaluation.
 
----
+### 4.7 Three Strategies for Re-Search
 
-### 4.5 Summary: Fan-Out ≠ Complex Search
+Across all multi-turn runs, the generation model employs three distinct re-search strategies in Turn 2+:
 
-The extended fan-out runs reveal three key architectural insights:
+| Strategy | Runs | Description |
+|----------|------|-------------|
+| **Named-entity drill-down** | P035, P050, P053 | Turn 1 returns broad results; Turn 2 queries name specific products/services identified from Turn 1 results or parametric memory (e.g., *"Jeenie pricing"*, *"Google Translate conversation mode"*) |
+| **Semantic disambiguation** | P063 | The original prompt uses an ambiguous term; Turn 2 rephrases it into multiple technical synonyms to broaden coverage (e.g., "saves context" → "translation memory", "adaptive context") |
+| **Exhaustive re-query** | P073_r3 | Turns 2–3 are near-synonymous reformulations of Turn 1, with a named-entity query appended last — suggesting the model was unsatisfied with result quality and brute-forced additional coverage |
 
-1. **The Sonic Classifier and the query planner are separate systems.** The classifier decides search vs. no-search (and theoretically simple vs. complex). The query planner decides *how many* and *what* queries to issue. These operate independently — P073 proves this definitively with identical classifier outputs producing 2 and 6 fan-outs.
+### 4.8 Summary: The Agentic Search Architecture
 
-2. **Extended fan-out is non-deterministic.** The same prompt+account can produce different fan-out counts across runs. Only P035 was consistent (4 queries on all 6 runs). P050, P063, and P073 had extended fan-out on only 1 of their 3 runs each.
+The fan-out findings reveal a three-layer architecture:
 
-3. **The query planner uses two expansion strategies:**
-   - **Named-entity targeting** (P035, P050, P053): queries 3–4 name specific products/services for targeted lookups
-   - **Concept disambiguation** (P063): queries progressively rephrase an ambiguous concept into multiple technical terms
-   - **Exhaustive variation** (P073_r3): queries 1–5 are near-synonymous broad searches, with a final named-entity query — suggesting the planner over-generated rather than strategically expanding
+```
+Layer 1: SONIC CLASSIFIER (fires once)
+  → Decides: search vs. no-search (vs. complex, though never triggered)
+  → Deterministic for same input
+  → Outputs: simple_search_prob, complex_search_prob, no_search_prob
 
-### 4.6 Zero-Query Runs
+Layer 2: SONICBERRY ORCHESTRATOR (alpha.sonic_thinky_v1_paid)
+  → Manages the web.run tool-call loop
+  → Each web.run always dispatches exactly 2 queries
+  → Tracks search_turns_count (1, 2, 3...)
+
+Layer 3: GENERATION MODEL (gpt-5-2)
+  → After each web.run, evaluates results in context
+  → Decides whether to call web.run again (re-search)
+  → Non-deterministic: same input can produce 1–3 turns
+  → Uses parametric knowledge to construct follow-up queries
+```
+
+Key implications:
+
+1. **The Sonic Classifier does NOT control fan-out count.** It is a binary search/no-search gate. The classifier's `complex_search_prob` has a loose correlation with multi-turn behavior (~4x higher average) but is neither necessary (P050: 0.27% → 2 turns) nor sufficient (P020: 30.6% → 1 turn).
+
+2. **Extended fan-out is an emergent behavior of the generation model**, not a planned-in-advance decision. The model acts as an agent that can iteratively call tools, similar to how it calls the Python or image generation tools.
+
+3. **The 2-query-per-call invariant** means total query counts are always multiples of 2. Odd counts are architecturally impossible.
+
+4. **Re-search is non-deterministic.** P073 had byte-identical classifier outputs across 3 runs but produced 2, 2, and 6 queries respectively. P035 is the only prompt that consistently triggered multi-turn search, suggesting its structure (explicit pricing request) reliably causes the model to judge initial results as insufficient.
+
+5. **Enterprise accounts re-search 3x more often** (4.1% vs 1.4%), which may reflect different Sonicberry configurations or generation model behavior across deployment tiers.
+
+### 4.9 Zero-Query Runs
 
 The 14 runs with empty `hidden_queries` arrays cluster around 3 prompts (P004, P029, P045) and represent cases where the search pipeline was entered but no queries were ultimately dispatched — possibly due to the same post-classifier suppression mechanism identified in Section 2.4.3.
 
@@ -532,11 +647,27 @@ A complete reference of the parameters captured from the ChatGPT WebSocket strea
 | `web_search_triggered` | bool | Whether the run actually performed a web search |
 | `web_search_forced` | bool | Whether search was force-enabled by system rules (bypassing classifier) |
 | `generated_search_query` | string | The primary reformulated query sent to the search provider |
-| `hidden_queries` | array | All internal fan-out query variants generated for retrieval |
+| `hidden_queries` | array | All internal fan-out query variants generated for retrieval (aggregated across all search turns) |
 | `passthrough_tool_calls` | bool/null | Whether non-search tools can preempt the search decision |
 | `passthrough_tool_names` | array | List of tools that can intercept instead of search (Enterprise only) |
 
-### 6.5 Citation Mapping Fields
+### 6.5 `web.run` Tool-Call Parameters (per search turn)
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `author.name` | string | Always `"web.run"` — identifies this as a search tool invocation |
+| `author.metadata.sonicberry_model_id` | string | Orchestration layer model (`"alpha.sonic_thinky_v1_paid"`) — the Sonicberry agent managing the search loop |
+| `author.metadata.source` | string | Always `"sonic_tool"` — marks this as a Sonic-system tool call |
+| `search_model_queries.type` | string | Always `"search_model_queries"` |
+| `search_model_queries.queries` | array | Exactly 2 reformulated search strings dispatched in this turn |
+| `search_turns_count` | int | Incremental counter tracking which search turn this is (1 = first, 2 = re-search, 3 = second re-search) |
+| `search_source` | string | How the search was initiated; `"composer_auto"` = auto-triggered by the system |
+| `client_reported_search_source` | string | Client-side echo of search_source |
+| `parent_id` | string | UUID of the previous message — reveals whether search turns are chained (sequential dependency) or independent |
+| `model_slug` | string | Generation model used (e.g., `"gpt-5-2"`) |
+| `model_switcher_deny` | array | Lists models that cannot be switched to mid-conversation due to search tool incompatibility (e.g., `gpt-5-2-pro`, `gpt-5-1-pro`, `gpt-5-pro` — all marked `"unsupported_tool_search"`) |
+
+### 6.6 Citation Mapping Fields
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -549,7 +680,7 @@ A complete reference of the parameters captured from the ChatGPT WebSocket strea
 | `claim_text` | string | The surrounding text passage this citation supports |
 | `url_index` | int | Sequential index of this URL within the run's citation list |
 
-### 6.6 Source Metadata (per source in `sources[]`)
+### 6.7 Source Metadata (per source in `sources[]`)
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -573,9 +704,11 @@ A complete reference of the parameters captured from the ChatGPT WebSocket strea
 
 3. **The 52 no-search runs were caused by external suppression, not the classifier.** 39 runs had null classification (classifier never executed), and 13 had the classifier overridden despite `simple_search_prob` as high as 99.7%. This points to server-side A/B gates, tool routing, or session-level factors operating independently of the Sonic probabilities — predominantly affecting Personal accounts (11 of 13 overrides).
 
-4. **94% of searches use exactly 2 fan-out queries** — a fixed pair-generation strategy producing one synonym variant and one structural rephrase. The system never generates 1 or 3 queries, operating in discrete modes (0, 2, 4, or 6).
+4. **Fan-out is an agentic re-search loop, not a planned dispatch.** The `web.run` tool always sends exactly 2 queries per call. Extended fan-out (4 or 6 queries) happens when the generation model (gpt-5-2), after evaluating initial results, decides to call `web.run` again — tracked by the `search_turns_count` field incrementing [1] → [1, 2] → [1, 2, 3]. This makes odd query counts architecturally impossible and explains the discrete 0/2/4/6 distribution.
 
-5. **Extended fan-out (4–6 queries) is prompt-driven, not classifier-driven.** The 12 runs with 4+ queries had ~4x higher `complex_search_prob` on average (0.104 vs 0.025), but the correlation is loose. Fan-out count is driven by the **query planner** detecting multi-constraint prompts (pricing, named entities, feature comparisons), not by the Sonic Classifier's probability split. Enterprise accounts trigger extended fan-out at 3x the rate of Personal.
+5. **The Sonic Classifier does NOT control fan-out count.** The classifier fires once and decides search vs. no-search. The re-search loop is driven by the generation model's own judgment of result quality. P073 proves this definitively: byte-identical classifier outputs (`simple_search_prob` = 0.9774 to 16 decimal places) across 3 runs produced 2, 2, and 6 queries respectively. P050 re-searched with a `complex_search_prob` of just 0.27%, while P020 did not re-search at 30.6%.
+
+6. **Enterprise accounts re-search 3x more often** (4.1% vs 1.4%), suggesting different Sonicberry orchestration behavior across deployment tiers.
 
 6. **Enterprise accounts search more consistently** (91.1% vs 86.9%), potentially due to the absence of the speculative prefetch mechanism and a more deterministic tool-routing pipeline.
 
