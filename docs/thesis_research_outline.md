@@ -121,8 +121,8 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 - **Instrumentation Method**: Because OpenAI does not expose grounding metadata (fan-out queries, retrieved snippets) via its public API, we used **Network Payload Inspection** (Chrome DevTools protocol) to capture the raw event stream of the production UI.
 - **Session Isolation**: All ChatGPT prompt runs were conducted in **Temporary Chat** mode to prevent conversation history and memory from influencing retrieval or generation behavior across runs.
 - **Personal vs. Enterprise**:
-    - **Personal**: Executed on a **ChatGPT Plus** subscription in the user's **personal workspace**; exhibits more 'elastic' retrieval and higher overlap with Google.
-    - **Enterprise**: Executed through a **ChatGPT Enterprise organization account**; restricted to Azure/Bing-centric grounding, providing a more 'controlled' corporate retrieval baseline.
+    - **Personal**: Executed on a **ChatGPT Plus** subscription in the user's **personal workspace**. OpenAI's [general documentation](https://openai.com/index/introducing-chatgpt-search/) describes ChatGPT search as leveraging "third-party search providers" (plural), leaving the exact provider mix unspecified.
+    - **Enterprise**: Executed through a **ChatGPT Enterprise organization account**. OpenAI's [Enterprise documentation](https://help.openai.com/en/articles/10093903-chatgpt-search-for-enterprise-and-edu) explicitly names **Bing** as the search provider, restricting retrieval to the Azure/Bing ecosystem.
 
 ### 1.4.2 Gemini: API-Based Grounding (Vertex AI)
 - **Deployment Context**: Unlike ChatGPT, Gemini was studied via the **Vertex AI / Google AI Studio API** (Gemini 1.5 Pro/Flash).
@@ -164,24 +164,6 @@ SerpApi returns Google results in multiple **result_type** buckets (not just "10
 - For overlap metrics, we default to **Organic-only** (and treat Video/PAA as separate diagnostic buckets), unless explicitly stated otherwise.
 - We keep the non-organic buckets available as a **discussion point** (e.g., "Google surfaces YouTube via Video blocks earlier than Bing"), and as a sensitivity analysis ("organic-only vs organic+video").
 - **Pagination rule (how we collected the "Top‑20 Organic" baseline)**: we paginate SerpApi until we have **≥20 Organic** results (not necessarily only the first page). In practice this is often the first ~3 pages, alongside non-organic blocks.
-
-### 2.1.3 Content-Size Context (Listicles vs Product Pages)
-We report page-length as **context** (not a grounding budget claim): listicles are longer and more heterogeneous than vendor pages, which can influence extractability and selection behavior.
-
-Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enrichment/content_size_stats_raw.csv`).
-
-| Bucket | Median words | Median bytes | Coverage |
-| --- | ---: | ---: | ---: |
-| `all::listicle` | 2,094 | 14,645 | 99.7% |
-| `all::product_page` | 927 | 6,593 | 97.7% |
-| `menu_any::listicle` | 2,111 | 14,747 | 99.8% |
-| `menu_any::product_page` | 930 | 6,614 | 98.0% |
-| `cited_any::listicle` | 2,182 | 15,343 | 99.5% |
-| `cited_any::product_page` | 925 | 6,563 | 96.1% |
-
-**Interpretation**: listicles are ~2× longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
-
-**Connection to Dejan ("grounding budget")**: Dejan's analysis of Google AI Overviews discusses a roughly fixed per-query *grounding/snippet budget* (on the order of ~2k words). Our table above is **not** measuring an injected-context budget; it measures **full page length** of the candidate/cited sources we fetched. We include it as context for extractability and selection behavior, not as a budget validation.
 
 ## 2.2 Methodological Evolution: From Top 30 to "Deep Hunt" (Rank 200)
 - **Initial Assumption:** Our study began with a standard retrieval depth of the **Top 30 Bing results**, assuming this would capture the vast majority of relevant citations used by ChatGPT.
@@ -820,6 +802,24 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 | `type` (top)                  | product_page (45.4%) / product_page (42.2%) | listicle (40.8%) / listicle (34.2%) | product_page (40.8%) / product_page (42.1%) |
 
 *Format note:* values are shown as **Enterprise / Personal**. "Page 1 ignored" is computed on **unique URLs** on Bing `page_num=1` that are **not cited** (per run, de-duplicated across runs). In our dataset, this bucket has substantial missing DNA labels because not all Bing Page‑1 results were fetched/labelled (Enterprise: 812/1660 labelled; Personal: 648/1394 labelled).
+
+### 3.4.4 Content-Size Context (Listicles vs Product Pages)
+We report page-length as **context** (not a grounding budget claim): listicles are longer and more heterogeneous than vendor pages, which can influence extractability and selection behavior.
+
+Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enrichment/content_size_stats_raw.csv`).
+
+| Bucket | Median words | Median bytes | Coverage |
+| --- | ---: | ---: | ---: |
+| `all::listicle` | 2,094 | 14,645 | 99.7% |
+| `all::product_page` | 927 | 6,593 | 97.7% |
+| `menu_any::listicle` | 2,111 | 14,747 | 99.8% |
+| `menu_any::product_page` | 930 | 6,614 | 98.0% |
+| `cited_any::listicle` | 2,182 | 15,343 | 99.5% |
+| `cited_any::product_page` | 925 | 6,563 | 96.1% |
+
+**Interpretation**: listicles are ~2× longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
+
+**Connection to Dejan ("grounding budget")**: Dejan's analysis of Google AI Overviews discusses a roughly fixed per-query *grounding/snippet budget* (on the order of ~2k words). Our table above is **not** measuring an injected-context budget; it measures **full page length** of the candidate/cited sources we fetched. We include it as context for extractability and selection behavior, not as a budget validation.
 
 ## 3.5 Selection Drift (Enrichment-Based)
 *With the DNA profile established in 3.4, we now measure how the model's selection ("Order") systematically diverges from the available pool ("Menu") along enriched feature dimensions.*
