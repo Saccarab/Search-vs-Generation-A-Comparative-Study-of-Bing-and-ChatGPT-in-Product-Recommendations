@@ -300,6 +300,7 @@ Unlike ChatGPT, where we must "scrape" the network stream, Gemini provides struc
 - **Transparency**: Gemini is "Grounding-First"—it exposes the raw chunks it read, whereas ChatGPT only exposes the final URL and a snippet.
 - **Segment-Level Attribution**: Gemini attributes every sentence/segment to a specific chunk index, allowing for a much higher resolution of fidelity analysis.
 - **Vertex Redirects**: Gemini uses internal redirect URLs (e.g., `vertexaisearch.cloud.google.com/...`) which must be resolved to find the original domain, a step we automated in our pipeline.
+- **API vs. Consumer UI gap**: Our Gemini data comes entirely from the Vertex AI API, which provides structured grounding metadata but does not carry IP/locale signals. Inspecting the **Gemini consumer UI** (`gemini.google.com`) via network packet analysis — mirroring our ChatGPT instrumentation approach — could reveal additional signals not exposed in the API, such as locale-driven fan-out rewriting, internal ranking or filtering stages before the `groundingMetadata` is constructed, or differences in fan-out strategy between the consumer product and the API. This remains a potential avenue for future work.
 
 ## 2.5 Content DNA Enrichment (LLM-as-a-Labeler)
 *How we transformed raw URLs into structured data for selection bias analysis.*
@@ -386,20 +387,18 @@ To make downstream analyses defensible, we first measured how much of the URL un
 - **Prompt Language Distribution**: Our dataset consists of **72 English prompts** and **7 foreign-language prompts** (1 French, 1 Chinese, 2 Turkish, 1 German, 1 Italian, 1 Spanish). All 7 foreign-language prompts originated from **Ahrefs** keyword clusters; the **Profound**-sourced prompts were exclusively English.
 - **Explicit Localization:** When the query targets an inherently local category — even without any geographic qualifier in the prompt. A query like "best bakery" or "best pizza" is implicitly local, and the system will inject a location into the fan-out queries automatically (e.g., rewriting to "best bakery near Munich Germany"). This primarily applies to local-commerce queries and is not a factor in our SaaS/software dataset, where products are globally available.
 - **Implicit Localization:** When the query is general (e.g., "Best laptop"), but the search engine uses the user's IP, browser language, and search history to localize results.
-- **The Research Problem:** Traditional search engines (Bing) are aggressively localized. Generative AI (ChatGPT) often provides a more "Global/US-centric" baseline unless explicitly prompted otherwise.
-- **Observed instrumentation signal (Fan-Out Queries):** In our logged **fan-out query sets** (Gemini `groundingMetadata.webSearchQueries[]`, ChatGPT network-derived hidden queries), implicit localization often manifests as **one of the fan-out queries being rewritten into the prompt's local language**, which then steers retrieval toward localized sources.
+- **Observed instrumentation signal (Fan-Out Queries):** In our logged **fan-out query sets** (Gemini `groundingMetadata.webSearchQueries[]` — officially called "grounding support" queries, functionally equivalent to fan-outs; ChatGPT network-derived hidden queries), implicit localization often manifests as **one of the fan-out queries being rewritten into the prompt's local language**, which then steers retrieval toward localized sources.
 - **Concrete example (implicit localization via fan-out):** When issuing an English prompt from **Munich, Germany**, we observed a two-query fan-out where one query remained English while the other was rewritten into German:
   - Q1: `"free website or program to translate video and add subtitles"`
   - Q2: `"kostenlos video übersetzen und Untertitel automatisch hinzufügen ..."`
 
-  This yielded German-language results despite an English user prompt. (Redacted network excerpt saved at `datapass/raw_network_responses/examples/implicit_localization_fanout_query_rewritten_de_redacted.txt`.)
+  This resulted in one of the two fan-out queries retrieving German-language sources despite an English user prompt.
 
-- **Concrete example (explicit localization via fan-out):** A location-free prompt like `"what is the best bakery"` can trigger fan-out queries that inject a specific place (e.g., `"best bakery near Munich Germany"`), effectively converting an implicit prompt into an explicitly localized retrieval task. (Redacted network excerpt saved at `datapass/raw_network_responses/examples/explicit_localization_bakery_munich_redacted.txt`.)
+- **Concrete example (explicit localization via fan-out):** A location-free prompt like `"what is the best bakery"` can trigger fan-out queries that inject a specific place (e.g., `"best bakery near Munich Germany"`), effectively converting an implicit prompt into an explicitly localized retrieval task.
 
-- **Observed fan-out localization patterns (3 cases we instrumented):**
-  1. **Prompt is foreign-language**: the system may still emit at least one **English** fan-out query alongside the local-language query (mixed-language retrieval).
-  2. **Prompt is English + user in non‑English region**: one fan-out query may be rewritten into the region's language (example above: Munich → German).
-  3. **Prompt is English + unexpected non‑English fan-out**: occasionally, a fan-out query appears in another language for unclear reasons (observed in both GPT and Gemini; e.g., Gemini searching in French for a TTS query). This is treated as an anomaly / potential hallucination or hidden locale signal.
+- **Observed fan-out localization patterns:**
+  1. **Foreign-language prompt → English anchor (GPT + Gemini):** Both systems consistently emit at least one **English** fan-out query alongside queries in the prompt's language, creating mixed-language retrieval. Verified across Chinese (P032: 1 English + 3 Chinese), French (P019: 1 English + 3 French), German (P055: 2 English + 2 German), and Spanish (P062: 1 English + 3 Spanish) prompts on Gemini, and observed on GPT as well.
+  2. **English prompt + non-English region → local-language rewrite (GPT only):** One fan-out query is rewritten into the user's regional language based on IP/locale signals (example above: Munich → German). This was only testable on GPT, where we ran prompts through the browser UI with a regional IP. Gemini was accessed via API, which does not carry IP-based locale signals, so this pattern could not be tested for Gemini.
 
 - **Findings** (occurrence rates, "English Anchor" effect, freshness steering stats) are reported in **`3.1`**.
 
@@ -440,7 +439,7 @@ To make downstream analyses defensible, we first measured how much of the URL un
 ## Executive Summary of Key Findings
 
 *   **The "Fan-Out Strategy" (Implicit vs. Explicit Retrieval):**
-    *   **Gemini's Freshness Obsession:** 93.4% of Gemini runs explicitly inject a year (2025 or 2026) into their fan-out queries, with 71.7% placing this signal in the very first query (Index 0). This drives Gemini's aggressive "Listicle Uptake."
+    *   **Gemini's Freshness Obsession:** 96.7% of Gemini runs (297/307) explicitly inject a year (2025 or 2026) into their fan-out queries, with 74.3% (228/307) placing this signal in the very first query (Index 0). This drives Gemini's aggressive "Listicle Uptake."
     *   **GPT's Multi-Turn Expansion:** While GPT only uses explicit years in 5.1% of runs, it exhibits a "Multi-Turn Fan-Out" phenomenon where it issues secondary and tertiary queries (3+ queries) in response to initial results, effectively "hunting" for specific citations before finalizing the response.
     *   **Implicit Localization Bias:** Implicit localization signals (non-English fan-out queries from English prompts) were observed in 13.1% of GPT runs and 4.6% of Gemini runs, demonstrating how retrieval environment (IP/locale) can steer grounding even without user intent.
 
@@ -517,7 +516,7 @@ The high-level flow as observed in the event stream:
 **Note on the "65% search threshold" claim:** Independent reverse-engineering by [Resoneo](https://think.resoneo.com/chatgpt/) documents a single `force_search_threshold` of 65%. Our data captures a different classifier variant using a three-class threshold system rather than a single cutoff. The two may reflect different A/B variants or classifier versions. Our median `simple_search_prob` was 96.8% — far above any plausible boundary — so we cannot empirically test where the effective decision point lies in the 50–70% zone. The Resoneo-reported 65% figure may also correspond to the `prefetch_threshold` (0.55 in our data), which has shifted between versions.
 
 ### 3.1.2 Freshness Steering
-- **Gemini: Explicit Freshness Obsession:** **93.4%** of Gemini runs explicitly inject a year (2025 or 2026) into their fan-out queries, with **71.7%** placing this signal in the very first query (Index 0). This drives Gemini's aggressive "Listicle Uptake" — by explicitly searching for "Best [Product] 2025," the model forces the retrieval of time-stamped listicles, which then dominate its grounding.
+- **Gemini: Explicit Freshness Obsession:** **96.7%** of Gemini runs (297/307 with valid grounding metadata) explicitly inject a year (2025 or 2026) into their fan-out queries. Of these, **74.3%** (228/307) place the year signal in the very first query (Index 0), while a further **22.5%** (69/307) include it only in later queries. Just **3.3%** (10/307) of runs contained no year signal at all. This drives Gemini's aggressive "Listicle Uptake" — by explicitly searching for "Best [Product] 2025," the model forces the retrieval of time-stamped listicles, which then dominate its grounding.
 - **GPT: Implicit Recency Reliance:** Only **5.1%** of GPT runs use explicit year signals in their fan-out queries. GPT relies almost entirely on the search index's (Bing's) internal recency ranking, leading to a more diverse (though still listicle-leaning) grounding pool.
 - **GPT's Multi-Turn Expansion:** GPT exhibits a "Multi-Turn Fan-Out" phenomenon where it issues secondary and tertiary queries (3+ queries) in response to initial results, effectively "hunting" for specific citations before finalizing the response. The empirical details of this mechanism are in **`3.1.3`** below.
 
