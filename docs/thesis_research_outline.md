@@ -220,9 +220,8 @@ The full Sonic Classifier configuration (classifier variant, 3-class thresholds,
 - **Observable field (network-derived)**: `search_model_queries.queries` (stored as `hidden_queries_json` in our extracted CSV/DB pipeline).
 
 **The `web.run` mechanism (empirically discovered):**
-- Fan-out is **not** a single dispatch of N queries. It is an **iterative tool-call loop** where the generation model (gpt-5-2) calls a tool named `web.run` via the Sonicberry orchestrator (`alpha.sonic_thinky_v1_paid`).
-- Each `web.run` call **always dispatches exactly 2 queries** — a fixed pair-generation strategy producing one synonym variant and one structural rephrase. Odd query counts (1, 3, 5) are architecturally impossible.
-- After each `web.run` returns results, the generation model evaluates them in context and decides whether to call `web.run` again, creating an agentic re-search loop tracked by the `search_turns_count` field.
+- The generation model (gpt-5-2) calls a tool named `web.run` via the Sonicberry orchestrator (`alpha.sonic_thinky_v1_paid`). Each `web.run` call **always dispatches exactly 2 queries in parallel** — a fixed pair-generation strategy producing one synonym variant and one structural rephrase. Odd query counts (1, 3, 5) are architecturally impossible.
+- In the vast majority of runs (**94%**), a single `web.run` call is all that fires — the 2 queries run in parallel and the results are used directly. However, in a small fraction of runs (2.7%), the generation model evaluates the returned results and calls `web.run` again, creating an iterative re-search loop tracked by the `search_turns_count` field.
 - **How it appears in the raw network stream (multi-turn fan-out signature)**:
   - The response arrives as an event stream (patch/append style) containing repeated tool messages (`role="tool"`, `name="web.run"`, `author.metadata.source="sonic_tool"`).
   - Each `web.run` message carries `search_model_queries.queries[]` (always length 2) and `search_turns_count` (incrementing 1, 2, 3…).
@@ -360,11 +359,13 @@ To make downstream analyses defensible, we first measured how much of the URL un
 *How we precisely map ChatGPT's written claims to their retrieved sources.*
 
 ### 2.6.1 The "Claim-to-Link" Forensic Pipeline
-- **The Challenge:** ChatGPT's final response text replaces internal citation tokens with generic `[URL]` tags. To understand *why* a link was cited, we must reconstruct the link between the **written claim** and the **retrieved source**.
-- **The Solution:** We developed a forensic mapping script (or as Gemini calls them, **grounding supports**) that:
-    1. **Token Alignment:** Extracts raw citation tokens (e.g., `citeturn0search17`) from the network stream and aligns them with their final position in the response text.
-    2. **Block-Level Extraction:** Instead of simple keyword matching, the script identifies the **Full Claim Block** (the descriptive text between consecutive citation tags). This captures the complete product description or factual statement ChatGPT attributed to that source.
-    3. **Metadata Enrichment:** Maps each claim to its retrieved "Ground Truth" (the snippet, title, and URL from the search result groups).
+- **The Challenge:** ChatGPT's final response text replaces internal citation tokens with generic `[URL]` tags. To understand *why* a link was cited, we must reconstruct the link between the **written claim** and the **retrieved source**. Unlike Gemini — which natively provides segment-level attribution via `groundingSupports` (see `2.4.2`) — ChatGPT exposes no such mapping; we had to build one.
+- **The Solution:** We developed a forensic mapping pipeline that reconstructs ChatGPT's claim-to-source attribution at a resolution comparable to Gemini's native `groundingSupports`:
+    1. **Token Alignment:** Raw citation tokens (e.g., `citeturn0search9`, `citeturn0search24`) are extracted from the network event stream along with their `start_idx` / `end_idx` character positions in the streamed response text.
+    2. **Block-Level Extraction:** The script identifies the **Full Claim Block** — the descriptive text between consecutive citation tokens. This captures the complete product description or factual statement ChatGPT attributed to that source, not just a keyword. For example, a single claim block might read: *"InqScribe – desktop transcription software with a perpetual license (no subscription; runs locally)"* mapped to `citeturn0search24` → `inqscribe.com`.
+    3. **Metadata Enrichment:** Each claim block is joined to its retrieved "Ground Truth" (the snippet, title, and URL from the `search_result_groups`) by resolving `ref_id` keys (`turn_index`, `ref_type`, `ref_index`).
+    4. **Output:** The pipeline produces a structured `mapping.json` per run, where each entry contains `claim_text`, `token`, `target_url`, `start_idx`, and `end_idx` — enabling the same claim-level fidelity and multi-source analyses that Gemini's API provides natively.
+- **Cross-model parity:** This pipeline is what makes direct GPT-vs-Gemini comparison possible at the claim level. Without it, ChatGPT attribution would be limited to run-level URL lists with no way to determine which claim maps to which source.
 
 ### 2.6.2 Multi-Chip Reconstruction (Synthesis Aggression)
 - **Defining Multi-Chips:** We observed cases where ChatGPT groups multiple sources under a single citation (e.g., "Vibe Voice+1").
