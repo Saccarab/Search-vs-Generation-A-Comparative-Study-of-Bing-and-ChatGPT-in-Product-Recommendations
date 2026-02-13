@@ -1,5 +1,5 @@
 # Thesis Research Outline
-## Grounding Behavior in LLM‑Mediated Commercial Search: Citation Patterns and Selection Bias
+## Grounding Behavior in LLM‑Mediated Commercial Search: How ChatGPT and Gemini Select and Cite Web Sources
 
 **Author:** [Your Name]
 **Date:** January 2026
@@ -109,9 +109,7 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 - **The "Salesforce of AI Search":** This funding round validated the concept of building a "generational company" centered on helping brands monitor and optimize for how they surface in AI-generated responses across models like ChatGPT, Gemini, and Claude.
 - **The European Challenger — Peec AI:** In November 2025, Berlin-based **Peec AI** raised **$21 million in a Series A led by Singular**, bringing its total funding to $29 million ([TechCrunch, 2025](https://techcrunch.com/2025/11/17/as-consumers-ditch-google-for-chatgpt-peec-ai-raises-21m-to-help-brands-adapt/)). Founded in early 2025, Peec grew to **$4M ARR in 10 months** with 1,300 companies on its platform (including ElevenLabs, Chanel, and Axel Springer), explicitly positioning itself in the **Generative Engine Optimization (GEO)** category. The speed of Peec's traction—alongside Profound's Sequoia-backed round—confirms that AI search analytics is rapidly consolidating into a recognized market category, not a niche experiment.
 - **The Hype vs. Reality:** While the hype is centered on "killing search," our research suggests the reality is a **deeper integration** where search becomes the infrastructure for AI.
-- **The High-Intent Conversion Hypothesis**: Preliminary industry observations (e.g., internal data from Maestra AI) suggest that while AI-driven traffic volume is currently lower than traditional search, the **conversion rate** and **purchase intent** of LLM-referred users can be significantly higher.
-    - **Evidence of High Quality**: Comparative analysis of referral traffic (e.g., `utm_source=chatgpt.com` across multiple landing pages such as `live.maestra.ai` and `maestra.ai/tools/web-captioner`) shows that ChatGPT-referred users often exhibit a **~10x higher conversion rate** compared to the site-wide organic average (e.g., ~12% vs ~1.2%). Furthermore, the **Average Order Value (AOV)** from these referrals is observed to be nearly **3x higher**, suggesting that LLM-referred users are not only more likely to convert but also represent higher-value transactions.
-    - **Implication**: This suggests that LLM citations act as a "pre-qualified" lead source, making the mechanics of selection (which we study here) commercially critical.
+- **The High-Intent Conversion Hypothesis**: Preliminary industry observations suggest that while AI-driven traffic volume is currently lower than traditional search, the **conversion rate** and **purchase intent** of LLM-referred users can be significantly higher — implying that LLM citations act as a "pre-qualified" lead source, making the mechanics of selection (which we study here) commercially critical.
 
 ## 1.4 Retrieval Environments & Deployment Contexts
 *Defining the specific interfaces and constraints of the models under study.*
@@ -150,7 +148,7 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
     - **Keyword Clustering:** Using **Ahrefs** to identify high-intent keyword clusters and derive 14 representative prompts from search volume data.
     - **Prompt Volume Analysis:** Leveraging **Profound's** Prompt Volumes feature to select 65 prompts derived from real user conversations with ChatGPT. Note: Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent rather than verbatim transcripts.
     - **Deliberate Intent Filtering:** From the broad set of available user prompts, we **deliberately filtered for high commercial intent**. This ensures the study reflects the specific segment of search where AI synthesis is most active and where the "Extractive Nature" of the model is most visible.
-    - **Domain Expertise:** Queries were focused on the **AI and Software-as-a-Service (SaaS)** sectors—a domain where the author has significant professional expertise—allowing for more nuanced qualitative analysis of the "Signal vs. Noise" in results.
+    - **Domain Expertise:** Queries were focused on the **AI and Software-as-a-Service (SaaS)** sectors — particularly **speech and language technology** (speech-to-text, live transcription, voice translation, text-to-speech) — a domain where the author has significant professional expertise, allowing for more nuanced qualitative analysis of the "Signal vs. Noise" in results.
 - **Experimental Rigor:** Each of the 79 prompts was executed in **3 independent runs** (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
 
 ### 2.1.2 Google SERP Result Types (SerpApi): Organic vs Video vs PAA
