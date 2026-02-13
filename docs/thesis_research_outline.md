@@ -356,7 +356,7 @@ To make downstream analyses defensible, we first measured how much of the URL un
    - Hypothesis: Ignored links are more `salesy`, lower `expertise_signal_score`
 
 ## 2.6 Citation Mapping & Claim-Level Attribution
-*How we precisely map ChatGPT's written claims to their retrieved sources.*
+*How we precisely map ChatGPT's written claims to their retrieved sources. This pipeline was applied specifically to **listicle-cited claims**, where the research question is sharpest: when a model cites a listicle containing 10+ products, does it actually extract information from that page, or does it hallucinate from parametric knowledge and merely attach the listicle as a plausible-looking source? Listicles are uniquely suited to this test because they contain a discrete, verifiable roster of items we can check against the model's output. Product pages could also be analyzed this way, but the single-item structure makes the fidelity question less discriminating.*
 
 ### 2.6.1 The "Claim-to-Link" Forensic Pipeline
 - **The Challenge:** ChatGPT's final response text replaces internal citation tokens with generic `[URL]` tags. To understand *why* a link was cited, we must reconstruct the link between the **written claim** and the **retrieved source**. Unlike Gemini — which natively provides segment-level attribution via `groundingSupports` (see `2.4.2`) — ChatGPT exposes no such mapping; we had to build one.
