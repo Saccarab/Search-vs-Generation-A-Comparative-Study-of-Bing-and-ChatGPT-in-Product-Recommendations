@@ -204,35 +204,9 @@ A critical methodological challenge arose from Bing's inconsistent UI pagination
 ## 2.3 Anatomy of a ChatGPT Response (Network-Instrumented)
 *What exactly we can observe about ChatGPT's retrieval + citation pipeline from captured network payloads.*
 
-### 2.3.1 The Three-Layer Architecture (as observed)
+### 2.3.1 Pipeline Overview (Methodology)
 
-Our network instrumentation reveals a three-layer pipeline, not a monolithic model:
-
-```
-Layer 1: SONIC CLASSIFIER (fires once, <15 ms)
-  ↓  Decides: search vs. no-search
-  ↓  Outputs: simple_search_prob, complex_search_prob, no_search_prob
-  ↓  Deterministic for same input (byte-identical across runs of same prompt)
-
-Layer 2: SONICBERRY ORCHESTRATOR (alpha.sonic_thinky_v1_paid)
-  ↓  Manages the web.run tool-call loop
-  ↓  Each web.run call dispatches exactly 2 queries (fixed pair-generation)
-  ↓  Tracks search_turns_count (1, 2, 3…)
-
-Layer 3: GENERATION MODEL (gpt-5-2)
-  ↓  After each web.run, evaluates retrieved results in context
-  ↓  Decides whether to call web.run again (agentic re-search)
-  ↓  Non-deterministic: same input can produce 1–3 search turns
-  ↓  Selects sources → generates response with inline citation tokens
-```
-
-The high-level flow as observed in the event stream:
-1. **User prompt received**
-2. **Search decision (Layer 1)**: the Sonic Classifier outputs a 3-class probability distribution and evaluates it against thresholds in priority order (`no_search` → `complex` → `simple`). If `no_search_prob ≥ 0.175`, search is suppressed; otherwise search fires.
-3. **Fan-out query generation + retrieval (Layer 2–3)**: the model calls the `web.run` tool, which dispatches exactly 2 reformulated queries. Results return as `search_result_groups`.
-4. **Re-search decision (Layer 3)**: the generation model evaluates the retrieved pool and may call `web.run` again (incrementing `search_turns_count`). This creates the agentic re-search loop — 94% of runs complete in 1 turn (2 queries), 2.5% require 2 turns (4 queries), 0.2% require 3 turns (6 queries).
-5. **Selection**: the model promotes some sources to be cited inline, and may also attach extra sources as "additional."
-6. **Generation**: answer text is streamed + citation tokens are inserted (e.g., `citeturn0search0`) and merged into the final response ("multi-chip").
+Our network instrumentation captured raw event-stream payloads from the ChatGPT production UI, revealing a **three-layer pipeline** (Sonic Classifier → Sonicberry Orchestrator → Generation Model) rather than a monolithic model. The detailed architecture, layer descriptions, and observed flow are reported as empirical findings in **`3.1`**. Here we note only the methodological implication: because each layer emits distinct payload fields, we can separately instrument the search-trigger decision, the fan-out query dispatch, and the citation-generation phase.
 
 ### 2.3.2 Source Categories We Use (scope)
 - **Cited**: sources referenced inline in the generated answer.
@@ -245,14 +219,7 @@ We log the system's search-decision artifacts where present (Enterprise streams 
 - `web_search_triggered`: whether search actually ran.
 - `web_search_forced`: whether search was forced (if present).
 
-**Sonic Classifier configuration (observed across all 474 runs):**
-- **Classifier:** `sonic_classifier_5p2_3cls_ev3` (model: `snc-pg-sw-3cls-ev3`, snapshot: `wli-searchdb-model5-2025-09-23-20-17`)
-- **3-class output:** `simple_search_prob` + `complex_search_prob` + `no_search_prob` = 1.0
-- **Thresholds (evaluated in order):** `no_search_threshold` = 0.175, `complex_search_threshold` = 0.4, `simple_search_threshold` = 0 (catch-all)
-- **First-turn override:** `force_search_first_turn_threshold` = 0.00001 (near-zero, almost always forces search on first message)
-- **Enterprise vs. Personal divergence:** Enterprise has `prefetch_threshold: null` + `passthrough_tool_calls: true`; Personal has `prefetch_threshold: 0.55` + no passthrough tools
-
-**Note on the "65% search threshold" claim:** Independent reverse-engineering by [Resoneo](https://think.resoneo.com/chatgpt/) documents a single `force_search_threshold` of 65%. Our data captures a different classifier variant using a three-class threshold system rather than a single cutoff. The two may reflect different A/B variants or classifier versions. Our median `simple_search_prob` was 96.8% — far above any plausible boundary — so we cannot empirically test where the effective decision point lies in the 50–70% zone. The Resoneo-reported 65% figure may also correspond to the `prefetch_threshold` (0.55 in our data), which has shifted between versions.
+The full Sonic Classifier configuration (classifier variant, 3-class thresholds, Enterprise vs. Personal divergence, and comparison with external reverse-engineering by Resoneo) is reported as empirical findings in **`3.1.1`**.
 
 ### 2.3.4 Fan-Out Queries ("hidden queries") & the `web.run` Agentic Loop
 - **Definition**: multiple search queries issued for one user prompt; these expand/reshape retrieval scope.
@@ -263,27 +230,12 @@ We log the system's search-decision artifacts where present (Enterprise streams 
 - Fan-out is **not** a single dispatch of N queries. It is an **iterative tool-call loop** where the generation model (gpt-5-2) calls a tool named `web.run` via the Sonicberry orchestrator (`alpha.sonic_thinky_v1_paid`).
 - Each `web.run` call **always dispatches exactly 2 queries** — a fixed pair-generation strategy producing one synonym variant and one structural rephrase. Odd query counts (1, 3, 5) are architecturally impossible.
 - After each `web.run` returns results, the generation model evaluates them in context and decides whether to call `web.run` again, creating an agentic re-search loop tracked by the `search_turns_count` field.
-- **Observed distribution (474 runs):**
-
-| Search Turns | `web.run` Calls | Total Queries | Runs | % |
-|-------------|----------------|---------------|------|---|
-| 0 (no search) | 0 | 0 | 14 | 3.2% |
-| 1 (standard) | 1 | 2 | 409 | **94.0%** |
-| 2 (re-search) | 2 | 4 | 11 | 2.5% |
-| 3 (double re-search) | 3 | 6 | 1 | 0.2% |
-
-- **Key proof of decoupling:** P073 had byte-identical Sonic Classifier outputs across 3 runs (`simple_search_prob` = 0.9774 to 16 decimal places) yet produced 2, 2, and 6 queries respectively. The re-search decision is made by the generation model at inference time, not by the classifier.
-- **Enterprise re-searches 3x more** (4.1% of runs vs 1.4% Personal), suggesting different Sonicberry orchestration behavior across deployment tiers.
-- **Three observed re-search strategies in Turn 2+:**
-  1. **Named-entity drill-down** (P035, P050, P053): Turn 1 returns broad results → Turn 2 names specific products/services for targeted lookups
-  2. **Semantic disambiguation** (P063): prompt uses ambiguous term → Turn 2 rephrases into multiple technical synonyms
-  3. **Exhaustive re-query** (P073_r3): Turns 2–3 are near-synonymous reformulations, suggesting dissatisfaction with result quality
-
-- **Query drift:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
 - **How it appears in the raw network stream (multi-turn fan-out signature)**:
   - The response arrives as an event stream (patch/append style) containing repeated tool messages (`role="tool"`, `name="web.run"`, `author.metadata.source="sonic_tool"`).
   - Each `web.run` message carries `search_model_queries.queries[]` (always length 2) and `search_turns_count` (incrementing 1, 2, 3…).
-  - Multi-turn calls may be **chained** (each `parent_id` = previous `web.run`'s `message_id`, as in P073_r3) or **independent** (different parent, as in P035). Chained calls show tighter timing (341–484 ms) while independent calls take ~1.2 seconds.
+  - Multi-turn calls may be **chained** (each `parent_id` = previous `web.run`'s `message_id`) or **independent** (different parent).
+
+The empirical distribution of search turns, re-search strategies, query drift, and timing evidence are reported in **`3.1.3`**.
 
 ### 2.3.5 Retrieved Candidate Pool (what the model could have used)
 We capture the retrieved candidates and their metadata:
@@ -394,6 +346,23 @@ To make downstream analyses defensible, we first measured how much of the URL un
 - **Enriched URLs:** 11,925 / 11,929 (**~100%**)
 - **Unlabeled URLs:** 4
 
+### 2.5.5 Research Questions for Selection Analysis
+*These research-design questions guided the enrichment-based analyses in Part 3 (`3.4`–`3.5`).*
+
+1. **Why were Additional links not cited inline?**
+   - Compare structural DNA: `has_tables`, `has_numbered_lists`, `heading_density`
+   - Compare `tone`: Are Additional links more `promotional` or `salesy`?
+   - Compare `type`: Are Additional links more `product_page` vs. `listicle`?
+
+2. **Cross-Run Citation:**
+   - Were Additional links from Run 1 cited inline in Run 2/3/4?
+   - This shows consistency vs. randomness in ChatGPT's citation selection
+
+3. **Page 1 Ignored Links:**
+   - Links in **Bing Page 1** (variable-size SERP page; see `3.2.1`) that ChatGPT did NOT cite
+   - Compare their DNA to cited links
+   - Hypothesis: Ignored links are more `salesy`, lower `expertise_signal_score`
+
 ## 2.6 Citation Mapping & Claim-Level Attribution
 *How we precisely map ChatGPT's written claims to their retrieved sources.*
 
@@ -487,66 +456,6 @@ To make downstream analyses defensible, we first measured how much of the URL un
 *   **The "Structural Filter" (Selection Drift):** Models exhibit statistically significant preferences for specific Content DNA. Gemini, for instance, shows a +8.7pp "hunt" for numbered lists, while GPT Personal shows a +12.2pp preference for tables in listicles.
 *   **Listicle Uptake & Host Bias:** LLMs exhibit a "graduation" effect, preferentially citing the primary product pages recommended within retrieved listicles, but this is tempered by a measurable "Host Exclusion" bias where certain domains are systematically ignored despite being present in the "Menu."
 
-## 3.0 Dataset Profile (Content DNA)
-*Descriptive statistics about the study URL pool and the cited sets. This is not a "finding" section; it's the baseline menu/context for interpreting Sections 3.1–3.6.*
-
-### 3.0.1 Study Set Composition (Cited + Additional + Page 1 Ignored)
-Distribution across the **study set**, shown separately for each study angle.
-
-#### GPT Enterprise study set (Bing-centric, N=2,858)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **product_page** | 1,159 | 40.6% | **promotional** | 2,002 | 70.0% |
-| **listicle** | 989 | 34.6% | neutral_info | 699 | 24.5% |
-| editorial | 161 | 5.6% | salesy | 115 | 4.0% |
-| news | 156 | 5.5% | opinionated | 26 | 0.9% |
-
-#### GPT Personal study set (Multi-provider, N=2,194)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 885 | 40.3% | **promotional** | 1,559 | 71.1% |
-| **product_page** | 808 | 36.8% | neutral_info | 495 | 22.6% |
-| editorial | 121 | 5.5% | salesy | 100 | 4.6% |
-| news | 105 | 4.8% | opinionated | 26 | 1.2% |
-
-#### Gemini study set (Google-centric, N=2,939)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 1,296 | 44.1% | **promotional** | 2,076 | 70.6% |
-| **product_page** | 709 | 24.1% | neutral_info | 768 | 26.1% |
-| news | 165 | 5.6% | salesy | 52 | 1.8% |
-| marketplace | 150 | 5.1% | opinionated | 37 | 1.3% |
-
-### 3.0.2 Cited Set Composition (Type + Tone)
-Distribution of DNA categories for the URLs actually **cited** in the final responses.
-
-#### GPT Enterprise cited set (N=1,614)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **product_page** | 649 | 40.2% | **promotional** | 1,105 | 68.5% |
-| **listicle** | 589 | 36.5% | neutral_info | 390 | 24.2% |
-| news_article | 104 | 6.4% | salesy | 95 | 5.9% |
-
-#### GPT Personal cited set (N=1,444)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 544 | 37.7% | **promotional** | 998 | 69.1% |
-| **product_page** | 523 | 36.2% | neutral_info | 329 | 22.8% |
-| news_article | 98 | 6.8% | salesy | 82 | 5.7% |
-
-#### Gemini cited set (N=653)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 371 | 56.8% | **promotional** | 467 | 71.5% |
-| **product_page** | 148 | 22.7% | neutral_info | 181 | 27.7% |
-| comparison | 26 | 4.0% | opinionated | 5 | 0.8% |
-
-**Where the "why" lives**:
-- Listicle-only feature drift is reported under **`3.5.1 Intra-Listicle Selection Drift`**.
-- Host bias / listicle rank bias / semantic fidelity are reported under **`3.6`**.
-
----
-
 > **Section 3 Reading Order:**
 > The findings are organized to follow the pipeline from retrieval to analysis:
 > 1. **3.1 Fan-Out** — How queries are generated and dispatched (the retrieval strategy)
@@ -562,7 +471,37 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 ## 3.1 Retrieval Strategy & Fan-Out Analysis
 *Before analyzing citation overlap, we examine the retrieval phase: how the models reshape the user prompt into multiple search queries. Methodology and instrumentation are defined in `2.3.4`, `2.7.1`, and `2.7.2`.*
 
-### 3.1.0 ChatGPT Search Trigger Behavior
+#### The Three-Layer Architecture (as observed)
+
+Our network instrumentation reveals a three-layer pipeline, not a monolithic model:
+
+```
+Layer 1: SONIC CLASSIFIER (fires once, <15 ms)
+  ↓  Decides: search vs. no-search
+  ↓  Outputs: simple_search_prob, complex_search_prob, no_search_prob
+  ↓  Deterministic for same input (byte-identical across runs of same prompt)
+
+Layer 2: SONICBERRY ORCHESTRATOR (alpha.sonic_thinky_v1_paid)
+  ↓  Manages the web.run tool-call loop
+  ↓  Each web.run call dispatches exactly 2 queries (fixed pair-generation)
+  ↓  Tracks search_turns_count (1, 2, 3…)
+
+Layer 3: GENERATION MODEL (gpt-5-2)
+  ↓  After each web.run, evaluates retrieved results in context
+  ↓  Decides whether to call web.run again (agentic re-search)
+  ↓  Non-deterministic: same input can produce 1–3 search turns
+  ↓  Selects sources → generates response with inline citation tokens
+```
+
+The high-level flow as observed in the event stream:
+1. **User prompt received**
+2. **Search decision (Layer 1)**: the Sonic Classifier outputs a 3-class probability distribution and evaluates it against thresholds in priority order (`no_search` → `complex` → `simple`). If `no_search_prob ≥ 0.175`, search is suppressed; otherwise search fires.
+3. **Fan-out query generation + retrieval (Layer 2–3)**: the model calls the `web.run` tool, which dispatches exactly 2 reformulated queries. Results return as `search_result_groups`.
+4. **Re-search decision (Layer 3)**: the generation model evaluates the retrieved pool and may call `web.run` again (incrementing `search_turns_count`). This creates the agentic re-search loop — 94% of runs complete in 1 turn (2 queries), 2.5% require 2 turns (4 queries), 0.2% require 3 turns (6 queries).
+5. **Selection**: the model promotes some sources to be cited inline, and may also attach extra sources as "additional."
+6. **Generation**: answer text is streamed + citation tokens are inserted (e.g., `citeturn0search0`) and merged into the final response ("multi-chip").
+
+### 3.1.1 ChatGPT Search Trigger Behavior
 *When does ChatGPT decide to search at all?*
 
 - **Overall search rate:** **89.0%** of 474 runs triggered web search (422/474). Enterprise: **91.1%**, Personal: **86.9%** — a 4.2 pp gap.
@@ -574,23 +513,33 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 - **Citation impact:** Search-triggered runs averaged **9.94 citations/run** vs **2.62** for no-search runs (~4x). Enterprise no-search runs averaged just 1.10 citations; Personal no-search runs managed 3.65, suggesting Personal more readily generates citation-like references from parametric memory.
 - **Ghost citations:** 7 runs (all Personal) produced citation-formatted markers with **zero backing URLs** — hallucinated citation syntax. A further 5 runs produced **fully sourced citations without search** (up to 14 citations from parametric URL recall alone).
 
-### 3.1.1 Freshness Steering
+**Sonic Classifier configuration (observed across all 474 runs):**
+- **Classifier:** `sonic_classifier_5p2_3cls_ev3` (model: `snc-pg-sw-3cls-ev3`, snapshot: `wli-searchdb-model5-2025-09-23-20-17`)
+- **3-class output:** `simple_search_prob` + `complex_search_prob` + `no_search_prob` = 1.0
+- **Thresholds (evaluated in order):** `no_search_threshold` = 0.175, `complex_search_threshold` = 0.4, `simple_search_threshold` = 0 (catch-all)
+- **First-turn override:** `force_search_first_turn_threshold` = 0.00001 (near-zero, almost always forces search on first message)
+- **Enterprise vs. Personal divergence:** Enterprise has `prefetch_threshold: null` + `passthrough_tool_calls: true`; Personal has `prefetch_threshold: 0.55` + no passthrough tools
+
+**Note on the "65% search threshold" claim:** Independent reverse-engineering by [Resoneo](https://think.resoneo.com/chatgpt/) documents a single `force_search_threshold` of 65%. Our data captures a different classifier variant using a three-class threshold system rather than a single cutoff. The two may reflect different A/B variants or classifier versions. Our median `simple_search_prob` was 96.8% — far above any plausible boundary — so we cannot empirically test where the effective decision point lies in the 50–70% zone. The Resoneo-reported 65% figure may also correspond to the `prefetch_threshold` (0.55 in our data), which has shifted between versions.
+
+### 3.1.2 Freshness Steering
 - **Gemini: Explicit Freshness Obsession:** **93.4%** of Gemini runs explicitly inject a year (2025 or 2026) into their fan-out queries, with **71.7%** placing this signal in the very first query (Index 0). This drives Gemini's aggressive "Listicle Uptake" — by explicitly searching for "Best [Product] 2025," the model forces the retrieval of time-stamped listicles, which then dominate its grounding.
 - **GPT: Implicit Recency Reliance:** Only **5.1%** of GPT runs use explicit year signals in their fan-out queries. GPT relies almost entirely on the search index's (Bing's) internal recency ranking, leading to a more diverse (though still listicle-leaning) grounding pool.
-- **GPT's Multi-Turn Expansion:** GPT exhibits a "Multi-Turn Fan-Out" phenomenon where it issues secondary and tertiary queries (3+ queries) in response to initial results, effectively "hunting" for specific citations before finalizing the response. The empirical details of this mechanism are in **`3.1.1a`** below.
+- **GPT's Multi-Turn Expansion:** GPT exhibits a "Multi-Turn Fan-Out" phenomenon where it issues secondary and tertiary queries (3+ queries) in response to initial results, effectively "hunting" for specific citations before finalizing the response. The empirical details of this mechanism are in **`3.1.3`** below.
 
-### 3.1.1a GPT Multi-Turn Fan-Out: Empirical Findings
+### 3.1.3 GPT Multi-Turn Fan-Out: Empirical Findings
 *Detailed breakdown of how and when GPT's agentic re-search loop fires, based on `web.run` tool-call chain analysis of raw network responses.*
 
-**Distribution (across 435 runs with valid search data):**
+**Distribution (across 474 runs, including 435 with valid search data):**
 
 | Search Turns | `web.run` Calls | Total Queries | Runs | % | Description |
 |-------------|----------------|---------------|------|---|-------------|
-| 1 | 1 | 2 | 409 | **94.0%** | Standard: one pair of reformulated queries |
-| 2 | 2 | 4 | 11 | 2.5% | Re-search: model evaluates Turn 1 results, issues 2 more queries |
-| 3 | 3 | 6 | 1 | 0.2% | Double re-search: model issues a third batch |
+| 0 (no search) | 0 | 0 | 14 | 3.2% | Search suppressed (classifier null or overridden) |
+| 1 (standard) | 1 | 2 | 409 | **94.0%** | Standard: one pair of reformulated queries |
+| 2 (re-search) | 2 | 4 | 11 | 2.5% | Re-search: model evaluates Turn 1 results, issues 2 more queries |
+| 3 (double re-search) | 3 | 6 | 1 | 0.2% | Double re-search: model issues a third batch |
 
-- **Enterprise triggers multi-turn search 3x more often** than Personal (4.1% vs 1.4%).
+- **Enterprise triggers multi-turn search 3x more often** than Personal (4.1% vs 1.4%), suggesting different Sonicberry orchestration behavior across deployment tiers.
 - Only **P035** (*"Can you list translation services with live interpreters and their 2-day pricing?"*) consistently triggered 2 turns across all 6 runs. All other multi-turn runs were sporadic (1 of 3 runs for that prompt).
 
 **What triggers re-search (the 12 multi-turn runs):**
@@ -614,7 +563,9 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 - 4-query runs: second `web.run` fires ~1.2 seconds after the first (time to receive and evaluate Turn 1 results)
 - 6-query run (P073_r3): calls are chained (`parent_id` links form a sequential chain) with tight timing (484 ms → 341 ms) — the model rapidly determined each round was insufficient
 
-### 3.1.2 Implicit Localization Bias
+**Query drift:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
+
+### 3.1.4 Implicit Localization Bias
 - **Occurrence Rates:** Implicit localization signals (non-English fan-out queries from English prompts) were observed in **13.1%** of GPT runs and **4.6%** of Gemini runs, demonstrating how retrieval environment (IP/locale) can steer grounding even without user intent.
 - **The "English Anchor" Effect (Gemini-specific):**
     - Even for foreign-language prompts, Gemini **always** reserves the first fan-out slot (Index 0) for an English translation of the prompt.
@@ -849,6 +800,8 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 | **product_page** | 148 | 22.7% | neutral_info | 181 | 27.7% |
 | comparison | 26 | 4.0% | opinionated | 5 | 0.8% |
 
+**Cross-references**: Listicle-only feature drift is reported under **`3.5.1`** (Intra-Listicle Selection Drift). Host bias, listicle rank bias, and semantic fidelity are reported under **`3.6`**.
+
 ### 3.4.3 Cited vs. Additional vs. Page 1 Ignored — Structural DNA Comparison
 
 *Why were some retrieved links cited inline while others were demoted to "Additional" or ignored entirely?*
@@ -867,22 +820,6 @@ Distribution of DNA categories for the URLs actually **cited** in the final resp
 | `type` (top)                  | product_page (45.4%) / product_page (42.2%) | listicle (40.8%) / listicle (34.2%) | product_page (40.8%) / product_page (42.1%) |
 
 *Format note:* values are shown as **Enterprise / Personal**. "Page 1 ignored" is computed on **unique URLs** on Bing `page_num=1` that are **not cited** (per run, de-duplicated across runs). In our dataset, this bucket has substantial missing DNA labels because not all Bing Page‑1 results were fetched/labelled (Enterprise: 812/1660 labelled; Personal: 648/1394 labelled).
-
-### 3.4.4 Research Questions for Cited vs. Additional
-
-1. **Why were Additional links not cited inline?**
-   - Compare structural DNA: `has_tables`, `has_numbered_lists`, `heading_density`
-   - Compare `tone`: Are Additional links more `promotional` or `salesy`?
-   - Compare `type`: Are Additional links more `product_page` vs. `listicle`?
-
-2. **Cross-Run Citation:**
-   - Were Additional links from Run 1 cited inline in Run 2/3/4?
-   - This shows consistency vs. randomness in ChatGPT's citation selection
-
-3. **Page 1 Ignored Links:**
-   - Links in **Bing Page 1** (variable-size SERP page; see `3.2.1`) that ChatGPT did NOT cite
-   - Compare their DNA to cited links
-   - Hypothesis: Ignored links are more `salesy`, lower `expertise_signal_score`
 
 ## 3.5 Selection Drift (Enrichment-Based)
 *With the DNA profile established in 3.4, we now measure how the model's selection ("Order") systematically diverges from the available pool ("Menu") along enriched feature dimensions.*
