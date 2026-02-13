@@ -299,7 +299,8 @@ Unlike ChatGPT, where we must "scrape" the network stream, Gemini provides struc
 ### 2.4.2 Key Differences in Instrumentation
 - **Transparency**: Gemini is "Grounding-First"—it exposes the raw chunks it read, whereas ChatGPT only exposes the final URL and a snippet.
 - **Segment-Level Attribution**: Gemini attributes every sentence/segment to a specific chunk index, allowing for a much higher resolution of fidelity analysis.
-- **Vertex Redirects**: Gemini uses internal redirect URLs (e.g., `vertexaisearch.cloud.google.com/...`) which must be resolved to find the original domain, a step we automated in our pipeline.
+- **Vertex Redirects**: Gemini's `groundingChunks` do not expose raw URLs — instead they contain internal redirect URLs (e.g., `vertexaisearch.cloud.google.com/...`) that must be followed to discover the actual destination domain. We built a dedicated resolution script (`scripts/resolve_grounding_urls.mjs`) that collects all unique Vertex redirect URLs from the raw response files, follows each redirect via HTTP, and produces a mapping from Vertex URL → resolved destination URL. Some redirects failed to resolve programmatically (e.g., due to timeouts or anti-bot blocks), so unresolved URLs were exported and resolved manually via a browser-based content fetcher. Without this resolution step, no domain-level or overlap analysis would be possible on the Gemini data.
+- **Thinking budget**: All Gemini runs in this study used the **minimum thinking budget** available via the API. Higher thinking budgets produce more fan-out queries — the model generates an initial broad query, discovers brands/products from the results, then issues targeted follow-up queries for those specific entities (e.g., `"best free AI video translation tools 2025 2026"` → `"HeyGen free trial video translation"` → `"ElevenLabs video translator free tier limitations"`). This iterative refinement pattern resembles GPT's multi-turn re-search (see `3.1.3`), but is driven by the thinking budget rather than an explicit agentic tool-call loop. Our use of minimum thinking keeps the fan-out count bounded and comparable across runs, but means the study captures the model's baseline retrieval behavior rather than its maximum-depth grounding capability.
 - **API vs. Consumer UI gap**: Our Gemini data comes entirely from the Vertex AI API, which provides structured grounding metadata but does not carry IP/locale signals. Inspecting the **Gemini consumer UI** (`gemini.google.com`) via network packet analysis — mirroring our ChatGPT instrumentation approach — could reveal additional signals not exposed in the API, such as locale-driven fan-out rewriting, internal ranking or filtering stages before the `groundingMetadata` is constructed, or differences in fan-out strategy between the consumer product and the API. This remains a potential avenue for future work.
 
 ## 2.5 Content DNA Enrichment (LLM-as-a-Labeler)
@@ -396,9 +397,12 @@ To make downstream analyses defensible, we first measured how much of the URL un
 
 - **Concrete example (explicit localization via fan-out):** A location-free prompt like `"what is the best bakery"` can trigger fan-out queries that inject a specific place (e.g., `"best bakery near Munich Germany"`), effectively converting an implicit prompt into an explicitly localized retrieval task.
 
-- **Observed fan-out localization patterns:**
-  1. **Foreign-language prompt → English anchor (GPT + Gemini):** Both systems consistently emit at least one **English** fan-out query alongside queries in the prompt's language, creating mixed-language retrieval. Verified across Chinese (P032: 1 English + 3 Chinese), French (P019: 1 English + 3 French), German (P055: 2 English + 2 German), and Spanish (P062: 1 English + 3 Spanish) prompts on Gemini, and observed on GPT as well.
-  2. **English prompt + non-English region → local-language rewrite (GPT only):** One fan-out query is rewritten into the user's regional language based on IP/locale signals (example above: Munich → German). This was only testable on GPT, where we ran prompts through the browser UI with a regional IP. Gemini was accessed via API, which does not carry IP-based locale signals, so this pattern could not be tested for Gemini.
+- **Observed GPT fan-out localization patterns (62 runs with non-English fan-out queries):**
+  1. **Case 1 — Foreign-language prompts (30 runs):** When the user prompt is in a non-English language (French P019, Chinese P032, Turkish P038, German P055, Turkish P060), GPT emits fan-out queries in both the prompt's language and English. This is expected behavior — the system mirrors the prompt language while also anchoring to English for broader coverage. Gemini exhibits the same pattern: verified across Chinese (P032: 1 English + 3 Chinese), French (P019: 1 English + 3 French), German (P055: 2 English + 2 German), and Spanish (P062: 1 English + 3 Spanish) prompts.
+  2. **Case 2 — Context-triggered anomalies (9 runs):** English prompts that **mention a specific language or locale** in their content trigger non-English fan-out queries. For example, "best software for Parsian/Farsi audio-to-text transcription" (P058) produces Farsi fan-out queries; "Chrome extension for live Chinese to English translation" (P047) produces Chinese fan-out queries. The non-English query is contextually motivated by the prompt's subject matter, not by IP or browser locale.
+  3. **Case 3 — Untriggered anomalies (23 runs):** Purely English prompts with **no language or locale context** produce non-English fan-out queries (Chinese, Japanese, Spanish, French, etc.). For example, "Is there a real time audio to text translation?" (P007) or "Can I add a live translation app to calls?" (P048) generate Chinese and Japanese fan-out queries. These appear to be driven by IP/locale signals or unexplained model behavior, as nothing in the prompt suggests a non-English retrieval path.
+
+  *Note: Cases 2 and 3 are GPT-only observations. Gemini was accessed via API without IP-based locale signals, so these patterns could not be tested for Gemini (see `2.4.2`).*
 
 - **Findings** (occurrence rates, "English Anchor" effect, freshness steering stats) are reported in **`3.1`**.
 
@@ -421,16 +425,24 @@ To make downstream analyses defensible, we first measured how much of the URL un
 - **Impact on Methodology**: This legal pressure has led to technical restrictions in the SEO/GEO tool ecosystem, such as the removal of high-volume parameters (e.g., `num=100`).
 - **Research Justification**: These constraints further justify our **Deep Hunt (Rank 200)** methodology. As traditional scraping becomes more restricted, the "Visibility Gap" between what an LLM can see (via direct API access) and what a researcher can see (via public search UIs) will likely widen, making the LLM a primary—and increasingly exclusive—gateway to the deep web.
 
-## 2.8 The Analysis App (Data Viewer)
+## 2.8 Analysis Applications
 
-### What the app does:
-- Interactive comparison of ChatGPT/Gemini responses vs. Search results per query/run
-- **Gemini Mode:** Visualizes the "Search Filter" by comparing `groundingChunks` (AI Shortlist) vs. `groundingSupports` (Final Citations) vs. `Google SERP` (The Control Group).
+We built two separate interactive tools for qualitative inspection and aggregate analysis, one per model:
+
+### 2.8.1 ChatGPT Analysis Viewer (`scripts/utility/data_viewer.py`)
+- Per-query/run comparison of ChatGPT responses vs. Bing SERP results (Top 200)
+- Highlights cited, additional, and invisible links with overlap status
 - Dashboard with aggregate statistics (Overlap %, Invisible Domains, etc.)
+- Enabled manual spot-checking that revealed the "Pagination Loop" and "Page 2 Cliff" problems in Bing
 
-### Why it matters for the thesis:
-- Enabled manual spot-checking of automated findings
-- Revealed the "Pagination Loop" and "Page 2 Cliff" problems in Bing
+### 2.8.2 Gemini Grounding Analyzer (`tools/GeminiVizApp`)
+- Per-query/run comparison of Gemini responses vs. Google SERP results
+- Visualizes the grounding pipeline by comparing `groundingChunks` (retrieved candidates) vs. `groundingSupports` (final segment-level attributions) vs. Google SERP (control group)
+- Surfaces fan-out query overlap distribution per query index (Q1–Q7)
+- Aggregate grounding behavior dashboard (SERP overlap rate, per-query citation counts)
+
+### Why two apps:
+The two models expose fundamentally different data structures — ChatGPT requires reconstructed citation mapping from network tokens (see `2.6`), while Gemini provides native `groundingMetadata` with chunk-level and segment-level attribution. A single unified viewer would have obscured these structural differences rather than surfacing them.
 
 ---
 
@@ -658,7 +670,21 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 - **The "Rank 1" Dominance**: Gemini shows a massive concentration of citations at the first organic result.
 - **Selection Decay**: Citations persist through Rank 9, but drop off significantly starting at Rank 10, confirming that Gemini's "Order" is heavily biased toward the top of the "Menu."
 - **Visibility Threshold**: The sharp drop at Rank 10 suggests a psychological or algorithmic "fold" where results become significantly less likely to be cited.
-- **First-Query Bias**: Gemini exhibits a massive dependency on the **first fan-out query (37.1%)**, with a steep drop-off for subsequent queries (Q2: 18.1%, Q3: 11.6%). GPT shows a more balanced distribution across its 50/50 fan-out split.
+- **First-Query Bias**: Gemini exhibits a massive dependency on the first fan-out query, with a steep decay across subsequent queries. GPT shows a more balanced distribution across its 50/50 fan-out split.
+
+**Gemini per-query citation overlap distribution (237 runs, 1,651 citations):**
+
+| Query | Overlap | Citations |
+|-------|--------:|----------:|
+| **Q1** | **37.1%** | 613 |
+| Q2 | 18.1% | 299 |
+| Q3 | 11.6% | 191 |
+| Q4 | 7.4% | 122 |
+| Q5 | 2.8% | 46 |
+| Q6 | 0.6% | 10 |
+| Q7 | 0.1% | 2 |
+
+  *Note: Not all runs produce queries at every index — Q5+ counts are lower partly because fewer runs generate that many fan-out queries (a function of the minimum thinking budget used; see `2.4.2`). The Q1 dominance is nonetheless striking: the first fan-out query accounts for more citations than Q2–Q7 combined.*
 
 ## 3.3 Citation Overlap & Invisible Links
 *Having established where citations land in the SERP (3.2), we now quantify what fraction exists in conventional search indices at all — and characterize the "invisible" remainder.*
