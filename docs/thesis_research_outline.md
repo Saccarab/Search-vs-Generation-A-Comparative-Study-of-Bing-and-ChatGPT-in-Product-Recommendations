@@ -547,22 +547,22 @@ The high-level flow as observed in the event stream:
 - **Enterprise triggers multi-turn search 3x more often** than Personal (4.1% vs 1.4%), suggesting different Sonicberry orchestration behavior across deployment tiers.
 - Only **P035** (*"Can you list translation services with live interpreters and their 2-day pricing?"*) consistently triggered 2 turns across all 6 runs. All other multi-turn runs were sporadic (1 of 3 runs for that prompt).
 
-**What triggers re-search (the 12 multi-turn runs):**
+**The 12 multi-turn runs — actual queries:**
 
-| Prompt | Turns | `complex_search_prob` | What Turn 2+ Searched For |
-|--------|-------|----------------------|---------------------------|
-| P035 | 2 | 0.069 | Named services: Jeenie, Boostlingo, LanguageLine (pricing drill-down) |
-| P053 | 2 | **0.259** | Named tools: Uberduck, FakeYou + legal/limitation angle |
-| P050_r3 | 2 | 0.003 | Named apps: Google Translate, Microsoft Translator (feature-specific) |
-| P063_r1 | 2 | 0.037 | Concept disambiguation: "saves context" → "translation memory" → "adaptive context" |
-| P073_r3 | **3** | 0.012 | Exhaustive variation + named tools: VEED, Kapwing, Happy Scribe |
+We cannot determine *why* the model chose to re-search; we can only observe *what* it searched. The table below shows the actual Turn 1 and Turn 2+ query content extracted from raw network payloads.
+
+| Prompt | Turns | `complex_search_prob` | Turn 1 Queries | Turn 2+ Queries |
+|--------|-------|----------------------|----------------|-----------------|
+| P035 | 2 | 0.069 | "translation services with live interpreters pricing…" | "Jeenie live interpreter pricing per minute…", "Jeenie or Boostlingo pricing" |
+| P053 | 2 | **0.259** | "free AI text to speech celebrity voices…" | "ElevenLabs free tier celebrity voices API IoT…", "open source TTS celebrity voices or voice cloning…" |
+| P050_r3 | 2 | 0.003 | "free app live translation during a call French…" | "Google Translate app live conversation translation…", "Microsoft Translator app real time voice…" |
+| P063_r1 | 2 | 0.037 | "best machine translation tool for live translation that maintains context" | "live translation tools maintain conversation context or memory…", "translation memory or adaptive context in real-time tools" |
+| P073_r3 | **3** | 0.012 | "best video translator for YouTube…" | Turn 2: "tools to translate YouTube videos subtitles or audio…"; Turn 3: "tools like VEED, Kapwing, Happy Scribe" |
 
 **Key finding: The Sonic Classifier does NOT control re-search.** The correlation between `complex_search_prob` and multi-turn behavior is loose (avg 0.104 for multi-turn vs 0.025 for single-turn, but P050 re-searched at 0.3% while P020 did not at 30.6%). The re-search decision is made by the generation model (gpt-5-2) at inference time after evaluating initial results. P073 proves this definitively: byte-identical classifier outputs across 3 runs produced 1, 1, and 3 search turns.
 
-**Three observed re-search strategies:**
-1. **Named-entity drill-down** (P035, P050, P053): Turn 1 returns generic results → Turn 2 queries name specific products/vendors for targeted price/feature lookups. Enterprise and Personal name *different* entities in Turn 2, drawing on different parametric knowledge.
-2. **Semantic disambiguation** (P063): The user's prompt uses an ambiguous term → Turn 2 casts a wider semantic net by rephrasing into multiple technical synonyms.
-3. **Exhaustive re-query** (P073_r3): Turns 2–3 are near-synonymous broad reformulations (suggesting result dissatisfaction), with a final query naming specific tools — the model brute-forces additional coverage.
+**Observed patterns in Turn 2+ queries:**
+Across all five multi-turn cases, Turn 2 queries tend to include specific product/service names (Jeenie, Boostlingo, ElevenLabs, Google Translate, Microsoft Translator, VEED, Kapwing) or rephrased terminology, whereas Turn 1 queries are more generic. We report this as an empirical observation without claiming a causal mechanism — the model's internal decision to re-search is not visible in the network data.
 
 **Timing evidence:**
 - 4-query runs: second `web.run` fires ~1.2 seconds after the first (time to receive and evaluate Turn 1 results)
