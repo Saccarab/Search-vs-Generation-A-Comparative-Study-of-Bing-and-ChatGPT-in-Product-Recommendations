@@ -571,9 +571,13 @@ Across all five multi-turn cases, Turn 2 queries tend to include specific produc
 **Query drift:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
 
 ### 3.1.4 Implicit Localization Bias
-- **Occurrence Rates:** Implicit localization signals (non-English fan-out queries from English prompts) were observed in **13.1%** of GPT runs and **4.6%** of Gemini runs, demonstrating how retrieval environment (IP/locale) can steer grounding even without user intent.
+- **GPT Occurrence Rate:** Implicit localization signals (non-English fan-out queries generated from English prompts) were observed in **13.1%** of GPT runs, distributed across three patterns:
+    - **Foreign-language anchoring** (30 runs): one of the two fan-out queries is issued in a non-English language (e.g., German, Turkish), with the other remaining in English.
+    - **Context-triggered** (9 runs): the prompt references an inherently local category (e.g., "best pizza," "local services"), triggering locale-aware query rewriting.
+    - **Untriggered anomalies** (23 runs): non-English fan-out queries appear with no obvious prompt-level trigger, suggesting IP/locale environment leaking into query generation.
+- **Gemini — not observed via API:** Because our Gemini data was collected through the Vertex AI API (which does not carry IP or locale signals), we cannot test whether Gemini exhibits similar implicit localization. This remains a limitation; inspecting Gemini's consumer UI network traffic could reveal whether localization occurs there (see `2.4.2`).
 - **The "English Anchor" Effect (Gemini-specific):**
-    - Even for foreign-language prompts, Gemini **always** reserves the first fan-out slot (Index 0) for an English translation of the prompt.
+    - Even for foreign-language prompts, Gemini **always** reserves the first grounding-support query slot (Index 0) for an English translation of the prompt.
     - Due to the **First-Query Bias** (where models preferentially cite results from the first search query), the English-language search results dominate the final response.
     - In 100% of our localized Gemini runs, the cited sources were primarily global/English SaaS platforms and tech publications (e.g., `pcmag.com`, `techradar.com`), effectively creating a "Global Information Bubble" even for non-English users.
 - **Publisher/SEO→GEO implication:** Even if users in non‑English-speaking countries **search in English**, IP/locale-driven fan‑out rewriting can route part of retrieval toward **localized-language SERPs**. Publishers without localized pages may lose visibility (and therefore citations/traffic) in these retrieval paths.
@@ -582,10 +586,10 @@ Across all five multi-turn cases, Turn 2 queries tend to include specific produc
 *Quantifying how search engine ranking (the "Menu" position) influences the final citation (the "Order"). We present this before the invisible-links analysis because understanding where citations land in the SERP provides context for interpreting what falls outside it.*
 
 ### 3.2.1 Page-Level Distribution (The "Long Tail" of Retrieval)
-Our analysis of 237 runs reveals that LLMs do not just "scrape the surface" of the search results but dig deep into the SERP pages.
+Our analysis of 237 runs per engine tier (79 queries × 3 runs) reveals that LLM citations are not concentrated on the first page of search results but are distributed deep into the SERP.
 
 #### Bing Page Distribution (Deep Hunt)
-Analysis of where citations appear in the Bing index (up to Rank 200).
+Analysis of where GPT citations match results in our Bing scrape (up to Rank 200). Because ChatGPT likely receives a cleaner backend ranking than the consumer UI we scraped (see `2.2.1`), these match counts reflect our best-effort alignment rather than ChatGPT's actual retrieval depth.
 
 | Page Index | GPT Enterprise Matches | GPT Personal Matches |
 | :--- | :--- | :--- |
@@ -606,48 +610,121 @@ Analysis of where citations appear in the Bing index (up to Rank 200).
 | Page 15 | 140 | 264 |
 | Page 16 | 103 | 204 |
 
-#### Google Page Distribution
-Analysis of where citations appear in the **per-run** Google SERP capture.
-
-- **The "Page 1" Elasticity Problem**: We explicitly avoid defining Page 1 as a fixed "Rank 1-10" range. In modern search engines (especially Bing), the length of the first page is highly variable, often truncated or expanded based on the presence of rich snippets, ads, and vertical blocks.
-- **The "Page 2 Dip" & Index Volatility**: We observe a curious drop in matches on Page 2 compared to Page 1 and Pages 3-5. This is likely an artifact of **Bing index volatility** rather than a deliberate model preference. Qualitative inspection of Bing's "deep" results reveals significant "noise" and irrelevant content across all pages, but Page 2 appears particularly inconsistent in our dataset, often containing transitional or low-signal results that the model bypasses in favor of more stable "deep" candidates found on subsequent pages.
-- **The "Deep Hunt" Confirmation**: The fact that we see hundreds of matches on Pages 4-10 proves that LLMs are heavily utilizing results that are effectively invisible to human searchers who rarely paginate past the first elastic page.
+**Observations on the Bing page distribution:**
+- **Enterprise vs Personal Page 1 gap**: Enterprise shows nearly 3× the Page 1 matches (1,468 vs 521), consistent with Enterprise's higher Bing affinity (81.3% overlap vs 67.6%; see `3.3.1`). Personal's lower Page 1 count aligns with its multi-provider retrieval strategy — many of its citations match Google rather than Bing.
+- **The "Page 2 Dip"**: Page 2 shows a conspicuous drop compared to both Page 1 and Pages 3–5. As discussed in `2.2.1`, this is likely an artifact of Bing's UI pagination instability (truncated Page 1 results not shifting cleanly to Page 2) rather than a model preference.
+- **Smooth decay after Page 3**: Pages 3–16 show a gradual, expected decay in match counts — the long-tail pattern. The fact that we still see hundreds of matches on Pages 4–10 demonstrates that many GPT citations fall well beyond what human searchers would see.
+- **The "Page 1" Elasticity caveat**: We avoid defining Page 1 as a fixed "Rank 1–10" range. In Bing's consumer UI, the first page length varies based on ads, rich snippets, and vertical blocks (see `2.2.1`).
 
 ### 3.2.2 Intra-Page Position Bias (The "Rank 1" Effect)
-Even within Page 1, there is a massive bias toward the very first organic result.
+Even within the first page of results, rank position matters significantly for citation likelihood. We show GPT against both the Bing index (its primary retrieval source for Enterprise) and the Google SERP, plus Gemini against its own Google fan-out results.
 
-#### GPT Personal: Google Match Distribution
-Analysis of where GPT Personal citations appear in the **per-run** Google SERP.
+#### GPT: Bing Rank-Level Match Distribution (Enterprise vs Personal)
+Analysis of where GPT citations match results by **global Bing rank** (position 1–200 across our full scrape). All 213 Enterprise and 209 Personal runs have results at every rank, so the match rates below are directly comparable. We count **distinct runs** where at least one cited link matched the Bing result at a given rank — this avoids inflating numbers when the same URL appears in multiple citation slots within a single run (e.g., both as a cited and additional link).
 
-| Result Type | Page | Position | Matches |
+| Rank | Enterprise Runs Matched | Enterprise Rate | Personal Runs Matched | Personal Rate |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | **152** | **71.4%** | **56** | **26.8%** |
+| 2 | 146 | 68.5% | 49 | 23.4% |
+| 3 | 86 | 40.4% | 47 | 22.5% |
+| 4 | 70 | 32.9% | 33 | 15.8% |
+| 5 | 48 | 22.5% | 40 | 19.1% |
+| 6 | 41 | 19.2% | 26 | 12.4% |
+| 7 | 44 | 20.7% | 26 | 12.4% |
+| 8 | 44 | 20.7% | 24 | 11.5% |
+| 9 | 38 | 17.8% | 27 | 12.9% |
+| 10 | 20 | 9.4% | 29 | 13.9% |
+
+*Match rate = distinct runs where at least one cited link matched the Bing result at that rank / total runs with a result at that rank (213 Enterprise, 209 Personal — all runs have results at every rank since we scraped to Rank 200).*
+
+**Why we normalize: Bing's "Elastic Page 1"**
+The global-rank table above treats every rank equally (all runs have results at Ranks 1–200). But in the actual Bing consumer UI, Page 1 is not a fixed "Top 10" — it varies per scrape (see `2.2.1`). This means raw match counts at higher ranks are partly suppressed by the fact that fewer runs even had a result at that position on Page 1. To avoid overstating the Rank 1–2 advantage, we measured **how many runs actually exposed a result at each rank on Page 1** and computed normalized match rates against that availability baseline.
+
+**Bing Page 1 length distribution:**
+
+| Page 1 Length | Enterprise Runs | Personal Runs |
+| :--- | :--- | :--- |
+| 1–2 results | 38 (17.8%) | 48 (23.0%) |
+| 3–5 results | 41 (19.2%) | 44 (21.1%) |
+| 6–7 results | 21 (9.9%) | 21 (10.0%) |
+| 8–10 results | 55 (25.8%) | 46 (22.0%) |
+| 11+ results | 58 (27.2%) | 50 (23.9%) |
+
+*Median Page 1: 9 results (Enterprise), 6 results (Personal). Nearly 37% of Enterprise scrapes and 44% of Personal scrapes had 5 or fewer results on Page 1. This means the raw match counts at Ranks 3+ are partly suppressed by availability — not every run even had a result to match at those positions.*
+
+**Page 1 availability and normalized match rates:**
+To account for the elastic Page 1, we normalize: of the runs that actually had a Bing result at Rank N on Page 1, what percentage matched a citation?
+
+| Rank | Ent. Page 1 Avail. | Ent. Matched | Ent. Rate | Pers. Page 1 Avail. | Pers. Matched | Pers. Rate |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | 213 (100%) | 152 | **71.4%** | 209 (100%) | 56 | **26.8%** |
+| 2 | 213 (100%) | 146 | **68.5%** | 209 (100%) | 49 | **23.4%** |
+| 3 | 173 (81%) | 76 | **43.9%** | 154 (74%) | 24 | **15.6%** |
+| 4 | 151 (71%) | 60 | **39.7%** | 134 (64%) | 19 | **14.2%** |
+| 5 | 135 (63%) | 38 | 28.1% | 115 (55%) | 10 | 8.7% |
+| 6 | 123 (58%) | 24 | 19.5% | 106 (51%) | 8 | 7.5% |
+| 7 | 110 (52%) | 28 | 25.5% | 88 (42%) | 8 | 9.1% |
+| 8 | 96 (45%) | 26 | 27.1% | 81 (39%) | 6 | 7.4% |
+| 9 | 86 (40%) | 20 | 23.3% | 73 (35%) | 6 | 8.2% |
+| 10 | 60 (28%) | 6 | 10.0% | 60 (29%) | 9 | 15.0% |
+
+**Key observations on Bing rank bias:**
+- **Enterprise Rank 1–2 dominance is real, not an artifact**: Even after normalizing for availability, 71% and 69% of runs cite the Bing Rank 1 and Rank 2 results. The drop to Rank 3 (44%) is the steepest cliff in the data.
+- **Enterprise Ranks 5–9 are more uniform than raw counts suggest**: Once normalized, the match rate for Ranks 5–9 is 19–28% — the apparent steep decline in raw match counts was partly driven by fewer runs having results at those positions on Page 1.
+- **Personal is flat on Bing**: Normalized rates range 7–27% with no strong rank signal, consistent with Personal drawing citations primarily from Google.
+- **The Rank 10 anomaly**: Only 28–29% of runs had a Rank 10 result on Page 1. Enterprise's 10% match rate at Rank 10 may reflect both lower availability and the tail end of the first "page" of results ChatGPT receives from Bing's backend.
+
+#### GPT: Google Match Distribution (Enterprise vs Personal)
+Analysis of where GPT citations match organic results in the Google SERP (collected via SerpApi). Showing both tiers side by side reveals the Enterprise/Personal divergence visible in Bing overlap (`3.3.1`) from a different angle.
+
+| Page | Position | Enterprise Matches | Personal Matches |
 | :--- | :--- | :--- | :--- |
-| **organic** | **1** | **1** | **168** |
-| organic | 1 | 2 | 128 |
-| organic | 1 | 3 | 145 |
-| organic | 1 | 4 | 107 |
-| organic | 1 | 5 | 112 |
-| organic | 1 | 6 | 113 |
-| organic | 1 | 7 | 103 |
-| organic | 1 | 8 | 92 |
-| organic | 1 | 9 | 48 |
-| organic | 1 | 10 | 38 |
-| organic | 2 | 1 | 58 |
-| organic | 2 | 2 | 57 |
-| organic | 2 | 3 | 65 |
-| organic | 2 | 4 | 41 |
-| organic | 2 | 5 | 48 |
-| organic | 2 | 6 | 50 |
-| organic | 2 | 7 | 38 |
-| organic | 2 | 8 | 46 |
-| organic | 2 | 9 | 23 |
-| organic | 2 | 10 | 29 |
-| related_question | 2 | 1 | 15 |
-| related_question | 2 | 2 | 12 |
-| video | 2 | 1 | 1 |
-| discussion | 2 | 2 | 1 |
+| **1** | **1** | **88** | **168** |
+| 1 | 2 | 59 | 128 |
+| 1 | 3 | 34 | 145 |
+| 1 | 4 | 37 | 107 |
+| 1 | 5 | 41 | 112 |
+| 1 | 6 | 39 | 113 |
+| 1 | 7 | 33 | 103 |
+| 1 | 8 | 26 | 92 |
+| 1 | 9 | 21 | 48 |
+| 1 | 10 | 14 | 38 |
+| 2 | 1 | 17 | 58 |
+| 2 | 2 | 18 | 57 |
+| 2 | 3 | 14 | 65 |
+| 2 | 4 | 18 | 41 |
+| 2 | 5 | 16 | 48 |
+| 2 | 6 | 18 | 50 |
+| 2 | 7 | 9 | 38 |
+| 2 | 8 | 9 | 46 |
+| 2 | 9 | 17 | 23 |
+| 2 | 10 | 8 | 29 |
+| 3 | 1 | 11 | 30 |
+| 3 | 2 | 7 | 21 |
+| 3 | 3 | 4 | 39 |
+| 3 | 4 | 7 | 27 |
+| 3 | 5 | 6 | 18 |
+| 3 | 6 | 6 | 14 |
+| 3 | 7 | 8 | 22 |
+| 3 | 8 | 3 | 16 |
+| 3 | 9 | — | 6 |
+
+**Non-organic SERP features (PAA, video, discussion):**
+
+| Feature | Enterprise Matches | Personal Matches |
+| :--- | :--- | :--- |
+| PAA (People Also Ask) | 23 (9+7+6+1) | 44 (19+13+9+3) |
+| Video | 3 (1+2) | 3 (1+1+1) |
+| Discussion | — | 3 (1+1+1) |
+
+*Non-organic match counts are low, confirming that GPT citations overwhelmingly align with organic results. The Personal tier shows roughly double the PAA matches, consistent with its higher Google affinity.*
+
+**Key contrast — Enterprise vs Personal on Google:**
+- Personal shows ~2× the Google matches at every rank, consistent with its multi-provider retrieval strategy (64.6% Google overlap vs Enterprise's 27.8% control).
+- Enterprise's low Google match counts confirm it is primarily Bing-driven; the Google matches it does have likely reflect domain overlap between indices rather than Google-sourced retrieval.
 
 #### Gemini: Google Match Distribution & Position Bias
-Analysis of where Gemini citations appear in the **per-run** Google fan-out query results.
+Analysis of where Gemini citations appear in the **per-run** Google fan-out query results (matched against SerpApi organic results for the same grounding-support queries).
 
 | Rank | Citations | Cited % |
 | :--- | :--- | :--- |
@@ -667,10 +744,9 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 | Rank 14 | 23 | 2.0% |
 | Rank 15 | 21 | 1.8% |
 
-- **The "Rank 1" Dominance**: Gemini shows a massive concentration of citations at the first organic result.
-- **Selection Decay**: Citations persist through Rank 9, but drop off significantly starting at Rank 10, confirming that Gemini's "Order" is heavily biased toward the top of the "Menu."
-- **Visibility Threshold**: The sharp drop at Rank 10 suggests a psychological or algorithmic "fold" where results become significantly less likely to be cited.
-- **First-Query Bias**: Gemini exhibits a massive dependency on the first fan-out query, with a steep decay across subsequent queries. GPT shows a more balanced distribution across its 50/50 fan-out split.
+- **The "Rank 1" Dominance**: Gemini shows a clear concentration at the first organic result (15.7%), nearly double the second rank (9.1%).
+- **Selection Decay**: Citations decay gradually through Rank 9, then drop sharply at Rank 10 (1.8%). Ranks 11–15 stabilize at ~2%, suggesting that results beyond the first page of Google results are still cited but at a much lower rate.
+- **First-Query Bias**: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see per-query table below). GPT shows a more balanced distribution across its two parallel fan-out queries.
 
 **Gemini per-query citation overlap distribution (237 runs, 1,651 citations):**
 
