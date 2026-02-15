@@ -746,7 +746,7 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 
 - **The "Rank 1" Dominance**: Gemini shows a clear concentration at the first organic result (15.7%), nearly double the second rank (9.1%).
 - **Selection Decay**: Citations decay gradually through Rank 9, then drop sharply at Rank 10 (1.8%). Ranks 11–15 stabilize at ~2%, suggesting that results beyond the first page of Google results are still cited but at a much lower rate.
-- **First-Query Bias (Gemini vs GPT)**: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see per-query tables below). GPT shows a nearly balanced 50/50 split across its two parallel fan-out queries — a fundamental architectural difference.
+- **First-Query Bias (Gemini vs GPT)**: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see per-query tables below). GPT shows a nearly balanced 50/50 split (exluding rare multi search run cases) across its two parallel fan-out queries — a fundamental architectural difference.
 
 **GPT per-query citation overlap (237 runs per tier):**
 
