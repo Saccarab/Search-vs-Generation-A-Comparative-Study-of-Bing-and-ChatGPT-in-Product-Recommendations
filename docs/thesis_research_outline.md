@@ -932,14 +932,16 @@ Beyond cited and additional links, ChatGPT's network responses contain a third c
 | Avg. rejected per run (when present) | 3.1 | 2.5 |
 | Max rejected in a single run | 44 | 29 |
 
-**Rejected links are overwhelmingly invisible from our Bing scrape:**
+**Rejected links are overwhelmingly invisible from both search indices:**
 
 | Metric | Cited | Additional | Rejected |
 | :--- | :--- | :--- | :--- |
 | Enterprise Bing overlap | 81.3% | 86.3% | **9.7%** |
+| Enterprise Google overlap | 34.9% | 25.8% | **3.6%** |
 | Personal Bing overlap | 67.6% | 56.3% | **5.6%** |
+| Personal Google overlap | 71.6% | 60.8% | **3.0%** |
 
-Only ~6–10% of rejected links appear in our Bing scrape, compared to 57–86% for cited and additional. This stark contrast suggests that the model's Bing API returns a broader set of results than what appears in the consumer UI we scraped — and the model selectively promotes the results it can verify through the search index while discarding the rest.
+Only ~6–10% of rejected links appear in our Bing scrape, and an even lower ~3–4% appear in Google — compared to 57–86% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that rejected links are simply "Bing-invisible but Google-findable." Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
 
 **Top rejected domains (Enterprise):**
 
@@ -959,7 +961,10 @@ Only ~6–10% of rejected links appear in our Bing scrape, compared to 57–86% 
 **Key finding — rejected links explain the previous "invisible" inflation:**
 The invisible domain lists in the previous version of this analysis (which included all citation types) were heavily inflated by rejected links. For example, `arxiv.org` appeared as the #2 invisible domain with 83 citations — but 82 of those were rejected and only 1 was additional. Once rejected links are separated out (as in the cited+additional tables above), the invisible set shrinks by **45% for Enterprise** (1,261 → 691) and **15% for Personal** (3,031 → 2,563).
 
-**Interpretation:** The rejected domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that the Bing API surfaces but that the model ultimately does not cite. Whether these URLs enter through the search pipeline or through parametric recall remains ambiguous — they appear in `search_result_groups` (suggesting retrieval), but their near-zero presence in our consumer UI scrape suggests they may be returned through a different ranking or supplementary index that the consumer UI does not expose.
+**Interpretation — what role do rejected links play?**
+The rejected domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that the Bing API surfaces but that the model ultimately does not cite. Whether these URLs enter through the search pipeline or through parametric recall remains ambiguous — they appear in `search_result_groups` (suggesting retrieval), but their near-zero presence in both consumer search indices suggests they may be returned through a different ranking or supplementary index that neither Bing nor Google's consumer UI exposes.
+
+What role these rejected links play in the generation process — whether the model uses them as background context, ignores them entirely, or processes them in some other way — is not observable from our data. We can only confirm that they were **present in the search response payload** and **absent from the final output**. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, but we cannot determine whether this reflects deliberate filtering by the model or some other mechanism upstream.
 
 ## 3.4 Content DNA Profile & Cited vs. Additional Comparison
 *Before analyzing selection drift, we establish the enrichment baseline: what types, tones, and structural features characterize the sources the model had to choose from ("Menu") versus what it actually cited ("Order"), and why some retrieved sources were demoted to "Additional."*
