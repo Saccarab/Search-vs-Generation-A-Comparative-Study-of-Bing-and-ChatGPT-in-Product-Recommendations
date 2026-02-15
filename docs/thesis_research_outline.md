@@ -983,8 +983,8 @@ What role these unreferenced links play in the generation process — whether th
 #### Note on Content DNA tables
 Study-set and cited-set DNA composition tables provide the baseline menu/context for interpreting the drift analysis in **`3.5`**.
 
-### 3.4.1 Study Set Composition ("The Menu")
-Type distribution across the **study set** — all enriched URLs the model could have selected from (cited, additional, and Bing/Google Page 1 results not used). Shown separately for each study angle.
+### 3.4.1 Full Retrieval Pool Composition ("The Menu")
+Type distribution across the full retrieval pool — all enriched URLs the model could have selected from (cited + additional + Bing/Google Page 1 results not used). This is the baseline "menu" against which the model's selections are compared.
 
 #### GPT Enterprise study set (Bing-centric, N=2,858)
 | Type | Count | % |
@@ -1010,8 +1010,8 @@ Type distribution across the **study set** — all enriched URLs the model could
 | news | 165 | 5.6% |
 | marketplace | 150 | 5.1% |
 
-### 3.4.2 Cited Set Composition (Type)
-Distribution of page types for the URLs actually **cited** in the final responses.
+### 3.4.2 Cited-Only Composition ("The Order")
+Type distribution for only the URLs the model actually **cited inline** in the final responses. Comparing this to the menu above reveals selection preferences.
 
 #### GPT Enterprise cited set (N=1,614)
 | Type | Count | % |
