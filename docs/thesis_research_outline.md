@@ -637,42 +637,13 @@ Analysis of where GPT citations match results by **global Bing rank** (position 
 
 *Match rate = distinct runs where at least one cited link matched the Bing result at that rank / total runs with a result at that rank (213 Enterprise, 209 Personal — all runs have results at every rank since we scraped to Rank 200).*
 
-**Why we normalize: Bing's "Elastic Page 1"**
-The global-rank table above treats every rank equally (all runs have results at Ranks 1–200). But in the actual Bing consumer UI, Page 1 is not a fixed "Top 10" — it varies per scrape (see `2.2.1`). This means raw match counts at higher ranks are partly suppressed by the fact that fewer runs even had a result at that position on Page 1. To avoid overstating the Rank 1–2 advantage, we measured **how many runs actually exposed a result at each rank on Page 1** and computed normalized match rates against that availability baseline.
-
-**Bing Page 1 length distribution (clean runs only):**
-*Note: ~50 runs per tier had a scraper artifact where the Bing page-break was not detected, causing all 200 results to be tagged as `page_num=1`. We exclude these from the Page 1 analysis below (161 clean runs per tier remain).*
-
-| Page 1 Length | Enterprise Runs (n=161) | Personal Runs (n=161) |
-| :--- | :--- | :--- |
-| 1–2 results | 38 (23.6%) | 48 (29.8%) |
-| 3–5 results | 41 (25.5%) | 44 (27.3%) |
-| 6–7 results | 21 (13.0%) | 21 (13.0%) |
-| 8–10 results | 55 (34.2%) | 46 (28.6%) |
-
-*Median Page 1: 6 results (Enterprise), 4 results (Personal). Nearly half of scrapes had 5 or fewer organic results on Page 1, and only about a third had the "classic" 8–10 results. This means raw match counts at Ranks 5+ are partly suppressed by availability — many runs simply did not have a result at those positions on Page 1.*
-
-**Page 1 availability and normalized match rates:**
-To account for the elastic Page 1, we normalize: of the runs that actually had a Bing result at Rank N on Page 1, what percentage matched a citation?
-
-| Rank | Ent. Page 1 Avail. | Ent. Matched | Ent. Rate | Pers. Page 1 Avail. | Pers. Matched | Pers. Rate |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | 161 (100%) | 111 | **68.9%** | 161 (100%) | 42 | **26.1%** |
-| 2 | 161 (100%) | 110 | **68.3%** | 161 (100%) | 39 | **24.2%** |
-| 3 | 123 (76%) | 57 | **46.3%** | 113 (70%) | 14 | **12.4%** |
-| 4 | 104 (65%) | 43 | **41.3%** | 93 (58%) | 14 | **15.1%** |
-| 5 | 89 (55%) | 29 | 32.6% | 77 (48%) | 4 | 5.2% |
-| 6 | 82 (51%) | 15 | 18.3% | 69 (43%) | 5 | 7.2% |
-| 7 | 72 (45%) | 22 | 30.6% | 55 (34%) | 6 | 10.9% |
-| 8 | 61 (38%) | 14 | 23.0% | 48 (30%) | 3 | 6.2% |
-| 9 | 55 (34%) | 12 | 21.8% | 40 (25%) | 4 | 10.0% |
-| 10 | 31 (19%) | 4 | 12.9% | 28 (17%) | 6 | 21.4% |
+**Bing's "Elastic Page 1" caveat:**
+The global-rank table above treats every rank equally (all runs have results at Ranks 1–200). But in the actual Bing consumer UI, Page 1 is not a fixed "Top 10" — it varies per scrape (see `2.2.1`). Of 161 clean runs per tier (excluding ~50 with a scraper artifact that tagged all 200 results as Page 1), the median Page 1 length was **6 results (Enterprise)** and **4 results (Personal)**. Nearly half of scrapes had 5 or fewer organic results on Page 1, and only about a third had the "classic" 8–10 results. This means the Rank 1–2 dominance in the table above is robust (every scrape has those ranks), but match rates at Ranks 5+ should be read with the caveat that many users would never see those results on Page 1.
 
 **Key observations on Bing rank bias:**
-- **Enterprise Rank 1–2 dominance is real, not an artifact**: Even after normalizing for Page 1 availability, 69% of runs cite the Bing Rank 1 and Rank 2 results. The drop to Rank 3 (46%) is the steepest cliff in the data.
-- **Enterprise Ranks 5–9 are more uniform than raw counts suggest**: Once normalized, the match rate for Ranks 5–9 is 18–33% — the apparent steep decline in raw match counts was partly driven by fewer runs having results at those positions on Page 1 (only 34–55% of scrapes had results at Ranks 5–9).
-- **Personal is flat on Bing**: Normalized rates range 5–26% with no strong rank signal, consistent with Personal drawing citations primarily from Google.
-- **The Rank 10 edge**: Only 19% of Enterprise and 17% of Personal scrapes even had a Rank 10 result on Page 1, making rate estimates noisy at this position.
+- **Enterprise Rank 1–2 dominance**: 71% and 69% of runs cite the Bing #1 and #2 results. The drop to Rank 3 (40%) is the steepest cliff in the data.
+- **Personal is flat on Bing**: Rates range 12–27% with no strong rank signal, consistent with Personal drawing citations primarily from Google.
+- **The Page 2+ long tail**: Match rates at Ranks 11+ (the start of Page 2 for most scrapes) drop to single digits but never reach zero — citations continue matching deep into the SERP, consistent with the page-level distribution in `3.2.1`.
 
 #### GPT: Google Match Distribution (Enterprise vs Personal)
 Analysis of where GPT citations match organic results in the Google SERP (collected via SerpApi). Showing both tiers side by side reveals the Enterprise/Personal divergence visible in Bing overlap (`3.3.1`) from a different angle.
