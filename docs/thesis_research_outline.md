@@ -719,27 +719,30 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 - **Selection Decay**: Citations decay gradually through Rank 9, then drop sharply at Rank 10 (1.8%). Ranks 11–15 stabilize at ~2%, suggesting that results beyond the first page of Google results are still cited but at a much lower rate.
 - **First-Query Bias (Gemini vs GPT)**: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see per-query tables below). GPT shows a nearly balanced 50/50 split (excluding rare multi search run cases) across its two parallel fan-out queries — a fundamental architectural difference.
 
-#### Cross-System Rank Comparison (Citation-Level Share)
+#### Cross-System Rank Concentration (Top-10 Share)
 
-**Metric note**: The GPT Bing table above uses a **run-level hit rate** (% of runs with at least one citation at rank N), which produces high percentages (71.4% at Rank 1) because each run has only one Bing SERP with one URL at each rank. The Gemini table uses a **citation-level share** (% of all matched citations landing at rank N), which distributes across all rank positions and produces lower percentages. These two metrics are **not directly comparable**.
+To compare how much each system favors higher-ranked results, we restrict to **ranks 1–10 only** and compute each rank's share of all top-10 matches. For GPT Personal, which retrieves from both Bing and Google, we take the **best (highest) rank** each citation achieves across both indices to avoid double-counting.
 
-To compare rank-1 concentration across systems, we standardize on **citation-level share** — of all citation-to-SERP matches, what percentage land at each rank?
+| Rank | GPT Enterprise (Bing) | GPT Personal (Bing+Google) | Gemini (Google) |
+| :--- | :--- | :--- | :--- |
+| **1** | **18.6%** | **18.3%** | **23.0%** |
+| 2 | 19.2% | 14.2% | 13.4% |
+| 3 | 11.8% | 12.3% | 11.8% |
+| 4 | 9.5% | 11.8% | 11.7% |
+| 5 | 8.7% | 10.8% | 8.9% |
+| 6 | 7.5% | 9.7% | 7.9% |
+| 7 | 7.3% | 8.6% | 9.2% |
+| 8 | 6.8% | 6.6% | 6.5% |
+| 9 | 6.2% | 4.4% | 5.0% |
+| 10 | 4.6% | 3.5% | 2.7% |
 
-| Rank | Gemini→Google | GPT→Google (Ent.) | GPT→Google (Pers.) | GPT→Bing (Ent.) |
-| :--- | :--- | :--- | :--- | :--- |
-| **1** | **15.7%** | **12.0%** | **8.8%** | **4.3%** |
-| 2 | 9.1% | 7.1% | 6.7% | 4.4% |
-| 3 | 8.1% | 5.8% | 6.7% | 2.7% |
-| 4 | 8.0% | 5.8% | 6.7% | 2.2% |
-| 5 | 6.1% | 5.1% | 6.6% | 2.0% |
-
-*Denominators: Gemini = 1,152 total citation-Google matches; GPT→Google Enterprise = 2,705; GPT→Google Personal = 8,977; GPT→Bing Enterprise = 8,433. Google matches use `global_position` across ~3.7 queries per run (GPT) or ~4.6 queries per run (Gemini); Bing uses the single scraped SERP per run (positions 1–200).*
+*Share = citation matches at rank N / total citation matches at ranks 1–10. Totals: GPT Enterprise = 1,953 matches; GPT Personal = 2,840 (best rank across Bing+Google per citation); Gemini = 786 matches.*
 
 **Key observations:**
-- **Gemini has the steepest rank-1 concentration** (15.7%), nearly 4× the GPT→Bing share (4.3%). This suggests Gemini's generation model weights the first organic result more heavily than GPT does.
-- **GPT→Bing is nearly flat** across ranks 1–2 (4.3% vs 4.4%) — rank 1 has no special privilege over rank 2 on Bing. The steep drop starts at rank 3 (2.7%), suggesting a "top-2" effect rather than a "rank-1" effect.
-- **GPT→Google Personal is the flattest profile**: 8.8% → 6.6% across ranks 1–5, with no steep drop. This is consistent with Personal drawing from multiple Google queries per run, diluting any single rank's dominance.
-- **The high run-level rate on Bing (71.4%) reflects recall, not concentration**: most runs *include* the Bing #1 result among their citations, but that citation is only one among many — it does not dominate the citation set the way Gemini's rank-1 pick does.
+- **Gemini has the steepest rank-1 concentration** (23.0%), followed by GPT Enterprise (18.6%) and Personal (18.3%). Gemini's generation model weights the top organic result more heavily.
+- **GPT Enterprise shows a "top-2" effect**: Ranks 1–2 together account for 37.8% of top-10 matches, with rank 2 (19.2%) actually slightly above rank 1 (18.6%). The steep drop occurs at rank 3 (11.8%).
+- **GPT Personal is the flattest profile**: 18.3% → 10.8% across ranks 1–5, a gradual decline. Drawing from two indices creates more rank diversity — no single rank dominates.
+- **All three systems show a "rank 10 cliff"**: The lowest rank in the top 10 gets 2.7–4.6% share, consistent with the Page 1→Page 2 boundary effect.
 
 **GPT per-query citation overlap (237 runs per tier):**
 
@@ -778,13 +781,13 @@ We analyzed the overlap between LLM citations and the underlying search index (B
 | **Total Additional Links** | 2,820 | 4,506 | - |
 | **Bing Overlap (Cited)** | **81.3%** | **67.6%** | - |
 | **Bing Overlap (Additional)** | **86.3%** | **56.3%** | - |
-| **Google Overlap (Cited)** | **27.8%** (Control) | **64.6%** | **77.7%** |
-| **Google Overlap (Additional)** | **20.7%** (Control) | **52.1%** | - |
+| **Google Overlap (Cited)** | **27.8%** | **64.6%** | **77.7%** |
+| **Google Overlap (Additional)** | **20.7%** | **52.1%** | - |
 | **Total Index Coverage** | **83.7%** (Bing+Google) | **80.6%** (Bing+Google) | **77.7%** (Google) |
 | **"Invisible" (Missing)** | **16.3%** | **19.4%** | **22.3%** |
 
 #### Key Observations on Provider Strategy:
-- **GPT Enterprise: The Bing Standard**: Consistent with OpenAI's [Enterprise documentation](https://help.openai.com/en/articles/10093903-chatgpt-search-for-enterprise-and-edu), which explicitly names Bing as the search provider, we see an **81.3% overlap** with the Bing index. We used Google SERP as a **control group** here, which only yielded a 27.8% overlap, confirming that Enterprise retrieval is heavily optimized for Bing.
+- **GPT Enterprise: The Bing Standard**: Consistent with OpenAI's [Enterprise documentation](https://help.openai.com/en/articles/10093903-chatgpt-search-for-enterprise-and-edu), which explicitly names Bing as the search provider, we see an **81.3% overlap** with the Bing index. Enterprise's Google overlap (27.8%) serves as a **control baseline** — since Enterprise does not retrieve from Google, this ~28% reflects natural domain overlap between the two indices (the same popular URLs appearing in both Bing and Google). Any Google overlap above this baseline in other tiers signals actual Google-sourced retrieval.
 - **GPT Personal: The Multi-Provider Shift**: OpenAI's [general documentation](https://openai.com/index/introducing-chatgpt-search/) describes ChatGPT search as leveraging "third-party search providers" (plural). Our data confirms this: GPT Personal shows a much higher affinity for **Google (64.6%)** than Enterprise (27.8%), and achieves its highest coverage (**80.6%**) when combining both indices.
 - **The "Google Jump" (Enterprise vs. Personal)**: We observe a massive **36.8 percentage-point increase** in Google SERP overlap when moving from Enterprise (27.8%) to Personal (64.6%) accounts. This suggests that while Enterprise is "locked" to the Bing index for compliance/contractual reasons, the Personal account type has shifted to a Google-primary or multi-index retrieval strategy, significantly altering the "Menu" of available sources.
 
