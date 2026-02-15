@@ -746,7 +746,29 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 
 - **The "Rank 1" Dominance**: Gemini shows a clear concentration at the first organic result (15.7%), nearly double the second rank (9.1%).
 - **Selection Decay**: Citations decay gradually through Rank 9, then drop sharply at Rank 10 (1.8%). Ranks 11–15 stabilize at ~2%, suggesting that results beyond the first page of Google results are still cited but at a much lower rate.
-- **First-Query Bias (Gemini vs GPT)**: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see per-query tables below). GPT shows a nearly balanced 50/50 split (exluding rare multi search run cases) across its two parallel fan-out queries — a fundamental architectural difference.
+- **First-Query Bias (Gemini vs GPT)**: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see per-query tables below). GPT shows a nearly balanced 50/50 split (excluding rare multi search run cases) across its two parallel fan-out queries — a fundamental architectural difference.
+
+#### Cross-System Rank Comparison (Citation-Level Share)
+
+**Metric note**: The GPT Bing table above uses a **run-level hit rate** (% of runs with at least one citation at rank N), which produces high percentages (71.4% at Rank 1) because each run has only one Bing SERP with one URL at each rank. The Gemini table uses a **citation-level share** (% of all matched citations landing at rank N), which distributes across all rank positions and produces lower percentages. These two metrics are **not directly comparable**.
+
+To compare rank-1 concentration across systems, we standardize on **citation-level share** — of all citation-to-SERP matches, what percentage land at each rank?
+
+| Rank | Gemini→Google | GPT→Google (Ent.) | GPT→Google (Pers.) | GPT→Bing (Ent.) |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | **15.7%** | **12.0%** | **8.8%** | **4.3%** |
+| 2 | 9.1% | 7.1% | 6.7% | 4.4% |
+| 3 | 8.1% | 5.8% | 6.7% | 2.7% |
+| 4 | 8.0% | 5.8% | 6.7% | 2.2% |
+| 5 | 6.1% | 5.1% | 6.6% | 2.0% |
+
+*Denominators: Gemini = 1,152 total citation-Google matches; GPT→Google Enterprise = 2,705; GPT→Google Personal = 8,977; GPT→Bing Enterprise = 8,433. Google matches use `global_position` across ~3.7 queries per run (GPT) or ~4.6 queries per run (Gemini); Bing uses the single scraped SERP per run (positions 1–200).*
+
+**Key observations:**
+- **Gemini has the steepest rank-1 concentration** (15.7%), nearly 4× the GPT→Bing share (4.3%). This suggests Gemini's generation model weights the first organic result more heavily than GPT does.
+- **GPT→Bing is nearly flat** across ranks 1–2 (4.3% vs 4.4%) — rank 1 has no special privilege over rank 2 on Bing. The steep drop starts at rank 3 (2.7%), suggesting a "top-2" effect rather than a "rank-1" effect.
+- **GPT→Google Personal is the flattest profile**: 8.8% → 6.6% across ranks 1–5, with no steep drop. This is consistent with Personal drawing from multiple Google queries per run, diluting any single rank's dominance.
+- **The high run-level rate on Bing (71.4%) reflects recall, not concentration**: most runs *include* the Bing #1 result among their citations, but that citation is only one among many — it does not dominate the citation set the way Gemini's rank-1 pick does.
 
 **GPT per-query citation overlap (237 runs per tier):**
 
@@ -828,23 +850,23 @@ Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisi
 | 8 | lifewire.com | 34 |
 | 9 | wired.com | 32 |
 | 10 | androidcentral.com | 28 |
-| 11 | techradar.com | 24 |
+| 11 | techradar.com | 27 |
 | 12 | nypost.com | 22 |
-| 13 | microsoft.com | 14 |
+| 13 | microsoft.com | 15 |
 | 14 | windowscentral.com | 11 |
 | 15 | tvtechnology.com | 10 |
 | 16 | t3.com | 10 |
 | 17 | axios.com | 9 |
 | 18 | apnews.com | 8 |
-| 19 | investopedia.com | 6 |
-| 20 | es.wikipedia.org | 6 |
-| 21 | deeptrue.org | 6 |
-| 22 | sohu.com | 6 |
-| 23 | zhuanlan.zhihu.com | 5 |
-| 24 | support.google.com | 5 |
-| 25 | blog.google | 5 |
+| 19 | zhuanlan.zhihu.com | 6 |
+| 20 | sohu.com | 6 |
+| 21 | investopedia.com | 6 |
+| 22 | es.wikipedia.org | 6 |
+| 23 | webex.com | 4 |
+| 24 | topbusinesssoftware.com | 4 |
+| 25 | support.microsoft.com | 4 |
 
-*All citation types (cited + additional), www/non-www merged. The list is entirely reference sites (Wikipedia, arxiv), tech publications (theverge, wired, techradar, tomsguide, androidcentral, windowscentral, t3), and news outlets (time, nypost, sfgate, axios, apnews). These are high-authority domains ChatGPT almost certainly accesses through parametric knowledge rather than the fan-out search pipeline.*
+*All citation types (cited + additional), www/non-www merged. Niche SaaS product domains excluded (see filter note above). The list is dominated by reference sites (Wikipedia, arxiv), tech publications (theverge, wired, techradar, tomsguide, androidcentral, windowscentral, t3, lifewire, tvtechnology), and news outlets (time, nypost, sfgate, axios, apnews). These are high-authority domains ChatGPT almost certainly accesses through parametric knowledge rather than the fan-out search pipeline.*
 
 ##### GPT Personal — Top Invisible Domains (top 25, excluding niche SaaS, with Google recovery)
 Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible check overstates the gap. The table below shows Bing-invisible counts alongside truly invisible (not in Bing **or** Google) and the Google recovery — how many Bing-absent citations were found in Google instead.
@@ -868,17 +890,17 @@ Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible 
 | 15 | nypost.com | 28 | 28 | 0 |
 | 16 | lifewire.com | 28 | 28 | 0 |
 | 17 | androidcentral.com | 23 | 23 | 0 |
-| 18 | naturalreaders.com | 21 | 0 | **21** (100%) |
-| 19 | evernote.com | 20 | 0 | **20** (100%) |
-| 20 | support.google.com | 14 | 8 | 6 |
-| 21 | capcut.com | 14 | 0 | **14** (100%) |
-| 22 | atanet.org | 14 | 0 | **14** (100%) |
+| 18 | evernote.com | 20 | 1 | **19** (95%) |
+| 19 | wondertools.substack.com | 15 | 0 | **15** (100%) |
+| 20 | deepl.com | 15 | 6 | **9** (60%) |
+| 21 | support.google.com | 14 | 8 | 6 |
+| 22 | atanet.org | 14 | 6 | **8** (57%) |
 | 23 | time.com | 13 | 13 | 0 |
-| 24 | tvtechnology.com | 11 | 11 | 0 |
-| 25 | github.com | 10 | 7 | 3 |
+| 24 | community.ricksteves.com | 12 | 4 | **8** (67%) |
+| 25 | tvtechnology.com | 11 | 11 | 0 |
 
-*All citation types (cited + additional), www/non-www merged. Two patterns emerge:*
-- *Google fully recovers several domains that are absent from Bing: `youtube.com`, `naturalreaders.com`, `evernote.com`, `capcut.com`, `atanet.org` (100% recovery), and substantially recovers `reddit.com` (58%), `facebook.com` (74%), `chromewebstore.google.com` (50%) — confirming Personal's multi-provider retrieval.*
+*All citation types (cited + additional), www/non-www merged. Niche SaaS product domains excluded (same filter as Enterprise). Two patterns emerge:*
+- *Google fully recovers several domains that are absent from Bing: `youtube.com` (97%), `wondertools.substack.com` (100%), `evernote.com` (95%), and substantially recovers `reddit.com` (58%), `facebook.com` (74%), `deepl.com` (60%), `chromewebstore.google.com` (50%), `community.ricksteves.com` (67%), `atanet.org` (57%) — confirming Personal's multi-provider retrieval.*
 - *Major news/reference domains (`en.wikipedia.org`, `arxiv.org`, `theverge.com`, `wired.com`, `sfgate.com`, `nypost.com`, `tomsguide.com`) remain equally invisible in both indices — these are the same domains that top the Enterprise list, reinforcing that they originate from parametric knowledge rather than retrieval regardless of which search provider is used.*
 
 #### Why these numbers are conservative (and what "truly invisible" likely means)
