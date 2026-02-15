@@ -772,7 +772,7 @@ To compare how much each system favors higher-ranked results, we restrict to **P
   *Note: Not all runs produce queries at every index — Q5+ counts are lower partly because fewer runs generate that many fan-out queries (a function of the minimum thinking budget used; see `2.4.2`). The Q1 dominance is striking: the first fan-out query accounts for more citations than Q2–Q7 combined. Compared to GPT's balanced 50/50 split, Gemini's retrieval is heavily front-loaded toward its first grounding-support query.*
 
 ## 3.3 Citation Overlap & Invisible Links
-*Having established where citations land in the SERP (3.2), we now quantify what fraction exists in conventional search indices at all — and characterize the "invisible" remainder.*
+*The position analysis in 3.2 shows that citations are not randomly drawn from the SERP — rank matters, and the top 1–2 results carry disproportionate weight. But that analysis only covers citations that **matched** a SERP result at all. We now ask the complementary question: what fraction of citations exist in conventional search indices in the first place, and what does the "invisible" remainder look like?*
 
 ### 3.3.1 Global Overlap & Provider Discrepancy
 We analyzed the overlap between LLM citations and the underlying search index (Bing/Google) across 237 runs. This analysis reveals a significant discrepancy in search provider usage between account types, aligning with OpenAI's official documentation.
@@ -811,8 +811,8 @@ We separate notions that are easy to conflate:
 
 #### Top invisible domains
 
-##### GPT Enterprise — Top Invisible Domains (top 25, excluding niche SaaS)
-Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisible. Google adds zero recovery, confirming Enterprise does not retrieve from Google. Niche SaaS/product domains from our speech/translation query set (e.g., maestra.ai, transyncai.com, x-doc.ai) are excluded — these likely reflect scrape limitations (Page 1 truncation, Rank 200 ceiling) rather than true index absence.
+##### GPT Enterprise — Top Invisible Domains (all citation types, excluding niche SaaS)
+Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisible. Niche SaaS/product domains excluded. This table includes cited, additional, **and** rejected links (see `3.3.3` for what "rejected" means).
 
 | Rank | Domain | Count |
 | :--- | :--- | ---: |
@@ -831,21 +831,11 @@ Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisi
 | 13 | microsoft.com | 15 |
 | 14 | windowscentral.com | 11 |
 | 15 | tvtechnology.com | 10 |
-| 16 | t3.com | 10 |
-| 17 | axios.com | 9 |
-| 18 | apnews.com | 8 |
-| 19 | zhuanlan.zhihu.com | 6 |
-| 20 | sohu.com | 6 |
-| 21 | investopedia.com | 6 |
-| 22 | es.wikipedia.org | 6 |
-| 23 | webex.com | 4 |
-| 24 | topbusinesssoftware.com | 4 |
-| 25 | support.microsoft.com | 4 |
 
-*All citation types (cited + additional), www/non-www merged. Niche SaaS product domains excluded (see filter note above). The list is dominated by reference sites (Wikipedia, arxiv), tech publications (theverge, wired, techradar, tomsguide, androidcentral, windowscentral, t3, lifewire, tvtechnology), and news outlets (time, nypost, sfgate, axios, apnews). These are high-authority domains ChatGPT almost certainly accesses through parametric knowledge rather than the fan-out search pipeline.*
+*All citation types (cited + additional + rejected), www/non-www merged. Dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from **rejected** links — URLs that appeared in the search response but were not used by the model.*
 
-##### GPT Personal — Top Invisible Domains (top 25, excluding niche SaaS, with Google recovery)
-Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible check overstates the gap. The table below is ordered by **truly invisible** count (not in Bing **or** Google), with Bing-invisible and Google recovery shown alongside.
+##### GPT Personal — Top Invisible Domains (all citation types, excluding niche SaaS, with Google recovery)
+Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible check overstates the gap. Ordered by **truly invisible** count (not in Bing **or** Google). Includes all citation types.
 
 | Rank | Domain | Truly Invisible | Bing-Invisible | Google Recovered |
 | :--- | :--- | ---: | ---: | ---: |
@@ -864,20 +854,61 @@ Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible 
 | 13 | chromewebstore.google.com | **27** | 54 | **27** (50%) |
 | 14 | medium.com | **25** | 29 | 4 |
 | 15 | androidcentral.com | **23** | 23 | 0 |
-| 16 | time.com | **13** | 13 | 0 |
-| 17 | tvtechnology.com | **11** | 11 | 0 |
-| 18 | facebook.com | **10** | 38 | **28** (74%) |
-| 19 | blog.google | **9** | 11 | 2 |
-| 20 | windowscentral.com | **8** | 8 | 0 |
-| 21 | support.google.com | **8** | 14 | 6 (43%) |
-| 22 | github.com | **7** | 7 | 0 |
-| 23 | reuters.com | **6** | 6 | 0 |
-| 24 | play.google.com | **6** | 11 | **5** (45%) |
-| 25 | forum.devtalk.com | **6** | 9 | 3 (33%) |
 
-*All citation types (cited + additional), www/non-www merged. Niche SaaS product domains excluded (same filter as Enterprise). Ordered by truly invisible count. Two patterns emerge:*
-- *Google recovery is significant for platform domains: `reddit.com` (58% of its Bing-invisible citations found in Google), `facebook.com` (74%), `chromewebstore.google.com` (50%), `play.google.com` (45%). Reddit has the highest Bing-invisible count (216) but Google recovers 126 of those, dropping it to 3rd in truly invisible.*
-- *Major news/reference domains (`en.wikipedia.org`, `arxiv.org`, `theverge.com`, `wired.com`, `sfgate.com`, `nypost.com`, `tomsguide.com`) remain equally invisible in both indices — these are the same domains that top the Enterprise list, reinforcing that they originate from parametric knowledge rather than retrieval regardless of which search provider is used.*
+*All citation types, www/non-www merged. Niche SaaS excluded. Two patterns: Google recovery is significant for platform domains (`reddit.com` 58%, `chromewebstore.google.com` 50%); major news/reference domains remain equally invisible in both indices.*
+
+##### Excluding rejected links: Cited + Additional only
+
+The tables above include rejected links (search results the model saw but did not use — see `3.3.3`). Since rejected links are **90%+ invisible** from our Bing scrape, they heavily inflate the counts above. Excluding them gives a cleaner picture of what ChatGPT actually **cited or recommended** but could not be found in search:
+
+**GPT Enterprise (cited + additional only, top 15):**
+
+| Rank | Domain | Count |
+| :--- | :--- | ---: |
+| 1 | en.wikipedia.org | 81 |
+| 2 | tomsguide.com | 22 |
+| 3 | theverge.com | 22 |
+| 4 | sfgate.com | 22 |
+| 5 | techradar.com | 9 |
+| 6 | androidcentral.com | 8 |
+| 7 | wired.com | 7 |
+| 8 | zhuanlan.zhihu.com | 6 |
+| 9 | sohu.com | 6 |
+| 10 | timesofindia.indiatimes.com | 4 |
+| 11 | geeky-gadgets.com | 4 |
+| 12 | g2.com | 4 |
+| 13 | chromewebstore.google.com | 4 |
+| 14 | topbusinesssoftware.com | 3 |
+| 15 | fr.wikipedia.org | 3 |
+
+*Excluding rejected shrinks Enterprise invisible by **45%** (1,261 → 691). The biggest casualty: `arxiv.org` drops from #2 (83) to absent — 82 of its 83 invisible citations were rejected, not cited or additional. Similarly, `time.com` (34→0), `lifewire.com` (34→0), `nypost.com` (22→0) were almost entirely rejected. Wikipedia remains #1 but drops from 116→81 (35 were rejected).*
+
+**GPT Personal (cited + additional only, top 20, by truly invisible):**
+
+| Rank | Domain | Truly Invisible | Bing-Invisible | Google Recovered |
+| :--- | :--- | ---: | ---: | ---: |
+| 1 | apps.apple.com | **93** | 138 | 45 (33%) |
+| 2 | reddit.com | **87** | 213 | **126** (59%) |
+| 3 | en.wikipedia.org | **65** | 65 | 0 |
+| 4 | chromewebstore.google.com | **27** | 54 | **27** (50%) |
+| 5 | medium.com | **25** | 29 | 4 |
+| 6 | tomsguide.com | **20** | 20 | 0 |
+| 7 | theverge.com | **10** | 10 | 0 |
+| 8 | facebook.com | **10** | 38 | **28** (74%) |
+| 9 | blog.google | **9** | 11 | 2 |
+| 10 | support.google.com | **8** | 14 | 6 (43%) |
+| 11 | github.com | **7** | 7 | 0 |
+| 12 | play.google.com | **6** | 11 | **5** (45%) |
+| 13 | lifewire.com | **6** | 6 | 0 |
+| 14 | forum.devtalk.com | **6** | 9 | 3 (33%) |
+| 15 | deepl.com | **6** | 15 | **9** (60%) |
+| 16 | atanet.org | **6** | 14 | **8** (57%) |
+| 17 | zoom.com | **5** | 10 | 5 (50%) |
+| 18 | techradar.com | **5** | 7 | 2 |
+| 19 | techcommunity.microsoft.com | **5** | 8 | 3 (38%) |
+| 20 | sfgate.com | **5** | 5 | 0 |
+
+*Personal is less affected (15% drop) since it has more cited+additional volume. The top 3 (apps.apple.com, reddit, Wikipedia) barely change. The biggest drops are in news/reference domains that were mostly rejected: `arxiv.org` (70→0), `wired.com` (40→0), `nypost.com` (28→0), `timesofindia.indiatimes.com` (31→0). Google recovery patterns remain the same.*
 
 #### Why these numbers are conservative (and what "truly invisible" likely means)
 Our reported invisible rates (16.3% Enterprise, 19.4% Personal) are **upper bounds** on truly index-absent citations. Two systematic factors inflate the invisible count:
@@ -887,6 +918,48 @@ Our reported invisible rates (16.3% Enterprise, 19.4% Personal) are **upper boun
 2. **Bing Page 1 truncation (the "Missing Middle")**: As documented in `2.2.1` and `3.2.2`, nearly half of our Bing scrapes had 5 or fewer organic results on Page 1 due to UI-level pagination instability. Results that would normally rank at positions 3–7 can be dropped entirely from a truncated scrape — they do not simply shift to Page 2. This is especially consequential because Page 1 is where we observe the **highest match rates** (69% at Ranks 1–2, 40–46% at Ranks 3–4; see `3.2.2`) — so every result missed due to Page 1 truncation is statistically more likely to be a citation match than a result missed deeper in the index. These "missing middle" results are almost certainly available to ChatGPT through its backend API integration with Bing, which likely returns a clean, stable ranked list without the consumer UI's truncation artifacts. Some of our "invisible" citations may therefore be high-ranking Bing results that our scrape happened to miss.
 
 **If both factors were addressed** (deeper scraping + repeated Page 1 scrapes to capture the full elastic range), our overlap rates would likely increase and the remaining "truly invisible" set would converge toward citations that genuinely come from **outside the search index** — sites like Wikipedia, app stores, and known reference domains that ChatGPT may access through parametric knowledge or supplementary indices rather than the fan-out search pipeline.
+
+### 3.3.3 Rejected Links — The "Retrieved but Not Used" Set
+
+Beyond cited and additional links, ChatGPT's network responses contain a third category: **rejected links**. These are URLs that appeared in the `search_result_groups` payload (the raw search results returned by Bing's API to the model) but were **not** promoted to either cited or additional status. They represent the search results the model saw and chose to pass over.
+
+**How we harvested rejected links:** Our ingestion pipeline (see `export_enrichment_queue_from_raw_network_responses.mjs`) parses each run's raw network response, extracts all URLs from the `search_result_groups_json` field, then subtracts any URL already classified as cited or additional. The remainder is labeled "rejected."
+
+| Metric | Enterprise | Personal |
+| :--- | :--- | :--- |
+| Total rejected links | 631 | 496 |
+| Runs with rejected links | 204 / 215 (95%) | 195 / 209 (93%) |
+| Avg. rejected per run (when present) | 3.1 | 2.5 |
+| Max rejected in a single run | 44 | 29 |
+
+**Rejected links are overwhelmingly invisible from our Bing scrape:**
+
+| Metric | Cited | Additional | Rejected |
+| :--- | :--- | :--- | :--- |
+| Enterprise Bing overlap | 81.3% | 86.3% | **9.7%** |
+| Personal Bing overlap | 67.6% | 56.3% | **5.6%** |
+
+Only ~6–10% of rejected links appear in our Bing scrape, compared to 57–86% for cited and additional. This stark contrast suggests that the model's Bing API returns a broader set of results than what appears in the consumer UI we scraped — and the model selectively promotes the results it can verify through the search index while discarding the rest.
+
+**Top rejected domains (Enterprise):**
+
+| Rank | Domain | Rejected Count |
+| :--- | :--- | ---: |
+| 1 | arxiv.org | 82 |
+| 2 | theverge.com | 49 |
+| 3 | en.wikipedia.org | 35 |
+| 4 | time.com | 34 |
+| 5 | timesofindia.indiatimes.com | 33 |
+| 6 | lifewire.com | 32 |
+| 7 | techradar.com | 29 |
+| 8 | wired.com | 25 |
+| 9 | sfgate.com | 24 |
+| 10 | nypost.com | 22 |
+
+**Key finding — rejected links explain the previous "invisible" inflation:**
+The invisible domain lists in the previous version of this analysis (which included all citation types) were heavily inflated by rejected links. For example, `arxiv.org` appeared as the #2 invisible domain with 83 citations — but 82 of those were rejected and only 1 was additional. Once rejected links are separated out (as in the cited+additional tables above), the invisible set shrinks by **45% for Enterprise** (1,261 → 691) and **15% for Personal** (3,031 → 2,563).
+
+**Interpretation:** The rejected domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that the Bing API surfaces but that the model ultimately does not cite. Whether these URLs enter through the search pipeline or through parametric recall remains ambiguous — they appear in `search_result_groups` (suggesting retrieval), but their near-zero presence in our consumer UI scrape suggests they may be returned through a different ranking or supplementary index that the consumer UI does not expose.
 
 ## 3.4 Content DNA Profile & Cited vs. Additional Comparison
 *Before analyzing selection drift, we establish the enrichment baseline: what types, tones, and structural features characterize the sources the model had to choose from ("Menu") versus what it actually cited ("Order"), and why some retrieved sources were demoted to "Additional."*
