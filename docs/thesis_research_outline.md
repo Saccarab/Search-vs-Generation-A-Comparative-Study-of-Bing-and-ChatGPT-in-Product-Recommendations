@@ -983,8 +983,8 @@ What role these unreferenced links play in the generation process — whether th
 #### Note on Content DNA tables
 Study-set and cited-set DNA composition tables provide the baseline menu/context for interpreting the drift analysis in **`3.5`**.
 
-### 3.4.1 Study Set Composition (Cited + Additional + Page 1 Ignored)
-Distribution across the **study set**, shown separately for each study angle.
+### 3.4.1 Study Set Composition ("The Menu")
+Type distribution across the **study set** — all enriched URLs the model could have selected from (cited, additional, and Bing/Google Page 1 results not used). Shown separately for each study angle.
 
 #### GPT Enterprise study set (Bing-centric, N=2,858)
 | Type | Count | % |
