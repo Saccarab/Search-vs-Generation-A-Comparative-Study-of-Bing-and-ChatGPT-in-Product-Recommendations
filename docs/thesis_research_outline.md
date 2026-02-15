@@ -1139,13 +1139,59 @@ When the model retrieves multiple listicles, it exhibits a measurable preference
 | `freshness_cue_strength`| +1.44pp |
 | `is_current_year_2026` | -4.01pp |
 
-### 3.5.2 Global Type Drift (De-Listicling)
-Across all retrieved links, we observe a consistent "graduation" effect where models prefer primary product pages over the listicles that may have recommended them.
+### 3.5.2 Intra-Product-Page Selection Drift (Feature Lift)
 
-| Account Type | `type=product_page` Lift | `type=listicle` Lift |
+Companion to `3.5.1`. When the model retrieves multiple product pages, does it show the same structural preferences as with listicles? The following tables report the same **weighted-average rank-stratified lift (percentage point drift)** methodology, restricted to URLs labeled `product_page`. Source: `data/enrichment/drift_split_tables.json`.
+
+##### GPT Enterprise (Bing-centric)
+*Product pages only. Menu n=443, Order n=355.*
+
+| Feature | Weighted Avg Lift |
+| :--- | :---: |
+| `heading_density` | **+2.69pp** |
+| `has_numbered_lists` | +0.84pp |
+| `has_pros_cons` | +0.61pp |
+| `has_clear_authorship` | +0.39pp |
+| `readability_score` | -0.17pp |
+| `is_current_year_2026` | -0.30pp |
+| `freshness_cue_strength`| -0.31pp |
+| `has_tables` | -0.37pp |
+| `expertise_signal_score` | -1.09pp |
+| `has_bullet_points` | -2.07pp |
+
+##### GPT Personal (Multi-provider)
+*Product pages only. Google: Menu n=3,577, Order n=1,582. Bing: Menu n=406, Order n=114.*
+
+| Feature | Google T10 Lift | Bing P1 Lift |
 | :--- | :---: | :---: |
-| **GPT Enterprise** | **+16.5 pp** | -8.5 pp |
-| **GPT Personal** | **+18.5 pp** | -9.4 pp |
+| `has_clear_authorship` | +0.38pp | **+5.32pp** |
+| `is_current_year_2026` | +2.09pp | **+5.24pp** |
+| `has_tables` | +0.51pp | **+4.93pp** |
+| `heading_density` | **+3.11pp** | **+4.94pp** |
+| `freshness_cue_strength`| +0.67pp | +1.60pp |
+| `expertise_signal_score` | -0.59pp | +1.80pp |
+| `readability_score` | +1.22pp | +0.16pp |
+| `has_pros_cons` | +0.10pp | +0.37pp |
+| `has_bullet_points` | -0.06pp | +0.41pp |
+| `has_numbered_lists` | -0.72pp | -0.22pp |
+
+##### Gemini (Google-centric)
+*Product pages only. Menu n=1,747, Order n=194.*
+
+| Feature | Weighted Avg Lift |
+| :--- | :---: |
+| `has_numbered_lists` | **+8.73pp** |
+| `readability_score` | +1.03pp |
+| `has_clear_authorship` | +1.03pp |
+| `has_pros_cons` | +0.26pp |
+| `is_current_year_2026` | -0.58pp |
+| `freshness_cue_strength`| -0.62pp |
+| `heading_density` | -4.85pp |
+| `has_tables` | **-5.11pp** |
+| `has_bullet_points` | -5.76pp |
+| `expertise_signal_score` | **-10.34pp** |
+
+*Product page contrast with listicles: Unlike listicles (3.5.1), product pages show much flatter drift profiles for GPT — most features stay within ±2pp. The notable exceptions are GPT Personal's Bing baseline, where freshness (+5.24pp) and authorship (+5.32pp) signals emerge, and Gemini, which strongly favors numbered lists (+8.73pp) while penalizing expertise signals (-10.34pp) and tables (-5.11pp). The overall flatness suggests product pages are structurally homogeneous, giving the model less to differentiate on compared to the more varied listicle pool.*
 
 ### 3.5.3 Freshness Paradox (selection drift, stratified)
 We analyze how freshness cues influence selection. The key pattern is that freshness signals can look weak or negative in aggregate due to **type confounding** (product pages vs listicles), but become positive when conditioning on listicles only (see `data/enrichment/full_stratified_drift_report.txt`).
