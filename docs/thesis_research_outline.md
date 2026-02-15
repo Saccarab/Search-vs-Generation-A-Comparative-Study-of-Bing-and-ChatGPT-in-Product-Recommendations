@@ -847,40 +847,41 @@ Below we report **Truly invisible (Bing+Google control)**, computed on **unique 
 
 #### Top invisible domains
 
-**Bing-invisible** (citations not found in our Bing Rank 1–200 scrape, all citation types — cited + additional):
+##### GPT Enterprise — Top Invisible Domains
+Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisible. Google adds zero recovery, confirming Enterprise does not retrieve from Google.
 
-| Rank | Enterprise Domain | Count | Personal Domain | Count |
-| :--- | :--- | ---: | :--- | ---: |
-| 1 | en.wikipedia.org | 116 | reddit.com | 216 |
-| 2 | arxiv.org | 83 | apps.apple.com | 139 |
-| 3 | theverge.com | 48 | en.wikipedia.org | 91 |
-| 4 | timesofindia.indiatimes.com | 36 | arxiv.org | 70 |
-| 5 | time.com | 34 | transyncai.com | 61 |
-| 6 | lifewire.com | 32 | theverge.com | 57 |
-| 7 | wired.com | 25 | x-doc.ai | 54 |
-| 8 | sfgate.com | 24 | chromewebstore.google.com | 54 |
-| 9 | maestra.ai | 24 | jotme.io | 44 |
-| 10 | tomsguide.com | 22 | wired.com | 40 |
+| Rank | Domain | Count (Bing-Invisible) |
+| :--- | :--- | ---: |
+| 1 | en.wikipedia.org | 116 |
+| 2 | arxiv.org | 83 |
+| 3 | theverge.com | 48 |
+| 4 | timesofindia.indiatimes.com | 36 |
+| 5 | time.com | 34 |
+| 6 | lifewire.com | 32 |
+| 7 | wired.com | 25 |
+| 8 | sfgate.com | 24 |
+| 9 | maestra.ai | 24 |
+| 10 | tomsguide.com | 22 |
 
-**Truly invisible** (citations not found in Bing **or** Google, all citation types):
+*All citation types (cited + additional). These domains are absent from our Bing Rank 1–200 scrape AND from our Google control — they are truly invisible to both indices.*
 
-| Rank | Enterprise Domain | Count | Personal Domain | Count |
-| :--- | :--- | ---: | :--- | ---: |
-| 1 | en.wikipedia.org | 116 | apps.apple.com | 94 |
-| 2 | arxiv.org | 83 | en.wikipedia.org | 91 |
-| 3 | theverge.com | 48 | reddit.com | 90 |
-| 4 | timesofindia.indiatimes.com | 36 | arxiv.org | 70 |
-| 5 | time.com | 34 | theverge.com | 57 |
-| 6 | lifewire.com | 32 | transyncai.com | 49 |
-| 7 | wired.com | 25 | x-doc.ai | 44 |
-| 8 | sfgate.com | 24 | wired.com | 40 |
-| 9 | tomsguide.com | 22 | sfgate.com | 37 |
-| 10 | nypost.com | 22 | timesofindia.indiatimes.com | 31 |
+##### GPT Personal — Top Invisible Domains (Bing vs Truly Invisible)
+Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible check overstates the gap. The table below shows the effect of adding Google as a second index check:
 
-**What the Google check reveals for Personal:**
-- Enterprise's Bing-invisible and truly invisible lists are **identical** — Google adds no recovery, confirming Enterprise does not use Google.
-- Personal's truly invisible list **shrinks significantly** for some domains: `reddit.com` drops from 216 → 90 (Google recovered 126 instances), `apps.apple.com` from 139 → 94, `chromewebstore.google.com` from 54 → 27. This confirms Personal retrieves from Google for these domains.
-- The domains that remain truly invisible across both indices — `en.wikipedia.org`, `arxiv.org`, `theverge.com`, major news outlets — are well-known, high-authority sites. These are likely accessed through ChatGPT's **parametric knowledge** or supplementary indices rather than the fan-out search pipeline, suggesting the model "knows" these sources exist without needing to search for them.
+| Domain | Bing-Invisible | Truly Invisible | Google Recovered |
+| :--- | ---: | ---: | ---: |
+| reddit.com | 216 | 90 | **126** (58%) |
+| apps.apple.com | 139 | 94 | **45** (32%) |
+| en.wikipedia.org | 91 | 91 | 0 |
+| arxiv.org | 70 | 70 | 0 |
+| transyncai.com | 61 | 49 | **12** (20%) |
+| theverge.com | 57 | 57 | 0 |
+| x-doc.ai | 54 | 44 | **10** (19%) |
+| chromewebstore.google.com | 54 | 27 | **27** (50%) |
+| jotme.io | 44 | — | — |
+| wired.com | 40 | 40 | 0 |
+
+*All citation types (cited + additional). Google recovers a substantial share of `reddit.com` (58%) and `chromewebstore.google.com` (50%) links that were absent from Bing, confirming Personal's multi-provider retrieval. However, major news/reference domains (`en.wikipedia.org`, `arxiv.org`, `theverge.com`, `wired.com`) remain equally invisible in both indices — these are likely accessed through ChatGPT's parametric knowledge or supplementary indices rather than the fan-out search pipeline.*
 
 #### Why these numbers are conservative (and what "truly invisible" likely means)
 Our reported invisible rates (16.3% Enterprise, 19.4% Personal) are **upper bounds** on truly index-absent citations. Two systematic factors inflate the invisible count:
