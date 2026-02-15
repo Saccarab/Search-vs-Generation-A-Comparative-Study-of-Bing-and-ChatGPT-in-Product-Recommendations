@@ -26,7 +26,7 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 - **Source-to-output fidelity**: whether products mentioned in retrieved listicles are carried into the final recommendations
 
 ### Sub-questions (decompositions of RQ1, not separate topics)
-- **RQ1a (selection + visibility)**: How do **cited vs additional vs rejected/invisible** sources differ in domain/type, and how does this differ by **enterprise vs personal** runs on chatGPT results?
+- **RQ1a (selection + visibility)**: How do **cited vs additional vs unreferenced/invisible** sources differ in domain/type, and how does this differ by **enterprise vs personal** runs on chatGPT results?
 - **RQ1b (external support)**: How often do selected citations appear in **Top‑N SERPs** (Bing/Google overlap; Gemini "survival" in Top‑20)?
 - **RQ1c (selection bias & DNA)**: Does the model exhibit a statistically significant preference for specific **Content DNA features** (e.g., tables, numbered lists, freshness) when selecting from the retrieved "Menu," and how does this preference vary between **GPT Personal, GPT Enterprise and Gemini**?
 - **RQ1d (listicle uptake / fidelity)**: When listicles are retrieved, which listicle-mentioned products are **selected vs ignored** in the final response (uptake rate, rank bias, host-bias), and how does this differ by run type?
@@ -201,10 +201,14 @@ A critical methodological challenge arose from Bing's inconsistent UI pagination
 
 Our network instrumentation captured raw event-stream payloads from the ChatGPT production UI, revealing a **three-layer pipeline** (Sonic Classifier → Sonicberry Orchestrator → Generation Model) rather than a monolithic model. The detailed architecture, layer descriptions, and observed flow are reported as empirical findings in **`3.1`**. Here we note only the methodological implication: because each layer emits distinct payload fields, we can separately instrument the search-trigger decision, the fan-out query dispatch, and the citation-generation phase.
 
-### 2.3.2 Source Categories We Use (scope)
-- **Cited**: sources referenced inline in the generated answer.
-- **Additional**: sources retrieved and attached but not referenced inline (still "considered").
-- **Rejected**: sources that appeared in the retrieved pool but did not survive selection (not cited, not attached).
+### 2.3.2 Source Categories (Naming Conventions)
+We classify every URL that appears in ChatGPT's network response into one of three categories, derived from distinct locations in the payload:
+
+- **Cited**: URLs that appear as inline footnote references in the generated answer. Mechanically, these are URLs linked via `content_references` token spans — the model inserted a citation marker at a specific position in the output text pointing to this source. In the ChatGPT UI, these render as numbered superscript links within the response body.
+- **Additional**: URLs that are attached to the response but **not** referenced inline. These appear in the `sources_additional` array in the network payload and render in the ChatGPT UI as a collapsible "Sources" section below the main response. The model retrieved and surfaced them to the user, but did not tie them to any specific claim.
+- **Unreferenced**: URLs present in the `search_result_groups` payload (the raw search results delivered to the model during generation) that were **not** promoted to either cited or additional status. These never appear in the user-facing response. We compute them as: all URLs in `search_result_groups` minus those already classified as cited or additional. See `3.3.3` for detailed analysis.
+
+**Important:** The `search_result_groups` field is the retrieval pool as it appears in ChatGPT's network stream. We do not know the exact upstream source of these results — while ChatGPT is known to use Bing, the field itself does not identify the backing search provider, and we cannot rule out internal indices or other retrieval paths.
 
 ### 2.3.3 Search Trigger Instrumentation (the "decision" fields)
 We log the system's search-decision artifacts where present (Enterprise streams are richest):
@@ -249,8 +253,8 @@ From these, we build:
 
 ### 2.3.8 What Happens Next (how this section feeds the thesis)
 This "anatomy" motivates the next analytic layers:
-- **Overlap & visibility**: compare cited/additional/rejected pools against Bing Top 30 + Deep Hunt and Google SERP controls.
-- **Selection bias**: compare Content DNA of Cited vs Additional vs Rejected.
+- **Overlap & visibility**: compare cited/additional/unreferenced pools against Bing Top 30 + Deep Hunt and Google SERP controls.
+- **Selection bias**: compare Content DNA of Cited vs Additional vs Unreferenced.
 - **Stochasticity**: quantify fan-out drift across runs and resulting citation churn.
 
 ### 2.3.9 Network Parameter Glossary (ChatGPT, Network-Instrumented)
@@ -314,7 +318,10 @@ To quantify selection effects (what gets cited vs. what was available), we neede
     *   **Content Format**: `best_of_list`, `landing_page`, `comparison_matrix`, etc.
     *   **Structural Features**: `has_tables`, `has_numbered_lists`, `has_pros_cons`.
     *   **Qualitative Scores**: `promotional_intensity_score`, `expertise_signal_score`, `readability_score`.
+    *   **Tone**: `promotional`, `neutral_informational`, `salesy`, `opinionated`.
 3.  **Validation**: A subset of labels was manually audited to ensure the LLM labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
+
+**Note on tone and promotional intensity:** While tone (`promotional` / `neutral_info` / `salesy` / `opinionated`) and `promotional_intensity_score` were captured as part of the enrichment schema, they showed no discriminative power in downstream analysis. Tone distribution was uniformly ~70% promotional across all systems, all citation categories (cited, additional, ignored), and both deployment tiers — a natural consequence of the product-recommendation prompt set. Because these fields do not differentiate cited from non-cited sources or vary across conditions, they are omitted from the findings tables in `3.4`–`3.5`.
 
 ### 2.5.2 Enrichment Logic & Static Overrides
 *To ensure efficiency and accuracy, the labeling pipeline uses a hybrid approach of LLM-labeling and static rules for high-volume, well-known domains.*
@@ -326,6 +333,10 @@ To quantify selection effects (what gets cited vs. what was available), we neede
     - **`arxiv.org`**: Labeled as `type=reference`, `content_format=academic_paper`.
     - **App Stores (`apps.apple.com`, `play.google.com`)**: Labeled as `type=app_store_listing`, `primary_intent=transactional`.
 - **The "Invisible" Domain Strategy**: Many of the top "invisible" domains (like `reddit.com` and `wikipedia.org`) were handled via these static overrides because their structure is fixed and does not require per-page LLM analysis.
+
+**Why we skipped these domains from full enrichment:** The skipDomains list (`wikipedia.org`, `reddit.com`, `arxiv.org`, `github.com`, `youtube.com`, app stores, social media platforms, and first-party support/docs sites) was applied consistently across all enrichment scripts (`enrich_gemini_grounding.mjs`, `enrich_control_gpt.mjs`, `enrich_db_list_with_gemini.js`, `enrich_db_list_with_vertex.js`). These domains have fixed, well-understood structures that do not benefit from LLM-based content analysis — a Wikipedia article is always `type=reference`, a Reddit thread is always `type=forum_ugc`. Instead of wasting API quota on these, we assigned heuristic labels via `label_skipped_urls.mjs` (see static overrides above) with conservative defaults (e.g., `promotional_intensity_score=0`, `spamminess_score=0`).
+
+**Consequence for drift analysis:** Because these skipped domains receive zeroed-out structural scores (no tables, no numbered lists, no pros/cons), including them in feature-level drift comparisons would create artificial signal. The selection drift analysis in `3.5` therefore focuses primarily on **product pages and listicles** — the two dominant types where full LLM enrichment was performed and where structural features are meaningfully variable. This scoping avoids comparing LLM-enriched pages against heuristically-labeled ones, which would conflate labeling method differences with actual content differences.
 
 ### 2.5.3 Labeler Fidelity (cross-model agreement)
 To test whether Content DNA is model-dependent, we ran a direct agreement audit between **Gemini 2.5 Flash** and **GPT-5-mini** on **2,660 overlapping URLs** (`docs/inter_model_fidelity_report.md`).
@@ -812,7 +823,7 @@ We separate notions that are easy to conflate:
 #### Top invisible domains
 
 ##### GPT Enterprise — Top Invisible Domains (all citation types, excluding niche SaaS)
-Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisible. Niche SaaS/product domains excluded. This table includes cited, additional, **and** rejected links (see `3.3.3` for what "rejected" means).
+Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisible. Niche SaaS/product domains excluded. This table includes cited, additional, **and** unreferenced links (see `3.3.3` for definition and `2.3.2` for naming conventions).
 
 | Rank | Domain | Count |
 | :--- | :--- | ---: |
@@ -832,7 +843,7 @@ Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisi
 | 14 | windowscentral.com | 11 |
 | 15 | tvtechnology.com | 10 |
 
-*All citation types (cited + additional + rejected), www/non-www merged. Dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from **rejected** links — URLs that appeared in the search response but were not used by the model.*
+*All citation types (cited + additional + unreferenced), www/non-www merged. Dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from **unreferenced** links — URLs present in the search result pool but never surfaced in the response.*
 
 ##### GPT Personal — Top Invisible Domains (all citation types, excluding niche SaaS, with Google recovery)
 Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible check overstates the gap. Ordered by **truly invisible** count (not in Bing **or** Google). Includes all citation types.
@@ -857,9 +868,9 @@ Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible 
 
 *All citation types, www/non-www merged. Niche SaaS excluded. Two patterns: Google recovery is significant for platform domains (`reddit.com` 58%, `chromewebstore.google.com` 50%); major news/reference domains remain equally invisible in both indices.*
 
-##### Excluding rejected links: Cited + Additional only
+##### Excluding unreferenced links: Cited + Additional only
 
-The tables above include rejected links (search results the model saw but did not use — see `3.3.3`). Since rejected links are **90%+ invisible** from our Bing scrape, they heavily inflate the counts above. Excluding them gives a cleaner picture of what ChatGPT actually **cited or recommended** but could not be found in search:
+The tables above include unreferenced links (URLs in the search result pool that were never surfaced — see `3.3.3`). Since unreferenced links are **90%+ invisible** from our Bing scrape, they heavily inflate the counts above. Excluding them gives a cleaner picture of what ChatGPT actually **cited or recommended** but could not be found in search:
 
 **GPT Enterprise (cited + additional only, top 15):**
 
@@ -881,7 +892,7 @@ The tables above include rejected links (search results the model saw but did no
 | 14 | topbusinesssoftware.com | 3 |
 | 15 | fr.wikipedia.org | 3 |
 
-*Excluding rejected shrinks Enterprise invisible by **45%** (1,261 → 691). The biggest casualty: `arxiv.org` drops from #2 (83) to absent — 82 of its 83 invisible citations were rejected, not cited or additional. Similarly, `time.com` (34→0), `lifewire.com` (34→0), `nypost.com` (22→0) were almost entirely rejected. Wikipedia remains #1 but drops from 116→81 (35 were rejected).*
+*Excluding unreferenced shrinks Enterprise invisible by **45%** (1,261 → 691). The biggest casualty: `arxiv.org` drops from #2 (83) to absent — 82 of its 83 invisible were unreferenced, not cited or additional. Similarly, `time.com` (34→0), `lifewire.com` (34→0), `nypost.com` (22→0) were almost entirely unreferenced. Wikipedia remains #1 but drops from 116→81 (35 were unreferenced).*
 
 **GPT Personal (cited + additional only, top 20, by truly invisible):**
 
@@ -908,7 +919,7 @@ The tables above include rejected links (search results the model saw but did no
 | 19 | techcommunity.microsoft.com | **5** | 8 | 3 (38%) |
 | 20 | sfgate.com | **5** | 5 | 0 |
 
-*Personal is less affected (15% drop) since it has more cited+additional volume. The top 3 (apps.apple.com, reddit, Wikipedia) barely change. The biggest drops are in news/reference domains that were mostly rejected: `arxiv.org` (70→0), `wired.com` (40→0), `nypost.com` (28→0), `timesofindia.indiatimes.com` (31→0). Google recovery patterns remain the same.*
+*Personal is less affected (15% drop) since it has more cited+additional volume. The top 3 (apps.apple.com, reddit, Wikipedia) barely change. The biggest drops are in news/reference domains that were mostly unreferenced: `arxiv.org` (70→0), `wired.com` (40→0), `nypost.com` (28→0), `timesofindia.indiatimes.com` (31→0). Google recovery patterns remain the same.*
 
 #### Why these numbers are conservative (and what "truly invisible" likely means)
 Our reported invisible rates (16.3% Enterprise, 19.4% Personal) are **upper bounds** on truly index-absent citations. Two systematic factors inflate the invisible count:
@@ -919,33 +930,33 @@ Our reported invisible rates (16.3% Enterprise, 19.4% Personal) are **upper boun
 
 **If both factors were addressed** (deeper scraping + repeated Page 1 scrapes to capture the full elastic range), our overlap rates would likely increase and the remaining "truly invisible" set would converge toward citations that genuinely come from **outside the search index** — sites like Wikipedia, app stores, and known reference domains that ChatGPT may access through parametric knowledge or supplementary indices rather than the fan-out search pipeline.
 
-### 3.3.3 Rejected Links — The "Retrieved but Not Used" Set
+### 3.3.3 Unreferenced Links — The Search Pool Remainder
 
-Beyond cited and additional links, ChatGPT's network responses contain a third category: **rejected links**. These are URLs that appeared in the `search_result_groups` payload (the raw search results returned by Bing's API to the model) but were **not** promoted to either cited or additional status. They represent the search results the model saw and chose to pass over.
+Beyond cited and additional links, ChatGPT's network responses contain a third category: **unreferenced links** (see naming conventions in `2.3.2`). These are URLs present in the `search_result_groups` payload — the retrieval pool delivered to the model during generation — that were **not** promoted to either cited or additional status. They never appear in the user-facing response.
 
-**How we harvested rejected links:** Our ingestion pipeline (see `export_enrichment_queue_from_raw_network_responses.mjs`) parses each run's raw network response, extracts all URLs from the `search_result_groups_json` field, then subtracts any URL already classified as cited or additional. The remainder is labeled "rejected."
+**How we identified unreferenced links:** Our ingestion pipeline (see `export_enrichment_queue_from_raw_network_responses.mjs`) parses each run's raw network response, extracts all URLs from the `search_result_groups_json` field, then subtracts any URL already classified as cited or additional. The remainder is classified as "unreferenced."
 
 | Metric | Enterprise | Personal |
 | :--- | :--- | :--- |
-| Total rejected links | 631 | 496 |
-| Runs with rejected links | 204 / 215 (95%) | 195 / 209 (93%) |
-| Avg. rejected per run (when present) | 3.1 | 2.5 |
-| Max rejected in a single run | 44 | 29 |
+| Total unreferenced links | 631 | 496 |
+| Runs with unreferenced links | 204 / 215 (95%) | 195 / 209 (93%) |
+| Avg. unreferenced per run (when present) | 3.1 | 2.5 |
+| Max unreferenced in a single run | 44 | 29 |
 
-**Rejected links are overwhelmingly invisible from both search indices:**
+**Unreferenced links are overwhelmingly invisible from both search indices:**
 
-| Metric | Cited | Additional | Rejected |
+| Metric | Cited | Additional | Unreferenced |
 | :--- | :--- | :--- | :--- |
 | Enterprise Bing overlap | 81.3% | 86.3% | **9.7%** |
 | Enterprise Google overlap | 34.9% | 25.8% | **3.6%** |
 | Personal Bing overlap | 67.6% | 56.3% | **5.6%** |
 | Personal Google overlap | 71.6% | 60.8% | **3.0%** |
 
-Only ~6–10% of rejected links appear in our Bing scrape, and an even lower ~3–4% appear in Google — compared to 57–86% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that rejected links are simply "Bing-invisible but Google-findable." Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
+Only ~6–10% of unreferenced links appear in our Bing scrape, and an even lower ~3–4% appear in Google — compared to 57–86% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that unreferenced links are simply "Bing-invisible but Google-findable." Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
 
-**Top rejected domains (Enterprise):**
+**Top unreferenced domains (Enterprise):**
 
-| Rank | Domain | Rejected Count |
+| Rank | Domain | Unreferenced Count |
 | :--- | :--- | ---: |
 | 1 | arxiv.org | 82 |
 | 2 | theverge.com | 49 |
@@ -958,13 +969,13 @@ Only ~6–10% of rejected links appear in our Bing scrape, and an even lower ~3�
 | 9 | sfgate.com | 24 |
 | 10 | nypost.com | 22 |
 
-**Key finding — rejected links explain the previous "invisible" inflation:**
-The invisible domain lists in the previous version of this analysis (which included all citation types) were heavily inflated by rejected links. For example, `arxiv.org` appeared as the #2 invisible domain with 83 citations — but 82 of those were rejected and only 1 was additional. Once rejected links are separated out (as in the cited+additional tables above), the invisible set shrinks by **45% for Enterprise** (1,261 → 691) and **15% for Personal** (3,031 → 2,563).
+**Key finding — unreferenced links explain the previous "invisible" inflation:**
+The invisible domain lists in the previous version of this analysis (which included all citation types) were heavily inflated by unreferenced links. For example, `arxiv.org` appeared as the #2 invisible domain with 83 entries — but 82 of those were unreferenced and only 1 was additional. Once unreferenced links are separated out (as in the cited+additional tables above), the invisible set shrinks by **45% for Enterprise** (1,261 → 691) and **15% for Personal** (3,031 → 2,563).
 
-**Interpretation — what role do rejected links play?**
-The rejected domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that the Bing API surfaces but that the model ultimately does not cite. Whether these URLs enter through the search pipeline or through parametric recall remains ambiguous — they appear in `search_result_groups` (suggesting retrieval), but their near-zero presence in both consumer search indices suggests they may be returned through a different ranking or supplementary index that neither Bing nor Google's consumer UI exposes.
+**Interpretation — what role do unreferenced links play?**
+The unreferenced domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that appeared in the retrieval pool but were never surfaced to the user. Whether these URLs enter through the search pipeline or through some other retrieval path remains ambiguous — they appear in `search_result_groups` (suggesting retrieval), but their near-zero presence in both consumer search indices suggests they may come from a different ranking layer or supplementary index that neither Bing nor Google's consumer UI exposes.
 
-What role these rejected links play in the generation process — whether the model uses them as background context, ignores them entirely, or processes them in some other way — is not observable from our data. We can only confirm that they were **present in the search response payload** and **absent from the final output**. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, but we cannot determine whether this reflects deliberate filtering by the model or some other mechanism upstream.
+What role these unreferenced links play in the generation process — whether the model uses them as background context, ignores them entirely, or processes them in some other way — is not observable from our data. We can only confirm that they were **present in the search result pool** and **absent from the final output**. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, but we cannot determine whether this reflects deliberate filtering by the model or some other mechanism upstream.
 
 ## 3.4 Content DNA Profile & Cited vs. Additional Comparison
 *Before analyzing selection drift, we establish the enrichment baseline: what types, tones, and structural features characterize the sources the model had to choose from ("Menu") versus what it actually cited ("Order"), and why some retrieved sources were demoted to "Additional."*
@@ -976,73 +987,88 @@ Study-set and cited-set DNA composition tables provide the baseline menu/context
 Distribution across the **study set**, shown separately for each study angle.
 
 #### GPT Enterprise study set (Bing-centric, N=2,858)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **product_page** | 1,159 | 40.6% | **promotional** | 2,002 | 70.0% |
-| **listicle** | 989 | 34.6% | neutral_info | 699 | 24.5% |
-| editorial | 161 | 5.6% | salesy | 115 | 4.0% |
-| news | 156 | 5.5% | opinionated | 26 | 0.9% |
+| Type | Count | % |
+| :--- | ---: | ---: |
+| **product_page** | 1,159 | 40.6% |
+| **listicle** | 989 | 34.6% |
+| editorial | 161 | 5.6% |
+| news | 156 | 5.5% |
 
 #### GPT Personal study set (Multi-provider, N=2,194)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 885 | 40.3% | **promotional** | 1,559 | 71.1% |
-| **product_page** | 808 | 36.8% | neutral_info | 495 | 22.6% |
-| editorial | 121 | 5.5% | salesy | 100 | 4.6% |
-| news | 105 | 4.8% | opinionated | 26 | 1.2% |
+| Type | Count | % |
+| :--- | ---: | ---: |
+| **listicle** | 885 | 40.3% |
+| **product_page** | 808 | 36.8% |
+| editorial | 121 | 5.5% |
+| news | 105 | 4.8% |
 
 #### Gemini study set (Google-centric, N=2,939)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 1,296 | 44.1% | **promotional** | 2,076 | 70.6% |
-| **product_page** | 709 | 24.1% | neutral_info | 768 | 26.1% |
-| news | 165 | 5.6% | salesy | 52 | 1.8% |
-| marketplace | 150 | 5.1% | opinionated | 37 | 1.3% |
+| Type | Count | % |
+| :--- | ---: | ---: |
+| **listicle** | 1,296 | 44.1% |
+| **product_page** | 709 | 24.1% |
+| news | 165 | 5.6% |
+| marketplace | 150 | 5.1% |
 
-### 3.4.2 Cited Set Composition (Type + Tone)
-Distribution of DNA categories for the URLs actually **cited** in the final responses.
+### 3.4.2 Cited Set Composition (Type)
+Distribution of page types for the URLs actually **cited** in the final responses.
 
 #### GPT Enterprise cited set (N=1,614)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **product_page** | 649 | 40.2% | **promotional** | 1,105 | 68.5% |
-| **listicle** | 589 | 36.5% | neutral_info | 390 | 24.2% |
-| news_article | 104 | 6.4% | salesy | 95 | 5.9% |
+| Type | Count | % |
+| :--- | ---: | ---: |
+| **product_page** | 649 | 40.2% |
+| **listicle** | 589 | 36.5% |
+| news_article | 104 | 6.4% |
 
 #### GPT Personal cited set (N=1,444)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 544 | 37.7% | **promotional** | 998 | 69.1% |
-| **product_page** | 523 | 36.2% | neutral_info | 329 | 22.8% |
-| news_article | 98 | 6.8% | salesy | 82 | 5.7% |
+| Type | Count | % |
+| :--- | ---: | ---: |
+| **listicle** | 544 | 37.7% |
+| **product_page** | 523 | 36.2% |
+| news_article | 98 | 6.8% |
 
 #### Gemini cited set (N=653)
-| Type | Count | % | Tone | Count | % |
-| :--- | ---: | ---: | :--- | ---: | ---: |
-| **listicle** | 371 | 56.8% | **promotional** | 467 | 71.5% |
-| **product_page** | 148 | 22.7% | neutral_info | 181 | 27.7% |
-| comparison | 26 | 4.0% | opinionated | 5 | 0.8% |
+| Type | Count | % |
+| :--- | ---: | ---: |
+| **listicle** | 371 | 56.8% |
+| **product_page** | 148 | 22.7% |
+| comparison | 26 | 4.0% |
+
+**Cross-system observation:** Gemini's cited set is dominated by listicles (**56.8%**) — significantly higher than both GPT tiers (~37%). This gap is *larger* in the cited set than in the study set (where Gemini is 44.1% listicle vs GPT's 35–40%), meaning Gemini amplifies its listicle preference during selection. GPT does the opposite: its product_page share stays flat or increases from menu to order (the "de-listicling" effect quantified in `3.5.2`). This divergence is partly a retrieval-level difference — Gemini's Google-based pool surfaces more listicles to begin with — but the selection stage widens the gap further.
 
 **Cross-references**: Listicle-only feature drift is reported under **`3.5.1`** (Intra-Listicle Selection Drift). Host bias, listicle rank bias, and semantic fidelity are reported under **`3.6`**.
 
-### 3.4.3 Cited vs. Additional vs. Page 1 Ignored — Structural DNA Comparison
+### 3.4.3 Cited vs. Additional — Structural DNA Comparison (by Page Type)
 
-*Why were some retrieved links cited inline while others were demoted to "Additional" or ignored entirely?*
+*Do cited links differ structurally from additional links? We split by page type to avoid washing out within-type signal — listicles and product pages have radically different structural profiles (e.g., ~50% of listicles have tables vs ~10% of product pages), so mixing them in a single table obscures any selection-driven differences.*
 
-| Field                         | Cited Links | Additional Links | Page 1 Ignored |
-| ----------------------------- | ----------- | ---------------- | -------------- |
-| `has_tables` (pct)            | 21.0% / 19.9% | 23.9% / 22.9%   | 23.0% / 23.9%  |
-| `has_numbered_lists` (pct)    | 56.4% / 45.5% | 61.5% / 46.8%   | 57.5% / 59.7%  |
-| `has_bullet_points` (pct)     | 74.7% / 69.4% | 81.4% / 69.1%   | 80.7% / 82.4%  |
-| `has_pros_cons` (pct)         | 17.7% / 19.3% | 25.3% / 22.4%   | 23.3% / 24.7%  |
-| `tone` (top)                  | promo (70.4%) / promo (72.1%) | promo (70.9%) / promo (66.5%) | promo (72.7%) / promo (74.2%) |
-| `promotional_intensity_score` (mean) | 3.28 / 3.32 | 3.11 / 3.15 | 3.20 / 3.23 |
-| `expertise_signal_score` (mean)      | 3.58 / 3.78 | 3.57 / 3.72 | 3.65 / 3.61 |
-| `spamminess_score` (mean)            | 0.26 / 0.26 | 0.33 / 0.33 | 0.29 / 0.30 |
-| `readability_score` (mean)           | 4.05 / 4.06 | 4.03 / 3.98 | 4.05 / 4.05 |
-| `type` (top)                  | product_page (45.4%) / product_page (42.2%) | listicle (40.8%) / listicle (34.2%) | product_page (40.8%) / product_page (42.1%) |
+#### Listicles only
 
-*Format note:* values are shown as **Enterprise / Personal**. "Page 1 ignored" is computed on **unique URLs** on Bing `page_num=1` that are **not cited** (per run, de-duplicated across runs). In our dataset, this bucket has substantial missing DNA labels because not all Bing Page‑1 results were fetched/labelled (Enterprise: 812/1660 labelled; Personal: 648/1394 labelled).
+| Field | Ent. Cited (n=205) | Ent. Additional (n=522) | Pers. Cited (n=173) | Pers. Additional (n=487) |
+| :--- | ---: | ---: | ---: | ---: |
+| `has_tables` | **45.9%** | 41.2% | **56.6%** | 48.3% |
+| `has_numbered_lists` | 79.5% | 77.6% | 72.3% | 76.0% |
+| `has_bullet_points` | 88.8% | 90.8% | **93.1%** | 88.9% |
+| `has_pros_cons` | **56.1%** | 52.1% | **63.6%** | 56.9% |
+| `expertise_signal_score` | 3.48 | 3.48 | 3.64 | 3.59 |
+| `spamminess_score` | 0.57 | 0.55 | 0.60 | 0.62 |
+| `readability_score` | 4.06 | 4.05 | 4.07 | 4.06 |
+
+*Cited listicles consistently show higher rates of tables (+4.7pp Enterprise, +8.3pp Personal) and pros/cons sections (+4.0pp Enterprise, +6.7pp Personal) than additional listicles. This suggests the model may prefer more structured, comparison-oriented listicles when deciding what to cite inline.*
+
+#### Product pages only
+
+| Field | Ent. Cited (n=328) | Ent. Additional (n=476) | Pers. Cited (n=276) | Pers. Additional (n=435) |
+| :--- | ---: | ---: | ---: | ---: |
+| `has_tables` | 11.9% | 10.1% | 7.2% | 8.7% |
+| `has_numbered_lists` | **63.7%** | 59.7% | 48.6% | 47.8% |
+| `has_bullet_points` | 89.0% | 86.1% | 84.8% | 84.4% |
+| `has_pros_cons` | 1.5% | 2.1% | 1.8% | 2.3% |
+| `expertise_signal_score` | 3.52 | 3.59 | 3.76 | 3.82 |
+| `spamminess_score` | 0.09 | 0.11 | 0.09 | 0.09 |
+| `readability_score` | 4.06 | 4.05 | 4.09 | 4.03 |
+
+*Product pages show essentially flat structural profiles between cited and additional — no feature strongly predicts citation status. This is expected: product pages are structurally homogeneous (low table/pros_cons rates, high bullet rates), leaving little for the model to differentiate on structure alone. Selection among product pages likely depends on relevance and authority signals not captured by Content DNA.*
 
 ### 3.4.4 Content-Size Context (Listicles vs Product Pages)
 We report page-length as **context** (not a grounding budget claim): listicles are longer and more heterogeneous than vendor pages, which can influence extractability and selection behavior.
