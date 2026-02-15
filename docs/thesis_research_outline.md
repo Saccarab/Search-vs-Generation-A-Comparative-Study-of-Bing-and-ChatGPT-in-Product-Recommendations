@@ -640,39 +640,39 @@ Analysis of where GPT citations match results by **global Bing rank** (position 
 **Why we normalize: Bing's "Elastic Page 1"**
 The global-rank table above treats every rank equally (all runs have results at Ranks 1–200). But in the actual Bing consumer UI, Page 1 is not a fixed "Top 10" — it varies per scrape (see `2.2.1`). This means raw match counts at higher ranks are partly suppressed by the fact that fewer runs even had a result at that position on Page 1. To avoid overstating the Rank 1–2 advantage, we measured **how many runs actually exposed a result at each rank on Page 1** and computed normalized match rates against that availability baseline.
 
-**Bing Page 1 length distribution:**
+**Bing Page 1 length distribution (clean runs only):**
+*Note: ~50 runs per tier had a scraper artifact where the Bing page-break was not detected, causing all 200 results to be tagged as `page_num=1`. We exclude these from the Page 1 analysis below (161 clean runs per tier remain).*
 
-| Page 1 Length | Enterprise Runs | Personal Runs |
+| Page 1 Length | Enterprise Runs (n=161) | Personal Runs (n=161) |
 | :--- | :--- | :--- |
-| 1–2 results | 38 (17.8%) | 48 (23.0%) |
-| 3–5 results | 41 (19.2%) | 44 (21.1%) |
-| 6–7 results | 21 (9.9%) | 21 (10.0%) |
-| 8–10 results | 55 (25.8%) | 46 (22.0%) |
-| 11+ results | 58 (27.2%) | 50 (23.9%) |
+| 1–2 results | 38 (23.6%) | 48 (29.8%) |
+| 3–5 results | 41 (25.5%) | 44 (27.3%) |
+| 6–7 results | 21 (13.0%) | 21 (13.0%) |
+| 8–10 results | 55 (34.2%) | 46 (28.6%) |
 
-*Median Page 1: 9 results (Enterprise), 6 results (Personal). Nearly 37% of Enterprise scrapes and 44% of Personal scrapes had 5 or fewer results on Page 1. This means the raw match counts at Ranks 3+ are partly suppressed by availability — not every run even had a result to match at those positions.*
+*Median Page 1: 6 results (Enterprise), 4 results (Personal). Nearly half of scrapes had 5 or fewer organic results on Page 1, and only about a third had the "classic" 8–10 results. This means raw match counts at Ranks 5+ are partly suppressed by availability — many runs simply did not have a result at those positions on Page 1.*
 
 **Page 1 availability and normalized match rates:**
 To account for the elastic Page 1, we normalize: of the runs that actually had a Bing result at Rank N on Page 1, what percentage matched a citation?
 
 | Rank | Ent. Page 1 Avail. | Ent. Matched | Ent. Rate | Pers. Page 1 Avail. | Pers. Matched | Pers. Rate |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | 213 (100%) | 152 | **71.4%** | 209 (100%) | 56 | **26.8%** |
-| 2 | 213 (100%) | 146 | **68.5%** | 209 (100%) | 49 | **23.4%** |
-| 3 | 173 (81%) | 76 | **43.9%** | 154 (74%) | 24 | **15.6%** |
-| 4 | 151 (71%) | 60 | **39.7%** | 134 (64%) | 19 | **14.2%** |
-| 5 | 135 (63%) | 38 | 28.1% | 115 (55%) | 10 | 8.7% |
-| 6 | 123 (58%) | 24 | 19.5% | 106 (51%) | 8 | 7.5% |
-| 7 | 110 (52%) | 28 | 25.5% | 88 (42%) | 8 | 9.1% |
-| 8 | 96 (45%) | 26 | 27.1% | 81 (39%) | 6 | 7.4% |
-| 9 | 86 (40%) | 20 | 23.3% | 73 (35%) | 6 | 8.2% |
-| 10 | 60 (28%) | 6 | 10.0% | 60 (29%) | 9 | 15.0% |
+| 1 | 161 (100%) | 111 | **68.9%** | 161 (100%) | 42 | **26.1%** |
+| 2 | 161 (100%) | 110 | **68.3%** | 161 (100%) | 39 | **24.2%** |
+| 3 | 123 (76%) | 57 | **46.3%** | 113 (70%) | 14 | **12.4%** |
+| 4 | 104 (65%) | 43 | **41.3%** | 93 (58%) | 14 | **15.1%** |
+| 5 | 89 (55%) | 29 | 32.6% | 77 (48%) | 4 | 5.2% |
+| 6 | 82 (51%) | 15 | 18.3% | 69 (43%) | 5 | 7.2% |
+| 7 | 72 (45%) | 22 | 30.6% | 55 (34%) | 6 | 10.9% |
+| 8 | 61 (38%) | 14 | 23.0% | 48 (30%) | 3 | 6.2% |
+| 9 | 55 (34%) | 12 | 21.8% | 40 (25%) | 4 | 10.0% |
+| 10 | 31 (19%) | 4 | 12.9% | 28 (17%) | 6 | 21.4% |
 
 **Key observations on Bing rank bias:**
-- **Enterprise Rank 1–2 dominance is real, not an artifact**: Even after normalizing for availability, 71% and 69% of runs cite the Bing Rank 1 and Rank 2 results. The drop to Rank 3 (44%) is the steepest cliff in the data.
-- **Enterprise Ranks 5–9 are more uniform than raw counts suggest**: Once normalized, the match rate for Ranks 5–9 is 19–28% — the apparent steep decline in raw match counts was partly driven by fewer runs having results at those positions on Page 1.
-- **Personal is flat on Bing**: Normalized rates range 7–27% with no strong rank signal, consistent with Personal drawing citations primarily from Google.
-- **The Rank 10 anomaly**: Only 28–29% of runs had a Rank 10 result on Page 1. Enterprise's 10% match rate at Rank 10 may reflect both lower availability and the tail end of the first "page" of results ChatGPT receives from Bing's backend.
+- **Enterprise Rank 1–2 dominance is real, not an artifact**: Even after normalizing for Page 1 availability, 69% of runs cite the Bing Rank 1 and Rank 2 results. The drop to Rank 3 (46%) is the steepest cliff in the data.
+- **Enterprise Ranks 5–9 are more uniform than raw counts suggest**: Once normalized, the match rate for Ranks 5–9 is 18–33% — the apparent steep decline in raw match counts was partly driven by fewer runs having results at those positions on Page 1 (only 34–55% of scrapes had results at Ranks 5–9).
+- **Personal is flat on Bing**: Normalized rates range 5–26% with no strong rank signal, consistent with Personal drawing citations primarily from Google.
+- **The Rank 10 edge**: Only 19% of Enterprise and 17% of Personal scrapes even had a Rank 10 result on Page 1, making rate estimates noisy at this position.
 
 #### GPT: Google Match Distribution (Enterprise vs Personal)
 Analysis of where GPT citations match organic results in the Google SERP (collected via SerpApi). Showing both tiers side by side reveals the Enterprise/Personal divergence visible in Bing overlap (`3.3.1`) from a different angle.
@@ -746,7 +746,18 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 
 - **The "Rank 1" Dominance**: Gemini shows a clear concentration at the first organic result (15.7%), nearly double the second rank (9.1%).
 - **Selection Decay**: Citations decay gradually through Rank 9, then drop sharply at Rank 10 (1.8%). Ranks 11–15 stabilize at ~2%, suggesting that results beyond the first page of Google results are still cited but at a much lower rate.
-- **First-Query Bias**: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see per-query table below). GPT shows a more balanced distribution across its two parallel fan-out queries.
+- **First-Query Bias (Gemini vs GPT)**: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see per-query tables below). GPT shows a nearly balanced 50/50 split across its two parallel fan-out queries — a fundamental architectural difference.
+
+**GPT per-query citation overlap (237 runs per tier):**
+
+| Metric | Enterprise | Personal |
+|--------|--------:|--------:|
+| Bing Query 1 Overlap | **63.7%** | 54.1% |
+| Bing Query 2 Overlap | **64.2%** | 52.4% |
+| Google Query 1 Overlap | — | 50.4% |
+| Google Query 2 Overlap | — | 46.4% |
+
+*GPT's two parallel fan-out queries contribute nearly equally to citation overlap — the split is effectively 50/50 on both Bing and Google. Neither query dominates. This contrasts sharply with Gemini's first-query concentration below.*
 
 **Gemini per-query citation overlap distribution (237 runs, 1,651 citations):**
 
@@ -760,7 +771,7 @@ Analysis of where Gemini citations appear in the **per-run** Google fan-out quer
 | Q6 | 0.6% | 10 |
 | Q7 | 0.1% | 2 |
 
-  *Note: Not all runs produce queries at every index — Q5+ counts are lower partly because fewer runs generate that many fan-out queries (a function of the minimum thinking budget used; see `2.4.2`). The Q1 dominance is nonetheless striking: the first fan-out query accounts for more citations than Q2–Q7 combined.*
+  *Note: Not all runs produce queries at every index — Q5+ counts are lower partly because fewer runs generate that many fan-out queries (a function of the minimum thinking budget used; see `2.4.2`). The Q1 dominance is striking: the first fan-out query accounts for more citations than Q2–Q7 combined. Compared to GPT's balanced 50/50 split, Gemini's retrieval is heavily front-loaded toward its first grounding-support query.*
 
 ## 3.3 Citation Overlap & Invisible Links
 *Having established where citations land in the SERP (3.2), we now quantify what fraction exists in conventional search indices at all — and characterize the "invisible" remainder.*
@@ -837,6 +848,15 @@ Below we report **Truly invisible (Bing+Google control)**, computed on **unique 
 #### Top invisible domains (examples)
 - **GPT Enterprise**: `en.wikipedia.org` (116), `arxiv.org` (83), `theverge.com` (48)
 - **GPT Personal**: `reddit.com` (216), `apps.apple.com` (139), `chromewebstore.google.com` (54)
+
+#### Why these numbers are conservative (and what "truly invisible" likely means)
+Our reported invisible rates (16.3% Enterprise, 19.4% Personal) are **upper bounds** on truly index-absent citations. Two systematic factors inflate the invisible count:
+
+1. **The Rank 200 ceiling**: Our Bing scrape stops at Rank 200, but the page-level match histogram (see `3.2.1`) shows no convergence — matches are still accumulating at Pages 15–16 with a smooth decay curve that does not reach zero. Scraping to Rank 300 or 400 would almost certainly recover additional matches, shrinking the invisible set. The "invisible" label for these URLs does not mean they are absent from Bing's index — only that they fell beyond our scrape depth.
+
+2. **Bing Page 1 truncation (the "Missing Middle")**: As documented in `2.2.1` and `3.2.2`, nearly half of our Bing scrapes had 5 or fewer organic results on Page 1 due to UI-level pagination instability. Results that would normally rank at positions 3–7 can be dropped entirely from a truncated scrape — they do not simply shift to Page 2. This is especially consequential because Page 1 is where we observe the **highest match rates** (69% at Ranks 1–2, 40–46% at Ranks 3–4; see `3.2.2`) — so every result missed due to Page 1 truncation is statistically more likely to be a citation match than a result missed deeper in the index. These "missing middle" results are almost certainly available to ChatGPT through its backend API integration with Bing, which likely returns a clean, stable ranked list without the consumer UI's truncation artifacts. Some of our "invisible" citations may therefore be high-ranking Bing results that our scrape happened to miss.
+
+**If both factors were addressed** (deeper scraping + repeated Page 1 scrapes to capture the full elastic range), our overlap rates would likely increase and the remaining "truly invisible" set would converge toward citations that genuinely come from **outside the search index** — sites like Wikipedia, app stores, and known reference domains that ChatGPT may access through parametric knowledge or supplementary indices rather than the fan-out search pipeline.
 
 ## 3.4 Content DNA Profile & Cited vs. Additional Comparison
 *Before analyzing selection drift, we establish the enrichment baseline: what types, tones, and structural features characterize the sources the model had to choose from ("Menu") versus what it actually cited ("Order"), and why some retrieved sources were demoted to "Additional."*
