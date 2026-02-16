@@ -389,7 +389,7 @@ To make downstream analyses defensible, we first measured how much of the URL un
 - **Multi-cited claim/segment:** a claim/segment with **2+ distinct cited URLs**. Computed by `scripts/analysis/multi_source_claim_support.py`.
 - **Mixed listicle+product citation:** among multi-cited claims, a case where the cited URL set contains **≥1** `type=listicle` and **≥1** `type=product_page`.
 - **Type-mix buckets:** each multi-cited claim is partitioned into exactly one bucket: *mixed listicle+product*, *listicle-only*, *product-only*, or *neither* (other page types / unknown).
-- **Quantitative results** for these metrics are reported in **`3.7`**.
+- **Quantitative results** for these metrics are reported in **`3.6.1`**.
 
 ## 2.7 Localization & Retrieval Environment
 
@@ -479,8 +479,7 @@ The two models expose fundamentally different data structures — ChatGPT requir
 > 3. **3.3 Citation Overlap & Invisible Links** — What fraction of citations exist in conventional search, and what doesn't
 > 4. **3.4 Content DNA Profile** — The enrichment breakdown of source types, tones, and structural features
 > 5. **3.5 Selection Drift** — How the model's "Order" diverges from the "Menu" based on enriched features
-> 6. **3.6 Listicle Bias** — Deep analysis of listicle-specific selection, re-ranking, and fidelity
-> 7. **3.7 Multi-Source Citation** — When models cite multiple sources for a single claim
+> 6. **3.6 Listicle Bias** — Multi-citation filtering, listicle-specific selection, re-ranking, and fidelity
 
 ---
 
@@ -1139,6 +1138,8 @@ When the model retrieves multiple listicles, it exhibits a measurable preference
 | `freshness_cue_strength`| +1.44pp |
 | `is_current_year_2026` | -4.01pp |
 
+*Freshness caveat for Gemini: The freshness rows (`freshness_cue_strength`, `is_current_year_2026`) should be interpreted with caution. As shown in `3.2`, Gemini explicitly injects a year token ("2025" or "2026") into **96.7%** of its fan-out queries, meaning the freshness profile of the retrieved pool is largely predetermined by query construction rather than reflecting a selection preference at the citation stage. The -4.01pp drift on `is_current_year_2026` likely reflects the fact that year-injected queries already saturate the menu with fresh content, leaving little room for positive selection lift. By contrast, GPT rarely uses explicit year signals (5.1% of runs), so GPT's freshness drift is a more meaningful indicator of selection behavior.*
+
 ### 3.5.2 Intra-Product-Page Selection Drift (Feature Lift)
 
 Companion to `3.5.1`. When the model retrieves multiple product pages, does it show the same structural preferences as with listicles? The following tables report the same **weighted-average rank-stratified lift (percentage point drift)** methodology, restricted to URLs labeled `product_page`. Source: `data/enrichment/drift_split_tables.json`.
@@ -1191,12 +1192,9 @@ Companion to `3.5.1`. When the model retrieves multiple product pages, does it s
 | `has_bullet_points` | -5.76pp |
 | `expertise_signal_score` | **-10.34pp** |
 
-*Product page contrast with listicles: Unlike listicles (3.5.1), product pages show much flatter drift profiles for GPT — most features stay within ±2pp. The notable exceptions are GPT Personal's Bing baseline, where freshness (+5.24pp) and authorship (+5.32pp) signals emerge, and Gemini, which strongly favors numbered lists (+8.73pp) while penalizing expertise signals (-10.34pp) and tables (-5.11pp). The overall flatness suggests product pages are structurally homogeneous, giving the model less to differentiate on compared to the more varied listicle pool.*
+*Product page contrast with listicles: Unlike listicles (3.5.1), product pages show much flatter drift profiles for GPT — most features stay within ±2pp. The notable exceptions are GPT Personal's Bing baseline, where freshness (+5.24pp) and authorship (+5.32pp) signals emerge, and Gemini, which strongly favors numbered lists (+8.73pp) while penalizing expertise signals (-10.34pp) and tables (-5.11pp). The overall flatness suggests product pages are structurally homogeneous, giving the model less to differentiate on compared to the more varied listicle pool. Gemini's freshness rows (`is_current_year_2026` -0.58pp, `freshness_cue_strength` -0.62pp) are again near-zero and subject to the same query-construction caveat noted in `3.5.1` — with 96.7% of fan-out queries already year-stamped, the menu is pre-filtered for freshness, making selection-stage drift uninformative.*
 
-### 3.5.3 Freshness Paradox (selection drift, stratified)
-We analyze how freshness cues influence selection. The key pattern is that freshness signals can look weak or negative in aggregate due to **type confounding** (product pages vs listicles), but become positive when conditioning on listicles only (see `data/enrichment/full_stratified_drift_report.txt`).
-
-### 3.5.4 Statistical Significance of Content DNA Preferences (T-Test)
+### 3.5.3 Statistical Significance of Content DNA Preferences (T-Test)
 To validate whether observed selection drifts are statistically significant, we performed a two-sample T-test (Welch's T-test) comparing the prevalence of content DNA features across models.
 
 ##### GPT Enterprise vs. Personal (Citations)
@@ -1222,7 +1220,19 @@ To validate whether observed selection drifts are statistically significant, we 
 
 *Self-promotion, product text comparison, accuracy.*
 
-### 3.6.1 Self-Promotion Bias & Host Exclusion
+### 3.6.1 Scope: Solo-Cited Claims Only (Multi-Citation Filtering)
+
+Listicle bias analysis requires attributing a product recommendation to a specific source. When a claim is backed by multiple citations (e.g., a listicle *and* a product page), it becomes ambiguous which source drove the selection — was the product picked because it appeared in the listicle, or because the model also had the vendor's own page? To avoid this attribution problem, the analyses in `3.6.2`–`3.6.4` are restricted to **solo-cited claims** (exactly one URL behind the claim).
+
+This filtering excludes a non-trivial share of claims:
+- **GPT**: 458 / 4,296 claim occurrences (**10.7%**) are multi-cited
+- **Gemini**: 788 / 2,287 claim occurrences (**34.5%**) are multi-cited
+
+Among multi-cited claims involving at least one listicle, **~20%** are mixed listicle+product-page citations (GPT: 21.1%, Gemini: 19.6%). Gemini's much higher multi-citation rate reflects its grounding architecture, which maps individual text segments to multiple `groundingChunks` — producing richer but harder-to-attribute citation linkages.
+
+The solo-cited filter is conservative: it discards cases where listicle influence may still be present but cannot be cleanly isolated. The trade-off is cleaner attribution at the cost of reduced sample size.
+
+### 3.6.2 Self-Promotion Bias & Host Exclusion
 - **Host exclusion (empirical)**: In the listicle semantic-fidelity audit (solo-cited listicles), models **often omit** the host's own product even when it is present in the listicle.
   - **Gemini**: host present in **405** listicles; host **missing** in **71.9%** (291/405), **included** in **28.1%** (114/405)
   - **GPT**: host present in **431** listicles; host **missing** in **63.6%** (274/431), **included** in **36.4%** (157/431)
@@ -1233,7 +1243,7 @@ To validate whether observed selection drifts are statistically significant, we 
   - **Bias multiplier**: Gemini **2.27×**; GPT **3.40×**
 - **Interpretation**: LLMs exhibit a mixed behavior: an "anti-self-promo" tendency (frequent host omission) combined with a measurable host selection advantage when they do pick items from host-authored listicles.
 
-### 3.6.2 Selection Order vs. Listicle Rank (The "Re-Ranking" Effect)
+### 3.6.3 Selection Order vs. Listicle Rank (The "Re-Ranking" Effect)
 - **Rank alignment**: how often **Chat response order** matches the **listicle's internal rank** for the same product (only when `listicle_rank` is recoverable).
   - **Gemini**: **29.5%** (108/366)
   - **GPT**: **27.9%** (166/596)
@@ -1254,7 +1264,7 @@ To validate whether observed selection drifts are statistically significant, we 
   - **Gemini**: #1 **2.53×**, Top‑3 **1.48×**, Top‑5 **1.18×**
 - **Interpretation**: when a listicle has a recoverable internal ranking signal, models **over-select higher-ranked items** (especially the #1 entry), but still **re-rank** them in the final response order (weak correlation between response product order and listicle rank).
 
-### 3.6.3 Semantic Fidelity: Reading Comprehension vs. Attribution
+### 3.6.4 Semantic Fidelity: Reading Comprehension vs. Attribution
 - **The "Two-Layer" Grounding Problem:** We decompose "Fidelity" into two distinct measurable phenomena:
     1.  **Attribution Accuracy:** Does the cited source actually contain the product?
     2.  **Reading Comprehension (Pure Fidelity):** When the product is present, how accurately does the model extract its details?
@@ -1264,48 +1274,6 @@ To validate whether observed selection drifts are statistically significant, we 
       - **Gemini**: **7.36%** (31/421 product roster items)
       - **GPT**: **1.89%** (13/689 product roster items)
 - **Thesis Implication:** The "hallucination problem" in modern RAG systems is increasingly an **attribution/linkage problem**, not a "reading" or "understanding" problem. The models "know" the facts but "forget" which specific tab they were looking at when they found them.
-
-## 3.7 Multi-Source Citation Analysis
-*How often do models cite multiple sources for a single claim, and what type combinations appear? Definitions in `2.6.3`.*
-
-### 3.7.1 Multi-Source Claim Support Rate
-**All claim/segment occurrences:**
-- **GPT**: 458 / 4296 (**10.7%**) multi-cited
-- **Gemini**: 788 / 2287 (**34.5%**) multi-cited
-
-**Listicle-cited occurrences only (at least one cited URL has `type=listicle`):**
-- **GPT**: 194 / 1363 (**14.2%**) multi-cited
-- **Gemini**: 664 / 1519 (**43.7%**) multi-cited
-
-### 3.7.2 Mixed Listicle + Product-Page Citations
-
-**All multi-cited occurrences:**
-- **GPT**: 41 / 458 (**9.0%**) mixed listicle+product-page
-- **Gemini**: 130 / 788 (**16.5%**) mixed listicle+product-page
-
-**GPT multi-cited (N=458) bucket breakdown:**
-- mixed listicle+product: **41 (9.0%)**
-- listicle-only: **153 (33.4%)**
-- product-only: **168 (36.7%)**
-- neither (no listicle/product_page): **96 (21.0%)**
-
-**Gemini multi-cited (N=788) bucket breakdown:**
-- mixed listicle+product: **130 (16.5%)**
-- listicle-only: **534 (67.8%)**
-- product-only: **84 (10.7%)**
-- neither (no listicle/product_page): **40 (5.1%)**
-
-**What does "neither" look like? (examples of multi-cited type-sets)**
-- **GPT neither (N=96)** is dominated by `unknown` (unlabeled URLs) plus small tails like `news_article`, `documentation`, `editorial_article`, `forum_ugc`, `marketplace_directory`, and combinations (see `multi_type_sets_by_bucket.neither_listicle_nor_product` in `data/enrichment/multi_source_claim_support_stats.json`).
-- **Gemini neither (N=40)** is mostly `other` / `unknown` mixtures plus a tail of `documentation`, `marketplace_directory`, `forum_ugc`, `editorial_article`, etc. (same JSON).
-
-**Listicle-cited multi-cited occurrences only:**
-- **GPT**: 41 / 194 (**21.1%**) mixed listicle+product-page
-- **Gemini**: 130 / 664 (**19.6%**) mixed listicle+product-page
-
-**Mixed-case lists (for qualitative inspection):**
-- `data/enrichment/mixed_listicle_plus_product_citations_gpt.csv` (41 rows)
-- `data/enrichment/mixed_listicle_plus_product_citations_gemini.csv` (130 rows)
 
 ---
 
@@ -1323,15 +1291,62 @@ To validate whether observed selection drifts are statistically significant, we 
 
 ---
 
-# Part 5: Conclusions & The Future of Search
+# Part 5: Conclusions & Practical Implications
 
-## 5.1 The Convergence of SEO and GEO
-- **GEO as SEO's Final Form:** Our data suggests that the "Extractive Nature" of GenAI means that to win in GEO, you must first win the fundamental elements of SEO (visibility, authority, and structured data).
-- **The "High-Signal" Mandate:** As search becomes cheaper than inference, LLMs will increasingly rely on external retrieval. Content that is not "searchable" will become "invisible" to AI.
+## 5.1 GEO Is SEO — With One Exception
 
-## 5.2 The Economic Moat of Retrieval
-- **Compute Efficiency:** We conclude that the future of AI is not larger models, but smarter **orchestrators**. By using the web as a "distributed memory," AI providers can reduce costs while increasing accuracy.
-- **The Relevance of Human-Centric Web:** SEO stays relevant because it provides the "Ground Truth" that AI requires to remain grounded and factual.
+Our data overwhelmingly confirms that Generative Engine Optimization is not a replacement for SEO but a direct extension of it. The Page 2 cliff (see `3.2.1`) demonstrates that position bias remains the dominant factor in LLM citation behavior: the vast majority of citations come from Rank 1–10, and the drop-off after that is violent. You cannot be cited if you are not retrieved, and you are unlikely to be retrieved if you do not rank. The entire GEO pipeline is parasitic on the search index — Bing for Enterprise, Bing+Google for Personal, Google for Gemini. Without SERP visibility, there is no grounding, no citation, no "Share of Model."
+
+The one exception is the **invisible link channel**. Our data shows that 16–22% of LLM citations come from URLs that do not appear in either Bing (Top 200) or Google (Top 20 Organic) for the corresponding query (see `3.3.1`). These invisible citations represent a fundamentally different acquisition channel — one where the rules of traditional SEO do not apply. The top invisible domains (see `3.3.2`) are dominated by **Wikipedia**, **Reddit**, **app stores**, and **major news/tech publications** (The Verge, Wired, Tom's Guide). These are not pages that rank for commercial product queries in traditional search; they surface through the model's parametric memory, supplementary indices, or non-search retrieval pathways.
+
+### 5.1.1 Invisible Links as a Marketing Channel
+
+The marketing implications of invisible citations are significant. Unlike paid search ads (Google Ads, Bing Ads), which require continuous spend and disappear the moment the budget runs out, an invisible citation is effectively a **permanent, unpaid placement** in the LLM's response. A brand that is mentioned on a Wikipedia page, discussed favorably in a Reddit thread, or reviewed in a major tech publication gains a citation pathway that bypasses the SERP entirely. This is arguably more valuable than a top-of-page ad placement: ads are marked as sponsored, compete in auctions, and are ignored by a growing share of users — whereas an LLM citation appears as an organic, authoritative recommendation within a conversational answer.
+
+This helps explain the emerging trend of brands investing in **Reddit presence** (community engagement, seeded discussions, AMA campaigns) and **Wikipedia notability** — not for the direct referral traffic these platforms generate, but for the indirect effect of embedding the brand into the LLM's parametric knowledge and retrieval surface. Our data shows Reddit alone accounts for 90+ truly invisible cited occurrences in GPT Personal (see `3.3.2`), with Google recovering an additional 58% of Bing-invisible Reddit URLs — meaning Reddit content is actively pulled from both search indices *and* non-search pathways.
+
+**The strategic takeaway**: while SEO remains the prerequisite for the ~80% of citations that flow through search indices, brands should treat Wikipedia pages, Reddit discussions, and presence in authoritative tech publications as a parallel GEO channel — one with potentially higher durability and trust than paid search placements.
+
+## 5.2 Listicles as the Critical Node — But Only If They Rank
+
+Our listicle analysis (see `3.6`) confirms that listicles are the primary "on-ramp" for product citations in LLM-generated recommendations. When an LLM retrieves a listicle, it extracts products from it at measurable rates, with a strong top-rank bias (#1 item selected at 1.7–2.5x the random baseline; see `3.6.3`). Listicles are the mechanism through which individual products enter the LLM's recommendation set.
+
+However, this power is entirely contingent on the listicle ranking in the SERP. A listicle that does not appear in Bing's Top 10 (or Google's Top 10 for Gemini) is unlikely to be retrieved, and a listicle that is not retrieved has zero influence on the LLM's output. The Page 2 cliff applies to listicles just as harshly as to any other content type.
+
+This creates an important tension for content creators: **listicles optimized purely for LLM extraction may fail to rank**. A listicle that omits real competitors (a common tactic in self-promotional "best of" content) may satisfy the LLM's structural preferences — tables, numbered lists, pros/cons — but if human readers find the content unhelpful and do not engage with it, the page will not earn the engagement signals, backlinks, and dwell time that search engines use to rank content. An unranked listicle, no matter how well-structured, is invisible to the grounding pipeline.
+
+**The practical implication**: listicle content should be created for both audiences simultaneously. The structural features that predict LLM citation (tables at +4.7 to +12.2pp lift, numbered lists at +7.3pp, pros/cons sections at +4.0 to +6.7pp; see `3.4.3`, `3.5.1`) are, conveniently, the same features that help human readers compare products. Honest, comprehensive listicles that include genuine competitors will rank better — and ranking is the gatekeeper to LLM visibility.
+
+## 5.3 Structural Content DNA — What LLMs Select For
+
+Our selection drift analysis (see `3.5`) reveals consistent, measurable preferences in what LLMs choose to cite from the available retrieval pool. These preferences are not random noise — they represent the "structural filter" that sits between retrieval and citation.
+
+**For listicles** (where drift signals are strongest):
+- **Tables** are the most consistent positive signal across GPT deployments: +4.7pp Enterprise, +12.2pp Personal (Google baseline). Listicles with comparison tables are measurably more likely to be cited.
+- **Numbered lists** show the strongest single lift for GPT Enterprise (+7.3pp) and Gemini (+8.7pp on product pages). Ordered structure appears to be a universal selection signal.
+- **Pros/cons sections** show moderate positive lift (+4.0pp Enterprise, +6.7pp Personal), reinforcing the pattern that evaluative, comparison-oriented structure is preferred.
+
+**For product pages**, drift profiles are much flatter (most features within ±2pp), reflecting the structural homogeneity of vendor pages. Selection among product pages likely depends on relevance and authority signals not captured by Content DNA.
+
+**Freshness as a GPT-specific signal**: GPT's freshness drift is more informative than Gemini's because GPT rarely injects year tokens into its fan-out queries (5.1% of runs vs Gemini's 96.7%; see `3.1.2`). This means GPT's freshness preferences at the citation stage reflect genuine selection behavior rather than query-level pre-filtering. For content targeting GPT specifically, keeping publication dates current and including temporal markers ("2026 update," "as of January 2026") may provide a small but real selection advantage.
+
+## 5.4 The Dual-Deployment Reality
+
+Our discovery of the Enterprise vs. Personal provider split (see `3.3.1`) has direct implications for brands optimizing for ChatGPT. Enterprise accounts are locked to the Bing index; Personal accounts retrieve from both Bing and Google, with a 36.8pp higher Google overlap than Enterprise. This means a brand that ranks well in Google but poorly in Bing will be visible to Personal ChatGPT users but invisible to Enterprise users — and vice versa.
+
+For brands targeting ChatGPT as a recommendation channel, optimizing for **both** Bing and Google indices is necessary to achieve full coverage across deployment contexts. This is a departure from the Google-centric SEO mindset that dominates the industry.
+
+## 5.5 The Host Exclusion Paradox
+
+LLMs exhibit a contradictory behavior toward self-promotional content (see `3.6.1`). Host products are **excluded** from listicle-sourced recommendations 64–72% of the time — a strong anti-self-promotion tendency. Yet when the host product *is* selected, it enjoys a 2.3–3.4x bias multiplier over the random baseline. This dual behavior suggests that LLMs have learned a heuristic to discount self-promotion, but the heuristic is imperfect — host products that survive the filter receive disproportionate attention, possibly because the host's own page provides the most detailed description of its product.
+
+For brands, this means that being the host of a listicle is a double-edged sword: your product will often be skipped, but when it is not skipped, it is amplified. The safer strategy is to be **mentioned in third-party listicles** rather than relying solely on self-authored "best of" content — third-party mentions avoid the host exclusion filter entirely while still benefiting from listicle-driven citation pathways.
+
+## 5.6 The Economic Moat of Retrieval
+
+The broader conclusion from our study reinforces the architectural argument made in `1.2.4`: retrieval is cheaper than inference, and this economic reality ensures that the web remains the foundation of AI-generated answers. LLMs are not replacing search — they are consuming it. The "tiny model with superhuman reasoning" vision (see `1.2.3`) depends on an external knowledge layer, and that layer is the indexed web.
+
+For the foreseeable future, SEO remains the prerequisite for AI visibility. Content that is not searchable is not retrievable, and content that is not retrievable is invisible to the generation pipeline. GEO adds a new optimization surface — structural content DNA, listicle positioning, invisible link channels — but it does not replace the fundamental requirement to rank.
 
 ---
 
