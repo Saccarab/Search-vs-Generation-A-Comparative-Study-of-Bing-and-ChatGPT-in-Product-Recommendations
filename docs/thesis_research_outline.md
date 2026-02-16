@@ -317,7 +317,7 @@ To quantify selection effects (what gets cited vs. what was available), we neede
     *   **Page Type**: `listicle`, `product_page`, `documentation`, `forum_ugc`, etc.
     *   **Content Format**: `best_of_list`, `landing_page`, `comparison_matrix`, etc.
     *   **Structural Features**: `has_tables`, `has_numbered_lists`, `has_pros_cons`.
-    *   **Qualitative Scores**: `promotional_intensity_score`, `expertise_signal_score`, `readability_score`.
+    *   **Qualitative Scores**: `promotional_intensity_score`, `readability_score`.
     *   **Tone**: `promotional`, `neutral_informational`, `salesy`, `opinionated`.
 3.  **Validation**: A subset of labels was manually audited to ensure the LLM labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
 
@@ -366,7 +366,7 @@ To make downstream analyses defensible, we first measured how much of the URL un
 3. **Page 1 Ignored Links:**
    - Links in **Bing Page 1** (variable-size SERP page; see `3.2.1`) that ChatGPT did NOT cite
    - Compare their DNA to cited links
-   - Hypothesis: Ignored links are more `salesy`, lower `expertise_signal_score`
+   - Hypothesis: Ignored links are more `salesy`, lower structural complexity
 
 ## 2.6 Citation Mapping & Claim-Level Attribution
 *How we precisely map ChatGPT's written claims to their retrieved sources. This pipeline was applied specifically to **listicle-cited claims**, where the research question is sharpest: when a model cites a listicle containing 10+ products, does it actually extract information from that page, or does it hallucinate from parametric knowledge and merely attach the listicle as a plausible-looking source? Listicles are uniquely suited to this test because they contain a discrete, verifiable roster of items we can check against the model's output. We further restricted the analysis to **solo-cited claims** — claim blocks attributed to exactly one URL — because when multiple sources back a single claim (e.g., a listicle + a product page), it becomes impossible to determine which source the model actually drew from. This solo-citation filter was applied across both GPT and Gemini listicle-cited claims.*
