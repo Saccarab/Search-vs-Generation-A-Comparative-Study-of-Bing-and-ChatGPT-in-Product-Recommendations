@@ -1252,270 +1252,34 @@ Bucket & Median words & Median bytes & Coverage \\
 
 \textbf{Interpretation}: listicles are \textasciitilde2$\times$ longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
 
-\textbf{Relation to grounding budget research}: Our table measures \textbf{full page length} of candidate/cited sources, not the snippet-level context that is actually injected into the model's context window. Practitioner research by Dejan (2025) provides the complementary measurement we do not attempt here: using Gemini's exposed \texttt{groundingChunks}, they report a per-query grounding budget of \textasciitilde2,000 words (median 1,929, p95 2,798), with allocation weighted by SERP rank (\#1 source receives a median of 531 words vs 266 for \#5) and coverage inversely proportional to page length (61\% for pages under 1K words, dropping to 13\% for pages over 3K words). A companion analysis of AI search citation survival rates found that roughly one-third of source content (32\%) is carried into AI-generated citations, with high variance across sites (21--65\%).
+\textbf{Relation to grounding budget research}: Our table measures \textbf{full page length} of candidate/cited sources, not the snippet-level context that is actually injected into the model's context window. Practitioner research by \textcite{petrovic2025grounding} provides the complementary measurement we do not attempt here: using Gemini's exposed \texttt{groundingChunks}, they report a per-query grounding budget of \textasciitilde2,000 words (median 1,929, p95 2,798), with allocation weighted by SERP rank (\#1 source receives a median of 531 words vs 266 for \#5) and coverage inversely proportional to page length (61\% for pages under 1K words, dropping to 13\% for pages over 3K words). A companion analysis by \textcite{petrovic2025filter} of AI search citation survival rates found that roughly one-third of source content (32\%) is carried into AI-generated citations, with high variance across sites (21--65\%). At a sub-page level, \textcite{indig2026attention} analyzed 1.2 million ChatGPT search results and found that citation likelihood is positionally skewed --- 44.2\% of citations originate from the first 30\% of page content --- and correlates with linguistic characteristics such as definitive language, question-answer structure, and entity density.
 
-These findings are directly relevant to our content size data: our median listicle length (2,094 words) sits almost exactly at Dejan's measured per-query budget ceiling, meaning a single listicle could plausibly consume most of the grounding budget for a query --- leaving less room for competing sources. Our median product page (927 words) falls well within the budget, suggesting product pages are more likely to be ingested in full. However, we emphasize that our study measures source-side page length, not the actual injected snippet size; validating the budget constraint for ChatGPT (where grounding chunks are not exposed) would require the kind of API-level instrumentation only available for Gemini (see Section~2.4, Related Work).
+These findings are directly relevant to our content size data: our median listicle length (2,094 words) sits almost exactly at the measured per-query budget ceiling, meaning a single listicle could plausibly consume most of the grounding budget for a query --- leaving less room for competing sources. Our median product page (927 words) falls well within the budget, suggesting product pages are more likely to be ingested in full. However, we emphasize that our study measures source-side page length, not the actual injected snippet size; validating the budget constraint for ChatGPT (where grounding chunks are not exposed) would require the kind of API-level instrumentation only available for Gemini (see Section~2.4, Related Work).
 
 %-----------------------------------------------------------------------
 \section{Selection Drift (Enrichment-Based)}
 \label{sec:selection-drift}
 
-\textit{With the DNA profile established in Section~\ref{sec:content-dna}, we now measure how the model's selection (``Order'') systematically diverges from the available pool (``Menu'') along enriched feature dimensions.}
+\textit{With the DNA profile established in Section~\ref{sec:content-dna}, we now measure how the model's selection systematically diverges from the available pool along enriched feature dimensions.}
 
-\textbf{Operational definitions} (matches \texttt{data/enrichment/full\_stratified\_drift\_report.txt}):
-\begin{itemize}
-    \item \textbf{Menu\% (feature at rank R)} = \% of retrieved candidates (for the baseline slice) at rank R with feature F.
-    \item \textbf{Order\% (feature at rank R)} = \% of cited URLs that match into that same baseline slice at rank R with feature F.
-    \item \textbf{Drift$_R$} = Order\% $-$ Menu\% (percentage points).
-    \item \textbf{Volume-weighted drift} = $\sum_R \text{Drift}_R \cdot N^{\text{order}}_R \; / \; \sum_R N^{\text{order}}_R$.
-\end{itemize}
+\textbf{Methodology---per-run Welch's t-test (no overlap):} For each run, every SERP URL (filtered by content type) is classified as either \textbf{Cited} or \textbf{Not-Cited} in that run. Zero overlap between groups. A URL may appear in multiple runs; each is an independent selection event. We test eight binary Content DNA features using Welch's two-sample t-test. \texttt{freshness\_cue\_strength} is binarized at $\geq$3 (``strong freshness cues'').
 
-\subsection{Intra-Listicle Selection Drift (Feature Lift)}
-\label{sec:listicle-drift}
+\textbf{GPT data:} SERP from Bing Page~1 (enterprise + personal) and Google Top-10 (personal only). Citations from \texttt{geo\_fresh.db}.
 
-When the model retrieves multiple listicles, it exhibits a measurable preference for specific structural and content features. The following tables summarize the \textbf{weighted-average lift (percentage point drift)} for listicles only, reported in \texttt{data/enrichment/listicle\_drift\_report.txt}.
+\textbf{Gemini data:} SERP from Google Top-10 (fan-out queries via SerpApi). Cited URLs reconstructed per-run from raw Gemini responses via \texttt{master\_bundle.json} (Vertex grounding chunks resolved to real URLs; 2{,}278 mappings, 100\% coverage).
 
-\paragraph{GPT Enterprise (Bing-centric)}
-\textit{Retrieved from Bing Page 1 (Top 5).}
-
-\begin{table}[htbp]
-\centering
-\caption{GPT Enterprise intra-listicle selection drift}
-\label{tab:ent-listicle-drift}
-\begin{tabular}{lr}
-\toprule
-Feature & Weighted Avg Lift \\
-\midrule
-\texttt{has\_numbered\_lists} & \textbf{+7.34pp} \\
-\texttt{has\_tables} & +3.64pp \\
-\texttt{has\_bullet\_points} & +3.29pp \\
-\texttt{freshness\_cue\_strength} & +2.15pp \\
-\texttt{has\_pros\_cons} & $-$0.60pp \\
-\texttt{has\_clear\_authorship} & $-$3.57pp \\
-\texttt{is\_current\_year\_2026} & $-$4.64pp \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    xbar,
-    bar width=10pt,
-    width=0.8\textwidth,
-    height=7cm,
-    xlabel={Weighted Avg Lift (pp)},
-    ytick=data,
-    symbolic y coords={is\_current\_year\_2026, has\_clear\_authorship, has\_pros\_cons, freshness\_cue\_strength, has\_bullet\_points, has\_tables, has\_numbered\_lists},
-    y dir=reverse,
-    xmin=-7, xmax=10,
-    nodes near coords,
-    nodes near coords align={horizontal},
-    every node near coord/.append style={font=\scriptsize},
-    ymajorgrids=false,
-    xmajorgrids=true,
-    extra x ticks={0},
-    extra x tick style={grid=major, grid style={black, thick}},
-    fill=entcolor,
-    draw=entcolor!80!black,
-]
-\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {
-    (7.34,has\_numbered\_lists)
-    (3.64,has\_tables)
-    (3.29,has\_bullet\_points)
-    (2.15,freshness\_cue\_strength)
-    (-0.60,has\_pros\_cons)
-    (-3.57,has\_clear\_authorship)
-    (-4.64,is\_current\_year\_2026)
-};
-\end{axis}
-\end{tikzpicture}
-\caption{GPT Enterprise intra-listicle selection drift. Positive values indicate features the model over-selects relative to the available pool; negative values indicate under-selection. Numbered lists show the strongest positive lift (+7.34pp), while current-year pages are under-selected ($-$4.64pp).}
-\label{fig:ent-listicle-drift}
-\end{figure}
-
-\paragraph{GPT Personal (Multi-provider)}
-\textit{Comparing selection from Google (Top 10) vs.\ Bing (Page 1, Top 5).}
-
-\begin{table}[htbp]
-\centering
-\caption{GPT Personal intra-listicle selection drift}
-\label{tab:pers-listicle-drift}
-\begin{tabular}{lrr}
-\toprule
-Feature & Google T10 Lift & Bing P1 Lift \\
-\midrule
-\texttt{has\_tables} & \textbf{+12.23pp} & +2.25pp \\
-\texttt{freshness\_cue\_strength} & \textbf{+6.31pp} & \textbf{+11.97pp} \\
-\texttt{has\_bullet\_points} & +5.74pp & $-$8.82pp \\
-\texttt{is\_current\_year\_2026} & +4.48pp & \textbf{+8.58pp} \\
-\texttt{has\_pros\_cons} & +3.38pp & $-$9.17pp \\
-\texttt{has\_numbered\_lists} & +2.20pp & $-$2.90pp \\
-\texttt{has\_clear\_authorship} & +1.83pp & +2.20pp \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Gemini (Google-centric)}
-\textit{Retrieved from Google fan-out queries (Top 10).}
-
-\begin{table}[htbp]
-\centering
-\caption{Gemini intra-listicle selection drift}
-\label{tab:gemini-listicle-drift}
-\begin{tabular}{lr}
-\toprule
-Feature & Weighted Avg Lift \\
-\midrule
-\texttt{has\_clear\_authorship} & \textbf{+6.16pp} \\
-\texttt{has\_tables} & +2.35pp \\
-\texttt{has\_numbered\_lists} & +1.85pp \\
-\texttt{has\_bullet\_points} & +1.74pp \\
-\texttt{has\_pros\_cons} & +1.46pp \\
-\texttt{freshness\_cue\_strength} & +1.44pp \\
-\texttt{is\_current\_year\_2026} & $-$4.01pp \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textit{Freshness caveat for Gemini: The freshness rows (\texttt{freshness\_cue\_strength}, \texttt{is\_current\_year\_2026}) should be interpreted with caution. As shown in Section~\ref{sec:freshness-steering}, Gemini explicitly injects a year token (``2025'' or ``2026'') into \textbf{96.7\%} of its fan-out queries, meaning the freshness profile of the retrieved pool is largely predetermined by query construction rather than reflecting a selection preference at the citation stage. The $-$4.01pp drift on \texttt{is\_current\_year\_2026} likely reflects the fact that year-injected queries already saturate the menu with fresh content, leaving little room for positive selection lift. By contrast, GPT rarely uses explicit year signals (5.1\% of runs), so GPT's freshness drift is a more meaningful indicator of selection behavior.}
-
-\subsection{Intra-Product-Page Selection Drift (Feature Lift)}
-\label{sec:product-page-drift}
-
-Companion to Section~\ref{sec:listicle-drift}. When the model retrieves multiple product pages, does it show the same structural preferences as with listicles? The following tables report the same \textbf{weighted-average rank-stratified lift (percentage point drift)} methodology, restricted to URLs labeled \texttt{product\_page}. Source: \texttt{data/enrichment/drift\_split\_tables.json}.
-
-\paragraph{GPT Enterprise (Bing-centric)}
-\textit{Product pages only. Menu n=443, Order n=355.}
-
-\begin{table}[htbp]
-\centering
-\caption{GPT Enterprise intra-product-page selection drift}
-\label{tab:ent-product-drift}
-\begin{tabular}{lr}
-\toprule
-Feature & Weighted Avg Lift \\
-\midrule
-\texttt{heading\_density} & \textbf{+2.69pp} \\
-\texttt{has\_numbered\_lists} & +0.84pp \\
-\texttt{has\_pros\_cons} & +0.61pp \\
-\texttt{has\_clear\_authorship} & +0.39pp \\
-\texttt{readability\_score} & $-$0.17pp \\
-\texttt{is\_current\_year\_2026} & $-$0.30pp \\
-\texttt{freshness\_cue\_strength} & $-$0.31pp \\
-\texttt{has\_tables} & $-$0.37pp \\
-\texttt{expertise\_signal\_score} & $-$1.09pp \\
-\texttt{has\_bullet\_points} & $-$2.07pp \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{GPT Personal (Multi-provider)}
-\textit{Product pages only. Google: Menu n=3,577, Order n=1,582. Bing: Menu n=406, Order n=114.}
-
-\begin{table}[htbp]
-\centering
-\caption{GPT Personal intra-product-page selection drift}
-\label{tab:pers-product-drift}
-\begin{tabular}{lrr}
-\toprule
-Feature & Google T10 Lift & Bing P1 Lift \\
-\midrule
-\texttt{has\_clear\_authorship} & +0.38pp & \textbf{+5.32pp} \\
-\texttt{is\_current\_year\_2026} & +2.09pp & \textbf{+5.24pp} \\
-\texttt{has\_tables} & +0.51pp & \textbf{+4.93pp} \\
-\texttt{heading\_density} & \textbf{+3.11pp} & \textbf{+4.94pp} \\
-\texttt{freshness\_cue\_strength} & +0.67pp & +1.60pp \\
-\texttt{expertise\_signal\_score} & $-$0.59pp & +1.80pp \\
-\texttt{readability\_score} & +1.22pp & +0.16pp \\
-\texttt{has\_pros\_cons} & +0.10pp & +0.37pp \\
-\texttt{has\_bullet\_points} & $-$0.06pp & +0.41pp \\
-\texttt{has\_numbered\_lists} & $-$0.72pp & $-$0.22pp \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Gemini (Google-centric)}
-\textit{Product pages only. Menu n=1,747, Order n=194.}
-
-\begin{table}[htbp]
-\centering
-\caption{Gemini intra-product-page selection drift}
-\label{tab:gemini-product-drift}
-\begin{tabular}{lr}
-\toprule
-Feature & Weighted Avg Lift \\
-\midrule
-\texttt{has\_numbered\_lists} & \textbf{+8.73pp} \\
-\texttt{readability\_score} & +1.03pp \\
-\texttt{has\_clear\_authorship} & +1.03pp \\
-\texttt{has\_pros\_cons} & +0.26pp \\
-\texttt{is\_current\_year\_2026} & $-$0.58pp \\
-\texttt{freshness\_cue\_strength} & $-$0.62pp \\
-\texttt{heading\_density} & $-$4.85pp \\
-\texttt{has\_tables} & \textbf{$-$5.11pp} \\
-\texttt{has\_bullet\_points} & $-$5.76pp \\
-\texttt{expertise\_signal\_score} & \textbf{$-$10.34pp} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textit{Product page contrast with listicles: Unlike listicles (Section~\ref{sec:listicle-drift}), product pages show much flatter drift profiles for GPT --- most features stay within $\pm$2pp. The notable exceptions are GPT Personal's Bing baseline, where freshness (+5.24pp) and authorship (+5.32pp) signals emerge, and Gemini, which strongly favors numbered lists (+8.73pp) while penalizing expertise signals ($-$10.34pp) and tables ($-$5.11pp). The overall flatness suggests product pages are structurally homogeneous, giving the model less to differentiate on compared to the more varied listicle pool. Gemini's freshness rows (\texttt{is\_current\_year\_2026} $-$0.58pp, \texttt{freshness\_cue\_strength} $-$0.62pp) are again near-zero and subject to the same query-construction caveat noted in Section~\ref{sec:listicle-drift} --- with 96.7\% of fan-out queries already year-stamped, the menu is pre-filtered for freshness, making selection-stage drift uninformative.}
-
-\subsection{Statistical Significance of Selection Drift (T-Test)}
-\label{sec:ttest}
-
-To validate whether the observed drift patterns are statistically significant, we performed Welch's two-sample t-tests on binary Content DNA features. We decompose the selection pipeline into two stages:
-
+\textbf{Two-stage decomposition (GPT only):}
 \begin{enumerate}
-\item \textbf{Cited vs Additional} (citation-stage): Both groups were surfaced by ChatGPT---cited URLs appeared in the response text, additional URLs were shown as supplementary sources. This isolates the final citation preference from an already-filtered pool. Gemini lacks an ``additional'' citation category, so this test is GPT-only.
-\item \textbf{Cited vs Not-Cited from SERP} (end-to-end): For each run, every SERP URL (filtered by content type) is classified as either Cited or Not-Cited. Zero overlap between groups. Each run is an independent selection event.
+\item \textbf{Cited vs Not-Cited from SERP:} For each run, SERP URLs are split into Cited vs Not-Cited. This captures the full end-to-end selection effect.
+\item \textbf{Cited vs Additional:} Both groups were surfaced by ChatGPT. Cited = appeared in response text. Additional = supplementary sources. This isolates the final citation preference from an already-filtered pool. Gemini lacks an ``additional'' citation category, so this test is GPT-only.
 \end{enumerate}
 
-\subsubsection{Stage 1: Cited vs Additional (Citation-Stage, GPT Only)}
-
-\begin{table}[htbp]
-\centering
-\caption{Cited vs Additional drift---Listicles (Welch's t-test). Only significant features shown; full results in Appendix.}
-\label{tab:ttest-cited-addl-listicle}
-\begin{tabular}{lrrlrrl}
-\toprule
- & \multicolumn{3}{c}{Enterprise (C=450, A=1{,}489)} & \multicolumn{3}{c}{Personal (C=312, A=1{,}577)} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
-\midrule
-Tables          & $+$5.8pp & 2.20 & $*$   & $+$8.1pp & 2.62 & $**$  \\
-Numbered Lists  & $+$2.9pp & 1.30 & ns    & $+$6.1pp & 2.14 & $*$   \\
-Bullet Points   & $-$0.3pp & $-$0.10 & ns & $+$5.7pp & 1.84 & ns    \\
-Clear Authorship& $-$1.5pp & $-$0.58 & ns & $-$6.7pp & $-$2.18 & $*$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\caption{Cited vs Additional drift---Product Pages (Welch's t-test).}
-\label{tab:ttest-cited-addl-pp}
-\begin{tabular}{lrrlrrl}
-\toprule
- & \multicolumn{3}{c}{Enterprise (C=790, A=882)} & \multicolumn{3}{c}{Personal (C=970, A=1{,}422)} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
-\midrule
-Bullet Points   & $+$5.9pp & 2.52 & $*$       & $+$9.8pp & 5.15 & $***$ \\
-Numbered Lists  & $+$4.7pp & 1.92 & ns        & $+$7.1pp & 3.63 & $***$ \\
-Tables          & $+$0.0pp & 0.00 & ns         & $+$3.7pp & 3.03 & $**$  \\
-Vendor Owned    & $+$0.9pp & 1.41 & ns         & $+$1.8pp & 2.73 & $**$  \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-At the citation stage, drifts are modest. Enterprise listicles show only one significant feature (Tables $+$5.8pp), while Personal listicles show three. Personal product pages exhibit the strongest citation-stage preferences: bullet points ($+$9.8pp, $p<0.001$), numbered lists ($+$7.1pp, $p<0.001$). The narrow drifts indicate that the Additional pool is structurally similar to the Cited pool---most of the selection has already occurred upstream.
-
-\subsubsection{Stage 2: Cited vs Not-Cited from SERP (Per-Run, No Overlap)}
+\subsection{Cited vs Not-Cited from SERP (Per-Run, No Overlap)}
+\label{sec:cited-vs-serp}
 
 For each run, every SERP URL of the relevant content type is classified as Cited or Not-Cited. A URL appearing in multiple runs contributes once per run.
+
+\subsubsection{GPT vs Bing Page 1}
 
 \begin{table}[htbp]
 \centering
@@ -1540,6 +1304,28 @@ Freshness ($\geq$3) & $+$1.2pp & 0.51 & ns   & $+$17.1pp & 7.75 & $***$ \\
 
 \begin{table}[htbp]
 \centering
+\caption{Cited vs Not-Cited from Bing Page 1---Product Pages (per-run).}
+\label{tab:ttest-serp-bing-pp}
+\begin{tabular}{lrrlrrl}
+\toprule
+ & \multicolumn{3}{c}{Enterprise (C=343, NC=1{,}141)} & \multicolumn{3}{c}{Personal (C=221, NC=1{,}212)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
+\midrule
+Numbered Lists    & $+$12.2pp & 4.06 & $***$ & $-$7.2pp & $-$1.98 & $*$ \\
+Bullet Points     & $+$3.9pp & 1.38 & ns     & $+$11.2pp & 3.15 & $**$ \\
+Tables            & $+$1.6pp & 0.78 & ns      & $+$3.9pp & 1.60 & ns \\
+Pros/Cons         & $+$1.6pp & 2.19 & $*$     & $-$0.0pp & $-$0.09 & ns \\
+Vendor Owned      & $-$1.1pp & $-$1.65 & ns   & $+$0.5pp & 2.46 & $*$ \\
+Freshness ($\geq$3) & $-$5.7pp & $-$3.16 & $**$ & $+$3.4pp & 1.35 & ns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{GPT Personal vs Google Top-10}
+
+\begin{table}[htbp]
+\centering
 \caption{Cited vs Not-Cited from Google Top-10---Listicles (Personal, per-run). 7 of 8 features significant.}
 \label{tab:ttest-serp-google-listicle}
 \begin{tabular}{lrrl}
@@ -1560,34 +1346,129 @@ Pros/Cons         & $+$1.9pp & 0.55 & ns \\
 
 \noindent\textit{Personal Listicle vs Google Top-10: Cited $N=225$, Not-Cited $N=2{,}484$.}
 
-The SERP-level comparison reveals dramatically larger drifts than the citation stage. Personal listicles vs Google Top-10 show 7 of 8 features reaching significance, with Tables at $+$19.7pp ($p<0.001$), Bullet Points at $+$12.5pp, and Freshness at $+$9.1pp. Clear Authorship shows a strong negative drift ($-$10.9pp, $p<0.01$), indicating ChatGPT systematically disfavors pages with visible bylines.
-
-\subsubsection{Gemini vs Google Top-10 (Per-Unique-URL)}
-
-Gemini lacks run-level granularity and an ``additional'' citation category, so we compare cited URLs against the deduplicated Google SERP for the same fan-out queries.
-
 \begin{table}[htbp]
 \centering
-\caption{Gemini Cited vs Google Top-10 (per-unique-URL). Minimal structural drift.}
-\label{tab:ttest-gemini-google}
-\begin{tabular}{lrrlrrl}
+\caption{Cited vs Not-Cited from Google Top-10---Product Pages (Personal, per-run). 4 significant.}
+\label{tab:ttest-serp-google-pp}
+\begin{tabular}{lrrl}
 \toprule
- & \multicolumn{3}{c}{Listicle (C=374, G=1{,}319)} & \multicolumn{3}{c}{Product Page (C=191, G=820)} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
+Feature & Drift & $t$ & Sig \\
 \midrule
-Bullet Points     & $+$6.3pp & 2.15 & $*$ & $-$4.4pp & $-$1.21 & ns \\
-Numbered Lists    & $-$0.4pp & $-$0.17 & ns & $-$4.6pp & $-$1.22 & ns \\
-Tables            & $+$3.6pp & 1.25 & ns   & $-$3.6pp & $-$1.84 & ns \\
-Vendor Owned      & $-$1.6pp & $-$0.57 & ns & $+$1.8pp & 1.88 & ns \\
-Freshness ($\geq$3) & $+$0.4pp & 0.21 & ns & $+$2.0pp & 0.62 & ns \\
+Bullet Points     & $+$7.5pp & 4.68 & $***$ \\
+Numbered Lists    & $+$6.9pp & 4.17 & $***$ \\
+Tables            & $+$2.9pp & 3.00 & $**$  \\
+Vendor Owned      & $+$1.1pp & 2.35 & $*$   \\
+Freshness ($\geq$3) & $+$0.9pp & 0.63 & ns  \\
+Sources/Citations & $-$0.6pp & $-$1.18 & ns  \\
+Clear Authorship  & $-$0.3pp & $-$0.39 & ns  \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Gemini shows essentially zero structural drift versus Google SERP. Only Bullet Points for listicles barely reaches $p<0.05$; product pages have zero significant features. Gemini cites what Google returns almost exactly proportionally, confirming that its grounding mechanism is SERP-faithful rather than structurally selective.
+\noindent\textit{Personal Product Page vs Google Top-10: Cited $N=1{,}089$, Not-Cited $N=3{,}530$.}
 
-\subsubsection{Two-Stage Pipeline Interpretation}
+The SERP-level comparison reveals dramatically larger drifts than the citation stage. Personal listicles vs Google Top-10 show 7 of 8 features reaching significance, with Tables at $+$19.7pp ($p<0.001$), Bullet Points at $+$12.5pp, and Freshness at $+$9.1pp. Clear Authorship shows a strong negative drift ($-$10.9pp, $p<0.01$), indicating ChatGPT systematically disfavors pages with visible bylines.
+
+\subsubsection{Gemini vs Google Top-10 (Per-Run)}
+
+Gemini cited URLs are reconstructed per-run from raw Vertex grounding chunks (resolved via \texttt{master\_bundle.json}). For each of 226 Gemini runs, every Google SERP URL is classified as Cited or Not-Cited based on whether the resolved grounding chunk URL matches.
+
+\begin{table}[htbp]
+\centering
+\caption{Gemini Cited vs Not-Cited from Google Top-10---Listicles (per-run). 7 of 8 features significant.}
+\label{tab:ttest-gemini-listicle}
+\begin{tabular}{lrrl}
+\toprule
+Feature & Drift & $t$ & Sig \\
+\midrule
+Tables            & $+$12.2pp & 7.60 & $***$ \\
+Vendor Owned      & $+$10.6pp & 7.28 & $***$ \\
+Bullet Points     & $+$8.1pp & 5.04 & $***$ \\
+Numbered Lists    & $+$7.5pp & 5.05 & $***$ \\
+Clear Authorship  & $+$5.1pp & 3.33 & $***$ \\
+Pros/Cons         & $+$4.7pp & 2.93 & $**$ \\
+Sources/Citations & $-$4.4pp & $-$4.29 & $***$ \\
+Freshness ($\geq$3) & $-$1.5pp & $-$1.41 & ns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textit{Gemini Listicle: Cited $N=1{,}094$, Not-Cited $N=8{,}239$.}
+
+\begin{table}[htbp]
+\centering
+\caption{Gemini Cited vs Not-Cited from Google Top-10---Product Pages (per-run). 3 significant.}
+\label{tab:ttest-gemini-pp}
+\begin{tabular}{lrrl}
+\toprule
+Feature & Drift & $t$ & Sig \\
+\midrule
+Vendor Owned      & $+$2.5pp & 10.38 & $***$ \\
+Sources/Citations & $-$4.4pp & $-$7.86 & $***$ \\
+Tables            & $-$4.1pp & $-$4.16 & $***$ \\
+Numbered Lists    & $+$4.8pp & 1.93 & ns \\
+Bullet Points     & $+$2.8pp & 1.15 & ns \\
+Freshness ($\geq$3) & $-$2.1pp & $-$0.97 & ns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textit{Gemini Product Page: Cited $N=392$, Not-Cited $N=4{,}277$.}
+
+\subsection{Cited vs Additional (Citation-Stage, GPT Only)}
+\label{sec:cited-vs-additional}
+
+Both groups were surfaced by ChatGPT---cited URLs appeared in the response text, additional URLs were shown as supplementary sources. This isolates the final citation preference from an already-filtered pool. Gemini lacks an ``additional'' citation category, so this test is GPT-only.
+
+\begin{table}[htbp]
+\centering
+\caption{Cited vs Additional drift---Listicles (Welch's t-test).}
+\label{tab:ttest-cited-addl-listicle}
+\begin{tabular}{lrrlrrl}
+\toprule
+ & \multicolumn{3}{c}{Enterprise (C=450, A=1{,}489)} & \multicolumn{3}{c}{Personal (C=312, A=1{,}577)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
+\midrule
+Tables          & $+$5.8pp & 2.20 & $*$   & $+$8.1pp & 2.62 & $**$  \\
+Numbered Lists  & $+$2.9pp & 1.30 & ns    & $+$6.1pp & 2.14 & $*$   \\
+Bullet Points   & $-$0.3pp & $-$0.10 & ns & $+$5.7pp & 1.84 & ns    \\
+Pros/Cons       & $+$3.4pp & 1.26 & ns    & $+$3.6pp & 1.16 & ns    \\
+Clear Authorship& $-$1.5pp & $-$0.58 & ns & $-$6.7pp & $-$2.18 & $*$ \\
+Sources/Citations& $+$0.4pp & 0.17 & ns   & $-$3.8pp & $-$1.93 & ns  \\
+Vendor Owned    & $+$0.4pp & 0.15 & ns    & $-$0.9pp & $-$0.32 & ns  \\
+Freshness ($\geq$3) & $-$0.8pp & $-$0.38 & ns & $-$1.0pp & $-$0.47 & ns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Cited vs Additional drift---Product Pages (Welch's t-test).}
+\label{tab:ttest-cited-addl-pp}
+\begin{tabular}{lrrlrrl}
+\toprule
+ & \multicolumn{3}{c}{Enterprise (C=790, A=882)} & \multicolumn{3}{c}{Personal (C=970, A=1{,}422)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
+\midrule
+Bullet Points   & $+$5.9pp & 2.52 & $*$       & $+$9.8pp & 5.15 & $***$ \\
+Numbered Lists  & $+$4.7pp & 1.92 & ns        & $+$7.1pp & 3.63 & $***$ \\
+Tables          & $+$0.0pp & 0.00 & ns         & $+$3.7pp & 3.03 & $**$  \\
+Vendor Owned    & $+$0.9pp & 1.41 & ns         & $+$1.8pp & 2.73 & $**$  \\
+Clear Authorship& $+$0.1pp & 0.21 & ns         & $-$0.8pp & $-$1.11 & ns \\
+Sources/Citations& $+$0.1pp & 0.13 & ns        & $+$0.5pp & 0.68 & ns   \\
+Freshness ($\geq$3) & $-$0.8pp & $-$0.51 & ns & $-$0.5pp & $-$0.29 & ns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At the citation stage, drifts are modest. Enterprise listicles show only one significant feature (Tables $+$5.8pp), while Personal listicles show three (Tables $+$8.1pp, Numbered Lists $+$6.1pp, Clear Authorship $-$6.7pp). Personal product pages exhibit the strongest citation-stage preferences: bullet points ($+$9.8pp, $p<0.001$), numbered lists ($+$7.1pp, $p<0.001$). The narrow drifts indicate that the Additional pool is structurally similar to the Cited pool---most of the selection has already occurred upstream.
+
+\subsection{Interpretation}
+\label{sec:drift-interpretation}
+
+\subsubsection{Two-Stage Pipeline (GPT)}
 
 The comparison between Stage~1 and Stage~2 reveals \emph{where} structural selection occurs:
 
@@ -1596,7 +1477,26 @@ The comparison between Stage~1 and Stage~2 reveals \emph{where} structural selec
 \item \textbf{Stage 2 (Cited vs Not-Cited from SERP):} Much larger drifts. Enterprise listicles: Tables $+$13.6pp, Numbered Lists $+$12.8pp, Sources/Citations $+$10.2pp (all $p<0.001$). Personal listicles vs Google: 7/8 features significant, Tables reaching $+$19.7pp.
 \end{itemize}
 
-This decomposition shows that \textbf{most structural selection happens at the retrieval/surfacing stage, not the citation stage.} ChatGPT's retrieval pipeline already over-selects for structured, scannable content from the SERP. The subsequent citation-stage filter refines this with smaller effect sizes. The consistent pattern across all ChatGPT tests: over-selection of tables, numbered lists, bullet points, vendor-owned sources, and freshness; under-selection of pages with clear authorship and editorial citations. Gemini, by contrast, exhibits no such structural preference---it cites what Google returns proportionally.
+This decomposition shows that \textbf{most structural selection happens at the retrieval/surfacing stage, not the citation stage.} ChatGPT's retrieval pipeline already over-selects for structured, scannable content from the SERP. The subsequent citation-stage filter refines this with smaller effect sizes.
+
+\subsubsection{Cross-Model Comparison}
+
+With per-run methodology applied to both models, \textbf{Gemini also shows significant structural selection}. Gemini listicles show 7 of 8 features significant, with Tables $+$12.2pp, Vendor Owned $+$10.6pp, and Bullet Points $+$8.1pp (all $p<0.001$).
+
+\textbf{Shared patterns across both models (listicles):}
+\begin{itemize}
+\item \textbf{Over-selected:} Tables, numbered lists, bullet points, vendor-owned sources
+\item \textbf{Under-selected:} Sources/citations (both models significantly under-select pages with editorial citations)
+\end{itemize}
+
+\textbf{Key differences:}
+\begin{itemize}
+\item \textbf{Clear Authorship:} ChatGPT significantly \emph{under-selects} pages with clear bylines ($-$10.9pp to $-$15.2pp), while Gemini \emph{over-selects} them ($+$5.1pp, $p<0.001$). This is the sharpest divergence between the two models.
+\item \textbf{Freshness:} ChatGPT shows strong freshness preference (up to $+$17.1pp), while Gemini shows no freshness drift---likely because 96.7\% of Gemini's fan-out queries already inject year tokens, pre-filtering the SERP for freshness.
+\item \textbf{Effect sizes:} ChatGPT's largest drifts (Tables $+$19.7pp vs Google) exceed Gemini's (Tables $+$12.2pp), but Gemini's larger sample sizes ($N=1{,}094$ cited listicles vs $N=225$) give it more statistical power.
+\end{itemize}
+
+\textbf{Product pages} show flatter drift profiles across both models. Product pages are structurally homogeneous (high vendor-owned rates, low table/pros-cons rates), leaving less for either model to differentiate on. The notable shared signal: both models significantly under-select pages with editorial sources/citations among product pages.
 
 %-----------------------------------------------------------------------
 \section{Listicle Extraction \& Bias Analysis}

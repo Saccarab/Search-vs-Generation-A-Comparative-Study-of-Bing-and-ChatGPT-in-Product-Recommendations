@@ -1115,9 +1115,9 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 
 **Interpretation**: listicles are ~2× longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
 
-**Relation to grounding budget research**: Our table measures **full page length** of candidate/cited sources, not the snippet-level context that is actually injected into the model's context window. Practitioner research by Dejan (2025) provides the complementary measurement we do not attempt here: using Gemini's exposed `groundingChunks`, they report a per-query grounding budget of ~2,000 words (median 1,929, p95 2,798), with allocation weighted by SERP rank (#1 source receives a median of 531 words vs 266 for #5) and coverage inversely proportional to page length (61% for pages under 1K words, dropping to 13% for pages over 3K words). A companion analysis of AI search citation survival rates found that roughly one-third of source content (32%) is carried into AI-generated citations, with high variance across sites (21–65%).
+**Relation to grounding budget research**: Our table measures **full page length** of candidate/cited sources, not the snippet-level context that is actually injected into the model's context window. Practitioner research by Petrovic (2025) provides the complementary measurement we do not attempt here: using Gemini's exposed `groundingChunks`, they report a per-query grounding budget of ~2,000 words (median 1,929, p95 2,798), with allocation weighted by SERP rank (#1 source receives a median of 531 words vs 266 for #5) and coverage inversely proportional to page length (61% for pages under 1K words, dropping to 13% for pages over 3K words). A companion analysis by Petrovic (2025b) of AI search citation survival rates found that roughly one-third of source content (32%) is carried into AI-generated citations, with high variance across sites (21–65%). At a sub-page level, Indig (2026) analyzed 1.2 million ChatGPT search results and found that citation likelihood is positionally skewed — 44.2% of citations originate from the first 30% of page content — and correlates with linguistic characteristics such as definitive language, question-answer structure, and entity density.
 
-These findings are directly relevant to our content size data: our median listicle length (2,094 words) sits almost exactly at Dejan's measured per-query budget ceiling, meaning a single listicle could plausibly consume most of the grounding budget for a query — leaving less room for competing sources. Our median product page (927 words) falls well within the budget, suggesting product pages are more likely to be ingested in full. However, we emphasize that our study measures source-side page length, not the actual injected snippet size; validating the budget constraint for ChatGPT (where grounding chunks are not exposed) would require the kind of API-level instrumentation only available for Gemini (see `2.4`, Related Work).
+These findings are directly relevant to our content size data: our median listicle length (2,094 words) sits almost exactly at the measured per-query budget ceiling, meaning a single listicle could plausibly consume most of the grounding budget for a query — leaving less room for competing sources. Our median product page (927 words) falls well within the budget, suggesting product pages are more likely to be ingested in full. However, we emphasize that our study measures source-side page length, not the actual injected snippet size; validating the budget constraint for ChatGPT (where grounding chunks are not exposed) would require the kind of API-level instrumentation only available for Gemini (see `2.4`, Related Work).
 
 ## 3.5 Selection Drift (Enrichment-Based)
 *With the DNA profile established in 3.4, we now measure how the model's selection systematically diverges from the available pool along enriched feature dimensions.*
@@ -1130,43 +1130,10 @@ For each run, every SERP URL (filtered by content type) is classified as either 
 **Gemini data:** SERP from Google Top-10 (fan-out queries via SerpApi). Cited URLs reconstructed per-run from raw Gemini responses via `master_bundle.json` (Vertex grounding chunks resolved to real URLs).
 
 **Two-stage decomposition (GPT only):**
-1. **Stage 1 — Cited vs Additional:** Both groups were surfaced by ChatGPT. Cited = appeared in response text. Additional = supplementary sources shown alongside response. This isolates what the model *preferentially cites* from its already-filtered retrieval pool. Gemini lacks an "additional" citation category, so this stage is GPT-only.
-2. **Stage 2 — Cited vs Not-Cited from SERP:** For each run, SERP URLs are split into Cited vs Not-Cited. This captures the full end-to-end selection effect from SERP availability to citation.
+1. **Cited vs Not-Cited from SERP:** For each run, SERP URLs are split into Cited vs Not-Cited. This captures the full end-to-end selection effect from SERP availability to citation.
+2. **Cited vs Additional:** Both groups were surfaced by ChatGPT. Cited = appeared in response text. Additional = supplementary sources shown alongside response. This isolates what the model *preferentially cites* from its already-filtered retrieval pool. Gemini lacks an "additional" citation category, so this test is GPT-only.
 
-### 3.5.1 Stage 1: Cited vs Additional (Citation-Stage Selection, GPT Only)
-##### Listicles
-
-| Feature | Ent Addl% | Ent Cited% | Ent Drift | Ent Sig | Pers Addl% | Pers Cited% | Pers Drift | Pers Sig |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Tables | 37.9% | 43.8% | +5.8pp | p<0.05 | 43.5% | 51.6% | **+8.1pp** | **p<0.01** |
-| Numbered Lists | 74.6% | 77.6% | +2.9pp | ns | 63.7% | 69.9% | +6.1pp | p<0.05 |
-| Bullet Points | 49.8% | 49.6% | -0.3pp | ns | 45.6% | 51.3% | +5.7pp | ns |
-| Pros/Cons | 50.2% | 53.6% | +3.4pp | ns | 48.0% | 51.6% | +3.6pp | ns |
-| Clear Authorship | 55.5% | 54.0% | -1.5pp | ns | 59.0% | 52.2% | -6.7pp | p<0.05 |
-| Sources/Citations | 17.9% | 18.2% | +0.4pp | ns | 14.7% | 10.9% | -3.8pp | ns |
-| Vendor Owned | 57.8% | 58.2% | +0.4pp | ns | 70.1% | 69.2% | -0.9pp | ns |
-| Freshness (≥3) | 81.3% | 80.4% | -0.8pp | ns | 88.8% | 87.8% | -1.0pp | ns |
-
-*N: Ent Cited=450, Additional=1,489; Pers Cited=312, Additional=1,577.*
-
-##### Product Pages
-
-| Feature | Ent Addl% | Ent Cited% | Ent Drift | Ent Sig | Pers Addl% | Pers Cited% | Pers Drift | Pers Sig |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Tables | 8.7% | 8.7% | +0.0pp | ns | 7.2% | 10.9% | **+3.7pp** | **p<0.01** |
-| Numbered Lists | 48.0% | 52.7% | +4.7pp | ns | 29.5% | 36.6% | **+7.1pp** | **p<0.001** |
-| Bullet Points | 32.0% | 37.8% | +5.9pp | p<0.05 | 24.6% | 34.4% | **+9.8pp** | **p<0.001** |
-| Pros/Cons | 1.7% | 2.2% | +0.5pp | ns | 0.9% | 1.1% | +0.2pp | ns |
-| Clear Authorship | 0.8% | 0.9% | +0.1pp | ns | 3.9% | 3.1% | -0.8pp | ns |
-| Sources/Citations | 1.8% | 1.9% | +0.1pp | ns | 3.1% | 3.6% | +0.5pp | ns |
-| Vendor Owned | 97.8% | 98.7% | +0.9pp | ns | 96.3% | 98.1% | **+1.8pp** | **p<0.01** |
-| Freshness (≥3) | 12.6% | 11.8% | -0.8pp | ns | 25.9% | 25.4% | -0.5pp | ns |
-
-*N: Ent Cited=790, Additional=882; Pers Cited=970, Additional=1,422.*
-
-**Interpretation:** At the citation stage, the model selects from an already-filtered pool. Drifts are modest — Enterprise Listicles show only one significant feature (Tables +5.8pp), while Personal Listicles show three (Tables +8.1pp, Numbered Lists +6.1pp, Clear Authorship -6.7pp). Personal Product Pages show the strongest citation-stage preferences: bullet points (+9.8pp, p<0.001), numbered lists (+7.1pp, p<0.001), and vendor-owned (+1.8pp, p<0.01). The narrow drifts indicate that the Additional pool is structurally similar to the Cited pool — most of the selection has already occurred upstream.
-
-### 3.5.2 Stage 2: Cited vs Not-Cited from SERP (End-to-End Selection)
+### 3.5.1 Cited vs Not-Cited from SERP (End-to-End Selection)
 
 For each run, every SERP URL of the relevant content type is classified as Cited or Not-Cited. A URL appearing in multiple runs contributes once per run. Zero overlap between groups.
 
@@ -1259,6 +1226,42 @@ Gemini cited URLs are reconstructed per-run from raw Vertex grounding chunks (re
 | Sources/Citations | 5.1% | 0.8% | **-4.4pp** | **p<0.001** |
 | Vendor Owned | 97.5% | 100.0% | **+2.5pp** | **p<0.001** |
 | Freshness (≥3) | 24.1% | 21.9% | -2.1pp | ns |
+
+### 3.5.2 Cited vs Additional (Citation-Stage Selection, GPT Only)
+
+Both groups were surfaced by ChatGPT — cited URLs appeared in the response text, additional URLs were shown as supplementary sources. This isolates what the model *preferentially cites* from its already-filtered retrieval pool. Gemini lacks an "additional" citation category, so this test is GPT-only.
+
+##### Listicles
+
+| Feature | Ent Addl% | Ent Cited% | Ent Drift | Ent Sig | Pers Addl% | Pers Cited% | Pers Drift | Pers Sig |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Tables | 37.9% | 43.8% | +5.8pp | p<0.05 | 43.5% | 51.6% | **+8.1pp** | **p<0.01** |
+| Numbered Lists | 74.6% | 77.6% | +2.9pp | ns | 63.7% | 69.9% | +6.1pp | p<0.05 |
+| Bullet Points | 49.8% | 49.6% | -0.3pp | ns | 45.6% | 51.3% | +5.7pp | ns |
+| Pros/Cons | 50.2% | 53.6% | +3.4pp | ns | 48.0% | 51.6% | +3.6pp | ns |
+| Clear Authorship | 55.5% | 54.0% | -1.5pp | ns | 59.0% | 52.2% | -6.7pp | p<0.05 |
+| Sources/Citations | 17.9% | 18.2% | +0.4pp | ns | 14.7% | 10.9% | -3.8pp | ns |
+| Vendor Owned | 57.8% | 58.2% | +0.4pp | ns | 70.1% | 69.2% | -0.9pp | ns |
+| Freshness (≥3) | 81.3% | 80.4% | -0.8pp | ns | 88.8% | 87.8% | -1.0pp | ns |
+
+*N: Ent Cited=450, Additional=1,489; Pers Cited=312, Additional=1,577.*
+
+##### Product Pages
+
+| Feature | Ent Addl% | Ent Cited% | Ent Drift | Ent Sig | Pers Addl% | Pers Cited% | Pers Drift | Pers Sig |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Tables | 8.7% | 8.7% | +0.0pp | ns | 7.2% | 10.9% | **+3.7pp** | **p<0.01** |
+| Numbered Lists | 48.0% | 52.7% | +4.7pp | ns | 29.5% | 36.6% | **+7.1pp** | **p<0.001** |
+| Bullet Points | 32.0% | 37.8% | +5.9pp | p<0.05 | 24.6% | 34.4% | **+9.8pp** | **p<0.001** |
+| Pros/Cons | 1.7% | 2.2% | +0.5pp | ns | 0.9% | 1.1% | +0.2pp | ns |
+| Clear Authorship | 0.8% | 0.9% | +0.1pp | ns | 3.9% | 3.1% | -0.8pp | ns |
+| Sources/Citations | 1.8% | 1.9% | +0.1pp | ns | 3.1% | 3.6% | +0.5pp | ns |
+| Vendor Owned | 97.8% | 98.7% | +0.9pp | ns | 96.3% | 98.1% | **+1.8pp** | **p<0.01** |
+| Freshness (≥3) | 12.6% | 11.8% | -0.8pp | ns | 25.9% | 25.4% | -0.5pp | ns |
+
+*N: Ent Cited=790, Additional=882; Pers Cited=970, Additional=1,422.*
+
+**Interpretation:** At the citation stage, the model selects from an already-filtered pool. Drifts are modest — Enterprise Listicles show only one significant feature (Tables +5.8pp), while Personal Listicles show three (Tables +8.1pp, Numbered Lists +6.1pp, Clear Authorship -6.7pp). Personal Product Pages show the strongest citation-stage preferences: bullet points (+9.8pp, p<0.001), numbered lists (+7.1pp, p<0.001), and vendor-owned (+1.8pp, p<0.01). The narrow drifts indicate that the Additional pool is structurally similar to the Cited pool — most of the selection has already occurred upstream.
 
 ### 3.5.3 Interpretation
 
