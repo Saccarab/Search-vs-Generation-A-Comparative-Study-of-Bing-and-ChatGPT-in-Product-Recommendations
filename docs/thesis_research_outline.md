@@ -580,17 +580,47 @@ Across all five multi-turn cases, Turn 2 queries tend to include specific produc
 
 **Query drift:** Across multiple runs of the same prompt, the fan-out query set can vary. This drift is a primary driver of stochastic retrieval—different fan-out sets lead to different retrieved sources and therefore different citations/recommendations.
 
-### 3.1.4 Implicit Localization Bias
-- **GPT Occurrence Rate:** Implicit localization signals (non-English fan-out queries generated from English prompts) were observed in **13.1%** of GPT runs, distributed across three patterns:
-    - **Foreign-language anchoring** (30 runs): one of the two fan-out queries is issued in a non-English language (e.g., German, Turkish), with the other remaining in English.
-    - **Context-triggered** (9 runs): the prompt references an inherently local category (e.g., "best pizza," "local services"), triggering locale-aware query rewriting.
-    - **Untriggered anomalies** (23 runs): non-English fan-out queries appear with no obvious prompt-level trigger, suggesting IP/locale environment leaking into query generation.
-- **Gemini — not observed via API:** Because our Gemini data was collected through the Vertex AI API (which does not carry IP or locale signals), we cannot test whether Gemini exhibits similar implicit localization. This remains a limitation; inspecting Gemini's consumer UI network traffic could reveal whether localization occurs there (see `2.4.2`).
-- **The "English Anchor" Effect (Gemini-specific):**
-    - Even for foreign-language prompts, Gemini **always** reserves the first grounding-support query slot (Index 0) for an English translation of the prompt.
-    - Due to the **First-Query Bias** (where models preferentially cite results from the first search query), the English-language search results dominate the final response.
-    - In 100% of our localized Gemini runs, the cited sources were primarily global/English SaaS platforms and tech publications (e.g., `pcmag.com`, `techradar.com`), effectively creating a "Global Information Bubble" even for non-English users.
-- **Publisher/SEO→GEO implication:** Even if users in non‑English-speaking countries **search in English**, IP/locale-driven fan‑out rewriting can route part of retrieval toward **localized-language SERPs**. Publishers without localized pages may lose visibility (and therefore citations/traffic) in these retrieval paths.
+### 3.1.4 Cross-Language Fan-Out & Localization Bias
+
+**Overview:** Both ChatGPT and Gemini systematically inject cross-language queries into their fan-out, meaning a user searching in one language will have part of their retrieval routed through a different language's search index. This is not a bug — it is an architectural feature of how grounded LLMs diversify their retrieval pool. However, it has profound implications for which publishers gain or lose visibility.
+
+#### GPT: Cross-Language Fan-Out Taxonomy (Our Data)
+
+Cross-language fan-out signals were observed in **13.1%** of GPT runs (62/474) and **4.6%** of Gemini runs, distributed across three distinct patterns:
+
+- **Case 1 — Foreign prompt → English fan-out (6.3% of runs, 30 runs):** The user searches in a non-English language; GPT generates one fan-out query in English alongside one in the user's language. This is the pattern externally corroborated by Peec AI (see below). The English query typically targets global review sites and English-language listicles, pulling the grounding pool toward anglophone sources.
+
+- **Case 2 — English prompt + foreign context → local-language fan-out (1.9% of runs, 9 runs):** The user searches in English but the prompt references an inherently local category (e.g., "best pizza in Istanbul," "local translation services in Berlin"). GPT responds by generating a locale-aware fan-out query in the relevant local language (Turkish, German), alongside the English query. This is context-triggered localization.
+
+- **Case 3 — English prompt, no foreign context → foreign-language fan-out (4.9% of runs, 23 runs):** The user searches in English with no geographic or cultural markers in the prompt, yet GPT generates a non-English fan-out query. These "untriggered" localizations suggest **IP geolocation or browser locale leaking into query generation** — the model infers the user's location and proactively diversifies retrieval into the local language even when the user gave no such signal.
+
+**Combined: 13.1% of GPT runs exhibit cross-language fan-out.** In all three cases, the fan-out query pair is split: one query in language A, one in language B. This means the retrieval pool is drawn from two separate language indexes of the search engine.
+
+#### External Validation: Peec AI Large-Scale Analysis
+
+Our finding is corroborated at scale by Rudzki \parencite{rudzki2026english}, who analyzed **over 10 million prompts and 20 million query fan-outs** from Peec AI's production monitoring data. Their methodology controlled for location-language matching (e.g., Polish queries from Poland, German queries from Germany only — excluding mismatches like Polish queries from the UK):
+
+- **Session-level:** In nearly **78% of non-English ChatGPT sessions**, at least one sub-search is performed on the English web. No non-English language falls below 60%.
+- **Volume-level:** **43% of all fan-out queries** issued for non-English prompts are performed in English — meaning nearly half of the LLM's retrieval work targets the English-language web even when the user searched in another language.
+- **Per-language breakdown:** Turkish **94%**, German ~85%, Polish ~80%, Spanish **66%** (lowest observed).
+- **Concrete impact examples:** German users asking about German software companies receive zero German companies; Polish users searching for auction portals see eBay prioritized over Allegro.pl (Poland's dominant platform); Spanish cosmetics queries return zero Spanish brands because fan-out queries add "global" to the reformulation.
+
+**Scope of corroboration:** Rudzki's analysis exclusively covers **Case 1** (foreign prompt → English fan-out). They filtered to non-English sessions and measured how often English sub-searches appear. **Cases 2 and 3 — where English-language prompts receive foreign-language fan-outs — are unique to our study** and not observed in the Peec AI data, which did not analyze English-language sessions. This means the reverse direction of the bias (English users losing visibility to localized retrieval via IP/geolocation) is a novel empirical contribution.
+
+Our Case 1 finding (6.3% of runs showing foreign→English fan-out) represents a lower bound because our dataset is predominantly English-language prompts. The Peec AI data, which focuses on non-English sessions, shows that when users *do* search in foreign languages, the English fan-out is near-universal (78% of sessions). Rudzki attributes this to two factors: (1) authority signals (backlinks, citations) favor global/English content, and (2) risk minimization — with ~50% of internet content in English, querying in English increases the probability of finding well-structured sources.
+
+#### Gemini: The "English Anchor" Effect
+
+- **Gemini — not directly observable via API:** Because our Gemini data was collected through the Vertex AI API (which does not carry IP or locale signals), we cannot test whether Gemini exhibits the same IP/locale-driven localization as GPT. This remains a limitation; inspecting Gemini's consumer UI network traffic could reveal whether localization occurs there (see `2.4.2`).
+- **English-first query ordering:** Even for foreign-language prompts, Gemini **always** reserves the first grounding-support query slot (Index 0) for an English translation of the prompt.
+- Due to the **First-Query Bias** (where models preferentially cite results from the first search query), the English-language search results dominate the final response.
+- In 100% of our localized Gemini runs, the cited sources were primarily global/English SaaS platforms and tech publications (e.g., `pcmag.com`, `techradar.com`), effectively creating a "Global Information Bubble" even for non-English users.
+
+#### Publisher/GEO Implications
+
+1. **Non-English publishers lose visibility in Case 1:** When foreign-language users' queries get an English fan-out (78% of the time per Peec AI), English-language sources enter the grounding pool and compete directly with local-language sources. Given LLMs' structural preference for well-formatted English listicles (see Content DNA drift in `3.5`), local publishers face a systematic disadvantage.
+2. **English-only publishers lose visibility in Cases 2–3:** Conversely, when English-speaking users get localized fan-outs (6.8% of our runs), publishers without localized pages are invisible to that retrieval path. This creates a paradox: **even if a publisher ranks well in English SERPs, IP-driven localization can route part of the LLM's retrieval away from their content.**
+3. **The language of optimization matters:** Traditional SEO focuses on ranking in the user's query language. GEO must account for the fact that the LLM may search in a *different* language than the user typed. Publishers targeting non-English markets need English-language content; publishers targeting English markets in non-English geographies need localized content.
 
 ## 3.2 Position Bias & Page Distribution
 *Quantifying how search engine ranking (the "Menu" position) influences the final citation (the "Order"). We present this before the invisible-links analysis because understanding where citations land in the SERP provides context for interpreting what falls outside it.*
@@ -1196,27 +1226,162 @@ Companion to `3.5.1`. When the model retrieves multiple product pages, does it s
 
 *Product page contrast with listicles: Unlike listicles (3.5.1), product pages show much flatter drift profiles for GPT — most features stay within ±2pp. The notable exceptions are GPT Personal's Bing baseline, where freshness (+5.24pp) and authorship (+5.32pp) signals emerge, and Gemini, which strongly favors numbered lists (+8.73pp) while penalizing expertise signals (-10.34pp) and tables (-5.11pp). The overall flatness suggests product pages are structurally homogeneous, giving the model less to differentiate on compared to the more varied listicle pool. Gemini's freshness rows (`is_current_year_2026` -0.58pp, `freshness_cue_strength` -0.62pp) are again near-zero and subject to the same query-construction caveat noted in `3.5.1` — with 96.7% of fan-out queries already year-stamped, the menu is pre-filtered for freshness, making selection-stage drift uninformative.*
 
-### 3.5.3 Statistical Significance of Content DNA Preferences (T-Test)
-To validate whether observed selection drifts are statistically significant, we performed a two-sample T-test (Welch's T-test) comparing the prevalence of content DNA features across models.
+### 3.5.3 Statistical Significance of Selection Drift (Welch's T-Test)
 
-##### GPT Enterprise vs. Personal (Citations)
-| Feature | Ent % | Pers % | Diff | Sig |
-| :--- | :---: | :---: | :---: | :---: |
-| tables | 21.3% | 19.1% | 2.2% | p<0.01 |
-| numbered lists | 50.3% | 35.1% | 15.2% | p<0.01 |
-| bullet points | 35.4% | 29.0% | 6.4% | p<0.01 |
-| is current year 2026 | 15.1% | 17.8% | -2.7% | p<0.01 |
-| clear authorship | 33.6% | 28.7% | 4.9% | p<0.01 |
+To validate whether the drift patterns observed in `3.5.1`–`3.5.2` are statistically significant, we performed two-sample Welch's t-tests on binary Content DNA features. We decompose the selection pipeline into two stages:
 
-##### Gemini Selection Preference (Order vs. Menu)
-| Feature | Order % | Menu % | Drift | Sig |
+1. **Cited vs Additional** (citation-stage selection): Both groups were surfaced by ChatGPT — cited URLs appeared in the response text, additional URLs were shown as supplementary sources. This isolates what the model *preferentially cites* from its own retrieval pool. Gemini lacks an "additional" citation category, so this test is GPT-only.
+2. **Cited vs Not-Cited from SERP** (end-to-end selection): For each run, every SERP URL (filtered by content type) is classified as either Cited or Not-Cited in that run. Zero overlap between groups. This isolates the full selection effect from SERP availability to citation.
+
+**GPT methodology:** Per-run, no overlap. For each run, SERP URLs are split into Cited vs Not-Cited. A URL may appear in multiple runs; each is an independent selection event.
+
+**Gemini methodology:** Per-unique-URL. Gemini data lacks run-level granularity, so Cited vs Google SERP (deduplicated) is used.
+
+`freshness_cue_strength` is binarized at ≥3 ("strong freshness cues").
+
+#### Stage 1: Cited vs Additional (Citation-Stage Selection, GPT Only)
+
+##### Listicles
+
+| Feature | Ent Addl% | Ent Cited% | Ent Drift | Ent Sig | Pers Addl% | Pers Cited% | Pers Drift | Pers Sig |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| tables | 37.9% | 43.8% | +5.8pp | p<0.05 | 43.5% | 51.6% | **+8.1pp** | **p<0.01** |
+| numbered lists | 74.6% | 77.6% | +2.9pp | ns | 63.7% | 69.9% | +6.1pp | p<0.05 |
+| bullet points | 49.8% | 49.6% | -0.3pp | ns | 45.6% | 51.3% | +5.7pp | ns |
+| pros/cons | 50.2% | 53.6% | +3.4pp | ns | 48.0% | 51.6% | +3.6pp | ns |
+| clear authorship | 55.5% | 54.0% | -1.5pp | ns | 59.0% | 52.2% | -6.7pp | p<0.05 |
+| sources/citations | 17.9% | 18.2% | +0.4pp | ns | 14.7% | 10.9% | -3.8pp | ns |
+| vendor owned | 57.8% | 58.2% | +0.4pp | ns | 70.1% | 69.2% | -0.9pp | ns |
+| freshness (≥3) | 81.3% | 80.4% | -0.8pp | ns | 88.8% | 87.8% | -1.0pp | ns |
+
+*N: Ent Cited=450, Additional=1,489; Pers Cited=312, Additional=1,577.*
+
+##### Product Pages
+
+| Feature | Ent Addl% | Ent Cited% | Ent Drift | Ent Sig | Pers Addl% | Pers Cited% | Pers Drift | Pers Sig |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| tables | 8.7% | 8.7% | +0.0pp | ns | 7.2% | 10.9% | **+3.7pp** | **p<0.01** |
+| numbered lists | 48.0% | 52.7% | +4.7pp | ns | 29.5% | 36.6% | **+7.1pp** | **p<0.001** |
+| bullet points | 32.0% | 37.8% | +5.9pp | p<0.05 | 24.6% | 34.4% | **+9.8pp** | **p<0.001** |
+| pros/cons | 1.7% | 2.2% | +0.5pp | ns | 0.9% | 1.1% | +0.2pp | ns |
+| clear authorship | 0.8% | 0.9% | +0.1pp | ns | 3.9% | 3.1% | -0.8pp | ns |
+| sources/citations | 1.8% | 1.9% | +0.1pp | ns | 3.1% | 3.6% | +0.5pp | ns |
+| vendor owned | 97.8% | 98.7% | +0.9pp | ns | 96.3% | 98.1% | **+1.8pp** | **p<0.01** |
+| freshness (≥3) | 12.6% | 11.8% | -0.8pp | ns | 25.9% | 25.4% | -0.5pp | ns |
+
+*N: Ent Cited=790, Additional=882; Pers Cited=970, Additional=1,422.*
+
+**Interpretation:** At the citation stage, the model selects from an already-filtered pool (Additional sources are already model-surfaced). Drifts are modest — Enterprise Listicles show only one significant feature (Tables +5.8pp), while Personal Listicles show three (Tables +8.1pp, Numbered Lists +6.1pp, Clear Authorship -6.7pp). Personal Product Pages show the strongest citation-stage preferences: bullet points (+9.8pp, p<0.001), numbered lists (+7.1pp, p<0.001), and vendor-owned (+1.8pp, p<0.01). The narrow drifts indicate that the Additional pool is structurally similar to the Cited pool — most of the selection has already occurred upstream.
+
+#### Stage 2: Cited vs Not-Cited from SERP (End-to-End Selection)
+
+This stage captures the full selection effect: for each run, which SERP URLs does ChatGPT choose to cite vs leave uncited? Zero overlap between groups.
+
+##### GPT vs Bing Page 1
+
+**Listicles:**
+
+| Feature | Ent Not-Cited% | Ent Cited% | Ent Drift | Ent Sig | Pers Not-Cited% | Pers Cited% | Pers Drift | Pers Sig |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| tables | 42.1% | 55.8% | **+13.6pp** | **p<0.001** | 44.0% | 42.7% | -1.4pp | ns |
+| numbered lists | 66.0% | 78.8% | **+12.8pp** | **p<0.001** | 68.9% | 84.0% | **+15.1pp** | **p<0.001** |
+| bullet points | 43.9% | 46.9% | +3.0pp | ns | 45.5% | 58.7% | **+13.2pp** | **p<0.05** |
+| pros/cons | 51.4% | 54.9% | +3.5pp | ns | 53.6% | 61.3% | +7.7pp | ns |
+| clear authorship | 60.4% | 58.1% | -2.3pp | ns | 63.2% | 48.0% | **-15.2pp** | **p<0.05** |
+| sources/citations | 16.9% | 27.1% | **+10.2pp** | **p<0.001** | 19.6% | 13.3% | -6.3pp | ns |
+| vendor owned | 51.3% | 60.2% | **+8.9pp** | **p<0.01** | 51.4% | 62.7% | +11.3pp | ns |
+| freshness (≥3) | 81.7% | 82.9% | +1.2pp | ns | 80.2% | 97.3% | **+17.1pp** | **p<0.001** |
+
+*N: Ent Cited=339, Not-Cited=988; Pers Cited=75, Not-Cited=1,117.*
+
+**Product Pages:**
+
+| Feature | Ent Not-Cited% | Ent Cited% | Ent Drift | Ent Sig | Pers Not-Cited% | Pers Cited% | Pers Drift | Pers Sig |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| tables | 10.7% | 12.2% | +1.6pp | ns | 9.2% | 13.1% | +3.9pp | ns |
+| numbered lists | 50.5% | 62.7% | **+12.2pp** | **p<0.001** | 54.3% | 47.1% | -7.2pp | p<0.05 |
+| bullet points | 28.1% | 32.1% | +3.9pp | ns | 29.5% | 40.7% | **+11.2pp** | **p<0.01** |
+| pros/cons | 0.2% | 1.7% | +1.6pp | p<0.05 | 0.5% | 0.5% | -0.0pp | ns |
+| clear authorship | 0.9% | 0.3% | -0.6pp | ns | 0.6% | 0.9% | +0.3pp | ns |
+| sources/citations | 1.2% | 0.6% | -0.6pp | ns | 1.6% | 2.7% | +1.1pp | ns |
+| vendor owned | 99.6% | 98.5% | -1.1pp | ns | 99.5% | 100.0% | +0.5pp | p<0.05 |
+| freshness (≥3) | 13.8% | 8.2% | **-5.7pp** | **p<0.01** | 11.1% | 14.5% | +3.4pp | ns |
+
+*N: Ent Cited=343, Not-Cited=1,141; Pers Cited=221, Not-Cited=1,212.*
+
+##### GPT Personal vs Google Top-10
+
+**Listicles** (Cited N=225, Not-Cited N=2,484) — 7 of 8 features significant:
+
+| Feature | Not-Cited% | Cited% | Drift | Sig |
 | :--- | :---: | :---: | :---: | :---: |
-| bullet points | 74.5% | 78.7% | -4.2% | p<0.01 |
-| numbered lists | 52.8% | 48.9% | 3.9% | p<0.05 |
-| pros cons | 38.1% | 38.8% | -0.8% | ns |
-| tables | 33.4% | 35.8% | -2.4% | ns |
-| is current year 2026 | 17.0% | 15.7% | 1.3% | ns |
-| is vendor owned | 23.1% | 24.8% | -1.7% | ns |
+| tables | 34.5% | 54.2% | **+19.7pp** | **p<0.001** |
+| numbered lists | 58.2% | 69.3% | **+11.2pp** | **p<0.001** |
+| bullet points | 41.3% | 53.8% | **+12.5pp** | **p<0.001** |
+| pros/cons | 45.2% | 47.1% | +1.9pp | ns |
+| clear authorship | 59.8% | 48.9% | **-10.9pp** | **p<0.01** |
+| sources/citations | 15.1% | 10.2% | **-4.9pp** | **p<0.05** |
+| vendor owned | 61.4% | 72.0% | **+10.6pp** | **p<0.001** |
+| freshness (≥3) | 83.3% | 92.4% | **+9.1pp** | **p<0.001** |
+
+**Product Pages** (Cited N=1,089, Not-Cited N=3,530) — 4 significant:
+
+| Feature | Not-Cited% | Cited% | Drift | Sig |
+| :--- | :---: | :---: | :---: | :---: |
+| tables | 6.2% | 9.1% | **+2.9pp** | **p<0.01** |
+| numbered lists | 30.9% | 37.8% | **+6.9pp** | **p<0.001** |
+| bullet points | 25.8% | 33.3% | **+7.5pp** | **p<0.001** |
+| pros/cons | 0.9% | 0.7% | -0.1pp | ns |
+| clear authorship | 4.0% | 3.8% | -0.3pp | ns |
+| sources/citations | 3.0% | 2.4% | -0.6pp | ns |
+| vendor owned | 97.1% | 98.3% | +1.1pp | p<0.05 |
+| freshness (≥3) | 19.2% | 20.0% | +0.9pp | ns |
+
+##### Gemini vs Google Top-10 (Per-Unique-URL)
+
+Gemini lacks run-level granularity and an "additional" citation category, so only SERP-level comparison is possible. Both sides are deduplicated.
+
+**Listicles** (Cited N=374, Google T10 N=1,319) — 1 significant:
+
+| Feature | Google T10% | Cited% | Drift | Sig |
+| :--- | :---: | :---: | :---: | :---: |
+| tables | 35.0% | 38.5% | +3.6pp | ns |
+| numbered lists | 72.1% | 71.7% | -0.4pp | ns |
+| bullet points | 40.8% | 47.1% | +6.3pp | p<0.05 |
+| pros/cons | 48.7% | 52.9% | +4.2pp | ns |
+| clear authorship | 56.8% | 58.0% | +1.2pp | ns |
+| sources/citations | 15.4% | 13.6% | -1.8pp | ns |
+| vendor owned | 67.1% | 65.5% | -1.6pp | ns |
+| freshness (≥3) | 88.9% | 89.3% | +0.4pp | ns |
+
+**Product Pages** (Cited N=191, Google T10 N=820) — 0 significant:
+
+| Feature | Google T10% | Cited% | Drift | Sig |
+| :--- | :---: | :---: | :---: | :---: |
+| tables | 9.4% | 5.8% | -3.6pp | ns |
+| numbered lists | 36.0% | 31.4% | -4.6pp | ns |
+| bullet points | 31.6% | 27.2% | -4.4pp | ns |
+| pros/cons | 1.5% | 1.0% | -0.4pp | ns |
+| clear authorship | 3.2% | 4.2% | +1.0pp | ns |
+| sources/citations | 3.0% | 2.6% | -0.4pp | ns |
+| vendor owned | 97.2% | 99.0% | +1.8pp | ns |
+| freshness (≥3) | 18.4% | 20.4% | +2.0pp | ns |
+
+#### Interpretation — the two-stage pipeline
+
+The comparison between Stage 1 and Stage 2 reveals **where structural selection occurs** in the pipeline:
+
+- **Stage 1 (Cited vs Additional):** Modest drifts. Enterprise Listicles have only 1 significant feature; Personal Listicles have 3. The Additional pool is structurally similar to the Cited pool because both have already passed the model's retrieval filter.
+- **Stage 2 (Cited vs Not-Cited from SERP):** Much larger drifts. Enterprise Listicles: Tables +13.6pp, Numbered Lists +12.8pp, Sources/Citations +10.2pp (all p<0.001). Personal Listicles vs Google: 7/8 features significant, with Tables reaching +19.7pp (p<0.001).
+
+This decomposition shows that **most structural selection happens at the retrieval/surfacing stage, not the citation stage.** The model's retrieval pipeline (or its search integration) already over-selects for structured, scannable content from the SERP. The subsequent citation-stage filter refines this further but with smaller effect sizes. The "structural filter" is primarily a retrieval-level phenomenon.
+
+**Gemini contrast:** Gemini shows essentially zero structural drift vs Google SERP — only Bullet Points for listicles barely reaches p<0.05, and product pages have zero significant features. Gemini cites what Google returns almost exactly proportionally, confirming that its grounding mechanism is SERP-faithful rather than structurally selective.
+
+**Consistent patterns across ChatGPT tests:**
+- **Over-selected:** Tables, numbered lists, bullet points, vendor-owned sources, freshness
+- **Under-selected:** Clear authorship, sources/citations
+- ChatGPT preferentially cites scannable, vendor-owned pages while disfavoring independently authored content with clear bylines
 
 ## 3.6 Listicle Extraction & Bias Analysis
 

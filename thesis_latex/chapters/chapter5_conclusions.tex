@@ -54,6 +54,15 @@ Our discovery of the Enterprise vs.\ Personal provider split (see Section~\ref{s
 
 For brands targeting ChatGPT as a recommendation channel, optimizing for \textbf{both} Bing and Google indices is necessary to achieve full coverage across deployment contexts. This is a departure from the Google-centric SEO mindset that dominates the industry.
 
+\section{The Cross-Language Retrieval Blind Spot}
+\label{sec:cross-language-conclusion}
+
+Our cross-language fan-out analysis (Section~\ref{sec:localization-bias}) reveals that LLM retrieval operates across language boundaries in ways that neither users nor publishers anticipate. We identified three cases: foreign-language prompts receiving English fan-outs (Case~1), English prompts with foreign context receiving local-language fan-outs (Case~2), and English prompts with no foreign context receiving IP/geolocation-driven foreign fan-outs (Case~3).
+
+Case~1 is corroborated at scale by \textcite{rudzki2026english}, whose analysis of 10M+ prompts found that 78\% of non-English ChatGPT sessions include at least one English sub-search, with 43\% of all fan-out queries issued in English. Cases~2 and~3---the reverse direction, where English users are routed into foreign-language retrieval---are novel to this study.
+
+The practical implication is bidirectional: non-English publishers must compete with English-language sources that enter their users' retrieval pools uninvited, while English-only publishers may lose visibility when IP-driven localization routes part of the LLM's retrieval into a language they do not publish in. For GEO, this means the \textbf{language of optimization} is no longer determined solely by the user's query---it is determined by the model's retrieval architecture.
+
 \section{The Host Exclusion Paradox}
 \label{sec:host-exclusion}
 

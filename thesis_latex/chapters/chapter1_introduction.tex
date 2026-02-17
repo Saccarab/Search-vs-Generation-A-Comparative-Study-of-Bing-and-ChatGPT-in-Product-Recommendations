@@ -130,25 +130,42 @@ Grounding behavior is the measurable pipeline from \textbf{retrieval $\rightarro
     \item \textbf{Thesis Connection:} Our discovery that ChatGPT citations are often buried at \textbf{Rank 31--200} in the Human Web proves that the ``Grounding'' engine uses a different set of priorities than the ``Ranking'' engine.
 \end{itemize}
 
-\section{Related Work: SEO, GEO, and Generative Search}
+\section{Related Work}
 \label{sec:related-work}
 
-This section situates the thesis within the emerging literature on how generative systems mediate visibility on the web. We focus on work that is directly relevant to commercial discovery: (i) conceptual frameworks for \textit{Generative Engine Optimization} (GEO), (ii) empirical studies of which sources generative systems select and cite, and (iii) early evidence on how generative interfaces change the incentives and outcomes of traditional SEO.
+This section situates the thesis within the emerging literature on how generative systems mediate visibility on the web. We focus on work directly relevant to commercial discovery: (i)~the foundational RAG architecture and its grounding mechanisms, (ii)~position bias in both traditional IR and LLM contexts, (iii)~the emerging GEO paradigm, and (iv)~empirical audits of citation behavior in generative search systems.
 
-\subsection{From SEO to GEO: Optimization Targets Under Generative Interfaces}
-\label{sec:rw-seo-to-geo}
+\subsection{Retrieval-Augmented Generation and Grounding Architectures}
+\label{sec:rw-rag}
 
-Recent work frames GEO as a distinct optimization problem from classic SEO, because the unit of exposure shifts from a ranked list of links to a \textit{synthesized answer} that selects, compresses, and attributes information to a small set of sources. In this framing, optimization targets include not only ranking and crawlability, but also being \textit{selected} and \textit{attributed} within the generative response, with potential engine-specific differences across systems and deployment contexts.
+The Retrieval-Augmented Generation (RAG) framework, introduced by \textcite{lewis2020rag}, established the architectural pattern that underpins all modern LLM search systems: a parametric generator conditioned on documents retrieved from a non-parametric index. This decoupling of reasoning from knowledge storage motivated the design of production systems such as WebGPT \parencite{nakano2021webgpt}, which fine-tuned GPT-3 to browse the web and collect citations while answering questions---the direct precursor to ChatGPT's search mode and Bing Chat.
 
-\subsection{What Generative Engines Prefer to Cite (Selection Bias and ``Extractability'')}
-\label{sec:rw-selection-preferences}
+A key challenge in RAG systems is ensuring that generated text remains faithful to retrieved sources. \textcite{gao2023alce} introduced the ALCE benchmark, the first systematic evaluation of end-to-end citation quality in LLM-generated text, measuring citation recall, precision, and faithfulness. \textcite{stolfo2024groundedness} further demonstrated that even with RAG, a significant fraction of LLM-generated sentences remain ungrounded---including factually correct sentences that lack source support. \textcite{huang2024hallucination} provide a comprehensive taxonomy distinguishing \textit{faithfulness hallucination} (output contradicts provided sources) from \textit{factuality hallucination} (output contradicts world knowledge), a distinction relevant to interpreting our citation fidelity results.
 
-Several GEO-oriented studies treat citation as a measurable behavior and argue that generative systems exhibit systematic preferences for certain source characteristics, such as information density, structured presentation, and third-party editorial authority. This supports analyzing selection as a distinct stage between retrieval and final generation, and motivates feature-based audits of the retrieved ``menu'' versus the cited ``order,'' as done in our Content DNA enrichment pipeline.
+\subsection{Position Bias: From Click-Through to Citation}
+\label{sec:rw-position-bias}
 
-\subsection{Market Evidence and the Continued Role of Search Visibility}
-\label{sec:rw-market-evidence}
+Position bias in search results is well established. \textcite{joachims2005clickthrough} demonstrated through eye-tracking that users examine higher-ranked results first and that clicks are heavily position-biased, independent of relevance. This finding---that top-ranked items receive disproportionate attention regardless of quality---provides the theoretical foundation for our investigation of whether LLMs inherit analogous biases from their retrieval pipelines.
 
-Industry analyses report that generative search features can affect click-through behavior and redistribute visibility across domains, often in ways that reinforce the importance of being present in conventional search indices. While such reports are not controlled academic studies, they provide external motivation for measuring overlap between generative citations and SERP rankings and for treating rank depth (e.g., Top~10 vs. deep pagination) as a key determinant of exposure.
+\textcite{liu2024lost} extended this inquiry to LLM context windows, showing that language models exhibit a U-shaped attention pattern over retrieved documents: they preferentially ground responses in content at the beginning and end of the context, while largely ignoring middle positions. This ``lost in the middle'' effect suggests that the ordering of retrieved documents---which is typically determined by search engine ranking---directly influences which sources get cited, even when all sources are technically available in the model's context.
+
+\subsection{Generative Engine Optimization (GEO)}
+\label{sec:rw-geo}
+
+\textcite{aggarwal2024geo} introduced GEO as a formal optimization problem, demonstrating through their GEO-bench evaluation that content modifications---adding citations, statistics, quotations, and authoritative language---can improve LLM citation visibility by up to 40\%. Their work established that the unit of optimization shifts from ranking in a list of links to being \textit{selected and attributed} within a synthesized answer. Our study complements this by examining the selection process in production systems (ChatGPT and Gemini) rather than controlled benchmarks, and by introducing Content DNA as a feature-level framework for measuring what structural characteristics predict citation.
+
+\textcite{mallen2023popqa} provide indirect support for GEO's relevance by showing that LLMs fail disproportionately on long-tail entities, where retrieval augmentation provides the greatest benefit. For commercial queries---where products, brands, and specifications change frequently---this implies that retrieval (and therefore search visibility) is especially critical, reinforcing the connection between SEO and GEO.
+
+\subsection{Empirical Audits of Generative Search Citation}
+\label{sec:rw-citation-audits}
+
+The most directly comparable academic work is \textcite{li2024audit}, who conducted a systematic audit of source selection in generative AI search engines, finding concentration effects and authority bias---a tendency to favor established, mainstream outlets. Their results align with our finding that LLM citations cluster around high-authority domains, though our study extends the analysis to cover the full retrieval-to-citation pipeline across multiple deployment contexts.
+
+\textcite{venkit2025falsepromise} evaluated citation behavior in You.com, Perplexity.ai, and Bing Chat, identifying 16 systematic limitations including frequent hallucination, inaccurate attribution, and lack of verifiability. Their finding that answer engines often fail to faithfully cite their own retrieved sources motivates our listicle fidelity analysis, which examines whether products mentioned in retrieved listicles actually survive into the final recommendation.
+
+At the practitioner scale, \textcite{punturo2026citationsources} analyzed 730,000 U.S.\ English-language ChatGPT conversations (October--December 2025), providing the largest observational study of ChatGPT citation behavior to date. Key findings include: only 18\% of conversations trigger web search (rising to 53.5\% for commercial intent), approximately 4 unique citations per search-triggered turn, a Gini coefficient of 0.8 for domain concentration (top~10 domains account for 12\% of citations), and Wikipedia (5\%) and Reddit (3\%) as the most-cited individual domains. Our study differs methodologically---we use controlled, repeated prompts rather than observational telemetry---and in scope. The gap between their 18\% overall search trigger rate and our 89\% is primarily explained by \textbf{prompt design}: we deliberately constructed prompts with explicit tool-finding and product-discovery intent (e.g., ``Can you list translation services with live interpreters?''), which near-guarantees search triggering. Their 18\% baseline is diluted by the majority of ChatGPT usage that never requires web search (coding assistance, creative writing, casual conversation). Profound's own intent-stratified data confirms this: commercial queries trigger search at 53.5\%, already 3$\times$ the baseline. Our per-run citation count (9.94) similarly exceeds their per-turn average ($\sim$4), reflecting the comprehensive sourcing that product recommendation queries demand. Crucially, our study goes beyond citation \emph{counting} to analyze the full retrieval-to-citation pipeline: fan-out mechanics, position bias, Content DNA selection drift, and cross-language retrieval---none of which are addressed in observational telemetry studies.
+
+Beyond peer-reviewed work, practitioner research has contributed methodologically documented findings on grounding mechanics. \textcite{petrovic2025grounding} measured the size of Google's grounding chunks (median 1,247 characters), and \textcite{petrovic2025filter} quantified the compression ratio between retrieved content and generated output, finding that only 15--25\% of retrieved text survives into the final response. While these are not controlled academic studies, they provide empirical baselines that complement our analysis of the retrieval-to-citation pipeline.
 
 \section{The Commercial Catalyst for RAG}
 
@@ -159,7 +176,7 @@ Industry analyses report that generative search features can affect click-throug
 \subsection{Industry Benchmark: ChatGPT Web Search Trigger Rates (Profound Analysis)}
 \label{sec:trigger-rates}
 
-\textit{To contextualize our study, we refer to industry-wide telemetry from \textbf{Profound} (captured as of Jan 6, 2026), which analyzes trigger rates across 667,000 real-user conversations.}
+\textit{To contextualize our study, we refer to industry-wide telemetry from \textbf{Profound} (captured as of Jan 6, 2026), which analyzes trigger rates across 667,000 real-user conversations. A subsequent Profound analysis of 730,000 conversations \parencite{punturo2026citationsources} confirmed the overall 18\% baseline trigger rate and provided additional citation distribution metrics (see Section~\ref{sec:rw-citation-audits}).}
 
 \begin{figure}[htbp]
     \centering
