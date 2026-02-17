@@ -1,0 +1,49 @@
+% appendix_a.tex
+\chapter{Data Schema Reference}
+\label{app:data-schema}
+
+This appendix documents the schema of the \texttt{urls} table used throughout the study. Each row represents a single URL encountered during data collection, enriched with structural and qualitative annotations produced by the LLM-based Content DNA pipeline.
+
+\section{URLs Table Fields}
+\label{sec:urls-table-fields}
+
+\begin{longtable}{@{}llp{7.5cm}@{}}
+\toprule
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{3}{r}{\emph{Continued on next page}} \\
+\bottomrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+\texttt{type}                        & enum & listicle, marketplace\_directory, product\_page, etc. \\
+\texttt{content\_format}             & enum & best\_of\_list, comparison\_matrix, single\_review, etc. \\
+\texttt{tone}                        & enum & neutral\_informational, promotional, salesy, etc. \\
+\texttt{promotional\_intensity\_score} & 0--5 & How ``pushy'' the content is \\
+\texttt{freshness\_cue\_strength}     & 0--5 & Recency signals \\
+\texttt{expertise\_signal\_score}     & 0--5 & Authority indicators \\
+\texttt{spamminess\_score}           & 0--5 & SEO junk indicators \\
+\texttt{readability\_score}          & 0--5 & Ease of reading/scanning \\
+\texttt{heading\_density}            & 0--5 & Structural organization \\
+\texttt{has\_tables}                 & 0/1  & Contains comparison tables \\
+\texttt{has\_numbered\_lists}        & 0/1  & Uses ordered lists \\
+\texttt{has\_bullet\_points}         & 0/1  & Uses unordered lists \\
+\texttt{has\_pros\_cons}             & 0/1  & Has pros/cons section \\
+\texttt{has\_clear\_authorship}      & 0/1  & Author attribution \\
+\texttt{has\_sources\_or\_citations} & 0/1  & References other sources \\
+\texttt{has\_schema\_markup}         & 0/1  & Structured data \\
+\texttt{primary\_intent}             & enum & informational, commercial, transactional \\
+\texttt{is\_grounded\_deep}          & bool & Found in Deep Hunt (Rank 31--200) \\
+\texttt{is\_strict\_match}           & bool & Exact URL match to citation \\
+
+\end{longtable}

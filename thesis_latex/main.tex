@@ -1,85 +1,130 @@
-\RequirePackage[l2tabu,orthodox]{nag}
+% main.tex -- Master thesis file
+% Grounding Behavior in LLM-Mediated Commercial Search
 
-% One-sided layout for digital submission
-\documentclass[headsepline,footsepline,footinclude=false,oneside,fontsize=11pt,paper=a4,listof=totoc,bibliography=totoc,DIV=12]{scrbook}
+\documentclass[12pt,a4paper]{report}
 
-% Basic packages
+% ---------- Packages ----------
+
+% Layout and typography
+\usepackage[margin=2.5cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
-\usepackage{graphicx}
 \usepackage{microtype}
 \usepackage{csquotes}
-\usepackage[backend=biber,style=numeric]{biblatex}
-\usepackage{hyperref}
+
+% Math
+\usepackage{amsmath}
+
+% Graphics and figures
+\usepackage{graphicx}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+% Tables
 \usepackage{booktabs}
+\usepackage{longtable}
+
+% Colors and code listings
+\usepackage{xcolor}
 \usepackage{listings}
-\usepackage{color}
-\usepackage[acronym,toc]{glossaries}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!60!black},
+  tabsize=2,
+  showstringspaces=false
+}
 
-% Thesis Information
-\newcommand*{\getUniversity}{Technische Universität München}
-\newcommand*{\getFaculty}{Department of Informatics}
-\newcommand*{\getTitle}{From Ranking to Grounding: A Comparative Analysis of Information Retrieval in Search Engines and Generative AI}
-\newcommand*{\getAuthor}{Ali San Kaya}
-\newcommand*{\getDoctype}{Master's Thesis in Information Systems}
-\newcommand*{\getSupervisor}{Supervisor Name}
-\newcommand*{\getAdvisor}{Advisor Name}
-\newcommand*{\getSubmissionDate}{Submission Date}
-\newcommand*{\getSubmissionLocation}{Munich}
+% Links and URLs
+\usepackage{url}
+\usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=green!50!black,urlcolor=blue!70!black]{hyperref}
 
-\addbibresource{bibliography.bib}
-\makeglossaries
+% Bibliography
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\addbibresource{references.bib}
 
+% ---------- Title metadata ----------
+
+\title{%
+  \textbf{Grounding Behavior in LLM-Mediated Commercial Search:}\\[0.5em]
+  \Large How ChatGPT and Gemini Select and Cite Web Sources%
+}
+\author{[Author Name]}
+\date{January 2026}
+
+% ==========================================================
 \begin{document}
+% ==========================================================
 
-\selectlanguage{english}
-\pagenumbering{alph}
+% ---------- Front matter ----------
 
-% Cover Page
+\pagenumbering{roman}
+
+% Title page
 \begin{titlepage}
-	\centering
-	\includegraphics[width=4cm]{figures/tum_logo.png} \\ % Placeholder for logo
-	\vspace{1cm}
-	{\scshape\LARGE \getUniversity \par}
-	{\scshape\Large \getFaculty \par}
-	\vspace{1.5cm}
-	{\huge\bfseries \getTitle \par}
-	\vspace{2cm}
-	{\Large\itshape \getDoctype \par}
-	\vspace{0.5cm}
-	{\Large \getAuthor \par}
-	\vfill
-	supervised by\par
-	\getSupervisor \par
-	\vspace{0.5cm}
-	advised by\par
-	\getAdvisor \par
-	\vfill
-	{\large \getSubmissionLocation, \getSubmissionDate \par}
+  \centering
+  \vspace*{2cm}
+  {\LARGE\bfseries Grounding Behavior in LLM-Mediated Commercial Search:\\[0.4em]
+   How ChatGPT and Gemini Select and Cite Web Sources\par}
+  \vspace{2.5cm}
+  {\Large [Author Name]\par}
+  \vspace{1.5cm}
+  {\large Master's Thesis\par}
+  \vspace{0.5cm}
+  {\large January 2026\par}
+  \vfill
+  {\large [University / Department]\par}
 \end{titlepage}
 
-\frontmatter
-
+% Abstract
 \chapter*{Abstract}
-This thesis investigates the paradigm shift from information retrieval based on ranking (Search Engines) to information retrieval based on grounding (Generative AI). By analyzing 240 runs across 80 commercial product recommendation queries, we quantify the "Visibility Gap" between the content surfaced by Bing/Google and the content cited by ChatGPT/Gemini. Our findings reveal a significant "AI Search Filter," where generative models systematically reject high-ranking but "salesy" content in favor of information-dense sources, often bypassing the top search results entirely. This study provides empirical evidence for the transition from Search Engine Optimization (SEO) to Generative Engine Optimization (GEO).
+\addcontentsline{toc}{chapter}{Abstract}
 
+% TODO: Replace with final abstract text.
+\textit{Abstract placeholder.}
+
+\newpage
+
+% Table of contents
 \tableofcontents
+
+% List of figures
 \listoffigures
+\addcontentsline{toc}{chapter}{\listfigurename}
+
+% List of tables
 \listoftables
+\addcontentsline{toc}{chapter}{\listtablename}
 
-\mainmatter
+\newpage
 
-\input{chapters/01_introduction}
-\input{chapters/02_background}
-\input{chapters/03_methodology}
-\input{chapters/04_results}
-\input{chapters/05_discussion}
-\input{chapters/06_conclusion}
+% ---------- Main matter ----------
+
+\pagenumbering{arabic}
+
+\input{chapters/chapter1_introduction}
+\input{chapters/chapter2_methodology}
+\input{chapters/chapter3_findings}
+\input{chapters/chapter4_future_work}
+\input{chapters/chapter5_conclusions}
+
+% ---------- Appendices ----------
 
 \appendix
 
-\printglossaries
-\printbibliography
+\input{chapters/appendix_a}
+\input{chapters/appendix_b}
 
+% ---------- Bibliography ----------
+
+\printbibliography[heading=bibintoc,title={References}]
+
+% ==========================================================
 \end{document}
