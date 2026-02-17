@@ -231,6 +231,31 @@ Page 16 & 103 & 204 \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=4pt,
+    width=\textwidth,
+    height=8cm,
+    xlabel={Bing Page},
+    ylabel={Citation Matches},
+    xtick={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16},
+    ymin=0,
+    ymajorgrids=true,
+    legend style={at={(0.98,0.98)}, anchor=north east},
+    enlarge x limits=0.04,
+]
+\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(1,1468) (2,333) (3,656) (4,692) (5,641) (6,560) (7,453) (8,437) (9,312) (10,271) (11,248) (12,202) (13,191) (14,166) (15,140) (16,103)};
+\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(1,521) (2,345) (3,663) (4,602) (5,667) (6,579) (7,590) (8,480) (9,433) (10,426) (11,391) (12,327) (13,293) (14,286) (15,264) (16,204)};
+\legend{Enterprise, Personal}
+\end{axis}
+\end{tikzpicture}
+\caption{Bing page-level citation distribution. Enterprise shows a dominant Page 1 spike (1,468 matches) followed by a ``Page 2 Dip'' and gradual decay, while Personal exhibits a flatter distribution consistent with its multi-provider retrieval strategy.}
+\label{fig:bing-page-dist}
+\end{figure}
+
 \paragraph{Observations on the Bing page distribution:}
 \begin{itemize}
     \item \textbf{Enterprise vs Personal Page 1 gap}: Enterprise shows nearly 3$\times$ the Page 1 matches (1,468 vs 521), consistent with Enterprise's higher Bing affinity (81.3\% overlap vs 67.6\%; see Section~\ref{sec:global-overlap}). Personal's lower Page 1 count aligns with its multi-provider retrieval strategy --- many of its citations match Google rather than Bing.
@@ -272,6 +297,30 @@ Rank & Ent.\ Runs Matched & Ent.\ Rate & Pers.\ Runs Matched & Pers.\ Rate \\
 \end{table}
 
 \textit{Match rate = distinct runs where at least one cited link matched the Bing result at that rank / total runs with a result at that rank (213 Enterprise, 209 Personal --- all runs have results at every rank since we scraped to Rank 200).}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.9\textwidth,
+    height=7cm,
+    xlabel={Bing Rank},
+    ylabel={Match Rate (\%)},
+    xtick={1,2,3,4,5,6,7,8,9,10},
+    ymin=0, ymax=80,
+    ymajorgrids=true,
+    mark=*,
+    line width=1.2pt,
+    legend style={at={(0.98,0.98)}, anchor=north east},
+]
+\addplot[color=entcolor, mark=*, line width=1.2pt] coordinates {(1,71.4) (2,68.5) (3,40.4) (4,32.9) (5,22.5) (6,19.2) (7,20.7) (8,20.7) (9,17.8) (10,9.4)};
+\addplot[color=perscolor, mark=*, line width=1.2pt] coordinates {(1,26.8) (2,23.4) (3,22.5) (4,15.8) (5,19.1) (6,12.4) (7,12.4) (8,11.5) (9,12.9) (10,13.9)};
+\legend{Enterprise, Personal}
+\end{axis}
+\end{tikzpicture}
+\caption{Bing rank-level match rate for GPT Enterprise vs.\ Personal. Enterprise exhibits a steep cliff from rank 2 (68.5\%) to rank 3 (40.4\%), while Personal shows a flatter profile (12--27\%) consistent with its multi-provider retrieval strategy drawing citations primarily from Google.}
+\label{fig:bing-rank-match-rate}
+\end{figure}
 
 \paragraph{Bing's ``Elastic Page 1'' caveat:}
 The global-rank table above treats every rank equally (all runs have results at Ranks 1--200). But in the actual Bing consumer UI, Page 1 is not a fixed ``Top 10'' --- it varies per scrape (see Section~2.2.1). Of 161 clean runs per tier (excluding \textasciitilde50 with a scraper artifact that tagged all 200 results as Page 1), the median Page 1 length was \textbf{6 results (Enterprise)} and \textbf{4 results (Personal)}. Nearly half of scrapes had 5 or fewer organic results on Page 1, and only about a third had the ``classic'' 8--10 results. This means the Rank 1--2 dominance in the table above is robust (every scrape has those ranks), but match rates at Ranks 5+ should be read with the caveat that many users would never see those results on Page 1.
@@ -422,6 +471,32 @@ Rank & GPT Enterprise (Bing P1) & GPT Personal (Bing+Google P1) & Gemini (Google
 
 \textit{Share = citation matches at rank N / total Page-1 citation matches at ranks 1--10. Totals: GPT Enterprise = 797; GPT Personal = 921; Gemini = 786.}
 
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=3pt,
+    width=\textwidth,
+    height=7cm,
+    xlabel={SERP Rank},
+    ylabel={Share of Page-1 Matches (\%)},
+    xtick={1,2,3,4,5,6,7,8,9,10},
+    ymin=0, ymax=28,
+    ymajorgrids=true,
+    legend style={at={(0.98,0.98)}, anchor=north east},
+    enlarge x limits=0.08,
+]
+\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(1,17.4) (2,18.7) (3,13.7) (4,10.5) (5,10.2) (6,8.3) (7,7.5) (8,5.9) (9,5.0) (10,2.8)};
+\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(1,18.1) (2,14.3) (3,12.2) (4,11.6) (5,9.4) (6,10.5) (7,8.3) (8,7.2) (9,5.1) (10,3.3)};
+\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(1,23.0) (2,13.4) (3,11.8) (4,11.7) (5,8.9) (6,7.9) (7,9.2) (8,6.5) (9,5.0) (10,2.7)};
+\legend{GPT Enterprise, GPT Personal, Gemini}
+\end{axis}
+\end{tikzpicture}
+\caption{Cross-system Page 1 rank concentration. Gemini shows the steepest rank-1 peak (23.0\%), while GPT Enterprise exhibits a distinctive ``top-2'' effect where rank 2 (18.7\%) slightly exceeds rank 1 (17.4\%). GPT Personal has the flattest profile across ranks.}
+\label{fig:cross-rank-concentration}
+\end{figure}
+
 \paragraph{Note on ranks 6--10 (Bing availability caveat):} Google consistently returns 10 organic results on Page 1, so Gemini and GPT Personal (Google side) have full data at all ranks. However, Bing's elastic Page 1 means many scrapes had fewer than 6 results on Page 1. To ensure a fair comparison at ranks 6--10, the GPT columns use only runs where Bing Page 1 had \textbf{8+ results} (88 Enterprise runs, 73 Personal runs out of 161 clean runs each). Ranks 1--5 are robust across all clean runs (\textasciitilde56\%+ availability at rank 5), but ranks 6--10 should be read with this subsetting caveat.
 
 \paragraph{Key observations:}
@@ -475,6 +550,32 @@ Q7 & 0.1\% & 2 \\
 
 \textit{Note: Not all runs produce queries at every index --- Q5+ counts are lower partly because fewer runs generate that many fan-out queries (a function of the minimum thinking budget used; see Section~2.4.2). The Q1 dominance is striking: the first fan-out query accounts for more citations than Q2--Q7 combined. Compared to GPT's balanced 50/50 split, Gemini's retrieval is heavily front-loaded toward its first grounding-support query.}
 
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=12pt,
+    width=0.7\textwidth,
+    height=6cm,
+    xlabel={Fan-Out Query Index},
+    ylabel={Citations},
+    symbolic x coords={Q1,Q2,Q3,Q4,Q5,Q6,Q7},
+    xtick=data,
+    ymin=0,
+    ymajorgrids=true,
+    nodes near coords,
+    every node near coord/.append style={font=\scriptsize},
+    fill=gemcolor,
+    draw=gemcolor!80!black,
+]
+\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(Q1,613) (Q2,299) (Q3,191) (Q4,122) (Q5,46) (Q6,10) (Q7,2)};
+\end{axis}
+\end{tikzpicture}
+\caption{Gemini per-query citation decay. The first fan-out query (Q1) accounts for 613 of 1,283 total citations --- more than Q2 through Q7 combined --- demonstrating Gemini's heavy front-loading toward its first grounding-support query.}
+\label{fig:gemini-query-decay}
+\end{figure}
+
 %-----------------------------------------------------------------------
 \section{Citation Overlap \& Invisible Links}
 \label{sec:citation-overlap}
@@ -506,6 +607,35 @@ Metric & GPT Enterprise (Bing-centric) & GPT Personal (Multi-provider) & Gemini 
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=10pt,
+    width=0.85\textwidth,
+    height=7cm,
+    ylabel={\%},
+    symbolic x coords={GPT Enterprise, GPT Personal, Gemini},
+    xtick=data,
+    ymin=0, ymax=100,
+    ymajorgrids=true,
+    legend style={at={(0.5,1.03)}, anchor=south, legend columns=3},
+    enlarge x limits=0.25,
+    nodes near coords,
+    nodes near coords align={vertical},
+    every node near coord/.append style={font=\scriptsize},
+]
+\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(GPT Enterprise,81.3) (GPT Personal,67.6) (Gemini,0)};
+\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(GPT Enterprise,27.8) (GPT Personal,64.6) (Gemini,77.7)};
+\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(GPT Enterprise,16.3) (GPT Personal,19.4) (Gemini,22.3)};
+\legend{Bing Overlap (Cited), Google Overlap (Cited), Invisible}
+\end{axis}
+\end{tikzpicture}
+\caption{Global citation overlap by provider. GPT Enterprise is Bing-dominant (81.3\%), GPT Personal shows balanced multi-provider retrieval, and Gemini relies exclusively on Google (77.7\%). The ``invisible'' share (citations not found in either index) ranges from 16--22\%. Gemini's Bing bar is zero because it does not use the Bing index.}
+\label{fig:global-overlap}
+\end{figure}
 
 \subsubsection{Key Observations on Provider Strategy}
 \label{sec:provider-strategy}
@@ -902,6 +1032,114 @@ comparison & 26 & 4.0\% \\
 
 \textbf{Cross-references}: Listicle-only feature drift is reported under Section~\ref{sec:listicle-drift} (Intra-Listicle Selection Drift). Host bias, listicle rank bias, and semantic fidelity are reported under Section~\ref{sec:listicle-bias}.
 
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+% ---- Helper: a single pie chart as a \pic ----
+% pgfplots does not have a native pie chart, so we draw them manually with tikz.
+% Each pie is a scope shifted to position.
+
+% === Row 1: Menu (Study Set) ===
+
+% GPT Enterprise Menu
+\begin{scope}[shift={(0,0)}]
+  \node[font=\bfseries\small] at (0,1.8) {GPT Enterprise};
+  \node[font=\scriptsize,gray] at (0,1.45) {Menu (N=2{,}858)};
+  % product_page 40.6%, listicle 34.6%, editorial 5.6%, news 5.5%, other 13.7%
+  \def\radius{1.3}
+  \fill[perscolor!70] (0,0) -- (90:\radius) arc (90:90-146.16:\radius) -- cycle; % product 40.6
+  \fill[entcolor!70] (0,0) -- (90-146.16:\radius) arc (90-146.16:90-146.16-124.56:\radius) -- cycle; % listicle 34.6
+  \fill[orange!60] (0,0) -- (90-270.72:\radius) arc (90-270.72:90-270.72-20.16:\radius) -- cycle; % editorial 5.6
+  \fill[yellow!70!orange] (0,0) -- (90-290.88:\radius) arc (90-290.88:90-290.88-19.8:\radius) -- cycle; % news 5.5
+  \fill[gray!30] (0,0) -- (90-310.68:\radius) arc (90-310.68:90-360:\radius) -- cycle; % other 13.7
+  \node[font=\tiny] at (30:0.85) {40.6\%};
+  \node[font=\tiny] at (-60:0.85) {34.6\%};
+\end{scope}
+
+% GPT Personal Menu
+\begin{scope}[shift={(4,0)}]
+  \node[font=\bfseries\small] at (0,1.8) {GPT Personal};
+  \node[font=\scriptsize,gray] at (0,1.45) {Menu (N=2{,}194)};
+  % listicle 40.3%, product_page 36.8%, editorial 5.5%, news 4.8%, other 12.6%
+  \def\radius{1.3}
+  \fill[entcolor!70] (0,0) -- (90:\radius) arc (90:90-145.08:\radius) -- cycle; % listicle 40.3
+  \fill[perscolor!70] (0,0) -- (90-145.08:\radius) arc (90-145.08:90-145.08-132.48:\radius) -- cycle; % product 36.8
+  \fill[orange!60] (0,0) -- (90-277.56:\radius) arc (90-277.56:90-277.56-19.8:\radius) -- cycle; % editorial 5.5
+  \fill[yellow!70!orange] (0,0) -- (90-297.36:\radius) arc (90-297.36:90-297.36-17.28:\radius) -- cycle; % news 4.8
+  \fill[gray!30] (0,0) -- (90-314.64:\radius) arc (90-314.64:90-360:\radius) -- cycle; % other 12.6
+  \node[font=\tiny] at (30:0.85) {40.3\%};
+  \node[font=\tiny] at (-55:0.85) {36.8\%};
+\end{scope}
+
+% Gemini Menu
+\begin{scope}[shift={(8,0)}]
+  \node[font=\bfseries\small] at (0,1.8) {Gemini};
+  \node[font=\scriptsize,gray] at (0,1.45) {Menu (N=2{,}939)};
+  % listicle 44.1%, product_page 24.1%, news 5.6%, marketplace 5.1%, other 21.1%
+  \def\radius{1.3}
+  \fill[entcolor!70] (0,0) -- (90:\radius) arc (90:90-158.76:\radius) -- cycle; % listicle 44.1
+  \fill[perscolor!70] (0,0) -- (90-158.76:\radius) arc (90-158.76:90-158.76-86.76:\radius) -- cycle; % product 24.1
+  \fill[yellow!70!orange] (0,0) -- (90-245.52:\radius) arc (90-245.52:90-245.52-20.16:\radius) -- cycle; % news 5.6
+  \fill[teal!50] (0,0) -- (90-265.68:\radius) arc (90-265.68:90-265.68-18.36:\radius) -- cycle; % marketplace 5.1
+  \fill[gray!30] (0,0) -- (90-284.04:\radius) arc (90-284.04:90-360:\radius) -- cycle; % other 21.1
+  \node[font=\tiny] at (20:0.85) {44.1\%};
+  \node[font=\tiny] at (-40:0.85) {24.1\%};
+\end{scope}
+
+% === Row 2: Order (Cited Set) ===
+
+% GPT Enterprise Cited
+\begin{scope}[shift={(0,-4)}]
+  \node[font=\scriptsize,gray] at (0,1.45) {Order (N=1{,}614)};
+  % product_page 40.2%, listicle 36.5%, news 6.4%, other 16.9%
+  \def\radius{1.3}
+  \fill[perscolor!70] (0,0) -- (90:\radius) arc (90:90-144.72:\radius) -- cycle; % product 40.2
+  \fill[entcolor!70] (0,0) -- (90-144.72:\radius) arc (90-144.72:90-144.72-131.4:\radius) -- cycle; % listicle 36.5
+  \fill[yellow!70!orange] (0,0) -- (90-276.12:\radius) arc (90-276.12:90-276.12-23.04:\radius) -- cycle; % news 6.4
+  \fill[gray!30] (0,0) -- (90-299.16:\radius) arc (90-299.16:90-360:\radius) -- cycle; % other 16.9
+  \node[font=\tiny] at (30:0.85) {40.2\%};
+  \node[font=\tiny] at (-55:0.85) {36.5\%};
+\end{scope}
+
+% GPT Personal Cited
+\begin{scope}[shift={(4,-4)}]
+  \node[font=\scriptsize,gray] at (0,1.45) {Order (N=1{,}444)};
+  % listicle 37.7%, product_page 36.2%, news 6.8%, other 19.3%
+  \def\radius{1.3}
+  \fill[entcolor!70] (0,0) -- (90:\radius) arc (90:90-135.72:\radius) -- cycle; % listicle 37.7
+  \fill[perscolor!70] (0,0) -- (90-135.72:\radius) arc (90-135.72:90-135.72-130.32:\radius) -- cycle; % product 36.2
+  \fill[yellow!70!orange] (0,0) -- (90-266.04:\radius) arc (90-266.04:90-266.04-24.48:\radius) -- cycle; % news 6.8
+  \fill[gray!30] (0,0) -- (90-290.52:\radius) arc (90-290.52:90-360:\radius) -- cycle; % other 19.3
+  \node[font=\tiny] at (35:0.85) {37.7\%};
+  \node[font=\tiny] at (-50:0.85) {36.2\%};
+\end{scope}
+
+% Gemini Cited
+\begin{scope}[shift={(8,-4)}]
+  \node[font=\scriptsize,gray] at (0,1.45) {Order (N=653)};
+  % listicle 56.8%, product_page 22.7%, comparison 4.0%, other 16.5%
+  \def\radius{1.3}
+  \fill[entcolor!70] (0,0) -- (90:\radius) arc (90:90-204.48:\radius) -- cycle; % listicle 56.8
+  \fill[perscolor!70] (0,0) -- (90-204.48:\radius) arc (90-204.48:90-204.48-81.72:\radius) -- cycle; % product 22.7
+  \fill[orange!60] (0,0) -- (90-286.2:\radius) arc (90-286.2:90-286.2-14.4:\radius) -- cycle; % comparison 4.0
+  \fill[gray!30] (0,0) -- (90-300.6:\radius) arc (90-300.6:90-360:\radius) -- cycle; % other 16.5
+  \node[font=\tiny] at (0:0.85) {\textbf{56.8\%}};
+  \node[font=\tiny] at (-70:0.85) {22.7\%};
+\end{scope}
+
+% === Legend ===
+\begin{scope}[shift={(4,-6.5)}]
+  \fill[entcolor!70] (-3.5,0) rectangle (-3.2,0.25); \node[font=\scriptsize,right] at (-3.15,0.125) {Listicle};
+  \fill[perscolor!70] (-1.5,0) rectangle (-1.2,0.25); \node[font=\scriptsize,right] at (-1.15,0.125) {Product Page};
+  \fill[yellow!70!orange] (0.8,0) rectangle (1.1,0.25); \node[font=\scriptsize,right] at (1.15,0.125) {News};
+  \fill[gray!30] (2.5,0) rectangle (2.8,0.25); \node[font=\scriptsize,right] at (2.85,0.125) {Other};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Source type composition: Menu (study set, top row) vs.\ Order (cited set, bottom row) across all three systems. Gemini's listicle share increases from 44.1\% to 56.8\% during selection, while GPT's product page share remains stable --- illustrating Gemini's ``listicle amplification'' effect.}
+\label{fig:type-composition-pies}
+\end{figure}
+
 \subsection{Cited vs.\ Additional --- Structural DNA Comparison (by Page Type)}
 \label{sec:cited-vs-additional}
 
@@ -1026,6 +1264,44 @@ Feature & Weighted Avg Lift \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xbar,
+    bar width=10pt,
+    width=0.8\textwidth,
+    height=7cm,
+    xlabel={Weighted Avg Lift (pp)},
+    ytick=data,
+    symbolic y coords={is\_current\_year\_2026, has\_clear\_authorship, has\_pros\_cons, freshness\_cue\_strength, has\_bullet\_points, has\_tables, has\_numbered\_lists},
+    y dir=reverse,
+    xmin=-7, xmax=10,
+    nodes near coords,
+    nodes near coords align={horizontal},
+    every node near coord/.append style={font=\scriptsize},
+    ymajorgrids=false,
+    xmajorgrids=true,
+    extra x ticks={0},
+    extra x tick style={grid=major, grid style={black, thick}},
+    fill=entcolor,
+    draw=entcolor!80!black,
+]
+\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {
+    (7.34,has\_numbered\_lists)
+    (3.64,has\_tables)
+    (3.29,has\_bullet\_points)
+    (2.15,freshness\_cue\_strength)
+    (-0.60,has\_pros\_cons)
+    (-3.57,has\_clear\_authorship)
+    (-4.64,is\_current\_year\_2026)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{GPT Enterprise intra-listicle selection drift. Positive values indicate features the model over-selects relative to the available pool; negative values indicate under-selection. Numbered lists show the strongest positive lift (+7.34pp), while current-year pages are under-selected ($-$4.64pp).}
+\label{fig:ent-listicle-drift}
+\end{figure}
 
 \paragraph{GPT Personal (Multi-provider)}
 \textit{Comparing selection from Google (Top 10) vs.\ Bing (Page 1, Top 5).}
@@ -1274,6 +1550,33 @@ The solo-cited filter is conservative: it discards cases where listicle influenc
     \end{itemize}
     \item \textbf{Interpretation}: when a listicle has a recoverable internal ranking signal, models \textbf{over-select higher-ranked items} (especially the \#1 entry), but still \textbf{re-rank} them in the final response order (weak correlation between response product order and listicle rank).
 \end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=8pt,
+    width=0.8\textwidth,
+    height=7cm,
+    xlabel={\#1, Top-3, Top-5},
+    ylabel={\% of Selected Items},
+    symbolic x coords={\#1,Top-3,Top-5},
+    xtick=data,
+    ymin=0, ymax=100,
+    ymajorgrids=true,
+    legend style={at={(0.5,1.03)}, anchor=south, legend columns=3},
+    enlarge x limits=0.25,
+]
+\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(\#1,18.9) (Top-3,50.9) (Top-5,76.0)};
+\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(\#1,31.7) (Top-3,60.5) (Top-5,81.0)};
+\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(\#1,34.8) (Top-3,61.1) (Top-5,79.5)};
+\legend{GPT Enterprise, GPT Personal, Gemini}
+\end{axis}
+\end{tikzpicture}
+\caption{Listicle rank bias: observed share of selected items coming from top ranks, by system. All three systems over-select the \#1 item relative to a uniform baseline, with Gemini and GPT Personal showing the strongest top-item skew.}
+\label{fig:listicle-rank-bias}
+\end{figure}
 
 \subsection{Semantic Fidelity: Reading Comprehension vs.\ Attribution}
 \label{sec:semantic-fidelity}
