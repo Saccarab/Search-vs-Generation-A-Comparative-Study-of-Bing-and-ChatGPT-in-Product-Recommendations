@@ -7,7 +7,7 @@ While this study provides a comprehensive empirical foundation for understanding
 \subsection{Deeper Crawling}
 \label{sec:fw-deeper-crawling}
 
-We stopped at Rank 200; going to 300+ might find more matches. Expanding the crawl depth would help determine whether additional ``invisible'' citations can be recovered at greater SERP depths, or whether a hard ceiling exists beyond which search-index overlap ceases to grow.
+This study stopped at Rank~200. Extending retrieval to Rank~300 (or beyond) would clarify whether additional ``invisible'' citations can be recovered at greater SERP depths, or whether a ceiling exists beyond which search-index overlap no longer increases.
 
 \subsection{Longitudinal Consistency (Expanded Runs)}
 \label{sec:fw-longitudinal-consistency}
@@ -17,22 +17,22 @@ While this study used 3--4 runs per prompt, future work should expand this to 10
 \subsection{Temporal Analysis}
 \label{sec:fw-temporal-analysis}
 
-How do results change over time? Running the same queries in 3 months would reveal whether citation patterns are stable or subject to temporal drift as model weights, retrieval indices, and web content evolve.
+How do results change over time? Re-running the same query set at fixed intervals (e.g., every three months) would reveal whether citation patterns are stable or subject to temporal drift as model weights, retrieval indices, and web content evolve.
 
 \subsection{Query Category Segmentation}
 \label{sec:fw-query-category}
 
-Do certain product categories have better or worse overlap? Segmenting the dataset by category (e.g., electronics vs.\ fashion vs.\ software) could reveal category-specific citation dynamics that are masked in aggregate analysis.
+Do certain product categories exhibit higher or lower overlap? Segmenting the dataset by category (e.g., electronics vs.\ fashion vs.\ software) could reveal category-specific citation dynamics that are masked in aggregate results.
 
 \subsection{Multi-Model Comparison}
 \label{sec:fw-multi-model}
 
-Compare ChatGPT vs.\ Gemini vs.\ Claude on the same queries. While this study includes both ChatGPT and Gemini, extending the comparison to additional frontier models would strengthen the generalisability of the findings.
+Comparing ChatGPT vs.\ Gemini vs.\ Claude on the same query set would strengthen the generalisability of the findings. While this study includes ChatGPT and Gemini, adding additional frontier models would help separate platform-specific effects from model-level grounding behavior.
 
 \subsection{User Study}
 \label{sec:fw-user-study}
 
-Do humans prefer ChatGPT's recommendations or Bing's Top~10? A controlled user study measuring preference, trust, and purchase intent would complement the purely structural analysis presented here.
+Do users prefer LLM-generated recommendations or a conventional SERP (e.g., Bing Top~10)? A controlled user study measuring preference, trust, and purchase intent would complement the structural analysis presented here.
 
 \subsection{Exhaustive SERP Depth Analysis}
 \label{sec:fw-serp-depth}
@@ -47,4 +47,4 @@ By programmatically ``subtracting'' all possible SERP matches (even at extreme d
 \subsection{Decay Rate of Attribution}
 \label{sec:fw-decay-rate}
 
-Analyzing if the probability of an LLM citing a source correlates with its SERP rank even beyond the first few pages, or if the LLM's ``internal'' prioritization overrides search engine ranking at depth.
+Analyzing whether the probability of an LLM citing a source correlates with SERP rank beyond the first few pages---or whether model-internal prioritization overrides search ranking at depth---would help characterize the persistence of position bias.

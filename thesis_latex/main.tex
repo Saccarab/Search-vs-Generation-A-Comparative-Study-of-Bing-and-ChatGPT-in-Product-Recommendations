@@ -25,6 +25,7 @@
 % Tables
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{makecell}
 
 % Charts (pgfplots)
 \usepackage{pgfplots}
@@ -51,7 +52,7 @@
 }
 
 % Links and URLs
-\usepackage{url}
+\usepackage{xurl}
 \usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=green!50!black,urlcolor=blue!70!black]{hyperref}
 
 % Bibliography
@@ -95,14 +96,14 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-% TODO: Review and finalize abstract text.
-This thesis investigates the grounding behavior of large language models (LLMs) in the context of commercial product recommendations, examining how ChatGPT and Gemini select and cite web sources when generating answers to high-intent queries. Using network payload instrumentation of 474 ChatGPT runs (across Personal and Enterprise deployment tiers) and API-level analysis of 237 Gemini runs, we capture the full retrieval-to-citation pipeline: fan-out query generation, candidate retrieval, source selection, and claim-level attribution.
+% TODO: Replace with final abstract text.
+This thesis investigates the grounding behavior of large language models (LLMs) in commercial product recommendations, examining how ChatGPT and Gemini select and cite web sources when answering high-intent queries. Using network-payload instrumentation of 474 ChatGPT runs (across Personal and Enterprise deployment tiers) and API-level analysis of 237 Gemini runs, we capture the full retrieval-to-citation pipeline: fan-out query generation, candidate retrieval, source selection, and claim-level attribution.
 
-We compare LLM citations against external search engine baselines (Bing Top~200, Google Top~20 Organic) to measure overlap, visibility gaps, and position bias. Our findings show that 78--84\% of citations originate from conventional search indices, with position bias remaining the dominant factor---the top 1--2 SERP results account for a disproportionate share of citations, and a steep ``Page~2 cliff'' limits visibility beyond Rank~10. However, 16--22\% of citations are ``invisible''---absent from both Bing and Google for the corresponding query---dominated by Wikipedia, Reddit, app stores, and major tech publications.
+We compare LLM citations against external search-engine baselines (Bing Top~200 and Google Top~20 Organic) to measure overlap, visibility gaps, and position bias. We find that 78--84\% of citations originate from conventional search indices, with position bias remaining a dominant factor: the top 1--2 SERP results account for a disproportionate share of citations, and a steep ``Page~2 cliff'' reduces visibility beyond Rank~10. However, 16--22\% of citations are ``invisible''---absent from both Bing and Google for the corresponding query---and are dominated by Wikipedia, Reddit, app stores, and major tech publications.
 
-We further develop a Content DNA enrichment pipeline (using LLM-as-a-labeler) to profile the structural characteristics of nearly 12,000 URLs and measure selection drift between the retrieved pool and the cited set. Models exhibit statistically significant preferences for structured content: comparison tables (+4.7 to +12.2\,pp lift), numbered lists (+7.3\,pp), and pros/cons sections (+4.0 to +6.7\,pp) in listicles. A listicle-level fidelity audit reveals strong top-rank bias (the \#1 listicle item is selected at 1.7--2.5$\times$ the random baseline) alongside a host exclusion effect (64--72\% omission rate for self-promotional products).
+We further develop a Content DNA enrichment pipeline (using an LLM as a labeler) to profile the structural characteristics of nearly 12,000 URLs and quantify selection drift between the retrieved pool and the cited set. Models exhibit statistically significant preferences for structured content in listicles, including comparison tables (+4.7 to +12.2\,pp lift), numbered lists (+7.3\,pp), and pros/cons sections (+4.0 to +6.7\,pp). A listicle-level fidelity audit reveals strong top-rank bias (the \#1 listicle item is selected at 1.7--2.5$\times$ the random baseline) alongside a host-exclusion effect (64--72\% omission rate for self-promotional products).
 
-A key deployment finding is the Enterprise--Personal provider split: Enterprise ChatGPT is locked to Bing, while Personal retrieves from both Bing and Google, producing a 36.8 percentage-point increase in Google overlap. These results provide an empirical foundation for the emerging field of Generative Engine Optimization (GEO), demonstrating that SEO remains a prerequisite for LLM visibility while identifying structural content features and invisible link channels as additional optimization surfaces.
+A key deployment finding is an Enterprise--Personal provider split: Enterprise ChatGPT is locked to Bing, while Personal retrieves from both Bing and Google, producing a 36.8 percentage-point increase in Google overlap. These results provide an empirical foundation for Generative Engine Optimization (GEO), showing that SEO remains a prerequisite for LLM visibility while identifying structural content features and invisible-link channels as additional optimization surfaces.
 
 \newpage
 
