@@ -26,7 +26,7 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 - **Source-to-output fidelity**: whether products mentioned in retrieved listicles are carried into the final recommendations
 
 ### Sub-questions (decompositions of RQ1, not separate topics)
-- **RQ1a (selection + visibility)**: How do **cited vs additional vs unreferenced/invisible** sources differ in domain/type, and how does this differ by **enterprise vs personal** runs on chatGPT results?
+- **RQ1a (selection + visibility)**: How do **cited vs additional vs retrieved-only/invisible** sources differ in domain/type, and how does this differ by **enterprise vs personal** runs on chatGPT results?
 - **RQ1b (external support)**: How often do selected citations appear in **Top‑N SERPs** (Bing/Google overlap; Gemini "survival" in Top‑20)?
 - **RQ1c (selection bias & DNA)**: Does the model exhibit a statistically significant preference for specific **Content DNA features** (e.g., tables, numbered lists, freshness) when selecting from the retrieved "Menu," and how does this preference vary between **GPT Personal, GPT Enterprise and Gemini**?
 - **RQ1d (listicle uptake / fidelity)**: When listicles are retrieved, which listicle-mentioned products are **selected vs ignored** in the final response (uptake rate, rank bias, host-bias), and how does this differ by run type?
@@ -206,7 +206,7 @@ We classify every URL that appears in ChatGPT's network response into one of thr
 
 - **Cited**: URLs that appear as inline footnote references in the generated answer. Mechanically, these are URLs linked via `content_references` token spans — the model inserted a citation marker at a specific position in the output text pointing to this source. In the ChatGPT UI, these render as numbered superscript links within the response body.
 - **Additional**: URLs that are attached to the response but **not** referenced inline. These appear in the `sources_additional` array in the network payload and render in the ChatGPT UI as a collapsible "Sources" section below the main response. The model retrieved and surfaced them to the user, but did not tie them to any specific claim.
-- **Unreferenced**: URLs present in the `search_result_groups` payload (the raw search results delivered to the model during generation) that were **not** promoted to either cited or additional status. These never appear in the user-facing response. We compute them as: all URLs in `search_result_groups` minus those already classified as cited or additional. See `3.3.3` for detailed analysis.
+- **Retrieved-only**: URLs present in the `search_result_groups` payload (the raw search results delivered to the model during generation) that were **not** promoted to either cited or additional status. These never appear in the user-facing response. We compute them as: all URLs in `search_result_groups` minus those already classified as cited or additional. See `3.3.3` for detailed analysis.
 
 **Important:** The `search_result_groups` field is the retrieval pool as it appears in ChatGPT's network stream. We do not know the exact upstream source of these results — while ChatGPT is known to use Bing, the field itself does not identify the backing search provider, and we cannot rule out internal indices or other retrieval paths.
 
@@ -253,8 +253,8 @@ From these, we build:
 
 ### 2.3.8 What Happens Next (how this section feeds the thesis)
 This "anatomy" motivates the next analytic layers:
-- **Overlap & visibility**: compare cited/additional/unreferenced pools against Bing Top 30 + Deep Hunt and Google SERP controls.
-- **Selection bias**: compare Content DNA of Cited vs Additional vs Unreferenced.
+- **Overlap & visibility**: compare cited/additional/retrieved-only pools against Bing Top 30 + Deep Hunt and Google SERP controls.
+- **Selection bias**: compare Content DNA of Cited vs Additional vs Retrieved-only.
 - **Stochasticity**: quantify fan-out drift across runs and resulting citation churn.
 
 ### 2.3.9 Network Parameter Glossary (ChatGPT, Network-Instrumented)
@@ -852,7 +852,7 @@ We separate notions that are easy to conflate:
 #### Top invisible domains
 
 ##### GPT Enterprise — Top Invisible Domains (all citation types, excluding niche SaaS)
-Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisible. Niche SaaS/product domains excluded. This table includes cited, additional, **and** unreferenced links (see `3.3.3` for definition and `2.3.2` for naming conventions).
+Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisible. Niche SaaS/product domains excluded. This table includes cited, additional, **and** retrieved-only links (see `3.3.3` for definition and `2.3.2` for naming conventions).
 
 | Rank | Domain | Count |
 | :--- | :--- | ---: |
@@ -872,7 +872,7 @@ Enterprise uses Bing exclusively (see `3.3.1`), so Bing-invisible = truly invisi
 | 14 | windowscentral.com | 11 |
 | 15 | tvtechnology.com | 10 |
 
-*All citation types (cited + additional + unreferenced), www/non-www merged. Dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from **unreferenced** links — URLs present in the search result pool but never surfaced in the response.*
+*All citation types (cited + additional + retrieved-only), www/non-www merged. Dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from **retrieved-only** links — URLs present in the search result pool but never surfaced in the response.*
 
 ##### GPT Personal — Top Invisible Domains (all citation types, excluding niche SaaS, with Google recovery)
 Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible check overstates the gap. Ordered by **truly invisible** count (not in Bing **or** Google). Includes all citation types.
@@ -897,9 +897,9 @@ Personal uses multiple search providers (see `3.3.1`), so a Bing-only invisible 
 
 *All citation types, www/non-www merged. Niche SaaS excluded. Two patterns: Google recovery is significant for platform domains (`reddit.com` 58%, `chromewebstore.google.com` 50%); major news/reference domains remain equally invisible in both indices.*
 
-##### Excluding unreferenced links: Cited + Additional only
+##### Excluding retrieved-only links: Cited + Additional only
 
-The tables above include unreferenced links (URLs in the search result pool that were never surfaced — see `3.3.3`). Since unreferenced links are **90%+ invisible** from our Bing scrape, they heavily inflate the counts above. Excluding them gives a cleaner picture of what ChatGPT actually **cited or recommended** but could not be found in search:
+The tables above include retrieved-only links (URLs in the search result pool that were never surfaced — see `3.3.3`). Since retrieved-only links are **90%+ invisible** from our Bing scrape, they heavily inflate the counts above. Excluding them gives a cleaner picture of what ChatGPT actually **cited or recommended** but could not be found in search:
 
 **GPT Enterprise (cited + additional only, top 15):**
 
@@ -921,7 +921,7 @@ The tables above include unreferenced links (URLs in the search result pool that
 | 14 | topbusinesssoftware.com | 3 |
 | 15 | fr.wikipedia.org | 3 |
 
-*Excluding unreferenced shrinks Enterprise invisible by **45%** (1,261 → 691). The biggest casualty: `arxiv.org` drops from #2 (83) to absent — 82 of its 83 invisible were unreferenced, not cited or additional. Similarly, `time.com` (34→0), `lifewire.com` (34→0), `nypost.com` (22→0) were almost entirely unreferenced. Wikipedia remains #1 but drops from 116→81 (35 were unreferenced).*
+*Excluding retrieved-only shrinks Enterprise invisible by **45%** (1,261 → 691). The biggest casualty: `arxiv.org` drops from #2 (83) to absent — 82 of its 83 invisible were retrieved-only, not cited or additional. Similarly, `time.com` (34→0), `lifewire.com` (34→0), `nypost.com` (22→0) were almost entirely retrieved-only. Wikipedia remains #1 but drops from 116→81 (35 were retrieved-only).*
 
 **GPT Personal (cited + additional only, top 20, by truly invisible):**
 
@@ -948,7 +948,7 @@ The tables above include unreferenced links (URLs in the search result pool that
 | 19 | techcommunity.microsoft.com | **5** | 8 | 3 (38%) |
 | 20 | sfgate.com | **5** | 5 | 0 |
 
-*Personal is less affected (15% drop) since it has more cited+additional volume. The top 3 (apps.apple.com, reddit, Wikipedia) barely change. The biggest drops are in news/reference domains that were mostly unreferenced: `arxiv.org` (70→0), `wired.com` (40→0), `nypost.com` (28→0), `timesofindia.indiatimes.com` (31→0). Google recovery patterns remain the same.*
+*Personal is less affected (15% drop) since it has more cited+additional volume. The top 3 (apps.apple.com, reddit, Wikipedia) barely change. The biggest drops are in news/reference domains that were mostly retrieved-only: `arxiv.org` (70→0), `wired.com` (40→0), `nypost.com` (28→0), `timesofindia.indiatimes.com` (31→0). Google recovery patterns remain the same.*
 
 #### Why these numbers are conservative (and what "truly invisible" likely means)
 Our reported invisible rates (16.3% Enterprise, 19.4% Personal) are **upper bounds** on truly index-absent citations. Two systematic factors inflate the invisible count:
@@ -959,33 +959,33 @@ Our reported invisible rates (16.3% Enterprise, 19.4% Personal) are **upper boun
 
 **If both factors were addressed** (deeper scraping + repeated Page 1 scrapes to capture the full elastic range), our overlap rates would likely increase and the remaining "truly invisible" set would converge toward citations that genuinely come from **outside the search index** — sites like Wikipedia, app stores, and known reference domains that ChatGPT may access through parametric knowledge or supplementary indices rather than the fan-out search pipeline.
 
-### 3.3.3 Unreferenced Links — The Search Pool Remainder
+### 3.3.3 Retrieved-only Links — The Search Pool Remainder
 
-Beyond cited and additional links, ChatGPT's network responses contain a third category: **unreferenced links** (see naming conventions in `2.3.2`). These are URLs present in the `search_result_groups` payload — the retrieval pool delivered to the model during generation — that were **not** promoted to either cited or additional status. They never appear in the user-facing response.
+Beyond cited and additional links, ChatGPT's network responses contain a third category: **retrieved-only links** (see naming conventions in `2.3.2`). These are URLs present in the `search_result_groups` payload — the retrieval pool delivered to the model during generation — that were **not** promoted to either cited or additional status. They never appear in the user-facing response.
 
-**How we identified unreferenced links:** Our ingestion pipeline (see `export_enrichment_queue_from_raw_network_responses.mjs`) parses each run's raw network response, extracts all URLs from the `search_result_groups_json` field, then subtracts any URL already classified as cited or additional. The remainder is classified as "unreferenced."
+**How we identified retrieved-only links:** Our ingestion pipeline (see `export_enrichment_queue_from_raw_network_responses.mjs`) parses each run's raw network response, extracts all URLs from the `search_result_groups_json` field, then subtracts any URL already classified as cited or additional. The remainder is classified as "retrieved-only."
 
 | Metric | Enterprise | Personal |
 | :--- | :--- | :--- |
-| Total unreferenced links | 631 | 496 |
-| Runs with unreferenced links | 204 / 215 (95%) | 195 / 209 (93%) |
-| Avg. unreferenced per run (when present) | 3.1 | 2.5 |
-| Max unreferenced in a single run | 44 | 29 |
+| Total retrieved-only links | 631 | 496 |
+| Runs with retrieved-only links | 204 / 215 (95%) | 195 / 209 (93%) |
+| Avg. retrieved-only per run (when present) | 3.1 | 2.5 |
+| Max retrieved-only in a single run | 44 | 29 |
 
-**Unreferenced links are overwhelmingly invisible from both search indices:**
+**Retrieved-only links are overwhelmingly invisible from both search indices:**
 
-| Metric | Cited | Additional | Unreferenced |
+| Metric | Cited | Additional | Retrieved-only |
 | :--- | :--- | :--- | :--- |
 | Enterprise Bing overlap | 81.3% | 86.3% | **9.7%** |
 | Enterprise Google overlap | 34.9% | 25.8% | **3.6%** |
 | Personal Bing overlap | 67.6% | 56.3% | **5.6%** |
 | Personal Google overlap | 71.6% | 60.8% | **3.0%** |
 
-Only ~6–10% of unreferenced links appear in our Bing scrape, and an even lower ~3–4% appear in Google — compared to 57–86% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that unreferenced links are simply "Bing-invisible but Google-findable." Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
+Only ~6–10% of retrieved-only links appear in our Bing scrape, and an even lower ~3–4% appear in Google — compared to 57–86% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that retrieved-only links are simply "Bing-invisible but Google-findable." Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
 
-**Top unreferenced domains (Enterprise):**
+**Top retrieved-only domains (Enterprise):**
 
-| Rank | Domain | Unreferenced Count |
+| Rank | Domain | Retrieved-only Count |
 | :--- | :--- | ---: |
 | 1 | arxiv.org | 82 |
 | 2 | theverge.com | 49 |
@@ -998,13 +998,13 @@ Only ~6–10% of unreferenced links appear in our Bing scrape, and an even lower
 | 9 | sfgate.com | 24 |
 | 10 | nypost.com | 22 |
 
-**Key finding — unreferenced links explain the previous "invisible" inflation:**
-The invisible domain lists in the previous version of this analysis (which included all citation types) were heavily inflated by unreferenced links. For example, `arxiv.org` appeared as the #2 invisible domain with 83 entries — but 82 of those were unreferenced and only 1 was additional. Once unreferenced links are separated out (as in the cited+additional tables above), the invisible set shrinks by **45% for Enterprise** (1,261 → 691) and **15% for Personal** (3,031 → 2,563).
+**Key finding — retrieved-only links explain the previous "invisible" inflation:**
+The invisible domain lists in the previous version of this analysis (which included all citation types) were heavily inflated by retrieved-only links. For example, `arxiv.org` appeared as the #2 invisible domain with 83 entries — but 82 of those were retrieved-only and only 1 was additional. Once retrieved-only links are separated out (as in the cited+additional tables above), the invisible set shrinks by **45% for Enterprise** (1,261 → 691) and **15% for Personal** (3,031 → 2,563).
 
-**Interpretation — what role do unreferenced links play?**
-The unreferenced domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that appeared in the retrieval pool but were never surfaced to the user. Whether these URLs enter through the search pipeline or through some other retrieval path remains ambiguous — they appear in `search_result_groups` (suggesting retrieval), but their near-zero presence in both consumer search indices suggests they may come from a different ranking layer or supplementary index that neither Bing nor Google's consumer UI exposes.
+**Interpretation — what role do retrieved-only links play?**
+The retrieved-only domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that appeared in the retrieval pool but were never surfaced to the user. Whether these URLs enter through the search pipeline or through some other retrieval path remains ambiguous — they appear in `search_result_groups` (suggesting retrieval), but their near-zero presence in both consumer search indices suggests they may come from a different ranking layer or supplementary index that neither Bing nor Google's consumer UI exposes.
 
-What role these unreferenced links play in the generation process — whether the model uses them as background context, ignores them entirely, or processes them in some other way — is not observable from our data. We can only confirm that they were **present in the search result pool** and **absent from the final output**. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, but we cannot determine whether this reflects deliberate filtering by the model or some other mechanism upstream.
+What role these retrieved-only links play in the generation process — whether the model uses them as background context, ignores them entirely, or processes them in some other way — is not observable from our data. We can only confirm that they were **present in the search result pool** and **absent from the final output**. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, but we cannot determine whether this reflects deliberate filtering by the model or some other mechanism upstream.
 
 ## 3.4 Content DNA Profile & Cited vs. Additional Comparison
 *Before analyzing selection drift, we establish the enrichment baseline: what types, tones, and structural features characterize the sources the model had to choose from ("Menu") versus what it actually cited ("Order"), and why some retrieved sources were demoted to "Additional."*
@@ -1344,11 +1344,18 @@ We evaluate both using an LLM-as-judge approach (Gemini 2.5 Flash for Gemini run
 | Metric | Gemini | GPT |
 |---|---|---|
 | Product items evaluated | 421 | 689 |
-| Product present in source | 390 (92.6%) | 673 (97.7%) |
-| **Attribution failure** | **31 (7.4%)** | **13 (1.9%)** |
+| Product present in source | 394 (93.6%) | 684 (99.3%) |
+| **Attribution failure** | **27 (6.4%)** | **5 (0.7%)** |
+| — of which: table-attribution collapse | 15 | 0 |
 | **Pure fidelity** (present only) | **4.81 / 5.0** | **4.71 / 5.0** |
 
-Both models achieve near-perfect reading comprehension when the product is present in the source (4.71–4.81 out of 5.0). The primary failure mode is not misunderstanding but *mis-attribution*: the model recommends a product and attaches a citation, but the cited listicle does not actually contain that product. Gemini exhibits a 4× higher attribution failure rate than GPT (7.4% vs. 1.9%), consistent with its more complex multi-chunk grounding architecture.
+Both models achieve near-perfect reading comprehension when the product is present in the source (4.71–4.81 out of 5.0). The primary failure mode is not misunderstanding but *mis-attribution*: the model recommends a product and attaches a citation, but the cited listicle does not actually contain that product. All 44 cases initially flagged by the LLM judge were manually verified by inspecting the cited listicle page, the raw grounding metadata, and the model's response text. Of these, 12 proved to be false positives caused by the LLM judge missing products present under variant names, the GPT product-extraction pipeline misidentifying category descriptors as product names, or incomplete page fetches. The remaining 32 cases (27 Gemini, 5 GPT) are genuine attribution failures, yielding verified rates of 6.4% for Gemini and 0.7% for GPT. We note that this manual audit covers only the positive cases (items the judge flagged as failures); the negative cases — where the judge confirmed the product was present — were not independently re-checked, so the true failure rate may be marginally higher if the judge produced false negatives.
+
+Critically, 15 of Gemini's 27 failures share a single root cause: *table-attribution collapse*. When Gemini generates a summary comparison table, its grounding API assigns the entire table to a single source chunk, even though individual products in the table were correctly attributed to different sources earlier in the response. This is a systematic artefact of how Gemini's grounding infrastructure handles tabular output rather than a hallucination or comprehension failure. Excluding these table cases would reduce Gemini's rate to 2.9% (12/421).
+
+Once table-attribution collapse is set aside, the genuine content-level failure rate — cases where a model cites a source for a product that truly does not appear anywhere on that page — drops to 2.9% for Gemini (12/421) and 0.7% for GPT (5/689). In other words, across 1,110 solo-cited product claims, only 17 represent cases where the model pointed a reader to a source that could not substantiate the recommendation.
+
+For context, Wu et al. (2025) evaluated seven LLMs on medical citation accuracy using a substantially more rigorous verification framework (800 questions, 58K statement–source pairs, physician validation) and found that retrieval-augmented models substantially outperform API-only models on both URL validity and statement-level support — yet even their best configuration (GPT-4o with RAG) achieved only ~70% statement-level support. Our analysis is narrower in scope — limited to solo-cited listicle product claims with an LLM judge and manual review rather than a comprehensive statement-level pipeline — and operates in a different domain on newer model generations. Direct comparison of absolute rates is therefore not meaningful, but the directional finding is consistent: grounding infrastructure materially reduces citation errors compared to parametric-only generation.
 
 This finding reframes the "hallucination problem" in production RAG systems. For product recommendations backed by solo-cited listicles, models rarely fabricate facts about a product they have read — the comprehension layer is robust. The remaining errors are attribution errors: the model "knows" the facts but "forgets" which specific source it found them in.
 
@@ -1424,6 +1431,8 @@ For brands, this means that being the host of a listicle is a double-edged sword
 ## 5.6 The Economic Moat of Retrieval
 
 The broader conclusion from our study reinforces the architectural argument made in `1.2.4`: retrieval is cheaper than inference, and this economic reality ensures that the web remains the foundation of AI-generated answers. LLMs are not replacing search — they are consuming it. The "tiny model with superhuman reasoning" vision (see `1.2.3`) depends on an external knowledge layer, and that layer is the indexed web.
+
+Our semantic fidelity audit (Section 3.6) provides empirical support for why this architecture works: across 1,110 solo-cited product claims, the verified attribution failure rate is just 6.4% for Gemini and 0.7% for GPT, with most Gemini failures attributable to a systematic table-grounding artefact rather than comprehension errors. While our fidelity analysis is narrower in scope than dedicated verification studies — Wu et al. (2025) employ a comprehensive 58K-pair statement-level pipeline with physician validation on medical queries — the directional finding is consistent: their study shows that enabling retrieval substantially reduces citation errors compared to parametric-only generation, and our results on newer models in a different domain reinforce this conclusion. As long as retrieval remains the mechanism that keeps LLM outputs factually anchored, the web — and the SEO that governs access to it — will remain central to AI-mediated information delivery.
 
 For the foreseeable future, SEO remains the prerequisite for AI visibility. Content that is not searchable is not retrievable, and content that is not retrievable is invisible to the generation pipeline. GEO adds a new optimization surface — structural content DNA, listicle positioning, invisible link channels — but it does not replace the fundamental requirement to rank.
 
