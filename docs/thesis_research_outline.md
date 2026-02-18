@@ -303,7 +303,7 @@ Unlike ChatGPT, where we must "scrape" the network stream, Gemini provides struc
 ### 2.4.2 Key Differences in Instrumentation
 - **Transparency**: Gemini is "Grounding-First"—it exposes the raw chunks it read, whereas ChatGPT only exposes the final URL and a snippet.
 - **Segment-Level Attribution**: Gemini attributes every sentence/segment to a specific chunk index, allowing for a much higher resolution of fidelity analysis.
-- **Vertex Redirects**: Gemini's `groundingChunks` do not expose raw URLs — instead they contain internal redirect URLs (e.g., `vertexaisearch.cloud.google.com/...`) that must be followed to discover the actual destination domain. We built a dedicated resolution script (`scripts/resolve_grounding_urls.mjs`) that collects all unique Vertex redirect URLs from the raw response files, follows each redirect via HTTP, and produces a mapping from Vertex URL → resolved destination URL. Some redirects failed to resolve programmatically (e.g., due to timeouts or anti-bot blocks), so unresolved URLs were exported and resolved manually via a browser-based content fetcher. Without this resolution step, no domain-level or overlap analysis would be possible on the Gemini data.
+- **Vertex Redirects**: Gemini's `groundingChunks` do not expose raw URLs — instead they contain internal redirect URLs (e.g., `vertexaisearch.cloud.google.com/...`) that must be followed to discover the actual destination domain. We built a dedicated resolution script (`scripts/resolve_grounding_urls.mjs`) that collects all unique Vertex redirect URLs from the raw response files, follows each redirect via HTTP, and produces a mapping from Vertex URL → resolved destination URL. Some redirects failed to resolve programmatically (e.g., due to timeouts or anti-bot blocks), so unresolved URLs were exported and resolved via a custom Chrome extension (`VertexResolverExtension`) that opens each redirect URL in a background tab, waits for the redirect chain to complete, and captures the final destination URL. Without this resolution step, no domain-level or overlap analysis would be possible on the Gemini data.
 - **Thinking budget**: All Gemini runs in this study used the **minimum thinking budget** available via the API. Higher thinking budgets produce more fan-out queries — the model generates an initial broad query, discovers brands/products from the results, then issues targeted follow-up queries for those specific entities (e.g., `"best free AI video translation tools 2025 2026"` → `"HeyGen free trial video translation"` → `"ElevenLabs video translator free tier limitations"`). This iterative refinement pattern resembles GPT's multi-turn re-search (see `3.1.3`), but is driven by the thinking budget rather than an explicit agentic tool-call loop. Our use of minimum thinking keeps the fan-out count bounded and comparable across runs, but means the study captures the model's baseline retrieval behavior rather than its maximum-depth grounding capability.
 - **API vs. Consumer UI gap**: Our Gemini data comes entirely from the Vertex AI API, which provides structured grounding metadata but does not carry IP/locale signals. Inspecting the **Gemini consumer UI** (`gemini.google.com`) via network packet analysis — mirroring our ChatGPT instrumentation approach — could reveal additional signals not exposed in the API, such as locale-driven fan-out rewriting, internal ranking or filtering stages before the `groundingMetadata` is constructed, or differences in fan-out strategy between the consumer product and the API. This remains a potential avenue for future work.
 
@@ -1292,62 +1292,67 @@ With per-run methodology applied to both models, **Gemini also shows significant
 
 ## 3.6 Listicle Extraction & Bias Analysis
 
-*Self-promotion, product text comparison, accuracy.*
+The preceding sections examined which *pages* the model selects from the SERP. This section shifts the unit of analysis one level deeper: given that a listicle has been cited, which *products within that listicle* does the model extract, and how faithfully does it reproduce their details? We investigate three phenomena: host-product exclusion, within-listicle position bias, and semantic fidelity of product claims.
 
 ### 3.6.1 Scope: Solo-Cited Claims Only (Multi-Citation Filtering)
 
-Listicle bias analysis requires attributing a product recommendation to a specific source. When a claim is backed by multiple citations (e.g., a listicle *and* a product page), it becomes ambiguous which source drove the selection — was the product picked because it appeared in the listicle, or because the model also had the vendor's own page? To avoid this attribution problem, the analyses in `3.6.2`–`3.6.4` are restricted to **solo-cited claims** (exactly one URL behind the claim).
+Listicle bias analysis requires attributing a product recommendation to a specific source. When a claim is backed by multiple citations (e.g., a listicle *and* a product page), it becomes ambiguous which source drove the selection — was the product picked because it appeared in the listicle, or because the model also had the vendor's own page? To avoid this attribution problem, the analyses in 3.6.2–3.6.4 are restricted to **solo-cited claims**: product recommendations backed by exactly one URL.
 
-This filtering excludes a non-trivial share of claims:
-- **GPT**: 458 / 4,296 claim occurrences (**10.7%**) are multi-cited
-- **Gemini**: 788 / 2,287 claim occurrences (**34.5%**) are multi-cited
-
-Among multi-cited claims involving at least one listicle, **~20%** are mixed listicle+product-page citations (GPT: 21.1%, Gemini: 19.6%). Gemini's much higher multi-citation rate reflects its grounding architecture, which maps individual text segments to multiple `groundingChunks` — producing richer but harder-to-attribute citation linkages.
+This filtering excludes a non-trivial share of claims. GPT produces 458 multi-cited claims out of 4,296 total claim occurrences (10.7%), while Gemini produces 788 out of 2,287 (34.5%). Among multi-cited claims involving at least one listicle, approximately 20% are mixed listicle+product-page citations (GPT: 21.1%, Gemini: 19.6%). Gemini's higher multi-citation rate reflects its grounding architecture, which maps individual response segments to multiple `groundingChunks` — producing richer but harder-to-attribute citation linkages.
 
 The solo-cited filter is conservative: it discards cases where listicle influence may still be present but cannot be cleanly isolated. The trade-off is cleaner attribution at the cost of reduced sample size.
 
 ### 3.6.2 Self-Promotion Bias & Host Exclusion
-- **Host exclusion (empirical)**: In the listicle semantic-fidelity audit (solo-cited listicles), models **often omit** the host's own product even when it is present in the listicle.
-  - **Gemini**: host present in **405** listicles; host **missing** in **71.9%** (291/405), **included** in **28.1%** (114/405)
-  - **GPT**: host present in **431** listicles; host **missing** in **63.6%** (274/431), **included** in **36.4%** (157/431)
-- **Bias multiplier (selection advantage)**: "Missing most of the time" does **not** imply "no bias." When host is present, it is still selected at a rate far above a random item on the page.
-  - **Avg listicle size (in this audited subset)**: Gemini **8.1** products/page; GPT **9.3** products/page
-  - **Host selection rate**: Gemini **28.15%**; GPT **36.43%**
-  - **Random baseline** (approx \(1/\)avg products): Gemini **12.41%**; GPT **10.70%**
-  - **Bias multiplier**: Gemini **2.27×**; GPT **3.40×**
-- **Interpretation**: LLMs exhibit a mixed behavior: an "anti-self-promo" tendency (frequent host omission) combined with a measurable host selection advantage when they do pick items from host-authored listicles.
+
+When a model cites a listicle authored by a vendor (e.g., HeyGen's "Best AI Video Translators"), does the model include the host's own product in its recommendations? We define *host exclusion* as the rate at which the host's product is omitted from the model's response despite being present in the listicle.
+
+| Metric | Gemini | GPT |
+|---|---|---|
+| Listicles with host product present | 405 | 431 |
+| Host **omitted** from response | 291 (71.9%) | 274 (63.6%) |
+| Host **included** in response | 114 (28.1%) | 157 (36.4%) |
+| Mean listicle size | 8.1 | 9.3 |
+| Random baseline (1/N) | 12.4% | 10.7% |
+| Host selection rate | 28.1% | 36.4% |
+| **Bias multiplier** | **2.27×** | **3.40×** |
+
+Both models exhibit a dual pattern. The dominant behavior is host *omission*: models exclude the host's own product in the majority of cases (72% for Gemini, 64% for GPT). However, when the host product *is* selected, it appears at 2–3× the rate expected under uniform random selection from the listicle. This suggests that models apply a partial "anti-self-promotion" heuristic — they tend to avoid the host's product — but that this filtering is imperfect, and host products still enjoy a measurable selection advantage when they survive.
 
 ### 3.6.3 Selection Order vs. Listicle Rank (The "Re-Ranking" Effect)
-- **Rank alignment**: how often **Chat response order** matches the **listicle's internal rank** for the same product (only when `listicle_rank` is recoverable).
-  - **Gemini**: **29.5%** (108/366)
-  - **GPT**: **27.9%** (166/596)
-- **Interpretation**: models frequently **re-rank** listicle items in the final response. The listicle's "#1–#10" order is not preserved as the model's "top picks" order.
 
-**Listicle rank bias (top-item skew):** Do models preferentially pick items that are near the top of the cited listicle?
-- **Data used**: product roster items only where `present_in_listicle=="yes"` and `listicle_rank` and `total_products_in_listicle>1` are available.
-  - **GPT Enterprise**: **n=391** (mean listicle size **10.95**)
-  - **GPT Personal**: **n=205** (mean listicle size **8.57**)
-  - **Gemini**: **n=365** (mean listicle size **8.56**)
-- **Observed share of selected items coming from top ranks**:
-  - **GPT Enterprise**: #1 **18.9%**, Top‑3 **50.9%**, Top‑5 **76.0%**
-  - **GPT Personal**: #1 **31.7%**, Top‑3 **60.5%**, Top‑5 **81.0%**
-  - **Gemini**: #1 **34.8%**, Top‑3 **61.1%**, Top‑5 **79.5%**
-- **Lift vs uniform baseline** (expected Top‑K share under random pick from a listicle of that size; computed per-item as \(K/N\), capped at 1.0):
-  - **GPT Enterprise**: #1 **1.73×**, Top‑3 **1.55×**, Top‑5 **1.40×**
-  - **GPT Personal**: #1 **2.34×**, Top‑3 **1.49×**, Top‑5 **1.22×**
-  - **Gemini**: #1 **2.53×**, Top‑3 **1.48×**, Top‑5 **1.18×**
-- **Interpretation**: when a listicle has a recoverable internal ranking signal, models **over-select higher-ranked items** (especially the #1 entry), but still **re-rank** them in the final response order (weak correlation between response product order and listicle rank).
+Do models preserve the internal ranking of a listicle when selecting products, or do they re-order items in their response?
+
+**Rank alignment.** We compare each product's position in the model's response against its rank in the source listicle. Exact alignment is low: Gemini matches in 29.5% of cases (108/366) and GPT in 27.9% (166/596). Models therefore **re-rank** listicle items rather than preserving the source order.
+
+**Top-item skew.** Despite re-ranking, models strongly over-select items from the top of the listicle:
+
+| System | n | #1 | Top-3 | Top-5 | Lift #1 | Lift Top-3 | Lift Top-5 |
+|---|---|---|---|---|---|---|---|
+| GPT Enterprise | 391 | 18.9% | 50.9% | 76.0% | 1.73× | 1.55× | 1.40× |
+| GPT Personal | 205 | 31.7% | 60.5% | 81.0% | 2.34× | 1.49× | 1.22× |
+| Gemini | 365 | 34.8% | 61.1% | 79.5% | 2.53× | 1.48× | 1.18× |
+
+The #1 item in a listicle is selected at 1.7–2.5× the uniform baseline, and the top-5 items account for 76–81% of all selections despite comprising roughly half the listicle on average. This mirrors the SERP-level position bias observed in Section 3.2: just as models disproportionately cite Rank 1 in the SERP, they disproportionately extract the #1 product from within a cited listicle. Position bias thus operates at two nested levels — SERP rank and within-listicle rank.
 
 ### 3.6.4 Semantic Fidelity: Reading Comprehension vs. Attribution
-- **The "Two-Layer" Grounding Problem:** We decompose "Fidelity" into two distinct measurable phenomena:
-    1.  **Attribution Accuracy:** Does the cited source actually contain the product?
-    2.  **Reading Comprehension (Pure Fidelity):** When the product is present, how accurately does the model extract its details?
-- **Key Findings (Solo-Cited Listicles):**
-    - **Pure Fidelity (Comprehension):** Both models exhibit near-perfect scores when the product is present (**Gemini: 4.81/5.0**, **GPT: 4.75/5.0**).
-    - **Attribution Failure:** Some "solo-cited" product claims still point to listicles where the product is not present (mis-attribution).
-      - **Gemini**: **7.36%** (31/421 product roster items)
-      - **GPT**: **1.89%** (13/689 product roster items)
-- **Thesis Implication:** The "hallucination problem" in modern RAG systems is increasingly an **attribution/linkage problem**, not a "reading" or "understanding" problem. The models "know" the facts but "forget" which specific tab they were looking at when they found them.
+
+The final question in the listicle pipeline is whether models accurately reproduce the details of products they extract. We decompose fidelity into two distinct phenomena:
+
+1. **Attribution accuracy**: Does the cited listicle actually contain the product the model claims it does?
+2. **Reading comprehension** (pure fidelity): When the product is present, how accurately does the model extract its details?
+
+We evaluate both using an LLM-as-judge approach (Gemini 2.5 Flash for Gemini runs, GPT-5 Mini for GPT runs), scoring fidelity on a 1–5 scale.
+
+| Metric | Gemini | GPT |
+|---|---|---|
+| Product items evaluated | 421 | 689 |
+| Product present in source | 390 (92.6%) | 673 (97.7%) |
+| **Attribution failure** | **31 (7.4%)** | **13 (1.9%)** |
+| **Pure fidelity** (present only) | **4.81 / 5.0** | **4.71 / 5.0** |
+
+Both models achieve near-perfect reading comprehension when the product is present in the source (4.71–4.81 out of 5.0). The primary failure mode is not misunderstanding but *mis-attribution*: the model recommends a product and attaches a citation, but the cited listicle does not actually contain that product. Gemini exhibits a 4× higher attribution failure rate than GPT (7.4% vs. 1.9%), consistent with its more complex multi-chunk grounding architecture.
+
+This finding reframes the "hallucination problem" in production RAG systems. For product recommendations backed by solo-cited listicles, models rarely fabricate facts about a product they have read — the comprehension layer is robust. The remaining errors are attribution errors: the model "knows" the facts but "forgets" which specific source it found them in.
 
 ---
 
