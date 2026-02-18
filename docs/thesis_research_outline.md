@@ -45,7 +45,7 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 - **The Macro Shift (8-Month Trend):** According to data from [Ahrefs (ChatGPT vs. Google)](https://chatgpt-vs-google.com/) analyzing **74,752 websites** between **June 2025 and January 2026**, total search traffic across the panel dropped by **7.5%** (from 494M to 457M visits).
 - **The AI Growth Engine:** In the same timeframe, referral traffic from AI chatbots grew by **27%** (from 2.9M to 3.7M visits).
 - **Implication for visibility:** Although AI referral traffic is growing rapidly, conventional search still dominates the referral landscape. This suggests that, in many cases, LLM answers remain downstream of search visibility: the model can only cite what it retrieves.
-- **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition — how assistants "ground" product recommendations in web sources, and how retrieval, selection, and citation interact with search rankings.
+- **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition — how assistants ground product recommendations in web sources, and how the retrieval-to-citation pipeline shapes which sources and products appear in the final response.
 
 ## 1.2 Theoretical Framework: From SEO to GEO
 
@@ -338,6 +338,8 @@ To test whether Content DNA is model-dependent, we ran a direct agreement audit 
 - **Structural fields (agreement)**: `has_pros_cons` **94.6%**, `has_sources_or_citations` **93.8%**, `has_clear_authorship` **93.3%**, `has_tables` **92.9%**, `has_numbered_lists` **91.1%**
 - **Categorical fields (agreement)**: `content_format` **92.1%**, `type` **87.7%**, `tone` **77.7%**
 - **Score consistency (correlation)**: `freshness_cue_strength` **r = 0.841** (strong trend agreement, different absolute thresholds)
+
+A parallel cross-model validation was performed on the listicle semantic fidelity judge (Section 3.6.4), where all 1,116 claims were judged by both models. Agreement rates (93–100% on structural fields, 93.9% within ±1 on fidelity scores) are consistent with the DNA labeler results above.
 
 ### 2.5.4 Enrichment Coverage & Label Distribution (Study URL Universe)
 To make downstream analyses defensible, we first measured how much of the URL universe was successfully enriched.
@@ -1335,7 +1337,7 @@ The final question in the listicle pipeline is whether models accurately reprodu
 1. **Attribution accuracy**: Does the cited listicle actually contain the product the model claims it does?
 2. **Reading comprehension** (pure fidelity): When the product is present, how accurately does the model extract its details?
 
-We evaluate both using an LLM-as-judge approach (Gemini 2.5 Flash for Gemini runs, GPT-5 Mini for GPT runs), scoring fidelity on a 1–5 scale.
+We evaluate both using an LLM-as-judge approach, scoring fidelity on a 1–5 scale by comparing each product claim against the source listicle text. A single inline prompt — generated programmatically by `build_listicle_llm_jobs.py` — performs all tasks per case: fidelity scoring, listicle presence verification, rank extraction, host-product detection, and roster-item classification. Cross-model validation (all 1,116 claims judged by both Gemini 2.5 Flash and GPT-5-mini) confirmed that structural fields agree at 93–100% and fidelity scores agree within ±1 in 93.9% of 1,826 matched product pairs, consistent with the DNA labeler benchmark (Section 2.5.3). Earlier draft prompts (`listicle_fidelity_verification_chunks_v1.txt`, `listicle_selection_omission_analysis_v1.txt`, `listicle_bias_uptake_analysis_v1.txt`, `semantic_verification_per_url_batch.txt`) were superseded by this combined inline prompt and were never executed (archived in `prompts/drafts/`).
 
 | Metric | Gemini | GPT |
 |---|---|---|
@@ -1354,6 +1356,33 @@ Once table-attribution collapse is set aside, the genuine content-level failure 
 For context, Wu et al. (2025) evaluated seven LLMs on medical citation accuracy using a substantially more rigorous verification framework (800 questions, 58K statement–source pairs, physician validation) and found that retrieval-augmented models substantially outperform API-only models on both URL validity and statement-level support — yet even their best configuration (GPT-4o with RAG) achieved only ~70% statement-level support. Our analysis is narrower in scope — limited to solo-cited listicle product claims with an LLM judge and manual review rather than a comprehensive statement-level pipeline — and operates in a different domain on newer model generations. Direct comparison of absolute rates is therefore not meaningful, but the directional finding is consistent: grounding infrastructure materially reduces citation errors compared to parametric-only generation.
 
 This finding reframes the "hallucination problem" in production RAG systems. For product recommendations backed by solo-cited listicles, models rarely fabricate facts about a product they have read — the comprehension layer is robust. The remaining errors are attribution errors: the model "knows" the facts but "forgets" which specific source it found them in.
+
+#### Cross-Model Judge Validation
+
+To verify that the listicle fidelity results are not artefacts of the judge model, we ran full cross-model validation: all 636 GPT claims were re-judged by Gemini 2.5 Flash, and all 480 Gemini claims were re-judged by GPT-5-mini — mirroring the DNA labeler fidelity audit in Section 2.5.3.
+
+**Structural field agreement** (1,826 matched product pairs across both datasets):
+
+| Field | GPT claims | Gemini claims | Pooled |
+|---|---|---|---|
+| `present_in_listicle` | 96.4% (κ=0.92) | 99.1% (κ=0.98) | **97.6%** |
+| `roster_item_is_product` | 97.3% (κ=0.94) | 99.4% (κ=0.99) | — |
+| `listicle_rank` | 100% (r=1.00) | 100% (r=1.00) | **100%** |
+| `host_product_in_listicle` | 92.8% (κ=0.82) | 92.5% (κ=0.76) | **92.7%** |
+
+**Semantic fidelity score (1–5)**:
+
+| Metric | GPT claims | Gemini claims | Pooled |
+|---|---|---|---|
+| Exact match | 74.1% | 78.1% | **75.8%** |
+| Within ±1 | 93.2% | 94.7% | **93.9%** |
+| Mean abs. difference | 0.355 | 0.303 | — |
+| Pearson r | 0.67 | 0.76 | — |
+| Weighted κ | 0.55 | 0.63 | — |
+
+**Attribution failure stability**: The two judges agree on `present_in_listicle` for 98.7% of GPT products and 99.4% of Gemini products. Only 50 out of 1,772 matched products (2.82%) have a true pass/fail conflict (one judge scores ≥4, the other ≤2). The net effect on attribution failure counts is +2 for GPT (11→13 among matched items) and 0 for Gemini. The manually verified failure rates (6.4% Gemini, 0.7% GPT) are unchanged.
+
+These agreement rates match or exceed the DNA labeler benchmark (91–95% structural agreement), confirming that all listicle analysis results — rank bias, host exclusion, and semantic fidelity — are reproducible across model families and are not artefacts of the judge model used.
 
 ---
 
