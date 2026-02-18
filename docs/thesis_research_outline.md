@@ -44,8 +44,8 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 
 - **The Macro Shift (8-Month Trend):** According to data from [Ahrefs (ChatGPT vs. Google)](https://chatgpt-vs-google.com/) analyzing **74,752 websites** between **June 2025 and January 2026**, total search traffic across the panel dropped by **7.5%** (from 494M to 457M visits).
 - **The AI Growth Engine:** In the same timeframe, referral traffic from AI chatbots grew by **27%** (from 2.9M to 3.7M visits).
-- **The "SEO is Not Dead" Reality:** While AI traffic is growing rapidly, traditional search still dominates the referral landscape by orders of magnitude. As noted by **Tim Soulo (CMO at Ahrefs)**, the strategic mistake is not ignoring AI, but abandoning SEO—our study proves that **AI grounding is parasitic on search results**, meaning SEO remains the prerequisite for AI visibility.
-- **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition: how these AI assistants "ground" their answers in the very search results that currently dominate the market. We measure the *dependency* of generation on search.
+- **Implication for visibility:** Although AI referral traffic is growing rapidly, conventional search still dominates the referral landscape. This suggests that, in many cases, LLM answers remain downstream of search visibility: the model can only cite what it retrieves.
+- **Thesis Motivation:** This study focuses on the **micro-level mechanics** of this transition — how assistants "ground" product recommendations in web sources, and how retrieval, selection, and citation interact with search rankings.
 
 ## 1.2 Theoretical Framework: From SEO to GEO
 
@@ -67,7 +67,7 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
     - **Freshness:** The only way to handle dynamic data (prices, news, product releases).
 
 ### 1.2.3 Sam Altman's "Tiny Model" Vision
-- Quoting the framework: *"The perfect AI is a very tiny model with superhuman reasoning... It doesn't need to contain the knowledge - just the ability to think, search, simulate, and solve."*
+- At Snowflake Summit 2025, Sam Altman described the framework he uses to think about AI's trajectory: *"a very tiny model with superhuman reasoning, 1 trillion tokens of context, and access to every tool you can imagine"* ([Source: Maginative on YouTube](https://www.youtube.com/watch?v=qhnJDDX2hhU)). The model does not need to contain knowledge — just the ability to reason over externally provided information.
 - **Thesis Connection:** This vision confirms that the future of search is not the death of the web, but the transformation of the web into a **distributed memory layer** for AI orchestrators.
 
 ### 1.2.4 The Economic & Technical Necessity of Retrieval
@@ -1110,6 +1110,8 @@ Computed from raw fetched text dumps in `data/fetched_content/` (see `data/enric
 **Interpretation**: listicles are ~2× longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
 
 **Relation to grounding budget research**: Our table measures **full page length** of candidate/cited sources, not the snippet-level context that is actually injected into the model's context window. For context on the system-level constraints these pages operate within: Petrovic (2025) reports a per-query grounding budget of ~2,000 words for Gemini (median 1,929, p95 2,798), with coverage inversely proportional to page length (61% for pages under 1K words, dropping to 13% for pages over 3K words). Petrovic (2025b) found that roughly one-third of source content (32%) survives into AI-generated citations. At the sub-page level, Indig (2026) analyzed 1.2 million ChatGPT search results and found that 44.2% of citations originate from the first 30% of page content, with citation likelihood correlating with definitive language and question-answer structure. These studies collectively describe how AI search systems ingest and compress web content — a pipeline our content size and Content DNA data sit within, but do not directly measure.
+
+**Token efficiency vs. citation visibility**: The grounding budget constraints above have motivated infrastructure-level responses such as Cloudflare's "Markdown for Agents" feature (Martinho & Allen, 2026), which reduces token consumption by up to 80% by serving markdown instead of HTML to AI crawlers. However, the question of whether format-level changes translate into citation advantages remains open. Punturo (2026) found no significant visibility difference in a controlled 381-page A/B test, and an analysis of 300,000 domains found no correlation between llms.txt adoption and AI citation rates (SE Ranking, 2025). This suggests that within the grounding budget pipeline, **what** content says (structural DNA, position, freshness) matters more than **how** it is served — a distinction our Content DNA and selection drift analyses are designed to capture.
 
 ## 3.5 Selection Drift (Enrichment-Based)
 *With the DNA profile established in 3.4, we now measure how the model's selection systematically diverges from the available pool along enriched feature dimensions.*
