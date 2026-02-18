@@ -706,14 +706,6 @@ body {
     gap: 5px;
 }
 
-.rank-drift-small {
-    font-size: 10px;
-    font-weight: bold;
-}
-
-.drift-pos { color: #27ae60; }
-.drift-neg { color: #e74c3c; }
-
 .rank-bar {
     width: 100%;
     background-color: var(--primary);
@@ -798,6 +790,47 @@ body {
     border-radius: 6px;
     padding: 10px;
     font-size: 0.8rem;
+}
+
+/* Grounded Segments and Citations */
+.grounded-segment {
+    padding: 2px 0;
+    border-bottom: 1px solid transparent;
+    transition: background 0.2s;
+    position: relative;
+}
+
+.grounded-segment:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-bottom-color: var(--primary);
+}
+
+.cit-container {
+    display: inline-flex;
+    gap: 2px;
+    margin-left: 4px;
+    vertical-align: super;
+}
+
+.cit-chip {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: bold;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+}
+
+.cit-chip:hover {
+    background: var(--primary-hover);
+    transform: scale(1.2);
 }
 
 .dna-header {

@@ -11,7 +11,7 @@ def normalize_url_key(raw_url):
 
 def main():
     db_path = 'geo_fresh.db'
-    jsonl_path = 'datapass/page_labels_gemini.jsonl'
+    jsonl_path = 'datapass/page_labels_gemini_v2.5.jsonl'
     
     if not os.path.exists(db_path):
         print(f"DB not found: {db_path}")

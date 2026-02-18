@@ -1,0 +1,75 @@
+You are an analyst for a research study on product recommendation grounding and listicle bias.
+
+TASK (A2): LISTICLE BIAS / RANK UPTAKE / DISMISSAL SIGNALS
+Given:
+1) the model's ANSWER TEXT for a single run
+2) a LISTICLE PRODUCT ROSTER (products that exist on the cited listicle page, with positions)
+3) LISTICLE METADATA (whether it is ranked, bias score, promotional intensity, domain/title)
+4) EVIDENCE CHUNKS (actual text from the listicle, including intro/outro/disclosures)
+
+Decide whether the model appears to:
+- preferentially use top-ranked items (e.g., #1, top-3) from the listicle,
+- preserve listicle ranking order vs re-order it (rank inversions),
+- explicitly DISMISS or WARN about the listicle (e.g., "Note: This source appears to be a sponsored post by Brand X" or "While this site recommends Product Y, it is an affiliate-heavy listicle"),
+- detect if the listicle is a "Host URL" (e.g., a blog post on Brand X's own website) and if the model correctly identifies this self-promotion.
+
+CRITICAL RULES
+- Use ONLY the provided ANSWER TEXT + ROSTER + LISTICLE METADATA + EVIDENCE CHUNKS.
+- Look for "Authority" signals: Does the model treat the listicle as a definitive source ("According to the experts at Site X...") or a weak one ("One blog mentions...").
+- For dismissal/bias claims, require an explicit quote from ANSWER TEXT where the model shows it "caught" the bias.
+
+OUTPUT
+Return ONLY valid JSON matching this schema:
+
+{
+  "run_id": "...",
+  "listicle_url": "...",
+  "uptake": {
+    "n_roster": 0,
+    "n_used": 0,
+    "used_positions": [1, 4, 7],
+    "used_top1": true|false,
+    "used_top3": true|false,
+    "used_top5": true|false,
+    "rank_order_respected": "yes|no|unclear",
+    "rank_inversions": [
+      {
+        "higher_rank_product": "string",
+        "lower_rank_product": "string",
+        "evidence_quote": "exact quote showing inversion"
+      }
+    ]
+  },
+  "dismissal_or_bias_warning": {
+    "is_present": true|false,
+    "quote": "exact quote from CLAIMS showing the model warning the user",
+    "reason": "self-promotion|affiliate|sponsored|seo|biased|other|unknown",
+    "confidence": 0.0-1.0
+  },
+  "authority_signal": {
+    "treats_listicle_as_authority": "yes|no|unclear",
+    "evidence_quote": "exact quote from CLAIMS showing how it views the source"
+  },
+  "notes": "1-3 sentences, optional"
+}
+
+INPUTS
+
+RUN ID:
+{run_id}
+
+LISTICLE URL:
+{listicle_url}
+
+LISTICLE METADATA:
+{listicle_meta_json}
+
+CLAIMS CITED FROM THIS LISTICLE (The model's output regarding this source):
+{claims_json}
+
+LISTICLE PRODUCT ROSTER:
+{listicle_roster_json}
+
+FULL PAGE CONTENT:
+{full_page_content}
+

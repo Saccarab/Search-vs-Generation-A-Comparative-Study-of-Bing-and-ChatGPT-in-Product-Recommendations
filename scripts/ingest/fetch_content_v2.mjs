@@ -19,7 +19,7 @@ import csv from 'csv-parser';
 
 const CONFIG = {
     xlsxPath: 'datapass/geo-enterprise-master.xlsx',
-    queuePath: 'data/enrichment/enrichment_queue.csv',
+    queuePath: 'data/enrichment/missing_drift_urls.csv',
     outDir: 'data/fetched_content',
     logPath: 'data/fetch_results.jsonl',
     concurrency: 5,
@@ -45,7 +45,9 @@ const CONFIG = {
         "instagram.com",
         "twitter.com",
         "x.com",
-        "linkedin.com"
+        "linkedin.com",
+        "tiktok.com",
+        "quora.com"
     ]
 };
 
@@ -150,8 +152,20 @@ async function main() {
     console.log("Starting fetch process...");
     if (!fs.existsSync(CONFIG.outDir)) fs.mkdirSync(CONFIG.outDir, { recursive: true });
 
-    const alreadyFetched = await getAlreadyFetchedUrls(CONFIG.xlsxPath);
-    console.log(`Loaded ${alreadyFetched.size} already fetched URLs from Excel.`);
+    const alreadyFetched = new Set();
+    // Also check local directory for existing files to avoid re-fetching
+    if (fs.existsSync(CONFIG.outDir)) {
+        const files = fs.readdirSync(CONFIG.outDir);
+        files.forEach(f => {
+            if (f.endsWith('.json')) {
+                try {
+                    const data = JSON.parse(fs.readFileSync(path.join(CONFIG.outDir, f), 'utf8'));
+                    if (data.normalized_url) alreadyFetched.add(data.normalized_url);
+                } catch (e) {}
+            }
+        });
+    }
+    console.log(`Loaded ${alreadyFetched.size} already fetched URLs from local storage.`);
 
     const queue = await loadQueue(CONFIG.queuePath);
     console.log(`Loaded ${queue.length} URLs from queue.`);
@@ -171,7 +185,8 @@ async function main() {
     const toFetch = CONFIG.max > 0 ? missing.slice(0, CONFIG.max) : missing;
     if (CONFIG.max > 0) console.log(`Limiting to first ${CONFIG.max} URLs.`);
 
-    const limiter = new Bottleneck({ maxConcurrent: CONFIG.concurrency, minTime: CONFIG.minTime });
+    // Increase concurrency for faster fetching
+    const limiter = new Bottleneck({ maxConcurrent: 10, minTime: 100 });
     let count = 0;
 
     const tasks = toFetch.map(row => limiter.schedule(async () => {
@@ -183,7 +198,6 @@ async function main() {
 
         // Skip if files already exist locally
         if (fs.existsSync(txtPath) && fs.existsSync(jsonPath)) {
-            console.log(`[skip] Already exists: ${url}`);
             return;
         }
 

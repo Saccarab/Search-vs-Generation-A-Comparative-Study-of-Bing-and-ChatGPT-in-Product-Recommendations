@@ -1,0 +1,27 @@
+Example: explicit localization via fan-out query injection (redacted)
+
+Context (user observation):
+- User prompt: "what is the best bakery" (no location specified).
+- Fan-out queries inject an explicit location ("Munich, Germany"), yielding locally-scoped results.
+
+NOTE: This file is intentionally REDACTED to remove sensitive identifiers/tokens.
+Removed/redacted fields include (non-exhaustive): `resume_conversation_token`, `conversation_id`, `message_id`, `request_id`, `turn_trace_id`, etc.
+
+--- BEGIN REDACTED NETWORK EXCERPT ---
+
+event: delta
+data: {"v": {"message": {"author": {"role": "tool", "name": "web.run"}, "metadata": {
+  "search_model_queries": {
+    "type": "search_model_queries",
+    "queries": [
+      "best bakery near Munich Germany",
+      "top rated bakeries Munich Germany bakery reviews Munich",
+      "best bakery in Munich"
+    ]
+  },
+  "search_turns_count": 1,
+  "search_source": "composer_auto"
+}}}}
+
+--- END REDACTED NETWORK EXCERPT ---
+

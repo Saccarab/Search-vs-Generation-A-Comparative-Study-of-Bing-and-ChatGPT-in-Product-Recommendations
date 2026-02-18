@@ -1,0 +1,78 @@
+You are an analyst for a research study on product recommendation grounding.
+
+TASK (A): LISTICLE SELECTION / OMISSION (UPTAKE)
+Given:
+1) the model's ANSWER TEXT for a single run
+2) a LISTICLE PRODUCT ROSTER (products that exist on the cited listicle page)
+Decide which roster products are actually USED by the answer, which are OMITTED, and whether the answer invents products not present on the roster.
+
+CRITICAL RULES
+- Use ONLY the provided ANSWER TEXT and LISTICLE PRODUCT ROSTER.
+- Match products conservatively:
+  - count as USED only if the answer mentions the product name clearly (allow minor spelling variants).
+  - do NOT count generic category mentions (e.g., “AI dubbing tools”) as a product mention.
+  - if uncertain between two similar names, mark as ambiguous and do NOT count as USED.
+- Do not add new products to the roster.
+
+OUTPUT
+Return ONLY valid JSON matching this schema:
+
+{
+  "run_id": "...",
+  "listicle_url": "...",
+  "used_products": [
+    {
+      "product_name": "...",
+      "position_in_listicle": 1,
+      "mention_spans": [
+        {"quote":"exact quote from answer containing the mention"}
+      ],
+      "mention_type": "recommended|mentioned|compared|dismissed|other"
+    }
+  ],
+  "omitted_products": [
+    {
+      "product_name": "...",
+      "position_in_listicle": 7,
+      "omission_note": "optional short note if obvious (e.g., answer focused on free-only; roster item is paid-only) or null"
+    }
+  ],
+  "invented_products": [
+    {
+      "product_name": "...",
+      "evidence_quote": "exact quote from answer",
+      "confidence": 0.0-1.0
+    }
+  ],
+  "ambiguous_matches": [
+    {
+      "answer_mention_quote": "...",
+      "candidate_roster_products": ["...", "..."],
+      "note": "why ambiguous"
+    }
+  ],
+  "summary": {
+    "n_roster": 0,
+    "n_used": 0,
+    "n_omitted": 0,
+    "n_invented": 0
+  }
+}
+
+INPUTS
+
+RUN ID:
+{run_id}
+
+LISTICLE URL:
+{listicle_url}
+
+ANSWER TEXT:
+<<<{answer_text}>>>
+
+LISTICLE PRODUCT ROSTER:
+[
+  {"product_name":"...", "position_in_listicle": 1},
+  {"product_name":"...", "position_in_listicle": 2}
+]
+

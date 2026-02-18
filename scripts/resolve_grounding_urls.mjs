@@ -24,13 +24,9 @@ async function resolveVertexUrls() {
     const files = fs.readdirSync(RESPONSES_DIR).filter(f => f.endsWith('.json'));
     const allUrls = new Set();
 
-    // 1. Collect all unique Vertex AI URLs (P004-P007 for our current analysis)
+    // 1. Collect all unique Vertex AI URLs (all runs in data/gemini_raw_responses)
     files.forEach(file => {
         try {
-            const id = file.split('_')[0];
-            const num = parseInt(id.replace('P', ''));
-            if (num < 4 || num > 7) return; // Only process P004-P007
-
             const content = JSON.parse(fs.readFileSync(path.join(RESPONSES_DIR, file), 'utf-8'));
             const chunks = content.groundingMetadata?.groundingChunks || [];
             chunks.forEach(chunk => {
@@ -47,14 +43,24 @@ async function resolveVertexUrls() {
     console.log(`Found ${allUrls.size} unique Vertex AI URLs to resolve.`);
 
     const urlList = Array.from(allUrls);
-    let resolvedCount = 0;
+    let successCount = 0;
+    let skippedCount = 0;
+    let failedCount = 0;
 
     // 2. Resolve them (following redirects)
-    for (const url of urlList) {
-        if (mapping[url] && mapping[url] !== url) continue; // Skip already resolved
+    for (let i = 0; i < urlList.length; i++) {
+        const url = urlList[i];
+        // Skip already resolved to a non-Vertex URL
+        if (mapping[url] && mapping[url] !== url) {
+            skippedCount++;
+            continue;
+        }
 
         try {
-            console.log(`   Resolving [${resolvedCount + 1}/${urlList.length}]: ${url.substring(0, 60)}...`);
+            // Use true index progress; successCount-only logging is misleading when there are many 403/429s.
+            console.log(
+                `   Resolving [${i + 1}/${urlList.length}] (ok=${successCount}, skip=${skippedCount}, fail=${failedCount}): ${url.substring(0, 60)}...`
+            );
             
             const response = await axios.get(url, {
                 maxRedirects: 10,
@@ -66,9 +72,9 @@ async function resolveVertexUrls() {
 
             const finalUrl = response.request.res.responseUrl || url;
             mapping[url] = finalUrl;
-            resolvedCount++;
+            successCount++;
 
-            if (resolvedCount % 5 === 0) {
+            if (successCount % 5 === 0) {
                 fs.writeFileSync(OUTPUT_MAPPING, JSON.stringify(mapping, null, 2));
             }
 
@@ -77,11 +83,12 @@ async function resolveVertexUrls() {
         } catch (error) {
             console.error(`   ❌ Failed to resolve: ${url.substring(0, 60)}... | Error: ${error.message}`);
             mapping[url] = url; 
+            failedCount++;
         }
     }
 
     fs.writeFileSync(OUTPUT_MAPPING, JSON.stringify(mapping, null, 2));
-    console.log(`\n✨ URL Resolution Complete. ${resolvedCount} URLs processed/updated.`);
+    console.log(`\n✨ URL Resolution Complete. ok=${successCount}, skip=${skippedCount}, fail=${failedCount}.`);
 }
 
 resolveVertexUrls();

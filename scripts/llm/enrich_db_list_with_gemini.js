@@ -18,7 +18,7 @@ const { promisify } = require("util");
 // --- CONFIGURATION (Matches original where possible) ---
 const CONFIG = {
     dbPath: 'geo_fresh.db',
-    jsonlPath: 'datapass/page_labels_gemini.jsonl',
+    jsonlPath: 'datapass/page_labels_gemini_v2.5.jsonl',
     contentDir: 'data/fetched_content',
     promptPath: 'prompts/page_label_prompt_v1.txt',
     concurrency: Number(process.env.CONCURRENCY || "5"),

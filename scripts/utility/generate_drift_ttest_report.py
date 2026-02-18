@@ -4,16 +4,18 @@ Outputs to data/enrichment/ttest_results/
 
 Methodology (per-run, no overlap):
   For each run, split SERP results (filtered by content type) into two groups:
-    - Cited-from-SERP: URLs in the SERP that ChatGPT cited in that run
-    - Not-Cited-from-SERP: URLs in the SERP that ChatGPT did NOT cite in that run
+    - Cited-from-SERP: URLs in the SERP that the model cited in that run
+    - Not-Cited-from-SERP: URLs in the SERP that the model did NOT cite in that run
   Pool across all runs and run Welch's t-test on each binary DNA feature.
 
   A URL may contribute to multiple runs (once per run it appears in).
   Each run is an independent selection event: in run A the model may cite URL X,
   in run B it may not, even though X appeared in both SERPs.
 
-  Gemini: uses review_gemini_drift.csv (per-unique-URL, no run granularity),
-  so Cited vs Non-Cited and Cited vs Google SERP (deduplicated) are used instead.
+  GPT: SERP from Bing Page 1 (enterprise + personal) and Google Top-10 (personal).
+       Citations from geo_fresh.db citations table.
+  Gemini: SERP from Google Top-10 (fan-out queries). Citations reconstructed from
+          raw Gemini responses via master_bundle.json (Vertex grounding chunks).
 """
 import sqlite3, csv, math, os, json
 

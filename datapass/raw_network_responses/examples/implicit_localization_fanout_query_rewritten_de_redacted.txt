@@ -1,0 +1,27 @@
+Example: implicit localization via fan-out query rewrite (redacted)
+
+Context (user observation):
+- User issued an English prompt from Munich, Germany.
+- One of the internal fan-out queries was rewritten into German.
+- This produced German-language SERP results, motivating the use of a US proxy for consistency.
+
+NOTE: This file is intentionally REDACTED to remove sensitive identifiers/tokens.
+Removed/redacted fields include (non-exhaustive): `resume_conversation_token`, `conversation_id`, `message_id`, `request_id`, `turn_trace_id`, etc.
+
+--- BEGIN REDACTED NETWORK EXCERPT ---
+
+event: delta
+data: {"v": {"message": {"author": {"role": "tool", "name": "web.run"}, "metadata": {
+  "search_model_queries": {
+    "type": "search_model_queries",
+    "queries": [
+      "free website or program to translate video and add subtitles",
+      "kostenlos video übersetzen und Untertitel automatisch hinzufügen Tool free video translation subtitle"
+    ]
+  },
+  "search_turns_count": 1,
+  "search_source": "composer_auto"
+}}}}
+
+--- END REDACTED NETWORK EXCERPT ---
+

@@ -93,31 +93,69 @@
 
         <div class="chart-section">
             <h3>Selection Drift Analysis (DNA Distribution)</h3>
-            <p>Comparing the DNA of <strong>Cited</strong> links vs. the overall <strong>SERP</strong> links. Positive lift indicates a preference for that feature.</p>
-            <table class="data-table" id="driftTable">
+            <p>Thesis-grade split drift tables computed offline (Listicles vs Product Pages). Values are percentage-point (pp) drift from SERP menu → cited order.</p>
+
+            <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin: 10px 0 14px;">
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <span style="font-size: 12px; color:#666; font-weight:600;">View:</span>
+                    <select id="driftViewSelect" style="padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:white;">
+                        <option value="metrics">Metrics</option>
+                        <option value="tone">Tone (top +/-)</option>
+                        <option value="content_format">Content format (top +/-)</option>
+                    </select>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <span style="font-size: 12px; color:#666; font-weight:600;">Content type:</span>
+                    <button id="ctypeListicle" class="btn-secondary" style="width:auto; padding:8px 12px;">Listicles</button>
+                    <button id="ctypeProduct" class="btn-secondary" style="width:auto; padding:8px 12px;">Product pages</button>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <span style="font-size: 12px; color:#666; font-weight:600;">Study:</span>
+                    <select id="driftStudySelect" style="padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:white;">
+                        <option value="Gemini (Google T10)">Gemini (Google T10)</option>
+                        <option value="GPT Personal (Google T10)">GPT Personal (Google T10)</option>
+                        <option value="GPT Personal (Bing P1, Top5)">GPT Personal (Bing P1, Top5)</option>
+                        <option value="GPT Enterprise (Bing P1)">GPT Enterprise (Bing P1)</option>
+                    </select>
+                </div>
+            </div>
+            <div id="driftSampleSizes" style="font-size: 12px; color:#475569; margin-bottom: 10px;"></div>
+
+            <table class="data-table" id="driftSplitTable">
                 <thead>
                     <tr>
                         <th>Feature</th>
-                        <th>SERP %</th>
-                        <th>Cited %</th>
-                        <th>Lift (pp)</th>
+                        <th>Top 1-5 Drift</th>
+                        <th>Bot 6-10 Drift</th>
+                        <th>Weighted Avg</th>
                     </tr>
                 </thead>
-                <tbody id="driftTableBody">
-                    <!-- JS Populated -->
-                </tbody>
+                <tbody id="driftSplitTableBody"></tbody>
             </table>
+
+            <div id="driftCategoricalWrap" style="display:none; margin-top: 14px;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
+                    <div>
+                        <h4 style="margin:0 0 8px;">Top positive drift</h4>
+                        <table class="data-table">
+                            <thead><tr><th>Value</th><th>Weighted Avg</th></tr></thead>
+                            <tbody id="driftCatPosBody"></tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h4 style="margin:0 0 8px;">Top negative drift</h4>
+                        <table class="data-table">
+                            <thead><tr><th>Value</th><th>Weighted Avg</th></tr></thead>
+                            <tbody id="driftCatNegBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="chart-section">
-            <h3>Citation Density & Rank Drift</h3>
-            <p>Comparing <strong>Availability</strong> (how often a rank appears in SERP) vs. <strong>Selection</strong> (how often Gemini cites it).</p>
-            
-            <div class="drift-explanation" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; border-left: 4px solid #3498db;">
-                <strong>What is Rank Drift?</strong><br>
-                If Gemini picked links randomly, the "Cited %" would match the "SERP %" (approx 3.3% for each rank). 
-                A positive <strong>Drift</strong> (e.g., +40%) means Gemini is "over-indexing" on that rank, showing a strong positional preference.
-            </div>
+            <h3>Citation Density by SERP Rank</h3>
+            <p>How often Gemini cites each SERP rank (rank distribution of cited sources).</p>
 
             <div id="rankDistributionChart" class="rank-bars-container">
                 <!-- JS Populated -->
@@ -129,11 +167,9 @@
                         <th>Rank</th>
                         <th>Citations</th>
                         <th>Cited %</th>
-                        <th>SERP %</th>
-                        <th>Drift (Lift)</th>
                     </tr>
                 </thead>
-                <tbody id="rankDriftTableBody">
+                <tbody id="rankTableBody">
                     <!-- JS Populated -->
                 </tbody>
             </table>
@@ -209,6 +245,9 @@
             document.getElementById('totalChunks').textContent = totalChunks;
             document.getElementById('globalSurvival').textContent = (totalMatches / totalChunks * 100).toFixed(1) + '%';
 
+            // Render offline split drift tables
+            await initSplitDriftTables();
+
             // DYNAMICALLY GENERATE QUERY SEQUENCE CARDS
             const summaryGrid = document.getElementById('summaryGrid');
             const queryPositionCounts = {}; // index -> count
@@ -274,40 +313,31 @@
 
             // Populate Chart & Table
             const chart = document.getElementById('rankDistributionChart');
-            const driftTableBody = document.getElementById('rankDriftTableBody');
+            const rankTableBody = document.getElementById('rankTableBody');
             const dist = data.rankDistribution || [];
             const maxCount = Math.max(...dist.map(d => d.count));
             
             chart.innerHTML = dist.slice(0, 30).map(d => {
                 const height = maxCount > 0 ? (d.count / maxCount * 100) : 0;
-                const driftClass = parseFloat(d.drift) > 0 ? 'drift-pos' : 'drift-neg';
                 return `
                     <div class="rank-bar-wrapper">
                         <div class="rank-bar-value">${d.count}</div>
                         <div class="rank-bar" style="height: ${height}%" title="Rank ${d.rank}: ${d.count} citations (${d.citedPercentage}%)"></div>
                         <div class="rank-label">${d.rank}</div>
-                        <div class="rank-drift-small ${driftClass}">${parseFloat(d.drift) > 0 ? '+' : ''}${d.drift}%</div>
                     </div>
                 `;
             }).join('');
 
-            driftTableBody.innerHTML = dist.slice(0, 30).map(d => {
-                const drift = parseFloat(d.drift);
-                const driftColor = drift > 0 ? '#27ae60' : (drift < -1 ? '#e74c3c' : '#7f8c8d');
+            rankTableBody.innerHTML = dist.slice(0, 30).map(d => {
                 return `
                     <tr>
                         <td><strong>Rank ${d.rank}</strong></td>
                         <td>${d.count}</td>
                         <td>${d.citedPercentage}%</td>
-                        <td>${d.serpPercentage}%</td>
-                        <td style="color: ${driftColor}; font-weight: bold;">${drift > 0 ? '+' : ''}${d.drift}%</td>
                     </tr>
                 `;
             }).join('');
 
-            // DRIFT ANALYSIS
-            renderDriftAnalysis(data);
-            
             // GLOBAL DNA BREAKDOWN
             renderGlobalDNABreakdown(data);
 
@@ -322,6 +352,102 @@
                 a.download = 'gemini_rank_distribution.csv';
                 a.click();
             };
+        }
+
+        let DRIFT_SPLIT = null;
+        let driftContentType = 'listicle';
+        let driftView = 'metrics';
+
+        function fmtPP(x) {
+            if (x === null || x === undefined) return 'N/A';
+            const v = Number(x);
+            if (Number.isNaN(v)) return 'N/A';
+            const color = v > 0 ? '#16a34a' : v < 0 ? '#dc2626' : 'inherit';
+            const bold = v !== 0 ? 'font-weight:600;' : '';
+            return `<span style="color:${color}; ${bold}">${v >= 0 ? '+' : ''}${v.toFixed(2)}pp</span>`;
+        }
+
+        async function initSplitDriftTables() {
+            try {
+                const resp = await fetch('/api/drift_split');
+                DRIFT_SPLIT = await resp.json();
+            } catch (e) {
+                console.warn('Failed to load drift split JSON', e);
+                return;
+            }
+
+            const btnList = document.getElementById('ctypeListicle');
+            const btnProd = document.getElementById('ctypeProduct');
+            const select = document.getElementById('driftStudySelect');
+            const viewSelect = document.getElementById('driftViewSelect');
+
+            const setActive = () => {
+                // simple active-state styling
+                const on = { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' };
+                const off = { background: 'white', color: '#333', borderColor: 'var(--border)' };
+                Object.assign(btnList.style, driftContentType === 'listicle' ? on : off);
+                Object.assign(btnProd.style, driftContentType === 'product_page' ? on : off);
+            };
+
+            btnList.addEventListener('click', () => { driftContentType = 'listicle'; setActive(); renderSplitDriftTable(); });
+            btnProd.addEventListener('click', () => { driftContentType = 'product_page'; setActive(); renderSplitDriftTable(); });
+            select.addEventListener('change', renderSplitDriftTable);
+            viewSelect.addEventListener('change', () => { driftView = viewSelect.value; renderSplitDriftTable(); });
+
+            setActive();
+            renderSplitDriftTable();
+        }
+
+        function renderSplitDriftTable() {
+            if (!DRIFT_SPLIT) return;
+            const select = document.getElementById('driftStudySelect');
+            const study = select.value;
+            const sizesEl = document.getElementById('driftSampleSizes');
+            const sizes = (((DRIFT_SPLIT.sample_sizes || {})[driftContentType] || {})[study]) || null;
+            if (sizes) {
+                const top = sizes.top_1_5;
+                const bot = sizes.bot_6_10;
+                const w = sizes.weighted_window;
+                sizesEl.textContent = `Sample sizes (with DNA): Top1–5 menu_n=${top.menu_n}, order_n=${top.order_n}` +
+                    (bot ? ` | Bot6–10 menu_n=${bot.menu_n}, order_n=${bot.order_n}` : '') +
+                    ` | Weighted window menu_n=${w.menu_n}, order_n=${w.order_n}`;
+            } else {
+                sizesEl.textContent = '';
+            }
+            const metricsTable = document.getElementById('driftSplitTable');
+            const catWrap = document.getElementById('driftCategoricalWrap');
+
+            if (driftView === 'metrics') {
+                metricsTable.style.display = '';
+                catWrap.style.display = 'none';
+                const rows = (((DRIFT_SPLIT.tables || {})[driftContentType] || {})[study]) || [];
+                const body = document.getElementById('driftSplitTableBody');
+                body.innerHTML = '';
+                rows.forEach(r => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${r.feature}</strong></td>
+                        <td>${fmtPP(r.top_1_5_drift_pp)}</td>
+                        <td>${fmtPP(r.bot_6_10_drift_pp)}</td>
+                        <td>${fmtPP(r.weighted_avg_drift_pp)}</td>
+                    `;
+                    body.appendChild(tr);
+                });
+                return;
+            }
+
+            // categorical views
+            metricsTable.style.display = 'none';
+            catWrap.style.display = '';
+            const cats = (((DRIFT_SPLIT.categoricals || {})[driftContentType] || {})[study]) || {};
+            const key = driftView; // 'tone' or 'content_format'
+            const pos = (cats[key] || {}).top_positive || [];
+            const neg = (cats[key] || {}).top_negative || [];
+
+            const posBody = document.getElementById('driftCatPosBody');
+            const negBody = document.getElementById('driftCatNegBody');
+            posBody.innerHTML = pos.map(r => `<tr><td>${r.value}</td><td>${fmtPP(r.weighted_avg_drift_pp)}</td></tr>`).join('');
+            negBody.innerHTML = neg.map(r => `<tr><td>${r.value}</td><td>${fmtPP(r.weighted_avg_drift_pp)}</td></tr>`).join('');
         }
 
         function normalizeUrl(url) {
@@ -402,85 +528,8 @@
             renderTable(toneCounts, toneBody);
         }
 
-        function renderDriftAnalysis(data) {
-            const driftBody = document.getElementById('driftTableBody');
-            const enriched = data.enrichedData || {};
-            
-            const serpCounts = {}; // feature -> count
-            const citedCounts = {}; // feature -> count
-            let totalSerpLinks = 0;
-            let totalCitedLinks = 0;
-
-            // 1. Count SERP DNA
-            data.runs.forEach(run => {
-                Object.values(run.serps || {}).forEach(results => {
-                    results.forEach(res => {
-                        const norm = normalizeUrlKey(res.link);
-                        const dnaRaw = enriched[norm];
-                        if (dnaRaw) {
-                            const dna = dnaRaw.urls || dnaRaw;
-                            totalSerpLinks++;
-                            const features = [
-                                `Intent: ${dna.primary_intent}`,
-                                `Format: ${dna.content_format}`,
-                                `Tone: ${dna.tone}`,
-                                `Freshness: ${dna.freshness_cue_strength ? dna.freshness_cue_strength + '/5' : (dna.freshness || 'N/A')}`
-                            ];
-                            features.forEach(f => serpCounts[f] = (serpCounts[f] || 0) + 1);
-                        }
-                    });
-                });
-            });
-
-            // 2. Count Cited DNA
-            data.runs.forEach(run => {
-                (run.groundingChunks || []).forEach(chunk => {
-                    const norm = normalizeUrlKey(chunk.web?.resolvedUri || chunk.web?.uri);
-                    const dnaRaw = enriched[norm];
-                    if (dnaRaw) {
-                        const dna = dnaRaw.urls || dnaRaw;
-                        totalCitedLinks++;
-                        const features = [
-                            `Intent: ${dna.primary_intent}`,
-                            `Format: ${dna.content_format}`,
-                            `Tone: ${dna.tone}`,
-                            `Freshness: ${dna.freshness_cue_strength ? dna.freshness_cue_strength + '/5' : (dna.freshness || 'N/A')}`
-                        ];
-                        features.forEach(f => citedCounts[f] = (citedCounts[f] || 0) + 1);
-                    }
-                });
-            });
-
-            if (totalSerpLinks === 0 || totalCitedLinks === 0) {
-                driftBody.innerHTML = '<tr><td colspan="4">Insufficient DNA data for drift analysis.</td></tr>';
-                return;
-            }
-
-            // 3. Calculate Lift
-            const allFeatures = Array.from(new Set([...Object.keys(serpCounts), ...Object.keys(citedCounts)]));
-            const driftData = allFeatures.map(f => {
-                const serpPct = (serpCounts[f] || 0) / totalSerpLinks * 100;
-                const citedPct = (citedCounts[f] || 0) / totalCitedLinks * 100;
-                return {
-                    feature: f,
-                    serpPct,
-                    citedPct,
-                    lift: citedPct - serpPct
-                };
-            }).sort((a, b) => b.lift - a.lift);
-
-            // 4. Render
-            driftBody.innerHTML = driftData.map(d => `
-                <tr>
-                    <td>${d.feature}</td>
-                    <td>${d.serpPct.toFixed(1)}%</td>
-                    <td>${d.citedPct.toFixed(1)}%</td>
-                    <td style="color: ${d.lift > 0 ? 'green' : 'red'}; font-weight: bold;">
-                        ${d.lift > 0 ? '+' : ''}${d.lift.toFixed(1)} pp
-                    </td>
-                </tr>
-            `).join('');
-        }
+        // NOTE: Legacy "computed-in-browser drift table" removed.
+        // Drift is now sourced from the offline artifact at /api/drift_split (data/enrichment/drift_split_tables.json).
 
         init();
     </script>

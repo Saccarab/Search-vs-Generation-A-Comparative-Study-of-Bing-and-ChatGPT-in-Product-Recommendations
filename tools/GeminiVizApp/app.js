@@ -511,7 +511,7 @@ function renderGroundingChunks(run) {
         }
         
         return `
-            <div class="chunk-card ${matchesTopN ? 'chunk-matched' : ''}">
+            <div class="chunk-card ${matchesTopN ? 'chunk-matched' : ''}" id="chunk-${idx}">
                 <div class="chunk-header">
                     <span class="chunk-index">[${idx}]</span>
                     <span class="chunk-title-text">${chunk.web?.title || 'Untitled Source'}</span>
@@ -564,18 +564,78 @@ function renderFanOutQueries(run) {
 function renderGeminiResponse(run) {
     const container = document.getElementById('geminiResponse');
     let text = run.geminiResponse;
-    
-    // Links are already resolved at build time in the markdown text
-    text = text.replace(/\[(.*?)\]\((.*?)\)/g, (match, title, url) => {
-        return `<a href="${url}" target="_blank" class="gemini-link">${title}</a>`;
+    const supports = run.groundingSupports || [];
+
+    if (supports.length === 0) {
+        // Fallback to basic rendering if no supports
+        text = text.replace(/\[(.*?)\]\((.*?)\)/g, (match, title, url) => {
+            return `<a href="${url}" target="_blank" class="gemini-link">${title}</a>`;
+        });
+        text = text.replace(/\n/g, '<br>');
+        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        container.innerHTML = text;
+        return;
+    }
+
+    // Sort supports by startIndex
+    const sortedSupports = [...supports].sort((a, b) => (a.segment?.startIndex || 0) - (b.segment?.startIndex || 0));
+
+    let html = '';
+    let lastIdx = 0;
+
+    sortedSupports.forEach(support => {
+        const start = support.segment?.startIndex || 0;
+        const end = support.segment?.endIndex || 0;
+        const segText = support.segment?.text || '';
+        const chunkIndices = support.groundingChunkIndices || [];
+
+        // Add text before this segment
+        if (start > lastIdx) {
+            html += formatText(text.substring(lastIdx, start));
+        }
+
+        // Add the segment itself with a citation wrapper
+        const citationChips = chunkIndices.map(idx => {
+            const chunk = run.groundingChunks[idx];
+            return `<span class="cit-chip" onclick="highlightChunk(${idx})" title="${chunk?.web?.title || 'Source'}">${idx}</span>`;
+        }).join('');
+
+        html += `<span class="grounded-segment">${formatText(segText)}<span class="cit-container">${citationChips}</span></span>`;
+        lastIdx = end;
     });
 
-    // Handle newlines and bolding
-    text = text.replace(/\n/g, '<br>');
-    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    
-    container.innerHTML = text;
+    // Add remaining text
+    if (lastIdx < text.length) {
+        html += formatText(text.substring(lastIdx));
+    }
+
+    container.innerHTML = html;
 }
+
+function formatText(t) {
+    // First handle bolding
+    let out = t.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Then handle newlines
+    out = out.replace(/\n/g, '<br>');
+    // Finally handle any remaining markdown links that weren't in segments
+    out = out.replace(/\[(.*?)\]\((.*?)\)/g, (match, title, url) => {
+        return `<a href="${url}" target="_blank" class="gemini-link">${title}</a>`;
+    });
+    return out;
+}
+
+window.highlightChunk = (idx) => {
+    const card = document.getElementById(`chunk-${idx}`);
+    if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.style.boxShadow = '0 0 20px rgba(52, 152, 219, 0.8)';
+        card.style.borderColor = 'var(--primary)';
+        setTimeout(() => {
+            card.style.boxShadow = '';
+            card.style.borderColor = '';
+        }, 3000);
+    }
+};
 
 function renderSerpTabs(run) {
     const tabsContainer = document.getElementById('serpTabs');

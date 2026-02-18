@@ -102,10 +102,13 @@ def main():
             if query_type != 'hidden_query':
                 continue
             
-            # Extract page number from search_parameters.start (0=page1, 10=page2, etc.)
-            search_params = data.get('search_parameters', {})
+            # Extract page number.
+            # IMPORTANT: our SerpAPI collector may aggregate multiple pages into one file.
+            # If so, file-level search_parameters.start reflects only the *last* fetched page.
+            # Prefer per-result _page_num/_global_position when present.
+            search_params = data.get('search_parameters', {}) or {}
             start = int(search_params.get('start', 0) or 0)
-            page_num = (start // 10) + 1
+            fallback_page_num = (start // 10) + 1
             
             # Track counts
             if account_type == 'personal':
@@ -114,10 +117,26 @@ def main():
                 enterprise_count += 1
             
             # Insert organic results
-            for result in data.get('organic_results', []):
+            # If this file aggregates multiple pages but lacks per-result _page_num,
+            # recover page_num/position deterministically from the result order.
+            organic_results = data.get('organic_results', []) or []
+            aggregated_multi_page = (len(organic_results) > 10 and start > 0)
+            for idx, result in enumerate(organic_results):
                 url = result.get('link', '')
-                pos = result.get('position') or 0
-                global_pos = (page_num - 1) * 10 + pos
+                if result.get('_page_num') is not None:
+                    pos = int(result.get('_position_in_page') or result.get('position') or 0)
+                    page_num = int(result.get('_page_num') or fallback_page_num)
+                    global_pos = int(result.get('_global_position') or ((page_num - 1) * 10 + pos))
+                elif aggregated_multi_page:
+                    # The list is 20-ish items (page1 then page2...) but search_parameters.start points to last page.
+                    seq_rank = idx + 1  # 1..N in the aggregated list
+                    page_num = ((seq_rank - 1) // 10) + 1
+                    pos = ((seq_rank - 1) % 10) + 1
+                    global_pos = seq_rank
+                else:
+                    pos = int(result.get('position') or 0)
+                    page_num = fallback_page_num
+                    global_pos = ((page_num - 1) * 10 + pos) if pos else 0
                 conn.execute('''
                     INSERT INTO google_results 
                     (run_id, chatgpt_run_id, prompt_id, account_type, query, query_type,
@@ -143,10 +162,11 @@ def main():
                 total_urls += 1
             
             # Also insert video results (valuable!)
-            for result in data.get('inline_videos', []):
+            for idx, result in enumerate(data.get('inline_videos', [])):
                 url = result.get('link', '')
-                pos = result.get('position') or 0
-                global_pos = (page_num - 1) * 10 + pos
+                pos = int(result.get('_position_in_page') or result.get('position') or 0)
+                page_num = int(result.get('_page_num') or fallback_page_num)
+                global_pos = int(result.get('_global_position') or 0)
                 conn.execute('''
                     INSERT INTO google_results 
                     (run_id, chatgpt_run_id, prompt_id, account_type, query, query_type,

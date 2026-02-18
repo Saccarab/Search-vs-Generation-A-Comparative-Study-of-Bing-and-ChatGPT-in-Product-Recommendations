@@ -3,10 +3,10 @@
  * 
  * What it does:
  * - Reads unique URLs from geo_fresh.db (Cited, Additional, Rejected).
- * - Skips URLs already successfully labeled in datapass/page_labels_gemini.jsonl.
+ * - Skips URLs already successfully labeled in datapass/page_labels_gemini_v2.5.jsonl.
  * - Loads local content from data/fetched_content/ (<hash>.txt and <hash>.json).
  * - Calls Vertex AI (Gemini) with prompts/page_label_prompt_v1.txt.
- * - Appends results to datapass/page_labels_gemini.jsonl.
+ * - Appends results to datapass/page_labels_gemini_v2.5.jsonl.
  * 
  * API Auth: Uses Google Cloud Application Default Credentials (ADC) or env vars.
  *   GCP_PROJECT_ID, GCP_LOCATION (default: us-central1)

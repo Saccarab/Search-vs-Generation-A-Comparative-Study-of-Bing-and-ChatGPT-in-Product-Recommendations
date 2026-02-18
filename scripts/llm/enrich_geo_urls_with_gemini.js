@@ -34,7 +34,7 @@ const path = require("path");
 const ExcelJS = require("exceljs");
 const Bottleneck = require("bottleneck");
 
-// We use Google's GenAI SDK (`@google/genai`) instead of raw fetch().
+We use Google's GenAI SDK (`@google/genai`) instead of raw fetch().
 // This gives better compatibility with Google's recommended integrations and
 // tends to provide clearer errors for quota/overload conditions (429/503).
 let _genAiClientPromise = null;

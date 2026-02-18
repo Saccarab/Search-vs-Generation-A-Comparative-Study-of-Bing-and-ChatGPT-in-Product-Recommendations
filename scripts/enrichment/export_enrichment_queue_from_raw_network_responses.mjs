@@ -6,7 +6,7 @@ function parseArgs(argv) {
   const out = {
     rawDir: path.join("datapass", "raw_network_responses"),
     xlsx: "", // optional
-    jsonl: "datapass/page_labels_gemini.jsonl,datapass/page_labels_gpt.jsonl", // comma list of existing labels
+    jsonl: "datapass/page_labels_gemini_v2.5.jsonl,datapass/page_labels_gpt.jsonl", // comma list of existing labels
     outCsv: path.join("data", "enrichment", "enrichment_queue.csv"),
     account: "all", // all|personal|enterprise
     include: "cited,additional,rejected", // comma list

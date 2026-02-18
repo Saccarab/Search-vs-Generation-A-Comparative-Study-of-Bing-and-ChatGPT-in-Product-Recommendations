@@ -50,7 +50,7 @@ function parseJsonMaybeString(v, fallback) {
 
 async function main() {
   const rawDir = "datapass/raw_network_responses";
-  const jsonlPaths = ["datapass/page_labels_gemini.jsonl", "datapass/page_labels_gpt.jsonl"];
+  const jsonlPaths = ["datapass/page_labels_gemini_v2.5.jsonl", "datapass/page_labels_gpt.jsonl"];
   
   console.log("🔍 Scanning existing labels...");
   const labeledKeys = new Set();

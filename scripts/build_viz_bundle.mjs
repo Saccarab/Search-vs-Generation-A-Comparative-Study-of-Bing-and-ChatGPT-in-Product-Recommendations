@@ -172,6 +172,7 @@ async function buildMasterBundle() {
                         }
                     };
                 }),
+                groundingSupports: content.groundingMetadata?.groundingSupports || [],
                 serps: {} // Map query -> results
             };
 

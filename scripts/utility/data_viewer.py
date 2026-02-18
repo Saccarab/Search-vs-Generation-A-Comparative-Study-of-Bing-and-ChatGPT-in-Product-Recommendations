@@ -546,405 +546,6 @@ DASHBOARD_TEMPLATE = """
             </div>
         </div>
 
-    {% if show_labels %}
-    <div class="grid">
-        <div class="card full-width">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <h2 style="margin:0;">Enrichment Coverage & Label Distribution</h2>
-                <form method="get" style="display:inline-flex; gap:8px; align-items:center;">
-                    <input type="hidden" name="labels" value="1">
-                    <label style="font-size:12px; color:#666;">Filter:</label>
-                    <select name="breakdown_account" onchange="this.form.submit()" style="padding:4px 8px; border-radius:6px; border:1px solid #ddd; font-size:12px;">
-                        <option value="all" {{ 'selected' if breakdown_account=='all' else '' }}>All Accounts</option>
-                        <option value="enterprise" {{ 'selected' if breakdown_account=='enterprise' else '' }}>Enterprise</option>
-                        <option value="personal" {{ 'selected' if breakdown_account=='personal' else '' }}>Personal</option>
-                    </select>
-                </form>
-            </div>
-            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:10px; align-items:center;">
-                <div class="stat-label">
-                    Enriched URLs: <strong>{{ enriched_citation_count }}</strong> / {{ enrichment_total_citations }}
-                    ({{ "%.1f"|format(enrichment_pct) }}%)
-                </div>
-                <div class="stat-label">Unlabeled URLs: <strong>{{ unlabeled_citation_count }}</strong></div>
-                <div style="display:flex; gap:12px; border-left:1px solid #e2e8f0; padding-left:20px; margin-left:10px;">
-                    <div class="stat-label" title="Agreement on objective structural features (has_tables, has_pros_cons, etc.)">
-                        Structural Fidelity: <strong style="color:#10a37f;">93.1%</strong>
-                    </div>
-                    <div class="stat-label" title="Agreement on categorical classification (Type, Format)">
-                        Categorical Fidelity: <strong style="color:#10a37f;">89.6%</strong>
-                    </div>
-                    <div class="stat-label" title="Pearson correlation for subjective quality scores (Freshness, Expertise)">
-                        Trend Correlation (r): <strong style="color:#10a37f;">0.84</strong>
-                    </div>
-                </div>
-                {% if breakdown_account != 'all' %}
-                <div class="stat-label" style="color:#f97316; font-weight:bold; margin-left:auto;">
-                    Filtered: {{ breakdown_account|title }}
-                </div>
-                {% endif %}
-            </div>
-            <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: 5px; gap: 10px;">
-                <div style="display: flex; flex-direction: column;">
-                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                        <h2 style="font-size: 14px; margin:0; border:none; padding:0;">Type (Enriched)</h2>
-                        <div class="view-toggle" data-toggle-group="labelType">
-                            <button class="btn" data-view="table" onclick="toggleView('labelType',this)">Table</button>
-                            <button class="btn active" data-view="chart" onclick="toggleView('labelType',this)">Pie</button>
-                        </div>
-                    </div>
-                    <div class="chart-wrap" data-group="labelType" data-view="table">
-                        <table>
-                            <tr><th>Type</th><th>Count</th><th>%</th></tr>
-                            {% for row in label_type_counts %}
-                            <tr>
-                                <td>{{ row['label'] }}</td>
-                                <td>{{ row['count'] }}</td>
-                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="chart-wrap active" data-group="labelType" data-view="chart" style="height: 220px; width: 100%;">
-                        <canvas id="typePieChart"></canvas>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column;">
-                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                        <h2 style="font-size: 14px; margin:0; border:none; padding:0;">Tone (Enriched)</h2>
-                        <div class="view-toggle" data-toggle-group="labelTone">
-                            <button class="btn" data-view="table" onclick="toggleView('labelTone',this)">Table</button>
-                            <button class="btn active" data-view="chart" onclick="toggleView('labelTone',this)">Pie</button>
-                        </div>
-                    </div>
-                    <div class="chart-wrap" data-group="labelTone" data-view="table">
-                        <table>
-                            <tr><th>Tone</th><th>Count</th><th>%</th></tr>
-                            {% for row in label_tone_counts %}
-                            <tr>
-                                <td>{{ row['label'] }}</td>
-                                <td>{{ row['count'] }}</td>
-                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="chart-wrap active" data-group="labelTone" data-view="chart" style="height: 220px; width: 100%;">
-                        <canvas id="tonePieChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="grid">
-        <div class="card full-width">
-            <h2 style="margin:0; margin-bottom:15px;">Enterprise Dataset Profile (Content DNA)</h2>
-            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:10px;">
-                <div class="stat-label">
-                    Enriched URLs: <strong>{{ enriched_counts_by_group.cited + enriched_counts_by_group.additional + enriched_counts_by_group.rejected }}</strong>
-                </div>
-                <div class="stat-label">Unlabeled URLs: <strong>{{ unlabeled_by_group.cited + unlabeled_by_group.additional + unlabeled_by_group.rejected }}</strong></div>
-            </div>
-            <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: 5px; gap: 10px;">
-                <div style="display: flex; flex-direction: column;">
-                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                        <h2 style="font-size: 14px; margin:0; border:none; padding:0;">Type (Enterprise)</h2>
-                        <div class="view-toggle" data-toggle-group="entType">
-                            <button class="btn" data-view="table" onclick="toggleView('entType',this)">Table</button>
-                            <button class="btn active" data-view="chart" onclick="toggleView('entType',this)">Pie</button>
-                        </div>
-                    </div>
-                    <div class="chart-wrap" data-group="entType" data-view="table">
-                        <table>
-                            <tr><th>Type</th><th>Count</th><th>%</th></tr>
-                            {% for row in label_type_counts_by_group.cited %}
-                            <tr>
-                                <td>{{ row['label'] }}</td>
-                                <td>{{ row['count'] }}</td>
-                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="chart-wrap active" data-group="entType" data-view="chart" style="height: 220px; width: 100%;">
-                        <canvas id="entTypePieChart"></canvas>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column;">
-                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                        <h2 style="font-size: 14px; margin:0; border:none; padding:0;">Tone (Enterprise)</h2>
-                        <div class="view-toggle" data-toggle-group="entTone">
-                            <button class="btn" data-view="table" onclick="toggleView('entTone',this)">Table</button>
-                            <button class="btn active" data-view="chart" onclick="toggleView('entTone',this)">Pie</button>
-                        </div>
-                    </div>
-                    <div class="chart-wrap" data-group="entTone" data-view="table">
-                        <table>
-                            <tr><th>Tone</th><th>Count</th><th>%</th></tr>
-                            {% for row in label_tone_counts_by_group.cited %}
-                            <tr>
-                                <td>{{ row['label'] }}</td>
-                                <td>{{ row['count'] }}</td>
-                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="chart-wrap active" data-group="entTone" data-view="chart" style="height: 220px; width: 100%;">
-                        <canvas id="entTonePieChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-        </div>
-    </div>
-
-    {% endif %}
-
-    <div class="grid">
-        <div class="card enterprise">
-            <h2>Enterprise - Top Invisible Domains</h2>
-            <table>
-                <tr><th>Domain</th><th>Count</th></tr>
-                {% for row in ent_invisible[:10] %}
-                <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-                {% endfor %}
-            </table>
-                            </div>
-        
-        <div class="card personal">
-            <h2>Personal - Top Invisible Domains</h2>
-            <table>
-                <tr><th>Domain</th><th>Count</th></tr>
-                {% for row in pers_invisible[:10] %}
-                <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-                    {% endfor %}
-            </table>
-        </div>
-        </div>
-
-    <div class="grid">
-        <div class="card enterprise">
-            <h2>Enterprise - Bing Page Distribution</h2>
-            <div class="view-toggle" data-toggle-group="entPage">
-                <button class="btn" data-view="table" onclick="toggleView('entPage',this)">Table</button>
-                <button class="btn active" data-view="chart" onclick="toggleView('entPage',this)">Histogram</button>
-            </div>
-            <div class="chart-wrap" data-group="entPage" data-view="table">
-                <table>
-                    <tr><th>Page</th><th>Matches</th></tr>
-                    {% for row in ent_page_data %}
-                    <tr><td>Page {{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="chart-wrap active" data-group="entPage" data-view="chart">
-                <canvas id="entPageChart" class="chart-canvas"></canvas>
-            </div>
-        </div>
-        
-        <div class="card personal">
-            <h2>Personal - Bing Page Distribution</h2>
-            <div class="view-toggle" data-toggle-group="persPage">
-                <button class="btn" data-view="table" onclick="toggleView('persPage',this)">Table</button>
-                <button class="btn active" data-view="chart" onclick="toggleView('persPage',this)">Histogram</button>
-            </div>
-            <div class="chart-wrap" data-group="persPage" data-view="table">
-                <table>
-                    <tr><th>Page</th><th>Matches</th></tr>
-                    {% for row in pers_page_data %}
-                    <tr><td>Page {{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="chart-wrap active" data-group="persPage" data-view="chart">
-                <canvas id="persPageChart" class="chart-canvas"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <div class="grid">
-        <div class="card enterprise">
-            <h2>Enterprise - Google Position Distribution</h2>
-            <div class="view-toggle" data-toggle-group="entGoogle">
-                <button class="btn" data-view="table" onclick="toggleView('entGoogle',this)">Table</button>
-                <button class="btn active" data-view="chart" onclick="toggleView('entGoogle',this)">Histogram</button>
-            </div>
-            <div class="chart-wrap" data-group="entGoogle" data-view="table">
-                <table>
-                    <tr><th>Bucket</th><th>Matches</th></tr>
-                    {% for row in ent_google_pos_data %}
-                    <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="chart-wrap active" data-group="entGoogle" data-view="chart">
-                <canvas id="entGoogleChart" class="chart-canvas"></canvas>
-            </div>
-        </div>
-
-        <div class="card personal">
-            <h2>Personal - Google Position Distribution</h2>
-            <div class="view-toggle" data-toggle-group="persGoogle">
-                <button class="btn" data-view="table" onclick="toggleView('persGoogle',this)">Table</button>
-                <button class="btn active" data-view="chart" onclick="toggleView('persGoogle',this)">Histogram</button>
-            </div>
-            <div class="chart-wrap" data-group="persGoogle" data-view="table">
-                <table>
-                    <tr><th>Bucket</th><th>Matches</th></tr>
-                    {% for row in pers_google_pos_data %}
-                    <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="chart-wrap active" data-group="persGoogle" data-view="chart">
-                <canvas id="persGoogleChart" class="chart-canvas"></canvas>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    {% if show_labels %}
-    <div class="grid" id="drift-analysis-section">
-        <div class="card full-width">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
-                <div>
-                    <h2 style="margin:0;">Selection & Attachment Drift Analysis</h2>
-                    <div class="stat-sub" style="margin-top:6px;">
-                        Percentage Point (PP) shift from search results to LLM selection. Positive = LLM "hunts" for this; Negative = LLM "avoids" this.
-                    </div>
-                </div>
-            </div>
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; margin-bottom:16px; font-size:12px; line-height:1.6;">
-                <strong style="color:#334155;">Drift types explained:</strong>
-                <div style="display:grid; grid-template-columns:auto 1fr; gap:4px 12px; margin-top:6px;">
-                    <span style="color:#10a37f; font-weight:700;">Selection Drift</span>
-                    <span style="color:#475569;">Feature lift when comparing <em>cited</em> URLs vs the full SERP menu (Menu &rarr; Order).</span>
-                    <span style="color:#f59e0b; font-weight:700;">Attachment Drift</span>
-                    <span style="color:#475569;">Feature difference between <em>cited</em> and <em>additional</em> (context-only) links.</span>
-                </div>
-            </div>
-
-            <div id="selection-drift-container">
-            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Selection Drift (Menu &rarr; Cited, within SERP)</h3>
-            {% if drift_split %}
-            <div class="stat-sub" style="margin: 6px 0 12px;">
-                Showing thesis-grade <strong>Selection Drift</strong> (Weighted Average Lift). {{ drift_split.methodology.enterprise_note }}
-            </div>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
-                <div>
-                    <h2 style="font-size: 14px; margin-top:0;">Listicles only</h2>
-                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)', 'Gemini (Google T10)'] %}
-                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
-                        <table>
-                            <tr>
-                                <th>Feature</th>
-                                <th style="text-align:right;">Weighted Lift</th>
-                            </tr>
-                            {% for row in (drift_split.tables.listicle.get(study_label) or []) %}
-                            <tr>
-                                <td>{{ row.feature }}</td>
-                                <td style="text-align:right; color: {{ '#16a34a' if row.weighted_avg_drift_pp > 0 else '#dc2626' if row.weighted_avg_drift_pp < 0 else 'inherit' }}; font-weight:600;">
-                                    {{ "%+.2f"|format(row.weighted_avg_drift_pp) }}pp
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endfor %}
-                </div>
-
-                <div>
-                    <h2 style="font-size: 14px; margin-top:0;">Product pages only</h2>
-                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)', 'Gemini (Google T10)'] %}
-                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
-                        <table>
-                            <tr>
-                                <th>Feature</th>
-                                <th style="text-align:right;">Weighted Lift</th>
-                            </tr>
-                            {% for row in (drift_split.tables.product_page.get(study_label) or []) %}
-                            <tr>
-                                <td>{{ row.feature }}</td>
-                                <td style="text-align:right; color: {{ '#16a34a' if row.weighted_avg_drift_pp > 0 else '#dc2626' if row.weighted_avg_drift_pp < 0 else 'inherit' }}; font-weight:600;">
-                                    {{ "%+.2f"|format(row.weighted_avg_drift_pp) }}pp
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endfor %}
-                </div>
-            </div>
-            {% else %}
-            <div style="padding: 20px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
-                <div style="font-weight: bold; color: #9a3412;">Selection Drift tables not found.</div>
-            </div>
-            {% endif %}
-            </div>
-
-            <div id="attachment-drift-container" style="margin-top:40px;">
-            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Attachment Drift (Cited vs Additional)</h3>
-            {% if attachment_drift %}
-            <div class="stat-sub" style="margin: 6px 0 12px;">
-                Showing <strong>Attachment Drift</strong> (Preference for citation from context).
-            </div>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
-                <div>
-                    <h2 style="font-size: 14px; margin-top:0;">Listicles only</h2>
-                    {% for study_label in ['GPT Personal', 'GPT Enterprise'] %}
-                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
-                        <table>
-                            <tr>
-                                <th>Feature</th>
-                                <th style="text-align:right;">Drift</th>
-                            </tr>
-                            {% for row in (attachment_drift.tables.listicle.get(study_label) or []) %}
-                            <tr>
-                                <td>{{ row.feature }}</td>
-                                <td style="text-align:right; color: {{ '#16a34a' if row.drift_pp > 0 else '#dc2626' if row.drift_pp < 0 else 'inherit' }}; font-weight:600;">
-                                    {{ "%+.2f"|format(row.drift_pp) }}pp
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endfor %}
-                </div>
-
-                <div>
-                    <h2 style="font-size: 14px; margin-top:0;">Product pages only</h2>
-                    {% for study_label in ['GPT Personal', 'GPT Enterprise'] %}
-                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
-                        <table>
-                            <tr>
-                                <th>Feature</th>
-                                <th style="text-align:right;">Drift</th>
-                            </tr>
-                            {% for row in (attachment_drift.tables.product_page.get(study_label) or []) %}
-                            <tr>
-                                <td>{{ row.feature }}</td>
-                                <td style="text-align:right; color: {{ '#16a34a' if row.drift_pp > 0 else '#dc2626' if row.drift_pp < 0 else 'inherit' }}; font-weight:600;">
-                                    {{ "%+.2f"|format(row.drift_pp) }}pp
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endfor %}
-                </div>
-            </div>
-            {% else %}
-            <div style="padding: 20px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
-                <div style="font-weight: bold; color: #9a3412;">Attachment Drift data not found.</div>
-            </div>
-            {% endif %}
-            </div>
-        </div>
-    </div>
-        </div>
-    </div>
-
     {% if loc_summary %}
     <div class="grid">
         <div class="card full-width">
@@ -1030,6 +631,630 @@ DASHBOARD_TEMPLATE = """
     </div>
     {% endif %}
 
+
+
+    <div class="grid">
+        <div class="card enterprise">
+            <h2>Enterprise - Bing Page Distribution</h2>
+            <div class="view-toggle" data-toggle-group="entPage">
+                <button class="btn" data-view="table" onclick="toggleView('entPage',this)">Table</button>
+                <button class="btn active" data-view="chart" onclick="toggleView('entPage',this)">Histogram</button>
+            </div>
+            <div class="chart-wrap" data-group="entPage" data-view="table">
+                <table>
+                    <tr><th>Page</th><th>Matches</th></tr>
+                    {% for row in ent_page_data %}
+                    <tr><td>Page {{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="chart-wrap active" data-group="entPage" data-view="chart">
+                <canvas id="entPageChart" class="chart-canvas"></canvas>
+            </div>
+        </div>
+        
+        <div class="card personal">
+            <h2>Personal - Bing Page Distribution</h2>
+            <div class="view-toggle" data-toggle-group="persPage">
+                <button class="btn" data-view="table" onclick="toggleView('persPage',this)">Table</button>
+                <button class="btn active" data-view="chart" onclick="toggleView('persPage',this)">Histogram</button>
+            </div>
+            <div class="chart-wrap" data-group="persPage" data-view="table">
+                <table>
+                    <tr><th>Page</th><th>Matches</th></tr>
+                    {% for row in pers_page_data %}
+                    <tr><td>Page {{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="chart-wrap active" data-group="persPage" data-view="chart">
+                <canvas id="persPageChart" class="chart-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card enterprise">
+            <h2>Enterprise - Google Position Distribution</h2>
+            <div class="view-toggle" data-toggle-group="entGoogle">
+                <button class="btn" data-view="table" onclick="toggleView('entGoogle',this)">Table</button>
+                <button class="btn active" data-view="chart" onclick="toggleView('entGoogle',this)">Histogram</button>
+            </div>
+            <div class="chart-wrap" data-group="entGoogle" data-view="table">
+                <table>
+                    <tr><th>Bucket</th><th>Matches</th></tr>
+                    {% for row in ent_google_pos_data %}
+                    <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="chart-wrap active" data-group="entGoogle" data-view="chart">
+                <canvas id="entGoogleChart" class="chart-canvas"></canvas>
+            </div>
+        </div>
+
+        <div class="card personal">
+            <h2>Personal - Google Position Distribution</h2>
+            <div class="view-toggle" data-toggle-group="persGoogle">
+                <button class="btn" data-view="table" onclick="toggleView('persGoogle',this)">Table</button>
+                <button class="btn active" data-view="chart" onclick="toggleView('persGoogle',this)">Histogram</button>
+            </div>
+            <div class="chart-wrap" data-group="persGoogle" data-view="table">
+                <table>
+                    <tr><th>Bucket</th><th>Matches</th></tr>
+                    {% for row in pers_google_pos_data %}
+                    <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="chart-wrap active" data-group="persGoogle" data-view="chart">
+                <canvas id="persGoogleChart" class="chart-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card full-width">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h2 style="margin:0;">Gemini Citation Density by SERP Rank</h2>
+                <div class="view-toggle" data-toggle-group="geminiRank">
+                    <button class="btn" data-view="table" onclick="toggleView('geminiRank',this)">Table</button>
+                    <button class="btn active" data-view="chart" onclick="toggleView('geminiRank',this)">Histogram</button>
+                </div>
+            </div>
+            <div class="stat-sub" style="margin-bottom:15px;">
+                How often Gemini cites each Google SERP rank (Rank 1-30).
+            </div>
+            
+            <div class="chart-wrap" data-group="geminiRank" data-view="table">
+                <table>
+                    <tr><th>Rank</th><th>Citations</th><th>Cited %</th></tr>
+                    <tr><td>Rank 1</td><td>181</td><td>15.7%</td></tr>
+                    <tr><td>Rank 2</td><td>105</td><td>9.1%</td></tr>
+                    <tr><td>Rank 3</td><td>93</td><td>8.1%</td></tr>
+                    <tr><td>Rank 4</td><td>92</td><td>8.0%</td></tr>
+                    <tr><td>Rank 5</td><td>70</td><td>6.1%</td></tr>
+                    <tr><td>Rank 6</td><td>62</td><td>5.4%</td></tr>
+                    <tr><td>Rank 7</td><td>72</td><td>6.2%</td></tr>
+                    <tr><td>Rank 8</td><td>53</td><td>4.6%</td></tr>
+                    <tr><td>Rank 9</td><td>49</td><td>4.2%</td></tr>
+                    <tr><td>Rank 10</td><td>33</td><td>2.9%</td></tr>
+                    <tr><td>Rank 11</td><td>27</td><td>2.3%</td></tr>
+                    <tr><td>Rank 12</td><td>30</td><td>2.6%</td></tr>
+                    <tr><td>Rank 13</td><td>23</td><td>2.0%</td></tr>
+                    <tr><td>Rank 14</td><td>18</td><td>1.6%</td></tr>
+                    <tr><td>Rank 15</td><td>27</td><td>2.3%</td></tr>
+                    <tr><td>Rank 16</td><td>21</td><td>1.8%</td></tr>
+                    <tr><td>Rank 17</td><td>25</td><td>2.2%</td></tr>
+                    <tr><td>Rank 18</td><td>11</td><td>1.0%</td></tr>
+                    <tr><td>Rank 19</td><td>14</td><td>1.2%</td></tr>
+                    <tr><td>Rank 20</td><td>14</td><td>1.2%</td></tr>
+                    <tr><td>Rank 21</td><td>16</td><td>1.4%</td></tr>
+                    <tr><td>Rank 22</td><td>15</td><td>1.3%</td></tr>
+                    <tr><td>Rank 23</td><td>10</td><td>0.9%</td></tr>
+                    <tr><td>Rank 24</td><td>21</td><td>1.8%</td></tr>
+                    <tr><td>Rank 25</td><td>17</td><td>1.5%</td></tr>
+                    <tr><td>Rank 26</td><td>18</td><td>1.6%</td></tr>
+                    <tr><td>Rank 27</td><td>16</td><td>1.4%</td></tr>
+                    <tr><td>Rank 28</td><td>11</td><td>1.0%</td></tr>
+                    <tr><td>Rank 29</td><td>7</td><td>0.6%</td></tr>
+                    <tr><td>Rank 30</td><td>3</td><td>0.3%</td></tr>
+                </table>
+            </div>
+
+            <div class="chart-wrap active" data-group="geminiRank" data-view="chart">
+                <div id="geminiRankChart" style="height: 200px; width: 100%; border-bottom: 2px solid #333; margin-bottom: 10px; display: flex;">
+                    <!-- JS Populated -->
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:10px; color:#666; padding:0 5px;">
+                    <span>Rank 1</span>
+                    <span>Rank 15</span>
+                    <span>Rank 30</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="grid">
+        <div class="card enterprise">
+            <h2>Enterprise - Top Invisible Domains</h2>
+            <table>
+                <tr><th>Domain</th><th>Count</th></tr>
+                {% for row in ent_invisible[:10] %}
+                <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                {% endfor %}
+            </table>
+                            </div>
+        
+        <div class="card personal">
+            <h2>Personal - Top Invisible Domains</h2>
+            <table>
+                <tr><th>Domain</th><th>Count</th></tr>
+                {% for row in pers_invisible[:10] %}
+                <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+                    {% endfor %}
+            </table>
+        </div>
+        </div>
+    {% if show_labels %}
+    <div class="grid">
+        <div class="card full-width">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h2 style="margin:0;">Enrichment Coverage & Label Distribution</h2>
+                <form method="get" style="display:inline-flex; gap:8px; align-items:center;">
+                    <input type="hidden" name="labels" value="1">
+                    <label style="font-size:12px; color:#666;">Filter:</label>
+                    <select name="breakdown_account" onchange="this.form.submit()" style="padding:4px 8px; border-radius:6px; border:1px solid #ddd; font-size:12px;">
+                        <option value="all" {{ 'selected' if breakdown_account=='all' else '' }}>All Accounts</option>
+                        <option value="enterprise" {{ 'selected' if breakdown_account=='enterprise' else '' }}>Enterprise</option>
+                        <option value="personal" {{ 'selected' if breakdown_account=='personal' else '' }}>Personal</option>
+                    </select>
+                </form>
+            </div>
+            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:15px; font-size:11px; color:#64748b; border-bottom:1px solid #f1f5f9; padding-bottom:10px;">
+                <div class="stat-label">
+                    Enriched URLs: <strong>{{ enriched_citation_count }}</strong> / {{ enrichment_total_citations }}
+                    ({{ "%.1f"|format(enrichment_pct) }}%)
+                </div>
+                <div class="stat-label">Unlabeled URLs: <strong>{{ unlabeled_citation_count }}</strong></div>
+                <div style="display:flex; gap:12px; border-left:1px solid #e2e8f0; padding-left:20px; margin-left:10px;">
+                    <div class="stat-label" title="Agreement on objective structural features">
+                        Structural Fidelity: <strong style="color:#10a37f;">93.1%</strong>
+                    </div>
+                    <div class="stat-label" title="Agreement on categorical classification">
+                        Categorical Fidelity: <strong style="color:#10a37f;">89.6%</strong>
+                    </div>
+                    <div class="stat-label" title="Pearson correlation for subjective quality scores">
+                        Trend Correlation (r): <strong style="color:#10a37f;">0.84</strong>
+                    </div>
+                </div>
+                {% if breakdown_account != 'all' %}
+                <div class="stat-label" style="color:#f97316; font-weight:bold; margin-left:auto;">
+                    Filtered: {{ breakdown_account|title }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <!-- Global Type -->
+                <div style="flex: 1; min-width: 0;">
+                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <h3 style="font-size: 13px; margin:0; font-weight:700; color:#475569;">Global Type</h3>
+                        <div class="view-toggle" data-toggle-group="labelType">
+                            <button class="btn" data-view="table" onclick="toggleView('labelType',this)">Table</button>
+                            <button class="btn active" data-view="chart" onclick="toggleView('labelType',this)">Pie</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrap" data-group="labelType" data-view="table">
+                        <table>
+                            <tr><th>Type</th><th>Count</th><th>%</th></tr>
+                            {% for row in label_type_counts %}
+                            <tr>
+                                <td>{{ row['label'] }}</td>
+                                <td>{{ row['count'] }}</td>
+                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="chart-wrap active" data-group="labelType" data-view="chart" style="height: 180px; width: 100%;">
+                        <canvas id="typePieChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gemini Type -->
+                <div style="flex: 1; min-width: 0; border-left: 1px solid #f1f5f9; padding-left: 12px;">
+                    <h3 style="font-size: 13px; margin:0 0 5px 0; font-weight:700; color:#475569;">Gemini Type</h3>
+                    <div style="height: 180px; width: 100%;">
+                        <canvas id="geminiTypePieChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Enterprise Type -->
+                <div style="flex: 1; min-width: 0; border-left: 1px solid #f1f5f9; padding-left: 12px;">
+                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <h3 style="font-size: 13px; margin:0; font-weight:700; color:#475569;">Enterprise Type</h3>
+                        <div class="view-toggle" data-toggle-group="entType">
+                            <button class="btn" data-view="table" onclick="toggleView('entType',this)">Table</button>
+                            <button class="btn active" data-view="chart" onclick="toggleView('entType',this)">Pie</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrap" data-group="entType" data-view="table">
+                        <table>
+                            <tr><th>Type</th><th>Count</th><th>%</th></tr>
+                            {% for row in label_type_counts_by_group.cited %}
+                            <tr>
+                                <td>{{ row['label'] }}</td>
+                                <td>{{ row['count'] }}</td>
+                                <td>{{ "%.1f"|format(row['pct']) }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="chart-wrap active" data-group="entType" data-view="chart" style="height: 180px; width: 100%;">
+                        <canvas id="entTypePieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+
+
+    {% if show_labels %}
+    <div class="grid" id="drift-analysis-section">
+        <div class="card full-width">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
+                <div>
+                    <h2 style="margin:0;">Selection & Attachment Drift Analysis</h2>
+                    <div class="stat-sub" style="margin-top:6px;">
+                        Percentage Point (PP) shift from search results to LLM selection. Positive = LLM "hunts" for this; Negative = LLM "avoids" this.
+                    </div>
+                </div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; margin-bottom:16px; font-size:12px; line-height:1.6;">
+                <strong style="color:#334155;">Drift types explained:</strong>
+                <div style="display:grid; grid-template-columns:auto 1fr; gap:4px 12px; margin-top:6px;">
+                    <span style="color:#10a37f; font-weight:700;">Selection Drift</span>
+                    <span style="color:#475569;">Feature lift when comparing <em>cited</em> URLs vs the full SERP menu (Menu &rarr; Order).</span>
+                    <span style="color:#f59e0b; font-weight:700;">Attachment Drift</span>
+                    <span style="color:#475569;">Feature difference between <em>cited</em> and <em>additional</em> (context-only) links.</span>
+                </div>
+            </div>
+
+            <div id="selection-drift-container">
+            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Selection Drift (Menu &rarr; Cited, within SERP)</h3>
+            {% if drift_split %}
+            <div class="stat-sub" style="margin: 6px 0 12px;">
+                Showing thesis-grade <strong>Selection Drift</strong> (Weighted Average Lift). {{ drift_split.methodology.enterprise_note }}
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Listicles only</h2>
+                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)', 'Gemini (Google T10)'] %}
+                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
+                        <table>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align:right;">Weighted Lift</th>
+                            </tr>
+                            {% for row in (drift_split.tables.listicle.get(study_label) or []) %}
+                            <tr>
+                                <td>{{ row.feature }}</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.weighted_avg_drift_pp > 0 else '#dc2626' if row.weighted_avg_drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.weighted_avg_drift_pp) }}pp
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Product pages only</h2>
+                    {% for study_label in ['GPT Personal (Google T10)', 'GPT Personal (Bing P1, Top5)', 'GPT Enterprise (Bing P1)', 'Gemini (Google T10)'] %}
+                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
+                        <table>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align:right;">Weighted Lift</th>
+                            </tr>
+                            {% for row in (drift_split.tables.product_page.get(study_label) or []) %}
+                            <tr>
+                                <td>{{ row.feature }}</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.weighted_avg_drift_pp > 0 else '#dc2626' if row.weighted_avg_drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.weighted_avg_drift_pp) }}pp
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <div style="padding: 20px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
+                <div style="font-weight: bold; color: #9a3412;">Selection Drift tables not found.</div>
+            </div>
+            {% endif %}
+            </div>
+
+            
+            <div id="ttest-analysis-container" style="margin-top:40px;">
+            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Statistical Significance (Two-Sample T-Test)</h3>
+            {% if ttests %}
+            <div class="stat-sub" style="margin: 6px 0 12px;">
+                Comparing content DNA feature prevalence between models. <strong>p&lt;0.05</strong> indicates statistical significance.
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">GPT Enterprise vs. Personal</h2>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th style="text-align:right;">Ent %</th>
+                            <th style="text-align:right;">Pers %</th>
+                            <th style="text-align:right;">Diff</th>
+                            <th style="text-align:right;">Sig</th>
+                        </tr>
+                        {% for feat, res in ttests.ent_vs_pers.items() %}
+                        <tr>
+                            <td>{{ feat.replace('has_', '').replace('_', ' ') }}</td>
+                            <td style="text-align:right;">{{ res.m1 }}%</td>
+                            <td style="text-align:right;">{{ res.m2 }}%</td>
+                            <td style="text-align:right; color: {{ '#16a34a' if res.diff > 0 else '#dc2626' if res.diff < 0 else 'inherit' }}; font-weight:600;">
+                                {{ "%+.1f"|format(res.diff) }}%
+                            </td>
+                            <td style="text-align:right; font-weight:bold; color: {{ '#10a37f' if res.sig != 'ns' else '#94a3b8' }};">
+                                {{ res.sig }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Gemini Selection Preference (Order vs. Menu)</h2>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th style="text-align:right;">Order %</th>
+                            <th style="text-align:right;">Menu %</th>
+                            <th style="text-align:right;">Diff</th>
+                            <th style="text-align:right;">Sig</th>
+                        </tr>
+                        {% for feat, res in ttests.gemini_order_vs_menu.items() %}
+                        <tr>
+                            <td>{{ feat.replace('has_', '').replace('_', ' ') }}</td>
+                            <td style="text-align:right;">{{ res.m1 }}%</td>
+                            <td style="text-align:right;">{{ res.m2 }}%</td>
+                            <td style="text-align:right; color: {{ '#16a34a' if res.diff > 0 else '#dc2626' if res.diff < 0 else 'inherit' }}; font-weight:600;">
+                                {{ "%+.1f"|format(res.diff) }}%
+                            </td>
+                            <td style="text-align:right; font-weight:bold; color: {{ '#10a37f' if res.sig != 'ns' else '#94a3b8' }};">
+                                {{ res.sig }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+            </div>
+
+            <div id="attachment-drift-container" style="margin-top:40px;">
+            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Attachment Drift (Cited vs Additional)</h3>
+            {% if attachment_drift %}
+            <div class="stat-sub" style="margin: 6px 0 12px;">
+                Showing <strong>Attachment Drift</strong> (Preference for citation from context).
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Listicles only</h2>
+                    {% for study_label in ['GPT Personal', 'GPT Enterprise'] %}
+                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
+                        <table>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align:right;">Drift</th>
+                            </tr>
+                            {% for row in (attachment_drift.tables.listicle.get(study_label) or []) %}
+                            <tr>
+                                <td>{{ row.feature }}</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.drift_pp > 0 else '#dc2626' if row.drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.drift_pp) }}pp
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Product pages only</h2>
+                    {% for study_label in ['GPT Personal', 'GPT Enterprise'] %}
+                        <div style="margin-top: 10px; font-weight: 700; color:#111827;">{{ study_label }}</div>
+                        <table>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align:right;">Drift</th>
+                            </tr>
+                            {% for row in (attachment_drift.tables.product_page.get(study_label) or []) %}
+                            <tr>
+                                <td>{{ row.feature }}</td>
+                                <td style="text-align:right; color: {{ '#16a34a' if row.drift_pp > 0 else '#dc2626' if row.drift_pp < 0 else 'inherit' }}; font-weight:600;">
+                                    {{ "%+.2f"|format(row.drift_pp) }}pp
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <div style="padding: 20px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
+                <div style="font-weight: bold; color: #9a3412;">Attachment Drift data not found.</div>
+            </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    {% if listicle_bias %}
+    <div class="grid">
+        <div class="card full-width">
+            <h2>Listicle Extraction &amp; Bias Analysis</h2>
+            <div class="stat-sub" style="margin-bottom:6px;">
+                When an LLM cites a listicle (e.g. "10 Best AI Tools"), which items from that list does it pick? This section measures position bias, host exclusion, and reading accuracy.
+            </div>
+
+            <!-- Listicle Rank Bias (Top-Item Skew) -->
+            <h3 style="font-size:13px; margin:14px 0 4px; color:#475569; font-weight:700;">Position Bias Within Listicles</h3>
+            <div class="stat-sub" style="margin-bottom:8px; font-size:11px;">
+                A listicle ranks products #1, #2, #3 etc. Do models favour items near the top?
+                Items analysed: GPT <strong>{{ listicle_bias.summaries[0].n_product_items_present_with_rank_and_total }}</strong>, Gemini <strong>{{ listicle_bias.summaries[1].n_product_items_present_with_rank_and_total }}</strong>.
+            </div>
+            <table>
+                <tr>
+                    <th style="width:45%;">Metric</th>
+                    <th>GPT</th>
+                    <th>Gemini</th>
+                    <th style="width:30%; font-weight:normal; color:#64748b; font-size:11px;">What it means</th>
+                </tr>
+                <tr>
+                    <td>Median Picked Rank</td>
+                    <td><strong>{{ listicle_bias.summaries[0].median_listicle_rank }}</strong></td>
+                    <td><strong>{{ listicle_bias.summaries[1].median_listicle_rank }}</strong></td>
+                    <td style="color:#64748b; font-size:11px;">Half of all picked items came from rank #{{ listicle_bias.summaries[0].median_listicle_rank }} or higher</td>
+                </tr>
+                <tr>
+                    <td>Picked from #1 spot</td>
+                    <td>{{ "%.1f"|format(listicle_bias.summaries[0].topk_rates.top1 * 100) }}%</td>
+                    <td>{{ "%.1f"|format(listicle_bias.summaries[1].topk_rates.top1 * 100) }}%</td>
+                    <td style="color:#64748b; font-size:11px;">How often the model chose the listicle's #1 item</td>
+                </tr>
+                <tr>
+                    <td>Picked from top 3</td>
+                    <td>{{ "%.1f"|format(listicle_bias.summaries[0].topk_rates.top3 * 100) }}%</td>
+                    <td>{{ "%.1f"|format(listicle_bias.summaries[1].topk_rates.top3 * 100) }}%</td>
+                    <td style="color:#64748b; font-size:11px;">% of picked items that were ranked #1-#3 on the listicle</td>
+                </tr>
+                <tr>
+                    <td>Picked from top 5</td>
+                    <td>{{ "%.1f"|format(listicle_bias.summaries[0].topk_rates.top5 * 100) }}%</td>
+                    <td>{{ "%.1f"|format(listicle_bias.summaries[1].topk_rates.top5 * 100) }}%</td>
+                    <td style="color:#64748b; font-size:11px;">% of picked items that were ranked #1-#5 on the listicle</td>
+                </tr>
+                <tr>
+                    <td>Avg products per listicle</td>
+                    <td>{{ "%.1f"|format(listicle_bias.summaries[0].mean_total_products_in_listicle_for_used_items) }}</td>
+                    <td>{{ "%.1f"|format(listicle_bias.summaries[1].mean_total_products_in_listicle_for_used_items) }}</td>
+                    <td style="color:#64748b; font-size:11px;">Average number of products on the listicle page</td>
+                </tr>
+            </table>
+            <div style="background:#f0f9ff; border-left:3px solid #3b82f6; padding:8px 12px; margin-top:8px; font-size:11px; color:#1e40af; border-radius:0 6px 6px 0;">
+                <strong>Takeaway:</strong> Both models strongly favour top-ranked items. Over half of all picks come from the top 3 — even though listicles average ~9-10 items. If you're not in the top 3 of a listicle, the LLM is much less likely to cite you.
+            </div>
+
+            <!-- Self-Promotion Bias & Host Exclusion -->
+            <h3 style="font-size:13px; margin:18px 0 4px; color:#475569; font-weight:700;">Host Exclusion ("Does the listicle author get picked?")</h3>
+            <div class="stat-sub" style="margin-bottom:8px; font-size:11px;">
+                Many listicles include the author's own product (e.g. HubSpot writing "10 Best CRMs" and including HubSpot CRM). How does the LLM handle this?
+            </div>
+            <table>
+                <tr>
+                    <th style="width:45%;">Metric</th>
+                    <th>GPT</th>
+                    <th>Gemini</th>
+                    <th style="width:30%; font-weight:normal; color:#64748b; font-size:11px;">What it means</th>
+                </tr>
+                <tr>
+                    <td>Listicles where host has own product</td>
+                    <td>431</td>
+                    <td>405</td>
+                    <td style="color:#64748b; font-size:11px;">Listicles where the site's own product appeared in the list</td>
+                </tr>
+                <tr>
+                    <td>Host product skipped</td>
+                    <td><strong style="color:#dc2626;">63.6%</strong> <span style="color:#94a3b8;">(274/431)</span></td>
+                    <td><strong style="color:#dc2626;">71.9%</strong> <span style="color:#94a3b8;">(291/405)</span></td>
+                    <td style="color:#64748b; font-size:11px;">LLM saw the host's product but chose NOT to recommend it</td>
+                </tr>
+                <tr>
+                    <td>Host product picked</td>
+                    <td>36.4%</td>
+                    <td>28.2%</td>
+                    <td style="color:#64748b; font-size:11px;">LLM chose the host's own product from the listicle</td>
+                </tr>
+                <tr>
+                    <td>Random chance (1 / avg items)</td>
+                    <td>10.7%</td>
+                    <td>12.4%</td>
+                    <td style="color:#64748b; font-size:11px;">If picking randomly, how often would the host be chosen</td>
+                </tr>
+                <tr>
+                    <td>Bias multiplier</td>
+                    <td><strong style="color:#16a34a;">3.40×</strong></td>
+                    <td><strong style="color:#16a34a;">2.27×</strong></td>
+                    <td style="color:#64748b; font-size:11px;">Host is picked this many times more often than random chance</td>
+                </tr>
+            </table>
+            <div style="background:#fef3c7; border-left:3px solid #f59e0b; padding:8px 12px; margin-top:8px; font-size:11px; color:#92400e; border-radius:0 6px 6px 0;">
+                <strong>Takeaway:</strong> Models usually <em>skip</em> the host's product (anti-self-promo), but when they do pick it, it happens 2-3× more often than random — so there's still a measurable host advantage.
+            </div>
+
+            <!-- Semantic Fidelity & Re-Ranking -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top:18px;">
+                <div>
+                    <h3 style="font-size:13px; margin:0 0 4px; color:#475569; font-weight:700;">Does the LLM re-order items?</h3>
+                    <div class="stat-sub" style="margin-bottom:8px; font-size:11px;">
+                        If a listicle says "#1 Notion, #2 Slack, #3 Zoom", does the LLM keep that order in its response?
+                    </div>
+                    <table>
+                        <tr><th>Model</th><th>Kept Original Order</th></tr>
+                        <tr><td>GPT</td><td><strong>27.9%</strong> <span style="color:#94a3b8;">(166/596)</span></td></tr>
+                        <tr><td>Gemini</td><td><strong>29.5%</strong> <span style="color:#94a3b8;">(108/366)</span></td></tr>
+                    </table>
+                    <div style="background:#f0fdf4; border-left:3px solid #16a34a; padding:6px 10px; margin-top:6px; font-size:11px; color:#166534; border-radius:0 6px 6px 0;">
+                        ~70% of the time, the LLM <strong>re-ranks</strong> the products — it doesn't just copy the listicle's order.
+                    </div>
+                </div>
+                <div>
+                    <h3 style="font-size:13px; margin:0 0 4px; color:#475569; font-weight:700;">Reading Accuracy (Solo-Cited Listicles)</h3>
+                    <div class="stat-sub" style="margin-bottom:8px; font-size:11px;">
+                        When the LLM cites only one listicle, how accurately does it extract product details from it?
+                    </div>
+                    <table>
+                        <tr><th style="width:50%;">Metric</th><th>GPT</th><th>Gemini</th></tr>
+                        <tr>
+                            <td>Accuracy score</td>
+                            <td><strong>4.75</strong>/5.0</td>
+                            <td><strong>4.81</strong>/5.0</td>
+                        </tr>
+                        <tr>
+                            <td>Wrong source linked</td>
+                            <td><strong style="color:#dc2626;">1.89%</strong> <span style="color:#94a3b8;">(13/689)</span></td>
+                            <td><strong style="color:#dc2626;">7.36%</strong> <span style="color:#94a3b8;">(31/421)</span></td>
+                        </tr>
+                    </table>
+                    <div style="background:#fef3c7; border-left:3px solid #f59e0b; padding:6px 10px; margin-top:6px; font-size:11px; color:#92400e; border-radius:0 6px 6px 0;">
+                        Reading is near-perfect. The real problem is <strong>attribution</strong> — sometimes the LLM links to a page that doesn't actually contain the product it described.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
     {% endif %}
 
     <div class="grid" id="drift-analysis-section">
@@ -1105,6 +1330,70 @@ DASHBOARD_TEMPLATE = """
             {% else %}
             <div style="padding: 20px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
                 <div style="font-weight: bold; color: #9a3412;">Selection Drift tables not found.</div>
+            </div>
+            {% endif %}
+            </div>
+
+            
+            <div id="ttest-analysis-container" style="margin-top:40px;">
+            <h3 style="font-size:14px; color:#111827; margin-bottom:10px;">Statistical Significance (Two-Sample T-Test)</h3>
+            {% if ttests %}
+            <div class="stat-sub" style="margin: 6px 0 12px;">
+                Comparing content DNA feature prevalence between models. <strong>p&lt;0.05</strong> indicates statistical significance.
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items:start;">
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">GPT Enterprise vs. Personal</h2>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th style="text-align:right;">Ent %</th>
+                            <th style="text-align:right;">Pers %</th>
+                            <th style="text-align:right;">Diff</th>
+                            <th style="text-align:right;">Sig</th>
+                        </tr>
+                        {% for feat, res in ttests.ent_vs_pers.items() %}
+                        <tr>
+                            <td>{{ feat.replace('has_', '').replace('_', ' ') }}</td>
+                            <td style="text-align:right;">{{ res.m1 }}%</td>
+                            <td style="text-align:right;">{{ res.m2 }}%</td>
+                            <td style="text-align:right; color: {{ '#16a34a' if res.diff > 0 else '#dc2626' if res.diff < 0 else 'inherit' }}; font-weight:600;">
+                                {{ "%+.1f"|format(res.diff) }}%
+                            </td>
+                            <td style="text-align:right; font-weight:bold; color: {{ '#10a37f' if res.sig != 'ns' else '#94a3b8' }};">
+                                {{ res.sig }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                <div>
+                    <h2 style="font-size: 14px; margin-top:0;">Gemini Selection Preference (Order vs. Menu)</h2>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th style="text-align:right;">Order %</th>
+                            <th style="text-align:right;">Menu %</th>
+                            <th style="text-align:right;">Diff</th>
+                            <th style="text-align:right;">Sig</th>
+                        </tr>
+                        {% for feat, res in ttests.gemini_order_vs_menu.items() %}
+                        <tr>
+                            <td>{{ feat.replace('has_', '').replace('_', ' ') }}</td>
+                            <td style="text-align:right;">{{ res.m1 }}%</td>
+                            <td style="text-align:right;">{{ res.m2 }}%</td>
+                            <td style="text-align:right; color: {{ '#16a34a' if res.diff > 0 else '#dc2626' if res.diff < 0 else 'inherit' }}; font-weight:600;">
+                                {{ "%+.1f"|format(res.diff) }}%
+                            </td>
+                            <td style="text-align:right; font-weight:bold; color: {{ '#10a37f' if res.sig != 'ns' else '#94a3b8' }};">
+                                {{ res.sig }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
             {% endif %}
             </div>
@@ -1196,6 +1485,24 @@ function toggleDriftView(btn) {
 
 /* ---- Chart colours ---- */
 var PALETTE = ['#3b82f6','#f59e0b','#10a37f','#ef4444','#8b5cf6','#ec4899','#14b8a6','#f97316','#6366f1','#84cc16'];
+var TYPE_COLORS = {
+    'product_page': '#3b82f6',
+    'listicle': '#f59e0b',
+    'news_article': '#10a37f',
+    'other': '#ef4444',
+    'documentation': '#8b5cf6',
+    'comparison_article': '#ec4899',
+    'marketplace_directory': '#14b8a6',
+    'editorial_article': '#f97316',
+    'forum_ugc': '#6366f1',
+    'review_article': '#84cc16',
+    'reference': '#64748b',
+    'app_store_listing': '#0ea5e9',
+    'comparison': '#ec4899'
+};
+function typeColorArray(labels) {
+    return labels.map(function(l) { return TYPE_COLORS[l] || '#94a3b8'; });
+}
 
 /* ---- Helper: bar chart ---- */
 function makeBar(canvasId, labels, values, color) {
@@ -1208,24 +1515,26 @@ function makeBar(canvasId, labels, values, color) {
     });
 }
 
-    function makePie(canvasId, labels, values) {
+    function makePie(canvasId, labels, values, showLegend) {
+        if (showLegend === undefined) showLegend = true;
         var el = document.getElementById(canvasId);
         if (!el) return;
         new Chart(el, {
             type: 'pie',
-            data: { labels: labels, datasets: [{data:values, backgroundColor:PALETTE.slice(0,labels.length)}] },
+            data: { labels: labels, datasets: [{data:values, backgroundColor:typeColorArray(labels)}] },
             options: { 
                 responsive:true, 
                 maintainAspectRatio:false, 
                 layout: { padding: 0 },
                 plugins:{
                     legend:{
-                        position:'right',
+                        display: showLegend,
+                        position:'bottom',
                         align: 'center',
                         labels:{
-                            boxWidth: 12,
-                            padding: 10,
-                            font:{size:11}
+                            boxWidth: 10,
+                            padding: 6,
+                            font:{size:10}
                         }
                     }
                 } 
@@ -1254,25 +1563,35 @@ document.addEventListener('DOMContentLoaded', function() {
     makeBar('persGoogleChart', persGLabels, persGValues, '#f59e0b');
 
     {% if show_labels %}
+    /* Gemini Rank Density Chart */
+    var geminiRankData = [269, 215, 161, 155, 118, 128, 125, 111, 92, 81, 45, 32, 28, 25, 22, 18, 15, 12, 10, 8, 5, 4, 3, 2, 2, 1, 1, 1, 1, 1];
+    var maxGemini = Math.max(...geminiRankData);
+    var rankHtml = '';
+    geminiRankData.forEach((count, i) => {
+        var h = (count / maxGemini * 100);
+        rankHtml += `<div style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; height:100%;" title="Rank ${i+1}: ${count} citations">
+            <div style="width:80%; background:#10a37f; height:${h}%; border-radius:2px 2px 0 0;"></div>
+        </div>`;
+    });
+    document.getElementById('geminiRankChart').style.display = 'flex';
+    document.getElementById('geminiRankChart').innerHTML = rankHtml;
+
     /* Type pie */
     var typeLabels = [{% for r in label_type_counts %}'{{r["label"]}}'{% if not loop.last %},{% endif %}{% endfor %}];
     var typeValues = [{% for r in label_type_counts %}{{r["count"]}}{% if not loop.last %},{% endif %}{% endfor %}];
-    makePie('typePieChart', typeLabels, typeValues);
+    makePie('typePieChart', typeLabels, typeValues, true);
 
-    /* Tone pie */
-    var toneLabels = [{% for r in label_tone_counts %}'{{r["label"]}}'{% if not loop.last %},{% endif %}{% endfor %}];
-    var toneValues = [{% for r in label_tone_counts %}{{r["count"]}}{% if not loop.last %},{% endif %}{% endfor %}];
-    makePie('tonePieChart', toneLabels, toneValues);
+    /* Gemini Hardcoded Profile */
+    makePie('geminiTypePieChart', 
+        ['listicle', 'product_page', 'other', 'news_article', 'documentation', 'comparison_article', 'marketplace_directory', 'editorial_article', 'forum_ugc', 'review_article'],
+        [886, 355, 151, 53, 33, 32, 31, 17, 13, 9],
+        false
+    );
 
     /* Enterprise Type pie */
     var entTypeLabels = [{% for r in label_type_counts_by_group.cited %}'{{r["label"]}}'{% if not loop.last %},{% endif %}{% endfor %}];
     var entTypeValues = [{% for r in label_type_counts_by_group.cited %}{{r["count"]}}{% if not loop.last %},{% endif %}{% endfor %}];
-    makePie('entTypePieChart', entTypeLabels, entTypeValues);
-
-    /* Enterprise Tone pie */
-    var entToneLabels = [{% for r in label_tone_counts_by_group.cited %}'{{r["label"]}}'{% if not loop.last %},{% endif %}{% endfor %}];
-    var entToneValues = [{% for r in label_tone_counts_by_group.cited %}{{r["count"]}}{% if not loop.last %},{% endif %}{% endfor %}];
-    makePie('entTonePieChart', entToneLabels, entToneValues);
+    makePie('entTypePieChart', entTypeLabels, entTypeValues, false);
     {% endif %}
 });
 </script>
@@ -3870,6 +4189,14 @@ def dashboard():
         except:
             return None
 
+
+    def load_feature_ttests():
+        try:
+            with open('data/enrichment/feature_ttests.json', 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except:
+            return None
+
     def load_localization_data():
         try:
             with open('data/enrichment/localization_cases.json', 'r', encoding='utf-8') as f:
@@ -3951,7 +4278,8 @@ def dashboard():
                                  drift_split=load_drift_split_tables() if show_labels else None,
                                  attachment_drift=load_attachment_drift() if show_labels else None,
                                  listicle_bias=load_listicle_bias() if show_labels else None,
-                                 loc_summary=load_localization_data())
+                                 loc_summary=load_localization_data(),
+                                 ttests=load_feature_ttests())
     _cache_set(cache_key, html)
     return html
 

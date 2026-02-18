@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Vertex URL Resolver",
+  "version": "1.0",
+  "description": "Resolves Vertex AI Search redirect URLs by visiting them in the browser.",
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
