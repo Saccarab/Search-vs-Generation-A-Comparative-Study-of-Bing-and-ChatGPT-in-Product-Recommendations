@@ -52,10 +52,7 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 *Tracing the evolution of information retrieval from keyword matching to generative synthesis.*
 
 ### 1.2.1 The Evolution of Search Optimization
-- **Traditional SEO (Search Engine Optimization):** Focus on keyword density, backlink authority, and technical performance to rank in a 10-blue-link UI.
-- **The Convergence of AEO & GEO:** These terms are often used interchangeably to describe the shift toward optimizing content for direct synthesis.
-    - **AEO (Answer Engine Optimization):** Focuses on being the "single best answer" for voice assistants and featured snippets.
-    - **GEO (Generative Engine Optimization):** Focuses on being cited and synthesized by LLMs in conversational RAG (Retrieval-Augmented Generation) workflows.
+**SEO (Search Engine Optimization)** is the established practice of optimizing content for visibility in organic search results through relevance, authority signals, and technical performance. As LLMs increasingly mediate search interactions, a parallel optimization practice is emerging: tailoring content to be retrieved, selected, and cited within AI-generated answers. The industry has not converged on a single term for this — common labels include **GEO** (Generative Engine Optimization), **AEO** (Answer Engine Optimization), **AI SEO**, **AIO** (AI Optimization), and **LLMO**. Throughout this thesis we adopt **GEO** following Aggarwal et al. (2024), as it is the most established term in academic literature, but the underlying concept is the same across labels: optimizing content so that it survives the retrieval-to-citation pipeline of RAG-based search systems.
 
 ### 1.2.2 The Genesis and Evolution of RAG (Retrieval-Augmented Generation)
 - **The "Stochastic Parrot" Era (Pre-2023):** Early LLMs relied purely on "parametric knowledge"—static information frozen at the time of training. This led to the "hallucination problem" and the "stale data" bottleneck.
@@ -79,12 +76,9 @@ Grounding behavior is the measurable pipeline from **retrieval → selection →
 - **Thesis Argument:** GEO is not a replacement for SEO; it is **SEO's final form**. Search is the "cheaper, better, faster" engine that feeds the LLM's reasoning core.
 
 ### 1.2.5 The Structural Pivot: From "Search" to "Grounding"
-- **The August 11, 2025 Retirement:** Microsoft officially decommissioned the legacy Bing Search APIs, forcing a migration to **"Grounding with Bing Search"** as part of the Azure AI Agents ecosystem.
-- **Defining "Grounding":** Unlike traditional search ranking (which optimizes for human click-through rates), **Grounding** is the process of anchoring an LLM's response in real-time, verifiable web data to reduce hallucinations and ensure factual accuracy.
-- **Retrieval Asymmetry:** This shift codifies the "Two-Web" reality:
-    1. **The Human Web (Ranking):** Optimized for SEO, ads, and engagement.
-    2. **The Agent Web (Grounding):** Optimized for information density, extraction potential, and factual synthesis.
-- **Thesis Connection:** Our discovery that ChatGPT citations are often buried at **Rank 31-200** in the Human Web proves that the "Grounding" engine uses a different set of priorities than the "Ranking" engine.
+In August 2025, Microsoft decommissioned the legacy Bing Search APIs and migrated to **"Grounding with Bing Search"** as part of the Azure AI Agents ecosystem. The rebranding from "search" to "grounding" reflects a conceptual shift: unlike traditional search ranking, which optimizes for human click-through rates, **grounding** is the process of anchoring an LLM's response in real-time, verifiable web data to reduce hallucinations and ensure factual accuracy.
+
+This shift has fuelled industry discussion around a "Two-Web" reality — a **Human Web** optimized for SEO, ads, and engagement, alongside an emerging **Agent Web** optimized for machine-readable structure and information density. Infrastructure providers are already building for this split: Martinho & Allen (2026) describe Cloudflare's "Markdown for Agents" feature, which uses HTTP content negotiation to serve markdown instead of HTML when AI crawlers request a page, reducing token consumption by up to 80%. However, it remains unclear whether this format-level distinction actually affects LLM citation behavior. Punturo (2026) tested this directly in a controlled A/B experiment across 381 pages and found **no statistically significant advantage** for markdown over standard HTML in AI bot traffic, suggesting that current LLMs are already effective at parsing HTML and that the "two-web" divide may be more about infrastructure efficiency than content visibility.
 
 ## 1.3 The Commercial Catalyst for RAG
 
