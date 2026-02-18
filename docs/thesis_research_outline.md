@@ -145,6 +145,28 @@ This shift has fuelled industry discussion around a "Two-Web" reality — a **Hu
     - **Domain Expertise:** Queries were focused on the **AI and Software-as-a-Service (SaaS)** sectors — particularly **speech and language technology** (speech-to-text, live transcription, voice translation, text-to-speech) — a domain where the author has significant professional expertise, allowing for more nuanced qualitative analysis of the "Signal vs. Noise" in results.
 - **Experimental Rigor:** Each of the 79 prompts was executed in **3 independent runs** (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
 
+**Intent-based prompt clusters.** Although the 79 prompts span 9 fine-grained `parent_keyword` categories, they reduce to 4 functional clusters when grouped by user intent:
+
+| Cluster | Categories included | Count | % |
+|---|---|---|---|
+| **Live / real-time** | live translation (23), live transcription (2) | **25** | **31.6%** |
+| **Post-production translation** | video translation (11), voice translation (9), video translator (4) | **24** | **30.4%** |
+| **Post-production transcription / STT** | audio transcription (16), speech to text (4), video transcription (1) | **21** | **26.6%** |
+| **Text-to-speech** | text to speech (9) | **9** | **11.4%** |
+
+The first three clusters are roughly balanced (27–32%), with TTS as a smaller tail. Note that some voice translation prompts (e.g., P014 "best app for voice translation", P042 "real-time voice translator") have clear live intent and could be reclassified to the live cluster, which would push live to ~37% and post-production translation to ~23%. The assignment above preserves the original `parent_keyword` boundaries.
+
+**Example prompts by cluster:**
+
+| Cluster | Example prompts |
+|---|---|
+| Live / real-time | "Is there a real time audio to text translation?" (P007), "Is there a Windows application for live translation during calls in Google Meet?" (P034), "什么实时翻译软件好用？" (P032) |
+| Post-prod translation | "Which free AI would you recommend for translating my video?" (P001), "Can you suggest a free website or program that can translate my 20-minute video and add subtitles?" (P018), "What is the AI app that changes the language of videos?" (P037) |
+| Post-prod transcription / STT | "I have an audio file and need to know which app or AI tool can transcribe it" (P004), "What are the best free audio to text transcription tools?" (P070), "What are the top 3 speech-to-text transcription tools?" (P079) |
+| TTS | "Can you recommend a text-to-speech service that generates conversations with multiple voices?" (P005), "Can you recommend free text-to-speech extensions that don't sound robotic?" (P069) |
+
+**Search trigger coverage.** Five prompts never triggered RAG in any of their 6 runs (3 enterprise + 3 personal): P013, P036, P056, P059, P062. An additional prompt (P067) also never triggered search. All 6 share a distinctive signature: their `sonic_classification_json` is **NULL** across every run — the Sonic Classifier was never invoked, indicating suppression at a layer upstream of the classifier itself. Two of the 6 are non-English (P056 Italian, P062 Spanish). Four partial-trigger prompts (P004, P016, P045, P067) had mixed behavior across runs; P016 shows a clean enterprise-triggered / personal-suppressed split, with its enterprise `no_search_prob` = 0.1737 — the highest in the dataset, missing the suppression threshold (0.175) by just 0.0013. Among runs with valid sonic data, the classifier is **deterministic**: all 3 runs of the same prompt on the same account produce byte-identical probability values, confirming that run-to-run stochasticity originates in post-classifier layers. Thirteen runs exhibited post-classifier overrides — the classifier recommended search (high `simple_search_prob`) but something downstream suppressed it — and 11 of 13 occurred on Personal accounts. All downstream analyses that depend on citations exclude the non-triggering runs.
+
 ### 2.1.2 Google SERP Result Types (SerpApi): Organic vs Video vs PAA
 SerpApi returns Google results in multiple **result_type** buckets (not just "10 blue links"). This matters because overlap numbers can shift depending on what we count as "the SERP."
 
@@ -1002,6 +1024,45 @@ The retrieved-only domain list overlaps heavily with the invisible domain list b
 
 What role these retrieved-only links play in the generation process — whether the model uses them as background context, ignores them entirely, or processes them in some other way — is not observable from our data. We can only confirm that they were **present in the search result pool** and **absent from the final output**. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, but we cannot determine whether this reflects deliberate filtering by the model or some other mechanism upstream.
 
+### 3.3.4 Citation Flip-Flop Rate — The Stochastic Boundary Between Cited and Additional
+
+A URL classified as "additional" (supplementary, shown alongside the response but not cited inline) in one run may be promoted to "cited" (inline citation) in a different run. We measure this **flip-flop rate** at two scopes: cross-prompt (any URL that appears as additional in any run and cited in any other run of the same account type) and per-prompt (restricted to different runs of the same prompt).
+
+**Cross-prompt flip-flop rate:**
+
+| Metric | Enterprise | Personal |
+|---|---|---|
+| Unique additional URLs | 1,298 | 1,594 |
+| Also cited in ≥1 other run | 337 | 413 |
+| **Flip-flop rate** | **25.96%** | **25.91%** |
+
+The near-identical rates (25.96% vs 25.91%) across account types are striking given the different retrieval indices (Bing-only for Enterprise, Bing+Google for Personal). However, since both account types execute the same 79 prompts targeting the same product categories, their URL pools overlap substantially. The convergence likely reflects the model applying a consistent citation threshold to similar URL pools rather than an index-independent property.
+
+**Per-prompt flip-flop rate** (restricted to same-prompt, different-run flip-flops):
+
+| Metric | Enterprise | Personal |
+|---|---|---|
+| Per-prompt flip-flop URLs | 262 | 346 |
+| **Per-prompt flip-flop rate** | **20.2%** | **21.7%** |
+| Prompts with ≥1 flip-flop | 71/79 (89.9%) | 69/79 (87.3%) |
+| Avg flip-flops per affected prompt | 4.9 (max 11) | 7.1 (max 17) |
+
+Roughly 78% of the cross-prompt flip-flop effect (20.2/26.0 for Enterprise) is already visible within-prompt — most flip-flopping is driven by run-to-run stochasticity on the same query, not by different queries producing overlapping URL pools. The remaining ~6pp comes from URLs that are additional for one prompt but cited for a different prompt entirely.
+
+**Pattern analysis** (how flip-flop URLs distribute across runs):
+
+| Pattern | Enterprise | Personal |
+|---|---|---|
+| Additional in 1 run, cited in 1 run | 137 (39.7%) | 137 (28.0%) |
+| Additional in 2 runs, cited in 1 run | 113 (32.8%) | 201 (41.1%) |
+| Additional in 1 run, cited in 2 runs | 95 (27.5%) | 151 (30.9%) |
+
+The dominant pattern is URLs that are "mostly additional, occasionally cited" — the model's default is to demote them, with promotion happening stochastically in a minority of runs.
+
+**Interpretation.** With only 3 runs per prompt, nearly 90% of prompts already exhibit at least one flip-flop. The observed 20–22% per-prompt rate is likely a lower bound; additional runs would surface more borderline URLs. The finding confirms that the model's boundary between "cite inline" and "show as supplementary" is genuinely stochastic — same query, same model, different outcome. This has direct implications for GEO: a brand's source may be cited inline in one user's session and demoted to additional in the next, even for identical queries.
+
+---
+
 ## 3.4 Content DNA Profile & Cited vs. Additional Comparison
 *Before analyzing selection drift, we establish the enrichment baseline: what types, tones, and structural features characterize the sources the model had to choose from ("Menu") versus what it actually cited ("Order"), and why some retrieved sources were demoted to "Additional."*
 
@@ -1453,7 +1514,15 @@ LLMs exhibit a contradictory behavior toward self-promotional content (see `3.6.
 
 For brands, this means that being the host of a listicle is a double-edged sword: your product will often be skipped, but when it is not skipped, it is amplified. The safer strategy is to be **mentioned in third-party listicles** rather than relying solely on self-authored "best of" content — third-party mentions avoid the host exclusion filter entirely while still benefiting from listicle-driven citation pathways.
 
-## 5.6 The Economic Moat of Retrieval
+## 5.6 Citation Stochasticity — The Flip-Flop Effect
+
+Our flip-flop analysis (Section 3.3.4) reveals that the model's boundary between "cite inline" and "show as supplementary" is genuinely stochastic. Across the full dataset, 25.96% (Enterprise) and 25.91% (Personal) of additional URLs also appear as cited in at least one other run. Per-prompt analysis confirms that most of this instability is within-prompt: 20.2% (Enterprise) and 21.7% (Personal) of additional URLs flip to cited status in a different run of the same query, accounting for roughly 78% of the total flip-flop effect.
+
+The near-identical rates across account types (25.96% vs 25.91%) are explained by the shared prompt pool: both Enterprise and Personal execute the same 79 prompts targeting the same product categories, producing overlapping URL universes. The convergence reflects the model applying a consistent citation threshold to similar inputs, not an index-independent constant. Meanwhile, the Sonic Classifier that governs search triggering is fully **deterministic** — all 3 runs of the same prompt on the same account produce byte-identical probability values — confirming that the stochasticity originates entirely in post-classifier layers.
+
+For GEO, this means citation visibility is partially probabilistic: a brand's source may be cited inline in one session and demoted to supplementary in the next, even for identical queries. Monitoring tools that report "Share of Model" from single snapshots will systematically miss this variance. Any robust GEO measurement framework must account for the ~20% within-prompt citation instability we observe.
+
+## 5.7 The Economic Moat of Retrieval
 
 The broader conclusion from our study reinforces the architectural argument made in `1.2.4`: retrieval is cheaper than inference, and this economic reality ensures that the web remains the foundation of AI-generated answers. LLMs are not replacing search — they are consuming it. The "tiny model with superhuman reasoning" vision (see `1.2.3`) depends on an external knowledge layer, and that layer is the indexed web.
 
