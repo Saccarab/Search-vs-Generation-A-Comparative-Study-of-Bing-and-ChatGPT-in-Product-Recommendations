@@ -1373,7 +1373,14 @@ When a model cites a listicle authored by a vendor (e.g., HeyGen's "Best AI Vide
 | Host selection rate | 28.1% | 36.4% |
 | **Bias multiplier** | **2.27×** | **3.40×** |
 
-Both models exhibit a dual pattern. The dominant behavior is host *omission*: models exclude the host's own product in the majority of cases (72% for Gemini, 64% for GPT). However, when the host product *is* selected, it appears at 2–3× the rate expected under uniform random selection from the listicle. This suggests that models apply a partial "anti-self-promotion" heuristic — they tend to avoid the host's product — but that this filtering is imperfect, and host products still enjoy a measurable selection advantage when they survive.
+At first glance, these numbers suggest a dual pattern: dominant omission, yet a 2–3× selection advantage when the host product *is* included. However, a position-controlled analysis reveals that this apparent "host bias" is largely explained by rank privilege. In our dataset, host products occupy rank #1 in 89.2% of GPT listicles and 100% of Gemini listicles — vendors overwhelmingly list their own product first. Comparing selection rates at the same position:
+
+| | Host at R1 selected | Non-host R1 selected | Residual |
+|---|---|---|---|
+| GPT | 18.9% (82/433) | 14.3% (29/203) | +4.7pp |
+| Gemini | 23.1% (94/407) | 20.5% (15/73) | +2.5pp |
+
+The 2.3–3.4× bias multiplier compares host selection against a *uniform random* baseline across all ranks — but because hosts sit at rank #1 and rank #1 is over-selected regardless of host status (see 3.6.3), the multiplier conflates position privilege with host identity. Once position is controlled, the residual advantage shrinks to +2.5–4.7pp — a modest effect that may reflect the host's more detailed self-description rather than any systematic host favoritism. Conversely, the 64–72% "omission rate" also requires reframing: non-host rank #1 items are skipped at even higher rates (79.5–85.7%). Models do not single out hosts for exclusion; they simply skip rank #1 items frequently, and host products happen to sit there.
 
 ### 3.6.3 Selection Order vs. Listicle Rank (The "Re-Ranking" Effect)
 
@@ -1390,6 +1397,8 @@ Do models preserve the internal ranking of a listicle when selecting products, o
 | Gemini | 365 | 34.8% | 61.1% | 79.5% | 2.53× | 1.48× | 1.18× |
 
 The #1 item in a listicle is selected at 1.7–2.5× the uniform baseline, and the top-5 items account for 76–81% of all selections despite comprising roughly half the listicle on average. This mirrors the SERP-level position bias observed in Section 3.2: just as models disproportionately cite Rank 1 in the SERP, they disproportionately extract the #1 product from within a cited listicle. Position bias thus operates at two nested levels — SERP rank and within-listicle rank.
+
+A plausible mechanism for within-listicle position bias emerges from recent work on how LLMs process source content. Petrovic (2025) shows that Google's grounding infrastructure operates with a fixed "content budget" of ~2,000 words per query, with rank #1 sources receiving 28% of the budget (531 words) versus 13% for rank #5 (266 words); pages exceeding 3,000 words receive only 13% coverage, meaning items listed further down a long listicle may never enter the grounding chunks sent to the model. Indig (2026) reports a complementary finding for ChatGPT: 44.2% of citations originate from the first 30% of a source page's text (a "ski ramp" distribution, p < 0.0001 over 18,012 verified citations), with content in the final 30% accounting for only 24.7% of citations. Together, these findings suggest that the top-item skew we observe is not merely a learned preference but may reflect an architectural constraint: items positioned later in a listicle are less likely to be included in the content window the model actually processes.
 
 ### 3.6.4 Semantic Fidelity: Reading Comprehension vs. Attribution
 
@@ -1508,11 +1517,13 @@ Our discovery of the Enterprise vs. Personal provider split (see `3.3.1`) has di
 
 For brands targeting ChatGPT as a recommendation channel, optimizing for **both** Bing and Google indices is necessary to achieve full coverage across deployment contexts. This is a departure from the Google-centric SEO mindset that dominates the industry.
 
-## 5.5 The Host Exclusion Paradox
+## 5.5 The Host Exclusion Paradox — Resolved by Position
 
-LLMs exhibit a contradictory behavior toward self-promotional content (see `3.6.1`). Host products are **excluded** from listicle-sourced recommendations 64–72% of the time — a strong anti-self-promotion tendency. Yet when the host product *is* selected, it enjoys a 2.3–3.4x bias multiplier over the random baseline. This dual behavior suggests that LLMs have learned a heuristic to discount self-promotion, but the heuristic is imperfect — host products that survive the filter receive disproportionate attention, possibly because the host's own page provides the most detailed description of its product.
+Our initial analysis suggested a contradictory behavior: host products are omitted 64–72% of the time, yet when selected they enjoy a 2.3–3.4× bias multiplier (see 3.6.2). A position-controlled analysis resolves this apparent paradox. Host products occupy rank #1 in 89–100% of listicles — vendors list their own product first. The raw bias multiplier compares host selection against a uniform baseline across *all* ranks, conflating host identity with rank privilege. Once we compare host and non-host items at the same position (rank #1), the residual advantage shrinks to just +2.5–4.7pp. Similarly, the 64–72% omission rate is not host-specific: non-host rank #1 items are skipped at comparable or even higher rates (79.5–85.7%).
 
-For brands, this means that being the host of a listicle is a double-edged sword: your product will often be skipped, but when it is not skipped, it is amplified. The safer strategy is to be **mentioned in third-party listicles** rather than relying solely on self-authored "best of" content — third-party mentions avoid the host exclusion filter entirely while still benefiting from listicle-driven citation pathways.
+The mechanism behind within-listicle position bias is illuminated by Petrovic (2025), who shows that Gemini's grounding operates with a fixed ~2,000-word content budget that allocates 28% to the top-ranked source and only 13% to the fifth, and by Indig (2026), who finds that 44.2% of ChatGPT citations originate from the first 30% of page text. Items positioned later in a listicle may never enter the content window the model processes — an architectural constraint rather than a learned preference.
+
+**Practical implication**: the host exclusion effect is largely a *position* effect, not an anti-self-promotion heuristic. Brands hosting their own listicles are not penalized for self-promotion — but they are not meaningfully advantaged either. The safer strategy remains being **mentioned in third-party listicles**, which avoids any position confound and benefits from the same listicle-driven citation pathway. For content creators, the lesson reinforces what the Dejan and Growth Memo studies suggest: front-load the most important products, because items deeper in the page face a diminishing probability of being grounded.
 
 ## 5.6 Citation Stochasticity — The Flip-Flop Effect
 
