@@ -473,6 +473,18 @@ We built two separate interactive tools for qualitative inspection and aggregate
 ### Why two apps:
 The two models expose fundamentally different data structures — ChatGPT requires reconstructed citation mapping from network tokens (see `2.6`), while Gemini provides native `groundingMetadata` with chunk-level and segment-level attribution. A single unified viewer would have obscured these structural differences rather than surfacing them.
 
+## 2.9 Use of AI Tools in This Research
+
+This thesis made extensive use of large language models as research tools at every stage of the work. We disclose this both for transparency and because we believe it reflects the reality of how empirical research involving LLMs is increasingly conducted.
+
+**Data enrichment and judging.** The Content DNA labeling pipeline (Section 2.5) used **GPT-5-mini** and **Gemini 2.5 Flash** as structured labelers to classify ~12,000 URLs. The semantic fidelity judge (Section 3.6.4) used the same two models to evaluate 1,116 listicle product claims. Cross-model agreement was validated in both cases (91–100% on structural fields), and all flagged attribution failures were manually verified.
+
+**Analysis scripting.** Many of the analysis scripts (Python, Node.js) were written with AI assistance using multiple models across two IDE integrations: **Gemini 3.0 Flash** (Google) was the primary model used via Cursor, with **GPT-5.2** and **GPT-5.2 Codex** (OpenAI) and **Claude Opus 4.5** (Anthropic) used occasionally via Cursor as well. Later-stage analysis and writing shifted to **Claude Opus 4.5/4.6** via Claude Code. The author specified the analysis logic, reviewed all outputs, and iteratively refined both the code and the interpretation of results through extended dialogue with the models.
+
+**Writing and editing.** Drafts of thesis prose, tables, and LaTeX formatting were developed in collaboration with Claude Opus 4.5/4.6. The workflow was dialogic: the author provided the arguments, data, and framing decisions; the model produced draft text; the author reviewed, challenged, and revised. Every finding, interpretation, and number in this thesis was verified by the author against the underlying data. The intellectual contribution — the research questions, the experimental design, the instrumentation approach, and the analytical arguments — is the author's own.
+
+We note a reflexive dimension to this disclosure: a thesis that studies how LLMs ground their outputs in web sources was itself produced with LLMs as writing and analysis tools, subject to the same grounding and fidelity questions we investigate. We consider this appropriate rather than paradoxical — the tools we study are the tools of our era, and using them transparently is preferable to understating their role.
+
 ---
 
 # Part 3: Findings & Analysis
@@ -803,6 +815,28 @@ To compare how much each system favors higher-ranked results, we restrict to **P
 - **GPT Enterprise has a "top-2" effect**: Ranks 1–2 together account for **36.1%** of Page-1 matches, with rank 2 (18.7%) slightly above rank 1 (17.4%). The steep drop occurs at rank 3 (13.7%).
 - **GPT Personal is the flattest profile**: 18.1% → 9.4% across ranks 1–5, a gradual decline. Drawing from two indices creates more rank diversity — no single rank dominates.
 - **All three systems converge at ranks 8–10**: Shares drop to 3–6%, consistent with the Page 1→Page 2 boundary effect.
+
+**Comparison with human click-through rates.**
+
+To contextualize LLM position bias, we place the cross-system rank concentration alongside Google organic click-through rates reported by First Page Sage for 2026:
+
+| Rank | Human CTR | GPT Enterprise | GPT Personal | Gemini |
+|---|---|---|---|---|
+| **1** | **39.8%** | 17.4% | 18.1% | 23.0% |
+| 2 | 18.7% | 18.7% | 14.3% | 13.4% |
+| 3 | 10.2% | 13.7% | 12.2% | 11.8% |
+| 4 | 7.2% | 10.5% | 11.6% | 11.7% |
+| 5 | 5.1% | 10.2% | 9.4% | 8.9% |
+| 6 | 4.4% | 8.3% | 10.5% | 7.9% |
+| 7 | 3.0% | 7.5% | 8.3% | 9.2% |
+| 8 | 2.1% | 5.9% | 7.2% | 6.5% |
+| 9 | 1.9% | 5.0% | 5.1% | 5.0% |
+| 10 | 1.6% | 2.8% | 3.3% | 2.7% |
+| **Top-3** | **68.7%** | **49.8%** | **44.6%** | **48.2%** |
+
+Both curves are top-heavy, but the human CTR distribution is substantially steeper: rank #1 captures 39.8% of human clicks versus 17–23% of LLM citations, and the top 3 account for 68.7% of human clicks versus 45–50% of LLM citations. LLMs distribute attention more evenly across the first page — they "look further down" than human users do. However, the fundamental shape is the same: a monotonic decay with the majority of attention concentrated in the top positions.
+
+This parallel reinforces the thesis argument. Position bias in LLM citation is not a novel artifact of generative AI — it is the same positional preference that has governed human search behavior for two decades, inherited by the retrieval pipeline that feeds the model. The optimization target has not changed; only the consumer of the ranking has. The same pattern holds within listicles: just as users reading a "Best Of" article disproportionately engage with the first items listed, LLMs extract the #1 listicle item at 1.7–2.5× the uniform baseline (Section 3.6.3). Position bias operates at every level of the information hierarchy — SERP, page, and within-page — for both human and machine consumers.
 
 **GPT per-query citation overlap (237 runs per tier):**
 
@@ -1533,7 +1567,51 @@ The near-identical rates across account types (25.96% vs 25.91%) are explained b
 
 For GEO, this means citation visibility is partially probabilistic: a brand's source may be cited inline in one session and demoted to supplementary in the next, even for identical queries. Monitoring tools that report "Share of Model" from single snapshots will systematically miss this variance. Any robust GEO measurement framework must account for the ~20% within-prompt citation instability we observe.
 
-## 5.7 The Economic Moat of Retrieval
+## 5.7 Fan-Out Keyword Analysis: The Convergence of GEO and SEO Gap Analysis
+
+Our fan-out data suggests a concrete methodology for GEO:
+
+1. **Acquire real prompt volumes.** Platforms like Profound and Peec AI surface the actual prompts users submit to ChatGPT, along with volume estimates.
+2. **Extract fan-out queries.** For each high-volume prompt, identify the fan-out queries the model generates. Tools already exist for this: [QueryFanout.ai](https://queryfanout.ai/) and [Dejan AI's fan-out tool](https://dejan.ai/tools/fanout/) make API calls to Google and extract the fan-out queries from the grounding response. Notably, these queries are not generated by Gemini itself — Google's QDG (Query Decomposition and Generation) classifier determines whether grounding is needed, and if so, a dedicated fan-out model generates the sub-queries supplied to Gemini alongside the `webSearchQueries` in `groundingMetadata`. Fan-out generation is conditional: if the classifier determines no grounding is needed, no fan-out queries are produced. For ChatGPT, our network instrumentation (Section 3.1.2) shows that GPT dispatches exactly 2 fan-out queries per search turn.
+3. **Cluster the fan-outs.** Aggregate fan-out queries across prompts and cluster them by keyword similarity, exactly as in traditional keyword research. The resulting clusters represent the *actual search queries* that feed the model's retrieval pool.
+4. **Run a keyword gap analysis.** For each fan-out cluster, check whether the brand ranks in the top positions of Bing and Google. Gaps in ranking correspond directly to gaps in LLM visibility.
+5. **Optimize using standard SEO.** Close the gaps with conventional techniques: content creation, link building, technical optimization.
+
+### Why Fan-Out Analysis May Be Unnecessary
+
+However, the more consequential observation is that **dedicated fan-out analysis may not be necessary at all**. Fan-out queries are, by design, reformulations of user intent into search-engine-compatible keywords. A prompt like "What's the best AI video translator?" generates fan-outs such as "best AI video translation tools 2026" and "AI video translator comparison free" — queries nearly identical to what a human would type into Google or Bing.
+
+Traditional SEO keyword research infrastructure is mature and well-supplied with data. Thousands of website owners connect their properties to platforms like Ahrefs, SEMrush, and Google Search Console, providing these tools with keyword volume, intent classification, and competitive gap data refined over more than a decade. Adobe's acquisition of SEMrush in November 2025 underscores the strategic value the industry places on this keyword intelligence layer. A thorough traditional SEO gap analysis using these tools would likely identify the same keyword clusters that fan-out analysis reveals, because the model's query reformulation is itself constrained by the search index it targets.
+
+The implication is that fan-out-based GEO gap analysis and traditional SEO gap analysis **converge in practice**. The marginal value of fan-out data over conventional keyword research is real but bounded: it captures the specific phrasings the model uses, the freshness signals it injects (Section 3.1.1), and the cross-language fan-outs that route retrieval into unexpected indices (Section 3.1.4). Rudzki (2026) reports that fan-out queries are growing longer on average across 20M analyzed QFOs, which may signal that long-tail keyword targeting becomes relatively more important in a GEO context. But the core keyword universe is substantially the same. A brand that already runs rigorous SEO gap analysis is, in most cases, already covering the GEO gap — reinforcing the thesis that **GEO is not a replacement for SEO but a thin, measurable layer on top of it**.
+
+### The Invisible-Link Channel as a Parallel Strategy
+
+One area where GEO strategy does diverge from traditional SEO is the **invisible-link channel** (Section 3.3.1). Our data shows that 16–22% of citations point to URLs absent from both Bing (Top 200) and Google (Top 20 Organic), dominated by Wikipedia, Reddit, app stores, and major tech publications.
+
+For brands, this suggests a parallel optimization track: securing mentions — even *unlinked* mentions — on high-authority surfaces like Wikipedia pages, Reddit discussions, and authoritative publications. Such mentions serve at least two functions. First, they may provide a direct retrieval pathway into the LLM's grounding pool via the invisible-link channel. Second, they may influence the model's *parametric* knowledge: brands discussed on high-authority surfaces during training may receive a baseline "nudge" in the model's recommendations, even before retrieval is triggered.
+
+**A potential future study** could test this parametric nudge hypothesis directly by comparing model recommendations with web search forced off (pure parametric recall) against recommendations with web search enabled (RAG-augmented), measuring whether brands with strong non-linked mentions on training-likely surfaces receive disproportionate parametric attention. If confirmed, this would identify a GEO channel that is genuinely independent of SEO: influencing the model's prior beliefs through training-data presence rather than search-index ranking.
+
+## 5.8 Where GEO Is Not Just SEO
+
+The preceding sections argue that the foundation of GEO is SEO. But framing GEO as *merely* SEO would overstate the case and undervalue the genuine novelty of the emerging GEO analytics layer. Several dimensions of LLM-mediated search visibility are not captured by traditional SEO tools:
+
+1. **Share of Model.** Traditional SEO tracks ranking position; GEO tracks whether a brand actually appears in the model's generated response. A brand may rank #1 in Google and still be absent from ChatGPT's answer — or vice versa. Platforms like Profound, Peec AI, and Ahrefs' AI search features provide this monitoring capability. No traditional SEO tool can replicate this.
+
+2. **Citation sentiment.** SEO measures visibility (do users see you?); GEO must also measure *framing* (how does the model describe you?). An LLM may cite a brand but frame it negatively ("expensive but capable") or omit key differentiators.
+
+3. **Cross-model divergence.** Our Enterprise–Personal provider split demonstrates that the same query can produce different citation sets depending on deployment context. A brand visible in GPT Personal (Bing + Google retrieval) may be invisible in GPT Enterprise (Bing-only). To our knowledge, no existing GEO platform currently monitors visibility *per deployment tier* of the same model — yet our data shows this distinction can produce a 36.8 pp difference in Google overlap alone. As LLM deployments fragment across tiers (consumer, enterprise, API, embedded), per-tier visibility monitoring will become a necessary GEO capability with no analogue in traditional SEO.
+
+4. **Citation stochasticity.** Our flip-flop analysis shows that ~20% of supplementary URLs are promoted to inline citations across reruns. Any single-snapshot visibility report will systematically misrepresent true citation frequency. Robust GEO monitoring requires repeated sampling — a design pattern built into GEO platforms but absent from traditional rank trackers.
+
+5. **Prompt volumes.** What users ask ChatGPT is not identical to what they search on Google. Prompt volume data reveals demand signals that keyword tools may miss — particularly for conversational, multi-turn, or comparison-oriented queries natural in chat but uncommon in search boxes.
+
+6. **The invisible-link channel as a marketing surface.** Our finding that 16–22% of citations originate from sources invisible to conventional SERPs — dominated by Wikipedia, Reddit, app stores, and major publications — suggests a marketing channel with unusual properties. Unlike paid search ads, which require continuous spend, an invisible citation functions as a durable, unpaid placement. A brand mentioned on a Wikipedia page, discussed in a Reddit thread, or reviewed in a major publication may gain exposure through pathways that bypass search ranking entirely. In principle, this logic extends to any high-authority, training-likely surface: academic publications, app store listings, and curated directories could all function as indirect citation channels.
+
+**The better framing**, then, is not "GEO is just SEO" but "**GEO is a specialization within SEO**" — analogous to how mobile SEO, local SEO, or video SEO are not separate disciplines but specific lenses on the same foundation. The prerequisite is ranking. The monitoring layer is new. And the stakes are growing: according to Ahrefs' panel of 74,752 websites, Google's share of referral traffic declined from 42.2% to 38.9% between June 2025 and January 2026 (−3.2pp), while ChatGPT referral traffic grew by 27% over the same period. AI-driven traffic remains a small fraction of total referrals (<0.3%), but the growth trajectory and the high-intent nature of LLM-referred users make the mechanics of citation selection — which this study documents — commercially material.
+
+## 5.9 The Economic Moat of Retrieval
 
 The broader conclusion from our study reinforces the architectural argument made in `1.2.4`: retrieval is cheaper than inference, and this economic reality ensures that the web remains the foundation of AI-generated answers. LLMs are not replacing search — they are consuming it. The "tiny model with superhuman reasoning" vision (see `1.2.3`) depends on an external knowledge layer, and that layer is the indexed web.
 
