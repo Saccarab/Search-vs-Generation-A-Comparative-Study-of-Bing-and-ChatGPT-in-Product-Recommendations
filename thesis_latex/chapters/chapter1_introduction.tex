@@ -1,20 +1,18 @@
 % Chapter 1: Introduction & Motivation
-% Converted from docs/thesis_research_outline.md (Part 1)
 
 \chapter{Introduction \& Motivation}
 \label{ch:introduction}
 
+Large language models are rapidly becoming the interface through which consumers discover products. By mid-2025, ChatGPT alone had reached approximately 10\% of the world's adult population, with information-seeking and practical guidance accounting for nearly 80\% of all conversations \parencite{chatterji2025chatgpt}. Yet beneath the surface of every AI-generated recommendation lies a dependency that is easy to overlook: the model does not \emph{know} what to recommend---it \emph{retrieves} the answer from the web and reasons over what it finds. At Snowflake Summit 2025, Sam Altman described the trajectory as ``a very tiny model with superhuman reasoning, 1 trillion tokens of context, and access to every tool you can imagine.'' The model supplies the reasoning; the web supplies the knowledge. This architecture---Retrieval-Augmented Generation (RAG)---is not a transitional compromise but the economically and technically inevitable design: inference is expensive, retrieval is cheap, and no model can be retrained hourly to keep pace with prices, reviews, and product launches.
+
+If retrieval is the foundation, then \emph{what gets retrieved} determines \emph{what gets recommended}. And what gets retrieved is governed, overwhelmingly, by search engine indices. This thesis provides the empirical evidence for that claim. We trace the full retrieval-to-citation pipeline---from fan-out query generation through candidate retrieval, source selection, and claim-level attribution---and show that the vast majority of LLM citations originate from conventional search results. Position bias persists at every level of the information hierarchy: top-ranked SERP results are cited disproportionately, and the same pattern repeats \emph{within} cited listicles, where top-listed products are extracted far above the uniform baseline. Search Engine Optimization (SEO) is therefore not obsolete in the age of generative search---it is the prerequisite.
+
+But SEO alone does not explain everything. On top of ranking, models apply a measurable \emph{structural filter}: sources with comparison tables, numbered lists, and other scannable formats are disproportionately selected from the retrieval pool. We also document invisible citation channels (URLs absent from both Bing and Google), a Business--Personal provider split revealing that the two ChatGPT tiers draw on different search backends, cross-language retrieval that routes users into unexpected language indices, and run-to-run citation instability where the same URL fluctuates between inline citation and supplementary status across identical queries. These phenomena constitute the thin but empirically real layer that Generative Engine Optimization (GEO) adds on top of SEO.
+
+The thesis argument, in short: \textbf{GEO is SEO---plus a structural optimization surface that this study is the first to quantify end-to-end.}
+
 \section{Research Questions}
 \label{sec:research-questions}
-
-\textbf{What we empirically observe and measure (high-level):}
-\begin{itemize}
-    \item \textbf{Cross-model grounding}: Gemini vs.\ ChatGPT
-    \item \textbf{Cross-deployment grounding}: ChatGPT \textbf{Personal vs Enterprise}
-    \item \textbf{Rank effects}: how grounding/citation choices relate to \textbf{SERP position distributions} (position bias)
-    \item \textbf{Selection bias in sources}: differences between the \textbf{available menu} (Top-N SERP) vs the \textbf{selected order} (cited set), measured via \textbf{Content DNA enrichment} of cited and non-cited URLs
-    \item \textbf{Visibility gaps}: ``invisible/shadow'' citations (cited URLs missing from the defined Top-N baseline), analyzed separately from within-SERP drift
-\end{itemize}
 
 \subsection{Core Research Question}
 \label{sec:core-rq}
@@ -37,9 +35,9 @@ Grounding behavior is the measurable pipeline from \textbf{retrieval $\rightarro
 \label{sec:sub-questions}
 
 \begin{itemize}
-    \item \textbf{RQ1a (selection + visibility)}: How do \textbf{cited vs additional vs unreferenced/invisible} sources differ in domain/type, and how does this differ by \textbf{enterprise vs personal} runs on ChatGPT results?
-    \item \textbf{RQ1b (external support)}: How often do selected citations appear in \textbf{Top-N SERPs} (Bing/Google overlap; Gemini ``survival'' in Top-20)?
-    \item \textbf{RQ1c (selection bias \& DNA)}: Does the model exhibit a statistically significant preference for specific \textbf{Content DNA features} (e.g., tables, numbered lists, freshness) when selecting from the retrieved ``Menu,'' and how does this preference vary between \textbf{GPT Personal, GPT Enterprise and Gemini}?
+    \item \textbf{RQ1a (selection + visibility)}: How do \textbf{cited vs additional vs retrieved-only/invisible} sources differ in domain/type, and how does this differ by \textbf{business vs personal} runs on ChatGPT results?
+    \item \textbf{RQ1b (external support)}: How often do selected citations appear in \textbf{Top-N SERPs} (Bing/Google overlap; Gemini ``survival'' in Top-25)?
+    \item \textbf{RQ1c (selection bias \& DNA)}: Does the model exhibit a statistically significant preference for specific \textbf{Content DNA features} (e.g., tables, numbered lists, freshness) when selecting from the retrieved ``Menu,'' and how does this preference vary between \textbf{GPT Personal, GPT Business and Gemini}?
     \item \textbf{RQ1d (listicle uptake / fidelity)}: When listicles are retrieved, which listicle-mentioned products are \textbf{selected vs ignored} in the final response (uptake rate, rank bias, host-bias), and how does this differ by run type?
 \end{itemize}
 
@@ -49,147 +47,133 @@ Grounding behavior is the measurable pipeline from \textbf{retrieval $\rightarro
 \begin{itemize}
     \item \textbf{Bing}: baseline ``human web'' retrieval/ranking surface used as a \textbf{measurement instrument} for rank/visibility and ``visibility gaps'' (\textbf{Top-200}).
     \item \textbf{Google (SerpApi)}: control baseline for Gemini fan-out queries and sensitivity checks (\textbf{Organic-only} vs including non-organic result types like \textbf{Video/PAA/Discussions}).
-    \item \textbf{Gemini}: optional cross-model baseline for grounding mechanics (has explicit \texttt{groundingMetadata} and claim-support mapping); not an enterprise/personal split unless we create our own conditions.
+    \item \textbf{Gemini}: optional cross-model baseline for grounding mechanics (has explicit \texttt{groundingMetadata} and claim-support mapping); not an business/personal split unless we create our own conditions.
 \end{itemize}
 
-\section{Market Context \& Motivation (Ahrefs Benchmark)}
+\section{Market Context \& Motivation}
 \label{sec:market-context}
 
-\begin{itemize}
-    \item \textbf{The Macro Shift (8-Month Trend):} According to data from Ahrefs\footnote{\url{https://chatgpt-vs-google.com/}} analyzing \textbf{74,752 websites} between \textbf{June 2025 and January 2026}, total search traffic across the panel dropped by \textbf{7.5\%} (from 494M to 457M visits).
-    \item \textbf{The AI Growth Engine:} In the same timeframe, referral traffic from AI chatbots grew by \textbf{27\%} (from 2.9M to 3.7M visits).
-    \item \textbf{Implication for visibility:} Although AI referral traffic is growing rapidly, conventional search still dominates the referral landscape. This suggests that, in many cases, LLM answers remain downstream of search visibility: the model can only cite what it retrieves.
-    \item \textbf{Thesis motivation:} This study focuses on the \textbf{micro-level mechanics} of this transition---how assistants ``ground'' product recommendations in web sources, and how retrieval, selection, and citation interact with search rankings.
-\end{itemize}
+To place this study in context, it is important to understand the current scale of AI-driven search traffic relative to traditional search. Table~\ref{tab:traffic-share} presents referral traffic data from Ahrefs' panel of 74,752 websites as of January 2026 \parencite{ahrefs2026chatgptvsgoogle}.
+
+\begin{table}[htbp]
+\centering
+\caption{Referral traffic share by source (January 2026). Data from Ahrefs panel of 74,752 websites \parencite{ahrefs2026chatgptvsgoogle}. AI assistants collectively account for less than one-third of one percent of referral traffic.}
+\label{tab:traffic-share}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Source} & \textbf{Traffic Share} & \textbf{Monthly Visitors} \\
+\midrule
+\multicolumn{3}{l}{\textit{Traditional Search Engines}} \\
+Google & 38.92\% & --- \\
+Bing & 1.44\% & --- \\
+DuckDuckGo & 0.29\% & --- \\
+\midrule
+\multicolumn{3}{l}{\textit{AI Assistants}} \\
+ChatGPT & 0.23\% & 3.3M \\
+Perplexity & 0.02\% & 288K \\
+Gemini & 0.01\% & 197K \\
+Claude & $<$0.01\% & --- \\
+\midrule
+\textbf{All traditional search} & \textbf{$\sim$40.7\%} & --- \\
+\textbf{All AI combined} & \textbf{0.26\%} & \textbf{$\sim$3.8M} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The numbers are stark: Google alone commands 150$\times$ the referral traffic of all AI assistants combined. Traditional search engines collectively account for approximately 40.7\% of referral traffic; AI search accounts for 0.26\%. By any absolute measure, AI-driven search remains a marginal channel.
+
+However, the trajectory tells a different story. Between June 2025 and January 2026, total search traffic across the Ahrefs panel declined by 7.5\% (from 494M to 457M visits), while AI chatbot referral traffic grew by 27\% (from 2.9M to 3.7M visits). Google's share dropped from 42.2\% to 38.9\% ($-$3.2\,pp). Among AI platforms, Gemini showed the fastest recent growth (+53.1\% month-over-month in January 2026), followed by Claude (+20.7\%) and ChatGPT (+9.2\%). These growth rates, sustained over even a few years, would shift AI search from a rounding error to a commercially significant channel.
+
+This creates the motivation for studying the mechanics of LLM citation \emph{now}, while the systems are still young and the patterns are forming. If AI search traffic continues to grow---and if, as preliminary industry observations suggest, LLM-referred users convert at higher rates than traditional search users due to the pre-qualified nature of AI recommendations---then the question of \emph{how} LLMs select which sources and products to recommend becomes commercially material. This thesis provides the micro-level mechanics of that selection process: how the retrieval-to-citation pipeline shapes which sources and products appear in the final response, and what content creators and brands can do to influence the outcome.
 
 \section{Theoretical Framework: From SEO to GEO}
 \label{sec:theoretical-framework}
 
-\textit{Tracing the evolution of information retrieval from keyword matching to generative synthesis.}
-
-\subsection{The Evolution of Search Optimization}
+\subsection{Search Optimization in the Age of Generative AI}
 \label{sec:evolution-search}
 
-\begin{itemize}
-    \item \textbf{Traditional SEO (Search Engine Optimization):} Focus on keyword density, backlink authority, and technical performance to rank in a 10-blue-link UI.
-    \item \textbf{The Convergence of AEO \& GEO:} These terms are often used interchangeably to describe the shift toward optimizing content for direct synthesis.
-    \begin{itemize}
-        \item \textbf{AEO (Answer Engine Optimization):} Focuses on being the ``single best answer'' for voice assistants and featured snippets.
-        \item \textbf{GEO (Generative Engine Optimization):} Focuses on being cited and synthesized by LLMs in conversational RAG (Retrieval-Augmented Generation) workflows.
-    \end{itemize}
-\end{itemize}
+Search Engine Optimization (SEO) is the established practice of optimizing content for visibility in organic search results through relevance, authority signals, and technical performance. As LLMs increasingly mediate search interactions, a parallel optimization practice is emerging: tailoring content to be retrieved, selected, and cited within AI-generated answers. The industry has not converged on a single term for this---common labels include GEO (Generative Engine Optimization), AEO (Answer Engine Optimization), AI~SEO, AIO (AI Optimization), and LLMO. Throughout this thesis we adopt \textbf{GEO} following \textcite{aggarwal2024geo}, as it is the most established term in academic literature, but the underlying concept is the same across labels: optimizing content so that it survives the retrieval-to-citation pipeline of RAG-based search systems.
 
-\subsection{The Genesis and Evolution of RAG (Retrieval-Augmented Generation)}
+Understanding why GEO exists---and why it does not replace SEO---requires tracing the architectural evolution that made retrieval central to how LLMs generate answers.
+
+\subsection{The Rise of Retrieval-Augmented Generation}
 \label{sec:rag-evolution}
 
-\begin{itemize}
-    \item \textbf{The ``Stochastic Parrot'' Era (Pre-2023):} Early LLMs relied purely on ``parametric knowledge''---static information frozen at the time of training. This led to the ``hallucination problem'' and the ``stale data'' bottleneck.
-    \item \textbf{The Reasoning vs.\ Knowledge Split:} The industry realized that LLMs are better at \textbf{reasoning} (logic, synthesis, formatting) than being a \textbf{database}. RAG was developed to decouple these functions.
-    \item \textbf{The RAG Workflow:}
-    \begin{enumerate}
-        \item \textbf{Retrieval:} The model identifies it needs external info and generates a search query.
-        \item \textbf{Augmentation:} The search results (grounding chunks) are injected into the model's context window.
-        \item \textbf{Generation:} The model reasons over the provided text to synthesize a factual response.
-    \end{enumerate}
-    \item \textbf{Why RAG became the Standard:}
-    \begin{itemize}
-        \item \textbf{Factuality:} Provides a ``paper trail'' (citations) for every claim.
-        \item \textbf{Efficiency:} Small models + RAG often outperform massive models without RAG.
-        \item \textbf{Freshness:} The only way to handle dynamic data (prices, news, product releases).
-    \end{itemize}
-\end{itemize}
+Early LLMs relied purely on parametric knowledge: static information frozen at the time of training. This produced two well-documented failure modes---hallucination (confident generation of false claims) and data staleness (inability to reflect prices, reviews, or product launches that post-date the training cutoff). The fundamental insight that led to Retrieval-Augmented Generation (RAG) was that LLMs are better at \emph{reasoning}---logic, synthesis, formatting---than at being a database \parencite{lewis2020rag}. Rather than encoding all world knowledge in model weights, RAG decouples reasoning from knowledge by introducing a three-stage pipeline: the model first \emph{retrieves} relevant documents from an external source (typically a search engine), the retrieved text is \emph{augmented} into the model's context window as grounding chunks, and the model then \emph{generates} a response by reasoning over the provided evidence.
 
-\subsection{Sam Altman's ``Tiny Model'' Vision}
-\label{sec:tiny-model}
+RAG became the industry standard for three reinforcing reasons. First, it provides a citation trail: every claim can be traced to a retrievable source, enabling at least partial verification. Second, it is efficient: smaller models augmented with retrieval routinely outperform larger models operating from parametric knowledge alone, because the retrieval step offloads the burden of memorization. Third, it is the only scalable mechanism for freshness---no model can be retrained hourly to keep pace with the web, but a search index can be queried in real time.
 
-\begin{itemize}
-    \item Quoting the framework: \textit{``The perfect AI is a very tiny model with superhuman reasoning\ldots\ It doesn't need to contain the knowledge---just the ability to think, search, simulate, and solve.''}
-    \item \textbf{Thesis Connection:} This vision confirms that the future of search is not the death of the web, but the transformation of the web into a \textbf{distributed memory layer} for AI orchestrators.
-\end{itemize}
+\subsection{The ``Tiny Model'' Vision and the Economics of Retrieval}
+\label{sec:rag-economics}
+\label{sec:reasoning-models}
 
-\subsection{The Economic \& Technical Necessity of Retrieval}
-\label{sec:economic-necessity}
+The logical endpoint of this architecture was articulated by Sam Altman at Snowflake Summit 2025: \textit{``a very tiny model with superhuman reasoning, 1 trillion tokens of context, and access to every tool you can imagine''}\footnote{Source: ``Sam Altman Talks AGI Timeline \& Next-Gen AI Capabilities,'' Snowflake Summit 2025. Available at \url{https://www.youtube.com/watch?v=qhnJDDX2hhU}.}. In this vision, the model does not need to contain knowledge---only the ability to reason over externally provided information. The web becomes a distributed memory layer for AI orchestrators, queried on demand rather than compressed into weights.
 
-\begin{itemize}
-    \item \textbf{The Compute Wall:} Inference (LLM ``thinking'') is exponentially more expensive than Retrieval (traditional search indexing).
-    \item \textbf{The Scaling Limit:} You cannot train a model every hour to keep up with the web. Retrieval is the only scalable solution for real-time information.
-    \item \textbf{Thesis Argument:} GEO is not a replacement for SEO; it is \textbf{SEO's final form}. Search is the ``cheaper, better, faster'' engine that feeds the LLM's reasoning core.
-\end{itemize}
+This vision is not aspirational; it is economically inevitable. Inference---the computational cost of LLM ``thinking''---is orders of magnitude more expensive than retrieval via traditional search indexing. Training encodes knowledge at enormous one-time cost and cannot keep pace with a web that changes by the minute. Retrieval, by contrast, is cheap, real-time, and already built at planetary scale by search engines. The economic logic is clear: let the model reason, and let the search index remember. The practical consequence for this thesis is equally clear: if retrieval is the foundation of AI-generated answers, then what gets retrieved determines what gets recommended---and what gets retrieved is governed by search engine ranking. SEO is not obsolete; it is the prerequisite for LLM visibility.
 
-\subsection{The Structural Pivot: From ``Search'' to ``Grounding''}
+\subsection{From ``Search'' to ``Grounding'': The Structural Pivot}
 \label{sec:structural-pivot}
 
-\begin{itemize}
-    \item \textbf{The August 11, 2025 Retirement:} Microsoft officially decommissioned the legacy Bing Search APIs, forcing a migration to \textbf{``Grounding with Bing Search''} as part of the Azure AI Agents ecosystem.
-    \item \textbf{Defining ``Grounding'':} Unlike traditional search ranking (which optimizes for human click-through rates), \textbf{Grounding} is the process of anchoring an LLM's response in real-time, verifiable web data to reduce hallucinations and ensure factual accuracy.
-    \item \textbf{Retrieval Asymmetry:} This shift codifies the ``Two-Web'' reality:
-    \begin{enumerate}
-        \item \textbf{The Human Web (Ranking):} Optimized for SEO, ads, and engagement.
-        \item \textbf{The Agent Web (Grounding):} Optimized for information density, extraction potential, and factual synthesis.
-    \end{enumerate}
-    \item \textbf{Thesis Connection:} Our discovery that ChatGPT citations are often buried at \textbf{Rank 31--200} in the Human Web proves that the ``Grounding'' engine uses a different set of priorities than the ``Ranking'' engine.
-\end{itemize}
+The shift from search to retrieval-augmented generation has begun to reshape the infrastructure itself. In August 2025, Microsoft decommissioned the legacy Bing Search APIs and migrated to \textbf{``Grounding with Bing Search''} as part of the Azure AI Agents ecosystem. The rebranding from ``search'' to ``grounding'' reflects a conceptual shift: unlike traditional search ranking, which optimizes for human click-through rates, grounding is the process of anchoring an LLM's response in real-time, verifiable web data to reduce hallucinations and ensure factual accuracy.
+
+This pivot has fuelled industry discussion around a ``Two-Web'' reality---a \textbf{Human Web} optimized for SEO, ads, and engagement, alongside an emerging \textbf{Agent Web} optimized for machine-readable structure and information density. Infrastructure providers are already building for this split: \textcite{martinho2026markdown} describe Cloudflare's ``Markdown for Agents'' feature, which uses HTTP content negotiation to serve markdown instead of HTML when AI crawlers request a page, reducing token consumption by up to 80\%. However, it remains unclear whether this format-level distinction actually affects LLM citation behavior. \textcite{punturo2026markdown} tested this directly in a controlled A/B experiment across 381~pages and found no statistically significant advantage for markdown over standard HTML in AI bot traffic, suggesting that current LLMs are already effective at parsing HTML and that the ``two-web'' divide may be more about infrastructure efficiency than content visibility.
+
+The question this thesis investigates is what \emph{does} matter for citation selection, if not serialization format. Our Content DNA analysis (Section~\ref{sec:selection-drift}) provides an empirical answer: structural content features---tables, numbered lists, pros/cons sections---predict citation at statistically significant rates, while format-level changes do not. The optimization surface is the information architecture of the page, not how it is served.
 
 \section{Related Work}
 \label{sec:related-work}
 
-This section situates the thesis within the emerging literature on how generative systems mediate visibility on the web. We focus on work directly relevant to commercial discovery: (i)~the foundational RAG architecture and its grounding mechanisms, (ii)~position bias in both traditional IR and LLM contexts, (iii)~the emerging GEO paradigm, and (iv)~empirical audits of citation behavior in generative search systems.
+Research on how LLMs select and cite web sources is young---most production RAG systems with grounding launched in 2024--2025---and the empirical literature remains thin. The work closest to ours falls into three categories: citation fidelity audits, large-scale observational studies of citation patterns, and investigations of the grounding mechanics that sit between retrieval and generation. We review each in turn, highlighting the specific gaps this thesis addresses.
 
-\subsection{Retrieval-Augmented Generation and Grounding Architectures}
-\label{sec:rw-rag}
+\subsection{Citation Fidelity in RAG Systems}
+\label{sec:rw-fidelity}
 
-The Retrieval-Augmented Generation (RAG) framework, introduced by \textcite{lewis2020rag}, established the architectural pattern that underpins all modern LLM search systems: a parametric generator conditioned on documents retrieved from a non-parametric index. This decoupling of reasoning from knowledge storage motivated the design of production systems such as WebGPT \parencite{nakano2021webgpt}, which fine-tuned GPT-3 to browse the web and collect citations while answering questions---the direct precursor to ChatGPT's search mode and Bing Chat.
+The question of whether RAG-grounded LLMs actually cite what they claim to cite has received limited but rigorous attention. \textcite{wu2025sourcecheckup} developed SourceCheckup, an automated verification framework that evaluated 7~LLMs across 800~medical questions, generating 58,000 statement--source pairs validated by physicians. Their central finding is that retrieval substantially reduces citation errors: GPT-4o with web search achieved $\sim$70\% statement-level support versus substantially worse rates for parametric-only models. Our study extends this line of inquiry into a different domain (commercial product recommendations) on newer model generations (GPT-5, Gemini 2.5), with a narrower but deeper focus: rather than scoring all statements in a response, we audit individual product claims against their solo-cited listicle sources and manually verify every flagged case (Section~\ref{sec:listicle-analysis}).
 
-A key challenge in RAG systems is ensuring that generated text remains faithful to retrieved sources. \textcite{gao2023alce} introduced the ALCE benchmark, the first systematic evaluation of end-to-end citation quality in LLM-generated text, measuring citation recall, precision, and faithfulness. \textcite{stolfo2024groundedness} further demonstrated that even with RAG, a significant fraction of LLM-generated sentences remain ungrounded---including factually correct sentences that lack source support. \textcite{huang2024hallucination} provide a comprehensive taxonomy distinguishing \textit{faithfulness hallucination} (output contradicts provided sources) from \textit{factuality hallucination} (output contradicts world knowledge), a distinction relevant to interpreting our citation fidelity results.
+\textbf{Gap}: SourceCheckup and related work evaluate fidelity at the \emph{statement} level but do not examine the \emph{selection} process---which sources are chosen from the retrieval pool, what structural features predict selection, and how position bias propagates from search ranking into the LLM's output. Our study fills this gap.
 
-\subsection{Position Bias: From Click-Through to Citation}
-\label{sec:rw-position-bias}
+\subsection{Large-Scale Observational Studies}
+\label{sec:rw-observational}
 
-Position bias in search results is well established. \textcite{joachims2005clickthrough} demonstrated through eye-tracking that users examine higher-ranked results first and that clicks are heavily position-biased, independent of relevance. This finding---that top-ranked items receive disproportionate attention regardless of quality---provides the theoretical foundation for our investigation of whether LLMs inherit analogous biases from their retrieval pipelines.
+Two practitioner studies provide the largest-scale empirical data on ChatGPT citation behavior. \textcite{punturo2026citationsources} analyzed 730,000 U.S.\ English-language ChatGPT conversations (October--December 2025), reporting that only 18\% of conversations trigger web search (rising to 53.5\% for commercial intent), with approximately 4 unique citations per search-triggered turn and a Gini coefficient of 0.8 for domain concentration. \textcite{rudzki2026english} analyzed 10M+ ChatGPT prompts and 20M+ fan-out queries via Peec~AI's production monitoring, finding that 78\% of non-English sessions include at least one English sub-search and 43\% of all fan-out queries are issued in English regardless of the user's language.
 
-\textcite{liu2024lost} extended this inquiry to LLM context windows, showing that language models exhibit a U-shaped attention pattern over retrieved documents: they preferentially ground responses in content at the beginning and end of the context, while largely ignoring middle positions. This ``lost in the middle'' effect suggests that the ordering of retrieved documents---which is typically determined by search engine ranking---directly influences which sources get cited, even when all sources are technically available in the model's context.
+Our study complements these in methodology and depth. The observational studies measure \emph{what} ChatGPT cites at population scale but cannot examine \emph{why}: they lack access to retrieval pools, fan-out queries, or SERP baselines. We use controlled, repeated prompts (79 queries $\times$ 3 runs $\times$ 2 deployment tiers) with full network instrumentation, enabling us to trace the causal chain from fan-out query $\rightarrow$ retrieved candidates $\rightarrow$ cited set $\rightarrow$ claim-level attribution. Our higher search trigger rate (89\% vs.\ their 18\% baseline) and citation density (9.94 vs.\ $\sim$4 per turn) reflect deliberate prompt design for high commercial intent rather than a sampling difference---Profound's own intent-stratified data confirms that commercial queries trigger search at 53.5\%, already 3$\times$ the all-intent baseline. The cross-language fan-out patterns documented by \textcite{rudzki2026english} (Case~1: foreign prompt $\rightarrow$ English retrieval) are directly corroborated in our data; we additionally identify the reverse direction (Cases~2--3: English prompt $\rightarrow$ foreign-language retrieval), which has not been previously documented (Section~\ref{sec:localization-bias}).
 
-\subsection{Generative Engine Optimization (GEO)}
-\label{sec:rw-geo}
+\subsection{Grounding Mechanics and the Content Budget}
+\label{sec:rw-grounding-mechanics}
 
-\textcite{aggarwal2024geo} introduced GEO as a formal optimization problem, demonstrating through their GEO-bench evaluation that content modifications---adding citations, statistics, quotations, and authoritative language---can improve LLM citation visibility by up to 40\%. Their work established that the unit of optimization shifts from ranking in a list of links to being \textit{selected and attributed} within a synthesized answer. Our study complements this by examining the selection process in production systems (ChatGPT and Gemini) rather than controlled benchmarks, and by introducing Content DNA as a feature-level framework for measuring what structural characteristics predict citation.
+A growing body of practitioner research examines \emph{how much} of a retrieved page actually enters the model's context. \textcite{petrovic2025grounding} measured Google's grounding chunks and found that the system operates with a fixed content budget of approximately 2,000 words per query, with the top-ranked source receiving 28\% of the budget and pages over 3,000 words achieving only 13\% coverage. \textcite{petrovic2025filter} further quantified the compression ratio between retrieved content and generated output: only 15--25\% of retrieved text survives into the final response. \textcite{indig2026attention} analyzed 1.2~million ChatGPT responses and found a ``ski ramp'' distribution where 44.2\% of citations originate from the first 30\% of a source page ($p < 0.0001$ over 18,012 verified citations), with citation likelihood correlating with definitive language and entity density.
 
-\textcite{mallen2023popqa} provide indirect support for GEO's relevance by showing that LLMs fail disproportionately on long-tail entities, where retrieval augmentation provides the greatest benefit. For commercial queries---where products, brands, and specifications change frequently---this implies that retrieval (and therefore search visibility) is especially critical, reinforcing the connection between SEO and GEO.
+These findings are directly relevant to our within-listicle position bias results (Section~\ref{sec:reranking}): if the model's grounding window is finite and front-loaded, items listed later in a long listicle may never enter the content the model processes---explaining why the \#1 listicle item is selected at 1.7--2.5$\times$ the uniform baseline. Our study contributes the selection-level evidence that these grounding-budget studies predict but do not directly measure.
 
-\subsection{Empirical Audits of Generative Search Citation}
-\label{sec:rw-citation-audits}
+\subsection{The ``Agent Web'' and Format Optimization}
+\label{sec:rw-agent-web}
 
-The most directly comparable academic work is \textcite{li2024audit}, who conducted a systematic audit of source selection in generative AI search engines, finding concentration effects and authority bias---a tendency to favor established, mainstream outlets. Their results align with our finding that LLM citations cluster around high-authority domains, though our study extends the analysis to cover the full retrieval-to-citation pipeline across multiple deployment contexts.
+A parallel line of work asks whether serving content in machine-optimized formats improves AI visibility. \textcite{martinho2026markdown} describe Cloudflare's ``Markdown for Agents'' feature, which uses HTTP content negotiation to serve markdown instead of HTML when AI crawlers request a page, reducing token consumption by up to 80\%. The \texttt{llms.txt} proposal \parencite{howard2024llmstxt}---a markdown file providing LLMs with a curated site map---has been adopted by approximately 800,000 websites, though an empirical study of 300,000 domains by SE~Ranking found no correlation between \texttt{llms.txt} presence and AI citation frequency \parencite{seranking2025llmstxt}. \textcite{punturo2026markdown} tested the markdown hypothesis directly in a controlled A/B experiment across 381~pages and found no statistically significant advantage for markdown over standard HTML in AI bot traffic.
 
-\textcite{venkit2025falsepromise} evaluated citation behavior in You.com, Perplexity.ai, and Bing Chat, identifying 16 systematic limitations including frequent hallucination, inaccurate attribution, and lack of verifiability. Their finding that answer engines often fail to faithfully cite their own retrieved sources motivates our listicle fidelity analysis, which examines whether products mentioned in retrieved listicles actually survive into the final recommendation.
+These null results are informative: they suggest that current LLMs are already effective at extracting structure from HTML, and that the ``Agent Web'' may be more about infrastructure efficiency than content visibility. Our Content DNA analysis (Section~\ref{sec:selection-drift}) approaches the question from the opposite direction: rather than asking whether \emph{format} matters, we ask whether \emph{structural content features}---tables, numbered lists, pros/cons sections---predict citation. The answer is yes, with measurable drift signals, suggesting that what matters is the \emph{information architecture} of a page rather than its serialization format.
 
-At the practitioner scale, \textcite{punturo2026citationsources} analyzed 730,000 U.S.\ English-language ChatGPT conversations (October--December 2025), providing the largest observational study of ChatGPT citation behavior to date. Key findings include: only 18\% of conversations trigger web search (rising to 53.5\% for commercial intent), approximately 4 unique citations per search-triggered turn, a Gini coefficient of 0.8 for domain concentration (top~10 domains account for 12\% of citations), and Wikipedia (5\%) and Reddit (3\%) as the most-cited individual domains. Our study differs methodologically---we use controlled, repeated prompts rather than observational telemetry---and in scope. The gap between their 18\% overall search trigger rate and our 89\% is primarily explained by \textbf{prompt design}: we deliberately constructed prompts with explicit tool-finding and product-discovery intent (e.g., ``Can you list translation services with live interpreters?''), which near-guarantees search triggering. Their 18\% baseline is diluted by the majority of ChatGPT usage that never requires web search (coding assistance, creative writing, casual conversation). Profound's own intent-stratified data confirms this: commercial queries trigger search at 53.5\%, already 3$\times$ the baseline. Our per-run citation count (9.94) similarly exceeds their per-turn average ($\sim$4), reflecting the comprehensive sourcing that product recommendation queries demand. Crucially, our study goes beyond citation \emph{counting} to analyze the full retrieval-to-citation pipeline: fan-out mechanics, position bias, Content DNA selection drift, and cross-language retrieval---none of which are addressed in observational telemetry studies.
-
-Beyond peer-reviewed work, practitioner research has contributed methodologically documented findings on grounding mechanics. \textcite{petrovic2025grounding} measured the size of Google's grounding chunks (median 1,247 characters), and \textcite{petrovic2025filter} quantified the compression ratio between retrieved content and generated output, finding that only 15--25\% of retrieved text survives into the final response. While these are not controlled academic studies, they provide empirical baselines that complement our analysis of the retrieval-to-citation pipeline.
+\textbf{Summary of gaps this thesis addresses}: Prior work has audited citation fidelity (but not selection mechanics), measured citation patterns at scale (but without access to retrieval pipelines), quantified grounding budgets (but not the downstream selection effects), and tested format optimization (but not structural content features). This thesis is, to our knowledge, the first end-to-end empirical study that traces the full retrieval-to-citation pipeline across multiple LLMs and deployment contexts, with claim-level attribution, SERP-position controls, and structural feature analysis.
 
 \section{The Commercial Catalyst for RAG}
-
 \label{sec:commercial-catalyst}
 
-\textit{Why product recommendations are the ``Front Line'' of Generative Search.}
+Not all queries are equally affected by the shift to retrieval-augmented generation. RAG is most consequential when the user's intent demands real-time, verifiable information---prices, availability, feature comparisons, reviews---that parametric knowledge cannot reliably provide. Product recommendations sit squarely in this category: they require freshness, competitive breadth, and factual precision, making them the segment where the retrieval pipeline is most active and where the mechanics of source selection are most commercially consequential.
 
-\subsection{Industry Benchmark: ChatGPT Web Search Trigger Rates (Profound Analysis)}
-\label{sec:trigger-rates}
-
-\textit{To contextualize our study, we refer to industry-wide telemetry from \textbf{Profound} (captured as of Jan 6, 2026), which analyzes trigger rates across 667,000 real-user conversations. A subsequent Profound analysis of 730,000 conversations \parencite{punturo2026citationsources} confirmed the overall 18\% baseline trigger rate and provided additional citation distribution metrics (see Section~\ref{sec:rw-citation-audits}).}
+Industry telemetry confirms this asymmetry. Figure~\ref{fig:trigger-rate} shows ChatGPT's web search trigger rates by query intent, based on 667,000 real-user conversations tracked by Profound as of January~6, 2026. A subsequent analysis of 730,000 conversations \parencite{punturo2026citationsources} confirmed the overall 18\% baseline trigger rate and provided additional citation distribution metrics (see Section~\ref{sec:rw-observational}).
 
 \begin{figure}[htbp]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
         ybar,
-        bar width=28pt,
-        width=0.85\textwidth,
-        height=7cm,
+        bar width=24pt,
+        width=0.92\textwidth,
+        height=7.5cm,
         ylabel={Web Search Trigger Rate (\%)},
-        symbolic x coords={Commercial, Informational, Generative},
+        symbolic x coords={Commercial, Informational, Generative, Other, Overall},
         xtick=data,
-        ymin=0, ymax=65,
+        ymin=0, ymax=62,
         nodes near coords={\pgfmathprintnumber\pgfplotspointmeta\%},
         nodes near coords align={vertical},
         every node near coord/.append style={font=\small\bfseries},
@@ -198,70 +182,39 @@ Beyond peer-reviewed work, practitioner research has contributed methodologicall
         grid=major,
         ymajorgrids=true,
         xmajorgrids=false,
-        extra y ticks={17.41},
-        extra y tick labels={},
-        extra y tick style={grid=major, grid style={dashed, red!60, line width=0.8pt}},
-        enlarge x limits=0.3,
+        enlarge x limits=0.15,
     ]
     \addplot[fill=entcolor!80, draw=entcolor] coordinates {
         (Commercial, 53.51)
         (Informational, 18.73)
         (Generative, 8.88)
+        (Other, 7.23)
+        (Overall, 17.41)
     };
-    % Baseline annotation
-    \node[anchor=west, font=\scriptsize, red!70!black] at (axis cs:Generative,18.5) {Overall baseline: 17.41\%};
     \end{axis}
     \end{tikzpicture}
-    \caption{ChatGPT web search trigger rate by query intent. Data from Profound (Jan 6, 2026; 667,000 conversations). Commercial intent triggers web search at nearly 3$\times$ the rate of informational queries and 6$\times$ the rate of generative queries. Dashed line shows the overall baseline trigger rate (17.41\%).}
+    \caption{ChatGPT web search trigger rate by query intent. Data from \textcite{punturo2026citationsources}, based on 667,000 real-user ChatGPT conversations tracked by Profound as of January~6, 2026. Commercial intent triggers web search at 3$\times$ the overall baseline rate (53.5\% vs.\ 17.4\%), motivating our focus on product-recommendation prompts.}
     \label{fig:trigger-rate}
 \end{figure}
 
-\begin{itemize}
-    \item \textbf{Commercial Intent as the Primary Driver}: Web search is triggered in \textbf{53.51\% of Commercial queries}, compared to only 18.73\% for Informational and 8.88\% for Generative queries.
-    \item \textbf{Overall Trigger Rate}: Across all intents, the baseline trigger rate is \textbf{17.41\%}.
-    \item \textbf{Thesis Alignment}: Our decision to filter for \textbf{high commercial intent} (product recommendations) aligns with this industry data, as this is the segment where RAG/Grounding is most active and commercially impactful.
-    \item \textbf{The ``Winnable'' Arena:} Because commercial intent requires real-time data (pricing, availability, reviews), it is the primary driver for RAG adoption. This makes product recommendations the most critical area for studying the shift from SEO to GEO.
-\end{itemize}
+Web search is triggered in 53.5\% of commercial queries, compared to only 18.7\% for informational and 8.9\% for generative queries---a 3$\times$ gap over the 17.4\% all-intent baseline. Our decision to filter for high commercial intent (product recommendations) aligns with this asymmetry: commercial queries are where the retrieval pipeline is most active, where citation selection has the most direct economic consequences, and where the shift from SEO to GEO is most empirically observable.
 
-\subsection{The GEO Industry Landscape: Citation Tracking \& ``Share of Model''}
+\subsection{The Emerging GEO Industry}
 \label{sec:geo-landscape}
 
-\begin{itemize}
-    \item \textbf{The Rise of GEO Analytics}: Emerging platforms (e.g., \textbf{Profound}, \textbf{Peec.ai}) are shifting the industry from ``Share of Voice'' (traditional search) to ``Share of Model'' (generative search).
-    \item \textbf{The Listicle as the ``Critical Node''}: Our research places extreme emphasis on listicles because they are the primary ``on-ramp'' for product citations. In the GEO ecosystem, being cited in a top-tier listicle is no longer just about referral traffic; it is a prerequisite for being ``seen'' by the RAG orchestrator.
-    \item \textbf{Quantifying the Value of a Citation}: By measuring the \textbf{Bias Multiplier} (how much more likely a cited product is to be selected vs.\ a random one) and \textbf{Host Exclusion} (the risk of being ignored if you are the host), we provide the first empirical framework for what these citation-tracking tools are actually measuring.
-    \item \textbf{The ``Gold Rush'' of AEO/GEO:} The rapid rise of companies like \textbf{Profound} and \textbf{Perplexity AI} underscores the industry's recognition that the ``Answer Engine'' is the next multi-billion dollar shift in tech.
-    \item \textbf{Venture Capital Validation:} A landmark moment occurred on August 12, 2025, when \textbf{Profound raised \$35 million in a Series B round led by Sequoia Capital}, bringing its total funding to \$58.5 million\footnote{\url{https://fortune.com/2025/08/12/ai-search-startup-profound-raises-35-million-series-b-sequoia/}}.
-    \item \textbf{The ``Salesforce of AI Search'':} This funding round validated the concept of building a ``generational company'' centered on helping brands monitor and optimize for how they surface in AI-generated responses across models like ChatGPT, Gemini, and Claude.
-    \item \textbf{The European Challenger --- Peec AI:} In November 2025, Berlin-based \textbf{Peec AI} raised \textbf{\$21 million in a Series A led by Singular}, bringing its total funding to \$29 million\footnote{\url{https://techcrunch.com/2025/11/17/as-consumers-ditch-google-for-chatgpt-peec-ai-raises-21m-to-help-brands-adapt/}}. Founded in early 2025, Peec grew to \textbf{\$4M ARR in 10 months} with 1,300 companies on its platform (including ElevenLabs, Chanel, and Axel Springer), explicitly positioning itself in the \textbf{Generative Engine Optimization (GEO)} category. The speed of Peec's traction---alongside Profound's Sequoia-backed round---confirms that AI search analytics is rapidly consolidating into a recognized market category, not a niche experiment.
-    \item \textbf{The Hype vs.\ Reality:} While the hype is centered on ``killing search,'' our research suggests the reality is a \textbf{deeper integration} where search becomes the infrastructure for AI.
-    \item \textbf{The High-Intent Conversion Hypothesis}: Preliminary industry observations suggest that while AI-driven traffic volume is currently lower than traditional search, the \textbf{conversion rate} and \textbf{purchase intent} of LLM-referred users can be significantly higher---implying that LLM citations act as a ``pre-qualified'' lead source, making the mechanics of selection (which we study here) commercially critical.
-\end{itemize}
+The commercial significance of LLM citation behavior has already attracted substantial venture capital. In August 2025, Profound raised \$35~million in a Series~B round led by Sequoia Capital, bringing its total funding to \$58.5~million \parencite{fortune2025profound}. Three months later, Berlin-based Peec~AI raised \$21~million in a Series~A led by Singular \parencite{techcrunch2025peec}, growing to \$4M~ARR in 10~months with 1,300 companies on its platform. Both companies are building what the industry calls ``Share of Model'' analytics---dashboards that track whether and how a brand appears in LLM-generated responses, analogous to ``Share of Voice'' in traditional search.
+
+The opportunity has not gone unnoticed by established players. Ahrefs, one of the largest SEO analytics platforms, has added AI search monitoring features that track brand visibility across LLM-generated responses alongside its traditional SERP tracking. More consequentially, Adobe announced the acquisition of SEMrush in November 2025 \parencite{adobe2025semrush}---a deal that signals how seriously the marketing technology industry takes the convergence of traditional keyword intelligence and AI search analytics. The competitive landscape is thus bifurcating: GEO-native startups (Profound, Peec~AI) are building from the AI-search side inward, while incumbent SEO platforms (Ahrefs, SEMrush) are extending outward from their traditional keyword and ranking data into AI citation monitoring. Whether these approaches converge---and whether dedicated GEO tools offer marginal value over well-executed traditional SEO---is one of the practical questions this thesis informs.
+
+The core value proposition of these platforms reduces to a competitive intelligence question: \emph{which sources cite your brand, how does the model frame you relative to competitors, and what prompts trigger your visibility?} Our findings provide the empirical foundation for understanding what these tools are actually measuring. Listicles function as the primary ``on-ramp'' for product citations (Section~\ref{sec:listicle-analysis}); within-listicle position determines extraction probability (Section~\ref{sec:reranking}); structural content features predict citation selection from the retrieval pool (Section~\ref{sec:selection-drift}); and citation stochasticity means that single-snapshot monitoring will systematically misrepresent true visibility (Section~\ref{sec:flip-flop}).
+
+The dominant industry narrative frames GEO as a replacement for SEO---a new discipline for a new era. Preliminary industry observations suggest that LLM-referred users may exhibit higher conversion rates and purchase intent than traditional search traffic, lending urgency to the claim. However, the empirical question this thesis investigates is whether GEO is genuinely distinct from SEO or whether it is, in practice, a thin optimization layer on top of the same ranking foundation. The answer, as the following chapters demonstrate, is substantially the latter---but with empirically real exceptions that the concluding chapter delineates (Section~\ref{sec:geo-not-seo}).
 
 \section{Retrieval Environments \& Deployment Contexts}
 \label{sec:retrieval-environments}
 
-\textit{Defining the specific interfaces and constraints of the models under study.}
+This thesis studies two production LLM systems with fundamentally different instrumentation approaches, creating a natural comparison between deployment contexts. Full methodological details are provided in Chapter~\ref{ch:methodology}; here we summarize the key constraints that shape the analysis.
 
-\subsection{ChatGPT: UI-Based Network Instrumentation (Personal vs.\ Enterprise)}
-\label{sec:chatgpt-instrumentation}
+\textbf{ChatGPT} was studied via the production web interface (\texttt{chatgpt.com}) using network payload inspection (Chrome DevTools protocol), because OpenAI does not expose grounding metadata through its public API. We captured runs across two deployment tiers: \textbf{Personal} (ChatGPT Plus subscription) and \textbf{Business} (organizational account). OpenAI's documentation for organization-managed tiers \parencite{openai2024enterprise} explicitly names Bing as the search provider, while its general documentation \parencite{openai2024search} describes ``third-party search providers'' in the plural, leaving the exact provider mix unspecified. This asymmetry is confirmed empirically in our overlap data (Section~\ref{sec:global-overlap}): Business citations overlap with the Bing index at 81.3\% but only 27.8\% with Google, while Personal citations show 64.6\% Google overlap---a 36.8~percentage-point increase consistent with Personal-tier retrieval drawing on the Google index in addition to Bing. All runs were conducted in Temporary Chat mode to prevent conversation history from influencing retrieval.
 
-\begin{itemize}
-    \item \textbf{Deployment Context}: We study ChatGPT as a consumer-facing product accessed via the standard web interface (\texttt{chatgpt.com}).
-    \item \textbf{Instrumentation Method}: Because OpenAI does not expose grounding metadata (fan-out queries, retrieved snippets) via its public API, we used \textbf{Network Payload Inspection} (Chrome DevTools protocol) to capture the raw event stream of the production UI.
-    \item \textbf{Session Isolation}: All ChatGPT prompt runs were conducted in \textbf{Temporary Chat} mode to prevent conversation history and memory from influencing retrieval or generation behavior across runs.
-    \item \textbf{Personal vs.\ Enterprise}:
-    \begin{itemize}
-        \item \textbf{Personal}: Executed on a \textbf{ChatGPT Plus} subscription in the user's \textbf{personal workspace}. OpenAI's general documentation\footnote{\url{https://openai.com/index/introducing-chatgpt-search/}} describes ChatGPT search as leveraging ``third-party search providers'' (plural), leaving the exact provider mix unspecified.
-        \item \textbf{Enterprise}: Executed through a \textbf{ChatGPT Enterprise organization account}. OpenAI's Enterprise documentation\footnote{\url{https://help.openai.com/en/articles/10093903-chatgpt-search-for-enterprise-and-edu}} explicitly names \textbf{Bing} as the search provider, restricting retrieval to the Azure/Bing ecosystem.
-    \end{itemize}
-\end{itemize}
-
-\subsection{Gemini: API-Based Grounding (Vertex AI)}
-\label{sec:gemini-instrumentation}
-
-\begin{itemize}
-    \item \textbf{Deployment Context}: Unlike ChatGPT, Gemini was studied via the \textbf{Vertex AI / Google AI Studio API} (Gemini 1.5 Pro/Flash).
-    \item \textbf{Instrumentation Method}: We utilized the API specifically to access the \textbf{\texttt{groundingMetadata}} object, which is not fully transparent in the consumer UI.
-    \item \textbf{Reliability of Data}: The API provides a `cleaner' laboratory environment, exposing the exact \texttt{groundingChunks} (retrieved snippets) and \texttt{groundingSupports} (segment-to-chunk mapping) required for high-fidelity grounding analysis.
-\end{itemize}
+\textbf{Gemini} was studied via the Vertex~AI API (Gemini~2.5~Flash), which provides structured grounding metadata not available in the consumer UI: the exact \texttt{groundingChunks} (retrieved snippets), \texttt{groundingSupports} (segment-to-chunk attribution mapping), and \texttt{webSearchQueries} (fan-out queries). This API-level transparency makes Gemini a cleaner laboratory for grounding analysis but introduces a trade-off: the API does not carry IP or locale signals, limiting our ability to test locale-driven retrieval effects for Gemini (Section~\ref{sec:localization-bias}).

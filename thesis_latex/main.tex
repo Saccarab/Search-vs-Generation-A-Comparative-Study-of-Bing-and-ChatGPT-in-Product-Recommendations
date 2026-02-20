@@ -62,8 +62,9 @@
 % ---------- Title metadata ----------
 
 \title{%
-  \textbf{Grounding Behavior in LLM-Mediated Commercial Search:}\\[0.5em]
-  \Large How ChatGPT and Gemini Select and Cite Web Sources%
+  \textbf{Is GEO Just SEO?}\\[0.5em]
+  \Large Grounding Behavior in LLM-Mediated Commercial Search\\[0.3em]
+  \large with ChatGPT and Gemini%
 }
 \author{[Author Name]}
 \date{January 2026}
@@ -80,8 +81,9 @@
 \begin{titlepage}
   \centering
   \vspace*{2cm}
-  {\LARGE\bfseries Grounding Behavior in LLM-Mediated Commercial Search:\\[0.4em]
-   How ChatGPT and Gemini Select and Cite Web Sources\par}
+  {\LARGE\bfseries Is GEO Just SEO?\\[0.4em]
+   Grounding Behavior in LLM-Mediated Commercial Search\\[0.2em]
+   \large with ChatGPT and Gemini\par}
   \vspace{2.5cm}
   {\Large [Author Name]\par}
   \vspace{1.5cm}
@@ -96,14 +98,17 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-% TODO: Replace with final abstract text.
-This thesis investigates the grounding behavior of large language models (LLMs) in commercial product recommendations, examining how ChatGPT and Gemini select and cite web sources when answering high-intent queries. Using network-payload instrumentation of 474 ChatGPT runs (across Personal and Enterprise deployment tiers) and API-level analysis of 237 Gemini runs, we capture the full retrieval-to-citation pipeline: fan-out query generation, candidate retrieval, source selection, and claim-level attribution.
+This thesis investigates the grounding behavior of large language models (LLMs) in commercial product recommendations, examining how ChatGPT and Gemini select and cite web sources when answering high commercial intent queries drawn from real user conversations. We execute 79 prompts three times each across three conditions---ChatGPT Personal (the consumer-facing default), ChatGPT Business (the organization-managed tier, which presents the same chat interface but is provisioned through an organization's workspace), and Gemini---yielding 711 total runs. ChatGPT runs are captured via network-payload instrumentation; Gemini runs via the Vertex~AI API. This design captures the full retrieval-to-citation pipeline: fan-out query generation, candidate retrieval, source selection, and claim-level attribution.
 
-We compare LLM citations against external search-engine baselines (Bing Top~200 and Google Top~20 Organic) to measure overlap, visibility gaps, and position bias. We find that 78--84\% of citations originate from conventional search indices, with position bias remaining a dominant factor: the top 1--2 SERP results account for a disproportionate share of citations, and a steep ``Page~2 cliff'' reduces visibility beyond Rank~10. However, 16--22\% of citations are ``invisible''---absent from both Bing and Google for the corresponding query---and are dominated by Wikipedia, Reddit, app stores, and major tech publications.
+We compare LLM citations against external search-engine baselines (Bing and Google organic results) to measure overlap, visibility gaps, and position bias. We find that 78--84\% of citations originate from conventional search indices, with position bias remaining a dominant factor: the top 1--2 search engine results account for a disproportionate share of citations, and a steep ``Page~2 cliff'' reduces visibility beyond Rank~10. However, 16--22\% of ChatGPT citations are ``invisible''---absent from both Bing and Google for the corresponding query---with frequent examples including Wikipedia, Reddit, app stores, and major tech publications.
 
-We further develop a Content DNA enrichment pipeline (using an LLM as a labeler) to profile the structural characteristics of nearly 12,000 URLs and quantify selection drift between the retrieved pool and the cited set. Models exhibit statistically significant preferences for structured content in listicles, including comparison tables (+4.7 to +12.2\,pp lift), numbered lists (+7.3\,pp), and pros/cons sections (+4.0 to +6.7\,pp). A listicle-level fidelity audit reveals strong top-rank bias (the \#1 listicle item is selected at 1.7--2.5$\times$ the random baseline) alongside a host-exclusion effect (64--72\% omission rate for self-promotional products).
+A key finding from this overlap analysis is that the two ChatGPT tiers retrieve from different search backends despite presenting an identical user interface. Business citations overlap with the Bing index at 81.3\% but only 27.8\% with Google, while Personal citations show 64.6\% Google overlap---a 36.8 percentage-point increase consistent with the consumer tier drawing on the Google index in addition to Bing. We also discover a citation ``flip-flop'' effect: approximately 20\% of supplementary URLs are promoted to inline citations in a different run of the same query, and the structural similarity between cited and supplementary links (minimal Content DNA differentiation) suggests this boundary is near-random rather than signal-driven.
 
-A key deployment finding is an Enterprise--Personal provider split: Enterprise ChatGPT is locked to Bing, while Personal retrieves from both Bing and Google, producing a 36.8 percentage-point increase in Google overlap. These results provide an empirical foundation for Generative Engine Optimization (GEO), showing that SEO remains a prerequisite for LLM visibility while identifying structural content features and invisible-link channels as additional optimization surfaces.
+We further develop a Content DNA enrichment pipeline (using two cross-validated LLMs as labelers) to profile the structural characteristics of approximately 6{,}500 URLs and quantify selection drift between the retrieved pool and the cited set. Both ChatGPT and Gemini exhibit statistically significant preferences for structured listicle content when compared against the search engine results baseline: comparison tables show $+$7.8\,pp lift for Gemini ($p<0.01$) and up to $+$19.7\,pp for ChatGPT ($p<0.001$), numbered lists $+$7.1 to $+$11.2\,pp, and bullet points up to $+$14.0\,pp. We then trace the pipeline one level deeper into cited listicles, extracting the individual products each model recommends and mapping them back to their position in the source listicle. This within-listicle analysis reveals strong top-rank bias (the \#1 listicle item is selected at 1.7--2.5$\times$ the random baseline across all three tiers). We also test for host bias---whether models penalize or favor a listicle author's own product---but find no strong effect once position is controlled: the apparent omission rate is largely explained by rank privilege rather than host identity.
+
+A semantic fidelity audit of 1{,}110 solo-cited product claims, with manual verification of every flagged case, reveals that genuine attribution failures are rare: 6.4\% for Gemini and 0.7\% for GPT, with the majority of Gemini errors caused by a systematic table-grounding artefact rather than comprehension failure. These rates are substantially lower than prior work on ungrounded LLMs, reinforcing that retrieval-augmented architectures remain essential for trustworthy AI-mediated search.
+
+These results provide an empirical foundation for Generative Engine Optimization (GEO), showing that SEO remains a prerequisite for LLM visibility while identifying structural content features, invisible-link channels, and citation stochasticity as factors that any robust GEO measurement framework must account for.
 
 \newpage
 

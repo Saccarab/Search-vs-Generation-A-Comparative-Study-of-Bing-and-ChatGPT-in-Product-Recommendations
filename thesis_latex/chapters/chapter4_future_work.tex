@@ -1,50 +1,77 @@
 % chapter4_future_work.tex
-\chapter{Research Gaps \& Future Work}
+\chapter{Limitations, Research Gaps \& Future Work}
 \label{ch:future-work}
 
-While this study provides a comprehensive empirical foundation for understanding LLM citation behavior, several avenues remain open for future investigation. The following subsections outline the most pressing research gaps identified during this work.
+This study traces the retrieval-to-citation pipeline for ChatGPT and Gemini on commercial product queries. The findings are robust within that scope, but several limitations constrain their interpretation, and several extensions would strengthen generalisability, deepen causal understanding, and address gaps we could not resolve within the current design.
 
-\subsection{Deeper Crawling}
+\section{Limitations}
+\label{sec:limitations}
+
+\subsection{Single-Domain Focus}
+\label{sec:lim-domain}
+
+All 79 prompts target AI and SaaS products, particularly speech and language technology. This domain focus was a deliberate methodological choice that enabled deeper qualitative analysis (Section~\ref{sec:query-set-selection}), but it limits external validity: the structural selection signals we observe (e.g., tables at +7.8 to +19.7\,pp, numbered lists at +7.1 to +11.2\,pp) may be partly driven by the nature of software-comparison content rather than universal LLM preferences. Categories with different content structures---consumer electronics (spec-heavy), fashion (image-heavy), financial services (regulation-heavy)---could produce different drift profiles.
+
+\subsection{SERP Baseline Limitations}
+\label{sec:lim-serp}
+
+Neither Bing nor Google provides a stable, publicly accessible search API suitable for academic SERP collection. Microsoft retired the Bing Search API in August 2025 (Section~\ref{sec:structural-pivot}), forcing us to scrape the consumer UI via a browser extension---a noisy proxy subject to the Page~1 truncation artifact documented in Section~\ref{sec:bing-pagination-instability}. For Google, we relied on SerpApi, a third-party scraping service that is itself the subject of litigation by Google (Section~\ref{sec:ethical-legal}), and which returned only $\sim$25 organic results per query. Both baselines are therefore degraded approximations of the underlying indices.
+
+More fundamentally, even a perfect SERP baseline would not necessarily reflect what the LLMs actually receive. ChatGPT's Bing integration is a backend API that likely returns a clean, stable ranked list without the ads, carousels, and pagination artifacts of the consumer UI. Gemini's retrieval is mediated by Google's internal grounding infrastructure, not the public search interface. Our overlap measurements therefore compare LLM citations against a \emph{proxy} for the retrieval surface, not the surface itself. The reported invisible rate (16--22\%) is best interpreted as an upper bound: some ``invisible'' citations are likely present in the index but fell beyond our scrape depth (Rank~200 for Bing, $\sim$25 for Google) or were missed due to UI-layer instability.
+
+\subsection{Run Count and Stochasticity}
+\label{sec:lim-runs}
+
+With 3 runs per prompt per tier, we can detect the $\sim$20\% flip-flop rate but cannot characterize its full distribution. Some prompts may have stable citation sets while others are highly volatile; 3 runs cannot distinguish these cases with confidence. The observed flip-flop rate is likely a lower bound---with only 3 observations per prompt, near-threshold URLs that flip in 1 of 10 runs would be missed entirely.
+
+\subsection{Observational Design}
+\label{sec:lim-observational}
+
+This study is observational, not experimental. We measure correlations between structural features and citation selection, but we cannot establish causation. A page with tables may be cited more often because the model prefers tables, because table-containing pages tend to be higher quality, or because table-containing pages rank higher in the SERP (confounding position with structure). The SERP-level comparison controls for index presence but not for rank within the index. A true causal test would require creating matched page variants (with and without tables) at controlled SERP positions---a design that is not feasible with production search engines.
+
+\subsection{Gemini API vs.\ Consumer UI}
+\label{sec:lim-gemini}
+
+All Gemini runs were collected via the Vertex~AI API, which provides structured grounding metadata but does not carry IP or locale signals (Section~\ref{sec:gemini-instrumentation-differences}). This means we cannot test whether Gemini exhibits the same IP/locale-driven cross-language fan-out observed in ChatGPT (Cases~2--3, Section~\ref{sec:localization-bias}). More broadly, the API may expose a different retrieval surface than the consumer UI at \texttt{gemini.google.com}; the two are not guaranteed to behave identically. This also introduces an asymmetry in our cross-system comparison: ChatGPT was studied through the production consumer UI, while Gemini was studied through a developer API. Differences in grounding behavior between the two models may therefore partly reflect instrumentation differences rather than genuine model-level divergence.
+
+\subsection{Foreign-Language Prompt Coverage}
+\label{sec:lim-language}
+
+Our cross-language fan-out findings (Section~\ref{sec:localization-bias}) are based on only 7 non-English prompts out of 79 total. While the patterns we observe---particularly Cases~2 and~3, where English prompts receive foreign-language fan-outs---are corroborated at scale by independent data from Peec~AI \parencite{rudzki2026english}, our own sample is too small to quantify the magnitude of cross-language effects with precision or to test whether they vary by language pair.
+
+\subsection{Semantic Fidelity Scope}
+\label{sec:lim-fidelity}
+
+Our semantic fidelity audit is restricted to solo-cited listicle product claims---those backed by exactly one URL. Multi-cited claims, where a product recommendation is attributed to two or more sources simultaneously, were excluded entirely from the fidelity analysis because it is impossible to determine which source the model actually drew from. This exclusion is non-trivial: multi-cited claims account for 10.7\% of GPT claims and 34.5\% of Gemini claims (Section~\ref{sec:solo-cited}). The fidelity of these multi-source claims, where the model may synthesize or conflate information across sources, remains unmeasured and may exhibit different error patterns than solo-cited claims. Additionally, our LLM-as-judge approach was validated by manual review of all flagged cases (positive predictions) but not of all negative predictions, so the true attribution failure rate may be marginally higher if the judge produced false negatives.
+
+\section{Extending to Perplexity and Google AI Overviews}
+\label{sec:fw-perplexity-aio}
+
+This study covers ChatGPT and Gemini, but the AI search landscape includes at least two other high-traffic systems with distinct architectures. \textbf{Perplexity} (288K monthly referral visitors as of January 2026; \cite{ahrefs2026chatgptvsgoogle}) is a search-first product that foregrounds citations more prominently than ChatGPT and may exhibit different position bias and selection drift patterns as a result. \textbf{Google AI Overviews} (formerly Search Generative Experience) is integrated directly into the Google SERP, which means the grounding pipeline shares infrastructure with the organic index in ways that ChatGPT's Bing-mediated retrieval does not. Replicating our methodology on these platforms would test whether the core findings---position bias, structural selection drift, the Page~2 cliff---are universal properties of RAG-based search or specific to the systems we studied.
+
+A practical challenge is instrumentation: Perplexity exposes inline citations in its UI but does not publish grounding metadata, and Google AI Overviews lack a public API for structured grounding data. Network instrumentation techniques similar to those we developed for ChatGPT (Section~\ref{sec:pipeline-overview}) may be necessary.
+
+\section{Deeper and Repeated SERP Crawling}
 \label{sec:fw-deeper-crawling}
 
-This study stopped at Rank~200. Extending retrieval to Rank~300 (or beyond) would clarify whether additional ``invisible'' citations can be recovered at greater SERP depths, or whether a ceiling exists beyond which search-index overlap no longer increases.
+Our Bing scrape stops at Rank~200, but the page-level match histogram (Section~\ref{sec:page-dist}) shows no convergence---matches are still accumulating at Pages~15--16 with a smooth decay curve that does not reach zero. Extending to Rank~300 or beyond would clarify how much of the ``invisible'' set is truly absent from the search index versus merely buried at greater depth. Complementarily, repeated scrapes of the same query would mitigate the Bing Page~1 truncation artifact documented in Section~\ref{sec:bing-pagination-instability}, where nearly half of our scrapes returned fewer than 6 organic results on Page~1. Combining deeper crawling with repeated scraping would produce tighter bounds on the truly invisible citation rate.
 
-\subsection{Longitudinal Consistency (Expanded Runs)}
-\label{sec:fw-longitudinal-consistency}
+\section{Expanded Runs and Longitudinal Tracking}
+\label{sec:fw-longitudinal}
 
-While this study used 3--4 runs per prompt, future work should expand this to 10+ runs to achieve statistical significance in ``stochastic retrieval'' patterns and to better map the ``long tail'' of citations that appear only in rare instances.
+Our design uses 3 runs per prompt, which is sufficient to detect the $\sim$20\% flip-flop rate (Section~\ref{sec:flip-flop}) but insufficient to characterize the full distribution of citation stochasticity. Expanding to 10+ runs per prompt would enable confidence intervals on per-prompt citation probabilities and reveal whether some brands occupy a stable ``always cited'' position while others are marginal. Re-running the same query set at fixed intervals (e.g., quarterly) would additionally reveal whether citation patterns are temporally stable or drift as model weights, retrieval indices, and web content evolve.
 
-\subsection{Temporal Analysis}
-\label{sec:fw-temporal-analysis}
+\section{Cross-Category and Cross-Language Replication}
+\label{sec:fw-cross-category}
 
-How do results change over time? Re-running the same query set at fixed intervals (e.g., every three months) would reveal whether citation patterns are stable or subject to temporal drift as model weights, retrieval indices, and web content evolve.
+Our prompt set is concentrated in the AI and SaaS sectors, particularly speech and language technology. Replicating the study across different product categories (e.g., consumer electronics, fashion, financial services) would test whether the structural selection signals we observe---tables at +7.8 to +19.7\,pp, numbered lists at +7.1 to +11.2\,pp---are universal or category-dependent. Similarly, a dedicated cross-language study extending our Case~2 and Case~3 fan-out observations (Section~\ref{sec:localization-bias}) with a fully non-English prompt set would quantify the magnitude of the English retrieval bias that \textcite{rudzki2026english} documents at scale.
 
-\subsection{Query Category Segmentation}
-\label{sec:fw-query-category}
+\section{The Parametric Nudge Hypothesis}
+\label{sec:fw-parametric-nudge}
 
-Do certain product categories exhibit higher or lower overlap? Segmenting the dataset by category (e.g., electronics vs.\ fashion vs.\ software) could reveal category-specific citation dynamics that are masked in aggregate results.
+Our invisible-link analysis (Section~\ref{sec:invisible-links}) identifies 16--22\% of citations from sources absent from both Bing and Google for the corresponding query. A plausible but untested explanation is that brands with strong presence on high-authority, training-likely surfaces (Wikipedia, Reddit, major publications) receive a parametric ``nudge'' in the model's recommendations even before retrieval is triggered. A controlled experiment could test this directly: comparing model recommendations with web search forced off (pure parametric recall) against recommendations with web search enabled (RAG-augmented), and measuring whether brands with strong non-linked mentions on training-likely surfaces receive disproportionate parametric attention. If confirmed, this would identify a GEO channel that is genuinely independent of SEO.
 
-\subsection{Multi-Model Comparison}
-\label{sec:fw-multi-model}
-
-Comparing ChatGPT vs.\ Gemini vs.\ Claude on the same query set would strengthen the generalisability of the findings. While this study includes ChatGPT and Gemini, adding additional frontier models would help separate platform-specific effects from model-level grounding behavior.
-
-\subsection{User Study}
+\section{User Perception and Conversion}
 \label{sec:fw-user-study}
 
-Do users prefer LLM-generated recommendations or a conventional SERP (e.g., Bing Top~10)? A controlled user study measuring preference, trust, and purchase intent would complement the structural analysis presented here.
-
-\subsection{Exhaustive SERP Depth Analysis}
-\label{sec:fw-serp-depth}
-
-Expanding Bing/Google search depth from top 200 to top 300+ results would help determine if ``invisible'' citations are simply lower-ranked search results or truly independent LLM retrievals.
-
-\subsection{Residual Source Isolation}
-\label{sec:fw-residual-source}
-
-By programmatically ``subtracting'' all possible SERP matches (even at extreme depths), researchers can isolate the true ``LLM-native'' grounding set---sources ChatGPT/Gemini access via internal knowledge bases, direct partnerships, or non-public indices.
-
-\subsection{Decay Rate of Attribution}
-\label{sec:fw-decay-rate}
-
-Analyzing whether the probability of an LLM citing a source correlates with SERP rank beyond the first few pages---or whether model-internal prioritization overrides search ranking at depth---would help characterize the persistence of position bias.
+This study measures what the model cites but not how users respond to those citations. A controlled user study comparing LLM-generated recommendations against a conventional SERP (e.g., Bing Top~10) on the same queries---measuring preference, trust, click-through, and purchase intent---would complement the structural analysis and test the industry hypothesis that LLM-referred users convert at higher rates than traditional search traffic.

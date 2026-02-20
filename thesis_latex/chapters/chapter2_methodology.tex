@@ -16,7 +16,7 @@
 \textbf{ChatGPT Data} & \makecell[l]{Full responses with inline citations, additional links, and recommended \\ products through chrome dev tool network packet inspection} \\
 \textbf{Bing Data} & Top 200 results \\
 \textbf{Gemini Data} & Full \texttt{groundingMetadata} (Chunks vs.\ Supports) + Fan-out Queries \\
-\textbf{Google SERP} & \makecell[l]{SerpApi pagination until $\geq$20 Organic results are collected \\ (often $\sim$3 pages), with Video/PAA/Discussions retained \\ as diagnostic buckets} \\
+\textbf{Google SERP} & \makecell[l]{SerpApi pagination until $\geq$25 Organic results are collected \\ (often $\sim$3 pages), with Video/PAA/Discussions retained \\ as diagnostic buckets} \\
 \textbf{Content Fetching} & \makecell[l]{Node.js fetcher + Browser extension for blocked pages \\ (Master Content Library)} \\
 \bottomrule
 \end{tabular}
@@ -25,179 +25,101 @@
 \subsection{Selection of the Research Query Set}
 \label{sec:query-set-selection}
 
-\begin{itemize}
-    \item \textbf{High-Volume Real-World Prompts:} Our dataset consists of \textbf{79 unique product recommendation prompts} (e.g., ``Best AI video translators'', ``Top-rated transcription software''), sourced from two platforms: \textbf{65 prompts from Profound} (real user conversations with ChatGPT) and \textbf{14 prompts from Ahrefs} (high-volume keyword clusters).
-    \item \textbf{Methodology for Selection:}
-    \begin{itemize}
-        \item \textbf{Keyword Clustering:} Using \textbf{Ahrefs} to identify high-intent keyword clusters and derive 14 representative prompts from search volume data.
-        \item \textbf{Prompt Volume Analysis:} Leveraging \textbf{Profound's} Prompt Volumes feature to select 65 prompts derived from real user conversations with ChatGPT. Note: Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent rather than verbatim transcripts.
-        \item \textbf{Deliberate Intent Filtering:} From the broad set of available user prompts, we \textbf{deliberately filtered for high commercial intent}. This ensures the study reflects the specific segment of search where AI synthesis is most active and where the ``Extractive Nature'' of the model is most visible.
-        \item \textbf{Domain Expertise:} Queries were focused on the \textbf{AI and Software-as-a-Service (SaaS)} sectors --- particularly \textbf{speech and language technology} (speech-to-text, live transcription, voice translation, text-to-speech) --- a domain where the author has significant professional expertise, allowing for more nuanced qualitative analysis of the ``Signal vs.\ Noise'' in results.
-    \end{itemize}
-    \item \textbf{Experimental Rigor:} Each of the 79 prompts was executed in \textbf{3 independent runs} (with a 4th run added only in cases of technical failure or RAG non-triggering) to analyze the consistency and stochastic nature of the retrieval process.
-\end{itemize}
+Our dataset consists of 79 unique product recommendation prompts, sourced from two platforms. The majority---65 prompts---were drawn from Profound's Prompt Volumes feature, which provides prompt-level data derived from licensed, double-opt-in consumer panels of real ChatGPT users. Data is anonymized, aggregated, scrubbed of PII, and GDPR/CCPA compliant; Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent rather than verbatim transcripts \parencite{profound2026promptvolumes}. The remaining 14 prompts were derived from Ahrefs keyword clusters, selected by identifying high-intent keyword groups with substantial search volume and extracting representative prompt phrasings. Prompts span collection dates from January 2025 to January 2026, with the majority concentrated between July and December 2025.
 
-\subsection{Google SERP Result Types (SerpApi): Organic vs Video vs PAA}
+From the broad set of available prompts, we deliberately filtered for high commercial intent---product recommendations, comparisons, and ``best of'' queries---to ensure the study reflects the segment of search where RAG is most active and where the retrieval-to-citation pipeline is most empirically observable (see Section~\ref{sec:commercial-catalyst}). All queries were concentrated in the AI and Software-as-a-Service (SaaS) sectors, particularly speech and language technology (speech-to-text, live transcription, voice translation, text-to-speech). This domain focus was a deliberate methodological choice: the author's professional expertise in this vertical enabled more nuanced qualitative analysis of retrieval relevance and citation quality. Representative examples include: \emph{``Which free AI would you recommend for translating my video?''} (P001), \emph{``Is there a transcription software available for a one-time payment instead of a subscription?''} (P003), \emph{``Are there live translation software options for video chats like Zoom or Teams?''} (P044), and \emph{``Can you recommend free text-to-speech extensions that don't sound robotic?''} (P069).
+
+Each of the 79 prompts was executed in 3 independent runs per deployment tier (with a 4th run added only in cases of technical failure or RAG non-triggering), yielding 474 ChatGPT runs (237 Business + 237 Personal) and 237 Gemini runs---711 total runs across all conditions.
+
+\paragraph{Intent-based prompt clusters.}
+Although the 79 prompts span 9 fine-grained \texttt{parent\_keyword} categories, they reduce to 4 functional clusters when grouped by user intent: \textbf{live/real-time} (25 prompts, 31.6\%), \textbf{post-production translation} (24, 30.4\%), \textbf{post-production transcription/STT} (21, 26.6\%), and \textbf{text-to-speech} (9, 11.4\%). The first three clusters are roughly balanced; TTS forms a smaller tail. Representative examples include: \emph{``Is there a Windows application for live translation during calls in Google Meet?''} (live), \emph{``Which free AI would you recommend for translating my video?''} (post-prod translation), \emph{``What are the best free audio to text transcription tools?''} (transcription/STT), and \emph{``Can you recommend free text-to-speech extensions that don't sound robotic?''} (TTS).
+
+\paragraph{Search trigger coverage.}
+Five prompts never triggered RAG in any of their 6 runs (P013, P036, P056, P059, P062); a sixth (P067) also never triggered. All 6 have \texttt{NULL} sonic classifier data across every run --- the classifier was never invoked, indicating suppression at a layer upstream of the classifier itself. Two are non-English (P056~Italian, P062~Spanish). Among runs with valid sonic data, the classifier is \textbf{deterministic}: all 3 runs of the same prompt on the same account produce byte-identical probability values, confirming that run-to-run stochasticity originates in post-classifier layers. Thirteen runs exhibited post-classifier overrides (high \texttt{simple\_search\_prob} but search suppressed); 11 of 13 occurred on Personal accounts. All downstream citation analyses exclude non-triggering runs.
+
+\subsection{Google SERP Baseline (SerpApi)}
 \label{sec:google-serp-types}
 
-SerpApi returns Google results in multiple \textbf{result\_type} buckets (not just ``10 blue links''). This matters because overlap numbers can shift depending on what we count as ``the SERP.''
+Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard web listings), video results (often YouTube-heavy), and discussion/forum blocks. Because overlap numbers can shift depending on what counts as ``the SERP,'' we adopted a strict comparability rule: all overlap metrics default to \textbf{organic results only}, with video, People Also Ask, and discussion results retained as separate diagnostic buckets for sensitivity analysis (e.g., whether Google surfaces YouTube via video blocks earlier than Bing).
 
-\begin{itemize}
-    \item \textbf{Organic results}: standard web results (our primary control-group baseline).
-    \item \textbf{Video results}: often YouTube-heavy; can appear in top positions and inflate ``coverage'' for topics where ChatGPT cites YouTube.
-    \item \textbf{Discussions / forums blocks}: SerpApi often surfaces forum-like ``discussions'' sections; we retain them as a separate diagnostic bucket (forums / quota etc.).
-\end{itemize}
-
-\textbf{Method rule (comparability)}:
-\begin{itemize}
-    \item For overlap metrics, we default to \textbf{Organic-only} (and treat Video/PAA as separate diagnostic buckets), unless explicitly stated otherwise.
-    \item We keep the non-organic buckets available as a \textbf{discussion point} (e.g., ``Google surfaces YouTube via Video blocks earlier than Bing''), and as a sensitivity analysis (``organic-only vs organic+video'').
-    \item \textbf{Pagination rule (how we collected the ``Top-20 Organic'' baseline)}: we paginate SerpApi until we have $\geq$20 Organic results (not necessarily only the first page). In practice this is often the first $\sim$3 pages, alongside non-organic blocks.
-\end{itemize}
+For each query, we paginated SerpApi until at least 25 organic results were collected---in practice, this typically required approximately 3 pages of results. This ``Top-25 Organic'' baseline serves as the Google control surface against which we measure citation overlap, complementing the deeper Bing Top-200 scrape described below.
 
 \subsection{Bing SERP Scraping (Browser Extension)}
 \label{sec:bing-scraping}
 
-Because Microsoft retired public Bing Search API access on \textbf{August 11, 2025} (see Section~1.2.5), no stable programmatic API was available for academic SERP collection. We therefore built a \textbf{Chrome browser extension} (\texttt{tools/Bing Results Scraper}) that scrapes Bing's live consumer UI via DOM interaction.
+Because Microsoft retired public Bing Search API access on August~11, 2025 (see Section~\ref{sec:structural-pivot}), no stable programmatic API was available for academic SERP collection. We therefore built a Chrome browser extension (\texttt{tools/Bing Results Scraper}) that scrapes Bing's live consumer UI via DOM interaction. The extension runs as a Manifest~V3 content script that simulates human search interaction---typing queries character-by-character with randomized inter-key delays (10--50\,ms), clicking the search button, and waiting for DOM stabilization (result count checked across 3 consecutive iterations before proceeding).
 
-\begin{itemize}
-    \item \textbf{Scrape method}: The extension runs as a Manifest V3 content script that simulates human search interaction --- typing queries character-by-character with randomized inter-key delays (10--50\,ms), clicking the search button, and waiting for DOM stabilization (result count checked across 3 consecutive iterations before proceeding).
-    \item \textbf{Ad filtering}: Organic results are selected via \texttt{.b\_algo:not(.b\_adTop):not(.b\_adBottom):not([data-apurl])}. A supplementary \texttt{isSponsoredResultElement()} function provides multi-layer ad detection: DOM class markers (\texttt{.adsMvCarousel}, \texttt{.b\_ads1line}, \texttt{.ad\_em}), text-prefix matching (\texttt{/\^{}Sponsored\textbackslash b/i}), CSS \texttt{::before} pseudo-element inspection, and URL-based filtering of known ad-click endpoints (\texttt{/aclick}, \texttt{/clk}, \texttt{/sclk} on \texttt{bing.com}). Unresolved Bing redirect URLs (\texttt{bing.com/ck/}) are also discarded as probable ads.
-    \item \textbf{Pagination to Rank 200}: The extension clicks Bing's native pagination button (\texttt{.sb\_pagN}) and waits 3 seconds between pages. Each page yields $\sim$10 organic results; 20 pages $\times$ 10 results = 200 results per query. Positions are numbered strictly sequentially across pages (not reset per page).
-    \item \textbf{URL decoding}: Bing wraps organic URLs in redirect parameters. The extension decodes these via URL-parameter extraction, Base64 decoding (with prefix stripping), and hex-byte fallback. Tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}) are stripped to normalize URLs for overlap matching.
-    \item \textbf{US proxy}: All Bing scrapes were routed through a \textbf{US-based proxy} to match the retrieval environment used for ChatGPT runs (see Section~2.7.3), ensuring that localized SERP variation does not inflate or deflate overlap measurements.
-    \item \textbf{Extracted fields per result}: \texttt{position}, \texttt{title}, \texttt{url}, \texttt{domain}, \texttt{displayUrl}, \texttt{snippet}, \texttt{page\_num}. When content extraction is enabled, the extension also fetches each page and extracts full text (up to 20,000 characters), metadata (\texttt{canonical\_url}, \texttt{published\_date}, \texttt{modified\_date}), schema markup types, and table counts.
-\end{itemize}
+Organic results are isolated from ads using a multi-layer filtering approach. The primary selector (\texttt{.b\_algo:not(.b\_adTop):not(.b\_adBottom):not([data-apurl])}) is supplemented by a secondary function that checks DOM class markers, text-prefix matching (\texttt{/\^{}Sponsored\textbackslash b/i}), CSS \texttt{::before} pseudo-element inspection, and URL-based filtering of known ad-click endpoints. Unresolved Bing redirect URLs (\texttt{bing.com/ck/}) are discarded as probable ads. For each result, the extension extracts position, title, URL, domain, display URL, snippet, and page number; Bing's redirect-wrapped URLs are decoded via URL-parameter extraction with Base64 and hex-byte fallback, and tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}) are stripped to normalize URLs for overlap matching.
 
-\section{Methodological Evolution: From Top 30 to ``Deep Hunt'' (Rank 200)}
+The extension paginates through 20 pages of results ($\sim$10 organic results per page = Rank~200 per query), with 3-second waits between pages and positions numbered strictly sequentially across pages. All Bing scrapes were routed through a US-based proxy to match the retrieval environment used for ChatGPT runs (see Section~\ref{sec:proxy-requirement}), ensuring that localized SERP variation does not inflate or deflate overlap measurements.
+
+\section{Methodological Evolution: From Top~30 to ``Deep Hunt'' (Rank~200)}
 \label{sec:methodological-evolution}
 
-\begin{itemize}
-    \item \textbf{Starting Point (Single-Query, Top 30):} Our study initially used only the \textbf{single fan-out query visible in ChatGPT's UI} (the ``Searching for\ldots'' text) and scraped the \textbf{Top 30 Bing results} for each, yielding a \textbf{40.3\% citation overlap}. At this stage we had no knowledge of the hidden double fan-out mechanism --- we assumed the UI-displayed query was the only query issued.
-    \item \textbf{The Network Instrumentation Turning Point:} Once we began capturing raw network payloads (see Section~2.3), we discovered that ChatGPT always dispatches \textbf{two} fan-out queries per search turn, not one. The ``Searching for\ldots'' text in the UI only surfaces one of them. This meant our initial Bing scrapes were matching against an incomplete query set, understating true overlap.
-    \item \textbf{The Discovery of ``UI Erasure'':} Even after correcting for fan-out, qualitative review using our custom Data Viewer revealed a significant ``Visibility Gap.'' ChatGPT was citing high-quality, relevant pages that were completely missing from the Top 30 human-facing results.
-    \item \textbf{The Pivot to Rank 200:} To test whether these citations were truly ``invisible'' or merely ``buried,'' we expanded our methodology to a \textbf{``Deep Hunt'' (Rank 200)}.
-    \item \textbf{Key Finding of the Pivot:} We discovered that Bing often surfaces the exact pages ChatGPT cites, but hides them deep within pagination loops or beyond the ``Page 2 Cliff'' (Rank 11+). This methodological shift allowed us to prove that the difference between Search and GenAI is often a \textbf{UI and Ranking problem}, not just an indexing one.
-    \item \textbf{Why Even Rank 200 May Not Be Enough:} Our page-level distribution data (see Section~3.2.1) shows that citation matches do not reach zero at Rank 200 --- the long tail continues. Going deeper (Rank 300+) would likely recover additional matches and further shrink the ``truly invisible'' set, producing a cleaner separation between sources ChatGPT finds via search indices and sources it accesses through other means (parametric memory, direct partnerships, or non-public indices).
-\end{itemize}
+Our scrape depth evolved through three stages as the study uncovered progressively more of ChatGPT's retrieval architecture. The initial design used only the single fan-out query visible in ChatGPT's UI (the ``Searching for\ldots'' text) and scraped the Top~30 Bing results for each, yielding a 40.3\% citation overlap. At this stage we had no knowledge of the hidden double fan-out mechanism---we assumed the UI-displayed query was the only query issued.
 
-\subsection{Bing Pagination Instability (The ``Elastic Page 1'' Problem)}
+The first turning point came with network instrumentation (Section~\ref{sec:pipeline-overview}). Capturing raw event-stream payloads revealed that ChatGPT always dispatches \emph{two} fan-out queries per search turn, not one; the ``Searching for\ldots'' text surfaces only one of them. This meant our initial scrapes were matching against an incomplete query set, systematically understating true overlap. Even after correcting for the double fan-out, qualitative review using our custom Data Viewer revealed a persistent visibility gap: ChatGPT was citing high-quality, relevant pages that were completely absent from the Top~30 human-facing results.
+
+To test whether these citations were truly ``invisible'' or merely ``buried,'' we expanded to a Deep Hunt at Rank~200. The results confirmed the latter: Bing often surfaces the exact pages ChatGPT cites, but at depths well beyond typical human scrolling. This methodological shift demonstrated that the divergence between traditional search and generative AI is often a UI and ranking problem, not an indexing one---the sources exist in the index, but the human-facing SERP suppresses them behind pagination boundaries that the LLM's backend API integration bypasses.
+
+Even Rank~200 may not be sufficient. Our page-level distribution data (Section~\ref{sec:page-dist}) shows that citation matches do not reach zero at Pages~15--16; the long tail continues with a smooth decay curve. Extending to Rank~300 or beyond would likely recover additional matches and further narrow the ``truly invisible'' set (see Section~\ref{sec:fw-deeper-crawling}).
+
+\subsection{Bing Pagination Instability (The ``Elastic Page~1'' Problem)}
 \label{sec:bing-pagination-instability}
 
-A critical methodological challenge arose from Bing's inconsistent UI pagination behavior, which we discovered through repeated scrapes of the same query. This instability is partly why the retirement of the Bing Search API (see Section~1.2.5, Section~2.1.3) is consequential for grounding research: the consumer UI we were forced to scrape is a far noisier baseline than a stable API would have provided.
+A critical methodological challenge arose from Bing's inconsistent UI pagination behavior. This instability is partly why the retirement of the Bing Search API is consequential for grounding research: the consumer UI we were forced to scrape is a far noisier baseline than a stable API would have provided.
 
-\begin{itemize}
-    \item \textbf{Page 1 Truncation:} Bing's first page of organic results is not a fixed ``Top 10.'' In some scrapes, Page 1 returned as few as \textbf{2 organic results} (e.g., for \texttt{"free AI tools to translate video"}, only \texttt{zeemo.ai} and \texttt{airmore.ai} appeared as organic results on Page 1, while subsequent scrapes of the same query minutes later returned \texttt{maestra.ai}, \texttt{akool.com}, \texttt{veed.io}, \texttt{happyscribe.com}, and \texttt{rask.ai} in the top positions). The rest of the page was filled with ads, Copilot branding, ``People also search for'' blocks, and video carousels.
-    \item \textbf{The ``Missing Middle'' Problem:} When Page 1 is truncated, the results at ranks 3--7 do not simply shift to Page 2. Instead, they appear to be \textbf{dropped entirely} from that particular scrape. Page 2 begins with a different, loosely-indexed set of results that often includes irrelevant content (e.g., PDF translators, image-to-video tools, and unrelated AI generators appearing for a video translation query). Our citation-overlap data corroborates this qualitative observation: Page 1 concentrates the bulk of matches, Page 2 shows a conspicuous dip, and Pages 3+ settle into a gradual decay --- the expected long-tail pattern, but at higher match volumes than a tightly indexed SERP would produce. The Page 2 dip in particular stands out as an artifact of loose indexing rather than smooth ranking decay (see Section~3.2.1).
-    \item \textbf{Implications for Overlap Measurement:}
-    \begin{enumerate}
-        \item \textbf{Lost overlap (conservative bias):} If our Bing scrape for a given run captured a truncated Page 1, we may have missed legitimate top-ranking results that ChatGPT's retrieval system almost certainly had access to. This means our reported overlap percentages are likely \textbf{underestimates} --- some citations we classified as ``invisible'' may have been present in Bing's index at high ranks but absent from our specific scrape due to pagination instability.
-        \item \textbf{Why Top 200 was necessary:} Because everything after Page 1 is loosely indexed and inconsistent, we needed to scrape deep (Rank 200) not because ChatGPT is truly ``deep hunting'' at those ranks, but to \textbf{compensate for Bing's UI-layer instability} and recover matches that a stable API would have returned in the Top 10--30.
-    \end{enumerate}
-    \item \textbf{The API vs.\ UI Divergence Hypothesis:} We strongly suspect that ChatGPT does \textbf{not} receive the same noisy, truncated pagination that Bing's web UI serves to human users. Bing likely provides its index to ChatGPT via a backend integration that returns a clean, stable ranked list without ads, carousels, or pagination artifacts --- the exact mechanism is not publicly documented, but the ranking and filtering logic almost certainly differs from what the consumer UI exposes. This means our Bing-UI-scraped baseline is a \textbf{degraded proxy} for what ChatGPT actually sees --- further supporting the interpretation that our overlap figures are conservative lower bounds.
-    \item \textbf{What This Implies About ChatGPT's Retrieval:} Given that ChatGPT consistently cites high-quality, relevant sources, one of two things must be true: either ChatGPT receives a \textbf{cleaner, more stable ranking} from Bing's backend API than what the consumer UI exposes, or the model is doing substantial work to \textbf{filter through the same noisy index} and extract signal from noise. Either interpretation underscores the divergence between the human-facing and agent-facing search experiences described in Section~1.2.5.
-    \item \textbf{Contrast with Google (SerpApi):} This instability was not observed in our Google SERP data collected via SerpApi, which returned consistent, stable organic rankings across paginated requests. This asymmetry between Bing's UI instability and Google's API stability is itself a noteworthy finding for researchers attempting to replicate grounding studies.
-\end{itemize}
+Bing's first page of organic results is not a fixed ``Top~10.'' In some scrapes, Page~1 returned as few as 2 organic results---for example, the query \texttt{"free AI tools to translate video"} returned only \texttt{zeemo.ai} and \texttt{airmore.ai} as organic results on Page~1 in one scrape, while a subsequent scrape of the same query minutes later returned \texttt{maestra.ai}, \texttt{akool.com}, \texttt{veed.io}, \texttt{happyscribe.com}, and \texttt{rask.ai} in the top positions. The remaining Page~1 space was filled with ads, Copilot branding, ``People also search for'' blocks, and video carousels.
+
+When Page~1 is truncated, the results at ranks 3--7 do not simply shift to Page~2. Instead, they appear to be dropped entirely from that particular scrape---a ``missing middle'' problem. Page~2 begins with a different, loosely-indexed set that often includes off-topic results. Our citation-overlap data corroborates this: Page~1 concentrates the bulk of matches, Page~2 shows a conspicuous dip, and Pages~3+ settle into a gradual decay (Section~\ref{sec:page-dist}).
+
+This instability has two consequences for our overlap measurements. First, it introduces a conservative bias: if our scrape captured a truncated Page~1, we may have missed high-ranking results that ChatGPT's backend integration almost certainly had access to, causing us to classify some citations as ``invisible'' when they were in fact present in the index. Second, it is why we needed to scrape to Rank~200---not because ChatGPT is truly ``deep hunting'' at those ranks, but to compensate for UI-layer instability and recover matches that a stable API would have returned in the Top~10--30.
+
+We strongly suspect that ChatGPT does not receive the same noisy, truncated pagination that Bing's web UI serves to human users. Bing likely provides its index to ChatGPT via a backend integration that returns a clean, stable ranked list without ads, carousels, or pagination artifacts. Our Bing-UI-scraped baseline is therefore a degraded proxy for what ChatGPT actually sees, further supporting the interpretation that our overlap figures are conservative lower bounds. This instability was not observed in our Google SERP data collected via SerpApi, which returned consistent, stable organic rankings across paginated requests---an asymmetry worth noting for researchers attempting to replicate grounding studies.
 
 \section{Anatomy of a ChatGPT Response (Network-Instrumented)}
 \label{sec:chatgpt-anatomy}
 
-\textit{What exactly we can observe about ChatGPT's retrieval + citation pipeline from captured network payloads.}
+This section describes what we can observe about ChatGPT's retrieval and citation pipeline from captured network payloads, and the naming conventions and field definitions that structure our analysis.
 
-\subsection{Pipeline Overview (Methodology)}
+\subsection{Pipeline Overview}
 \label{sec:pipeline-overview}
 
-Our network instrumentation captured raw event-stream payloads from the ChatGPT production UI, revealing a \textbf{three-layer pipeline} (Sonic Classifier $\rightarrow$ Sonicberry Orchestrator $\rightarrow$ Generation Model) rather than a monolithic model. The detailed architecture, layer descriptions, and observed flow are reported as empirical findings in Section~3.1. Here we note only the methodological implication: because each layer emits distinct payload fields, we can separately instrument the search-trigger decision, the fan-out query dispatch, and the citation-generation phase.
+Our network instrumentation captured raw event-stream payloads from the ChatGPT production UI (\texttt{chatgpt.com}) using the Chrome DevTools protocol. The payloads reveal a three-layer pipeline---Sonic Classifier, Sonicberry Orchestrator, and Generation Model---rather than a monolithic model. The detailed architecture, layer descriptions, and observed flow are reported as empirical findings in Section~\ref{sec:three-layer}. The methodological implication is that because each layer emits distinct payload fields, we can separately instrument the search-trigger decision, the fan-out query dispatch, and the citation-generation phase.
 
 \subsection{Source Categories (Naming Conventions)}
 \label{sec:source-categories}
 
-We classify every URL that appears in ChatGPT's network response into one of three categories, derived from distinct locations in the payload:
+We classify every URL that appears in ChatGPT's network response into one of three categories, derived from distinct locations in the payload. \textbf{Cited} URLs appear as inline footnote references in the generated answer; mechanically, these are URLs linked via \texttt{content\_references} token spans, rendering as numbered superscript links in the ChatGPT UI. \textbf{Additional} URLs are attached to the response but not referenced inline; they appear in the \texttt{sources\_additional} array and render as a collapsible ``Sources'' section below the main response. \textbf{Retrieved-only} URLs are present in the \texttt{search\_result\_groups} payload (the raw search results delivered to the model during generation) but were not promoted to either cited or additional status---they never appear in the user-facing response. We compute them as: all URLs in \texttt{search\_result\_groups} minus those already classified as cited or additional (see Section~\ref{sec:retrieved-only} for detailed analysis).
 
-\begin{itemize}
-    \item \textbf{Cited}: URLs that appear as inline footnote references in the generated answer. Mechanically, these are URLs linked via \texttt{content\_references} token spans --- the model inserted a citation marker at a specific position in the output text pointing to this source. In the ChatGPT UI, these render as numbered superscript links within the response body.
-    \item \textbf{Additional}: URLs that are attached to the response but \textbf{not} referenced inline. These appear in the \texttt{sources\_additional} array in the network payload and render in the ChatGPT UI as a collapsible ``Sources'' section below the main response. The model retrieved and surfaced them to the user, but did not tie them to any specific claim.
-    \item \textbf{Unreferenced}: URLs present in the \texttt{search\_result\_groups} payload (the raw search results delivered to the model during generation) that were \textbf{not} promoted to either cited or additional status. These never appear in the user-facing response. We compute them as: all URLs in \texttt{search\_result\_groups} minus those already classified as cited or additional. See Section~3.3.3 for detailed analysis.
-\end{itemize}
+The \texttt{search\_result\_groups} field represents the retrieval pool as it appears in ChatGPT's network stream. We do not know the exact upstream source of these results; while ChatGPT is documented to use Bing, the field itself does not identify the backing search provider, and we cannot rule out internal indices or other retrieval paths.
 
-\textbf{Important:} The \texttt{search\_result\_groups} field is the retrieval pool as it appears in ChatGPT's network stream. We do not know the exact upstream source of these results --- while ChatGPT is known to use Bing, the field itself does not identify the backing search provider, and we cannot rule out internal indices or other retrieval paths.
+\subsection{Search Trigger Instrumentation}
+\label{sec:search-trigger-method}
 
-\subsection{Search Trigger Instrumentation (the ``decision'' fields)}
-\label{sec:search-trigger}
+We log the system's search-decision artifacts where present in the event stream: the \texttt{sonic\_classification\_result} (classifier output with \texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, and thresholds), \texttt{web\_search\_triggered} (whether search actually ran), and \texttt{web\_search\_forced} (whether search was forced). Business streams are the richest source of these fields. The full Sonic Classifier configuration and its empirical behavior are reported in Section~\ref{sec:search-trigger}.
 
-We log the system's search-decision artifacts where present (Enterprise streams are richest):
-\begin{itemize}
-    \item \texttt{sonic\_classification\_result}: the classifier output used to decide search (e.g., \texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, thresholds).
-    \item \texttt{web\_search\_triggered}: whether search actually ran.
-    \item \texttt{web\_search\_forced}: whether search was forced (if present).
-\end{itemize}
-
-The full Sonic Classifier configuration (classifier variant, 3-class thresholds, Enterprise vs.\ Personal divergence, and comparison with external reverse-engineering by Resoneo) is reported as empirical findings in Section~3.1.1.
-
-\subsection{Fan-Out Queries (``hidden queries'') \& the \texttt{web.run} Agentic Loop}
+\subsection{Fan-Out Queries and the \texttt{web.run} Agentic Loop}
 \label{sec:fan-out-queries}
 
-\begin{itemize}
-    \item \textbf{Definition}: multiple search queries issued for one user prompt; these expand/reshape retrieval scope.
-    \item \textbf{Why it matters}: fan-out sets control which sources are even eligible to be cited.
-    \item \textbf{Observable field (network-derived)}: \texttt{search\_model\_queries.queries} (stored as \texttt{hidden\_queries\_json} in our extracted CSV/DB pipeline).
-\end{itemize}
+Fan-out queries are the multiple search queries ChatGPT issues for a single user prompt, reshaping and expanding the retrieval scope. They are the gate that determines which sources are even eligible to be cited. We observe them via the \texttt{search\_model\_queries.queries} field in the network stream.
 
-\textbf{The \texttt{web.run} mechanism (empirically discovered):}
-\begin{itemize}
-    \item The generation model (gpt-5-2) calls a tool named \texttt{web.run} via the Sonicberry orchestrator (\texttt{alpha.sonic\_thinky\_v1\_paid}). Each \texttt{web.run} call \textbf{always dispatches exactly 2 queries in parallel} --- a fixed pair-generation strategy producing one synonym variant and one structural rephrase. Odd query counts (1, 3, 5) are architecturally impossible.
-    \item In the vast majority of runs (\textbf{94\%}), a single \texttt{web.run} call is all that fires --- the 2 queries run in parallel and the results are used directly. However, in a small fraction of runs (2.7\%), the generation model evaluates the returned results and calls \texttt{web.run} again, creating an iterative re-search loop tracked by the \texttt{search\_turns\_count} field.
-    \item \textbf{How it appears in the raw network stream (multi-turn fan-out signature)}:
-    \begin{itemize}
-        \item The response arrives as an event stream (patch/append style) containing repeated tool messages (\texttt{role="tool"}, \texttt{name="web.run"}, \texttt{author.metadata.source="sonic\_tool"}).
-        \item Each \texttt{web.run} message carries \texttt{search\_model\_queries.queries[]} (always length 2) and \texttt{search\_turns\_count} (incrementing 1, 2, 3\ldots).
-        \item Multi-turn calls may be \textbf{chained} (each \texttt{parent\_id} = previous \texttt{web.run}'s \texttt{message\_id}) or \textbf{independent} (different parent).
-    \end{itemize}
-\end{itemize}
+Our instrumentation revealed that the generation model (gpt-5-2) calls a tool named \texttt{web.run} via the Sonicberry orchestrator. Each \texttt{web.run} call always dispatches exactly 2 queries in parallel---a fixed pair-generation strategy producing one synonym variant and one structural rephrase; odd query counts are architecturally impossible. In 94\% of runs, a single \texttt{web.run} call suffices. In 2.7\% of runs, the generation model evaluates the returned results and calls \texttt{web.run} again, creating an iterative re-search loop tracked by the \texttt{search\_turns\_count} field. In the raw network stream, each \texttt{web.run} message carries the query array (always length~2) and an incrementing search turn count; multi-turn calls may be chained (\texttt{parent\_id} linking to the previous call) or independent. The empirical distribution of search turns, re-search strategies, and query drift are reported in Section~\ref{sec:multi-turn}.
 
-The empirical distribution of search turns, re-search strategies, query drift, and timing evidence are reported in Section~3.1.3.
-
-\subsection{Retrieved Candidate Pool (what the model could have used)}
+\subsection{Retrieved Candidate Pool}
 \label{sec:retrieved-candidates}
 
-We capture the retrieved candidates and their metadata:
-\begin{itemize}
-    \item \texttt{search\_result\_groups}: grouped search entries containing \texttt{url}, \texttt{title}, \texttt{snippet}, and \texttt{ref\_id} (turn/ref index keys).
-    \item \textbf{Interpretation}: this is the model's ``shortlist menu'' prior to selection.
-\end{itemize}
+The \texttt{search\_result\_groups} field contains the full retrieval pool delivered to the model: grouped search entries with URL, title, snippet, and \texttt{ref\_id} (turn/reference index keys). This is the model's ``shortlist menu'' prior to selection---every URL that the model could have cited or attached.
 
-\subsection{Citation Tokens \& Claim Mapping (how we attach sources to text)}
+\subsection{Citation Tokens and Claim Mapping}
 \label{sec:citation-tokens}
 
-Two key payload elements enable claim$\rightarrow$source reconstruction:
-\begin{itemize}
-    \item \texttt{content\_references}: token spans / citation tokens with \texttt{start\_idx} / \texttt{end\_idx} (where citations appear in the output stream).
-    \item \texttt{response\_text}: the generated text (often streamed via patch/append events).
-\end{itemize}
+Two payload elements enable claim-to-source reconstruction: \texttt{content\_references} (citation token spans with \texttt{start\_idx}/\texttt{end\_idx} marking where citations appear in the output stream) and the streamed \texttt{response\_text}. From these, we extract claim blocks (the text segments preceding each citation token) and map them to their backing sources by resolving \texttt{ref\_id} keys against \texttt{search\_result\_groups}. This reconstruction pipeline is described in detail in Section~\ref{sec:claim-to-link}.
 
-From these, we build:
-\begin{itemize}
-    \item \textbf{Claim blocks}: the text segments preceding each citation token (our \texttt{claim\_text} extraction).
-    \item \textbf{Mapped sources}: resolved URLs/titles/snippets by matching \texttt{ref\_id} keys to \texttt{search\_result\_groups}.
-\end{itemize}
-
-\subsection{What the Network Does \textit{Not} Reveal (critical limitation)}
+\subsection{Limitations of Network Instrumentation}
 \label{sec:network-limitations}
 
-\begin{itemize}
-    \item It does \textbf{not} include the exact on-page snippets/chunks that were fetched/inserted into the model context.
-    \item Therefore: our ChatGPT-side ``grounding budget'' analyses are \textbf{output-side proxies} (claim-attributed text), not true input-side snippet budgets.
-\end{itemize}
-
-\subsection{What Happens Next (how this section feeds the thesis)}
-\label{sec:anatomy-next-steps}
-
-This ``anatomy'' motivates the next analytic layers:
-\begin{itemize}
-    \item \textbf{Overlap \& visibility}: compare cited/additional/unreferenced pools against Bing Top 30 + Deep Hunt and Google SERP controls.
-    \item \textbf{Selection bias}: compare Content DNA of Cited vs Additional vs Unreferenced.
-    \item \textbf{Stochasticity}: quantify fan-out drift across runs and resulting citation churn.
-\end{itemize}
+The network stream does not include the exact on-page snippets or chunks that were fetched and inserted into the model's context window. Our ChatGPT-side grounding analyses are therefore output-side proxies (claim-attributed text), not true input-side snippet budgets. This limitation does not affect the overlap, selection drift, or fidelity analyses, but it means we cannot directly measure ChatGPT's grounding budget in the way that Gemini's API-exposed \texttt{groundingChunks} allow (Section~\ref{sec:grounding-metadata}).
 
 \subsection{Network Parameter Glossary (ChatGPT, Network-Instrumented)}
 \label{sec:network-glossary}
@@ -277,54 +199,30 @@ Unlike ChatGPT, where we must ``scrape'' the network stream, Gemini provides str
 \subsection{Key Differences in Instrumentation}
 \label{sec:gemini-instrumentation-differences}
 
-\begin{itemize}
-    \item \textbf{Transparency}: Gemini is ``Grounding-First''---it exposes the raw chunks it read, whereas ChatGPT only exposes the final URL and a snippet.
-    \item \textbf{Segment-Level Attribution}: Gemini attributes every sentence/segment to a specific chunk index, allowing for a much higher resolution of fidelity analysis.
-    \item \textbf{Vertex Redirects}: Gemini's \texttt{groundingChunks} do not expose raw URLs --- instead they contain internal redirect URLs (e.g., \texttt{vertexaisearch.cloud.google.com/\ldots}) that must be followed to discover the actual destination domain. We built a dedicated resolution script (\texttt{scripts/resolve\_grounding\_urls.mjs}) that collects all unique Vertex redirect URLs from the raw response files, follows each redirect via HTTP, and produces a mapping from Vertex URL $\rightarrow$ resolved destination URL. Some redirects failed to resolve programmatically (e.g., due to timeouts or anti-bot blocks), so unresolved URLs were exported and resolved manually via a browser-based content fetcher. Without this resolution step, no domain-level or overlap analysis would be possible on the Gemini data.
-    \item \textbf{Thinking budget}: All Gemini runs in this study used the \textbf{minimum thinking budget} available via the API. Higher thinking budgets produce more fan-out queries --- the model generates an initial broad query, discovers brands/products from the results, then issues targeted follow-up queries for those specific entities (e.g., \texttt{"best free AI video translation tools 2025 2026"} $\rightarrow$ \texttt{"HeyGen free trial video translation"} $\rightarrow$ \texttt{"ElevenLabs video translator free tier limitations"}). This iterative refinement pattern resembles GPT's multi-turn re-search (see Section~3.1.3), but is driven by the thinking budget rather than an explicit agentic tool-call loop. Our use of minimum thinking keeps the fan-out count bounded and comparable across runs, but means the study captures the model's baseline retrieval behavior rather than its maximum-depth grounding capability.
-    \item \textbf{API vs.\ Consumer UI gap}: Our Gemini data comes entirely from the Vertex AI API, which provides structured grounding metadata but does not carry IP/locale signals. Inspecting the \textbf{Gemini consumer UI} (\texttt{gemini.google.com}) via network packet analysis --- mirroring our ChatGPT instrumentation approach --- could reveal additional signals not exposed in the API, such as locale-driven fan-out rewriting, internal ranking or filtering stages before the \texttt{groundingMetadata} is constructed, or differences in fan-out strategy between the consumer product and the API. This remains a potential avenue for future work.
-\end{itemize}
+The most significant difference is transparency: Gemini is ``grounding-first''---it exposes the raw chunks it read and attributes every response segment to a specific chunk index, enabling higher-resolution fidelity analysis than ChatGPT's output-side-only instrumentation allows.
+
+A practical challenge is that Gemini's \texttt{groundingChunks} do not expose raw URLs; instead, they contain internal redirect URLs (e.g., \texttt{vertexaisearch.cloud.google.com/\ldots}) that must be followed to discover the actual destination domain. We built a dedicated resolution script (\texttt{scripts/resolve\_grounding\_urls.mjs}) that collects all unique Vertex redirect URLs, follows each via HTTP, and produces a Vertex URL $\rightarrow$ resolved destination mapping. Redirects that failed programmatically (due to timeouts or anti-bot blocks) were resolved via a custom Chrome extension (\texttt{VertexResolverExtension}) that opens each URL in a background tab and captures the final destination. Without this resolution step, no domain-level or overlap analysis would be possible on the Gemini data.
+
+All Gemini runs used the minimum thinking budget available via the API. Higher budgets produce more fan-out queries through an iterative refinement pattern resembling GPT's multi-turn re-search (Section~\ref{sec:multi-turn}), but driven by the thinking budget rather than an explicit tool-call loop. Our use of minimum thinking keeps the fan-out count bounded and comparable across runs, but means the study captures baseline retrieval behavior rather than maximum-depth grounding capability.
+
+Finally, our Gemini data comes entirely from the Vertex~AI API, which provides structured grounding metadata but does not carry IP or locale signals. Inspecting the Gemini consumer UI (\texttt{gemini.google.com}) via network packet analysis---mirroring our ChatGPT instrumentation approach---could reveal additional signals not exposed in the API. This remains a potential avenue for future work (Section~\ref{sec:fw-perplexity-aio}).
 
 \section{Content DNA Enrichment (LLM-as-a-Labeler)}
 \label{sec:content-dna}
 
-\textit{How we transformed raw URLs into structured data for selection bias analysis.}
+To quantify selection effects---what gets cited versus what was available---we needed to move beyond URLs and domains to a structured profile of each page's content characteristics.
 
 \subsection{The Labeling Pipeline}
 \label{sec:labeling-pipeline}
 
-To quantify selection effects (what gets cited vs.\ what was available), we needed to move beyond URLs and domains. We developed an automated enrichment pipeline using \textbf{GPT-5-mini} and \textbf{Gemini Flash 2.5} as structured labelers:
-\begin{enumerate}
-    \item \textbf{Content Extraction}: Raw HTML was fetched and converted to clean markdown/text.
-    \item \textbf{Schema-Driven Labeling}: The LLM was prompted to evaluate each page against a strict 20-field schema, including:
-    \begin{itemize}
-        \item \textbf{Page Type}: \texttt{listicle}, \texttt{product\_page}, \texttt{documentation}, \texttt{forum\_ugc}, etc.
-        \item \textbf{Content Format}: \texttt{best\_of\_list}, \texttt{landing\_page}, \texttt{comparison\_matrix}, etc.
-        \item \textbf{Structural Features}: \texttt{has\_tables}, \texttt{has\_numbered\_lists}, \texttt{has\_pros\_cons}.
-        \item \textbf{Qualitative Scores}: \texttt{promotional\_intensity\_score}, \texttt{readability\_score}.
-        \item \textbf{Tone}: \texttt{promotional}, \texttt{neutral\_informational}, \texttt{salesy}, \texttt{opinionated}.
-    \end{itemize}
-    \item \textbf{Validation}: A subset of labels was manually audited to ensure the LLM labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
-\end{enumerate}
+We developed an automated enrichment pipeline using GPT-5-mini and Gemini~2.5~Flash as structured labelers. The pipeline operates in three stages. First, raw HTML was fetched for each URL and converted to clean markdown/text. Second, the LLM was prompted to evaluate each page against a strict 20-field schema covering page type (\texttt{listicle}, \texttt{product\_page}, \texttt{documentation}, \texttt{forum\_ugc}), content format (\texttt{best\_of\_list}, \texttt{landing\_page}, \texttt{comparison\_matrix}), structural features (\texttt{has\_tables}, \texttt{has\_numbered\_lists}, \texttt{has\_pros\_cons}), qualitative scores (\texttt{promotional\_intensity\_score}, \texttt{readability\_score}), and tone (\texttt{promotional}, \texttt{neutral\_informational}, \texttt{salesy}, \texttt{opinionated}). Third, a subset of labels was manually audited to ensure the labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
 
-\textbf{Note on tone and promotional intensity:} While tone (\texttt{promotional} / \texttt{neutral\_info} / \texttt{salesy} / \texttt{opinionated}) and \texttt{promotional\_intensity\_score} were captured as part of the enrichment schema, they showed no discriminative power in downstream analysis. Tone distribution was uniformly $\sim$70\% promotional across all systems, all citation categories (cited, additional, ignored), and both deployment tiers --- a natural consequence of the product-recommendation prompt set. Because these fields do not differentiate cited from non-cited sources or vary across conditions, they are omitted from the findings tables in Section~3.4--3.5.
+While tone and promotional intensity were captured, they showed no discriminative power in downstream analysis: tone distribution was uniformly $\sim$70\% promotional across all systems, citation categories, and deployment tiers---a natural consequence of the product-recommendation prompt set. These fields are therefore omitted from the findings tables in Sections~\ref{sec:content-dna}--\ref{sec:selection-drift}.
 
-\subsection{Enrichment Logic \& Static Overrides}
+\subsection{Enrichment Logic and Static Overrides}
 \label{sec:enrichment-logic}
 
-\textit{To ensure efficiency and accuracy, the labeling pipeline uses a hybrid approach of LLM-labeling and static rules for high-volume, well-known domains.}
-
-\begin{itemize}
-    \item \textbf{LLM-Labeling (GPT-5-mini)}: Used for general web pages, blogs, and niche product sites to determine structural features (\texttt{has\_tables}, \texttt{has\_pros\_cons}, etc.).
-    \item \textbf{Static Domain Overrides (Skipped Enrichment)}: Known platforms with consistent structural patterns were assigned ``pre-made'' labels to save quota and ensure consistency:
-    \begin{itemize}
-        \item \textbf{\texttt{reddit.com}}: Automatically labeled as \texttt{type=forum\_ugc}, \texttt{content\_format=discussion\_thread}, \texttt{tone=opinionated}.
-        \item \textbf{\texttt{en.wikipedia.org}}: Automatically labeled as \texttt{type=reference}, \texttt{content\_format=encyclopedic}, \texttt{tone=neutral\_informational}.
-        \item \textbf{\texttt{arxiv.org}}: Labeled as \texttt{type=reference}, \texttt{content\_format=academic\_paper}.
-        \item \textbf{App Stores (\texttt{apps.apple.com}, \texttt{play.google.com})}: Labeled as \texttt{type=app\_store\_listing}, \texttt{primary\_intent=transactional}.
-    \end{itemize}
-    \item \textbf{The ``Invisible'' Domain Strategy}: Many of the top ``invisible'' domains (like \texttt{reddit.com} and \texttt{wikipedia.org}) were handled via these static overrides because their structure is fixed and does not require per-page LLM analysis.
-\end{itemize}
+The labeling pipeline uses a hybrid approach. General web pages, blogs, and niche product sites were labeled by GPT-5-mini. However, high-volume domains with fixed, well-understood structures were assigned static ``pre-made'' labels to save API quota and ensure consistency: \texttt{reddit.com} was labeled as \texttt{forum\_ugc}, \texttt{en.wikipedia.org} as \texttt{reference}, \texttt{arxiv.org} as \texttt{academic\_paper}, and app stores (\texttt{apps.apple.com}, \texttt{play.google.com}) as \texttt{app\_store\_listing}. Many of the top ``invisible'' domains (Section~\ref{sec:top-invisible-domains}) were handled via these static overrides because their structure does not require per-page LLM analysis.
 
 \textbf{Why we skipped these domains from full enrichment:} The skipDomains list (\texttt{wikipedia.org}, \texttt{reddit.com}, \texttt{arxiv.org}, \texttt{github.com}, \texttt{youtube.com}, app stores, social media platforms, and first-party support/docs sites) was applied consistently across all enrichment scripts (\texttt{enrich\_gemini\_grounding.mjs}, \texttt{enrich\_control\_gpt.mjs}, \texttt{enrich\_db\_list\_with\_gemini.js}, \texttt{enrich\_db\_list\_with\_vertex.js}). These domains have fixed, well-understood structures that do not benefit from LLM-based content analysis --- a Wikipedia article is always \texttt{type=reference}, a Reddit thread is always \texttt{type=forum\_ugc}. Instead of wasting API quota on these, we assigned heuristic labels via \texttt{label\_skipped\_urls.mjs} (see static overrides above) with conservative defaults (e.g., \texttt{promotional\_intensity\_score=0}, \texttt{spamminess\_score=0}).
 
@@ -341,6 +239,8 @@ To test whether Content DNA is model-dependent, we ran a direct agreement audit 
     \item \textbf{Score consistency (correlation)}: \texttt{freshness\_cue\_strength} \textbf{$r = 0.841$} (strong trend agreement, different absolute thresholds)
 \end{itemize}
 
+A parallel cross-model validation was performed on the listicle semantic fidelity judge (Section~\ref{sec:semantic-fidelity}), where all 1{,}116 claims were judged by both models. Agreement rates (93--100\% on structural fields, 93.9\% within $\pm$1 on fidelity scores) are consistent with the DNA labeler results above.
+
 \subsection{Enrichment Coverage \& Label Distribution (Study URL Universe)}
 \label{sec:enrichment-coverage}
 
@@ -354,162 +254,85 @@ To make downstream analyses defensible, we first measured how much of the URL un
 \subsection{Research Questions for Selection Analysis}
 \label{sec:selection-research-questions}
 
-\textit{These research-design questions guided the enrichment-based analyses in Part 3 (Section~3.4--3.5).}
+The enrichment data enables three lines of analysis. First, we compare the structural DNA of cited versus additional links to identify which content features predict inline citation versus supplementary attachment. Second, we track cross-run citation consistency: whether URLs demoted to ``additional'' in one run are promoted to ``cited'' in a different run of the same prompt, quantifying the stochasticity of the citation boundary (Section~\ref{sec:flip-flop}). Third, we compare the DNA of Bing Page~1 links that ChatGPT ignored against those it cited, testing whether ignored links exhibit lower structural complexity (Section~\ref{sec:cited-vs-serp}).
 
-\begin{enumerate}
-    \item \textbf{Why were Additional links not cited inline?}
-    \begin{itemize}
-        \item Compare structural DNA: \texttt{has\_tables}, \texttt{has\_numbered\_lists}, \texttt{heading\_density}
-        \item Compare \texttt{tone}: Are Additional links more \texttt{promotional} or \texttt{salesy}?
-        \item Compare \texttt{type}: Are Additional links more \texttt{product\_page} vs.\ \texttt{listicle}?
-    \end{itemize}
-
-    \item \textbf{Cross-Run Citation:}
-    \begin{itemize}
-        \item Were Additional links from Run 1 cited inline in Run 2/3/4?
-        \item This shows consistency vs.\ randomness in ChatGPT's citation selection
-    \end{itemize}
-
-    \item \textbf{Page 1 Ignored Links:}
-    \begin{itemize}
-        \item Links in \textbf{Bing Page 1} (variable-size SERP page; see Section~3.2.1) that ChatGPT did NOT cite
-        \item Compare their DNA to cited links
-        \item Hypothesis: Ignored links are more \texttt{salesy}, lower structural complexity
-    \end{itemize}
-\end{enumerate}
-
-\section{Citation Mapping \& Claim-Level Attribution}
+\section{Citation Mapping and Claim-Level Attribution}
 \label{sec:citation-mapping}
 
-\textit{How we precisely map ChatGPT's written claims to their retrieved sources. This pipeline was applied specifically to \textbf{listicle-cited claims}, where the research question is sharpest: when a model cites a listicle containing 10+ products, does it actually extract information from that page, or does it hallucinate from parametric knowledge and merely attach the listicle as a plausible-looking source? Listicles are uniquely suited to this test because they contain a discrete, verifiable roster of items we can check against the model's output. We further restricted the analysis to \textbf{solo-cited claims} --- claim blocks attributed to exactly one URL --- because when multiple sources back a single claim (e.g., a listicle + a product page), it becomes impossible to determine which source the model actually drew from. This solo-citation filter was applied across both GPT and Gemini listicle-cited claims.}
+This section describes how we map ChatGPT's written claims to their retrieved sources at claim-level resolution. The pipeline was applied specifically to listicle-cited claims, where the research question is sharpest: when a model cites a listicle containing 10+ products, does it actually extract information from that page, or does it hallucinate from parametric knowledge and merely attach the listicle as a plausible-looking source? We further restricted the analysis to \textbf{solo-cited claims}---claim blocks attributed to exactly one URL---because when multiple sources back a single claim, it becomes impossible to determine which source the model actually drew from. This filter was applied across both GPT and Gemini.
 
-\subsection{The ``Claim-to-Link'' Forensic Pipeline}
+\subsection{The Claim-to-Link Forensic Pipeline}
 \label{sec:claim-to-link}
 
-\begin{itemize}
-    \item \textbf{The Challenge:} ChatGPT's final response text replaces internal citation tokens with generic \texttt{[URL]} tags. To understand \textit{why} a link was cited, we must reconstruct the link between the \textbf{written claim} and the \textbf{retrieved source}. Unlike Gemini --- which natively provides segment-level attribution via \texttt{groundingSupports} (see Section~2.4.2) --- ChatGPT exposes no such mapping; we had to build one.
-    \item \textbf{The Solution:} We developed a forensic mapping pipeline that reconstructs ChatGPT's claim-to-source attribution at a resolution comparable to Gemini's native \texttt{groundingSupports}:
-    \begin{enumerate}
-        \item \textbf{Token Alignment:} Raw citation tokens (e.g., \texttt{citeturn0search9}, \texttt{citeturn0search24}) are extracted from the network event stream along with their \texttt{start\_idx} / \texttt{end\_idx} character positions in the streamed response text.
-        \item \textbf{Block-Level Extraction:} The script identifies the \textbf{Full Claim Block} --- the descriptive text between consecutive citation tokens. This captures the complete product description or factual statement ChatGPT attributed to that source, not just a keyword. For example, a single claim block might read: \textit{``InqScribe -- desktop transcription software with a perpetual license (no subscription; runs locally)''} mapped to \texttt{citeturn0search24} $\rightarrow$ \texttt{inqscribe.com}.
-        \item \textbf{Metadata Enrichment:} Each claim block is joined to its retrieved ``Ground Truth'' (the snippet, title, and URL from the \texttt{search\_result\_groups}) by resolving \texttt{ref\_id} keys (\texttt{turn\_index}, \texttt{ref\_type}, \texttt{ref\_index}).
-        \item \textbf{Output:} The pipeline produces a structured \texttt{mapping.json} per run, where each entry contains \texttt{claim\_text}, \texttt{token}, \texttt{target\_url}, \texttt{start\_idx}, and \texttt{end\_idx} --- enabling the same claim-level fidelity and multi-source analyses that Gemini's API provides natively.
-    \end{enumerate}
-    \item \textbf{Cross-model parity:} This pipeline is what makes direct GPT-vs-Gemini comparison possible at the claim level. Without it, ChatGPT attribution would be limited to run-level URL lists with no way to determine which claim maps to which source.
-\end{itemize}
+Unlike Gemini, which natively provides segment-level attribution via \texttt{groundingSupports} (Section~\ref{sec:grounding-metadata}), ChatGPT exposes no such mapping. We therefore developed a forensic reconstruction pipeline that achieves comparable resolution through four steps. First, raw citation tokens (e.g., \texttt{citeturn0search9}) are extracted from the network event stream along with their character positions (\texttt{start\_idx}/\texttt{end\_idx}) in the streamed response. Second, the script identifies the full claim block---the descriptive text between consecutive citation tokens---capturing the complete product description attributed to that source. For example, a single claim block might read: \emph{``InqScribe---desktop transcription software with a perpetual license (no subscription; runs locally)''} mapped to \texttt{citeturn0search24} $\rightarrow$ \texttt{inqscribe.com}. Third, each claim block is joined to its retrieved ground truth (snippet, title, and URL from \texttt{search\_result\_groups}) by resolving \texttt{ref\_id} keys. Fourth, the pipeline produces a structured \texttt{mapping.json} per run enabling the same claim-level analyses that Gemini's API provides natively. This pipeline is what makes direct GPT-vs-Gemini comparison possible at the claim level.
 
-\subsection{Multi-Chip Reconstruction (Synthesis Aggression)}
+\subsection{Multi-Chip Reconstruction}
 \label{sec:multi-chip}
 
-\begin{itemize}
-    \item \textbf{Defining Multi-Chips:} We observed cases where ChatGPT groups multiple sources under a single citation (e.g., ``Vibe Voice+1'').
-    \item \textbf{Forensic Discovery:} Our mapping revealed that these correspond to concatenated tokens (e.g., \texttt{turn0search8} + \texttt{search15}).
-    \item \textbf{Research Value:} This allows us to measure \textbf{Synthesis Aggression}---how ChatGPT merges facts from multiple distinct search results into a single cohesive claim.
-\end{itemize}
+We observed cases where ChatGPT groups multiple sources under a single citation display (e.g., ``Vibe Voice+1''). Our mapping revealed that these correspond to concatenated citation tokens (e.g., \texttt{turn0search8} + \texttt{search15}), enabling us to measure how ChatGPT merges facts from multiple distinct search results into a single cohesive claim.
 
-\subsection{Definitions for Multi-Source \& Mixed Citation Analysis}
+\subsection{Definitions for Multi-Source Analysis}
 \label{sec:multi-source-definitions}
 
-\begin{itemize}
-    \item \textbf{Multi-cited claim/segment:} a claim/segment with \textbf{2+ distinct cited URLs}. Computed by \texttt{scripts/analysis/multi\_source\_claim\_support.py}.
-    \item \textbf{Mixed listicle+product citation:} among multi-cited claims, a case where the cited URL set contains $\geq$1 \texttt{type=listicle} and $\geq$1 \texttt{type=product\_page}.
-    \item \textbf{Type-mix buckets:} each multi-cited claim is partitioned into exactly one bucket: \textit{mixed listicle+product}, \textit{listicle-only}, \textit{product-only}, or \textit{neither} (other page types / unknown).
-    \item \textbf{Quantitative results} for these metrics are reported in Section~3.6.1.
-\end{itemize}
+A \textbf{multi-cited claim} is a claim or segment backed by 2+ distinct cited URLs. Among multi-cited claims, a \textbf{mixed listicle+product citation} is a case where the cited URL set contains at least one listicle and at least one product page. Each multi-cited claim is partitioned into exactly one bucket: mixed listicle+product, listicle-only, product-only, or other. Quantitative results are reported in Section~\ref{sec:solo-cited}.
 
-\section{Localization \& Retrieval Environment}
+\section{Localization and Retrieval Environment}
 \label{sec:localization}
 
-\textit{How geographical context affects the comparison between Search and GenAI.}
+Geographical context affects retrieval in ways that are not always visible to the user. This section defines our localization taxonomy and documents the cross-language fan-out patterns we observed.
 
-\subsection{Implicit vs.\ Explicit Localization (Definitions \& Instrumentation)}
+\subsection{Localization Definitions and Language Distribution}
 \label{sec:localization-definitions}
 
-\begin{itemize}
-    \item \textbf{Prompt Language Distribution}: Our dataset consists of \textbf{72 English prompts} and \textbf{7 foreign-language prompts} (1 French, 1 Chinese, 2 Turkish, 1 German, 1 Italian, 1 Spanish). All 7 foreign-language prompts originated from \textbf{Ahrefs} keyword clusters; the \textbf{Profound}-sourced prompts were exclusively English.
-    \item \textbf{Explicit Localization:} When the query targets an inherently local category --- even without any geographic qualifier in the prompt. A query like ``best bakery'' or ``best pizza'' is implicitly local, and the system will inject a location into the fan-out queries automatically (e.g., rewriting to ``best bakery near Munich Germany''). This primarily applies to local-commerce queries and is not a factor in our SaaS/software dataset, where products are globally available.
-    \item \textbf{Implicit Localization:} When the query is general (e.g., ``Best laptop''), but the search engine uses the user's IP, browser language, and search history to localize results.
-    \item \textbf{Observed instrumentation signal (Fan-Out Queries):} In our logged \textbf{fan-out query sets} (Gemini \texttt{groundingMetadata.webSearchQueries[]} --- officially called ``grounding support'' queries, functionally equivalent to fan-outs; ChatGPT network-derived hidden queries), implicit localization often manifests as \textbf{one of the fan-out queries being rewritten into the prompt's local language}, which then steers retrieval toward localized sources.
-    \item \textbf{Concrete example (implicit localization via fan-out):} When issuing an English prompt from \textbf{Munich, Germany}, we observed a two-query fan-out where one query remained English while the other was rewritten into German:
-    \begin{itemize}
-        \item Q1: \texttt{"free website or program to translate video and add subtitles"}
-        \item Q2: \texttt{"kostenlos video \"ubersetzen und Untertitel automatisch hinzuf\"ugen \ldots"}
-    \end{itemize}
+Our dataset consists of 72 English prompts and 7 foreign-language prompts (1~French, 1~Chinese, 2~Turkish, 1~German, 1~Italian, 1~Spanish). All 7 foreign-language prompts originated from Ahrefs keyword clusters; the Profound-sourced prompts were exclusively English.
 
-    This resulted in one of the two fan-out queries retrieving German-language sources despite an English user prompt.
+We distinguish two forms of localization. \textbf{Explicit localization} occurs when the query targets an inherently local category---even without a geographic qualifier, a query like ``best bakery'' triggers location-injected fan-out queries (e.g., ``best bakery near Munich Germany''). This primarily applies to local-commerce queries and is not a factor in our SaaS/software dataset. \textbf{Implicit localization} occurs when the search engine uses the user's IP, browser language, or search history to localize results for a general query.
 
-    \item \textbf{Concrete example (explicit localization via fan-out):} A location-free prompt like \texttt{"what is the best bakery"} can trigger fan-out queries that inject a specific place (e.g., \texttt{"best bakery near Munich Germany"}), effectively converting an implicit prompt into an explicitly localized retrieval task.
+In our fan-out data, implicit localization manifests as one of the two fan-out queries being rewritten into the prompt's local language. For example, when issuing an English prompt from Munich, Germany, we observed one query in English (\texttt{"free website or program to translate video and add subtitles"}) and a parallel query in German (\texttt{"kostenlos video \"ubersetzen und Untertitel automatisch hinzuf\"ugen\ldots"})---routing half the retrieval into the German-language index despite an English user prompt.
 
-    \item \textbf{Observed GPT fan-out localization patterns (62 runs with non-English fan-out queries):}
-    \begin{enumerate}
-        \item \textbf{Case 1 --- Foreign-language prompts (30 runs):} When the user prompt is in a non-English language (French P019, Chinese P032, Turkish P038, German P055, Turkish P060), GPT emits fan-out queries in both the prompt's language and English. This is expected behavior --- the system mirrors the prompt language while also anchoring to English for broader coverage. Gemini exhibits the same pattern: verified across Chinese (P032: 1 English + 3 Chinese), French (P019: 1 English + 3 French), German (P055: 2 English + 2 German), and Spanish (P062: 1 English + 3 Spanish) prompts.
-        \item \textbf{Case 2 --- Context-triggered anomalies (9 runs):} English prompts that \textbf{mention a specific language or locale} in their content trigger non-English fan-out queries. For example, ``best software for Parsian/Farsi audio-to-text transcription'' (P058) produces Farsi fan-out queries; ``Chrome extension for live Chinese to English translation'' (P047) produces Chinese fan-out queries. The non-English query is contextually motivated by the prompt's subject matter, not by IP or browser locale.
-        \item \textbf{Case 3 --- Untriggered anomalies (23 runs):} Purely English prompts with \textbf{no language or locale context} produce non-English fan-out queries (Chinese, Japanese, Spanish, French, etc.). For example, ``Is there a real time audio to text translation?'' (P007) or ``Can I add a live translation app to calls?'' (P048) generate Chinese and Japanese fan-out queries. These appear to be driven by IP/locale signals or unexplained model behavior, as nothing in the prompt suggests a non-English retrieval path.
-    \end{enumerate}
+\subsection{Cross-Language Fan-Out Patterns}
 
-    \textit{Note: Cases 2 and 3 are GPT-only observations. Gemini was accessed via API without IP-based locale signals, so these patterns could not be tested for Gemini (see Section~2.4.2).}
+We identified 62 GPT runs (13.1\% of 474) with non-English fan-out queries, distributed across three distinct patterns:
 
-    \item \textbf{Findings} (occurrence rates, ``English Anchor'' effect, freshness steering stats) are reported in Section~3.1.
-\end{itemize}
+\begin{enumerate}
+    \item \textbf{Case~1---Foreign-language prompts (30 runs):} When the user prompt is in a non-English language (e.g., P019~French, P038~Turkish, P056~Italian), GPT emits fan-out queries in both the prompt's language and English. Gemini exhibits the same pattern. This is expected behavior---the system mirrors the prompt language while anchoring to English for broader coverage.
+    \item \textbf{Case~2---Context-triggered (9 runs):} English prompts that mention a specific language or locale trigger non-English fan-out queries. For example, ``best software for Parsian/Farsi audio-to-text transcription'' (P058) produces Farsi queries; ``Chrome extension for live Chinese to English translation'' (P047) produces Chinese queries. The non-English query is contextually motivated by the prompt's subject matter.
+    \item \textbf{Case~3---Untriggered (23 runs):} Purely English prompts with no language or locale context produce non-English fan-out queries. For example, ``Is there a real time audio to text translation?'' (P007) generates Chinese and Japanese queries. These appear driven by IP/locale signals leaking into query generation.
+\end{enumerate}
 
-\subsection{Freshness Steering (Methodology)}
-\label{sec:freshness-steering}
+Cases~2 and~3 are GPT-only observations; Gemini was accessed via API without IP-based locale signals, so these patterns could not be tested (Section~\ref{sec:gemini-instrumentation-differences}). The full empirical breakdown---occurrence rates, the ``English Anchor'' effect, and freshness steering---is reported in Section~\ref{sec:localization-bias}.
 
-\begin{itemize}
-    \item \textbf{What we measure:} Whether fan-out queries contain explicit year signals (e.g., ``2025'', ``2026'') and at which query index they appear.
-    \item \textbf{Why it matters:} Explicit year injection steers retrieval toward time-stamped listicles, which changes the composition of the grounding pool.
-    \item \textbf{Findings} (Gemini vs.\ GPT freshness rates) are reported in Section~3.1.
-\end{itemize}
+\subsection{Freshness Steering}
+\label{sec:freshness-steering-method}
+
+We measure whether fan-out queries contain explicit year signals (e.g., ``2025,'' ``2026'') and at which query index they appear. Explicit year injection steers retrieval toward time-stamped listicles, changing the composition of the grounding pool. The Gemini-vs-GPT comparison is reported in Section~\ref{sec:freshness-steering}.
 
 \subsection{The Proxy Requirement (US-Centric Baseline)}
 \label{sec:proxy-requirement}
 
-To ensure a fair ``apples-to-apples'' comparison, we standardized our retrieval environment using a \textbf{US-based Proxy}.
+To ensure a fair comparison, all Bing scrapes and ChatGPT runs were routed through a US-based proxy. This decision reflects three considerations: ChatGPT's primary training data and search behaviors are heavily weighted toward US-English web content; a US baseline prevents Bing from surfacing local retailers or regional blogs that would artificially lower overlap percentages; and the AI/SaaS products in our query set are globally available, making the US SERP the most relevant ground truth.
 
-\textbf{Why US Proxy?}
-\begin{enumerate}
-    \item \textbf{Baseline Consistency:} ChatGPT's primary training data and search behaviors are heavily weighted toward US-English web content.
-    \item \textbf{Avoiding ``Regional Noise'':} Prevents Bing from surfacing local retailers or regional blogs that ChatGPT would never see, which would artificially lower the overlap percentage.
-    \item \textbf{Global Tech Standard:} Most product recommendations in the ``AI/Software'' category (our primary focus) are global in nature, making the US SERP the most relevant ``Ground Truth.''
-\end{enumerate}
-
-\subsection{Ethical and Legal Constraints in Retrieval Instrumentation}
+\subsection{Ethical and Legal Constraints}
 \label{sec:ethical-legal}
 
-\begin{itemize}
-    \item \textbf{The ``Data Access'' Bottleneck}: A significant challenge in RAG research is the increasing difficulty of accessing ``raw'' search indices.
-    \item \textbf{Google vs.\ SerpApi (Dec 2025)}: On December 19, 2025, Google filed a lawsuit against \textbf{SerpApi}, alleging ``unlawful scraping'' and circumvention of security measures\footnote{\url{https://blog.google/innovation-and-ai/technology/safety-security/serpapi-lawsuit/}}.
-    \item \textbf{The ``Customer List'' Paradox}: Interestingly, the SerpApi homepage has historically listed major AI players like \textbf{Perplexity} and \textbf{OpenAI} (the latter was subsequently removed) as customers\footnote{\url{https://serpapi.com/}}. This suggests a complex ecosystem where the very companies building RAG systems may rely on third-party scrapers to bridge the ``Visibility Gap'' between their models and the live web.
-    \item \textbf{Impact on Methodology}: This legal pressure has led to technical restrictions in the SEO/GEO tool ecosystem, such as the removal of high-volume parameters (e.g., \texttt{num=100}).
-    \item \textbf{Research Justification}: These constraints further justify our \textbf{Deep Hunt (Rank 200)} methodology. As traditional scraping becomes more restricted, the ``Visibility Gap'' between what an LLM can see (via direct API access) and what a researcher can see (via public search UIs) will likely widen, making the LLM a primary---and increasingly exclusive---gateway to the deep web.
-\end{itemize}
+A significant challenge in RAG research is the increasing difficulty of accessing raw search indices. On December~19, 2025, Google filed a lawsuit against SerpApi, alleging unlawful scraping and circumvention of security measures\footnote{\url{https://blog.google/innovation-and-ai/technology/safety-security/serpapi-lawsuit/}}. The SerpApi homepage has historically listed major AI players including Perplexity and OpenAI (the latter subsequently removed) as customers\footnote{\url{https://serpapi.com/}}, suggesting a complex ecosystem where the very companies building RAG systems may rely on third-party scrapers to access the live web. This legal pressure has led to technical restrictions in the SEO/GEO tool ecosystem and further justifies our Deep Hunt (Rank~200) methodology: as traditional scraping becomes more restricted, the visibility gap between what an LLM can see (via direct API access) and what a researcher can see (via public search UIs) will likely widen.
 
 \section{Analysis Applications}
 \label{sec:analysis-applications}
 
-We built two separate interactive tools for qualitative inspection and aggregate analysis, one per model:
+We built two separate interactive tools for qualitative inspection and aggregate analysis. The \textbf{ChatGPT Analysis Viewer} (\texttt{scripts/utility/data\_viewer.py}) provides per-query/run comparison of ChatGPT responses against Bing SERP results (Top~200), highlighting cited, additional, and invisible links with overlap status. It includes an aggregate dashboard and enabled the manual spot-checking that revealed the Bing pagination instability documented in Section~\ref{sec:bing-pagination-instability}. The \textbf{Gemini Grounding Analyzer} (\texttt{tools/GeminiVizApp}) provides the equivalent for Gemini, visualizing the grounding pipeline by comparing \texttt{groundingChunks} against \texttt{groundingSupports} against the Google SERP control, with per-query-index overlap distributions (Q1--Q7) and aggregate grounding dashboards.
 
-\subsection{ChatGPT Analysis Viewer (\texttt{scripts/utility/data\_viewer.py})}
-\label{sec:chatgpt-viewer}
+The two tools were built separately rather than unified because the models expose fundamentally different data structures: ChatGPT requires reconstructed citation mapping from network tokens (Section~\ref{sec:claim-to-link}), while Gemini provides native \texttt{groundingMetadata} with chunk-level and segment-level attribution. A single viewer would have obscured these structural differences.
 
-\begin{itemize}
-    \item Per-query/run comparison of ChatGPT responses vs.\ Bing SERP results (Top 200)
-    \item Highlights cited, additional, and invisible links with overlap status
-    \item Dashboard with aggregate statistics (Overlap \%, Invisible Domains, etc.)
-    \item Enabled manual spot-checking that revealed the ``Pagination Loop'' and ``Page 2 Cliff'' problems in Bing
-\end{itemize}
+\section{Use of AI Tools in This Research}
+\label{sec:ai-tools-disclosure}
 
-\subsection{Gemini Grounding Analyzer (\texttt{tools/GeminiVizApp})}
-\label{sec:gemini-viewer}
+This thesis made extensive use of large language models as research tools at every stage of the work. We disclose this both for transparency and because we believe it reflects the reality of how empirical research involving LLMs is increasingly conducted.
 
-\begin{itemize}
-    \item Per-query/run comparison of Gemini responses vs.\ Google SERP results
-    \item Visualizes the grounding pipeline by comparing \texttt{groundingChunks} (retrieved candidates) vs.\ \texttt{groundingSupports} (final segment-level attributions) vs.\ Google SERP (control group)
-    \item Surfaces fan-out query overlap distribution per query index (Q1--Q7)
-    \item Aggregate grounding behavior dashboard (SERP overlap rate, per-query citation counts)
-\end{itemize}
+\textbf{Data enrichment and judging.} The Content DNA labeling pipeline (Section~\ref{sec:labeling-pipeline}) used \textbf{GPT-5-mini} and \textbf{Gemini 2.5 Flash} as structured labelers to classify $\sim$12{,}000 URLs. The semantic fidelity judge (Section~\ref{sec:semantic-fidelity}) used the same two models to evaluate 1{,}116 listicle product claims. Cross-model agreement was validated in both cases (91--100\% on structural fields), and all flagged attribution failures were manually verified.
 
-\subsection{Why two apps}
-\label{sec:why-two-apps}
+\textbf{Analysis scripting.} Many of the analysis scripts (Python, Node.js) were written with AI assistance using multiple models across two IDE integrations: \textbf{Gemini 3.0 Flash} (Google) was the primary model used via Cursor, with \textbf{GPT-5.2} and \textbf{GPT-5.2 Codex} (OpenAI) and \textbf{Claude Opus 4.5} (Anthropic) used occasionally via Cursor as well. Later-stage analysis and writing shifted to \textbf{Claude Opus 4.5/4.6} via Claude Code. The author specified the analysis logic, reviewed all outputs, and iteratively refined both the code and the interpretation of results through extended dialogue with the models.
 
-The two models expose fundamentally different data structures --- ChatGPT requires reconstructed citation mapping from network tokens (see Section~2.6), while Gemini provides native \texttt{groundingMetadata} with chunk-level and segment-level attribution. A single unified viewer would have obscured these structural differences rather than surfacing them.
+\textbf{Writing and editing.} Drafts of thesis prose, tables, and \LaTeX{} formatting were developed in collaboration with Claude Opus 4.5/4.6. The workflow was dialogic: the author provided the arguments, data, and framing decisions; the model produced draft text; the author reviewed, challenged, and revised. Every finding, interpretation, and number in this thesis was verified by the author against the underlying data. The intellectual contribution---the research questions, the experimental design, the instrumentation approach, and the analytical arguments---is the author's own.
+
+We note a reflexive dimension to this disclosure: a thesis that studies how LLMs ground their outputs in web sources was itself produced with LLMs as writing and analysis tools, subject to the same grounding and fidelity questions we investigate. We consider this appropriate rather than paradoxical---the tools we study are the tools of our era, and using them transparently is preferable to understating their role.
