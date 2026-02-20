@@ -114,7 +114,7 @@ We cannot determine \textit{why} the model chose to re-search; we can only obser
 
 \begin{table}[htbp]
 \centering
-\caption{Multi-turn query content for selected prompts}
+\caption{Multi-turn query content for selected prompts} [Wait unlike I talked above this is actually quite similar to thinking searches gemini does]
 \label{tab:multi-turn-queries}
 \small
 \begin{tabular}{lrcp{3.8cm}p{4.5cm}}
@@ -153,7 +153,8 @@ Both ChatGPT and Gemini systematically inject cross-language queries into their 
 Cross-language fan-out signals were observed in \textbf{13.1\%} of GPT runs (62/474), distributed across three distinct patterns:
 
 \begin{enumerate}
-    \item \textbf{Case~1 --- Foreign prompt $\rightarrow$ English fan-out (6.3\%, 30 runs):} The user searches in a non-English language; GPT generates one fan-out query in English alongside one in the user's language. The English query typically targets global review sites and English-language listicles, pulling the grounding pool toward anglophone sources.
+    \item \textbf{Case~1 --- Foreign prompt $\rightarrow$ English fan-out (6.3\%, 30 runs):} The user searches in a non-English language; GPT generates one fan-out query in English alongside one in the user's language. The English query typically targets global review sites and English-language listicles, pulling the grounding pool toward anglophone sources. [arent these 3 cases same as we talked above?  on 2.7.2 this feels kinda duplicate? or are they not same 100 idk if we ever have case 2 btw]
+    [irrelevant here but also make sure to specify that everything has been proofread after LLM assistance many times referrig to llm assistance block]
 
     \item \textbf{Case~2 --- English prompt + foreign context $\rightarrow$ local-language fan-out (1.9\%, 9 runs):} The user searches in English but the prompt references an inherently local category (e.g., ``best pizza in Istanbul,'' ``local translation services in Berlin''). GPT responds by generating a locale-aware fan-out query in the relevant local language (Turkish, German), alongside the English query.
 
@@ -266,7 +267,7 @@ Page 16 & 103 & 204 \\
 
 \paragraph{Observations on the Bing page distribution:}
 \begin{itemize}
-    \item \textbf{Business vs Personal Page 1 gap}: Business shows nearly 3$\times$ the Page 1 matches (1,468 vs 521), consistent with Business's higher Bing affinity (81.3\% overlap vs 67.6\%; see Section~\ref{sec:global-overlap}). Personal's lower Page 1 count aligns with its multi-provider retrieval strategy --- many of its citations match Google rather than Bing.
+    \item \textbf{Business vs Personal Page 1 gap}: Business shows nearly 3$\times$ the Page 1 matches (1,468 vs 521), consistent with Business's higher Bing affinity (81.3\% overlap vs 67.6\%; see Section~\ref{sec:global-overlap}). Personal's lower Page 1 count aligns with its multi-provider retrieval strategy --- many of its citations match Google rather than Bing. [I mean even besides truncation page 2 results seem quite random tbh i'VE SEEN quite absurd stuff that i'd never see on google serp page2 is almost like bing is not even indexing propelry]
     \item \textbf{The ``Page 2 Dip''}: Page 2 shows a conspicuous drop compared to both Page 1 and Pages 3--5. As discussed in Section~2.2.1, this is likely an artifact of Bing's UI pagination instability (truncated Page 1 results not shifting cleanly to Page 2) rather than a model preference.
     \item \textbf{Smooth decay after Page 3}: Pages 3--16 show a gradual, expected decay in match counts --- the long-tail pattern. The fact that we still see hundreds of matches on Pages 4--10 demonstrates that many GPT citations fall well beyond what human searchers would see.
     \item \textbf{The ``Page 1'' Elasticity caveat}: We avoid defining Page 1 as a fixed ``Rank 1--10'' range. In Bing's consumer UI, the first page length varies based on ads, rich snippets, and vertical blocks (see Section~2.2.1).
@@ -277,7 +278,7 @@ Page 16 & 103 & 204 \\
 
 Even within the first page of results, rank position matters significantly for citation likelihood. We show GPT against both the Bing index (its primary retrieval source for Business) and the Google SERP, plus Gemini against its own Google fan-out results.
 
-\subsubsection{GPT: Bing Rank-Level Match Distribution (Business vs Personal)}
+\subsubsection{GPT: Bing Rank-Level Match Distribution (Business vs Personal)} [idk I dont think I understodd what we show here tbh like the citation likeliehood of each rank?]
 \label{sec:gpt-bing-rank}
 
 Analysis of where GPT citations match results by \textbf{global Bing rank} (position 1--200 across our full scrape). All 213 Business and 209 Personal runs have results at every rank, so the match rates below are directly comparable. We count \textbf{distinct runs} where at least one cited link matched the Bing result at a given rank --- this avoids inflating numbers when the same URL appears in multiple citation slots within a single run (e.g., both as a cited and additional link).
@@ -304,7 +305,7 @@ Rank & Bus.\ Runs Matched & Bus.\ Rate & Pers.\ Runs Matched & Pers.\ Rate \\
 \end{tabular}
 \end{table}
 
-Match rate is defined as the number of distinct runs where at least one cited link matched the Bing result at that rank, divided by the total runs with a result at that rank (213 Business, 209 Personal---all runs have results at every rank since we scraped to Rank~200).
+Match rate is defined as the number of distinct runs where at least one cited link matched the Bing result at that rank, divided by the total runs with a result at that rank (213 Business, 209 Personal---all runs have results at every rank since we scraped to Rank~200). [should we also put google here for personal?]
 
 \begin{figure}[htbp]
 \centering
@@ -326,8 +327,8 @@ Match rate is defined as the number of distinct runs where at least one cited li
 \legend{Business, Personal}
 \end{axis}
 \end{tikzpicture}
-\caption{Bing rank-level match rate for GPT Business vs.\ Personal. Business exhibits a steep cliff from rank 2 (68.5\%) to rank 3 (40.4\%), while Personal shows a flatter profile (12--27\%) consistent with its multi-provider retrieval strategy drawing citations primarily from Google.}
-\label{fig:bing-rank-match-rate}
+\caption{Bing rank-level match rate for GPT Business vs.\ Personal. Business exhibits a steep cliff from rank 2 (68.5\%) to rank 3 (40.4\%), while Personal shows a flatter profile (12--27\%) consistent with its multi-provider retrieval strategy drawing citations primarily from Google.} [i mean weird to say citations primarily from google, imo just put also that to graph maybe and dontm make sentences like this]
+\label{fig:bing-rank-match-rate} 
 \end{figure}
 
 \paragraph{Bing's ``Elastic Page 1'' caveat:}
@@ -345,6 +346,7 @@ The global-rank table above treats every rank equally (all runs have results at 
 
 Analysis of where GPT citations match organic results in the Google SERP (collected via SerpApi). Showing both tiers side by side reveals the Business/Personal divergence visible in Bing overlap (Section~\ref{sec:global-overlap}) from a different angle.
 
+[ I mean this business vs google table could be seen as a control group for sure I tihnk this isa good point bcs it also shows us how a just relationship distribution should look between gpt and a serach index like someone seraching for same concepts on an index even if they arent really tied together we should expect to see some relevance right? i THINK this shows that if indexing is being done reasonably for these fan outs queires ther'll be some overlap]
 \begin{table}[htbp]
 \centering
 \caption{GPT citation matches by Google page and position}
@@ -404,7 +406,7 @@ Discussion & --- & 3 (1+1+1) \\
 \end{tabular}
 \end{table}
 
-Non-organic match counts are low, confirming that GPT citations overwhelmingly align with organic results. The Personal tier shows roughly double the PAA matches, consistent with its higher Google affinity.
+Non-organic match counts are low, confirming [confirm dont sya confirm imo] that GPT citations overwhelmingly align with organic results. The Personal tier shows roughly double the PAA matches, consistent with its higher Google affinity.
 
 \paragraph{Key contrast --- Business vs Personal on Google:}
 \begin{itemize}
@@ -415,7 +417,7 @@ Non-organic match counts are low, confirming that GPT citations overwhelmingly a
 \subsubsection{Gemini: Google Match Distribution \& Position Bias}
 \label{sec:gemini-google-rank}
 
-Analysis of where Gemini citations appear in the \textbf{per-run} Google fan-out query results (matched against SerpApi organic results for the same grounding-support queries).
+Analysis of where Gemini citations appear in the \textbf{per-run} Google fan-out query results (matched against SerpApi organic results for the same grounding-support queries). [well gemini confirms they only use google right? so we don't even have to like go absurd on invisbile links and stuff but good study and tables again for ocntrast  to gpt imo]
 
 \begin{table}[htbp]
 \centering
@@ -501,7 +503,7 @@ Share is computed as citation matches at rank~$N$ divided by total Page-1 citati
 \legend{GPT Business, GPT Personal, Gemini}
 \end{axis}
 \end{tikzpicture}
-\caption{Cross-system Page 1 rank concentration. Gemini shows the steepest rank-1 peak (23.0\%), while GPT Business exhibits a distinctive ``top-2'' effect where rank 2 (18.7\%) slightly exceeds rank 1 (17.4\%). GPT Personal has the flattest profile across ranks.}
+\caption{Cross-system Page 1 rank concentration. Gemini shows the steepest rank-1 peak (23.0\%), while GPT Business exhibits a distinctive ``top-2'' effect where rank 2 (18.7\%) slightly exceeds rank 1 (17.4\%). GPT Personal has the flattest profile across ranks.} [right after this show a parallel maybe to SERP ctr rates? xd]
 \label{fig:cross-rank-concentration}
 \end{figure}
 
@@ -564,8 +566,8 @@ Google Query 2 Overlap & --- & 46.4\% \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-GPT's two parallel fan-out queries contribute nearly equally to citation overlap: the split is effectively 50/50 on both Bing and Google, with neither query dominating. This contrasts sharply with Gemini's first-query concentration reported below.
+[I feel liek this needs a header kinda feels out of nowehre after a huuge point we make this is a new topic and we sshould segue more carefully maybe about overlap rates q1q2 being quite close in percentage]
+GPT's two parallel fan-out queries contribute nearly equally to citation overlap: the split is effectively 50/50 on both Bing and Google, with neither query dominating. This contrasts sharply with Gemini's first-query concentration reported below. 
 
 \paragraph{Gemini per-query citation overlap distribution (237 runs, 1,651 citations):}
 
@@ -612,10 +614,12 @@ Not all runs produce queries at every index; Q5+ counts are lower partly because
 \addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(Q1,613) (Q2,299) (Q3,191) (Q4,122) (Q5,46) (Q6,10) (Q7,2)};
 \end{axis}
 \end{tikzpicture}
+
+
 \caption{Gemini per-query citation decay. The first fan-out query (Q1) accounts for 613 of 1,283 total citations --- more than Q2 through Q7 combined --- demonstrating Gemini's heavy front-loading toward its first grounding-support query.}
 \label{fig:gemini-query-decay}
 \end{figure}
-
+[these tables are like mid context of sth else Iguess it is wierd placement or we fucked up latex here ?]
 %-----------------------------------------------------------------------
 \section{Citation Overlap \& Invisible Links}
 \label{sec:citation-overlap}
@@ -637,12 +641,13 @@ We analyzed the overlap between LLM citations and the underlying search index (B
 Metric & GPT Business (Bing-centric) & GPT Personal (Multi-provider) & Gemini (Google-centric) \\
 \midrule
 \textbf{Total Cited Links} & 1,637 & 1,839 & 1,651 \\
-\textbf{Total Additional Links} & 2,820 & 4,506 & --- \\
+\textbf{Total Additional Links} [wtf is additional link epxlain maybe if havent before] & 2,820 & 4,506 & --- \\
 \textbf{Bing Overlap (Cited)} & \textbf{81.3\%} & \textbf{67.6\%} & --- \\
 \textbf{Bing Overlap (Additional)} & \textbf{86.3\%} & \textbf{56.3\%} & --- \\
 \textbf{Google Overlap (Cited)} & \textbf{27.8\%} & \textbf{64.6\%} & \textbf{77.7\%} \\
 \textbf{Google Overlap (Additional)} & \textbf{20.7\%} & \textbf{52.1\%} & --- \\
 \textbf{Total Index Coverage} & \textbf{83.7\%} (Bing+Google) & \textbf{80.6\%} (Bing+Google) & \textbf{77.7\%} (Google) \\
+[ this table doesnt seem to fit the screen]
 \textbf{``Invisible'' (Missing)} & \textbf{16.3\%} & \textbf{19.4\%} & \textbf{22.3\%} \\
 \bottomrule
 \end{tabular}
@@ -682,7 +687,7 @@ Metric & GPT Business (Bing-centric) & GPT Personal (Multi-provider) & Gemini (G
 
 \begin{itemize}
     \item \textbf{GPT Business: High Bing Affinity.} Business citations overlap with the Bing index at \textbf{81.3\%}---the highest single-index overlap in the study. Business's Google overlap is only \textbf{27.8\%}, which we treat as a \textbf{control baseline}: it approximates the natural domain overlap between the two indices (popular URLs that appear in both Bing and Google). Any Google overlap substantially above this \textasciitilde28\% baseline in other tiers is consistent with Google-sourced retrieval. OpenAI's documentation for organization-managed tiers explicitly names Bing as the search provider \parencite{openai2024enterprise}, and our data aligns with that statement.
-    \item \textbf{GPT Personal: High Google Affinity.} Personal citations overlap with Google at \textbf{64.6\%}---a \textbf{36.8 percentage-point increase} over the Business control baseline (27.8\%). Simultaneously, Personal's Bing overlap drops to 67.6\% (from Business's 81.3\%). The combined Bing+Google coverage reaches \textbf{80.6\%}, the highest total coverage of any tier. OpenAI's general documentation describes ChatGPT search as leveraging ``third-party search providers'' in the plural \parencite{openai2024search}; the magnitude of the Google overlap shift is consistent with Personal-tier retrieval drawing on the Google index in addition to Bing.
+    \item \textbf{GPT Personal: High Google Affinity.} Personal citations overlap with Google at \textbf{64.6\%}---a \textbf{36.8 percentage-point increase} over the Business control baseline (27.8\%). Simultaneously, Personal's Bing overlap drops to 67.6\% (from Business's 81.3\%). The combined Bing+Google coverage reaches \textbf{80.6\%},[is it higher than 81.3 xd?] the highest total coverage of any tier. OpenAI's general documentation describes ChatGPT search as leveraging ``third-party search providers'' in the plural \parencite{openai2024search}; the magnitude of the Google overlap shift is consistent with Personal-tier retrieval drawing on the Google index in addition to Bing.
     \item \textbf{Implication: Index-Dependent Visibility.} The 36.8\,pp Google overlap gap means that a brand ranking well in Google but poorly in Bing may be visible to Personal ChatGPT users but largely invisible to Business users---and vice versa. This is not a minor calibration difference; it represents a fundamentally different retrieval surface depending on deployment tier, with direct consequences for any brand monitoring its ``Share of Model'' across ChatGPT audiences.
 \end{itemize}
 
@@ -704,7 +709,7 @@ We use \textbf{Visibility Gap} as the empirical gap between what is \textbf{cite
 We separate notions that are easy to conflate:
 
 \begin{itemize}
-    \item \textbf{Hidden zone (Bing Rank 11--30)}: a cited URL that is present, but beyond typical human scrolling.
+    \item \textbf{Hidden zone (Bing Rank 11--30)}: a cited URL that is present, but beyond typical human scrolling. [I dont get what we talk about here on hidden zone? review if this is necessary at all I guess I wanted to talk about truncation stuff of bing again]
     \begin{itemize}
         \item \textbf{GPT Business}: \textbf{388 / 1,637 (23.7\%)} of cited occurrences were found in Bing \textbf{Rank 11--30}.
         \item \textbf{GPT Personal}: \textbf{326 / 1,839 (17.7\%)} of cited occurrences were found in Bing \textbf{Rank 11--30}.
@@ -720,7 +725,7 @@ We separate notions that are easy to conflate:
 
 \paragraph{GPT Business --- Top Invisible Domains (all citation types, excluding niche SaaS)}
 
-Business uses Bing exclusively (see Section~\ref{sec:global-overlap}), so Bing-invisible = truly invisible. Niche SaaS/product domains excluded. This table includes cited, additional, \textbf{and} retrieved-only links (see Section~\ref{sec:retrieved-only} for definition and Section~2.3.2 for naming conventions).
+Business uses Bing exclusively (see Section~\ref{sec:global-overlap}), so Bing-invisible = truly invisible. Niche SaaS/product domains excluded. [Might be worth explaining why they are filtered out, I kinda did it bcs i assume they are just truncated hidden zone links. maybe that is why hiden zone description above is imporatnt] This table includes cited, additional, \textbf{and} retrieved-only links (see Section~\ref{sec:retrieved-only} for definition and Section~2.3.2 for naming conventions).
 
 \begin{table}[htbp]
 \centering
@@ -749,11 +754,11 @@ Rank & Domain & Count \\
 \end{tabular}
 \end{table}
 
-All citation types (cited + additional + retrieved-only) are included, with www/non-www variants merged. The list is dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from \textbf{retrieved-only} links---URLs present in the search result pool but never surfaced in the response.
+All citation types (cited + additional + retrieved-only) are included, with www/non-www variants merged. The list is dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from \textbf{retrieved-only} [wtf is retireved only?] links---URLs present in the search result pool but never surfaced in the response.
 
 \paragraph{GPT Personal --- Top Invisible Domains (all citation types, excluding niche SaaS, with Google recovery)}
 
-Personal uses multiple search providers (see Section~\ref{sec:global-overlap}), so a Bing-only invisible check overstates the gap. Ordered by \textbf{truly invisible} count (not in Bing \textbf{or} Google). Includes all citation types.
+Personal uses multiple search providers [assumption here] (see Section~\ref{sec:global-overlap}), so a Bing-only invisible check overstates the gap. Ordered by \textbf{truly invisible} count (not in Bing \textbf{or} Google). Includes all citation types.
 
 \begin{table}[htbp]
 \centering
@@ -821,8 +826,9 @@ Excluding retrieved-only links shrinks the Business invisible set by \textbf{45\
 
 \paragraph{GPT Personal (cited + additional only, top 20, by truly invisible):}
 
+[idk maybe some of these tables are too much]
 \begin{table}[htbp]
-\centering
+\centering 
 \caption{GPT Personal --- top invisible domains (cited + additional only, by truly invisible)}
 \label{tab:pers-invisible-cited}
 \begin{tabular}{rlrrr}
@@ -859,7 +865,7 @@ Personal is less affected (15\% drop) since it has more cited+additional volume.
 \label{sec:invisible-conservative}
 
 Our reported invisible rates (16.3\% Business, 19.4\% Personal) are \textbf{upper bounds} on truly index-absent citations. Two systematic factors inflate the invisible count:
-
+[well we say conservative but we kinda bypass the top200 ceiling by fitering out AI saas anyways I think it is imporant to clarify that so create correleation and maybe even show non filtered snippet of invisbile or sth]
 \begin{enumerate}
     \item \textbf{The Rank 200 ceiling}: Our Bing scrape stops at Rank 200, but the page-level match histogram (see Section~\ref{sec:page-dist}) shows no convergence --- matches are still accumulating at Pages 15--16 with a smooth decay curve that does not reach zero. Scraping to Rank 300 or 400 would almost certainly recover additional matches, shrinking the invisible set. The ``invisible'' label for these URLs does not mean they are absent from Bing's index --- only that they fell beyond our scrape depth.
 
@@ -1318,7 +1324,7 @@ Bucket & Median words & Median bytes & Coverage \\
 
 With the DNA profile established in Section~\ref{sec:content-dna}, we now measure how each model's selection systematically diverges from the available pool along enriched feature dimensions.
 
-\textbf{Methodology---per-run, SERP-constrained Welch's t-test:} For each run, every SERP URL (filtered by content type) is classified as either \textbf{Cited} or \textbf{Not-Cited} in that run. A cited URL only counts if it also appears in the SERP for that run, ensuring both groups are drawn from the same retrieval pool. Zero overlap between groups. A URL may appear in multiple runs; each is an independent selection event. We test eight binary Content DNA features using Welch's two-sample t-test. \texttt{freshness\_cue\_strength} is binarized at $\geq$3 (``strong freshness cues''). A per-unique-URL robustness check (deduplicating across runs) produces the same direction of drift for every significant feature, confirming that the results are not driven by repeated counting.
+\textbf{Methodology---per-run, SERP-constrained Welch's t-test:} For each run, every SERP URL (filtered by content type) is classified as either \textbf{Cited} or \textbf{Not-Cited} in that run. A cited URL only counts if it also appears in the SERP for that run, ensuring both groups are drawn from the same retrieval pool. Zero overlap between groups. A URL may appear in multiple runs; each is an independent selection event. We test eight binary Content DNA features using Welch's two-sample t-test. \texttt{freshness\_cue\_strength} is binarized at $\geq$3 (``strong freshness cues''). A per-unique-URL robustness check (deduplicating across runs) produces the same direction of drift for every significant feature, confirming that [saying confirm again sdoesnt make sense use more humble words] the results are not driven by repeated counting.
 
 \textbf{GPT data:} SERP from Bing Page~1 (business + personal) and Google Top-10 (personal only). Citations from \texttt{geo\_fresh.db}.
 
@@ -1482,6 +1488,7 @@ Pros/Cons         & $+$1.1pp  & 1.17 & ns    \\
 
 Both groups were surfaced by ChatGPT---cited URLs appeared in the response text, additional URLs were shown as supplementary sources. This isolates the final citation preference from an already-filtered pool. Gemini lacks an ``additional'' citation category, so this test is GPT-only.
 
+[idk why these tables are here it is way too much nand these seem different than before  doesnt even say what data it is gpt gemini pers business?]
 \begin{table}[htbp]
 \centering
 \caption{Cited vs Additional drift---Listicles (Welch's t-test).}

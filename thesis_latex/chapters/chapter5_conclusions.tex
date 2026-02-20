@@ -14,12 +14,14 @@ An important exception is the \textbf{invisible link channel}. We find that 16--
 
 The marketing implications of invisible citations may be substantial. Unlike paid search ads (Google Ads, Bing Ads), which require continuous spend and stop when budgets pause, an invisible citation can function as a durable, unpaid placement in an LLM response. A brand that is mentioned on a Wikipedia page, discussed in a Reddit thread, or reviewed in a major publication may gain exposure pathways that are less dependent on ranking for the original commercial query. Compared to ads---which are explicitly labeled and auction-based---citations may carry a different credibility signal to users because they appear embedded in the assistant's explanation.
 
-This may help explain why brands increasingly invest in \textbf{Reddit presence} (community engagement, seeded discussions, AMA campaigns) and \textbf{Wikipedia notability}: not primarily for direct referral traffic, but for the indirect effect of increasing brand mentions on surfaces that LLMs may draw on outside conventional SERP results. In our dataset, Reddit accounts for 90+ truly invisible cited occurrences in GPT Personal (see Section~\ref{sec:top-invisible-domains}). We also observe that Google recovers an additional 58\% of Bing-invisible Reddit URLs, indicating that some ``invisible'' sources are likely query- and engine-dependent rather than fundamentally outside search indices.
+This may help explain why brands increasingly invest in \textbf{Reddit presence} [and not in vain according to our study] (community engagement, seeded discussions, AMA campaigns) and \textbf{Wikipedia notability}: not primarily for direct referral traffic, but for the indirect effect of increasing brand mentions on surfaces that LLMs may draw on outside conventional SERP results. In our dataset, Reddit accounts for 90+ truly invisible cited occurrences in GPT Personal (see Section~\ref{sec:top-invisible-domains}). We also observe that Google recovers an additional 58\% of Bing-invisible Reddit URLs, indicating that some ``invisible'' sources are likely query- and engine-dependent rather than fundamentally outside search indices.
 
 \textbf{Strategic takeaway}: while SEO remains a prerequisite for the majority of citations that flow through search indices, brands may benefit from treating Wikipedia pages, Reddit discussions, and coverage in authoritative publications as a parallel GEO channel that can influence LLM responses through partially non-SERP pathways.
 
 \section{Listicles as the Critical Node --- But Only If They Rank}
 \label{sec:listicles-critical-node}
+
+[give percentages gemini 50pp 35pp gpt kinda of]
 
 Our listicle analysis (see Section~\ref{sec:listicle-bias}) confirms that listicles are the primary ``on-ramp'' for product citations in LLM-generated recommendations. When an LLM retrieves a listicle, it extracts products from it at measurable rates, with a strong top-rank bias (\#1 item selected at 1.7--2.5$\times$ the random baseline; see Section~\ref{sec:reranking}). Listicles are the mechanism through which individual products enter the LLM's recommendation set.
 
@@ -43,7 +45,7 @@ Our selection drift analysis (see Section~\ref{sec:selection-drift}) reveals con
     \item \textbf{Bullet points} show $+$9.7\,pp for GPT Personal (vs.\ Google, $p<0.05$) and $+$4.5\,pp for Gemini (directionally positive but not significant under SERP constraint), reinforcing the pattern that scannable, comparison-oriented structure is generally preferred.
 \end{itemize}
 
-\textbf{For product pages}, drift profiles are much flatter (most features within $\pm$2pp), reflecting the structural homogeneity of vendor pages. Selection among product pages likely depends on relevance and authority signals not captured by Content DNA.
+\textbf{For product pages}, drift profiles are much flatter (most features within $\pm$2pp), reflecting the structural homogeneity of vendor pages. Selection among product pages likely depends on relevance and authority signals not captured by Content DNA. [we did find product pgae dirft also no? towards numbered list and stuff?]
 
 \textbf{Freshness as a GPT-specific signal}: GPT's freshness drift is more informative than Gemini's because GPT rarely injects year tokens into its fan-out queries (5.1\% of runs vs Gemini's 96.7\%; see Section~\ref{sec:freshness-steering}). This means GPT's freshness preferences at the citation stage reflect genuine selection behavior rather than query-level pre-filtering. For content targeting GPT specifically, keeping publication dates current and including temporal markers (``2026 update,'' ``as of January 2026'') may provide a small but real selection advantage.
 
@@ -66,6 +68,7 @@ The practical implication is bidirectional: non-English publishers must compete 
 \section{The Host Exclusion Paradox --- Resolved by Position}
 \label{sec:host-exclusion}
 
+[idk this bis feels weird there is no paradox no?]
 Neither ChatGPT nor Gemini exhibits a meaningful host bias in listicle extraction (Section~\ref{sec:self-promo}). Although host products appear to be omitted 64--72\% of the time, a position-controlled comparison shows that non-host items at the same rank are skipped at comparable or higher rates (79.5--85.7\%). The residual host advantage after controlling for position is just +2.5--4.7\,pp---a modest effect likely explained by the host's more detailed self-description rather than any systematic favoritism or penalization.
 
 The mechanism behind within-listicle position bias is illuminated by \textcite{petrovic2025grounding}, who shows that Gemini's grounding operates with a fixed $\sim$2{,}000-word content budget that allocates 28\% to the top-ranked source and only 13\% to the fifth, and by \textcite{indig2026attention}, who finds that 44.2\% of ChatGPT citations originate from the first 30\% of page text. Items positioned later in a listicle may never enter the content window the model processes---an architectural constraint rather than a learned preference.
@@ -83,6 +86,8 @@ For GEO, this means that citation visibility is partially probabilistic: a brand
 \label{sec:fanout-gap-analysis}
 
 Our fan-out data suggests a concrete methodology for GEO. The logic is straightforward:
+
+[meh this entire bit on now starting to give suggestions is kinad bad imo might be discarded]
 
 \begin{enumerate}
     \item \textbf{Acquire real prompt volumes.} Platforms like Profound and Peec~AI surface the actual prompts users submit to ChatGPT, along with volume estimates.
@@ -130,7 +135,8 @@ The preceding sections argue that the foundation of GEO is SEO. But framing GEO 
     \item \textbf{The invisible-link channel as a marketing surface.} Our finding that 16--22\% of citations originate from sources invisible to conventional SERPs (Section~\ref{sec:invisible-links})---dominated by Wikipedia, Reddit, app stores, and major publications---suggests a marketing channel with unusual properties. Unlike paid search ads, which require continuous spend and stop when budgets pause, an invisible citation functions as a durable, unpaid placement in an LLM response. A brand mentioned on a Wikipedia page, discussed in a Reddit thread, or reviewed in a major publication may gain exposure through pathways that bypass search ranking entirely. As the GEO ecosystem matures, we may see brands invest more deliberately in presence on these high-authority surfaces---not for direct referral traffic, but for their influence on LLM citation behavior. In principle, this logic extends to any high-authority, training-likely surface: academic publications, app store listings, and curated directories could all function as indirect citation channels.
 \end{enumerate}
 
-\textbf{The better framing}, then, is not ``GEO is just SEO'' but ``\textbf{GEO is a specialization within SEO}''---analogous to how mobile SEO, local SEO, or video SEO are not separate disciplines but specific lenses on the same foundation. The prerequisite is ranking. The monitoring layer is new. And the stakes are growing: according to Ahrefs' panel of 74{,}752 websites \parencite{ahrefs2026chatgptvsgoogle}, Google's share of referral traffic declined from 42.2\% to 38.9\% between June 2025 and January 2026 ($-$3.2\,pp), while ChatGPT referral traffic grew by 27\% over the same period. AI-driven traffic remains a small fraction of total referrals ($<$0.3\%), but the growth trajectory and the high-intent nature of LLM-referred users make the mechanics of citation selection---which this study documents---commercially material.
+\textbf{The better framing}, then, is not ``GEO is just SEO'' but ``\textbf{GEO is a specialization within SEO}''---analogous to how mobile SEO, local SEO, or video SEO are not separate disciplines but specific lenses on the same foundation. The prerequisite is ranking. The monitoring layer is new. And the stakes are growing: according to Ahrefs' panel of 74{,}752 websites \parencite{ahrefs2026chatgptvsgoogle}, Google's share of referral traffic declined from 42.2\% to 38.9\% between June 2025 and January 2026 ($-$3.2\,pp), while ChatGPT referral traffic grew by 27\% over the 
+[redundant info on percentage increase?] same period. AI-driven traffic remains a small fraction of total referrals ($<$0.3\%), but the growth trajectory and the high-intent nature of LLM-referred users make the mechanics of citation selection---which this study documents---commercially material.
 
 \section{The Economic Moat of Retrieval}
 \label{sec:economic-moat}
