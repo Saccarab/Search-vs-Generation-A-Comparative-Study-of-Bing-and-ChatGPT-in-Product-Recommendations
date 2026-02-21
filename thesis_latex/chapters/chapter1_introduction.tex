@@ -3,13 +3,31 @@
 \chapter{Introduction \& Motivation}
 \label{ch:introduction}
 
-Large language models are rapidly becoming the interface through which consumers discover products. By mid-2025, ChatGPT alone had reached approximately 10\% of the world's adult population, with information-seeking and practical guidance accounting for nearly 80\% of all conversations \parencite{chatterji2025chatgpt}. For product queries in particular, these models often go beyond their training data: they search the web in real time, retrieve candidate sources, and reason over what they find. This design---Retrieval-Augmented Generation (RAG)---is already how ChatGPT and Gemini operate today. At Snowflake Summit 2025, Sam Altman described where this trajectory leads: ``a very tiny model with superhuman reasoning, 1 trillion tokens of context, and access to every tool you can imagine.'' The model supplies the reasoning; the web supplies the knowledge. RAG is not a transitional compromise but the economically and technically inevitable design: inference is expensive, retrieval is cheap, and no model can be retrained hourly to keep pace with prices, reviews, and product launches.
+  Large language models are rapidly becoming the interface through which consumers discover products. 
+  By mid-2025, ChatGPT alone had reached approximately 10% of the world's adult population, with information-seeking and practical guidance accounting for nearly 80% of all conversations. Yet these models do not generate recommendations from memory alone. When a user asks for a  
+  product recommendation, the system can search the web in real time, retrieve relevant sources, and ground its response in what
+  it finds. This retrieval-and-grounding workflow is commonly referred to as retrieval-augmented generation (RAG), and it is
+  increasingly standard in LLM conversations when up-to-date information is required. At Snowflake Summit 2025, OpenAI CEO Sam  
+  Altman described where this trajectory leads: "a very tiny model with superhuman reasoning, 1 trillion tokens of context, and 
+  access to every tool you can imagine." The model supplies the reasoning; the web supplies the knowledge. This architecture is 
+  not a transitional compromise but the economically and technically inevitable design: inference is expensive, retrieval is    
+  cheap, and no model can be retrained hourly to keep pace with prices, reviews, and product launches.
 
-If retrieval is the foundation, then \emph{what gets retrieved} determines \emph{what gets recommended}. And what gets retrieved is governed, overwhelmingly, by search engine indices. This thesis provides the empirical evidence for that claim. We trace the full retrieval-to-citation pipeline---from fan-out query generation through candidate retrieval, source selection, and claim-level attribution---and show that the vast majority of LLM citations originate from conventional search results. Position bias persists at every level of the information hierarchy: top-ranked SERP [describe what serp is] results are cited disproportionately, and the same pattern repeats \emph{within} cited listicles, where top-listed products are extracted far above the uniform baseline. [talk about dicsussions in the are regarding seo being dead before going ahead and saying not dead] Search Engine Optimization (SEO) is therefore not obsolete in the age of generative search---it is the prerequisite.
+  If retrieval is the foundation, then \emph{what gets retrieved} determines \emph{what gets recommended}. And what gets retrieved is
+  governed, overwhelmingly, by search engine indices. This thesis provides the empirical evidence for that claim. We trace the  
+  full retrieval-to-citation pipeline—from fan-out query generation through candidate retrieval, source selection, and
+  claim-level attribution—and show that the vast majority of LLM citations originate from conventional search results.  
+  Despite growing industry speculation that generative AI will render traditional search optimization obsolete, Search Engine   
+  Optimization (SEO) is not dead—it is the prerequisite.
 
-But SEO alone does not explain everything. On top of ranking, models apply a measurable \emph{structural filter}: sources with comparison tables, numbered lists, and other scannable formats are disproportionately selected from the retrieval pool. [jump feels kinda odd, maybe say these are prioritized or sth idk read bad] We also document invisible citation channels [also reads weird bcs readers dont know what invisible is yet necessarily] (URLs absent from both Bing and Google), a Business--Personal [I tihnk even on abstract it'd be good to mention business eprsonal gpt RAG web srach behaves quite differently and then it cna clearde here]provider split revealing that the two ChatGPT tiers draw on different search backends [wouldnt say differnet backend they just behave differnetly I t hink is better way to put it], [this bit here about cross language retrieveall aso is really odd]cross-language retrieval that routes users into unexpected language indices, and run-to-run citation instability where the same URL fluctuates between inline citation and supplementary status across identical queries. These phenomena constitute the thin but empirically real layer that Generative Engine Optimization (GEO) adds on top of SEO.
+  Our data does, however, reveal additional factors beyond ranking that shape which sources get cited. A significant share of
+  citations originate from sources outside the direct search indices entirely. The two ChatGPT tiers (Business and
+  Personal) also exhibit different retrieval behavior despite sharing the same interface. Models also show preferences for how
+  content is structured: sources with comparison tables, numbered lists, and bullet points are cited more often than less
+  structured alternatives. Within retrieved listicles, products listed near the top are recommended disproportionately more often than those further     
+  down, suggesting that rank bias extends beyond the search results page and into the source content itself. Phenomena such as these constitute the thin but empirically real layer that Generative Engine
+  Optimization (GEO) adds on top of SEO.
 
-The thesis argument, in short: \textbf{GEO is SEO---plus a structural optimization surface that this study is the first to quantify end-to-end.} [maybe is fine but do we really go call it first to quantify? isnt it too ballsy?]
 
 \section{Research Questions}
 \label{sec:research-questions}
@@ -17,8 +35,7 @@ The thesis argument, in short: \textbf{GEO is SEO---plus a structural optimizati
 \subsection{Core Research Question}
 \label{sec:core-rq}
 
-\textbf{RQ1:} \textit{How does grounding behavior manifest in LLM-generated product recommendations, and how does it vary across conditions we can observe (deployment context and/or model)?} [again I dont like deployment context phrase, also model reads like we tried gpt 5.2 5.1 gemini 3 flash pro etc we just did gpt business vs plus and gemini not rlly differnet models over each provider, oh also if we still asy enterprise everywhere lets call it businesss instead]
-
+\textbf{RQ1:} \textit{How does grounding behavior manifest in LLM-generated product recommendations, and how does it vary across conditions we can observe (by tier or provider: ChatGPT Business vs.\ Personal, and ChatGPT vs.\ Gemini)?}
 \subsubsection{Operational Definition (What ``Grounding Behavior'' Means in This Thesis)}
 \label{sec:grounding-definition}
 
@@ -31,24 +48,25 @@ Grounding behavior is the measurable pipeline from \textbf{retrieval $\rightarro
     \item \textbf{Source-to-output fidelity}: whether products mentioned in retrieved listicles are carried into the final recommendations
 \end{itemize}
 
-\subsection{Sub-questions (Decompositions of RQ1, Not Separate Topics)}
+\subsection{Sub-questions}
 \label{sec:sub-questions}
 
 \begin{itemize}
-    \item \textbf{RQ1a (selection + visibility)}: How do \textbf{cited vs additional vs retrieved-only/invisible[this reads as retriever only and invisible are same things, but invisible is stuff we never got while retrieved is stuff we got from network context but wasnt in citation panels]} sources differ in domain/type, and how does this differ by \textbf{business vs personal} runs on ChatGPT results?
+    \item \textbf{RQ1a (selection + visibility)}: How do \textbf{cited, additional, retrieved-only, and invisible} sources differ in domain/type, and how does this differ by \textbf{Business vs.\ Personal} runs on ChatGPT results?
     \item \textbf{RQ1b (external support)}: How often do selected citations appear in \textbf{Top-N SERPs} (Bing/Google overlap; Gemini ``survival'' in Top-25)?
     \item \textbf{RQ1c (selection bias \& DNA)}: Does the model exhibit a statistically significant preference for specific \textbf{Content DNA features} (e.g., tables, numbered lists, freshness) when selecting from the retrieved ``Menu,'' and how does this preference vary between \textbf{GPT Personal, GPT Business and Gemini}?
     \item \textbf{RQ1d (listicle uptake / fidelity)}: When listicles are retrieved, which listicle-mentioned products are \textbf{selected vs ignored} in the final response (uptake rate, rank bias, host-bias), and how does this differ by run type?
 \end{itemize}
 
-\subsection{Role of External Systems (Clarify Scope)}
+\subsection{Role of External Search Indices}
 \label{sec:external-systems}
 
 \begin{itemize}
-    \item \textbf{Bing}: [do we mention that bing API is retired here since this is furst mention? or later in methodology] baseline ``human web'' retrieval/ranking surface used as a \textbf{measurement instrument} for rank/visibility and ``visibility gaps'' (\textbf{Top-200}).
-    \item \textbf{Google (SerpApi)}: control baseline for Gemini fan-out queries and sensitivity checks (\textbf{Organic-only} vs including non-organic result types like \textbf{Video/PAA/Discussions}).
-    \item \textbf{Gemini}: optional cross-model baseline for grounding mechanics (has explicit \texttt{groundingMetadata} and claim-support mapping).
+    \item \textbf{Bing Search}: baseline ``human web'' retrieval/ranking surface used as a \textbf{measurement instrument} for rank/visibility and ``visibility gaps'' (\textbf{Top-200}). Primary overlap index for ChatGPT Business citations.
+    \item \textbf{Google (SerpApi)}: second overlap index for ChatGPT citations (revealing the Personal tier's Google affinity) and retrieval baseline for Gemini fan-out queries. Also used for sensitivity checks (\textbf{Organic-only} vs.\ non-organic result types such as \textbf{Video/PAA/Discussions}).
 \end{itemize}
+
+Gemini (Vertex AI, Gemini~3~Flash) serves as a \textbf{second LLM subject} rather than a measurement instrument. Its API provides structured grounding metadata (\texttt{groundingChunks}, \texttt{groundingSupports}, \texttt{webSearchQueries}) not available in ChatGPT, making it a complementary lens on the same retrieval-to-citation pipeline.
 
 \section{Market Context \& Motivation}
 \label{sec:market-context}
