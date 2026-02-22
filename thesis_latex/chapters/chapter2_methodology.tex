@@ -322,25 +322,12 @@ A \textbf{multi-cited claim} is a claim or segment backed by 2+ distinct cited U
 \section{Localization and Retrieval Environment}
 \label{sec:localization}
 
-Geographical context affects retrieval in ways that are not always visible to the user. This section defines our localization taxonomy and documents the cross-language fan-out patterns we observed.
-
-\subsection{Localization Definitions and Language Distribution}
-\label{sec:localization-definitions}
-
-Our dataset consists of 72 English prompts and 7 foreign-language prompts (1~French, 1~Chinese, 2~Turkish, 1~German, 1~Italian, 1~Spanish). All 7 foreign-language prompts originated from Ahrefs keyword clusters; the Profound-sourced prompts were exclusively English.
-
-We distinguish two forms of localization. \textbf{Explicit localization} occurs when the query targets an inherently local category---even without a geographic qualifier, a query like ``best bakery'' triggers location-injected fan-out queries (e.g., ``best bakery near Munich Germany''). This primarily applies to local-commerce queries and is not a factor in our SaaS/software dataset. \textbf{Implicit localization} occurs when the search engine uses the user's IP, browser language, or search history to localize results for a general query.
-
-In our fan-out data, implicit localization manifests as one of the two fan-out queries being rewritten into the prompt's local language. For example, when issuing an English prompt from Munich, Germany, we observed one query in English (\texttt{"free website or program to translate video and add subtitles"}) and a parallel query in German (\texttt{"kostenlos video \"ubersetzen und Untertitel automatisch hinzuf\"ugen\ldots"})---routing half the retrieval into the German-language index despite an English user prompt.
-
-\subsection{Cross-Language Fan-Out Patterns}
-
-We identified 62 GPT runs (13.1\% of 474) with non-English fan-out queries, distributed across three patterns: (1)~foreign-language prompts producing bilingual fan-outs (30 runs), (2)~English prompts with foreign context triggering locale-aware queries (9 runs), and (3)~purely English prompts with no foreign context unexpectedly producing non-English fan-outs (23 runs). These observations align with independent findings by \textcite{rudzki2026english}, who document at scale that ChatGPT searches in English even when the user prompt is in another language. Cases~2 and~3 vary in cross-run consistency: some prompts exhibit the behavior on every run (e.g., P018), while others do so only sporadically (e.g., P048 in 2 of 3 runs). Cases~2 and~3 are GPT-only observations; Gemini was accessed via API without IP-based locale signals, so these patterns could not be tested (Section~\ref{sec:gemini-instrumentation-differences}). The full taxonomy with examples, occurrence rates, and external validation is reported in Section~\ref{sec:localization-bias}.
+Geographical context affects retrieval in ways that are not always visible to the user. Our dataset contains 72 English and 7 foreign-language prompts; early runs revealed that IP geolocation and browser locale can leak into query generation, producing cross-language fan-outs that route retrieval into unexpected language indices. The full localization taxonomy, case-by-case analysis, and external validation are reported in Section~\ref{sec:localization-bias}.
 
 \subsection{The Proxy Requirement (US-Centric Baseline)}
 \label{sec:proxy-requirement}
 
-All Bing scrapes and ChatGPT runs were routed through a US-based proxy. The primary motivation was the IP-driven fan-out behavior documented above: early runs conducted from a German IP produced German-language fan-out queries even for English prompts (Cases~2 and~3), pulling half the retrieval pool into the German-language index and contaminating both the Bing SERP baseline and the ChatGPT citation set. A US proxy eliminates this locale leakage, ensuring that fan-out queries default to English and that our Bing scrapes reflect the same retrieval surface ChatGPT receives. As a secondary benefit, the US baseline aligns with the globally available AI/SaaS products in our query set, where the US-English SERP is the most relevant ground truth.
+All Bing scrapes and ChatGPT runs were routed through a US-based proxy. The primary motivation was the IP-driven fan-out behavior documented in Section~\ref{sec:localization-bias}: early runs conducted from a German IP produced German-language fan-out queries even for English prompts (Cases~2 and~3), pulling half the retrieval pool into the German-language index and contaminating both the Bing SERP baseline and the ChatGPT citation set. A US proxy eliminates this locale leakage, ensuring that fan-out queries default to English and that our Bing scrapes reflect the same retrieval surface ChatGPT receives. As a secondary benefit, the US baseline aligns with the globally available AI/SaaS products in our query set, where the US-English SERP is the most relevant ground truth.
 
 \subsection{Ethical and Legal Constraints}
 \label{sec:ethical-legal}

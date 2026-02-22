@@ -148,6 +148,10 @@ Across all five multi-turn cases, Turn 2 queries tend to include specific produc
 
 Both ChatGPT and Gemini systematically inject cross-language queries into their fan-out, meaning a user searching in one language will have part of their retrieval routed through a different language's search index. This is not a bug---it is an architectural feature of how grounded LLMs diversify their retrieval pool. However, it has profound implications for which publishers gain or lose visibility.
 
+Our dataset consists of 72 English prompts and 7 foreign-language prompts (1~French, 1~Chinese, 2~Turkish, 1~German, 1~Italian, 1~Spanish). All 7 foreign-language prompts originated from Ahrefs keyword clusters; the Profound-sourced prompts were exclusively English.
+
+We distinguish two forms of localization. \textbf{Explicit localization} occurs when the query targets an inherently local category---even without a geographic qualifier, a query like ``best bakery'' triggers location-injected fan-out queries (e.g., ``best bakery near Munich Germany''). This primarily applies to local-commerce queries and is not a factor in our SaaS/software dataset. \textbf{Implicit localization} occurs when the search engine uses the user's IP, browser language, or search history to localize results for a general query. In our fan-out data, implicit localization manifests as one of the two fan-out queries being rewritten into the prompt's local language. For example, when issuing an English prompt from Munich, Germany, we observed one query in English (\texttt{"free website or program to translate video and add subtitles"}) and a parallel query in German (\texttt{"kostenlos video \"ubersetzen und Untertitel automatisch hinzuf\"ugen\ldots"})---routing half the retrieval into the German-language index despite an English user prompt.
+
 \subsubsection{GPT: Cross-Language Fan-Out Taxonomy}
 
 Cross-language fan-out signals were observed in \textbf{13.1\%} of GPT runs (62/474), distributed across three distinct patterns:
@@ -159,6 +163,8 @@ Cross-language fan-out signals were observed in \textbf{13.1\%} of GPT runs (62/
 
     \item \textbf{Case~3 --- English prompt, no foreign context $\rightarrow$ foreign-language fan-out (4.9\%, 23 runs):} The user searches in English with no geographic or cultural markers in the prompt, yet GPT generates a non-English fan-out query. These ``untriggered'' localizations suggest \textbf{IP geolocation or browser locale leaking into query generation}---the model infers the user's location and proactively diversifies retrieval into the local language even when the user gave no such signal.
 \end{enumerate}
+
+Cases~2 and~3 vary in cross-run consistency: some prompts exhibit the behavior on every run (e.g., P018), while others do so only sporadically (e.g., P048 in 2 of 3 runs). Cases~2 and~3 are GPT-only observations; Gemini was accessed via the Vertex~AI API without IP-based locale signals, so these patterns could not be tested (Section~\ref{sec:gemini-instrumentation-differences}).
 
 In all three cases, the fan-out query pair is split: one query in language~A, one in language~B. This means the retrieval pool is drawn from two separate language indexes of the search engine.
 
