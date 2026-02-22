@@ -69,15 +69,66 @@ Even Rank~200 may not be sufficient. Our page-level distribution data (Section~\
 
 A critical methodological challenge arose from Bing's inconsistent UI pagination behavior. This instability is partly why the retirement of the Bing Search API is consequential for grounding research: the consumer UI we were forced to scrape is a far noisier baseline than a stable API would have provided.
 
-Bing's first page of organic results is not a fixed ``Top~10.'' In some scrapes, Page~1 returned as few as 2 organic results---for example, the query \texttt{"free AI tools to translate video"} returned only \texttt{zeemo.ai} and \texttt{wayin.ai} on Page~1 in one scrape, while a subsequent scrape of the same query showed additional results (\texttt{airmore.ai}, \texttt{ScreenApp}, \texttt{Murf~AI}, \texttt{Canva}) at ranks 3--7. Ranks 1--2 remained stable across scrapes, but positions 3--7 varied between runs of the same query. The remaining Page~1 space was filled with ads, Copilot branding, ``People also search for'' blocks, and video carousels.
+Bing's first page of organic results is not a fixed ``Top~10.'' In some scrapes, Page~1 returned as few as 2 organic results due to ads, Copilot answer blocks, and video carousels consuming the available space. Tables~\ref{tab:bing-truncated} and~\ref{tab:bing-full} illustrate this with two scrapes of the same query (\texttt{"free AI tools for translating video"}), run minutes apart (raw screenshots in Appendix~\ref{app:bing-pagination}).
 
-When Page~1 was truncated (e.g., showing only ranks 1--2 due to ads and Copilot blocks), Page~2 did not pick up at rank~3. Instead, it appeared to start from a fixed offset---showing results that would normally appear around ranks 7--15 in a full Page~1 scrape, effectively skipping the middle ranks entirely. From Page~3 onward, continuity resumed with a gradual decay. Our citation-overlap data corroborates this pattern: Page~1 concentrates the bulk of matches, Page~2 shows a conspicuous dip, and Pages~3+ settle into a gradual decay (Section~\ref{sec:page-dist}).
+\begin{table}[htbp]
+\centering
+\caption{Truncated Bing scrape: only 2 organic results on Page~1. Ranks 3--7 from the full scrape (Table~\ref{tab:bing-full}) are absent from Page~2 and never reappear at any subsequent depth.}
+\label{tab:bing-truncated}
+\small
+\begin{tabular}{@{}clp{6.5cm}c@{}}
+\toprule
+\textbf{Rank} & \textbf{Domain} & \textbf{Title} & \textbf{Page} \\
+\midrule
+1 & zeemo.ai & Free Online Video Translator With High Accuracy & 1 \\
+2 & wayin.ai & Free AI Video Translator -- Translate 100+ Languages & 1 \\
+\midrule
+3 & zeemo.ai & Free Online Video Translator\ldots\ \textit{(repeated)} & 2 \\
+4 & a2e.ai & A2E -- Free, Uncensored AI Videos & 2 \\
+5 & dreamfaceapp.com & Best Free AI Tools for Video \& Image Generation & 2 \\
+6 & happyscribe.com & Online Video Translator -- AI Video Translator & 2 \\
+7 & notegpt.io & AI Audio Translator: Translate Mp3 \& Audio Files & 2 \\
+8 & maestra.ai & AI Video Translator -- Translate to English \& 125+\ldots & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Full Bing scrape of the same query, same session. Page~1 returns 7+ tightly relevant video translation tools. \textbf{Bold} entries (ranks 3--7) are the results that disappear entirely in the truncated scrape.}
+\label{tab:bing-full}
+\small
+\begin{tabular}{@{}clp{6.5cm}c@{}}
+\toprule
+\textbf{Rank} & \textbf{Domain} & \textbf{Title} & \textbf{Page} \\
+\midrule
+1 & zeemo.ai & Free Online Video Translator With High Accuracy & 1 \\
+2 & wayin.ai & Free AI Video Translator -- Translate 100+\ldots & 1 \\
+\textbf{3} & \textbf{airmore.ai} & \textbf{Free Online Video Translation With AI} & \textbf{1} \\
+\textbf{4} & \textbf{screenapp.io} & \textbf{AI Translators -- Free Video \& Audio\ldots} & \textbf{1} \\
+\textbf{5} & \textbf{murf.ai} & \textbf{Free AI Video Translator: Translate Videos\ldots} & \textbf{1} \\
+\textbf{6} & \textbf{aivideotranslator.ai} & \textbf{AI Video Translator -- Free Translation Tool} & \textbf{1} \\
+\textbf{7} & \textbf{heygen.com} & \textbf{10 Best AI Video Translators I Tested\ldots} & \textbf{1} \\
+\midrule
+8 & notegpt.io & AI Audio Translator: Translate Mp3 \& Audio Files & 2 \\
+9 & maestra.ai & AI Video Translator -- Translate to English \& 125+\ldots & 2 \\
+10 & descript.com & Descript -- AI Video \& Podcast Editor | Free, Online & 2 \\
+11 & pdftranslate.ai & PDF Translator Online | Translate PDF for Free & 2 \\
+12 & notegpt.io & YouTube Video Summarizer with AI -- Online Free & 2 \\
+13 & lipsync.video & LipSync -- Online Free AI Lip Sync Video & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In the full scrape (Table~\ref{tab:bing-full}), Page~1 returned 7 tightly relevant video translation tools. In the truncated scrape (Table~\ref{tab:bing-truncated}), the same query returned only \texttt{zeemo.ai} and \texttt{wayin.ai} on Page~1; the remaining 5 results (ranks 3--7, bolded in Table~\ref{tab:bing-full}) were lost entirely---they did not resurface on Page~2 or at any subsequent depth, even when scraping to Rank~200.
+
+Page~2 exhibited two notable patterns. First, a sharp relevance drop: the truncated run's Page~2 included \texttt{a2e.ai} (uncensored AI videos) and \texttt{dreamfaceapp.com} (image generation)---off-topic results that would never appear on a well-curated Page~1. The full run's Page~2 similarly included \texttt{pdftranslate.ai} (PDF translation) and \texttt{lipsync.video} (lip-sync tool)---tangentially related at best. Second, both Page~2 results shared a similar character despite their Page~1 results differing substantially: \texttt{notegpt.io} and \texttt{maestra.ai} appeared on Page~2 in both runs. This suggests that Bing's Page~2 starts from a fixed offset regardless of how many organic results Page~1 actually displayed. From Page~3 onward, continuity resumed with a gradual decay. Our citation-overlap data corroborates this pattern: Page~1 concentrates the bulk of matches, Page~2 shows a conspicuous dip, and Pages~3+ settle into a gradual decay (Section~\ref{sec:page-dist}).
 
 This instability has two consequences for our overlap measurements. First, it introduces a conservative bias: if our scrape captured a truncated Page~1, we may have missed high-ranking results that ChatGPT's backend integration almost certainly had access to, causing us to classify some citations as ``invisible'' when they were in fact present in the index. Second, it is why we needed to scrape to Rank~200---not because ChatGPT is truly ``deep hunting'' at those ranks, but to compensate for UI-layer instability and recover matches that a stable API would have returned in the Top~10--30.
 
 We strongly suspect that ChatGPT does not receive the same noisy, truncated pagination that Bing's web UI serves to human users. Bing likely provides its index to ChatGPT via a backend integration that returns a clean, stable ranked list without ads, carousels, or pagination artifacts. Our Bing-UI-scraped baseline is therefore a degraded proxy for what ChatGPT actually sees, further supporting the interpretation that our overlap figures are conservative lower bounds. This instability was not observed in our Google SERP data collected via SerpApi, which returned consistent, stable organic rankings across paginated requests---an asymmetry worth noting for researchers attempting to replicate grounding studies.
 
-\section{Anatomy of a ChatGPT Response (Network-Instrumented)}
+\section{Anatomy of a ChatGPT Response}
 \label{sec:chatgpt-anatomy}
 
 This section describes what we can observe about ChatGPT's retrieval and citation pipeline from captured network payloads, and the naming conventions and field definitions that structure our analysis.
