@@ -3,7 +3,25 @@
 \chapter{Introduction \& Motivation}
 \label{ch:introduction}
 
+
+
+
+% Ensure floats (figures/tables) don't drift past section boundaries.
+
+% Requires \usepackage{placeins} in the preamble.
+
+
+
+% Ensure floats (figures/tables) don't drift past section boundaries.
+
+% Requires \usepackage{placeins} in the preamble.
+
+
+
+
+
   Large language models are rapidly becoming the interface through which consumers discover products. 
+
   By mid-2025, ChatGPT alone had reached approximately 10% of the world's adult population, with information-seeking and practical guidance accounting for nearly 80% of all conversations. Yet these models do not generate recommendations from memory alone. When a user asks for a  
   product recommendation, the system can search the web in real time, retrieve relevant sources, and ground its response in what
   it finds. This retrieval-and-grounding workflow is commonly referred to as retrieval-augmented generation (RAG), and it is
@@ -149,12 +167,12 @@ The question of whether RAG-grounded LLMs actually cite what they claim to cite 
 
 Two practitioner studies provide the largest-scale empirical data on ChatGPT citation behavior. \textcite{punturo2026citationsources} analyzed 730,000 U.S.\ English-language ChatGPT conversations (October--December 2025), reporting that only 18\% of conversations trigger web search overall. However, the trigger rate varies sharply by intent: commercial queries---product comparisons, purchase advice, ``best X for Y'' questions---trigger web search at 53.5\%, roughly 3$\times$ the all-intent baseline (see Section~\ref{sec:commercial-catalyst} and Figure~\ref{fig:trigger-rate} for a detailed breakdown). The same study found approximately 4 unique citations per search-triggered turn and a Gini coefficient of 0.8 for domain concentration, indicating that a small number of domains capture the bulk of citations. \textcite{rudzki2026english} analyzed 10M+ ChatGPT prompts and 20M+ fan-out queries via Peec~AI's production monitoring, finding that 78\% of non-English sessions include at least one English sub-search and 43\% of all fan-out queries are issued in English regardless of the user's language.
 
-Our study complements these in methodology and depth. The observational studies measure \emph{what} ChatGPT cites at population scale but cannot examine \emph{why}: they lack access to retrieval pools, fan-out queries, or SERP baselines. We use controlled, repeated prompts across ChatGPT Business, ChatGPT Personal, and Gemini with full network instrumentation, enabling us to trace each step from fan-out query through retrieved candidates to cited set and claim-level attribution (see Chapter~\ref{ch:methodology} for full design). Our higher search trigger rate (89\% vs.\ their 18\% baseline) and citation density (9.94 vs.\ $\sim$4 per turn) reflect deliberate prompt design for high commercial intent rather than a sampling difference---Profound's own intent-stratified data confirms that commercial queries trigger search at 53.5\%, already 3$\times$ the all-intent baseline. The cross-language fan-out patterns documented by \textcite{rudzki2026english} (Case~1: foreign prompt $\rightarrow$ English retrieval) are directly corroborated in our data; we additionally identify the reverse direction (Cases~2--3: English prompt $\rightarrow$ foreign-language retrieval), which has not been previously documented (Section~\ref{sec:localization-bias}).
+We use controlled, repeated prompts across ChatGPT Business, ChatGPT Personal, and Gemini with full network instrumentation, enabling us to trace each step from fan-out query through retrieved candidates to cited set and claim-level attribution (see Chapter~\ref{ch:methodology} for full design). Our higher search trigger rate (89\% vs.\ their 18\% baseline) and citation density (9.94 vs.\ $\sim$4 per turn) reflect deliberate prompt design for high commercial intent rather than a sampling difference---Profound's own intent-stratified data confirms that commercial queries trigger search at 53.5\%, already 3$\times$ the all-intent baseline. The cross-language fan-out patterns documented by \textcite{rudzki2026english} (Case~1: foreign prompt $\rightarrow$ English retrieval) are directly corroborated in our data; we additionally identify the reverse direction (Cases~2--3: English prompt $\rightarrow$ foreign-language retrieval), which has not been previously documented (Section~\ref{sec:localization-bias}).
 
 \subsection{Grounding Mechanics and the Content Budget}
 \label{sec:rw-grounding-mechanics}
 
-A growing body of practitioner research examines \emph{how much} of a retrieved page actually enters the model's context. \textcite{petrovic2025grounding} measured Google's grounding chunks and found that the system operates with a fixed content budget of approximately 2,000 words per query, with the top-ranked source receiving 28\% of the budget and pages over 3,000 words achieving only 13\% coverage. \textcite{petrovic2025filter} further quantified the compression ratio between retrieved content and generated output: only 15--25\% of retrieved text survives into the final response. \textcite{indig2026attention} analyzed 1.2~million ChatGPT responses and found a ``ski ramp'' distribution where 44.2\% of citations originate from the first 30\% of a source page ($p < 0.0001$ over 18,012 verified citations), with citation likelihood correlating with definitive language and entity density.
+A growing body of practitioner research examines \emph{how much} of a retrieved page actually enters the model's context. \textcite{petrovic2025grounding} measured Gemini's grounding chunks and found that the system operates with a fixed content budget of approximately 2,000 words per query, with the top-ranked source receiving 28\% of the budget and pages over 3,000 words achieving only 13\% coverage. \textcite{petrovic2025filter} further quantified the compression ratio between retrieved content and generated output: only 15--25\% of retrieved text survives into the final response. \textcite{indig2026attention} analyzed 1.2~million ChatGPT responses and found a ``ski ramp'' distribution where 44.2\% of citations originate from the first 30\% of a source page ($p < 0.0001$ over 18,012 verified citations), with citation likelihood correlating with definitive language and entity density.
 
 These findings are directly relevant to our within-listicle position bias results (Section~\ref{sec:reranking}): if the model's grounding window is finite and front-loaded, items listed later in a long listicle may never enter the content the model processes---which may help explain why the \#1 listicle item is selected at 1.7--2.5$\times$ the uniform baseline. While we do not measure grounding budgets directly, our study provides complementary evidence from the selection side: we observe the downstream effect (position-dependent uptake rates) that these budget constraints appear to produce.
 
@@ -209,7 +227,11 @@ Industry telemetry confirms this asymmetry. Figure~\ref{fig:trigger-rate} shows 
     \label{fig:trigger-rate}
 \end{figure}
 
+\FloatBarrier
+
+
 Web search is triggered in 53.5\% of commercial queries, compared to only 18.7\% for informational and 8.9\% for generative queries---a 3$\times$ gap over the 17.4\% all-intent baseline. Our decision to filter for high commercial intent (product recommendations) aligns with this asymmetry: commercial queries are where the retrieval pipeline is most active, where citation selection has the most direct economic consequences, and where the shift from SEO to GEO is most empirically observable.
+
 
 \subsection{The Emerging GEO Industry}
 \label{sec:geo-landscape}
@@ -219,6 +241,8 @@ The commercial significance of LLM citation behavior has already attracted subst
 The opportunity has not gone unnoticed by established players. Ahrefs, one of the largest SEO analytics platforms, has added AI search monitoring features that track brand visibility across LLM-generated responses alongside its traditional SERP tracking. More consequentially, Adobe announced the acquisition of SEMrush in November 2025 \parencite{adobe2025semrush}---a deal that signals how seriously the marketing technology industry takes the convergence of traditional keyword intelligence and AI search analytics. The competitive landscape is thus bifurcating: GEO-native startups (Profound, Peec~AI) are building from the AI-search side inward, while incumbent SEO platforms (Ahrefs, SEMrush) are extending outward from their traditional keyword and ranking data into AI citation monitoring. Whether these approaches converge---and whether dedicated GEO tools offer marginal value over well-executed traditional SEO---is one of the practical questions this thesis informs.
 
 At their core, these platforms are trying to answer a simple question: \emph{is the AI recommending your brand, and if not, why?} Our findings speak directly to what drives these outcomes. Products appear in LLM responses primarily because they appear in retrieved listicles---and their position within those listicles matters (Section~\ref{sec:listicle-bias}, Section~\ref{sec:reranking}). Structural content features such as tables and numbered lists appear to improve a source's chances of being cited (Section~\ref{sec:selection-drift}). And because LLM citation behavior is stochastic---the same prompt can produce different citations across runs---single-snapshot monitoring will systematically misrepresent a brand's true visibility (Section~\ref{sec:flip-flop}).
+
+
 
 The dominant industry narrative frames GEO as a replacement for SEO---a new discipline for a new era. Some industry practitioners have suggested that LLM-referred users may exhibit higher conversion rates and purchase intent than traditional search traffic, lending urgency to the claim. However, the empirical question this thesis investigates is whether GEO is genuinely distinct from SEO or whether it is, in practice, a thin optimization layer on top of the same ranking foundation. The answer, as the following chapters demonstrate, is substantially the latter---but with empirically real exceptions that the concluding chapter delineates (Section~\ref{sec:geo-not-seo}).
 
