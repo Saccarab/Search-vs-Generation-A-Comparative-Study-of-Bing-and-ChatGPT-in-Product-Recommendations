@@ -153,8 +153,7 @@ Both ChatGPT and Gemini systematically inject cross-language queries into their 
 Cross-language fan-out signals were observed in \textbf{13.1\%} of GPT runs (62/474), distributed across three distinct patterns:
 
 \begin{enumerate}
-    \item \textbf{Case~1 --- Foreign prompt $\rightarrow$ English fan-out (6.3\%, 30 runs):} The user searches in a non-English language; GPT generates one fan-out query in English alongside one in the user's language. The English query typically targets global review sites and English-language listicles, pulling the grounding pool toward anglophone sources. [arent these 3 cases same as we talked above?  on 2.7.2 this feels kinda duplicate? or are they not same 100 idk if we ever have case 2 btw]
-    [irrelevant here but also make sure to specify that everything has been proofread after LLM assistance many times referrig to llm assistance block]
+    \item \textbf{Case~1 --- Foreign prompt $\rightarrow$ English fan-out (6.3\%, 30 runs):} The user searches in a non-English language; GPT generates one fan-out query in English alongside one in the user's language. The English query typically targets global review sites and English-language listicles, pulling the grounding pool toward anglophone sources.
 
     \item \textbf{Case~2 --- English prompt + foreign context $\rightarrow$ local-language fan-out (1.9\%, 9 runs):} The user searches in English but the prompt references an inherently local category (e.g., ``best pizza in Istanbul,'' ``local translation services in Berlin''). GPT responds by generating a locale-aware fan-out query in the relevant local language (Turkish, German), alongside the English query.
 
@@ -694,7 +693,7 @@ Metric & GPT Business (Bing-centric) & GPT Personal (Multi-provider) & Gemini (G
 \subsection{Invisible Links --- The Visibility Gap}
 \label{sec:invisible-links}
 
-We use \textbf{Visibility Gap} as the empirical gap between what is \textbf{cited} and what is visible in conventional SERP UX. The methodological pivot (Top-30 $\rightarrow$ Deep Hunt Rank-200) is defined once in Section~2.2; here we report the \textbf{residual unmatched} set and what it looks like.
+We use \textbf{Visibility Gap} as the empirical gap between what is \textbf{cited} and what is visible in conventional SERP UX. The methodological pivot (Top-30 $\rightarrow$ Deep Hunt Rank-200) is defined once in Section~2.2; here we report the \textbf{residual unmatched} set and what it looks like. This analysis focuses on ChatGPT, where the invisible-link question is most consequential: ChatGPT dominates LLM search traffic (Section~\ref{sec:commercial-catalyst}), and the relationship between its citations and the Bing index is not self-evident. Gemini grounds on Google's own index, making an invisible-link analysis less revealing---the interesting question for Gemini is not \emph{whether} it draws from Google, but \emph{how} it selects within that index, which we address in the selection drift and fidelity analyses.
 
 \begin{itemize}
     \item \textbf{What is being compared}: \textbf{cited URLs} vs \textbf{presence/absence} in the \textit{per-run} SERP snapshot (and/or Bing Deep Hunt $\leq$200).
