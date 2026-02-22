@@ -281,7 +281,7 @@ The labeling pipeline uses a hybrid approach. General web pages, blogs, and nich
 
 A consistent skip list (\texttt{wikipedia.org}, \texttt{reddit.com}, \texttt{arxiv.org}, \texttt{github.com}, \texttt{youtube.com}, app stores, social media platforms, and first-party support/docs sites) was applied across all enrichment runs. These domains have fixed, well-understood structures---a Wikipedia article is always \texttt{type=reference}, a Reddit thread is always \texttt{type=forum\_ugc}---and their content is unlikely to contain the structural features (comparison tables, numbered lists, pros/cons blocks) that drive our drift analysis. They were therefore assigned heuristic labels with conservative defaults rather than full LLM enrichment.
 
-The selection drift analysis in Section~\ref{sec:selection-drift} focuses on \textbf{product pages and listicles}---the two dominant page types where structural features are meaningfully variable and where the question of whether LLMs prefer certain content formats is most relevant.
+\textbf{Consequence for drift analysis:} Because these skipped domains receive zeroed-out structural scores (no tables, no numbered lists, no pros/cons), including them in feature-level drift comparisons would create artificial signal. The selection drift analysis in Section~3.5 therefore focuses on \textbf{product pages and listicles} --- the two dominant types where full LLM enrichment was performed and where structural features are meaningfully variable. This scoping avoids comparing LLM-enriched pages against heuristically-labeled ones, which would conflate labeling method differences with actual content differences.
 
 \subsection{Labeler Fidelity (cross-model agreement)}
 \label{sec:labeler-fidelity}
