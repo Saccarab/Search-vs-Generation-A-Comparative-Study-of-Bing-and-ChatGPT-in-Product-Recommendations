@@ -12,34 +12,14 @@ This section examines the retrieval phase: how models reshape a single user prom
 \subsubsection{The Three-Layer Architecture (as observed)}
 \label{sec:three-layer}
 
-Our network instrumentation reveals a three-layer pipeline, not a monolithic model:
-
-\begin{lstlisting}
-Layer 1: SONIC CLASSIFIER (fires once per turn)
-  |  Decides: search vs. no-search
-  |  Outputs: simple_search_prob, complex_search_prob, no_search_prob
-  |  Deterministic for same input (byte-identical across runs of same prompt)
-
-Layer 2: SONICBERRY ORCHESTRATOR (alpha.sonic_thinky_v1_paid)
-  |  Manages the web.run tool-call loop
-  |  Each web.run call dispatches exactly 2 queries (fixed pair-generation)
-  |  Tracks search_turns_count (1, 2, 3...)
-
-Layer 3: GENERATION MODEL (gpt-5-2)
-  |  After each web.run, evaluates retrieved results in context
-  |  Decides whether to call web.run again (agentic re-search)
-  |  Non-deterministic: same input can produce 1-3 search turns
-  |  Selects sources -> generates response with inline citation tokens
-\end{lstlisting}
-
-The high-level flow as observed in the event stream:
+Our network instrumentation reveals a three-layer pipeline, not a monolithic model. The high-level flow as observed in the event stream:
 \begin{enumerate}
-    \item \textbf{User prompt received}
-    \item \textbf{Search decision (Layer 1)}: the Sonic Classifier outputs a 3-class probability distribution and evaluates it against thresholds in priority order (\texttt{no\_search} $\rightarrow$ \texttt{complex} $\rightarrow$ \texttt{simple}). If \texttt{no\_search\_prob} $\geq 0.175$, the classifier signals suppression; otherwise it signals search (though external mechanisms can still override this decision---see below).
-    \item \textbf{Fan-out query generation + retrieval (Layer 2--3)}: the model calls the \texttt{web.run} tool, which dispatches exactly 2 reformulated queries. Results return as \texttt{search\_result\_groups}.
-    \item \textbf{Re-search decision (Layer 3)}: the generation model evaluates the retrieved pool and may call \texttt{web.run} again (incrementing \texttt{search\_turns\_count}). This creates the agentic re-search loop --- 94\% of runs complete in 1 turn (2 queries), 2.5\% require 2 turns (4 queries), 0.2\% require 3 turns (6 queries).
-    \item \textbf{Selection}: the model promotes some sources to be cited inline, and may also attach extra sources as ``additional.''
-    \item \textbf{Generation}: answer text is streamed + citation tokens are inserted (e.g., \texttt{citeturn0search0}) and merged into the final response (``multi-chip'').
+    \item \textbf{User prompt received.}
+    \item \textbf{Search decision (Layer~1 --- Sonic Classifier):} a three-class classifier (\texttt{sonic\_classifier\_5p2\_3cls\_ev3}) fires once per turn and outputs \texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, and \texttt{no\_search\_prob} (summing to 1.0). These are evaluated against thresholds in priority order (\texttt{no\_search} $\rightarrow$ \texttt{complex} $\rightarrow$ \texttt{simple}). If \texttt{no\_search\_prob} $\geq 0.175$, the classifier signals suppression; otherwise it signals search (though external mechanisms can still override this decision---see below). The classifier's probability output is deterministic: the same prompt on the same account tier produces byte-identical probabilities across runs. However, whether search ultimately fires also depends on external mechanisms that can override the classifier's decision (see below), which is why some prompts show mixed search behaviour across runs despite stable classifier output.
+    \item \textbf{Fan-out query generation + retrieval (Layer~2 --- Sonicberry Orchestrator):} an orchestrator (\texttt{alpha.sonic\_thinky\_v1\_paid}) manages the \texttt{web.run} tool-call loop. Each \texttt{web.run} call dispatches exactly 2 reformulated queries. Results return as \texttt{search\_result\_groups}.
+    \item \textbf{Re-search decision (Layer~3 --- Generation Model):} the generation model (\texttt{gpt-5-2}) evaluates the retrieved pool and may call \texttt{web.run} again (incrementing \texttt{search\_turns\_count}). This creates an agentic re-search loop --- 94\% of runs complete in 1 turn (2 queries), 2.5\% require 2 turns (4 queries), 0.2\% require 3 turns (6 queries). Unlike the classifier, this decision is non-deterministic: the same input can produce different turn counts across runs.
+    \item \textbf{Selection:} the model promotes some sources to be cited inline, and may also attach extra sources as ``additional.''
+    \item \textbf{Generation:} answer text is streamed with citation tokens (e.g., \texttt{citeturn0search0}) that are merged into the final response.
 \end{enumerate}
 
 \subsection{ChatGPT Search Trigger Behavior}

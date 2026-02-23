@@ -78,6 +78,11 @@ Our prompt set is concentrated in the AI and SaaS sectors, particularly speech a
 
 Our prompt set, optimised for product-recommendation queries, produced a near-uniform classifier response: 96.8\% median simple-search probability, with no crossings of the suppression or complex-search thresholds (Section~\ref{sec:lim-search-trigger}). A study with a deliberately heterogeneous prompt set---spanning conversational, factual, creative, and coding queries alongside commercial prompts---would map the full decision surface of the three-class classifier, identify the prompt characteristics that push \texttt{no\_search\_prob} above the 0.175 gate, and test whether the complex-search pathway (threshold 0.4) produces materially different retrieval behaviour (e.g., more fan-out queries or deeper result pools). Comparing free-tier and paid-tier classifier versions on the same prompt set would additionally quantify the architectural divergence we infer from configuration differences alone (Section~\ref{sec:search-trigger}), and test whether the opt-in versus opt-out framing produces measurably different grounding rates for borderline queries.
 
+\section{Agentic Re-Search Behaviour}
+\label{sec:fw-agentic-research}
+
+Our data reveals that the generation model (Layer~3) can autonomously decide to issue additional search turns after evaluating initial results (Section~\ref{sec:three-layer}). In our dataset, 94\% of search-triggered runs completed in a single turn (2 queries), but 2.5\% required 2 turns (4 queries) and 0.2\% required 3 turns (6 queries). This agentic re-search loop is non-deterministic---the same prompt can produce different turn counts across runs---yet we could not identify what triggers it: the complex-search probability was negligible in all multi-turn cases, ruling out the classifier as the driver. A dedicated study could investigate the conditions under which the generation model decides to re-search (e.g., low-confidence initial results, insufficient source diversity, query ambiguity), whether additional turns improve citation quality or simply add redundant sources, and whether the re-search mechanism introduces systematic biases in which domains or content types ultimately get cited.
+
 \section{The Parametric Nudge Hypothesis}
 \label{sec:fw-parametric-nudge}
 
