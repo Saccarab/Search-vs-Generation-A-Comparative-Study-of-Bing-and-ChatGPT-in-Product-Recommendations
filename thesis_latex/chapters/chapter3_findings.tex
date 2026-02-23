@@ -1,7 +1,7 @@
 \chapter{Findings \& Analysis}
 \label{ch:findings}
 
-This chapter traces the full retrieval-to-citation pipeline, organized to mirror the stages through which a user's prompt becomes a set of product recommendations. We begin with the retrieval strategy itself---how models reshape a single prompt into multiple search queries (Section~\ref{sec:fanout})---and then follow the results through the pipeline: how citations are distributed across SERP pages (Section~\ref{sec:position-bias}), what fraction of citations exist in conventional search indices and how provider strategy differs across deployment tiers (Section~\ref{sec:citation-overlap}), how rank position within pages shapes citation likelihood (Section~\ref{sec:rank1-effect}), what the ``invisible'' remainder looks like and how citation status fluctuates across runs (Section~\ref{sec:invisible-links-section}), how the structural characteristics of cited sources differ from the available pool (Sections~\ref{sec:content-dna}--\ref{sec:selection-drift}), and finally how the model extracts and reproduces individual products from within cited listicles (Section~\ref{sec:listicle-bias}).
+This chapter traces the full retrieval-to-citation pipeline, organized to mirror the stages through which a user's prompt becomes a set of product recommendations. We begin with the retrieval strategy itself---how models reshape a single prompt into multiple search queries (Section~\ref{sec:fanout})---and then follow the results through the pipeline: how citations are distributed across SERP pages (Section~\ref{sec:position-bias}), what fraction of citations exist in conventional search indices and how provider strategy differs across deployment tiers (Section~\ref{sec:citation-overlap}), how rank position within pages shapes citation likelihood (Section~\ref{sec:gemini-google-rank}), what the ``invisible'' remainder looks like and how citation status fluctuates across runs (Section~\ref{sec:invisible-links-section}), how the structural characteristics of cited sources differ from the available pool (Sections~\ref{sec:content-dna}--\ref{sec:selection-drift}), and finally how the model extracts and reproduces individual products from within cited listicles (Section~\ref{sec:listicle-bias}).
 
 %-----------------------------------------------------------------------
 \section{Retrieval Strategy \& Fan-Out Analysis}
@@ -190,7 +190,7 @@ Because our Gemini data was collected through the Vertex~AI API (which does not 
 \section{Page-Level Citation Distribution}
 \label{sec:position-bias}
 
-Having established how models generate fan-out queries and trigger search, we now examine how citations are distributed across SERP pages. Understanding where citations land within the SERP provides the necessary context for interpreting what falls outside conventional search indices (Section~\ref{sec:citation-overlap}) and how rank position shapes citation likelihood (Section~\ref{sec:rank1-effect}).
+Having established how models generate fan-out queries and trigger search, we now examine how citations are distributed across SERP pages. Understanding where citations land within the SERP provides the necessary context for interpreting what falls outside conventional search indices (Section~\ref{sec:citation-overlap}) and how rank position shapes citation likelihood (Section~\ref{sec:gemini-google-rank}).
 
 \subsection{Page-Level Distribution (The ``Long Tail'' of Retrieval)}
 \label{sec:page-dist}
@@ -336,81 +336,10 @@ Invisible (neither index) & 16.3\% & 19.4\% & 22.3\% \\
 \label{fig:global-overlap}
 \end{figure}
 
-\subsubsection{Key Observations on Provider Strategy}
-\label{sec:provider-strategy}
-
-\begin{itemize}
-    \item \textbf{GPT Business: High Bing Affinity.} Business citations overlap with the Bing index at \textbf{81.3\%}---the highest single-index overlap in the study. Business's Google overlap is only \textbf{27.8\%}, which we treat as a \textbf{control baseline}: it approximates the natural domain overlap between the two indices (popular URLs that appear in both Bing and Google). Any Google overlap substantially above this \textasciitilde28\% baseline in other tiers is consistent with Google-sourced retrieval. OpenAI's documentation for organization-managed tiers explicitly names Bing as the search provider \parencite{openai2024enterprise}, and our data aligns with that statement.
-    \item \textbf{GPT Personal: High Google Affinity.} Personal citations overlap with Google at \textbf{64.6\%}---a \textbf{36.8 percentage-point increase} over the Business control baseline (27.8\%). Simultaneously, Personal's Bing overlap drops to 67.6\% (from Business's 81.3\%). The combined Bing+Google coverage reaches \textbf{80.6\%}, the highest total coverage of any tier. OpenAI's general documentation describes ChatGPT search as leveraging ``third-party search providers'' in the plural \parencite{openai2024search}; the magnitude of the Google overlap shift is consistent with Personal-tier retrieval drawing on the Google index in addition to Bing.
-    \item \textbf{Implication: Index-Dependent Visibility.} The 36.8\,pp Google overlap gap means that a brand ranking well in Google but poorly in Bing may be visible to Personal ChatGPT users but largely invisible to Business users---and vice versa. This is not a minor calibration difference; it represents a fundamentally different retrieval surface depending on deployment tier, with direct consequences for any brand monitoring its ``Share of Model'' across ChatGPT audiences.
-\end{itemize}
-
-With the global overlap landscape established, the following subsections examine how rank position within these indices shapes citation likelihood.
-
-\subsection{GPT: Rank-Level Position Bias}
-\label{sec:rank1-effect}
-\label{sec:gpt-bing-rank}
-
-To measure rank-level position bias, we count how often GPT citations match each Bing SERP rank. For each rank, we count \textbf{distinct runs} where at least one cited URL matched the result at that position---avoiding inflation when the same URL appears in multiple citation slots. Counts are out of 213 (Business) or 209 (Personal) runs with valid Bing data.
-
-\begin{table}[H]
-\centering
-\caption{GPT citation match counts by Bing SERP rank (Top~10). Each cell counts distinct runs where at least one citation matched that rank, out of 213 (Business) or 209 (Personal).}
-\label{tab:gpt-bing-rank}
-\begin{tabular}{lrrrr}
-\toprule
-Rank & Bus.\ Runs Matched & Bus.\ Rate & Pers.\ Runs Matched & Pers.\ Rate \\
-\midrule
-\textbf{1} & \textbf{152} & \textbf{71.4\%} & 56 & 26.8\% \\
-2 & 146 & 68.5\% & 49 & 23.4\% \\
-3 & 86 & 40.4\% & 47 & 22.5\% \\
-4 & 70 & 32.9\% & 33 & 15.8\% \\
-5 & 48 & 22.5\% & 40 & 19.1\% \\
-6 & 41 & 19.2\% & 26 & 12.4\% \\
-7 & 44 & 20.7\% & 26 & 12.4\% \\
-8 & 44 & 20.7\% & 24 & 11.5\% \\
-9 & 38 & 17.8\% & 27 & 12.9\% \\
-10 & 20 & 9.4\% & 29 & 13.9\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Business shows steep Bing rank bias (71\% at Rank~1, dropping to 9\% at Rank~10), while Personal is relatively flat across ranks (13--27\%), consistent with Personal retrieving from a different primary index.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=0.9\textwidth,
-    height=7cm,
-    xlabel={SERP Rank},
-    ylabel={Match Rate (\%)},
-    xtick={1,2,3,4,5,6,7,8,9,10},
-    ymin=0, ymax=85,
-    ymajorgrids=true,
-    mark=*,
-    line width=1.2pt,
-    legend style={at={(0.98,0.98)}, anchor=north east},
-]
-\addplot[color=entcolor, mark=*, line width=1.2pt] coordinates {(1,71.4) (2,68.5) (3,40.4) (4,32.9) (5,22.5) (6,19.2) (7,20.7) (8,20.7) (9,17.8) (10,9.4)};
-\addplot[color=perscolor, mark=*, line width=1.2pt, dashed] coordinates {(1,26.8) (2,23.4) (3,22.5) (4,15.8) (5,19.1) (6,12.4) (7,12.4) (8,11.5) (9,12.9) (10,13.9)};
-\legend{Business (Bing), Personal (Bing)}
-\end{axis}
-\end{tikzpicture}
-\caption{GPT Bing rank-level match rates. Business shows steep position bias with a cliff at Rank~3 (71\% $\rightarrow$ 40\%). Personal is relatively flat (13--27\%), consistent with Bing not being its primary retrieval source.}
-\label{fig:bing-rank-match-rate}
-\end{figure}
-
-\paragraph{Key observations:}
-\begin{itemize}
-    \item \textbf{Business Rank 1--2 dominance}: 71\% and 69\% of Business runs cite the Bing \#1 and \#2 results. The drop to Rank 3 (40\%) is the steepest cliff in the data. The Rank~1--2 signal is robust despite Bing's elastic Page~1 length (median 4--6 results; see Section~\ref{sec:bing-page-dist}), since every scrape includes those ranks.
-    \item \textbf{Personal's flat Bing profile}: Personal is relatively flat against Bing (13--27\%), with no clear rank signal.
-\end{itemize}
-
 \subsection{Gemini: Google Position Bias}
 \label{sec:gemini-google-rank}
 
-Gemini retrieves exclusively from Google's index. We match Gemini citations against SerpApi organic results for the same grounding-support queries.
+Since Gemini retrieves exclusively from a single index (Google at 77.7\%), we can isolate rank-level position bias without the multi-provider confound that complicates GPT analysis. We match Gemini citations against SerpApi organic results for the same grounding-support queries.
 
 \begin{table}[H]
 \centering
@@ -437,6 +366,15 @@ Rank 10 & 21 & 1.8\% \\
 \begin{itemize}
     \item \textbf{Rank~1 dominance}: Gemini shows a clear concentration at the first organic result (15.7\%), nearly double the second rank (9.1\%).
     \item \textbf{Selection decay}: Citations decay gradually through Rank~9, then drop sharply at Rank~10 (1.8\%). Ranks 11--15 (not shown) stabilize at \textasciitilde2\%, indicating that results beyond Google's first page are still cited but at a much lower rate.
+\end{itemize}
+
+\subsubsection{Key Observations on Provider Strategy}
+\label{sec:provider-strategy}
+
+\begin{itemize}
+    \item \textbf{GPT Business: High Bing Affinity.} Business citations overlap with the Bing index at \textbf{81.3\%}---the highest single-index overlap in the study. Business's Google overlap is only \textbf{27.8\%}, which we treat as a \textbf{control baseline}: it approximates the natural domain overlap between the two indices (popular URLs that appear in both Bing and Google). Any Google overlap substantially above this \textasciitilde28\% baseline in other tiers is consistent with Google-sourced retrieval. OpenAI's documentation for organization-managed tiers explicitly names Bing as the search provider \parencite{openai2024enterprise}, and our data aligns with that statement.
+    \item \textbf{GPT Personal: High Google Affinity.} Personal citations overlap with Google at \textbf{64.6\%}---a \textbf{36.8 percentage-point increase} over the Business control baseline (27.8\%). Simultaneously, Personal's Bing overlap drops to 67.6\% (from Business's 81.3\%). The combined Bing+Google coverage reaches \textbf{80.6\%}, the highest total coverage of any tier. OpenAI's general documentation describes ChatGPT search as leveraging ``third-party search providers'' in the plural \parencite{openai2024search}; the magnitude of the Google overlap shift is consistent with Personal-tier retrieval drawing on the Google index in addition to Bing.
+    \item \textbf{Implication: Index-Dependent Visibility.} The 36.8\,pp Google overlap gap means that a brand ranking well in Google but poorly in Bing may be visible to Personal ChatGPT users but largely invisible to Business users---and vice versa. This is not a minor calibration difference; it represents a fundamentally different retrieval surface depending on the ChatGPT plan.
 \end{itemize}
 
 \subsection{Cross-System Rank Concentration (Page 1)}
@@ -748,7 +686,7 @@ Our reported invisible rates (16.3\% Business, 19.4\% Personal) are \textbf{uppe
 \begin{enumerate}
     \item \textbf{The Rank 200 ceiling}: Our Bing scrape stops at Rank 200, but the page-level match histogram (see Section~\ref{sec:page-dist}) shows no convergence --- matches are still accumulating at Pages 15--16 with a smooth decay curve that does not reach zero. Scraping to Rank 300 or 400 would almost certainly recover additional matches, shrinking the invisible set. The ``invisible'' label for these URLs does not mean they are absent from Bing's index --- only that they fell beyond our scrape depth.
 
-    \item \textbf{Bing Page 1 truncation (the ``Missing Middle'')}: As documented in Section~2.2.1 and Section~\ref{sec:rank1-effect}, nearly half of our Bing scrapes had 5 or fewer organic results on Page 1 due to UI-level pagination instability. Results that would normally rank at positions 3--7 can be dropped entirely from a truncated scrape --- they do not simply shift to Page 2. This is especially consequential because Page 1 is where we observe the \textbf{highest match rates} (69\% at Ranks 1--2, 40--46\% at Ranks 3--4; see Section~\ref{sec:rank1-effect}) --- so every result missed due to Page 1 truncation is statistically more likely to be a citation match than a result missed deeper in the index. These ``missing middle'' results are almost certainly available to ChatGPT through its backend API integration with Bing, which likely returns a clean, stable ranked list without the consumer UI's truncation artifacts. Some of our ``invisible'' citations may therefore be high-ranking Bing results that our scrape happened to miss.
+    \item \textbf{Bing Page 1 truncation (the ``Missing Middle'')}: As documented in Section~2.2.1, nearly half of our Bing scrapes had 5 or fewer organic results on Page 1 due to UI-level pagination instability. Results that would normally rank at positions 3--7 can be dropped entirely from a truncated scrape --- they do not simply shift to Page 2. This is especially consequential because Page~1 is where we observe the \textbf{highest match rates} (Section~\ref{sec:page-dist}) --- so every result missed due to Page~1 truncation is statistically more likely to be a citation match than a result missed deeper in the index. These ``missing middle'' results are almost certainly available to ChatGPT through its backend API integration with Bing, which likely returns a clean, stable ranked list without the consumer UI's truncation artifacts. Some of our ``invisible'' citations may therefore be high-ranking Bing results that our scrape happened to miss.
 \end{enumerate}
 
 \textbf{If both factors were addressed} (deeper scraping + repeated Page 1 scrapes to capture the full elastic range), our overlap rates would likely increase and the remaining ``truly invisible'' set would converge toward citations that genuinely come from \textbf{outside the search index} --- sites like Wikipedia, app stores, and known reference domains that ChatGPT may access through parametric knowledge or supplementary indices rather than the fan-out search pipeline.
