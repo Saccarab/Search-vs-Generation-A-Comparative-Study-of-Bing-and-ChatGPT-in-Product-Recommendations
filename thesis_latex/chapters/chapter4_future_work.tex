@@ -44,6 +44,13 @@ Our cross-language fan-out findings (Section~\ref{sec:localization-bias}) are ba
 
 Our semantic fidelity audit is restricted to solo-cited listicle product claims---those backed by exactly one URL. Multi-cited claims, where a product recommendation is attributed to two or more sources simultaneously, were excluded entirely from the fidelity analysis because it is impossible to determine which source the model actually drew from. This exclusion is non-trivial: multi-cited claims account for 10.7\% of GPT claims and 34.5\% of Gemini claims (Section~\ref{sec:solo-cited}). The fidelity of these multi-source claims, where the model may synthesize or conflate information across sources, remains unmeasured and may exhibit different error patterns than solo-cited claims. Additionally, our LLM-as-judge approach was validated by manual review of all flagged cases (positive predictions) but not of all negative predictions, so the true attribution failure rate may be marginally higher if the judge produced false negatives.
 
+\subsection{Search Trigger Analysis Scope}
+\label{sec:lim-search-trigger}
+
+Our Sonic Classifier analysis (Section~\ref{sec:search-trigger}) is based exclusively on paid ChatGPT tiers (Business and Plus) and a prompt set designed to elicit product recommendations---queries that inherently require web retrieval. As a result, the classifier routed virtually all runs to simple search: the median \texttt{simple\_search\_prob} was 96.8\%, and no run ever crossed the \texttt{no\_search\_threshold} (0.175) or the \texttt{complex\_search\_threshold} (0.4). The 52 runs that did not trigger search were suppressed by external mechanisms (null classification or server-side overrides), not by the classifier's probability output. We therefore describe the classifier's threshold cascade from its embedded configuration rather than from empirical observation of the suppression gate firing.
+
+This has three consequences. First, we cannot empirically confirm that the \texttt{no\_search\_prob} $\geq 0.175$ gate actually suppresses search when crossed---we only know the threshold exists in the configuration. Second, we have no observations of the complex-search pathway, so its behavioural differences from simple search remain uncharacterised. Third, our findings on search trigger rates, fan-out patterns, and citation behaviour apply strictly to paid-tier deployments; the free tier uses a structurally different classifier (\texttt{sonic\_force\_pg\_switcher}) with an inverted default, as discussed in Section~\ref{sec:search-trigger}.
+
 \section{Extending to Perplexity and Google AI Overviews}
 \label{sec:fw-perplexity-aio}
 
@@ -66,6 +73,11 @@ Our design uses 3 runs per prompt, which is sufficient to detect the $\sim$20\% 
 
 Our prompt set is concentrated in the AI and SaaS sectors, particularly speech and language technology. Replicating the study across different product categories (e.g., consumer electronics, fashion, financial services) would test whether the structural selection signals we observe---tables at +7.8 to +19.7\,pp, numbered lists at +7.1 to +11.2\,pp---are universal or category-dependent. Similarly, a dedicated cross-language study extending our Case~2 and Case~3 fan-out observations (Section~\ref{sec:localization-bias}) with a fully non-English prompt set would quantify the magnitude of the English retrieval bias that \textcite{rudzki2026english} documents at scale.
 
+\section{Search Trigger Characterisation}
+\label{sec:fw-search-trigger}
+
+Our prompt set, optimised for product-recommendation queries, produced a near-uniform classifier response: 96.8\% median simple-search probability, with no crossings of the suppression or complex-search thresholds (Section~\ref{sec:lim-search-trigger}). A study with a deliberately heterogeneous prompt set---spanning conversational, factual, creative, and coding queries alongside commercial prompts---would map the full decision surface of the three-class classifier, identify the prompt characteristics that push \texttt{no\_search\_prob} above the 0.175 gate, and test whether the complex-search pathway (threshold 0.4) produces materially different retrieval behaviour (e.g., more fan-out queries or deeper result pools). Comparing free-tier and paid-tier classifier versions on the same prompt set would additionally quantify the architectural divergence we infer from configuration differences alone (Section~\ref{sec:search-trigger}), and test whether the opt-in versus opt-out framing produces measurably different grounding rates for borderline queries.
+
 \section{The Parametric Nudge Hypothesis}
 \label{sec:fw-parametric-nudge}
 
@@ -75,6 +87,3 @@ Our invisible-link analysis (Section~\ref{sec:invisible-links}) identifies 16--2
 \label{sec:fw-user-study}
 
 This study measures what the model cites but not how users respond to those citations. A controlled user study comparing LLM-generated recommendations against a conventional SERP (e.g., Bing Top~10) on the same queries---measuring preference, trust, click-through, and purchase intent---would complement the structural analysis and test the industry hypothesis that LLM-referred users convert at higher rates than traditional search traffic.
-
-
-[maybr invest more into the gmeini study it was kinda shit im comparison to gpt love we gave]

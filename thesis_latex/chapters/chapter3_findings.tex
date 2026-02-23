@@ -15,7 +15,7 @@ This section examines the retrieval phase: how models reshape a single user prom
 Our network instrumentation reveals a three-layer pipeline, not a monolithic model:
 
 \begin{lstlisting}
-Layer 1: SONIC CLASSIFIER (fires once, <15 ms)
+Layer 1: SONIC CLASSIFIER (fires once per turn)
   |  Decides: search vs. no-search
   |  Outputs: simple_search_prob, complex_search_prob, no_search_prob
   |  Deterministic for same input (byte-identical across runs of same prompt)
@@ -35,7 +35,7 @@ Layer 3: GENERATION MODEL (gpt-5-2)
 The high-level flow as observed in the event stream:
 \begin{enumerate}
     \item \textbf{User prompt received}
-    \item \textbf{Search decision (Layer 1)}: the Sonic Classifier outputs a 3-class probability distribution and evaluates it against thresholds in priority order (\texttt{no\_search} $\rightarrow$ \texttt{complex} $\rightarrow$ \texttt{simple}). If \texttt{no\_search\_prob} $\geq 0.175$, search is suppressed; otherwise search fires.
+    \item \textbf{Search decision (Layer 1)}: the Sonic Classifier outputs a 3-class probability distribution and evaluates it against thresholds in priority order (\texttt{no\_search} $\rightarrow$ \texttt{complex} $\rightarrow$ \texttt{simple}). If \texttt{no\_search\_prob} $\geq 0.175$, the classifier signals suppression; otherwise it signals search (though external mechanisms can still override this decision---see below).
     \item \textbf{Fan-out query generation + retrieval (Layer 2--3)}: the model calls the \texttt{web.run} tool, which dispatches exactly 2 reformulated queries. Results return as \texttt{search\_result\_groups}.
     \item \textbf{Re-search decision (Layer 3)}: the generation model evaluates the retrieved pool and may call \texttt{web.run} again (incrementing \texttt{search\_turns\_count}). This creates the agentic re-search loop --- 94\% of runs complete in 1 turn (2 queries), 2.5\% require 2 turns (4 queries), 0.2\% require 3 turns (6 queries).
     \item \textbf{Selection}: the model promotes some sources to be cited inline, and may also attach extra sources as ``additional.''
@@ -45,7 +45,7 @@ The high-level flow as observed in the event stream:
 \subsection{ChatGPT Search Trigger Behavior}
 \label{sec:search-trigger}
 
-A prerequisite to any fan-out analysis is determining when ChatGPT triggers web search at all. The Sonic Classifier, a lightweight three-class model that fires once per conversation turn, governs this decision.
+A prerequisite to any fan-out analysis is determining when ChatGPT triggers web search at all. The Sonic Classifier, a three-class model that fires once per conversation turn, governs this decision.
 
 \begin{itemize}
     \item \textbf{Overall search rate:} \textbf{89.0\%} of 474 runs triggered web search (422/474). Business: \textbf{91.1\%}, Personal: \textbf{86.9\%} --- a 4.2~pp gap.
@@ -53,7 +53,7 @@ A prerequisite to any fan-out analysis is determining when ChatGPT triggers web 
     \item \textbf{External suppression:} The 52 no-search runs were \textbf{not} caused by the classifier's probability output:
     \begin{itemize}
         \item 39 runs had \textbf{null classification} (classifier never executed; raw network response files were empty)
-        \item 13 runs had the classifier \textbf{overridden} despite \texttt{simple\_search\_prob} as high as 99.7\% --- pointing to server-side A/B gates, tool routing (\texttt{passthrough\_tool\_calls}), or session-level factors, predominantly on Personal accounts (11 of 13 overrides)
+        \item 13 runs had the classifier \textbf{overridden} despite \texttt{simple\_search\_prob} as high as 99.7\% --- the exact suppression mechanism is not visible in the payload, but plausible candidates include server-side A/B gates, tool routing logic (\texttt{passthrough\_tool\_calls}), or session-level factors. These overrides occurred predominantly on Personal accounts (11 of 13)
     \end{itemize}
     \item \textbf{Prompt-level consistency:} 61/79 prompts (77.2\%) always triggered search across all 6 runs; 6 prompts (7.6\%) never triggered search; 12 prompts (15.2\%) showed mixed behavior --- P016 had a perfect 50/50 split.
     \item \textbf{Citation impact:} Search-triggered runs averaged \textbf{9.94 citations/run} vs \textbf{2.62} for no-search runs (\textasciitilde4x). Business no-search runs averaged just 1.10 citations; Personal no-search runs managed 3.65, suggesting Personal more readily generates citation-like references from parametric memory. For context, \textcite{punturo2026citationsources} report $\sim$4 unique citations per search-triggered turn across 730K general-purpose conversations---our 2.5$\times$ higher rate reflects the comprehensive sourcing that product-finding prompts demand compared to average ChatGPT usage, which includes many non-search intents (coding, creative writing, casual conversation).
@@ -62,14 +62,16 @@ A prerequisite to any fan-out analysis is determining when ChatGPT triggers web 
 
 \paragraph{Sonic Classifier configuration (observed across all 474 runs):}
 \begin{itemize}
-    \item \textbf{Classifier:} \texttt{sonic\_classifier\_5p2\_3cls\_ev3} (model: \texttt{snc-pg-sw-3cls-ev3}, snapshot: \texttt{wli-searchdb-model5-2025-09-23-20-17})
+    \item \textbf{Classifier:} \texttt{sonic\_classifier\_5p2\_3cls\_ev3} (model: \texttt{snc-pg-sw-3cls-ev3}, snapshot: \texttt{wli-searchdb-model5-2025-09-23-20-17}). This version was identical across both Business and Personal tiers---same model, same snapshot, same thresholds---and remained constant throughout our data collection window (January 2026). The version identifier is significant: independent observations document a structurally different classifier (\texttt{sonic\_force\_pg\_switcher}) on the free tier (see note below), indicating that classifier behavior can change substantially between versions and plan tiers.
     \item \textbf{3-class output:} \texttt{simple\_search\_prob} + \texttt{complex\_search\_prob} + \texttt{no\_search\_prob} = 1.0
     \item \textbf{Thresholds (evaluated in order):} \texttt{no\_search\_threshold} = 0.175, \texttt{complex\_search\_threshold} = 0.4, \texttt{simple\_search\_threshold} = 0 (catch-all)
     \item \textbf{First-turn override:} \texttt{force\_search\_first\_turn\_threshold} = 0.00001 (near-zero, almost always forces search on first message)
-    \item \textbf{Business vs.\ Personal divergence:} Business has \texttt{prefetch\_threshold: null} + \texttt{passthrough\_tool\_calls: true}; Personal has \texttt{prefetch\_threshold: 0.55} + no passthrough tools
+    \item \textbf{Business vs.\ Personal config divergence:} Both tiers use the same classifier model and thresholds, but differ in peripheral settings: Business has \texttt{prefetch\_threshold: null} + \texttt{passthrough\_tool\_calls: true}; Personal has \texttt{prefetch\_threshold: 0.55} + no passthrough tools
 \end{itemize}
 
-\paragraph{Note on the ``65\% search threshold'' claim:} Independent reverse-engineering by \textcite{resoneo2025chatgpt} documents a single \texttt{force\_search\_threshold} of 65\%. Our data captures a different classifier variant using a three-class threshold system rather than a single cutoff. The two may reflect different A/B variants or classifier versions. Our median \texttt{simple\_search\_prob} was 96.8\% --- far above any plausible boundary --- so we cannot empirically test where the effective decision point lies in the 50--70\% zone. The Resoneo-reported 65\% figure may also correspond to the \texttt{prefetch\_threshold} (0.55 in our data), which has shifted between versions.
+\paragraph{Note on the ``65\% search threshold'' claim:} Independent reverse-engineering by \textcite{resoneo2025chatgpt} documents a single \texttt{force\_search\_threshold} of 65\%, where search fires only if \texttt{search\_prob} exceeds that cutoff---making inference the default and search opt-in. Our data, collected exclusively on paid tiers (Business and Plus), captures a structurally different classifier variant: a three-class system where search is the \emph{default} and is suppressed only if \texttt{no\_search\_prob} $\geq 0.175$---effectively inverting the burden of proof. The Resoneo observations and conference presentations by practitioners appear to describe the free-tier classifier (\texttt{sonic\_force\_pg\_switcher}), which uses a single probability and a higher activation threshold. This architectural divergence---opt-in search on the free tier versus opt-out search on paid tiers---is consistent with practitioner reports that paid plans trigger grounding more aggressively, and means our findings on search trigger rates, fan-out behavior, and citation selection apply specifically to paid ChatGPT deployments.
+
+\paragraph{Scope caveat:} Because our 79 prompts were deliberately designed to elicit product recommendations requiring web data, the classifier overwhelmingly routed them to search---no run ever crossed the \texttt{no\_search\_threshold} or the \texttt{complex\_search\_threshold}. The thresholds and cascade logic described above are extracted from the classifier's configuration payload, not from empirical observation of suppression events. The 52 no-search runs in our dataset resulted from external mechanisms (null classification or server-side overrides), not from the classifier's probability output exceeding the configured gate. A fuller discussion of this limitation and its implications is in Section~\ref{sec:lim-search-trigger}.
 
 \subsection{Freshness Steering}
 \label{sec:freshness-steering}
