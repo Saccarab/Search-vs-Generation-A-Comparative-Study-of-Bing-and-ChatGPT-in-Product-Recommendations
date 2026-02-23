@@ -200,7 +200,7 @@ Our analysis of 237 runs per engine tier (79 queries $\times$ 3 runs) reveals th
 \subsubsection{Bing Page Distribution (Deep Hunt)}
 \label{sec:bing-page-dist}
 
-Analysis of where GPT citations match results in our Bing scrape (up to Rank 200). Because ChatGPT likely receives a cleaner backend ranking than the consumer UI we scraped (see Section~2.2.1), these match counts reflect our best-effort alignment rather than ChatGPT's actual retrieval depth.
+Table~\ref{tab:bing-page-dist} shows where GPT citations match results in our Bing scrape (up to Rank 200). Because ChatGPT likely receives a cleaner backend ranking than the consumer UI we scraped (see Section~2.2.1), these match counts reflect our best-effort alignment rather than ChatGPT's actual retrieval depth.
 
 \begin{table}[H]
 \centering
@@ -230,31 +230,6 @@ Page 16 & 103 & 204 \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    ybar,
-    bar width=4pt,
-    width=\textwidth,
-    height=8cm,
-    xlabel={Bing Page},
-    ylabel={Citation Matches},
-    xtick={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16},
-    ymin=0,
-    ymajorgrids=true,
-    legend style={at={(0.98,0.98)}, anchor=north east},
-    enlarge x limits=0.04,
-]
-\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(1,1468) (2,333) (3,656) (4,692) (5,641) (6,560) (7,453) (8,437) (9,312) (10,271) (11,248) (12,202) (13,191) (14,166) (15,140) (16,103)};
-\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(1,521) (2,345) (3,663) (4,602) (5,667) (6,579) (7,590) (8,480) (9,433) (10,426) (11,391) (12,327) (13,293) (14,286) (15,264) (16,204)};
-\legend{Business, Personal}
-\end{axis}
-\end{tikzpicture}
-\caption{Bing page-level citation distribution. Business shows a dominant Page 1 spike (1,468 matches) followed by a ``Page 2 Dip'' and gradual decay, while Personal exhibits a flatter distribution consistent with its multi-provider retrieval strategy.}
-\label{fig:bing-page-dist}
-\end{figure}
-
 \paragraph{Observations on the Bing page distribution:}
 \begin{itemize}
     \item \textbf{Business vs Personal Page 1 gap}: Business shows nearly 3$\times$ the Page 1 matches (1,468 vs 521), consistent with Business's higher Bing affinity (81.3\% overlap vs 67.6\%; see Section~\ref{sec:global-overlap}). Personal's lower Page 1 count aligns with its multi-provider retrieval strategy --- many of its citations match Google rather than Bing. 
@@ -270,20 +245,33 @@ To complement the Bing distribution above, we examine where GPT citations match 
 
 \begin{table}[H]
 \centering
-\caption{GPT citation matches by Google SERP page (aggregated from per-position data)}
+\caption{GPT citation matches by Google SERP rank}
 \label{tab:gpt-google-dist}
-\begin{tabular}{lrr}
+\small
+\begin{tabular}{lrr@{\hskip 1.5em}lrr}
 \toprule
-Page & Business Matches & Personal Matches \\
+Rank & Bus. & Pers. & Rank & Bus. & Pers. \\
 \midrule
-\textbf{Page 1} & \textbf{392} & \textbf{1,054} \\
-Page 2 & 144 & 455 \\
-Page 3 & 52 & 193 \\
+\textbf{1} & \textbf{88} & \textbf{168} & 16 & 18 & 50 \\
+2 & 59 & 128 & 17 & 9 & 38 \\
+3 & 34 & 145 & 18 & 9 & 46 \\
+4 & 37 & 107 & 19 & 17 & 23 \\
+5 & 41 & 112 & 20 & 8 & 29 \\
+6 & 39 & 113 & 21 & 11 & 30 \\
+7 & 33 & 103 & 22 & 7 & 21 \\
+8 & 26 & 92 & 23 & 4 & 39 \\
+9 & 21 & 48 & 24 & 7 & 27 \\
+10 & 14 & 38 & 25 & 6 & 18 \\
+11 & 17 & 58 & 26 & 6 & 14 \\
+12 & 18 & 57 & 27 & 8 & 22 \\
+13 & 14 & 65 & 28 & 3 & 16 \\
+14 & 18 & 41 & 29 & --- & 6 \\
+15 & 16 & 48 & & & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Personal shows \textasciitilde2.7$\times$ the Google matches of Business across all three pages, consistent with its multi-provider retrieval strategy (Section~\ref{sec:global-overlap}). Non-organic SERP features account for minimal matches: PAA produced 23 Business and 44 Personal matches; video and discussion matches were negligible ($\leq$3 each). The Google distribution is limited to $\sim$3 pages due to SerpApi's shallower scrape depth ($\sim$25 results vs Bing's 200).
+Personal shows \textasciitilde2.7$\times$ the Google matches of Business across all ranks, consistent with its multi-provider retrieval strategy (Section~\ref{sec:global-overlap}). The Google distribution is limited to $\sim$29 ranks due to SerpApi's shallower scrape depth ($\sim$25 results vs Bing's 200). Non-organic SERP features account for minimal matches (23/44 PAA matches for Business/Personal; $\leq$3 each for video and discussion).
 
 %-----------------------------------------------------------------------
 \section{Citation Overlap \& Position Bias}
