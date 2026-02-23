@@ -1,7 +1,7 @@
 \chapter{Findings \& Analysis}
 \label{ch:findings}
 
-This chapter traces the full retrieval-to-citation pipeline, organized to mirror the stages through which a user's prompt becomes a set of product recommendations. We begin with the retrieval strategy itself---how models reshape a single prompt into multiple search queries (Section~\ref{sec:fanout})---and then follow the results through the pipeline: where in the SERP the model's citations land (Section~\ref{sec:position-bias}), what fraction of citations exist in conventional search indices and what falls outside them (Section~\ref{sec:citation-overlap}), how the structural characteristics of cited sources differ from the available pool (Sections~\ref{sec:content-dna}--\ref{sec:selection-drift}), and finally how the model extracts and reproduces individual products from within cited listicles (Section~\ref{sec:listicle-bias}).
+This chapter traces the full retrieval-to-citation pipeline, organized to mirror the stages through which a user's prompt becomes a set of product recommendations. We begin with the retrieval strategy itself---how models reshape a single prompt into multiple search queries (Section~\ref{sec:fanout})---and then follow the results through the pipeline: how citations are distributed across SERP pages (Section~\ref{sec:position-bias}), what fraction of citations exist in conventional search indices and how provider strategy differs across deployment tiers (Section~\ref{sec:citation-overlap}), how rank position within pages shapes citation likelihood (Section~\ref{sec:rank1-effect}), what the ``invisible'' remainder looks like and how citation status fluctuates across runs (Section~\ref{sec:invisible-links-section}), how the structural characteristics of cited sources differ from the available pool (Sections~\ref{sec:content-dna}--\ref{sec:selection-drift}), and finally how the model extracts and reproduces individual products from within cited listicles (Section~\ref{sec:listicle-bias}).
 
 %-----------------------------------------------------------------------
 \section{Retrieval Strategy \& Fan-Out Analysis}
@@ -45,12 +45,19 @@ A prerequisite to any fan-out analysis is determining when ChatGPT triggers web 
 \begin{itemize}
     \item \textbf{Classifier:} \texttt{sonic\_classifier\_5p2\_3cls\_ev3} (model: \texttt{snc-pg-sw-3cls-ev3}, snapshot: \texttt{wli-searchdb-model5-2025-09-23-20-17}). This version was identical across both Business and Personal tiers---same model, same snapshot, same thresholds---and remained constant throughout our data collection window (January 2026). The version identifier is significant: independent observations document a structurally different classifier (\texttt{sonic\_force\_pg\_switcher}) on the free tier (see note below), indicating that classifier behavior can change substantially between versions and plan tiers.
     \item \textbf{3-class output:} \texttt{simple\_search\_prob} + \texttt{complex\_search\_prob} + \texttt{no\_search\_prob} = 1.0
-    \item \textbf{Thresholds (evaluated in order):} \texttt{no\_search\_threshold} = 0.175, \texttt{complex\_search\_threshold} = 0.4, \texttt{simple\_search\_threshold} = 0 (catch-all)
+    \item \textbf{Thresholds (evaluated in order):}
+    \begin{enumerate}
+        \item \texttt{no\_search\_threshold} = 0.175
+        \item \texttt{complex\_search\_threshold} = 0.4
+        \item \texttt{simple\_search\_threshold} = 0 (catch-all)
+    \end{enumerate}
     \item \textbf{First-turn override:} \texttt{force\_search\_first\_turn\_threshold} = 0.00001 (near-zero, almost always forces search on first message)
     \item \textbf{Business vs.\ Personal config divergence:} Both tiers use the same classifier model and thresholds, but differ in peripheral settings: Business has \texttt{prefetch\_threshold: null} + \texttt{passthrough\_tool\_calls: true}; Personal has \texttt{prefetch\_threshold: 0.55} + no passthrough tools
 \end{itemize}
 
-\paragraph{Note on the ``65\% search threshold'' claim:} Independent reverse-engineering by \textcite{resoneo2025chatgpt} documents a single \texttt{force\_search\_threshold} of 65\%, where search fires only if \texttt{search\_prob} exceeds that cutoff---making inference the default and search opt-in. Our data, collected exclusively on paid tiers (Business and Plus), captures a structurally different classifier variant: a three-class system where search is the \emph{default} and is suppressed only if \texttt{no\_search\_prob} $\geq 0.175$---effectively inverting the burden of proof. The Resoneo observations and \textcite{williamscook2025sonic} appear to describe the free-tier classifier (\texttt{sonic\_force\_pg\_switcher}), which uses a single probability and a higher activation threshold. This architectural divergence---opt-in search on the free tier versus opt-out search on paid tiers---is consistent with practitioner observations that paid plans trigger grounding more aggressively, and means our findings on search trigger rates, fan-out behavior, and citation selection apply specifically to paid ChatGPT deployments.
+\paragraph{The search-default paradigm shift.} The most architecturally significant finding from our classifier analysis is the inversion of the search decision's burden of proof. Earlier versions of the classifier, documented by \textcite{resoneo2025chatgpt} and \textcite{williamscook2025sonic}, used a single \texttt{search\_prob} that had to exceed a threshold (65\%) before web search would fire---making parametric inference the default and search opt-in. The version we observe on paid tiers inverts this: search is the \emph{default}, and is suppressed only if \texttt{no\_search\_prob} $\geq 0.175$. The question the classifier answers is no longer ``should I search?'' but ``should I \emph{not} search?''---and with a catch-all \texttt{simple\_search\_threshold} of~0, any prompt that fails to clear the suppression gate will trigger retrieval. For product-recommendation queries, this means web grounding is near-guaranteed on paid tiers.
+
+\paragraph{Free-tier vs.\ paid-tier divergence.} The Resoneo and Williams-Cook observations appear to describe the free-tier classifier (\texttt{sonic\_force\_pg\_switcher}), which retains the older opt-in architecture with a single probability and a higher activation threshold. This architectural divergence---opt-in search on the free tier versus opt-out search on paid tiers---is consistent with practitioner observations that paid plans trigger grounding more aggressively, and means our findings on search trigger rates, fan-out behavior, and citation selection apply specifically to paid ChatGPT deployments.
 
 \paragraph{Scope caveat:} Because our 79 prompts were deliberately designed to elicit product recommendations requiring web data, the classifier overwhelmingly routed them to search---no run ever crossed the \texttt{no\_search\_threshold} or the \texttt{complex\_search\_threshold}. The thresholds and cascade logic described above are extracted from the classifier's configuration payload, not from empirical observation of suppression events. The 52 no-search runs in our dataset resulted from external mechanisms (null classification or server-side overrides), not from the classifier's probability output exceeding the configured gate. A fuller discussion of this limitation and its implications is in Section~\ref{sec:lim-search-trigger}.
 
@@ -70,7 +77,7 @@ While the majority of GPT runs complete their retrieval in a single search turn,
 
 \paragraph{Distribution (across 474 runs, including 435 with valid search data):}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT multi-turn fan-out distribution}
 \label{tab:multi-turn-dist}
@@ -95,7 +102,7 @@ Search Turns & \texttt{web.run} Calls & Total Queries & Runs & \% & Description 
 
 We cannot determine \textit{why} the model chose to re-search; we can only observe \textit{what} it searched. The table below shows the actual Turn 1 and Turn 2+ query content extracted from raw network payloads.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Multi-turn query content for selected prompts} [Wait unlike I talked above this is actually quite similar to thinking searches gemini does]
 \label{tab:multi-turn-queries}
@@ -180,10 +187,10 @@ Because our Gemini data was collected through the Vertex~AI API (which does not 
 \end{enumerate}
 
 %-----------------------------------------------------------------------
-\section{Position Bias \& Page Distribution}
+\section{Page-Level Citation Distribution}
 \label{sec:position-bias}
 
-Having established how models generate fan-out queries and trigger search, we now quantify how search-engine ranking---the position a URL holds in the SERP ``menu''---influences its likelihood of being cited in the model's ``order.'' This analysis precedes the invisible-links section because understanding where citations land within the SERP provides the necessary context for interpreting what falls outside it.
+Having established how models generate fan-out queries and trigger search, we now examine how citations are distributed across SERP pages. Understanding where citations land within the SERP provides the necessary context for interpreting what falls outside conventional search indices (Section~\ref{sec:citation-overlap}) and how rank position shapes citation likelihood (Section~\ref{sec:rank1-effect}).
 
 \subsection{Page-Level Distribution (The ``Long Tail'' of Retrieval)}
 \label{sec:page-dist}
@@ -195,7 +202,7 @@ Our analysis of 237 runs per engine tier (79 queries $\times$ 3 runs) reveals th
 
 Analysis of where GPT citations match results in our Bing scrape (up to Rank 200). Because ChatGPT likely receives a cleaner backend ranking than the consumer UI we scraped (see Section~2.2.1), these match counts reflect our best-effort alignment rather than ChatGPT's actual retrieval depth.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Bing page-level citation match distribution}
 \label{tab:bing-page-dist}
@@ -223,7 +230,7 @@ Page 16 & 103 & 204 \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -250,87 +257,18 @@ Page 16 & 103 & 204 \\
 
 \paragraph{Observations on the Bing page distribution:}
 \begin{itemize}
-    \item \textbf{Business vs Personal Page 1 gap}: Business shows nearly 3$\times$ the Page 1 matches (1,468 vs 521), consistent with Business's higher Bing affinity (81.3\% overlap vs 67.6\%; see Section~\ref{sec:global-overlap}). Personal's lower Page 1 count aligns with its multi-provider retrieval strategy --- many of its citations match Google rather than Bing. [I mean even besides truncation page 2 results seem quite random tbh i'VE SEEN quite absurd stuff that i'd never see on google serp page2 is almost like bing is not even indexing propelry]
+    \item \textbf{Business vs Personal Page 1 gap}: Business shows nearly 3$\times$ the Page 1 matches (1,468 vs 521), consistent with Business's higher Bing affinity (81.3\% overlap vs 67.6\%; see Section~\ref{sec:global-overlap}). Personal's lower Page 1 count aligns with its multi-provider retrieval strategy --- many of its citations match Google rather than Bing. 
     \item \textbf{The ``Page 2 Dip''}: Page 2 shows a conspicuous drop compared to both Page 1 and Pages 3--5. As discussed in Section~2.2.1, this is likely an artifact of Bing's UI pagination instability (truncated Page 1 results not shifting cleanly to Page 2) rather than a model preference.
     \item \textbf{Smooth decay after Page 3}: Pages 3--16 show a gradual, expected decay in match counts --- the long-tail pattern. The fact that we still see hundreds of matches on Pages 4--10 demonstrates that many GPT citations fall well beyond what human searchers would see.
     \item \textbf{The ``Page 1'' Elasticity caveat}: We avoid defining Page 1 as a fixed ``Rank 1--10'' range. In Bing's consumer UI, the first page length varies based on ads, rich snippets, and vertical blocks (see Section~2.2.1).
 \end{itemize}
 
-\subsection{Intra-Page Position Bias (The ``Rank 1'' Effect)}
-\label{sec:rank1-effect}
+\subsubsection{Google Page Distribution}
+\label{sec:google-page-dist}
 
-Even within the first page of results, rank position matters significantly for citation likelihood. We show GPT against both the Bing index (its primary retrieval source for Business) and the Google SERP, plus Gemini against its own Google fan-out results.
+To complement the Bing distribution above, we examine where GPT citations match organic results in the Google SERP (collected via SerpApi, $\sim$25 results per query). Showing both tiers side by side reveals the Business/Personal divergence from a page-distribution angle.
 
-\subsubsection{GPT: Bing Rank-Level Match Distribution (Business vs Personal)} [idk I dont think I understodd what we show here tbh like the citation likeliehood of each rank?]
-\label{sec:gpt-bing-rank}
-
-Analysis of where GPT citations match results by \textbf{global Bing rank} (position 1--200 across our full scrape). All 213 Business and 209 Personal runs have results at every rank, so the match rates below are directly comparable. We count \textbf{distinct runs} where at least one cited link matched the Bing result at a given rank --- this avoids inflating numbers when the same URL appears in multiple citation slots within a single run (e.g., both as a cited and additional link).
-
-\begin{table}[htbp]
-\centering
-\caption{GPT citation match rate by Bing rank (Top 10)}
-\label{tab:gpt-bing-rank}
-\begin{tabular}{lrrrr}
-\toprule
-Rank & Bus.\ Runs Matched & Bus.\ Rate & Pers.\ Runs Matched & Pers.\ Rate \\
-\midrule
-\textbf{1} & \textbf{152} & \textbf{71.4\%} & \textbf{56} & \textbf{26.8\%} \\
-2 & 146 & 68.5\% & 49 & 23.4\% \\
-3 & 86 & 40.4\% & 47 & 22.5\% \\
-4 & 70 & 32.9\% & 33 & 15.8\% \\
-5 & 48 & 22.5\% & 40 & 19.1\% \\
-6 & 41 & 19.2\% & 26 & 12.4\% \\
-7 & 44 & 20.7\% & 26 & 12.4\% \\
-8 & 44 & 20.7\% & 24 & 11.5\% \\
-9 & 38 & 17.8\% & 27 & 12.9\% \\
-10 & 20 & 9.4\% & 29 & 13.9\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Match rate is defined as the number of distinct runs where at least one cited link matched the Bing result at that rank, divided by the total runs with a result at that rank (213 Business, 209 Personal---all runs have results at every rank since we scraped to Rank~200). [should we also put google here for personal?]
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=0.9\textwidth,
-    height=7cm,
-    xlabel={Bing Rank},
-    ylabel={Match Rate (\%)},
-    xtick={1,2,3,4,5,6,7,8,9,10},
-    ymin=0, ymax=80,
-    ymajorgrids=true,
-    mark=*,
-    line width=1.2pt,
-    legend style={at={(0.98,0.98)}, anchor=north east},
-]
-\addplot[color=entcolor, mark=*, line width=1.2pt] coordinates {(1,71.4) (2,68.5) (3,40.4) (4,32.9) (5,22.5) (6,19.2) (7,20.7) (8,20.7) (9,17.8) (10,9.4)};
-\addplot[color=perscolor, mark=*, line width=1.2pt] coordinates {(1,26.8) (2,23.4) (3,22.5) (4,15.8) (5,19.1) (6,12.4) (7,12.4) (8,11.5) (9,12.9) (10,13.9)};
-\legend{Business, Personal}
-\end{axis}
-\end{tikzpicture}
-\caption{Bing rank-level match rate for GPT Business vs.\ Personal. Business exhibits a steep cliff from rank 2 (68.5\%) to rank 3 (40.4\%), while Personal shows a flatter profile (12--27\%) consistent with its multi-provider retrieval strategy drawing citations primarily from Google.} [i mean weird to say citations primarily from google, imo just put also that to graph maybe and dontm make sentences like this]
-\label{fig:bing-rank-match-rate} 
-\end{figure}
-
-\paragraph{Bing's ``Elastic Page 1'' caveat:}
-The global-rank table above treats every rank equally (all runs have results at Ranks 1--200). But in the actual Bing consumer UI, Page 1 is not a fixed ``Top 10'' --- it varies per scrape (see Section~2.2.1). Of 161 clean runs per tier (excluding \textasciitilde50 with a scraper artifact that tagged all 200 results as Page 1), the median Page 1 length was \textbf{6 results (Business)} and \textbf{4 results (Personal)}. Nearly half of scrapes had 5 or fewer organic results on Page 1, and only about a third had the ``classic'' 8--10 results. This means the Rank 1--2 dominance in the table above is robust (every scrape has those ranks), but match rates at Ranks 5+ should be read with the caveat that many users would never see those results on Page 1.
-
-\paragraph{Key observations on Bing rank bias:}
-\begin{itemize}
-    \item \textbf{Business Rank 1--2 dominance}: 71\% and 69\% of runs cite the Bing \#1 and \#2 results. The drop to Rank 3 (40\%) is the steepest cliff in the data.
-    \item \textbf{Personal is flat on Bing}: Rates range 12--27\% with no strong rank signal, consistent with Personal drawing citations primarily from Google.
-    \item \textbf{The Page 2+ long tail}: Match rates at Ranks 11+ (the start of Page 2 for most scrapes) drop to single digits but never reach zero --- citations continue matching deep into the SERP, consistent with the page-level distribution in Section~\ref{sec:page-dist}.
-\end{itemize}
-
-\subsubsection{GPT: Google Match Distribution (Business vs Personal)}
-\label{sec:gpt-google-rank}
-
-Analysis of where GPT citations match organic results in the Google SERP (collected via SerpApi). Showing both tiers side by side reveals the Business/Personal divergence visible in Bing overlap (Section~\ref{sec:global-overlap}) from a different angle.
-
-[ I mean this business vs google table could be seen as a control group for sure I tihnk this isa good point bcs it also shows us how a just relationship distribution should look between gpt and a serach index like someone seraching for same concepts on an index even if they arent really tied together we should expect to see some relevance right? i THINK this shows that if indexing is being done reasonably for these fan outs queires ther'll be some overlap]
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT citation matches by Google page and position}
 \label{tab:gpt-google-dist}
@@ -374,7 +312,7 @@ Page & Position & Business Matches & Personal Matches \\
 
 \paragraph{Non-organic SERP features (PAA, video, discussion):}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT citation matches against non-organic SERP features}
 \label{tab:gpt-serp-features}
@@ -389,254 +327,50 @@ Discussion & --- & 3 (1+1+1) \\
 \end{tabular}
 \end{table}
 
-Non-organic match counts are low, confirming [confirm dont sya confirm imo] that GPT citations overwhelmingly align with organic results. The Personal tier shows roughly double the PAA matches, consistent with its higher Google affinity.
+Non-organic match counts are low, confirming that GPT citations overwhelmingly align with organic results. The Personal tier shows roughly double the PAA matches, consistent with its higher Google affinity.
 
-\paragraph{Key contrast --- Business vs Personal on Google:}
+\paragraph{Key observations --- Business vs Personal on Google:}
 \begin{itemize}
-    \item Personal shows \textasciitilde2$\times$ the Google matches at every rank, consistent with its multi-provider retrieval strategy (64.6\% Google overlap vs Business's 27.8\% control).
+    \item Personal shows \textasciitilde2$\times$ the Google matches at every position, consistent with its multi-provider retrieval strategy (64.6\% Google overlap vs Business's 27.8\% control; see Section~\ref{sec:global-overlap}).
     \item Business's low Google match counts confirm it is primarily Bing-driven; the Google matches it does have likely reflect domain overlap between indices rather than Google-sourced retrieval.
+    \item Unlike the Bing distribution, which extends to Page~16 with hundreds of matches, the Google distribution is limited to $\sim$3 pages due to SerpApi's shallower scrape depth ($\sim$25 results vs Bing's 200).
 \end{itemize}
 
-\subsubsection{Gemini: Google Match Distribution \& Position Bias}
-\label{sec:gemini-google-rank}
-
-Analysis of where Gemini citations appear in the \textbf{per-run} Google fan-out query results (matched against SerpApi organic results for the same grounding-support queries). [well gemini confirms they only use google right? so we don't even have to like go absurd on invisbile links and stuff but good study and tables again for ocntrast  to gpt imo]
-
-\begin{table}[htbp]
-\centering
-\caption{Gemini citation distribution by Google rank}
-\label{tab:gemini-google-rank}
-\begin{tabular}{lrr}
-\toprule
-Rank & Citations & Cited \% \\
-\midrule
-\textbf{Rank 1} & \textbf{181} & \textbf{15.7\%} \\
-Rank 2 & 105 & 9.1\% \\
-Rank 3 & 93 & 8.1\% \\
-Rank 4 & 92 & 8.0\% \\
-Rank 5 & 70 & 6.1\% \\
-Rank 6 & 62 & 5.4\% \\
-Rank 7 & 72 & 6.2\% \\
-Rank 8 & 51 & 4.4\% \\
-Rank 9 & 39 & 3.4\% \\
-Rank 10 & 21 & 1.8\% \\
-Rank 11 & 24 & 2.1\% \\
-Rank 12 & 26 & 2.3\% \\
-Rank 13 & 22 & 1.9\% \\
-Rank 14 & 23 & 2.0\% \\
-Rank 15 & 21 & 1.8\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{itemize}
-    \item \textbf{The ``Rank 1'' Dominance}: Gemini shows a clear concentration at the first organic result (15.7\%), nearly double the second rank (9.1\%).
-    \item \textbf{Selection Decay}: Citations decay gradually through Rank 9, then drop sharply at Rank 10 (1.8\%). Ranks 11--15 stabilize at \textasciitilde2\%, suggesting that results beyond the first page of Google results are still cited but at a much lower rate.
-    \item \textbf{First-Query Bias (Gemini vs GPT)}: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see per-query tables below). GPT shows a nearly balanced 50/50 split (excluding rare multi search run cases) across its two parallel fan-out queries --- a fundamental architectural difference.
-\end{itemize}
-
-\subsubsection{Cross-System Rank Concentration (Page 1)}
-\label{sec:cross-system-rank}
-
-To compare how much each system favors higher-ranked results, we restrict to \textbf{Page 1 results} and compute each rank's share of all Page-1 matches. For GPT Personal, which retrieves from both Bing and Google, we take the \textbf{best (highest) rank} each citation achieves across both indices to avoid double-counting. Bing data excludes \textasciitilde50 runs with a scraper artifact (see Section~2.2.1).
-
-\begin{table}[htbp]
-\centering
-\caption{Cross-system Page 1 rank concentration}
-\label{tab:cross-rank-concentration}
-\begin{tabular}{lrrr}
-\toprule
-Rank & GPT Business (Bing P1) & GPT Personal (Bing+Google P1) & Gemini (Google P1) \\
-\midrule
-\textbf{1} & \textbf{17.4\%} & \textbf{18.1\%} & \textbf{23.0\%} \\
-2 & 18.7\% & 14.3\% & 13.4\% \\
-3 & 13.7\% & 12.2\% & 11.8\% \\
-4 & 10.5\% & 11.6\% & 11.7\% \\
-5 & 10.2\% & 9.4\% & 8.9\% \\
-6* & 8.3\% & 10.5\% & 7.9\% \\
-7* & 7.5\% & 8.3\% & 9.2\% \\
-8* & 5.9\% & 7.2\% & 6.5\% \\
-9* & 5.0\% & 5.1\% & 5.0\% \\
-10* & 2.8\% & 3.3\% & 2.7\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Share is computed as citation matches at rank~$N$ divided by total Page-1 citation matches at ranks~1--10. Totals: GPT Business = 797; GPT Personal = 921; Gemini = 786.
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    ybar,
-    bar width=3pt,
-    width=\textwidth,
-    height=7cm,
-    xlabel={SERP Rank},
-    ylabel={Share of Page-1 Matches (\%)},
-    xtick={1,2,3,4,5,6,7,8,9,10},
-    ymin=0, ymax=28,
-    ymajorgrids=true,
-    legend style={at={(0.98,0.98)}, anchor=north east},
-    enlarge x limits=0.08,
-]
-\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(1,17.4) (2,18.7) (3,13.7) (4,10.5) (5,10.2) (6,8.3) (7,7.5) (8,5.9) (9,5.0) (10,2.8)};
-\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(1,18.1) (2,14.3) (3,12.2) (4,11.6) (5,9.4) (6,10.5) (7,8.3) (8,7.2) (9,5.1) (10,3.3)};
-\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(1,23.0) (2,13.4) (3,11.8) (4,11.7) (5,8.9) (6,7.9) (7,9.2) (8,6.5) (9,5.0) (10,2.7)};
-\legend{GPT Business, GPT Personal, Gemini}
-\end{axis}
-\end{tikzpicture}
-\caption{Cross-system Page 1 rank concentration. Gemini shows the steepest rank-1 peak (23.0\%), while GPT Business exhibits a distinctive ``top-2'' effect where rank 2 (18.7\%) slightly exceeds rank 1 (17.4\%). GPT Personal has the flattest profile across ranks.} [right after this show a parallel maybe to SERP ctr rates? xd]
-\label{fig:cross-rank-concentration}
-\end{figure}
-
-\paragraph{Note on ranks 6--10 (Bing availability caveat):} Google consistently returns 10 organic results on Page 1, so Gemini and GPT Personal (Google side) have full data at all ranks. However, Bing's elastic Page 1 means many scrapes had fewer than 6 results on Page 1. To ensure a fair comparison at ranks 6--10, the GPT columns use only runs where Bing Page 1 had \textbf{8+ results} (88 Business runs, 73 Personal runs out of 161 clean runs each). Ranks 1--5 are robust across all clean runs (\textasciitilde56\%+ availability at rank 5), but ranks 6--10 should be read with this subsetting caveat.
-
-\paragraph{Key observations:}
-\begin{itemize}
-    \item \textbf{Gemini has the steepest rank-1 concentration}: 23.0\% at rank 1, dropping immediately to 13.4\% at rank 2 --- a 10-point cliff. Unlike GPT, rank 2 gets no special treatment.
-    \item \textbf{GPT Business has a ``top-2'' effect}: Ranks 1--2 together account for \textbf{36.1\%} of Page-1 matches, with rank 2 (18.7\%) slightly above rank 1 (17.4\%). The steep drop occurs at rank 3 (13.7\%).
-    \item \textbf{GPT Personal is the flattest profile}: 18.1\% $\rightarrow$ 9.4\% across ranks 1--5, a gradual decline. Drawing from two indices creates more rank diversity --- no single rank dominates.
-    \item \textbf{All three systems converge at ranks 8--10}: Shares drop to 3--6\%, consistent with the Page 1$\rightarrow$Page 2 boundary effect.
-\end{itemize}
-
-\paragraph{Comparison with human click-through rates.}
-
-To contextualize LLM position bias, Table~\ref{tab:ctr-comparison} places the cross-system rank concentration alongside Google organic click-through rates reported by First Page Sage for 2026 \parencite{firstpagesage2026ctr}. The human CTR data reflects aggregate user clicking behavior on standard SERPs.
-
-\begin{table}[htbp]
-\centering
-\caption{LLM citation share vs.\ human CTR by SERP rank. Human CTR data from \textcite{firstpagesage2026ctr} (Google organic, 2026). LLM columns reproduce the Page-1 rank concentration from Table~\ref{tab:cross-rank-concentration}.}
-\label{tab:ctr-comparison}
-\begin{tabular}{lrrrr}
-\toprule
-Rank & \textbf{Human CTR} & \textbf{GPT Business} & \textbf{GPT Personal} & \textbf{Gemini} \\
-\midrule
-\textbf{1} & \textbf{39.8\%} & 17.4\% & 18.1\% & 23.0\% \\
-2 & 18.7\% & 18.7\% & 14.3\% & 13.4\% \\
-3 & 10.2\% & 13.7\% & 12.2\% & 11.8\% \\
-4 & 7.2\% & 10.5\% & 11.6\% & 11.7\% \\
-5 & 5.1\% & 10.2\% & 9.4\% & 8.9\% \\
-6 & 4.4\% & 8.3\% & 10.5\% & 7.9\% \\
-7 & 3.0\% & 7.5\% & 8.3\% & 9.2\% \\
-8 & 2.1\% & 5.9\% & 7.2\% & 6.5\% \\
-9 & 1.9\% & 5.0\% & 5.1\% & 5.0\% \\
-10 & 1.6\% & 2.8\% & 3.3\% & 2.7\% \\
-\midrule
-Top-3 share & 68.7\% & 49.8\% & 44.6\% & 48.2\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Both curves are top-heavy, but the human CTR distribution is substantially steeper: rank~\#1 captures 39.8\% of human clicks versus 17--23\% of LLM citations, and the top~3 account for 68.7\% of human clicks versus 45--50\% of LLM citations. LLMs distribute attention more evenly across the first page---they ``look further down'' than human users do. However, the fundamental shape is the same: a monotonic decay with the majority of attention concentrated in the top positions and a sharp drop-off at the Page~1 boundary.
-
-This parallel reinforces the thesis argument. Position bias in LLM citation is not a novel artifact of generative AI---it is the same positional preference that has governed human search behavior for two decades, inherited by the retrieval pipeline that feeds the model. The optimization target has not changed; only the consumer of the ranking has. A page that ranks well for humans will, by the same mechanism, rank well for the LLM's retrieval. The same pattern holds within listicles: just as users reading a ``Best Of'' article disproportionately engage with the first items listed, LLMs extract the \#1 listicle item at 1.7--2.5$\times$ the uniform baseline (Section~\ref{sec:reranking}). Position bias operates at every level of the information hierarchy---SERP, page, and within-page---for both human and machine consumers.
-
-\paragraph{GPT per-query citation overlap (237 runs per tier):}
-
-\begin{table}[htbp]
-\centering
-\caption{GPT per-query citation overlap rates}
-\label{tab:gpt-per-query}
-\begin{tabular}{lrr}
-\toprule
-Metric & Business & Personal \\
-\midrule
-Bing Query 1 Overlap & \textbf{63.7\%} & 54.1\% \\
-Bing Query 2 Overlap & \textbf{64.2\%} & 52.4\% \\
-Google Query 1 Overlap & --- & 50.4\% \\
-Google Query 2 Overlap & --- & 46.4\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-[I feel liek this needs a header kinda feels out of nowehre after a huuge point we make this is a new topic and we sshould segue more carefully maybe about overlap rates q1q2 being quite close in percentage]
-GPT's two parallel fan-out queries contribute nearly equally to citation overlap: the split is effectively 50/50 on both Bing and Google, with neither query dominating. This contrasts sharply with Gemini's first-query concentration reported below. 
-
-\paragraph{Gemini per-query citation overlap distribution (237 runs, 1,651 citations):}
-
-\begin{table}[htbp]
-\centering
-\caption{Gemini per-query citation overlap distribution}
-\label{tab:gemini-per-query}
-\begin{tabular}{lrr}
-\toprule
-Query & Overlap & Citations \\
-\midrule
-\textbf{Q1} & \textbf{37.1\%} & 613 \\
-Q2 & 18.1\% & 299 \\
-Q3 & 11.6\% & 191 \\
-Q4 & 7.4\% & 122 \\
-Q5 & 2.8\% & 46 \\
-Q6 & 0.6\% & 10 \\
-Q7 & 0.1\% & 2 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Not all runs produce queries at every index; Q5+ counts are lower partly because fewer runs generate that many fan-out queries (a function of the minimum thinking budget used; see Section~2.4.2). The Q1 dominance is striking: the first fan-out query accounts for more citations than Q2--Q7 combined. Compared to GPT's balanced 50/50 split, Gemini's retrieval is heavily front-loaded toward its first grounding-support query.
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    ybar,
-    bar width=12pt,
-    width=0.7\textwidth,
-    height=6cm,
-    xlabel={Fan-Out Query Index},
-    ylabel={Citations},
-    symbolic x coords={Q1,Q2,Q3,Q4,Q5,Q6,Q7},
-    xtick=data,
-    ymin=0,
-    ymajorgrids=true,
-    nodes near coords,
-    every node near coord/.append style={font=\scriptsize},
-    fill=gemcolor,
-    draw=gemcolor!80!black,
-]
-\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(Q1,613) (Q2,299) (Q3,191) (Q4,122) (Q5,46) (Q6,10) (Q7,2)};
-\end{axis}
-\end{tikzpicture}
-
-
-\caption{Gemini per-query citation decay. The first fan-out query (Q1) accounts for 613 of 1,283 total citations --- more than Q2 through Q7 combined --- demonstrating Gemini's heavy front-loading toward its first grounding-support query.}
-\label{fig:gemini-query-decay}
-\end{figure}
-[these tables are like mid context of sth else Iguess it is wierd placement or we fucked up latex here ?]
 %-----------------------------------------------------------------------
-\section{Citation Overlap \& Invisible Links}
+\section{Citation Overlap \& Position Bias}
 \label{sec:citation-overlap}
 
-The position analysis in Section~\ref{sec:position-bias} demonstrates that citations are not randomly drawn from the SERP: rank matters, and the top one to two results carry disproportionate weight. However, that analysis only covers citations that matched a SERP result at all. This section asks the complementary question: what fraction of citations exist in conventional search indices in the first place, and what does the ``invisible'' remainder look like?
+The page-level distribution in Section~\ref{sec:position-bias} demonstrates that citations are not confined to the first page of results---they spread deep into the SERP long tail. However, that analysis only covers citations that \emph{matched} a SERP result at all. This section addresses two complementary questions: first, what fraction of citations exist in conventional search indices in the first place, and what does the gap between cited and indexed sources reveal about each provider's retrieval strategy? Second, \emph{within} the results that do match, how does rank position shape citation likelihood---does being the \#1 result confer a measurable advantage, and does that advantage differ across systems and indices?
 
 \subsection{Global Overlap \& Provider Discrepancy}
 \label{sec:global-overlap}
 
 We analyzed the overlap between LLM citations and the underlying search index (Bing/Google) across 237 runs. This analysis reveals a significant discrepancy in index affinity between deployment tiers---one of the study's most consequential findings.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Global citation overlap by provider and deployment tier}
 \label{tab:global-overlap}
 \small
 \begin{tabular}{lrrr}
 \toprule
-Metric & GPT Business (Bing-centric) & GPT Personal (Multi-provider) & Gemini (Google-centric) \\
+ & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Personal} & Gemini \\
 \midrule
-\textbf{Total Cited Links} & 1,637 & 1,839 & 1,651 \\
-\textbf{Total Additional Links} [wtf is additional link epxlain maybe if havent before] & 2,820 & 4,506 & --- \\
-\textbf{Bing Overlap (Cited)} & \textbf{81.3\%} & \textbf{67.6\%} & --- \\
-\textbf{Bing Overlap (Additional)} & \textbf{86.3\%} & \textbf{56.3\%} & --- \\
-\textbf{Google Overlap (Cited)} & \textbf{27.8\%} & \textbf{64.6\%} & \textbf{77.7\%} \\
-\textbf{Google Overlap (Additional)} & \textbf{20.7\%} & \textbf{52.1\%} & --- \\
-\textbf{Total Index Coverage} & \textbf{83.7\%} (Bing+Google) & \textbf{80.6\%} (Bing+Google) & \textbf{77.7\%} (Google) \\
-[ this table doesnt seem to fit the screen]
-\textbf{``Invisible'' (Missing)} & \textbf{16.3\%} & \textbf{19.4\%} & \textbf{22.3\%} \\
+Total Cited Links & 1,637 & 1,839 & 1,651 \\
+Total Additional Links & 2,820 & 4,506 & --- \\
+Bing Overlap (Cited) & \textbf{81.3\%} & 67.6\% & --- \\
+Bing Overlap (Additional) & \textbf{86.3\%} & 56.3\% & --- \\
+Google Overlap (Cited) & 27.8\% & \textbf{64.6\%} & \textbf{77.7\%} \\
+Google Overlap (Additional) & 20.7\% & 52.1\% & --- \\
+\midrule
+Total Index Coverage & 83.7\% & 80.6\% & 77.7\% \\
+Invisible (neither index) & 16.3\% & 19.4\% & 22.3\% \\
 \bottomrule
+\multicolumn{4}{l}{\scriptsize Coverage: Business/Personal = Bing $\cup$ Google; Gemini = Google only.}
 \end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -670,9 +404,289 @@ Metric & GPT Business (Bing-centric) & GPT Personal (Multi-provider) & Gemini (G
 
 \begin{itemize}
     \item \textbf{GPT Business: High Bing Affinity.} Business citations overlap with the Bing index at \textbf{81.3\%}---the highest single-index overlap in the study. Business's Google overlap is only \textbf{27.8\%}, which we treat as a \textbf{control baseline}: it approximates the natural domain overlap between the two indices (popular URLs that appear in both Bing and Google). Any Google overlap substantially above this \textasciitilde28\% baseline in other tiers is consistent with Google-sourced retrieval. OpenAI's documentation for organization-managed tiers explicitly names Bing as the search provider \parencite{openai2024enterprise}, and our data aligns with that statement.
-    \item \textbf{GPT Personal: High Google Affinity.} Personal citations overlap with Google at \textbf{64.6\%}---a \textbf{36.8 percentage-point increase} over the Business control baseline (27.8\%). Simultaneously, Personal's Bing overlap drops to 67.6\% (from Business's 81.3\%). The combined Bing+Google coverage reaches \textbf{80.6\%},[is it higher than 81.3 xd?] the highest total coverage of any tier. OpenAI's general documentation describes ChatGPT search as leveraging ``third-party search providers'' in the plural \parencite{openai2024search}; the magnitude of the Google overlap shift is consistent with Personal-tier retrieval drawing on the Google index in addition to Bing.
+    \item \textbf{GPT Personal: High Google Affinity.} Personal citations overlap with Google at \textbf{64.6\%}---a \textbf{36.8 percentage-point increase} over the Business control baseline (27.8\%). Simultaneously, Personal's Bing overlap drops to 67.6\% (from Business's 81.3\%). The combined Bing+Google coverage reaches \textbf{80.6\%}, the highest total coverage of any tier. OpenAI's general documentation describes ChatGPT search as leveraging ``third-party search providers'' in the plural \parencite{openai2024search}; the magnitude of the Google overlap shift is consistent with Personal-tier retrieval drawing on the Google index in addition to Bing.
     \item \textbf{Implication: Index-Dependent Visibility.} The 36.8\,pp Google overlap gap means that a brand ranking well in Google but poorly in Bing may be visible to Personal ChatGPT users but largely invisible to Business users---and vice versa. This is not a minor calibration difference; it represents a fundamentally different retrieval surface depending on deployment tier, with direct consequences for any brand monitoring its ``Share of Model'' across ChatGPT audiences.
 \end{itemize}
+
+With the global overlap landscape established, the following subsections examine how rank position within these indices shapes citation likelihood.
+
+\subsection{GPT: Rank-Level Position Bias}
+\label{sec:rank1-effect}
+\label{sec:gpt-bing-rank}
+
+To measure rank-level position bias, we count how often GPT citations match each Bing SERP rank. For each rank, we count \textbf{distinct runs} where at least one cited URL matched the result at that position---avoiding inflation when the same URL appears in multiple citation slots. Counts are out of 213 (Business) or 209 (Personal) runs with valid Bing data.
+
+\begin{table}[H]
+\centering
+\caption{GPT citation match counts by Bing SERP rank (Top~10). Each cell counts distinct runs where at least one citation matched that rank, out of 213 (Business) or 209 (Personal).}
+\label{tab:gpt-bing-rank}
+\begin{tabular}{lrrrr}
+\toprule
+Rank & Bus.\ Runs Matched & Bus.\ Rate & Pers.\ Runs Matched & Pers.\ Rate \\
+\midrule
+\textbf{1} & \textbf{152} & \textbf{71.4\%} & 56 & 26.8\% \\
+2 & 146 & 68.5\% & 49 & 23.4\% \\
+3 & 86 & 40.4\% & 47 & 22.5\% \\
+4 & 70 & 32.9\% & 33 & 15.8\% \\
+5 & 48 & 22.5\% & 40 & 19.1\% \\
+6 & 41 & 19.2\% & 26 & 12.4\% \\
+7 & 44 & 20.7\% & 26 & 12.4\% \\
+8 & 44 & 20.7\% & 24 & 11.5\% \\
+9 & 38 & 17.8\% & 27 & 12.9\% \\
+10 & 20 & 9.4\% & 29 & 13.9\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Business shows steep Bing rank bias (71\% at Rank~1, dropping to 9\% at Rank~10), while Personal is relatively flat across ranks (13--27\%), consistent with Personal retrieving from a different primary index.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.9\textwidth,
+    height=7cm,
+    xlabel={SERP Rank},
+    ylabel={Match Rate (\%)},
+    xtick={1,2,3,4,5,6,7,8,9,10},
+    ymin=0, ymax=85,
+    ymajorgrids=true,
+    mark=*,
+    line width=1.2pt,
+    legend style={at={(0.98,0.98)}, anchor=north east},
+]
+\addplot[color=entcolor, mark=*, line width=1.2pt] coordinates {(1,71.4) (2,68.5) (3,40.4) (4,32.9) (5,22.5) (6,19.2) (7,20.7) (8,20.7) (9,17.8) (10,9.4)};
+\addplot[color=perscolor, mark=*, line width=1.2pt, dashed] coordinates {(1,26.8) (2,23.4) (3,22.5) (4,15.8) (5,19.1) (6,12.4) (7,12.4) (8,11.5) (9,12.9) (10,13.9)};
+\legend{Business (Bing), Personal (Bing)}
+\end{axis}
+\end{tikzpicture}
+\caption{GPT Bing rank-level match rates. Business shows steep position bias with a cliff at Rank~3 (71\% $\rightarrow$ 40\%). Personal is relatively flat (13--27\%), consistent with Bing not being its primary retrieval source.}
+\label{fig:bing-rank-match-rate}
+\end{figure}
+
+\paragraph{Bing's ``Elastic Page 1'' caveat:}
+The global-rank table above treats every rank equally (all runs have results at Ranks 1--200). But in the actual Bing consumer UI, Page 1 is not a fixed ``Top 10'' --- it varies per scrape (see Section~2.2.1). Of 161 clean runs per tier (excluding \textasciitilde50 with a scraper artifact that tagged all 200 results as Page 1), the median Page 1 length was \textbf{6 results (Business)} and \textbf{4 results (Personal)}. Nearly half of scrapes had 5 or fewer organic results on Page 1, and only about a third had the ``classic'' 8--10 results. This means the Rank 1--2 dominance in the table above is robust (every scrape has those ranks), but match rates at Ranks 5+ should be read with the caveat that many users would never see those results on Page 1.
+
+\paragraph{Key observations:}
+\begin{itemize}
+    \item \textbf{Business Rank 1--2 dominance}: 71\% and 69\% of Business runs cite the Bing \#1 and \#2 results. The drop to Rank 3 (40\%) is the steepest cliff in the data.
+    \item \textbf{Personal's flat Bing profile}: Personal is relatively flat against Bing (13--27\%), with no clear rank signal---consistent with Bing not being its primary retrieval source.
+    \item \textbf{The Page 2+ long tail}: Match rates at Ranks 11+ drop to single digits but never reach zero --- citations continue matching deep into the SERP, consistent with the page-level distribution in Section~\ref{sec:page-dist}.
+\end{itemize}
+
+\subsection{Gemini: Google Position Bias}
+\label{sec:gemini-google-rank}
+
+Gemini retrieves exclusively from Google's index. We match Gemini citations against SerpApi organic results for the same grounding-support queries.
+
+\begin{table}[H]
+\centering
+\caption{Gemini citation distribution by Google rank}
+\label{tab:gemini-google-rank}
+\begin{tabular}{lrr}
+\toprule
+Rank & Citations & Cited \% \\
+\midrule
+\textbf{Rank 1} & \textbf{181} & \textbf{15.7\%} \\
+Rank 2 & 105 & 9.1\% \\
+Rank 3 & 93 & 8.1\% \\
+Rank 4 & 92 & 8.0\% \\
+Rank 5 & 70 & 6.1\% \\
+Rank 6 & 62 & 5.4\% \\
+Rank 7 & 72 & 6.2\% \\
+Rank 8 & 51 & 4.4\% \\
+Rank 9 & 39 & 3.4\% \\
+Rank 10 & 21 & 1.8\% \\
+Rank 11 & 24 & 2.1\% \\
+Rank 12 & 26 & 2.3\% \\
+Rank 13 & 22 & 1.9\% \\
+Rank 14 & 23 & 2.0\% \\
+Rank 15 & 21 & 1.8\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+    \item \textbf{Rank~1 dominance}: Gemini shows a clear concentration at the first organic result (15.7\%), nearly double the second rank (9.1\%).
+    \item \textbf{Selection decay}: Citations decay gradually through Rank~9, then drop sharply at Rank~10 (1.8\%). Ranks 11--15 stabilize at \textasciitilde2\%, suggesting that results beyond Google's first page are still cited but at a much lower rate.
+    \item \textbf{First-query bias}: Gemini exhibits a strong dependency on the first grounding-support query, with a steep decay across subsequent queries (see Section~\ref{sec:per-query-citation}). GPT shows a nearly balanced 50/50 split across its two parallel fan-out queries --- a fundamental architectural difference.
+\end{itemize}
+
+\subsection{Cross-System Rank Concentration (Page 1)}
+\label{sec:cross-system-rank}
+
+To compare how much each system favors higher-ranked results, we restrict to \textbf{Page 1 results} and compute each rank's share of all Page-1 matches. For GPT Personal, which retrieves from both Bing and Google, we take the \textbf{best (highest) rank} each citation achieves across both indices to avoid double-counting. Bing data excludes \textasciitilde50 runs with a scraper artifact (see Section~2.2.1).
+
+\begin{table}[H]
+\centering
+\caption{Cross-system Page 1 rank concentration}
+\label{tab:cross-rank-concentration}
+\begin{tabular}{lrrr}
+\toprule
+Rank & GPT Business (Bing P1) & GPT Personal (Bing+Google P1) & Gemini (Google P1) \\
+\midrule
+\textbf{1} & \textbf{17.4\%} & \textbf{18.1\%} & \textbf{23.0\%} \\
+2 & 18.7\% & 14.3\% & 13.4\% \\
+3 & 13.7\% & 12.2\% & 11.8\% \\
+4 & 10.5\% & 11.6\% & 11.7\% \\
+5 & 10.2\% & 9.4\% & 8.9\% \\
+6* & 8.3\% & 10.5\% & 7.9\% \\
+7* & 7.5\% & 8.3\% & 9.2\% \\
+8* & 5.9\% & 7.2\% & 6.5\% \\
+9* & 5.0\% & 5.1\% & 5.0\% \\
+10* & 2.8\% & 3.3\% & 2.7\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Share is computed as citation matches at rank~$N$ divided by total Page-1 citation matches at ranks~1--10. Totals: GPT Business = 797; GPT Personal = 921; Gemini = 786.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=3pt,
+    width=\textwidth,
+    height=7cm,
+    xlabel={SERP Rank},
+    ylabel={Share of Page-1 Matches (\%)},
+    xtick={1,2,3,4,5,6,7,8,9,10},
+    ymin=0, ymax=28,
+    ymajorgrids=true,
+    legend style={at={(0.98,0.98)}, anchor=north east},
+    enlarge x limits=0.08,
+]
+\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(1,17.4) (2,18.7) (3,13.7) (4,10.5) (5,10.2) (6,8.3) (7,7.5) (8,5.9) (9,5.0) (10,2.8)};
+\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(1,18.1) (2,14.3) (3,12.2) (4,11.6) (5,9.4) (6,10.5) (7,8.3) (8,7.2) (9,5.1) (10,3.3)};
+\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(1,23.0) (2,13.4) (3,11.8) (4,11.7) (5,8.9) (6,7.9) (7,9.2) (8,6.5) (9,5.0) (10,2.7)};
+\legend{GPT Business, GPT Personal, Gemini}
+\end{axis}
+\end{tikzpicture}
+\caption{Cross-system Page 1 rank concentration. Gemini shows the steepest rank-1 peak (23.0\%), while GPT Business exhibits a distinctive ``top-2'' effect where rank 2 (18.7\%) slightly exceeds rank 1 (17.4\%). GPT Personal has the flattest profile across ranks.}
+\label{fig:cross-rank-concentration}
+\end{figure}
+
+\paragraph{Note on ranks 6--10 (Bing availability caveat):} Google consistently returns 10 organic results on Page 1, so Gemini and GPT Personal (Google side) have full data at all ranks. However, Bing's elastic Page 1 means many scrapes had fewer than 6 results on Page 1. To ensure a fair comparison at ranks 6--10, the GPT columns use only runs where Bing Page 1 had \textbf{8+ results} (88 Business runs, 73 Personal runs out of 161 clean runs each). Ranks 1--5 are robust across all clean runs (\textasciitilde56\%+ availability at rank 5), but ranks 6--10 should be read with this subsetting caveat.
+
+\paragraph{Key observations:}
+\begin{itemize}
+    \item \textbf{Gemini has the steepest rank-1 concentration}: 23.0\% at rank 1, dropping immediately to 13.4\% at rank 2 --- a 10-point cliff. Unlike GPT, rank 2 gets no special treatment.
+    \item \textbf{GPT Business has a ``top-2'' effect}: Ranks 1--2 together account for \textbf{36.1\%} of Page-1 matches, with rank 2 (18.7\%) slightly above rank 1 (17.4\%). The steep drop occurs at rank 3 (13.7\%).
+    \item \textbf{GPT Personal is the flattest profile}: 18.1\% $\rightarrow$ 9.4\% across ranks 1--5, a gradual decline. Drawing from two indices creates more rank diversity --- no single rank dominates.
+    \item \textbf{All three systems converge at ranks 8--10}: Shares drop to 3--6\%, consistent with the Page 1$\rightarrow$Page 2 boundary effect.
+\end{itemize}
+
+\paragraph{Comparison with human click-through rates.}
+
+To contextualize LLM position bias, Table~\ref{tab:ctr-comparison} places the cross-system rank concentration alongside Google organic click-through rates reported by First Page Sage for 2026 \parencite{firstpagesage2026ctr}. The human CTR data reflects aggregate user clicking behavior on standard SERPs.
+
+\begin{table}[H]
+\centering
+\caption{LLM citation share vs.\ human CTR by SERP rank. Human CTR data from \textcite{firstpagesage2026ctr} (Google organic, 2026). LLM columns reproduce the Page-1 rank concentration from Table~\ref{tab:cross-rank-concentration}.}
+\label{tab:ctr-comparison}
+\begin{tabular}{lrrrr}
+\toprule
+Rank & \textbf{Human CTR} & \textbf{GPT Business} & \textbf{GPT Personal} & \textbf{Gemini} \\
+\midrule
+\textbf{1} & \textbf{39.8\%} & 17.4\% & 18.1\% & 23.0\% \\
+2 & 18.7\% & 18.7\% & 14.3\% & 13.4\% \\
+3 & 10.2\% & 13.7\% & 12.2\% & 11.8\% \\
+4 & 7.2\% & 10.5\% & 11.6\% & 11.7\% \\
+5 & 5.1\% & 10.2\% & 9.4\% & 8.9\% \\
+6 & 4.4\% & 8.3\% & 10.5\% & 7.9\% \\
+7 & 3.0\% & 7.5\% & 8.3\% & 9.2\% \\
+8 & 2.1\% & 5.9\% & 7.2\% & 6.5\% \\
+9 & 1.9\% & 5.0\% & 5.1\% & 5.0\% \\
+10 & 1.6\% & 2.8\% & 3.3\% & 2.7\% \\
+\midrule
+Top-3 share & 68.7\% & 49.8\% & 44.6\% & 48.2\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both curves are top-heavy, but the human CTR distribution is substantially steeper: rank~\#1 captures 39.8\% of human clicks versus 17--23\% of LLM citations, and the top~3 account for 68.7\% of human clicks versus 45--50\% of LLM citations. LLMs distribute attention more evenly across the first page---they ``look further down'' than human users do. However, the fundamental shape is the same: a monotonic decay with the majority of attention concentrated in the top positions and a sharp drop-off at the Page~1 boundary.
+
+This parallel reinforces the thesis argument. Position bias in LLM citation is not a novel artifact of generative AI---it is the same positional preference that has governed human search behavior for two decades, inherited by the retrieval pipeline that feeds the model. The optimization target has not changed; only the consumer of the ranking has. A page that ranks well for humans will, by the same mechanism, rank well for the LLM's retrieval. The same pattern holds within listicles: just as users reading a ``Best Of'' article disproportionately engage with the first items listed, LLMs extract the \#1 listicle item at 1.7--2.5$\times$ the uniform baseline (Section~\ref{sec:reranking}). Position bias operates at every level of the information hierarchy---SERP, page, and within-page---for both human and machine consumers.
+
+\subsection{Per-Query Citation Distribution}
+\label{sec:per-query-citation}
+
+The fan-out architecture of each system determines how evenly citations are drawn from successive retrieval queries. GPT issues two parallel fan-out queries per run, while Gemini issues a variable number of grounding-support queries (typically 3--7). The tables below compare how each system distributes citations across its queries---revealing GPT's balanced 50/50 split versus Gemini's steep first-query dominance.
+
+\paragraph{GPT per-query overlap.}
+
+\begin{table}[H]
+\centering
+\caption{GPT per-query citation overlap rates}
+\label{tab:gpt-per-query}
+\begin{tabular}{lrr}
+\toprule
+Metric & Business & Personal \\
+\midrule
+Bing Query 1 Overlap & \textbf{63.7\%} & 54.1\% \\
+Bing Query 2 Overlap & \textbf{64.2\%} & 52.4\% \\
+Google Query 1 Overlap & --- & 50.4\% \\
+Google Query 2 Overlap & --- & 46.4\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+GPT's two parallel fan-out queries contribute nearly equally to citation overlap: the split is effectively 50/50 on both Bing and Google, with neither query dominating. This contrasts sharply with Gemini's first-query concentration reported below.
+
+\paragraph{Gemini per-query overlap.}
+
+\begin{table}[H]
+\centering
+\caption{Gemini per-query citation overlap distribution}
+\label{tab:gemini-per-query}
+\begin{tabular}{lrr}
+\toprule
+Query & Overlap & Citations \\
+\midrule
+\textbf{Q1} & \textbf{37.1\%} & 613 \\
+Q2 & 18.1\% & 299 \\
+Q3 & 11.6\% & 191 \\
+Q4 & 7.4\% & 122 \\
+Q5 & 2.8\% & 46 \\
+Q6 & 0.6\% & 10 \\
+Q7 & 0.1\% & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Not all runs produce queries at every index; Q5+ counts are lower partly because fewer runs generate that many fan-out queries (a function of the minimum thinking budget used; see Section~2.4.2). The Q1 dominance is striking: the first fan-out query accounts for more citations than Q2--Q7 combined. Compared to GPT's balanced 50/50 split, Gemini's retrieval is heavily front-loaded toward its first grounding-support query.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=12pt,
+    width=0.7\textwidth,
+    height=6cm,
+    xlabel={Fan-Out Query Index},
+    ylabel={Citations},
+    symbolic x coords={Q1,Q2,Q3,Q4,Q5,Q6,Q7},
+    xtick=data,
+    ymin=0,
+    ymajorgrids=true,
+    nodes near coords,
+    every node near coord/.append style={font=\scriptsize},
+    fill=gemcolor,
+    draw=gemcolor!80!black,
+]
+\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(Q1,613) (Q2,299) (Q3,191) (Q4,122) (Q5,46) (Q6,10) (Q7,2)};
+\end{axis}
+\end{tikzpicture}
+
+
+\caption{Gemini per-query citation decay. The first fan-out query (Q1) accounts for 613 of 1,283 total citations --- more than Q2 through Q7 combined --- demonstrating Gemini's heavy front-loading toward its first grounding-support query.}
+\label{fig:gemini-query-decay}
+\end{figure}
+
+%-----------------------------------------------------------------------
+\section{Invisible Links \& Citation Characteristics}
+\label{sec:invisible-links-section}
 
 \subsection{Invisible Links --- The Visibility Gap}
 \label{sec:invisible-links}
@@ -710,7 +724,7 @@ We separate notions that are easy to conflate:
 
 Business uses Bing exclusively (see Section~\ref{sec:global-overlap}), so Bing-invisible = truly invisible. Niche SaaS/product domains excluded. [Might be worth explaining why they are filtered out, I kinda did it bcs i assume they are just truncated hidden zone links. maybe that is why hiden zone description above is imporatnt] This table includes cited, additional, \textbf{and} retrieved-only links (see Section~\ref{sec:retrieved-only} for definition and Section~2.3.2 for naming conventions).
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT Business --- top invisible domains (all citation types)}
 \label{tab:ent-invisible-all}
@@ -743,7 +757,7 @@ All citation types (cited + additional + retrieved-only) are included, with www/
 
 Personal uses multiple search providers [assumption here] (see Section~\ref{sec:global-overlap}), so a Bing-only invisible check overstates the gap. Ordered by \textbf{truly invisible} count (not in Bing \textbf{or} Google). Includes all citation types.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT Personal --- top invisible domains with Google recovery (all citation types)}
 \label{tab:pers-invisible-all}
@@ -778,7 +792,7 @@ The tables above include retrieved-only links (URLs in the search result pool th
 
 \paragraph{GPT Business (cited + additional only, top 15):}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT Business --- top invisible domains (cited + additional only)}
 \label{tab:ent-invisible-cited}
@@ -810,7 +824,7 @@ Excluding retrieved-only links shrinks the Business invisible set by \textbf{45\
 \paragraph{GPT Personal (cited + additional only, top 20, by truly invisible):}
 
 [idk maybe some of these tables are too much]
-\begin{table}[htbp]
+\begin{table}[H]
 \centering 
 \caption{GPT Personal --- top invisible domains (cited + additional only, by truly invisible)}
 \label{tab:pers-invisible-cited}
@@ -862,9 +876,9 @@ Our reported invisible rates (16.3\% Business, 19.4\% Personal) are \textbf{uppe
 
 Beyond cited and additional links, ChatGPT's network responses contain a third category: \textbf{retrieved-only links} (see naming conventions in Section~2.3.2). These are URLs present in the \texttt{search\_result\_groups} payload --- the retrieval pool delivered to the model during generation --- that were \textbf{not} promoted to either cited or additional status. They never appear in the user-facing response.
 
-\paragraph{How we identified retrieved-only links:} Our ingestion pipeline (see \texttt{export\_enrichment\_queue\_from\_raw\_network\_responses.mjs}) parses each run's raw network response, extracts all URLs from the \texttt{search\_result\_groups\_json} field, then subtracts any URL already classified as cited or additional. The remainder is classified as ``retrieved-only.''
+\paragraph{How we identified retrieved-only links:} Our ingestion pipeline parses each run's raw network response, extracts all URLs from the \texttt{search\_result\_groups\_json} field, then subtracts any URL already classified as cited or additional. The remainder is classified as ``retrieved-only.''
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Retrieved-only link volume}
 \label{tab:retrieved-only-volume}
@@ -882,7 +896,7 @@ Max retrieved-only in a single run & 44 & 29 \\
 
 \paragraph{Retrieved-only links are overwhelmingly invisible from both search indices:}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Search index overlap by citation type}
 \label{tab:retrieved-only-overlap}
@@ -902,7 +916,7 @@ Only \textasciitilde6--10\% of retrieved-only links appear in our Bing scrape, a
 
 \paragraph{Top retrieved-only domains (Business):}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Top retrieved-only domains (Business)}
 \label{tab:retrieved-only-domains}
@@ -940,7 +954,7 @@ A URL classified as ``additional'' (supplementary, shown alongside the response 
 \paragraph{Cross-prompt flip-flop.}
 Of all unique additional URLs across each account type, we identify those that also appear as cited in at least one other run (any prompt).
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Cross-prompt flip-flop rate: additional URLs that appear as cited in at least one other run.}
 \label{tab:flipflop-cross}
@@ -960,7 +974,7 @@ The near-identical rates (25.96\% vs 25.91\%) are striking given the different r
 \paragraph{Per-prompt flip-flop.}
 Restricting to same-prompt, different-run flip-flops isolates the model's run-to-run stochasticity from cross-query URL reuse.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Per-prompt flip-flop rate: URLs that switch between additional and cited across different runs of the same prompt.}
 \label{tab:flipflop-perprompt}
@@ -997,7 +1011,7 @@ Type distribution across the full retrieval pool --- all enriched URLs the model
 
 \subsubsection{GPT Business study set (Bing-centric, N=2,858)}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT Business study set type distribution (N=2,858)}
 \label{tab:ent-menu}
@@ -1015,7 +1029,7 @@ news & 156 & 5.5\% \\
 
 \subsubsection{GPT Personal study set (Multi-provider, N=2,194)}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT Personal study set type distribution (N=2,194)}
 \label{tab:pers-menu}
@@ -1033,7 +1047,7 @@ news & 105 & 4.8\% \\
 
 \subsubsection{Gemini study set (Google-centric, N=2,939)}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Gemini study set type distribution (N=2,939)}
 \label{tab:gemini-menu}
@@ -1056,7 +1070,7 @@ Type distribution for only the URLs the model actually \textbf{cited inline} in 
 
 \subsubsection{GPT Business cited set (N=1,614)}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT Business cited set type distribution (N=1,614)}
 \label{tab:ent-cited}
@@ -1073,7 +1087,7 @@ news\_article & 104 & 6.4\% \\
 
 \subsubsection{GPT Personal cited set (N=1,444)}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{GPT Personal cited set type distribution (N=1,444)}
 \label{tab:pers-cited}
@@ -1090,7 +1104,7 @@ news\_article & 98 & 6.8\% \\
 
 \subsubsection{Gemini cited set (N=653)}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Gemini cited set type distribution (N=653)}
 \label{tab:gemini-cited}
@@ -1109,7 +1123,7 @@ comparison & 26 & 4.0\% \\
 
 \textbf{Cross-references}: Listicle-only feature drift is reported under Section~\ref{sec:selection-drift} (Selection Drift). Host bias, listicle rank bias, and semantic fidelity are reported under Section~\ref{sec:listicle-bias}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 % ---- Helper: a single pie chart as a \pic ----
@@ -1224,7 +1238,7 @@ To determine whether cited links differ structurally from additional links, we s
 
 \subsubsection{Listicles only}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Cited vs.\ Additional structural DNA comparison --- listicles only}
 \label{tab:cited-vs-additional-listicles}
@@ -1248,7 +1262,7 @@ Cited listicles consistently show higher rates of tables (+4.7\,pp Business, +8.
 
 \subsubsection{Product pages only}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Cited vs.\ Additional structural DNA comparison --- product pages only}
 \label{tab:cited-vs-additional-product}
@@ -1277,7 +1291,7 @@ We report page-length as \textbf{context} (not a grounding budget claim): listic
 
 Computed from raw fetched text dumps in \texttt{data/fetched\_content/} (see \texttt{data/enrichment/content\_size\_stats\_raw.csv}).
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Content size by page type bucket}
 \label{tab:content-size}
@@ -1326,7 +1340,7 @@ For each run, every SERP URL of the relevant content type is classified as Cited
 
 \subsubsection{GPT vs Bing Page 1}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Cited vs Not-Cited from Bing Page 1---Listicles (per-run, SERP-constrained).}
 \label{tab:ttest-serp-bing-listicle}
@@ -1348,7 +1362,7 @@ Freshness ($\geq$3) & $-$0.8pp & $-$0.27 & ns & $+$16.6pp & 5.67 & $***$ \\
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Cited vs Not-Cited from Bing Page 1---Product Pages (per-run, SERP-constrained).}
 \label{tab:ttest-serp-bing-pp}
@@ -1372,7 +1386,7 @@ Clear Authorship  & $-$0.4pp  & $-$0.89 & ns   & $+$0.5pp  & 0.55  & ns \\
 
 \subsubsection{GPT Personal vs Google Top-10}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Cited vs Not-Cited from Google Top-10---Listicles (Personal, per-run, SERP-constrained). 5 of 8 features significant.}
 \label{tab:ttest-serp-google-listicle}
@@ -1394,7 +1408,7 @@ Pros/Cons         & $+$2.7pp  & 0.67 & ns    \\
 
 \noindent Personal Listicle vs Google Top-10: Cited $N=160$, Not-Cited $N=2{,}100$.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Cited vs Not-Cited from Google Top-10---Product Pages (Personal, per-run, SERP-constrained). 3 significant.}
 \label{tab:ttest-serp-google-pp}
@@ -1422,7 +1436,7 @@ The SERP-level comparison reveals larger drifts than the citation stage. Persona
 
 Gemini cited URLs are reconstructed per-run from raw Vertex grounding chunks (resolved via \texttt{master\_bundle.json}). For each of 226 Gemini runs, every Google SERP URL is classified as Cited or Not-Cited based on whether the resolved grounding chunk URL matches.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Gemini Cited vs Not-Cited from Google Top-10---Listicles (per-run, SERP-constrained). 4 of 8 features significant.}
 \label{tab:ttest-gemini-listicle}
@@ -1444,7 +1458,7 @@ Freshness ($\geq$3) & $-$0.1pp & $-$0.08 & ns \\
 
 \noindent Gemini Listicle: Cited $N=468$, Not-Cited $N=3{,}349$.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Gemini Cited vs Not-Cited from Google Top-10---Product Pages (per-run, SERP-constrained). 4 significant.}
 \label{tab:ttest-gemini-pp}
@@ -1472,7 +1486,7 @@ Pros/Cons         & $+$1.1pp  & 1.17 & ns    \\
 Both groups were surfaced by ChatGPT---cited URLs appeared in the response text, additional URLs were shown as supplementary sources. This isolates the final citation preference from an already-filtered pool. Gemini lacks an ``additional'' citation category, so this test is GPT-only.
 
 [idk why these tables are here it is way too much nand these seem different than before  doesnt even say what data it is gpt gemini pers business?]
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Cited vs Additional drift---Listicles (Welch's t-test).}
 \label{tab:ttest-cited-addl-listicle}
@@ -1494,7 +1508,7 @@ Freshness ($\geq$3) & $-$0.8pp & $-$0.38 & ns & $-$1.0pp & $-$0.47 & ns \\
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Cited vs Additional drift---Product Pages (Welch's t-test).}
 \label{tab:ttest-cited-addl-pp}
@@ -1572,7 +1586,7 @@ When a model cites a listicle authored by a vendor (e.g., HeyGen's ``Best AI Vid
 
 Table~\ref{tab:host-exclusion} summarizes the results across solo-cited listicles where the host's own product was identified in the source.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Host-product exclusion in solo-cited listicles. ``Bias multiplier'' compares the observed host selection rate against a uniform random baseline ($1/\bar{N}$, where $\bar{N}$ is the mean number of products in the listicle).}
 \label{tab:host-exclusion}
@@ -1594,7 +1608,7 @@ Host selection rate & 28.1\% & 36.4\% \\
 
 At first glance, these numbers suggest a dual pattern: dominant omission, yet a 2--3$\times$ selection advantage when the host product \emph{is} included. However, a position-controlled analysis reveals that this apparent ``host bias'' is largely explained by rank privilege. In our dataset, host products occupy rank~\#1 in 89.2\% of GPT listicles and 100\% of Gemini listicles --- vendors overwhelmingly list their own product first. Comparing selection rates at the same position yields a much smaller residual:
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Host vs.\ non-host selection rates at listicle rank~\#1. The ``residual'' column shows the difference after controlling for position; compare against the raw bias multipliers in Table~\ref{tab:host-exclusion}.}
 \label{tab:host-position-controlled}
@@ -1621,7 +1635,7 @@ Do models preserve the internal ranking of a listicle when selecting products, o
 
 \paragraph{Top-item skew.} Despite re-ranking, models strongly over-select items from the top of the listicle. Table~\ref{tab:listicle-rank-bias} reports the share of selected products originating from the top ranks, compared against a uniform baseline computed per-item as $\min(K/N,\;1)$ where $N$ is the listicle size.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Listicle rank bias: observed share of selected products from the top-$K$ positions, with lift relative to uniform random selection. All systems over-select the \#1 item, with Gemini and GPT Personal showing the strongest skew.}
 \label{tab:listicle-rank-bias}
@@ -1642,7 +1656,7 @@ The \#1 item in a listicle is selected at 1.7--2.5$\times$ the uniform baseline,
 
 A plausible mechanism for within-listicle position bias emerges from recent work on how LLMs process source content. \textcite{petrovic2025grounding} shows that Google's grounding infrastructure operates with a fixed ``content budget'' of approximately 2{,}000 words per query, with rank~\#1 sources receiving 28\% of the budget (531 words) versus 13\% for rank~\#5 (266 words); pages exceeding 3{,}000 words receive only 13\% coverage, meaning items listed further down a long listicle may never enter the grounding chunks sent to the model. \textcite{indig2026attention} reports a complementary finding for ChatGPT: 44.2\% of citations originate from the first 30\% of a source page's text (a ``ski ramp'' distribution, $p < 0.0001$ over 18{,}012 verified citations), with content in the final 30\% accounting for only 24.7\% of citations. Together, these findings suggest that the top-item skew we observe is not merely a learned preference but may reflect an architectural constraint: items positioned later in a listicle are less likely to be included in the content window the model actually processes.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -1681,7 +1695,7 @@ The final question in the listicle pipeline is whether models accurately reprodu
 
 We evaluate both using an LLM-as-judge approach, scoring fidelity on a 1--5 scale by comparing each product claim against the source listicle text. A single inline prompt performs all tasks per case: fidelity scoring, listicle presence verification, rank extraction, host-product detection, and roster-item classification. Cross-model validation (all 1{,}116 claims judged by both Gemini 2.5 Flash and GPT-5-mini) confirmed that structural fields agree at 93--100\% and fidelity scores agree within $\pm$1 in 93.9\% of 1{,}826 matched product pairs, consistent with the DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}). Table~\ref{tab:semantic-fidelity} reports the results.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Semantic fidelity of solo-cited listicle product claims. ``Pure fidelity'' is the mean score (1--5 scale) for products confirmed present in the source. ``Attribution failure'' is the share of product items where the cited listicle does not contain the claimed product.}
 \label{tab:semantic-fidelity}
