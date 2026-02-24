@@ -673,7 +673,7 @@ Avg flip-flops per prompt & 4.9 (max 11) & 7.1 (max 17) \\
 
 Roughly 78\% of the cross-prompt flip-flop effect is already visible within-prompt --- most flip-flopping is driven by run-to-run stochasticity on the same query, not by different queries sharing URLs. With only 3 runs per prompt, nearly 90\% of prompts already exhibit at least one flip-flop; the observed 20--22\% rate is likely a lower bound.
 
-The finding confirms that the model's boundary between ``cite inline'' and ``show as supplementary'' is genuinely stochastic---same query, same model, different outcome. The Content DNA analysis in Section~\ref{sec:cited-vs-additional} reinforces this interpretation: the Cited vs.\ Additional structural comparison shows minimal differentiation (Business listicles: only 1 of 8 features significant; Personal listicles: 3 of 8), meaning the model's own enrichment profile reveals no strong signal distinguishing the two categories. If cited and additional links are structurally near-identical, the boundary between them is effectively a near-random threshold rather than a signal-driven decision. This has direct implications for GEO: a brand's source may be cited inline in one session and demoted to additional in the next, even for identical queries.
+The finding confirms that the model's boundary between ``cite inline'' and ``show as supplementary'' is genuinely stochastic---same query, same model, different outcome. The Content DNA analysis in Section~\ref{sec:cited-vs-additional} reinforces this interpretation: the Cited vs.\ Additional structural comparison shows minimal differentiation (Business listicles: only 1 of 8 features significant; Personal listicles: 3 of 8), meaning the model's own enrichment profile reveals no strong signal distinguishing the two categories. If cited and additional links are structurally near-identical, the boundary between them is effectively a near-random threshold rather than a signal-driven decision. A brand's source may be cited inline in one session and demoted to additional in the next, even for identical queries.
 
 %-----------------------------------------------------------------------
 \section{Content DNA Profile \& Cited vs.\ Additional Comparison}
@@ -701,8 +701,8 @@ Type distribution across the full retrieval pool --- all enriched URLs the model
 \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
 Type & Count & \% & Count & \% & Count & \% \\
 \midrule
-\textbf{listicle} & 989 & 34.6\% & 885 & 40.3\% & 1,296 & \textbf{44.1\%} \\
-\textbf{product\_page} & 1,159 & \textbf{40.6\%} & 808 & 36.8\% & 709 & 24.1\% \\
+\textbf{listicle} & 989 & 34.6\% & 885 & 40.3\% & 1,296 & 44.1\% \\
+\textbf{product\_page} & 1,159 & 40.6\% & 808 & 36.8\% & 709 & 24.1\% \\
 news & 156 & 5.5\% & 105 & 4.8\% & 165 & 5.6\% \\
 editorial & 161 & 5.6\% & 121 & 5.5\% & --- & --- \\
 marketplace & --- & --- & --- & --- & 150 & 5.1\% \\
@@ -726,17 +726,15 @@ Type distribution for only the URLs the model actually \textbf{cited inline} in 
 \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
 Type & Count & \% & Count & \% & Count & \% \\
 \midrule
-\textbf{listicle} & 589 & 36.5\% & 544 & 37.7\% & 371 & \textbf{56.8\%} \\
-\textbf{product\_page} & 649 & \textbf{40.2\%} & 523 & 36.2\% & 148 & 22.7\% \\
+\textbf{listicle} & 589 & 36.5\% & 544 & 37.7\% & 371 & 56.8\% \\
+\textbf{product\_page} & 649 & 40.2\% & 523 & 36.2\% & 148 & 22.7\% \\
 news & 104 & 6.4\% & 98 & 6.8\% & --- & --- \\
 comparison & --- & --- & --- & --- & 26 & 4.0\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Cross-system observation:} Gemini's cited set is dominated by listicles (\textbf{56.8\%}) --- significantly higher than both GPT tiers (\textasciitilde37\%). This gap is \textit{larger} in the cited set than in the study set (where Gemini is 44.1\% listicle vs GPT's 35--40\%), meaning Gemini amplifies its listicle preference during selection. GPT does the opposite: its product\_page share stays flat or increases from menu to order (the ``de-listicling'' effect quantified in Section~\ref{sec:selection-drift}). This divergence is partly a retrieval-level difference --- Gemini's Google-based pool surfaces more listicles to begin with --- but the selection stage widens the gap further.
-
-\textbf{Cross-references}: Listicle-only feature drift is reported under Section~\ref{sec:selection-drift} (Selection Drift). Host bias, listicle rank bias, and semantic fidelity are reported under Section~\ref{sec:listicle-bias}.
+How these menu-to-order shifts reveal selection preferences is quantified in Section~\ref{sec:selection-drift} (Selection Drift). Host bias, listicle rank bias, and semantic fidelity are reported under Section~\ref{sec:listicle-bias}.
 
 
 \subsection{Cited vs.\ Additional --- Structural DNA Comparison (by Page Type)}
@@ -762,8 +760,8 @@ Field & \makecell{Cited\\(n=205)} & \makecell{Addtl.\\(n=522)} & \makecell{Cited
 \texttt{has\_bullet\_points} & 88.8\% & 90.8\% & \textbf{93.1\%} & 88.9\% \\
 \texttt{has\_pros\_cons} & \textbf{56.1\%} & 52.1\% & \textbf{63.6\%} & 56.9\% \\
 \texttt{expertise\_signal} & 3.48 & 3.48 & 3.64 & 3.59 \\
-\texttt{spamminess} & 0.57 & 0.55 & 0.60 & 0.62 \\
-\texttt{readability} & 4.06 & 4.05 & 4.07 & 4.06 \\
+\texttt{freshness\_cue} & 3.19 & 3.12 & 3.40 & 3.38 \\
+\texttt{has\_clear\_authorship} & 54.0\% & 55.5\% & 52.2\% & 59.0\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -788,42 +786,13 @@ Field & \makecell{Cited\\(n=328)} & \makecell{Addtl.\\(n=476)} & \makecell{Cited
 \texttt{has\_bullet\_points} & 89.0\% & 86.1\% & 84.8\% & 84.4\% \\
 \texttt{has\_pros\_cons} & 1.5\% & 2.1\% & 1.8\% & 2.3\% \\
 \texttt{expertise\_signal} & 3.52 & 3.59 & 3.76 & 3.82 \\
-\texttt{spamminess} & 0.09 & 0.11 & 0.09 & 0.09 \\
-\texttt{readability} & 4.06 & 4.05 & 4.09 & 4.03 \\
+\texttt{freshness\_cue} & 0.73 & 0.67 & 1.26 & 1.14 \\
+\texttt{has\_clear\_authorship} & 0.9\% & 0.8\% & 3.1\% & 3.9\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Product pages show essentially flat structural profiles between cited and additional---no feature strongly predicts citation status. This is expected: product pages are structurally homogeneous (low table/pros-cons rates, high bullet rates), leaving little for the model to differentiate on structure alone. Selection among product pages likely depends on relevance and authority signals not captured by Content DNA.
-
-\subsection{Content-Size Context (Listicles vs Product Pages)}
-\label{sec:content-size}
-
-We report page-length as \textbf{context} (not a grounding budget claim): listicles are longer and more heterogeneous than vendor pages, which can influence extractability and selection behavior.
-
-\begin{table}[H]
-\centering
-\caption{Content size by page type bucket}
-\label{tab:content-size}
-\begin{tabular}{lrrr}
-\toprule
-Bucket & Median words & Median bytes & Coverage \\
-\midrule
-\texttt{all::listicle} & 2,094 & 14,645 & 99.7\% \\
-\texttt{all::product\_page} & 927 & 6,593 & 97.7\% \\
-\texttt{menu\_any::listicle} & 2,111 & 14,747 & 99.8\% \\
-\texttt{menu\_any::product\_page} & 930 & 6,614 & 98.0\% \\
-\texttt{cited\_any::listicle} & 2,182 & 15,343 & 99.5\% \\
-\texttt{cited\_any::product\_page} & 925 & 6,563 & 96.1\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{Interpretation}: listicles are \textasciitilde2$\times$ longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
-
-\textbf{Relation to grounding budget research}: Our table measures \textbf{full page length} of candidate/cited sources, not the snippet-level context that is actually injected into the model's context window. For context on the system-level constraints these pages operate within: \textcite{petrovic2025grounding} report a per-query grounding budget of \textasciitilde2,000 words for Gemini (median 1,929, p95 2,798), with coverage inversely proportional to page length (61\% for pages under 1K words, dropping to 13\% for pages over 3K words). \textcite{petrovic2025filter} found that roughly one-third of source content (32\%) survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} analyzed 1.2 million ChatGPT search results and found that 44.2\% of citations originate from the first 30\% of page content, with citation likelihood correlating with definitive language and question-answer structure. These studies collectively describe how AI search systems ingest and compress web content --- a pipeline our content size and Content DNA data sit within, but do not directly measure.
-
-\textbf{Token efficiency vs.\ citation visibility}: The grounding budget constraints above have motivated infrastructure-level responses such as Cloudflare's ``Markdown for Agents'' feature \parencite{martinho2026markdown}, which reduces token consumption by up to 80\% by serving markdown instead of HTML to AI crawlers. However, the question of whether format-level changes translate into citation advantages remains open. \textcite{punturo2026markdown} found no significant visibility difference in a controlled 381-page A/B test, and an analysis of 300,000 domains found no correlation between llms.txt adoption and AI citation rates \parencite{seranking2025llmstxt}. This suggests that within the grounding budget pipeline, \textbf{what} content says (structural DNA, position, freshness) matters more than \textbf{how} it is served---a distinction our Content DNA and selection drift analyses are designed to capture.
 
 %-----------------------------------------------------------------------
 \section{Selection Drift (Enrichment-Based)}
@@ -1073,6 +1042,33 @@ With per-run, SERP-constrained methodology applied to both models, \textbf{Gemin
 \end{itemize}
 
 \textbf{Product pages} show flatter drift profiles across both models. Product pages are structurally homogeneous (high vendor-owned rates, low table/pros-cons rates), leaving less for either model to differentiate on. Gemini product pages show significant under-selection of pages with editorial sources/citations ($-$3.6pp, $p<0.001$); this signal is directionally present but not significant for GPT.
+
+\subsection{Content-Size Context (Listicles vs Product Pages)}
+\label{sec:content-size}
+
+We report page-length as \textbf{context} (not a grounding budget claim): listicles are longer and more heterogeneous than vendor pages, which can influence extractability and selection behavior.
+
+\begin{table}[H]
+\centering
+\caption{Content size by page type bucket}
+\label{tab:content-size}
+\begin{tabular}{lrrr}
+\toprule
+Bucket & Median words & Median bytes & Coverage \\
+\midrule
+\texttt{all::listicle} & 2,094 & 14,645 & 99.7\% \\
+\texttt{all::product\_page} & 927 & 6,593 & 97.7\% \\
+\texttt{menu\_any::listicle} & 2,111 & 14,747 & 99.8\% \\
+\texttt{menu\_any::product\_page} & 930 & 6,614 & 98.0\% \\
+\texttt{cited\_any::listicle} & 2,182 & 15,343 & 99.5\% \\
+\texttt{cited\_any::product\_page} & 925 & 6,563 & 96.1\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Interpretation}: listicles are \textasciitilde2$\times$ longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
+
+\textbf{Relation to grounding budget research}: Our table measures \textbf{full page length} of candidate/cited sources, not the snippet-level context that is actually injected into the model's context window. For context on the system-level constraints these pages operate within: \textcite{petrovic2025grounding} report a per-query grounding budget of \textasciitilde2,000 words for Gemini (median 1,929, p95 2,798), with coverage inversely proportional to page length (61\% for pages under 1K words, dropping to 13\% for pages over 3K words). \textcite{petrovic2025filter} found that roughly one-third of source content (32\%) survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} analyzed 1.2 million ChatGPT search results and found that 44.2\% of citations originate from the first 30\% of page content, with citation likelihood correlating with definitive language and question-answer structure. These studies collectively describe how AI search systems ingest and compress web content --- a pipeline our content size and Content DNA data sit within, but do not directly measure.
 
 %-----------------------------------------------------------------------
 \section{Listicle Extraction \& Bias Analysis}
