@@ -20,15 +20,10 @@
 
 
 
-  Large language models are rapidly becoming the interface through which consumers discover products. 
-
-  By mid-2025, ChatGPT alone had reached approximately 10\% of the world's adult population, with information-seeking and practical guidance accounting for nearly 80\% of all conversations. Yet these models do not generate recommendations from memory alone. When a user asks for a  
-  product recommendation, the system can search the web in real time, retrieve relevant sources, and ground its response in what
+  LLMs are rapidly becoming the interface through which consumers discover products. By mid-2025, ChatGPT alone had reached approximately 10\% of the world's adult population, with information-seeking and practical guidance accounting for nearly 80\% of all conversations \parencite{chatterji2025chatgpt}. Yet especially for commercial intent prompts these models do not generate recommendations from memory alone anymore. When a user asks for a product recommendation, the system can search the web in real time, retrieve relevant sources, and ground its response in what
   it finds. This retrieval-and-grounding workflow is commonly referred to as retrieval-augmented generation (RAG), and it is
-  increasingly standard in LLM conversations when up-to-date information is required. At Snowflake Summit 2025, OpenAI CEO Sam  
-  Altman described where this trajectory leads: "a very tiny model with superhuman reasoning, 1 trillion tokens of context, and 
-  access to every tool you can imagine." The model supplies the reasoning; the web supplies the knowledge. This architecture is 
-  not a transitional compromise but the economically and technically inevitable design: inference is expensive, retrieval is    
+  increasingly standard in LLM conversations when up-to-date information is required. The model supplies the reasoning; the web supplies the knowledge. This architecture is
+  not a transitional compromise but the economically and technically inevitable design: inference is expensive, retrieval is
   cheap, and no model can be retrained hourly to keep pace with prices, reviews, and product launches.
 
   If retrieval is the foundation, then \emph{what gets retrieved} determines \emph{what gets recommended}. And what gets retrieved is
@@ -38,13 +33,7 @@
   Despite growing industry speculation that generative AI will render traditional search optimization obsolete, Search Engine   
   Optimization (SEO) is not dead; it is the prerequisite.
 
-  Our data does, however, reveal additional factors beyond ranking that shape which sources get cited. A significant share of
-  citations originate from sources outside the direct search indices entirely. The two ChatGPT tiers (Business and
-  Personal) also exhibit different retrieval behavior despite sharing the same interface. Models also show preferences for how
-  content is structured: sources with comparison tables, numbered lists, and bullet points are cited more often than less
-  structured alternatives. Within retrieved listicles, products listed near the top are recommended disproportionately more often than those further     
-  down, suggesting that rank bias extends beyond the search results page and into the source content itself. Phenomena such as these constitute the thin but empirically real layer that Generative Engine
-  Optimization (GEO) adds on top of SEO.
+  But if SEO is the prerequisite, is it sufficient? The emerging industry narrative around Generative Engine Optimization (GEO) claims that LLMs introduce new selection criteria beyond traditional ranking. If true, content creators would need to optimize for both search engines and LLM-specific preferences. If not, GEO is simply rebranded SEO. This thesis investigates which of these is the case, operationalizing grounding behavior as the measurable pipeline from retrieval through selection, citation, and final text generation: which sources the system retrieves, which survive into the response, how claims map to sources, and whether the cited content is faithfully reproduced.
 
 
 \section{Research Questions}
@@ -54,17 +43,6 @@
 \label{sec:core-rq}
 
 \textbf{RQ1:} \textit{How does grounding behavior manifest in LLM-generated product recommendations, and how does it vary across conditions we can observe (by tier or provider: ChatGPT Business vs.\ Personal, and ChatGPT vs.\ Gemini)?}
-\subsubsection{Operational Definition (What ``Grounding Behavior'' Means in This Thesis)}
-\label{sec:grounding-definition}
-
-Grounding behavior is the measurable pipeline from \textbf{retrieval $\rightarrow$ selection $\rightarrow$ citation $\rightarrow$ final text}, using observable artifacts:
-\begin{itemize}
-    \item \textbf{Retrieved candidate set} (where available): sources the system pulled/considered
-    \item \textbf{Selected set}: sources that ``survive'' selection (cited/attached)
-    \item \textbf{Claim linkage}: which textual claims map to which sources (claim-to-link mapping)
-    \item \textbf{SERP support}: whether selected sources are actually present in external SERPs (Bing/Google)
-    \item \textbf{Source-to-output fidelity}: whether products mentioned in retrieved listicles are carried into the final recommendations
-\end{itemize}
 
 \subsection{Sub-questions}
 \label{sec:sub-questions}
