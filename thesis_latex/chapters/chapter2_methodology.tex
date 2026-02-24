@@ -1,37 +1,18 @@
 \chapter{Methodology \& Tools}
 \label{ch:methodology}
 
-This chapter describes the experimental setup, instrumentation, and analytical tools used to study how ChatGPT and Gemini retrieve and cite web sources when answering product recommendation queries. We study two production LLM systems with fundamentally different instrumentation approaches. \textbf{ChatGPT} was studied via the production web interface (\texttt{chatgpt.com}) using network payload inspection (Chrome DevTools protocol), because OpenAI does not expose grounding metadata through its public API. We captured runs across two deployment tiers: \textbf{Personal} (a consumer ChatGPT Plus subscription) and \textbf{Business} (an organization-managed workspace account, provisioned through OpenAI's enterprise offering). Both tiers present the same chat interface but differ in backend configuration, most notably in search provider routing (Section~\ref{sec:global-overlap}). All ChatGPT runs were conducted in Temporary Chat mode to prevent conversation history from influencing retrieval, and routed through a U.S.\ proxy to ensure consistent locale-based retrieval behavior (Section~\ref{sec:proxy-requirement}). \textbf{Gemini} was studied via the Vertex~AI API (Gemini~3~Flash), which provides structured grounding metadata not available in the consumer UI. Full details of each instrumentation approach follow in the sections below.
+This chapter describes the analytical tools and the instrumentation we used to study how ChatGPT and Gemini retrieve and cite web sources when answering product recommendation queries. ChatGPT prompts were run via the production web interface (\texttt{chatgpt.com}) and responses were captured via network payload inspection. We captured runs across two subscription tiers: \textbf{Personal} (a consumer ChatGPT Plus subscription) and \textbf{Business} (an organization-managed workspace account, provisioned through ChatGPT Business tier). All ChatGPT runs were done in Temporary Chat mode to prevent conversation history from influencing retrieval, and run with a U.S.\ proxy using a browser extension to prevent user location from affecting the results (Section~\ref{sec:proxy-requirement}). Gemini prompts were run via the Vertex~AI API (Gemini~3~Flash), which provides structured grounding metadata in JSON format. 
 
-\section{Data Collection Pipeline}
-\label{sec:data-collection}
+The contrast between these three environments revealed notable differences, especially between the ChatGPT Plus and Business tiers. We ran each prompt three times per environment to examine how results vary across runs, which also increased our sample size.
 
-\begin{table}[htbp]
-\centering
-\caption{Data Collection Pipeline Components}
-\label{tab:data-collection-pipeline}
-\begin{tabular}{@{}ll@{}}
-\toprule
-\textbf{Component} & \textbf{Description} \\
-\midrule
-\textbf{Queries} & 79 product recommendation queries $\times$ 3 runs each (237 total runs) \\
-\textbf{ChatGPT Data} & \makecell[l]{Full responses with inline citations, additional links, and recommended \\ products through chrome dev tool network packet inspection} \\
-\textbf{Bing Data} & Top 200 results \\
-\textbf{Gemini Data} & Full \texttt{groundingMetadata} (Chunks vs.\ Supports) + Fan-out Queries \\
-\textbf{Google SERP} & \makecell[l]{SerpApi pagination until $\geq$25 Organic results are collected \\ (often $\sim$3 pages), with Video/PAA/Discussions retained \\ as diagnostic buckets} \\
-\textbf{Content Fetching} & \makecell[l]{Node.js fetcher + Browser extension for blocked pages \\ (Master Content Library)} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Selection of the Research Query Set}
+\section{Selection of the Research Query Set}
 \label{sec:query-set-selection}
 
-Our dataset consists of 79 unique product recommendation prompts, sourced from two platforms. The majority, 65 prompts, were drawn from Profound's Prompt Volumes feature, which provides prompt-level data derived from licensed, double-opt-in consumer panels of real ChatGPT users. Data is anonymized, aggregated, scrubbed of PII, and GDPR/CCPA compliant; Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent rather than verbatim transcripts \parencite{profound2026promptvolumes}. The remaining 14 prompts were identified through Ahrefs' AI Citations feature, which tracks URLs and domains appearing in ChatGPT responses; we used it to surface additional high-intent prompts within our target verticals. Prompts span collection dates from January 2025 to January 2026, with the majority concentrated between July and December 2025.
+We have taken the 79 unique prompts in our dataset from two platforms. 65 of these prompts were taken from Profound's Prompt Volumes feature \parencite{profound2026promptvolumes}, which provides prompt-level data derived from licensed and opt-in prompts of real ChatGPT users. Data is anonymized, aggregated, and GDPR/CCPA compliant; Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent rather than exact prompts. The other 14 prompts were taken from Ahrefs' AI Citations feature, which tracks URLs and domains appearing in ChatGPT responses; we used it to surface additional high-intent prompts within our target verticals. Prompts span collection dates from January 2025 to January 2026, with the majority concentrated between July and December 2025.
 
 From the broad set of available prompts, we deliberately filtered for high commercial intent (product recommendations, comparisons, and ``best of'' queries) to ensure the study reflects the segment of search where RAG is most active and where the retrieval-to-citation pipeline is most empirically observable (see Section~\ref{sec:commercial-catalyst}). All queries were concentrated in the AI and Software-as-a-Service (SaaS) sectors, particularly speech and language technology (speech-to-text, live transcription, voice translation, text-to-speech). This domain focus was a deliberate methodological choice: the author's professional expertise in this vertical enabled more nuanced qualitative analysis of retrieval relevance and citation quality. Representative examples include: \emph{``Which free AI would you recommend for translating my video?''} (P001), \emph{``Is there a transcription software available for a one-time payment instead of a subscription?''} (P003), \emph{``Are there live translation software options for video chats like Zoom or Teams?''} (P044), and \emph{``Can you recommend free text-to-speech extensions that don't sound robotic?''} (P069).
 
-Each of the 79 prompts was executed in 3 independent runs per deployment tier (with a 4th run added only in cases of technical failure or RAG non-triggering), yielding 474 ChatGPT runs (237 Business + 237 Personal) and 237 Gemini runs, for 711 total runs across all conditions.
+Each of the 79 prompts was executed in 3 independent runs per subscription tier (with a 4th run added only in cases of technical failure or RAG non-triggering), yielding 474 ChatGPT runs (237 Business + 237 Personal) and 237 Gemini runs, for 711 total runs across all conditions.
 
 \paragraph{Intent-based prompt clusters.}
 Although the 79 prompts span 9 fine-grained \texttt{parent\_keyword} categories, they reduce to 4 functional clusters when grouped by user intent: \textbf{live/real-time} (25 prompts, 31.6\%), \textbf{post-production translation} (24, 30.4\%), \textbf{post-production transcription/STT} (21, 26.6\%), and \textbf{text-to-speech} (9, 11.4\%). The first three clusters are roughly balanced; TTS forms a smaller tail. Representative examples include: \emph{``Is there a Windows application for live translation during calls in Google Meet?''} (live), \emph{``Which free AI would you recommend for translating my video?''} (post-prod translation), \emph{``What are the best free audio to text transcription tools?''} (transcription/STT), and \emph{``Can you recommend free text-to-speech extensions that don't sound robotic?''} (TTS).

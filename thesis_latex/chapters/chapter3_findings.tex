@@ -1,7 +1,7 @@
 \chapter{Findings \& Analysis}
 \label{ch:findings}
 
-This chapter traces the full retrieval-to-citation pipeline, organized to mirror the stages through which a user's prompt becomes a set of product recommendations. We begin with the retrieval strategy itself (how models reshape a single prompt into multiple search queries; Section~\ref{sec:fanout}) and then follow the results through the pipeline: how citations are distributed across SERP pages (Section~\ref{sec:position-bias}), what fraction of citations exist in conventional search indices and how provider strategy differs across deployment tiers (Section~\ref{sec:citation-overlap}), how rank position within pages shapes citation likelihood (Section~\ref{sec:gemini-google-rank}), what the ``invisible'' remainder looks like and how citation status fluctuates across runs (Section~\ref{sec:invisible-links-section}), how the structural characteristics of cited sources differ from the available pool (Sections~\ref{sec:content-dna}--\ref{sec:selection-drift}), and finally how the model extracts and reproduces individual products from within cited listicles (Section~\ref{sec:listicle-bias}).
+This chapter traces the full retrieval-to-citation pipeline, organized to mirror the stages through which a user's prompt becomes a set of product recommendations. We begin with the retrieval strategy itself (how models reshape a single prompt into multiple search queries; Section~\ref{sec:fanout}) and then follow the results through the pipeline: how citations are distributed across SERP pages (Section~\ref{sec:position-bias}), what fraction of citations exist in conventional search indices and how provider strategy differs across subscription tiers (Section~\ref{sec:citation-overlap}), how rank position within pages shapes citation likelihood (Section~\ref{sec:gemini-google-rank}), what the ``invisible'' remainder looks like and how citation status fluctuates across runs (Section~\ref{sec:invisible-links-section}), how the structural characteristics of cited sources differ from the available pool (Sections~\ref{sec:content-dna}--\ref{sec:selection-drift}), and finally how the model extracts and reproduces individual products from within cited listicles (Section~\ref{sec:listicle-bias}).
 
 %-----------------------------------------------------------------------
 \section{Retrieval Strategy \& Fan-Out Analysis}
@@ -94,7 +94,7 @@ Search Turns & \texttt{web.run} Calls & Total Queries & Runs & \% & Description 
 \end{table}
 
 \begin{itemize}
-    \item \textbf{Business triggers multi-turn search 3x more often} than Personal (4.1\% vs 1.4\%), suggesting different Sonicberry orchestration behavior across deployment tiers.
+    \item \textbf{Business triggers multi-turn search 3x more often} than Personal (4.1\% vs 1.4\%), suggesting different Sonicberry orchestration behavior across subscription tiers.
     \item Only \textbf{P035} (\textit{``Can you list translation services with live interpreters and their 2-day pricing?''}) consistently triggered 2 turns across all 6 runs. All other multi-turn runs were sporadic (1 of 3 runs for that prompt).
 \end{itemize}
 
@@ -273,11 +273,11 @@ Section~\ref{sec:position-bias} covered citations that \emph{matched} a SERP res
 \subsection{Global Overlap \& Provider Discrepancy}
 \label{sec:global-overlap}
 
-We analyzed the overlap between LLM citations and the underlying search index (Bing/Google) across 237 runs. This analysis reveals a significant discrepancy in index affinity between deployment tiers, one of the study's most consequential findings.
+We analyzed the overlap between LLM citations and the underlying search index (Bing/Google) across 237 runs. This analysis reveals a significant discrepancy in index affinity between subscription tiers, one of the study's most consequential findings.
 
 \begin{table}[H]
 \centering
-\caption{Global citation overlap by provider and deployment tier}
+\caption{Global citation overlap by provider and subscription tier}
 \label{tab:global-overlap}
 \small
 \begin{tabular}{lrrr}
