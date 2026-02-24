@@ -39,30 +39,18 @@
 \section{Research Questions}
 \label{sec:research-questions}
 
-\subsection{Core Research Question}
-\label{sec:core-rq}
+\textit{RQ1: How does grounding behavior manifest in LLM-generated product recommendations, and how does it vary across deployment tiers and providers?}
 
-\textbf{RQ1:} \textit{How does grounding behavior manifest in LLM-generated product recommendations, and how does it vary across conditions we can observe (by tier or provider: ChatGPT Business vs.\ Personal, and ChatGPT vs.\ Gemini)?}
+This core question decomposes into four sub-questions:
 
-\subsection{Sub-questions}
-\label{sec:sub-questions}
+\begin{enumerate}
+    \item RQ1a (Selection and visibility): How do cited, additional, rejected, and invisible sources differ in domain and type, and how does this differ between Business and Personal tiers?
+    \item RQ1b (External support): How often do LLM citations appear in conventional search engine results (Bing and Google)?
+    \item RQ1c (Selection bias): Do models exhibit preferences for specific structural content features (e.g., tables, numbered lists, freshness cues) when selecting from the retrieved pool, and how do these preferences vary across systems?
+    \item RQ1d (Listicle fidelity): When listicles are cited, which products within them are selected or ignored, and how faithfully does the model reproduce their details?
+\end{enumerate}
 
-\begin{itemize}
-    \item \textbf{RQ1a (selection + visibility)}: How do \textbf{cited, additional, rejected, and invisible} sources differ in domain/type, and how does this differ by \textbf{Business vs.\ Personal} runs on ChatGPT results?
-    \item \textbf{RQ1b (external support)}: How often do selected citations appear in \textbf{Top-N SERPs} (Bing/Google overlap; Gemini ``survival'' in Top-25)?
-    \item \textbf{RQ1c (selection bias \& DNA)}: Does the model exhibit a statistically significant preference for specific \textbf{Content DNA features} (e.g., tables, numbered lists, freshness) when selecting from the retrieved ``Menu,'' and how does this preference vary between \textbf{GPT Personal, GPT Business and Gemini}?
-    \item \textbf{RQ1d (listicle uptake / fidelity)}: When listicles are retrieved, which listicle-mentioned products are \textbf{selected vs ignored} in the final response (uptake rate, rank bias, host-bias), and how does this differ by run type?
-\end{itemize}
-
-\subsection{Role of External Search Indices}
-\label{sec:external-systems}
-
-\begin{itemize}
-    \item \textbf{Bing Search}: baseline ``human web'' retrieval/ranking surface used as a \textbf{measurement instrument} for rank/visibility and ``visibility gaps'' (\textbf{Top-200}). Primary overlap index for ChatGPT Business citations.
-    \item \textbf{Google (SerpApi)}: second overlap index for ChatGPT citations (revealing the Personal tier's Google affinity) and retrieval baseline for Gemini fan-out queries. Also used for sensitivity checks (\textbf{Organic-only} vs.\ non-organic result types such as \textbf{Video/PAA/Discussions}).
-\end{itemize}
-
-Gemini (Vertex AI, Gemini~3~Flash) serves as a \textbf{second LLM subject} rather than a measurement instrument. Its API provides structured grounding metadata (\texttt{groundingChunks}, \texttt{groundingSupports}, \texttt{webSearchQueries}) not available in ChatGPT, making it a complementary lens on the same retrieval-to-citation pipeline.
+To answer these questions, we compare LLM citations against two external search indices. Bing serves as the primary overlap baseline for ChatGPT (top 200 results per query), while Google (via SerpApi) provides a second overlap index and the retrieval baseline for Gemini's fan-out queries. Gemini itself serves as a second LLM subject rather than a measurement instrument, studied via its Vertex AI API which exposes structured grounding metadata not available in ChatGPT.
 
 \section{Market Context \& Motivation}
 \label{sec:market-context}
