@@ -145,7 +145,7 @@ Cross-language fan-out signals were observed in \textbf{13.1\%} of GPT runs (62/
 
     \item \textbf{Case~2 --- English prompt + foreign context $\rightarrow$ local-language fan-out (1.9\%, 9 runs):} The user searches in English but the prompt references an inherently local category (e.g., ``best pizza in Istanbul,'' ``local translation services in Berlin''). GPT responds by generating a locale-aware fan-out query in the relevant local language (Turkish, German), alongside the English query.
 
-    \item \textbf{Case~3 --- English prompt, no foreign context $\rightarrow$ foreign-language fan-out (4.9\%, 23 runs):} The user searches in English with no geographic or cultural markers in the prompt, yet GPT generates a non-English fan-out query. These ``untriggered'' localizations suggest \textbf{IP geolocation or browser locale leaking into query generation}---the model infers the user's location and proactively diversifies retrieval into the local language even when the user gave no such signal.
+    \item \textbf{Case~3 --- English prompt, no foreign context $\rightarrow$ foreign-language fan-out (4.9\%, 23 runs):} The user searches in English with no geographic or cultural markers in the prompt, yet GPT generates a non-English fan-out query. These ``untriggered'' localizations are consistent with OpenAI's documented behaviour: ChatGPT ``collects general location information based on your IP address and may share that general location with third-party search providers to improve the accuracy of your results'' \parencite{openai2024searchhelp}. The model infers the user's location and proactively diversifies retrieval into the local language even when the user gave no such signal.
 \end{enumerate}
 
 Cases~2 and~3 vary in cross-run consistency: some prompts exhibit the behavior on every run (e.g., P018), while others do so only sporadically (e.g., P048 in 2 of 3 runs). Cases~2 and~3 are GPT-only observations; Gemini was accessed via the Vertex~AI API without IP-based locale signals, so these patterns could not be tested (Section~\ref{sec:gemini-instrumentation-differences}).
@@ -154,16 +154,7 @@ In all three cases, the fan-out query pair is split: one query in language~A, on
 
 \subsubsection{External Validation at Scale}
 
-Our Case~1 finding is corroborated at scale by \textcite{rudzki2026english}, who analyzed over 10~million prompts and 20~million query fan-outs from Peec~AI's production monitoring data. Their methodology controlled for location-language matching (e.g., Polish queries from Poland, German queries from Germany only---excluding mismatches):
-
-\begin{itemize}
-    \item \textbf{Session-level:} In nearly \textbf{78\%} of non-English ChatGPT sessions, at least one sub-search is performed on the English web. No non-English language falls below 60\%.
-    \item \textbf{Volume-level:} \textbf{43\%} of all fan-out queries issued for non-English prompts are performed in English---nearly half of the LLM's retrieval work targets the English-language web even when the user searched in another language.
-    \item \textbf{Per-language breakdown:} Turkish \textbf{94\%}, German $\sim$85\%, Polish $\sim$80\%, Spanish \textbf{66\%} (lowest observed).
-    \item \textbf{Concrete impact:} German users asking about German software companies receive zero German companies; Polish users searching for auction portals see eBay prioritized over Allegro.pl (Poland's dominant platform); Spanish cosmetics queries return zero Spanish brands.
-\end{itemize}
-
-Our Case~1 rate (6.3\%) represents a lower bound because our dataset is predominantly English-language prompts. The Peec~AI data shows that when users \emph{do} search in foreign languages, the English fan-out is near-universal (78\% of sessions).
+Our Case~1 finding is corroborated at scale by \textcite{rudzki2026english}, who analyzed over 10~million prompts and 20~million query fan-outs from Peec~AI's production monitoring data (controlling for location-language matching). They report that \textbf{78\%} of non-English ChatGPT sessions include at least one English-language sub-search, and \textbf{43\%} of all fan-out queries for non-English prompts target the English web. Our Case~1 rate (6.3\%) represents a lower bound because our dataset is predominantly English-language prompts; the Peec~AI data confirms that when users \emph{do} search in foreign languages, the English fan-out is near-universal.
 
 \textbf{Scope of corroboration:} Rudzki's analysis exclusively covers Case~1 (foreign prompt $\rightarrow$ English fan-out). \textbf{Cases~2 and~3---where English-language prompts receive foreign-language fan-outs---are unique to our study} and represent a novel empirical contribution. The reverse direction of the bias (English users losing visibility to IP/geolocation-driven localized retrieval) has not been previously documented.
 
@@ -410,32 +401,6 @@ Top-3 & 68.7\% & 49.8\% & 44.6\% & 48.2\% \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    ybar,
-    bar width=3pt,
-    width=\textwidth,
-    height=7cm,
-    xlabel={SERP Rank},
-    ylabel={Share of Page-1 Matches (\%)},
-    xtick={1,2,3,4,5,6,7,8,9,10},
-    ymin=0, ymax=28,
-    ymajorgrids=true,
-    legend style={at={(0.98,0.98)}, anchor=north east},
-    enlarge x limits=0.08,
-]
-\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(1,17.4) (2,18.7) (3,13.7) (4,10.5) (5,10.2) (6,8.3) (7,7.5) (8,5.9) (9,5.0) (10,2.8)};
-\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(1,18.1) (2,14.3) (3,12.2) (4,11.6) (5,9.4) (6,10.5) (7,8.3) (8,7.2) (9,5.1) (10,3.3)};
-\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(1,23.0) (2,13.4) (3,11.8) (4,11.7) (5,8.9) (6,7.9) (7,9.2) (8,6.5) (9,5.0) (10,2.7)};
-\legend{GPT Business, GPT Personal, Gemini}
-\end{axis}
-\end{tikzpicture}
-\caption{Cross-system Page 1 rank concentration. Gemini shows the steepest rank-1 peak (23.0\%), while GPT Business exhibits a distinctive ``top-2'' effect where rank 2 (18.7\%) slightly exceeds rank 1 (17.4\%). GPT Personal has the flattest profile across ranks.}
-\label{fig:cross-rank-concentration}
-\end{figure}
-
 \paragraph{Key observations:}
 \begin{itemize}
     \item \textbf{Gemini has the steepest rank-1 concentration}: 23.0\% at rank 1, dropping immediately to 13.4\% at rank 2 --- a 10-point cliff.
@@ -443,8 +408,6 @@ Top-3 & 68.7\% & 49.8\% & 44.6\% & 48.2\% \\
     \item \textbf{GPT Personal is the flattest profile}: 18.1\% $\rightarrow$ 9.4\% across ranks 1--5. Drawing from two indices creates more rank diversity.
     \item \textbf{LLMs ``look further down'' than humans}: Human CTR concentrates 68.7\% in the top~3; LLMs spread 45--50\% across the same ranks. The shape is the same monotonic decay, but flatter---the optimization target has not changed, only the consumer of the ranking.
 \end{itemize}
-
-Position bias in LLM citation is the same positional preference that has governed human search behavior for two decades, inherited by the retrieval pipeline. The same pattern holds within listicles: LLMs extract the \#1 listicle item at 1.7--2.5$\times$ the uniform baseline (Section~\ref{sec:reranking}). Position bias operates at every level of the information hierarchy---SERP, page, and within-page---for both human and machine consumers.
 
 \subsection{Per-Query Citation Distribution}
 \label{sec:per-query-citation}
@@ -520,29 +483,25 @@ We use \textbf{Visibility Gap} as the empirical gap between what is \textbf{cite
     \item \textbf{Long tail context} (how deep ``matched'' links are): see Section~\ref{sec:page-dist} (Bing Pages 1--16).
 \end{itemize}
 
-\subsubsection{Operationalization: ``hidden zone'' vs ``truly invisible''}
-\label{sec:hidden-vs-invisible}
+\subsubsection{Scraping Limitations that Inflate the Invisible Count}
+\label{sec:invisible-conservative}
 
-We separate notions that are easy to conflate:
+Our reported invisible rates (16.3\% Business, 19.4\% Personal) are \textbf{upper bounds} on truly index-absent citations. Two systematic factors inflate the invisible count:
 
-\begin{itemize}
-    \item \textbf{Hidden zone (Bing Rank 11--30)}: a cited URL that is present, but beyond typical human scrolling. [I dont get what we talk about here on hidden zone? review if this is necessary at all I guess I wanted to talk about truncation stuff of bing again]
-    \begin{itemize}
-        \item \textbf{GPT Business}: \textbf{388 / 1,637 (23.7\%)} of cited occurrences were found in Bing \textbf{Rank 11--30}.
-        \item \textbf{GPT Personal}: \textbf{326 / 1,839 (17.7\%)} of cited occurrences were found in Bing \textbf{Rank 11--30}.
-    \end{itemize}
-    \item \textbf{Truly invisible (Bing+Google control)}: cited URLs \textbf{not found in Bing $\leq$ 200} \textbf{and} \textbf{not found in Google} (SerpApi control for the same run).
-    \begin{itemize}
-        \item This matters for GPT Personal, which shows strong Google affinity; otherwise a Bing-only ``invisible'' count can overstate what is missing from the combined index surface.
-    \end{itemize}
-\end{itemize}
+\begin{enumerate}
+    \item \textbf{The Rank 200 ceiling}: Our Bing scrape stops at Rank 200, but the page-level match histogram (Section~\ref{sec:page-dist}) shows no convergence---matches are still accumulating at Pages 15--16 with a smooth decay curve that does not reach zero. Scraping to Rank 300 or 400 would almost certainly recover additional matches, shrinking the invisible set. The ``invisible'' label for these URLs does not mean they are absent from Bing's index---only that they fell beyond our scrape depth.
+
+    \item \textbf{Bing Page 1 truncation (the ``Missing Middle'')}: As documented in Section~2.2.1, nearly half of our Bing scrapes had 5 or fewer organic results on Page~1 due to UI-level pagination instability. Results that would normally rank at positions 3--7 can be dropped entirely from a truncated scrape---they do not simply shift to Page~2. This is especially consequential because Page~1 is where we observe the highest match rates (Section~\ref{sec:page-dist})---so every result missed due to Page~1 truncation is statistically more likely to be a citation match than a result missed deeper in the index. These ``missing middle'' results are almost certainly available to ChatGPT through its backend API integration with Bing, which likely returns a clean, stable ranked list without the consumer UI's truncation artifacts.
+\end{enumerate}
+
+Both factors disproportionately affect \textbf{niche SaaS and product domains}---the very category our prompt set targets. These domains are likely present in the Bing index but fell beyond our scrape depth or were lost to Page~1 truncation. Using our Content DNA page-type labels (Section~\ref{sec:content-dna}), we identify and \textbf{exclude} URLs classified as \texttt{product\_page} from the invisible domain tables below. This filtering is modest---removing 31 entries (4.0\%) for Business and 113 entries (6.7\%) for Personal---so the resulting tables are not substantially altered, but the excluded entries are precisely the category most vulnerable to the two scraping artifacts above.
 
 \subsubsection{Top invisible domains}
 \label{sec:top-invisible-domains}
 
 \paragraph{GPT Business --- Top Invisible Domains (all citation types, excluding niche SaaS)}
 
-Business uses Bing exclusively (see Section~\ref{sec:global-overlap}), so Bing-invisible = truly invisible. Niche SaaS/product domains excluded. [Might be worth explaining why they are filtered out, I kinda did it bcs i assume they are just truncated hidden zone links. maybe that is why hiden zone description above is imporatnt] This table includes cited, additional, \textbf{and} retrieved-only links (see Section~\ref{sec:retrieved-only} for definition and Section~2.3.2 for naming conventions).
+Business uses Bing exclusively (see Section~\ref{sec:global-overlap}), so Bing-invisible = truly invisible. This table includes cited, additional, \textbf{and} contextual links (see Section~\ref{sec:contextual} for definition and Section~2.3.2 for naming conventions).
 
 \begin{table}[H]
 \centering
@@ -571,11 +530,11 @@ Rank & Domain & Count \\
 \end{tabular}
 \end{table}
 
-All citation types (cited + additional + retrieved-only) are included, with www/non-www variants merged. The list is dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from \textbf{retrieved-only} [wtf is retireved only?] links---URLs present in the search result pool but never surfaced in the response.
+All citation types (cited + additional + contextual) are included, with www/non-www variants merged. The list is dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from \textbf{contextual} links---URLs present in the search result pool but never surfaced in the response.
 
 \paragraph{GPT Personal --- Top Invisible Domains (all citation types, excluding niche SaaS, with Google recovery)}
 
-Personal uses multiple search providers [assumption here] (see Section~\ref{sec:global-overlap}), so a Bing-only invisible check overstates the gap. Ordered by \textbf{truly invisible} count (not in Bing \textbf{or} Google). Includes all citation types.
+Personal uses multiple search providers (see Section~\ref{sec:global-overlap}), so a Bing-only invisible check overstates the gap. Ordered by \textbf{truly invisible} count (not in Bing \textbf{or} Google). Includes all citation types.
 
 \begin{table}[H]
 \centering
@@ -606,9 +565,9 @@ Rank & Domain & Truly Invisible & Bing-Invisible & Google Recovered \\
 
 All citation types are included, with www/non-www merged and niche SaaS excluded. Two patterns emerge: Google recovery is significant for platform domains (\texttt{reddit.com} 58\%, \texttt{chromewebstore.google.com} 50\%), while major news and reference domains remain equally invisible in both indices.
 
-\paragraph{Excluding retrieved-only links: Cited + Additional only}
+\paragraph{Excluding contextual links: Cited + Additional only}
 
-The tables above include retrieved-only links (URLs in the search result pool that were never surfaced --- see Section~\ref{sec:retrieved-only}). Since retrieved-only links are \textbf{90\%+ invisible} from our Bing scrape, they heavily inflate the counts above. Excluding them gives a cleaner picture of what ChatGPT actually \textbf{cited or recommended} but could not be found in search:
+The tables above include contextual links (URLs in the search result pool that were never surfaced --- see Section~\ref{sec:contextual}). Since contextual links are \textbf{90\%+ invisible} from our Bing scrape, they heavily inflate the counts above. Excluding them gives a cleaner picture of what ChatGPT actually \textbf{cited or recommended} but could not be found in search:
 
 \paragraph{GPT Business (cited + additional only, top 15):}
 
@@ -639,7 +598,7 @@ Rank & Domain & Count \\
 \end{tabular}
 \end{table}
 
-Excluding retrieved-only links shrinks the Business invisible set by \textbf{45\%} (1,261 $\rightarrow$ 691). The biggest casualty is \texttt{arxiv.org}, which drops from \#2 (83) to absent---82 of its 83 invisible entries were retrieved-only, not cited or additional. Similarly, \texttt{time.com} (34$\rightarrow$0), \texttt{lifewire.com} (34$\rightarrow$0), and \texttt{nypost.com} (22$\rightarrow$0) were almost entirely retrieved-only. Wikipedia remains \#1 but drops from 116 to 81 (35 were retrieved-only).
+Excluding contextual links shrinks the Business invisible set by \textbf{45\%} (1,261 $\rightarrow$ 691). The biggest casualty is \texttt{arxiv.org}, which drops from \#2 (83) to absent---82 of its 83 invisible entries were contextual, not cited or additional. Similarly, \texttt{time.com} (34$\rightarrow$0), \texttt{lifewire.com} (34$\rightarrow$0), and \texttt{nypost.com} (22$\rightarrow$0) were almost entirely contextual. Wikipedia remains \#1 but drops from 116 to 81 (35 were contextual).
 
 \paragraph{GPT Personal (cited + additional only, top 20, by truly invisible):}
 
@@ -676,53 +635,42 @@ Rank & Domain & Truly Invisible & Bing-Invisible & Google Recovered \\
 \end{tabular}
 \end{table}
 
-Personal is less affected (15\% drop) since it has more cited+additional volume. The top three domains (apps.apple.com, reddit, Wikipedia) barely change. The biggest drops are in news and reference domains that were mostly retrieved-only: \texttt{arxiv.org} (70$\rightarrow$0), \texttt{wired.com} (40$\rightarrow$0), \texttt{nypost.com} (28$\rightarrow$0), and \texttt{timesofindia.indiatimes.com} (31$\rightarrow$0). Google recovery patterns remain the same.
+Personal is less affected (15\% drop) since it has more cited+additional volume. The top three domains (apps.apple.com, reddit, Wikipedia) barely change. The biggest drops are in news and reference domains that were mostly contextual: \texttt{arxiv.org} (70$\rightarrow$0), \texttt{wired.com} (40$\rightarrow$0), \texttt{nypost.com} (28$\rightarrow$0), and \texttt{timesofindia.indiatimes.com} (31$\rightarrow$0). Google recovery patterns remain the same.
 
-\subsubsection{Why these numbers are conservative (and what ``truly invisible'' likely means)}
-\label{sec:invisible-conservative}
+If both factors were addressed (deeper scraping + repeated Page~1 scrapes), the remaining ``truly invisible'' set would converge toward citations that genuinely come from outside the search index---sites like Wikipedia, app stores, and known reference domains that ChatGPT may access through parametric knowledge or supplementary indices rather than the fan-out search pipeline.
 
-Our reported invisible rates (16.3\% Business, 19.4\% Personal) are \textbf{upper bounds} on truly index-absent citations. Two systematic factors inflate the invisible count:
-[well we say conservative but we kinda bypass the top200 ceiling by fitering out AI saas anyways I think it is imporant to clarify that so create correleation and maybe even show non filtered snippet of invisbile or sth]
-\begin{enumerate}
-    \item \textbf{The Rank 200 ceiling}: Our Bing scrape stops at Rank 200, but the page-level match histogram (see Section~\ref{sec:page-dist}) shows no convergence --- matches are still accumulating at Pages 15--16 with a smooth decay curve that does not reach zero. Scraping to Rank 300 or 400 would almost certainly recover additional matches, shrinking the invisible set. The ``invisible'' label for these URLs does not mean they are absent from Bing's index --- only that they fell beyond our scrape depth.
+\subsection{Contextual Links --- The Search Pool Remainder}
+\label{sec:contextual}
 
-    \item \textbf{Bing Page 1 truncation (the ``Missing Middle'')}: As documented in Section~2.2.1, nearly half of our Bing scrapes had 5 or fewer organic results on Page 1 due to UI-level pagination instability. Results that would normally rank at positions 3--7 can be dropped entirely from a truncated scrape --- they do not simply shift to Page 2. This is especially consequential because Page~1 is where we observe the \textbf{highest match rates} (Section~\ref{sec:page-dist}) --- so every result missed due to Page~1 truncation is statistically more likely to be a citation match than a result missed deeper in the index. These ``missing middle'' results are almost certainly available to ChatGPT through its backend API integration with Bing, which likely returns a clean, stable ranked list without the consumer UI's truncation artifacts. Some of our ``invisible'' citations may therefore be high-ranking Bing results that our scrape happened to miss.
-\end{enumerate}
+Beyond cited and additional links, ChatGPT's network responses contain a third category: \textbf{contextual links} (see naming conventions in Section~2.3.2). These are URLs present in the \texttt{search\_result\_groups} payload --- the retrieval pool delivered to the model during generation --- that were \textbf{not} promoted to either cited or additional status. They never appear in the user-facing response.
 
-\textbf{If both factors were addressed} (deeper scraping + repeated Page 1 scrapes to capture the full elastic range), our overlap rates would likely increase and the remaining ``truly invisible'' set would converge toward citations that genuinely come from \textbf{outside the search index} --- sites like Wikipedia, app stores, and known reference domains that ChatGPT may access through parametric knowledge or supplementary indices rather than the fan-out search pipeline.
-
-\subsection{Retrieved-only Links --- The Search Pool Remainder}
-\label{sec:retrieved-only}
-
-Beyond cited and additional links, ChatGPT's network responses contain a third category: \textbf{retrieved-only links} (see naming conventions in Section~2.3.2). These are URLs present in the \texttt{search\_result\_groups} payload --- the retrieval pool delivered to the model during generation --- that were \textbf{not} promoted to either cited or additional status. They never appear in the user-facing response.
-
-\paragraph{How we identified retrieved-only links:} Our ingestion pipeline parses each run's raw network response, extracts all URLs from the \texttt{search\_result\_groups\_json} field, then subtracts any URL already classified as cited or additional. The remainder is classified as ``retrieved-only.''
+\paragraph{How we identified contextual links:} Our ingestion pipeline parses each run's raw network response, extracts all URLs from the \texttt{search\_result\_groups\_json} field, then subtracts any URL already classified as cited or additional. The remainder is classified as ``contextual.''
 
 \begin{table}[H]
 \centering
-\caption{Retrieved-only link volume}
-\label{tab:retrieved-only-volume}
+\caption{Contextual link volume}
+\label{tab:contextual-volume}
 \begin{tabular}{lrr}
 \toprule
 Metric & Business & Personal \\
 \midrule
-Total retrieved-only links & 631 & 496 \\
-Runs with retrieved-only links & 204 / 215 (95\%) & 195 / 209 (93\%) \\
-Avg.\ retrieved-only per run (when present) & 3.1 & 2.5 \\
-Max retrieved-only in a single run & 44 & 29 \\
+Total contextual links & 631 & 496 \\
+Runs with contextual links & 204 / 215 (95\%) & 195 / 209 (93\%) \\
+Avg.\ contextual per run (when present) & 3.1 & 2.5 \\
+Max contextual in a single run & 44 & 29 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{Retrieved-only links are overwhelmingly invisible from both search indices:}
+\paragraph{Contextual links are overwhelmingly invisible from both search indices:}
 
 \begin{table}[H]
 \centering
 \caption{Search index overlap by citation type}
-\label{tab:retrieved-only-overlap}
+\label{tab:contextual-overlap}
 \begin{tabular}{lrrr}
 \toprule
-Metric & Cited & Additional & Retrieved-only \\
+Metric & Cited & Additional & Contextual \\
 \midrule
 Business Bing overlap & 81.3\% & 86.3\% & \textbf{9.7\%} \\
 Business Google overlap & 34.9\% & 25.8\% & \textbf{3.6\%} \\
@@ -732,17 +680,17 @@ Personal Google overlap & 71.6\% & 60.8\% & \textbf{3.0\%} \\
 \end{tabular}
 \end{table}
 
-Only \textasciitilde6--10\% of retrieved-only links appear in our Bing scrape, and an even lower \textasciitilde3--4\% appear in Google --- compared to 57--86\% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that retrieved-only links are simply ``Bing-invisible but Google-findable.'' Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
+Only \textasciitilde6--10\% of contextual links appear in our Bing scrape, and an even lower \textasciitilde3--4\% appear in Google --- compared to 57--86\% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that contextual links are simply ``Bing-invisible but Google-findable.'' Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
 
-\paragraph{Top retrieved-only domains (Business):}
+\paragraph{Top contextual domains (Business):}
 
 \begin{table}[H]
 \centering
-\caption{Top retrieved-only domains (Business)}
-\label{tab:retrieved-only-domains}
+\caption{Top contextual domains (Business)}
+\label{tab:contextual-domains}
 \begin{tabular}{rlr}
 \toprule
-Rank & Domain & Retrieved-only Count \\
+Rank & Domain & Contextual Count \\
 \midrule
 1 & arxiv.org & 82 \\
 2 & theverge.com & 49 \\
@@ -758,13 +706,13 @@ Rank & Domain & Retrieved-only Count \\
 \end{tabular}
 \end{table}
 
-\paragraph{Key finding --- retrieved-only links explain the previous ``invisible'' inflation:}
-The invisible domain lists in the previous version of this analysis (which included all citation types) were heavily inflated by retrieved-only links. For example, \texttt{arxiv.org} appeared as the \#2 invisible domain with 83 entries --- but 82 of those were retrieved-only and only 1 was additional. Once retrieved-only links are separated out (as in the cited+additional tables above), the invisible set shrinks by \textbf{45\% for Business} (1,261 $\rightarrow$ 691) and \textbf{15\% for Personal} (3,031 $\rightarrow$ 2,563).
+\paragraph{Key finding --- contextual links explain the previous ``invisible'' inflation:}
+The invisible domain lists in the previous version of this analysis (which included all citation types) were heavily inflated by contextual links. For example, \texttt{arxiv.org} appeared as the \#2 invisible domain with 83 entries --- but 82 of those were contextual and only 1 was additional. Once contextual links are separated out (as in the cited+additional tables above), the invisible set shrinks by \textbf{45\% for Business} (1,261 $\rightarrow$ 691) and \textbf{15\% for Personal} (3,031 $\rightarrow$ 2,563).
 
-\paragraph{Interpretation --- what role do retrieved-only links play?}
-The retrieved-only domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that appeared in the retrieval pool but were never surfaced to the user. Whether these URLs enter through the search pipeline or through some other retrieval path remains ambiguous --- they appear in \texttt{search\_result\_groups} (suggesting retrieval), but their near-zero presence in both consumer search indices suggests they may come from a different ranking layer or supplementary index that neither Bing nor Google's consumer UI exposes.
+\paragraph{Interpretation --- what role do contextual links play?}
+The contextual domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that appeared in the retrieval pool but were never surfaced to the user. Whether these URLs enter through the search pipeline or through some other retrieval path remains ambiguous --- they appear in \texttt{search\_result\_groups} (suggesting retrieval), but their near-zero presence in both consumer search indices suggests they may come from a different ranking layer or supplementary index that neither Bing nor Google's consumer UI exposes.
 
-What role these retrieved-only links play in the generation process --- whether the model uses them as background context, ignores them entirely, or processes them in some other way --- is not observable from our data. We can only confirm that they were \textbf{present in the search result pool} and \textbf{absent from the final output}. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, but we cannot determine whether this reflects deliberate filtering by the model or some other mechanism upstream.
+What role these contextual links play in the generation process --- whether the model uses them as background context, ignores them entirely, or processes them in some other way --- is not observable from our data. We can only confirm that they were \textbf{present in the search result pool} and \textbf{absent from the final output}. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, but we cannot determine whether this reflects deliberate filtering by the model or some other mechanism upstream.
 
 \subsection{Citation Flip-Flop Rate}
 \label{sec:flip-flop}
