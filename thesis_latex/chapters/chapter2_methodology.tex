@@ -1,6 +1,8 @@
 \chapter{Methodology \& Tools}
 \label{ch:methodology}
 
+This chapter describes the experimental setup, instrumentation, and analytical tools used to study how ChatGPT and Gemini retrieve and cite web sources when answering product recommendation queries. We study two production LLM systems with fundamentally different instrumentation approaches. \textbf{ChatGPT} was studied via the production web interface (\texttt{chatgpt.com}) using network payload inspection (Chrome DevTools protocol), because OpenAI does not expose grounding metadata through its public API. We captured runs across two deployment tiers: \textbf{Personal} (a consumer ChatGPT Plus subscription) and \textbf{Business} (an organization-managed workspace account, provisioned through OpenAI's enterprise offering). Both tiers present the same chat interface but differ in backend configuration, most notably in search provider routing (Section~\ref{sec:global-overlap}). All ChatGPT runs were conducted in Temporary Chat mode to prevent conversation history from influencing retrieval, and routed through a U.S.\ proxy to ensure consistent locale-based retrieval behavior (Section~\ref{sec:proxy-requirement}). \textbf{Gemini} was studied via the Vertex~AI API (Gemini~3~Flash), which provides structured grounding metadata not available in the consumer UI. Full details of each instrumentation approach follow in the sections below.
+
 \section{Data Collection Pipeline}
 \label{sec:data-collection}
 
