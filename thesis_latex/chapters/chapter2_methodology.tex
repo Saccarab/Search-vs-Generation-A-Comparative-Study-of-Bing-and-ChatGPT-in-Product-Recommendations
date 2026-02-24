@@ -8,9 +8,21 @@ The contrast between these three environments revealed notable differences, espe
 \section{Selection of the Research Query Set}
 \label{sec:query-set-selection}
 
-We have taken the 79 unique prompts in our dataset from two platforms. 65 of these prompts were taken from Profound's Prompt Volumes feature \parencite{profound2026promptvolumes}, which provides prompt-level data derived from licensed and opt-in prompts of real ChatGPT users. Data is anonymized, aggregated, and GDPR/CCPA compliant; Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent rather than exact prompts. The other 14 prompts were taken from Ahrefs' AI Citations feature, which tracks URLs and domains appearing in ChatGPT responses; we used it to surface additional high-intent prompts within our target verticals. Prompts span collection dates from January 2025 to January 2026, with the majority concentrated between July and December 2025.
+We have 79 unique prompts in our dataset that we have gathered from two platforms. 65 of these prompts were taken from Profound's Prompt Volumes feature \parencite{profound2026promptvolumes}, which provides prompt-level data derived from licensed and opt-in prompts of real ChatGPT users. Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent. The other 14 prompts were taken from Ahrefs' AI Citations feature \parencite{ahrefs2025aicitations}, which we have used to capture additional prompts within our target verticals. Prompts span collection dates from January 2025 to January 2026, with the majority concentrated between July and December 2025.
 
-From the broad set of available prompts, we deliberately filtered for high commercial intent (product recommendations, comparisons, and ``best of'' queries) to ensure the study reflects the segment of search where RAG is most active and where the retrieval-to-citation pipeline is most empirically observable (see Section~\ref{sec:commercial-catalyst}). All queries were concentrated in the AI and Software-as-a-Service (SaaS) sectors, particularly speech and language technology (speech-to-text, live transcription, voice translation, text-to-speech). This domain focus was a deliberate methodological choice: the author's professional expertise in this vertical enabled more nuanced qualitative analysis of retrieval relevance and citation quality. Representative examples include: \emph{``Which free AI would you recommend for translating my video?''} (P001), \emph{``Is there a transcription software available for a one-time payment instead of a subscription?''} (P003), \emph{``Are there live translation software options for video chats like Zoom or Teams?''} (P044), and \emph{``Can you recommend free text-to-speech extensions that don't sound robotic?''} (P069).
+From the available prompts, we filtered for product discovery queries with commercial intent ---
+prompts where users ask for tool recommendations, comparisons, or ``best of'' lists.
+These are the queries most likely to trigger web search grounding
+(see Section~\ref{sec:commercial-catalyst}), ensuring the retrieval pipeline
+is consistently active and observable.
+All queries were concentrated in the AI and Software-as-a-Service (SaaS) sectors,
+particularly speech and language technology (speech-to-text,
+live transcription, voice translation, text-to-speech).
+This domain focus reflects the author's professional expertise in this vertical,
+which enabled more nuanced analysis of retrieval relevance and citation quality.
+Representative examples include: \emph{``Which free AI would you recommend 
+ for translating my video?''} (P001), \emph{``Is there a transcription software available for a one-time payment instead of a subscription?''} (P003), \emph{``Are there live translation software options for video chats like Zoom or Teams?''} (P044), and \emph{``Can you recommend free text-to-speech extensions that don't sound robotic?''} (P069).
+We wanted to make sure that even if the 
 
 Each of the 79 prompts was executed in 3 independent runs per subscription tier (with a 4th run added only in cases of technical failure or RAG non-triggering), yielding 474 ChatGPT runs (237 Business + 237 Personal) and 237 Gemini runs, for 711 total runs across all conditions.
 
