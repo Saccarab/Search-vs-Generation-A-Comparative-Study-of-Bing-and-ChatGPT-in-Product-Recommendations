@@ -3,22 +3,8 @@
 \chapter{Introduction \& Motivation}
 \label{ch:introduction}
 
-
-
-
 % Ensure floats (figures/tables) don't drift past section boundaries.
-
 % Requires \usepackage{placeins} in the preamble.
-
-
-
-% Ensure floats (figures/tables) don't drift past section boundaries.
-
-% Requires \usepackage{placeins} in the preamble.
-
-
-
-
 
   LLMs are rapidly becoming the interface through which consumers discover products. By mid-2025, ChatGPT alone had reached approximately 10\% of the world's adult population, with information-seeking and practical guidance accounting for nearly 80\% of all conversations \parencite{chatterji2025chatgpt}. Yet especially for commercial intent prompts these models do not generate recommendations from memory alone anymore. When a user asks for a product recommendation, the system can search the web in real time, retrieve relevant sources, and ground its response in what
   it finds. This retrieval-and-grounding workflow is commonly referred to as retrieval-augmented generation (RAG), and it is
@@ -26,34 +12,16 @@
   not a transitional compromise but the economically and technically inevitable design: inference is expensive, retrieval is
   cheap, and no model can be retrained hourly to keep pace with prices, reviews, and product launches.
 
-  If retrieval is the foundation, then \emph{what gets retrieved} determines \emph{what gets recommended}. And what gets retrieved is
-  governed, overwhelmingly, by search engine indices. This thesis provides the empirical evidence for that claim. We trace the  
+  If retrieval is the foundation, then what gets retrieved determines what gets recommended. And what gets retrieved is
+  governed, overwhelmingly, by search engine indices. This thesis provides the empirical evidence for that claim. We trace the
   full retrieval-to-citation pipeline, from fan-out query generation through candidate retrieval, source selection, and
-  claim-level attribution, and show that the vast majority of LLM citations originate from conventional search results.  
-  Despite growing industry speculation that generative AI will render traditional search optimization obsolete, Search Engine   
+  claim-level attribution, and show that the vast majority of LLM citations originate from conventional search results.
+  Despite growing industry speculation that generative AI will render traditional search optimization obsolete, we will argue in this thesis that Search Engine
   Optimization (SEO) is not dead; it is the prerequisite.
 
-  But if SEO is the prerequisite, is it sufficient? The emerging industry narrative around Generative Engine Optimization (GEO) claims that LLMs introduce new selection criteria beyond traditional ranking. If true, content creators would need to optimize for both search engines and LLM-specific preferences. If not, GEO is simply rebranded SEO. This thesis investigates which of these is the case, operationalizing grounding behavior as the measurable pipeline from retrieval through selection, citation, and final text generation: which sources the system retrieves, which survive into the response, how claims map to sources, and whether the cited content is faithfully reproduced.
+  But even if SEO is the prerequisite, is it sufficient? If it is not, content creators would need to optimize for both search engines and LLM-specific preferences. We investigate this question by examining grounding behavior as the measurable pipeline from retrieval through selection, citation, and final text generation: which sources the system retrieves, which survive into the response, how claims map to sources, and whether the cited content is faithfully reproduced.
 
-
-\section{Research Questions}
-\label{sec:research-questions}
-
-\textit{RQ1: How does grounding behavior manifest in LLM-generated product recommendations, and how does it vary across deployment tiers and providers?}
-
-This core question decomposes into four sub-questions:
-
-\begin{enumerate}
-    \item RQ1a (Selection and visibility): How do cited, additional, rejected, and invisible sources differ in domain and type, and how does this differ between Business and Personal tiers?
-    \item RQ1b (External support): How often do LLM citations appear in conventional search engine results (Bing and Google)?
-    \item RQ1c (Selection bias): Do models exhibit preferences for specific structural content features (e.g., tables, numbered lists, freshness cues) when selecting from the retrieved pool, and how do these preferences vary across systems?
-    \item RQ1d (Listicle fidelity): When listicles are cited, which products within them are selected or ignored, and how faithfully does the model reproduce their details?
-\end{enumerate}
-
-To answer these questions, we compare LLM citations against two external search indices. Bing serves as the primary overlap baseline for ChatGPT (top 200 results per query), while Google (via SerpApi) provides a second overlap index and the retrieval baseline for Gemini's fan-out queries. Gemini itself serves as a second LLM subject rather than a measurement instrument, studied via its Vertex AI API which exposes structured grounding metadata not available in ChatGPT.
-
-\section{Market Context \& Motivation}
-\label{sec:market-context}
+% --- Market context (flows from intro, no section header) ---
 
 To place this study in context, it is important to understand the current scale of AI-driven search traffic relative to traditional search. Table~\ref{tab:traffic-share} presents referral traffic data from Ahrefs' panel of 74,752 websites as of January 2026 \parencite{ahrefs2026chatgptvsgoogle}.
 
@@ -66,9 +34,9 @@ To place this study in context, it is important to understand the current scale 
 \textbf{Source} & \textbf{Traffic Share} & \textbf{Monthly Visitors} \\
 \midrule
 \multicolumn{3}{l}{\textit{Traditional Search Engines}} \\
-Google & 38.92\% & --- \\
-Bing & 1.44\% & --- \\
-DuckDuckGo & 0.29\% & --- \\
+Google & 38.92\% & 434.6M \\
+Bing & 1.44\% & 18.8M \\
+DuckDuckGo & 0.29\% & 3.7M \\
 \midrule
 \multicolumn{3}{l}{\textit{AI Assistants}} \\
 ChatGPT & 0.23\% & 3.3M \\
@@ -82,13 +50,73 @@ Claude & $<$0.01\% & --- \\
 \end{tabular}
 \end{table}
 
-The numbers are stark: Google alone commands 150$\times$ the referral traffic of all AI assistants combined. Traditional search engines collectively account for approximately 40.7\% of referral traffic; AI search accounts for 0.26\%. By any absolute measure, AI-driven search remains a marginal channel.
+The numbers are stark: Google alone commands over 100$\times$ the referral traffic of all AI assistants combined. Traditional search engines collectively account for approximately 40.7\% of referral traffic; AI search accounts for 0.26\%. By any absolute measure, AI-driven search remains a marginal channel.
 
 However, the growth trajectory is noteworthy. Between June 2025 and January 2026, total search traffic across the Ahrefs panel declined by 7.5\% (from 494M to 457M visits), while AI chatbot referral traffic grew by 27\% (from 2.9M to 3.7M visits). Google's share dropped from 42.2\% to 38.9\% ($-$3.2\,pp). Among AI platforms, Gemini showed the fastest recent growth (+53.1\% month-over-month in January 2026), followed by Claude (+20.7\%) and ChatGPT (+9.2\%). These growth rates, sustained over even a few years, would shift AI search from a rounding error to a commercially significant channel.
 
-This creates the motivation for studying the mechanics of LLM citation \emph{now}, while the systems are still young and the patterns are forming. If AI search traffic continues to grow (and if, as preliminary industry observations suggest, LLM-referred users convert at higher rates than traditional search users due to the pre-qualified nature of AI recommendations), then the question of \emph{how} LLMs select which sources and products to recommend becomes even more significant. This thesis provides the micro-level mechanics of that selection process: how the retrieval-to-citation pipeline shapes which sources and products appear in the final response, and what content creators and brands can do to influence the outcome.
+This creates the motivation for studying the mechanics of LLM citation \emph{now}, while the systems are still young and the patterns are forming. If AI search traffic continues to grow (and if LLM-referred users convert at higher rates than traditional search users, as Ahrefs' own data suggests \parencite{law2025aiconversions}), then the question of \emph{how} LLMs select which sources and products to recommend becomes even more significant. This thesis provides the micro-level mechanics of that selection process: how the retrieval-to-citation pipeline shapes which sources and products appear in the final response, and what content creators and brands can do to influence the outcome.
 
-\section{Theoretical Framework: From SEO to GEO}
+\section{The Commercial Catalyst for RAG}
+\label{sec:commercial-catalyst}
+
+Not all queries are equally affected by the shift to retrieval-augmented generation. RAG is most consequential when the user's intent demands real-time, verifiable information (prices, availability, feature comparisons, reviews) that parametric knowledge cannot reliably provide. Product recommendations sit squarely in this category: they require freshness, competitive breadth, and factual precision, making them the segment where the retrieval pipeline is most active and where the mechanics of source selection are most commercially consequential.
+
+Industry telemetry confirms this asymmetry. Figure~\ref{fig:trigger-rate} shows ChatGPT's web search trigger rates by query intent, based on 667,000 real-user conversations tracked by Profound as of January~6, 2026. A subsequent analysis of 730,000 conversations \parencite{punturo2026citationsources} confirmed the overall 18\% baseline trigger rate and provided additional citation distribution metrics (see Section~\ref{sec:rw-observational}).
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        bar width=24pt,
+        width=0.92\textwidth,
+        height=7.5cm,
+        ylabel={Web Search Trigger Rate (\%)},
+        symbolic x coords={Commercial, Informational, Generative, Other, Overall},
+        xtick=data,
+        ymin=0, ymax=62,
+        nodes near coords={\pgfmathprintnumber\pgfplotspointmeta\%},
+        nodes near coords align={vertical},
+        every node near coord/.append style={font=\small\bfseries},
+        ytick={0,10,20,30,40,50,60},
+        yticklabel={\pgfmathprintnumber\tick\%},
+        grid=major,
+        ymajorgrids=true,
+        xmajorgrids=false,
+        enlarge x limits=0.15,
+    ]
+    \addplot[fill=entcolor!80, draw=entcolor] coordinates {
+        (Commercial, 53.51)
+        (Informational, 18.73)
+        (Generative, 8.88)
+        (Other, 7.23)
+        (Overall, 17.41)
+    };
+    \end{axis}
+    \end{tikzpicture}
+    \caption{ChatGPT web search trigger rate by query intent. Data from \textcite{punturo2026citationsources}, based on 667,000 real-user ChatGPT conversations tracked by Profound as of January~6, 2026. Commercial intent triggers web search at 3$\times$ the overall baseline rate (53.5\% vs.\ 17.4\%), motivating our focus on product-recommendation prompts.}
+    \label{fig:trigger-rate}
+\end{figure}
+
+\FloatBarrier
+
+
+Web search is triggered in 53.5\% of commercial queries, compared to only 18.7\% for informational and 8.9\% for generative queries, a 3$\times$ gap over the 17.4\% all-intent baseline. Our decision to filter for high commercial intent (product recommendations) aligns with this asymmetry: commercial queries are where the retrieval pipeline is most active, where citation selection has the most direct economic consequences, and where the shift from SEO to GEO is most empirically observable.
+
+
+\subsection{The Emerging GEO Industry}
+\label{sec:geo-landscape}
+
+The commercial significance of LLM citation behavior has already attracted substantial venture capital. In August 2025, Profound raised \$35~million in a Series~B round led by Sequoia Capital, bringing its total funding to \$58.5~million \parencite{fortune2025profound}. Three months later, Berlin-based Peec~AI raised \$21~million in a Series~A led by Singular \parencite{techcrunch2025peec}, growing to \$4M~ARR in 10~months with 1,300 companies on its platform. Both companies are building brand-visibility dashboards that track whether and how often a brand appears in LLM-generated responses, the AI equivalent of monitoring how frequently a brand ranks in traditional search results.
+
+The opportunity has not gone unnoticed by established players. Ahrefs, one of the largest SEO analytics platforms, has added AI search monitoring features that track brand visibility across LLM-generated responses alongside its traditional SERP tracking. More consequentially, Adobe announced the acquisition of SEMrush in November 2025 \parencite{adobe2025semrush}, a deal that signals how seriously the marketing technology industry takes the convergence of traditional keyword intelligence and AI search analytics. The competitive landscape is thus bifurcating: GEO-native startups (Profound, Peec~AI) are building from the AI-search side inward, while incumbent SEO platforms (Ahrefs, SEMrush) are extending outward from their traditional keyword and ranking data into AI citation monitoring. Whether these approaches converge, and whether dedicated GEO tools offer marginal value over well-executed traditional SEO, is one of the practical questions this thesis informs.
+
+At their core, these platforms are trying to answer a simple question: \emph{is the AI recommending your brand, and if not, why?} Our findings speak directly to what drives these outcomes. Products appear in LLM responses primarily because they appear in retrieved listicles, and their position within those listicles matters (Section~\ref{sec:listicle-bias}, Section~\ref{sec:reranking}). Structural content features such as tables and numbered lists appear to improve a source's chances of being cited (Section~\ref{sec:selection-drift}). And because LLM citation behavior is stochastic (the same prompt can produce different citations across runs), single-snapshot monitoring will systematically misrepresent a brand's true visibility (Section~\ref{sec:flip-flop}).
+
+
+The dominant industry narrative frames GEO as a replacement for SEO, a new discipline for a new era. Some industry practitioners have suggested that LLM-referred users may exhibit higher conversion rates and purchase intent than traditional search traffic, lending urgency to the claim. However, the empirical question this thesis investigates is whether GEO is genuinely distinct from SEO or whether it is, in practice, a thin optimization layer on top of the same ranking foundation. The answer, as the following chapters demonstrate, is substantially the latter, but with empirically real exceptions that the concluding chapter delineates (Section~\ref{sec:geo-not-seo}).
+
+\section{Background: From SEO to GEO}
 \label{sec:theoretical-framework}
 
 \subsection{Search Optimization in the Age of Generative AI}
@@ -151,64 +179,18 @@ These null results are informative: they suggest that current LLMs are already e
 
 \textbf{Summary of gaps this thesis addresses}: Prior work has audited citation fidelity (but not selection mechanics), measured citation patterns at scale (but without access to retrieval pipelines), quantified grounding budgets (but not the downstream selection effects), and tested format optimization (but not structural content features). This thesis attempts to connect these threads by tracing the retrieval-to-citation pipeline across multiple LLMs and tiers (ChatGPT Business vs.\ Personal, and Gemini), with particular attention to within-listicle position bias, citations that fall outside search indices entirely, and claim-level attribution.
 
-\section{The Commercial Catalyst for RAG}
-\label{sec:commercial-catalyst}
+\section{Research Questions}
+\label{sec:research-questions}
 
-Not all queries are equally affected by the shift to retrieval-augmented generation. RAG is most consequential when the user's intent demands real-time, verifiable information (prices, availability, feature comparisons, reviews) that parametric knowledge cannot reliably provide. Product recommendations sit squarely in this category: they require freshness, competitive breadth, and factual precision, making them the segment where the retrieval pipeline is most active and where the mechanics of source selection are most commercially consequential.
+\textit{RQ1: How does grounding behavior manifest in LLM-generated product recommendations, and how does it vary across deployment tiers and providers?}
 
-Industry telemetry confirms this asymmetry. Figure~\ref{fig:trigger-rate} shows ChatGPT's web search trigger rates by query intent, based on 667,000 real-user conversations tracked by Profound as of January~6, 2026. A subsequent analysis of 730,000 conversations \parencite{punturo2026citationsources} confirmed the overall 18\% baseline trigger rate and provided additional citation distribution metrics (see Section~\ref{sec:rw-observational}).
+This core question decomposes into four sub-questions:
 
-\begin{figure}[htbp]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        ybar,
-        bar width=24pt,
-        width=0.92\textwidth,
-        height=7.5cm,
-        ylabel={Web Search Trigger Rate (\%)},
-        symbolic x coords={Commercial, Informational, Generative, Other, Overall},
-        xtick=data,
-        ymin=0, ymax=62,
-        nodes near coords={\pgfmathprintnumber\pgfplotspointmeta\%},
-        nodes near coords align={vertical},
-        every node near coord/.append style={font=\small\bfseries},
-        ytick={0,10,20,30,40,50,60},
-        yticklabel={\pgfmathprintnumber\tick\%},
-        grid=major,
-        ymajorgrids=true,
-        xmajorgrids=false,
-        enlarge x limits=0.15,
-    ]
-    \addplot[fill=entcolor!80, draw=entcolor] coordinates {
-        (Commercial, 53.51)
-        (Informational, 18.73)
-        (Generative, 8.88)
-        (Other, 7.23)
-        (Overall, 17.41)
-    };
-    \end{axis}
-    \end{tikzpicture}
-    \caption{ChatGPT web search trigger rate by query intent. Data from \textcite{punturo2026citationsources}, based on 667,000 real-user ChatGPT conversations tracked by Profound as of January~6, 2026. Commercial intent triggers web search at 3$\times$ the overall baseline rate (53.5\% vs.\ 17.4\%), motivating our focus on product-recommendation prompts.}
-    \label{fig:trigger-rate}
-\end{figure}
+\begin{enumerate}
+    \item RQ1a (Selection and visibility): How do cited, additional, rejected, and invisible sources differ in domain and type, and how does this differ between Business and Personal tiers?
+    \item RQ1b (External support): How often do LLM citations appear in conventional search engine results (Bing and Google)?
+    \item RQ1c (Selection bias): Do models exhibit preferences for specific structural content features (e.g., tables, numbered lists, freshness cues) when selecting from the retrieved pool, and how do these preferences vary across systems?
+    \item RQ1d (Listicle fidelity): When listicles (list-format articles or blog posts such as "Top 10 Best...") are cited, which products within them are selected or ignored, and how faithfully does the model reproduce their details?
+\end{enumerate}
 
-\FloatBarrier
-
-
-Web search is triggered in 53.5\% of commercial queries, compared to only 18.7\% for informational and 8.9\% for generative queries, a 3$\times$ gap over the 17.4\% all-intent baseline. Our decision to filter for high commercial intent (product recommendations) aligns with this asymmetry: commercial queries are where the retrieval pipeline is most active, where citation selection has the most direct economic consequences, and where the shift from SEO to GEO is most empirically observable.
-
-
-\subsection{The Emerging GEO Industry}
-\label{sec:geo-landscape}
-
-The commercial significance of LLM citation behavior has already attracted substantial venture capital. In August 2025, Profound raised \$35~million in a Series~B round led by Sequoia Capital, bringing its total funding to \$58.5~million \parencite{fortune2025profound}. Three months later, Berlin-based Peec~AI raised \$21~million in a Series~A led by Singular \parencite{techcrunch2025peec}, growing to \$4M~ARR in 10~months with 1,300 companies on its platform. Both companies are building brand-visibility dashboards that track whether and how often a brand appears in LLM-generated responses, the AI equivalent of monitoring how frequently a brand ranks in traditional search results.
-
-The opportunity has not gone unnoticed by established players. Ahrefs, one of the largest SEO analytics platforms, has added AI search monitoring features that track brand visibility across LLM-generated responses alongside its traditional SERP tracking. More consequentially, Adobe announced the acquisition of SEMrush in November 2025 \parencite{adobe2025semrush}, a deal that signals how seriously the marketing technology industry takes the convergence of traditional keyword intelligence and AI search analytics. The competitive landscape is thus bifurcating: GEO-native startups (Profound, Peec~AI) are building from the AI-search side inward, while incumbent SEO platforms (Ahrefs, SEMrush) are extending outward from their traditional keyword and ranking data into AI citation monitoring. Whether these approaches converge, and whether dedicated GEO tools offer marginal value over well-executed traditional SEO, is one of the practical questions this thesis informs.
-
-At their core, these platforms are trying to answer a simple question: \emph{is the AI recommending your brand, and if not, why?} Our findings speak directly to what drives these outcomes. Products appear in LLM responses primarily because they appear in retrieved listicles, and their position within those listicles matters (Section~\ref{sec:listicle-bias}, Section~\ref{sec:reranking}). Structural content features such as tables and numbered lists appear to improve a source's chances of being cited (Section~\ref{sec:selection-drift}). And because LLM citation behavior is stochastic (the same prompt can produce different citations across runs), single-snapshot monitoring will systematically misrepresent a brand's true visibility (Section~\ref{sec:flip-flop}).
-
-
-
-The dominant industry narrative frames GEO as a replacement for SEO, a new discipline for a new era. Some industry practitioners have suggested that LLM-referred users may exhibit higher conversion rates and purchase intent than traditional search traffic, lending urgency to the claim. However, the empirical question this thesis investigates is whether GEO is genuinely distinct from SEO or whether it is, in practice, a thin optimization layer on top of the same ranking foundation. The answer, as the following chapters demonstrate, is substantially the latter, but with empirically real exceptions that the concluding chapter delineates (Section~\ref{sec:geo-not-seo}).
-
+To answer these questions, we compare LLM citations against two external search indices. Bing serves as the primary overlap baseline for ChatGPT, while Google provides a second overlap index and the retrieval baseline for Gemini. Then we analyze the characteristics of the pages that made it to the citations sections of these LLM responses and compare them against the ones that did not.
