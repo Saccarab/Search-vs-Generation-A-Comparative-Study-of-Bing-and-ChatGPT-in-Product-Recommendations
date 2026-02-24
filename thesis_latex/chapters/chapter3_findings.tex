@@ -286,6 +286,7 @@ We analyzed the overlap between LLM citations and the underlying search index (B
 \midrule
 Total Cited Links & 1,637 & 1,839 & 1,651 \\
 Total Additional Links & 2,820 & 4,506 & --- \\
+Total Rejected Links & 631 & 496 & --- \\
 Bing Overlap (Cited) & \textbf{81.3\%} & 67.6\% & --- \\
 Bing Overlap (Additional) & \textbf{86.3\%} & 56.3\% & --- \\
 Google Overlap (Cited) & 27.8\% & \textbf{64.6\%} & \textbf{77.7\%} \\
@@ -496,12 +497,70 @@ Our reported invisible rates (16.3\% Business, 19.4\% Personal) are \textbf{uppe
 
 Both factors disproportionately affect \textbf{niche SaaS and product domains}---the very category our prompt set targets. These domains are likely present in the Bing index but fell beyond our scrape depth or were lost to Page~1 truncation. Using our Content DNA page-type labels (Section~\ref{sec:content-dna}), we identify and \textbf{exclude} URLs classified as \texttt{product\_page} from the invisible domain tables below. This filtering is modest---removing 31 entries (4.0\%) for Business and 113 entries (6.7\%) for Personal---so the resulting tables are not substantially altered, but the excluded entries are precisely the category most vulnerable to the two scraping artifacts above.
 
-\subsubsection{Top invisible domains}
+\subsection{Rejected Links --- The Search Pool Remainder}
+\label{sec:rejected}
+
+Beyond cited and additional links, ChatGPT's network responses contain a third category: \textbf{rejected links} (see naming conventions in Section~2.3.2). These are URLs present in the \texttt{search\_result\_groups} payload --- the retrieval pool delivered to the model during generation --- that were \textbf{not} promoted to either cited or additional status. They never appear in the user-facing response.
+
+\paragraph{How we identified rejected links:} Our ingestion pipeline parses each run's raw network response, extracts all URLs from the \texttt{search\_result\_groups\_json} field, then subtracts any URL already classified as cited or additional. The remainder is classified as ``rejected.''
+
+\begin{table}[H]
+\centering
+\caption{Rejected link volume}
+\label{tab:rejected-volume}
+\begin{tabular}{lrr}
+\toprule
+Metric & Business & Personal \\
+\midrule
+Total rejected links & 631 & 496 \\
+Runs with rejected links & 204 / 215 (95\%) & 195 / 209 (93\%) \\
+Avg.\ rejected per run (when present) & 3.1 & 2.5 \\
+Max rejected in a single run & 44 & 29 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Rejected links are overwhelmingly invisible from both search indices.}
+As shown in Table~\ref{tab:global-overlap}, only \textasciitilde6--10\% of rejected links appear in our Bing scrape, and an even lower \textasciitilde3--4\% appear in Google --- compared to 57--86\% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that rejected links are simply ``Bing-invisible but Google-findable.'' Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
+
+\paragraph{Top rejected domains (Business):}
+
+\begin{table}[H]
+\centering
+\caption{Top rejected domains (Business)}
+\label{tab:rejected-domains}
+\begin{tabular}{rlr}
+\toprule
+Rank & Domain & Rejected Count \\
+\midrule
+1 & arxiv.org & 82 \\
+2 & theverge.com & 49 \\
+3 & en.wikipedia.org & 35 \\
+4 & time.com & 34 \\
+5 & timesofindia.indiatimes.com & 33 \\
+6 & lifewire.com & 32 \\
+7 & techradar.com & 29 \\
+8 & wired.com & 25 \\
+9 & sfgate.com & 24 \\
+10 & nypost.com & 22 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Interpretation --- what role do rejected links play?}
+The rejected domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that appeared in the retrieval pool but were never surfaced to the user. Whether these URLs enter through the search pipeline or through some other retrieval path remains ambiguous --- they appear in \texttt{search\_result\_groups} (suggesting retrieval), but their near-zero presence in both consumer search indices suggests they may come from a different ranking layer or supplementary index that neither Bing nor Google's consumer UI exposes.
+
+The \textasciitilde8--10\% promotion rate (Section~\ref{sec:flip-flop}; rejected in one run $\rightarrow$ cited or additional in another) suggests these links are not simply discarded: the model \textit{can} surface them, but does so stochastically. The rejected category therefore appears to represent a low-priority tail of the retrieval pool---URLs that are available but fall below the citation threshold on most runs. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, which may explain their lower promotion likelihood for a product-recommendation task.
+
+\paragraph{Rejected--to--promoted promotion rate.}
+The boundary between rejected and cited/additional is itself stochastic. Comparing across runs of the same prompt, \textbf{7.9\%} of Business rejected URL--prompt pairs and \textbf{9.8\%} of Personal pairs appear as cited or additional in at least one other run. Of the promoted URLs, Business skews toward cited (33 of 37 promotions), while Personal is more balanced (20 cited, 16 additional). This means the three-tier classification (cited, additional, rejected) reflects a \textbf{continuum of stochastic thresholds} rather than categorical distinctions: the cited$\leftrightarrow$additional boundary flips in $\sim$20\% of cases (Section~\ref{sec:flip-flop}), and the rejected$\leftrightarrow$cited/additional boundary flips in $\sim$8--10\%.
+
+\subsection{Top Invisible Domains}
 \label{sec:top-invisible-domains}
 
 \paragraph{GPT Business --- Top Invisible Domains (all citation types, excluding niche SaaS)}
 
-Business uses Bing exclusively (see Section~\ref{sec:global-overlap}), so Bing-invisible = truly invisible. This table includes cited, additional, \textbf{and} contextual links (see Section~\ref{sec:contextual} for definition and Section~2.3.2 for naming conventions).
+Business uses Bing exclusively (see Section~\ref{sec:global-overlap}), so Bing-invisible = truly invisible. This table includes cited, additional, \textbf{and} rejected links (as defined in Section~\ref{sec:rejected} above).
 
 \begin{table}[H]
 \centering
@@ -530,7 +589,7 @@ Rank & Domain & Count \\
 \end{tabular}
 \end{table}
 
-All citation types (cited + additional + contextual) are included, with www/non-www variants merged. The list is dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. However, as shown below, a large share of these counts comes from \textbf{contextual} links---URLs present in the search result pool but never surfaced in the response.
+All citation types (cited + additional + rejected) are included, with www/non-www variants merged. The list is dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. As documented in Section~\ref{sec:rejected}, a large share of these counts comes from \textbf{rejected} links---URLs present in the search result pool but never surfaced in the response.
 
 \paragraph{GPT Personal --- Top Invisible Domains (all citation types, excluding niche SaaS, with Google recovery)}
 
@@ -565,154 +624,8 @@ Rank & Domain & Truly Invisible & Bing-Invisible & Google Recovered \\
 
 All citation types are included, with www/non-www merged and niche SaaS excluded. Two patterns emerge: Google recovery is significant for platform domains (\texttt{reddit.com} 58\%, \texttt{chromewebstore.google.com} 50\%), while major news and reference domains remain equally invisible in both indices.
 
-\paragraph{Excluding contextual links: Cited + Additional only}
-
-The tables above include contextual links (URLs in the search result pool that were never surfaced --- see Section~\ref{sec:contextual}). Since contextual links are \textbf{90\%+ invisible} from our Bing scrape, they heavily inflate the counts above. Excluding them gives a cleaner picture of what ChatGPT actually \textbf{cited or recommended} but could not be found in search:
-
-\paragraph{GPT Business (cited + additional only, top 15):}
-
-\begin{table}[H]
-\centering
-\caption{GPT Business --- top invisible domains (cited + additional only)}
-\label{tab:ent-invisible-cited}
-\begin{tabular}{rlr}
-\toprule
-Rank & Domain & Count \\
-\midrule
-1 & en.wikipedia.org & 81 \\
-2 & tomsguide.com & 22 \\
-3 & theverge.com & 22 \\
-4 & sfgate.com & 22 \\
-5 & techradar.com & 9 \\
-6 & androidcentral.com & 8 \\
-7 & wired.com & 7 \\
-8 & zhuanlan.zhihu.com & 6 \\
-9 & sohu.com & 6 \\
-10 & timesofindia.indiatimes.com & 4 \\
-11 & geeky-gadgets.com & 4 \\
-12 & g2.com & 4 \\
-13 & chromewebstore.google.com & 4 \\
-14 & topbusinesssoftware.com & 3 \\
-15 & fr.wikipedia.org & 3 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Excluding contextual links shrinks the Business invisible set by \textbf{45\%} (1,261 $\rightarrow$ 691). The biggest casualty is \texttt{arxiv.org}, which drops from \#2 (83) to absent---82 of its 83 invisible entries were contextual, not cited or additional. Similarly, \texttt{time.com} (34$\rightarrow$0), \texttt{lifewire.com} (34$\rightarrow$0), and \texttt{nypost.com} (22$\rightarrow$0) were almost entirely contextual. Wikipedia remains \#1 but drops from 116 to 81 (35 were contextual).
-
-\paragraph{GPT Personal (cited + additional only, top 20, by truly invisible):}
-
-[idk maybe some of these tables are too much]
-\begin{table}[H]
-\centering 
-\caption{GPT Personal --- top invisible domains (cited + additional only, by truly invisible)}
-\label{tab:pers-invisible-cited}
-\begin{tabular}{rlrrr}
-\toprule
-Rank & Domain & Truly Invisible & Bing-Invisible & Google Recovered \\
-\midrule
-1 & apps.apple.com & \textbf{93} & 138 & 45 (33\%) \\
-2 & reddit.com & \textbf{87} & 213 & \textbf{126} (59\%) \\
-3 & en.wikipedia.org & \textbf{65} & 65 & 0 \\
-4 & chromewebstore.google.com & \textbf{27} & 54 & \textbf{27} (50\%) \\
-5 & medium.com & \textbf{25} & 29 & 4 \\
-6 & tomsguide.com & \textbf{20} & 20 & 0 \\
-7 & theverge.com & \textbf{10} & 10 & 0 \\
-8 & facebook.com & \textbf{10} & 38 & \textbf{28} (74\%) \\
-9 & blog.google & \textbf{9} & 11 & 2 \\
-10 & support.google.com & \textbf{8} & 14 & 6 (43\%) \\
-11 & github.com & \textbf{7} & 7 & 0 \\
-12 & play.google.com & \textbf{6} & 11 & \textbf{5} (45\%) \\
-13 & lifewire.com & \textbf{6} & 6 & 0 \\
-14 & forum.devtalk.com & \textbf{6} & 9 & 3 (33\%) \\
-15 & deepl.com & \textbf{6} & 15 & \textbf{9} (60\%) \\
-16 & atanet.org & \textbf{6} & 14 & \textbf{8} (57\%) \\
-17 & zoom.com & \textbf{5} & 10 & 5 (50\%) \\
-18 & techradar.com & \textbf{5} & 7 & 2 \\
-19 & techcommunity.microsoft.com & \textbf{5} & 8 & 3 (38\%) \\
-20 & sfgate.com & \textbf{5} & 5 & 0 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Personal is less affected (15\% drop) since it has more cited+additional volume. The top three domains (apps.apple.com, reddit, Wikipedia) barely change. The biggest drops are in news and reference domains that were mostly contextual: \texttt{arxiv.org} (70$\rightarrow$0), \texttt{wired.com} (40$\rightarrow$0), \texttt{nypost.com} (28$\rightarrow$0), and \texttt{timesofindia.indiatimes.com} (31$\rightarrow$0). Google recovery patterns remain the same.
-
-If both factors were addressed (deeper scraping + repeated Page~1 scrapes), the remaining ``truly invisible'' set would converge toward citations that genuinely come from outside the search index---sites like Wikipedia, app stores, and known reference domains that ChatGPT may access through parametric knowledge or supplementary indices rather than the fan-out search pipeline.
-
-\subsection{Contextual Links --- The Search Pool Remainder}
-\label{sec:contextual}
-
-Beyond cited and additional links, ChatGPT's network responses contain a third category: \textbf{contextual links} (see naming conventions in Section~2.3.2). These are URLs present in the \texttt{search\_result\_groups} payload --- the retrieval pool delivered to the model during generation --- that were \textbf{not} promoted to either cited or additional status. They never appear in the user-facing response.
-
-\paragraph{How we identified contextual links:} Our ingestion pipeline parses each run's raw network response, extracts all URLs from the \texttt{search\_result\_groups\_json} field, then subtracts any URL already classified as cited or additional. The remainder is classified as ``contextual.''
-
-\begin{table}[H]
-\centering
-\caption{Contextual link volume}
-\label{tab:contextual-volume}
-\begin{tabular}{lrr}
-\toprule
-Metric & Business & Personal \\
-\midrule
-Total contextual links & 631 & 496 \\
-Runs with contextual links & 204 / 215 (95\%) & 195 / 209 (93\%) \\
-Avg.\ contextual per run (when present) & 3.1 & 2.5 \\
-Max contextual in a single run & 44 & 29 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Contextual links are overwhelmingly invisible from both search indices:}
-
-\begin{table}[H]
-\centering
-\caption{Search index overlap by citation type}
-\label{tab:contextual-overlap}
-\begin{tabular}{lrrr}
-\toprule
-Metric & Cited & Additional & Contextual \\
-\midrule
-Business Bing overlap & 81.3\% & 86.3\% & \textbf{9.7\%} \\
-Business Google overlap & 34.9\% & 25.8\% & \textbf{3.6\%} \\
-Personal Bing overlap & 67.6\% & 56.3\% & \textbf{5.6\%} \\
-Personal Google overlap & 71.6\% & 60.8\% & \textbf{3.0\%} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Only \textasciitilde6--10\% of contextual links appear in our Bing scrape, and an even lower \textasciitilde3--4\% appear in Google --- compared to 57--86\% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that contextual links are simply ``Bing-invisible but Google-findable.'' Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
-
-\paragraph{Top contextual domains (Business):}
-
-\begin{table}[H]
-\centering
-\caption{Top contextual domains (Business)}
-\label{tab:contextual-domains}
-\begin{tabular}{rlr}
-\toprule
-Rank & Domain & Contextual Count \\
-\midrule
-1 & arxiv.org & 82 \\
-2 & theverge.com & 49 \\
-3 & en.wikipedia.org & 35 \\
-4 & time.com & 34 \\
-5 & timesofindia.indiatimes.com & 33 \\
-6 & lifewire.com & 32 \\
-7 & techradar.com & 29 \\
-8 & wired.com & 25 \\
-9 & sfgate.com & 24 \\
-10 & nypost.com & 22 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Key finding --- contextual links explain the previous ``invisible'' inflation:}
-The invisible domain lists in the previous version of this analysis (which included all citation types) were heavily inflated by contextual links. For example, \texttt{arxiv.org} appeared as the \#2 invisible domain with 83 entries --- but 82 of those were contextual and only 1 was additional. Once contextual links are separated out (as in the cited+additional tables above), the invisible set shrinks by \textbf{45\% for Business} (1,261 $\rightarrow$ 691) and \textbf{15\% for Personal} (3,031 $\rightarrow$ 2,563).
-
-\paragraph{Interpretation --- what role do contextual links play?}
-The contextual domain list overlaps heavily with the invisible domain list because both capture the same phenomenon from different angles: high-authority reference domains (arxiv, Wikipedia, news outlets) that appeared in the retrieval pool but were never surfaced to the user. Whether these URLs enter through the search pipeline or through some other retrieval path remains ambiguous --- they appear in \texttt{search\_result\_groups} (suggesting retrieval), but their near-zero presence in both consumer search indices suggests they may come from a different ranking layer or supplementary index that neither Bing nor Google's consumer UI exposes.
-
-What role these contextual links play in the generation process --- whether the model uses them as background context, ignores them entirely, or processes them in some other way --- is not observable from our data. We can only confirm that they were \textbf{present in the search result pool} and \textbf{absent from the final output}. The composition skews toward reference and news domains (arxiv, Wikipedia, theverge, time) rather than product-oriented sources, but we cannot determine whether this reflects deliberate filtering by the model or some other mechanism upstream.
+\paragraph{Effect of excluding rejected links.}
+The tables above include rejected links (as defined in Section~\ref{sec:rejected}). Since rejected links are \textbf{90\%+ invisible} from our Bing scrape (Table~\ref{tab:global-overlap}), they contribute disproportionately to the counts above. Excluding them shrinks the Business invisible set by \textbf{45\%} (1,261 $\rightarrow$ 691) and the Personal set by \textbf{15\%}. The drop is spread across many news and reference domains whose invisible counts were almost entirely rejected. For Business: \texttt{arxiv.org} (83$\rightarrow$1), \texttt{theverge.com} (70$\rightarrow$22), \texttt{time.com} (34$\rightarrow$0), \texttt{lifewire.com} (34$\rightarrow$0), and \texttt{nypost.com} (22$\rightarrow$0). The same domains show comparable drops in Personal. Wikipedia remains the top invisible domain in both tiers but loses its rejected portion (Business: 116$\rightarrow$81). Personal is less affected because it has more cited+additional volume; the top domains (apps.apple.com, reddit, Wikipedia) and Google recovery patterns remain largely unchanged.
 
 \subsection{Citation Flip-Flop Rate}
 \label{sec:flip-flop}
@@ -777,56 +690,22 @@ Study-set and cited-set DNA composition tables provide the baseline menu/context
 
 Type distribution across the full retrieval pool --- all enriched URLs the model could have selected from (cited + additional + Bing/Google Page 1 results not used). This is the baseline ``menu'' against which the model's selections are compared.
 
-\subsubsection{GPT Business study set (Bing-centric, N=2,858)}
-
 \begin{table}[H]
 \centering
-\caption{GPT Business study set type distribution (N=2,858)}
-\label{tab:ent-menu}
-\begin{tabular}{lrr}
+\caption{Full retrieval pool (``Menu'') type distribution across all three systems}
+\label{tab:menu-combined}
+\begin{tabular}{lrrrrrr}
 \toprule
-Type & Count & \% \\
+ & \multicolumn{2}{c}{GPT Business} & \multicolumn{2}{c}{GPT Personal} & \multicolumn{2}{c}{Gemini} \\
+ & \multicolumn{2}{c}{(N=2,858)} & \multicolumn{2}{c}{(N=2,194)} & \multicolumn{2}{c}{(N=2,939)} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+Type & Count & \% & Count & \% & Count & \% \\
 \midrule
-\textbf{product\_page} & 1,159 & 40.6\% \\
-\textbf{listicle} & 989 & 34.6\% \\
-editorial & 161 & 5.6\% \\
-news & 156 & 5.5\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsubsection{GPT Personal study set (Multi-provider, N=2,194)}
-
-\begin{table}[H]
-\centering
-\caption{GPT Personal study set type distribution (N=2,194)}
-\label{tab:pers-menu}
-\begin{tabular}{lrr}
-\toprule
-Type & Count & \% \\
-\midrule
-\textbf{listicle} & 885 & 40.3\% \\
-\textbf{product\_page} & 808 & 36.8\% \\
-editorial & 121 & 5.5\% \\
-news & 105 & 4.8\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsubsection{Gemini study set (Google-centric, N=2,939)}
-
-\begin{table}[H]
-\centering
-\caption{Gemini study set type distribution (N=2,939)}
-\label{tab:gemini-menu}
-\begin{tabular}{lrr}
-\toprule
-Type & Count & \% \\
-\midrule
-\textbf{listicle} & 1,296 & 44.1\% \\
-\textbf{product\_page} & 709 & 24.1\% \\
-news & 165 & 5.6\% \\
-marketplace & 150 & 5.1\% \\
+\textbf{listicle} & 989 & 34.6\% & 885 & 40.3\% & 1,296 & \textbf{44.1\%} \\
+\textbf{product\_page} & 1,159 & \textbf{40.6\%} & 808 & 36.8\% & 709 & 24.1\% \\
+news & 156 & 5.5\% & 105 & 4.8\% & 165 & 5.6\% \\
+editorial & 161 & 5.6\% & 121 & 5.5\% & --- & --- \\
+marketplace & --- & --- & --- & --- & 150 & 5.1\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -836,53 +715,21 @@ marketplace & 150 & 5.1\% \\
 
 Type distribution for only the URLs the model actually \textbf{cited inline} in the final responses. Comparing this to the menu above reveals selection preferences.
 
-\subsubsection{GPT Business cited set (N=1,614)}
-
 \begin{table}[H]
 \centering
-\caption{GPT Business cited set type distribution (N=1,614)}
-\label{tab:ent-cited}
-\begin{tabular}{lrr}
+\caption{Cited set (``Order'') type distribution across all three systems}
+\label{tab:cited-combined}
+\begin{tabular}{lrrrrrr}
 \toprule
-Type & Count & \% \\
+ & \multicolumn{2}{c}{GPT Business} & \multicolumn{2}{c}{GPT Personal} & \multicolumn{2}{c}{Gemini} \\
+ & \multicolumn{2}{c}{(N=1,614)} & \multicolumn{2}{c}{(N=1,444)} & \multicolumn{2}{c}{(N=653)} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+Type & Count & \% & Count & \% & Count & \% \\
 \midrule
-\textbf{product\_page} & 649 & 40.2\% \\
-\textbf{listicle} & 589 & 36.5\% \\
-news\_article & 104 & 6.4\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsubsection{GPT Personal cited set (N=1,444)}
-
-\begin{table}[H]
-\centering
-\caption{GPT Personal cited set type distribution (N=1,444)}
-\label{tab:pers-cited}
-\begin{tabular}{lrr}
-\toprule
-Type & Count & \% \\
-\midrule
-\textbf{listicle} & 544 & 37.7\% \\
-\textbf{product\_page} & 523 & 36.2\% \\
-news\_article & 98 & 6.8\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsubsection{Gemini cited set (N=653)}
-
-\begin{table}[H]
-\centering
-\caption{Gemini cited set type distribution (N=653)}
-\label{tab:gemini-cited}
-\begin{tabular}{lrr}
-\toprule
-Type & Count & \% \\
-\midrule
-\textbf{listicle} & 371 & 56.8\% \\
-\textbf{product\_page} & 148 & 22.7\% \\
-comparison & 26 & 4.0\% \\
+\textbf{listicle} & 589 & 36.5\% & 544 & 37.7\% & 371 & \textbf{56.8\%} \\
+\textbf{product\_page} & 649 & \textbf{40.2\%} & 523 & 36.2\% & 148 & 22.7\% \\
+news & 104 & 6.4\% & 98 & 6.8\% & --- & --- \\
+comparison & --- & --- & --- & --- & 26 & 4.0\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -891,113 +738,6 @@ comparison & 26 & 4.0\% \\
 
 \textbf{Cross-references}: Listicle-only feature drift is reported under Section~\ref{sec:selection-drift} (Selection Drift). Host bias, listicle rank bias, and semantic fidelity are reported under Section~\ref{sec:listicle-bias}.
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-% ---- Helper: a single pie chart as a \pic ----
-% pgfplots does not have a native pie chart, so we draw them manually with tikz.
-% Each pie is a scope shifted to position.
-
-% === Row 1: Menu (Study Set) ===
-
-% GPT Business Menu
-\begin{scope}[shift={(0,0)}]
-  \node[font=\bfseries\small] at (0,1.8) {GPT Business};
-  \node[font=\scriptsize,gray] at (0,1.45) {Menu (N=2{,}858)};
-  % product_page 40.6%, listicle 34.6%, editorial 5.6%, news 5.5%, other 13.7%
-  \def\radius{1.3}
-  \fill[perscolor!70] (0,0) -- (90:\radius) arc (90:90-146.16:\radius) -- cycle; % product 40.6
-  \fill[entcolor!70] (0,0) -- (90-146.16:\radius) arc (90-146.16:90-146.16-124.56:\radius) -- cycle; % listicle 34.6
-  \fill[orange!60] (0,0) -- (90-270.72:\radius) arc (90-270.72:90-270.72-20.16:\radius) -- cycle; % editorial 5.6
-  \fill[yellow!70!orange] (0,0) -- (90-290.88:\radius) arc (90-290.88:90-290.88-19.8:\radius) -- cycle; % news 5.5
-  \fill[gray!30] (0,0) -- (90-310.68:\radius) arc (90-310.68:90-360:\radius) -- cycle; % other 13.7
-  \node[font=\tiny] at (30:0.85) {40.6\%};
-  \node[font=\tiny] at (-60:0.85) {34.6\%};
-\end{scope}
-
-% GPT Personal Menu
-\begin{scope}[shift={(4,0)}]
-  \node[font=\bfseries\small] at (0,1.8) {GPT Personal};
-  \node[font=\scriptsize,gray] at (0,1.45) {Menu (N=2{,}194)};
-  % listicle 40.3%, product_page 36.8%, editorial 5.5%, news 4.8%, other 12.6%
-  \def\radius{1.3}
-  \fill[entcolor!70] (0,0) -- (90:\radius) arc (90:90-145.08:\radius) -- cycle; % listicle 40.3
-  \fill[perscolor!70] (0,0) -- (90-145.08:\radius) arc (90-145.08:90-145.08-132.48:\radius) -- cycle; % product 36.8
-  \fill[orange!60] (0,0) -- (90-277.56:\radius) arc (90-277.56:90-277.56-19.8:\radius) -- cycle; % editorial 5.5
-  \fill[yellow!70!orange] (0,0) -- (90-297.36:\radius) arc (90-297.36:90-297.36-17.28:\radius) -- cycle; % news 4.8
-  \fill[gray!30] (0,0) -- (90-314.64:\radius) arc (90-314.64:90-360:\radius) -- cycle; % other 12.6
-  \node[font=\tiny] at (30:0.85) {40.3\%};
-  \node[font=\tiny] at (-55:0.85) {36.8\%};
-\end{scope}
-
-% Gemini Menu
-\begin{scope}[shift={(8,0)}]
-  \node[font=\bfseries\small] at (0,1.8) {Gemini};
-  \node[font=\scriptsize,gray] at (0,1.45) {Menu (N=2{,}939)};
-  % listicle 44.1%, product_page 24.1%, news 5.6%, marketplace 5.1%, other 21.1%
-  \def\radius{1.3}
-  \fill[entcolor!70] (0,0) -- (90:\radius) arc (90:90-158.76:\radius) -- cycle; % listicle 44.1
-  \fill[perscolor!70] (0,0) -- (90-158.76:\radius) arc (90-158.76:90-158.76-86.76:\radius) -- cycle; % product 24.1
-  \fill[yellow!70!orange] (0,0) -- (90-245.52:\radius) arc (90-245.52:90-245.52-20.16:\radius) -- cycle; % news 5.6
-  \fill[teal!50] (0,0) -- (90-265.68:\radius) arc (90-265.68:90-265.68-18.36:\radius) -- cycle; % marketplace 5.1
-  \fill[gray!30] (0,0) -- (90-284.04:\radius) arc (90-284.04:90-360:\radius) -- cycle; % other 21.1
-  \node[font=\tiny] at (20:0.85) {44.1\%};
-  \node[font=\tiny] at (-40:0.85) {24.1\%};
-\end{scope}
-
-% === Row 2: Order (Cited Set) ===
-
-% GPT Business Cited
-\begin{scope}[shift={(0,-4)}]
-  \node[font=\scriptsize,gray] at (0,1.45) {Order (N=1{,}614)};
-  % product_page 40.2%, listicle 36.5%, news 6.4%, other 16.9%
-  \def\radius{1.3}
-  \fill[perscolor!70] (0,0) -- (90:\radius) arc (90:90-144.72:\radius) -- cycle; % product 40.2
-  \fill[entcolor!70] (0,0) -- (90-144.72:\radius) arc (90-144.72:90-144.72-131.4:\radius) -- cycle; % listicle 36.5
-  \fill[yellow!70!orange] (0,0) -- (90-276.12:\radius) arc (90-276.12:90-276.12-23.04:\radius) -- cycle; % news 6.4
-  \fill[gray!30] (0,0) -- (90-299.16:\radius) arc (90-299.16:90-360:\radius) -- cycle; % other 16.9
-  \node[font=\tiny] at (30:0.85) {40.2\%};
-  \node[font=\tiny] at (-55:0.85) {36.5\%};
-\end{scope}
-
-% GPT Personal Cited
-\begin{scope}[shift={(4,-4)}]
-  \node[font=\scriptsize,gray] at (0,1.45) {Order (N=1{,}444)};
-  % listicle 37.7%, product_page 36.2%, news 6.8%, other 19.3%
-  \def\radius{1.3}
-  \fill[entcolor!70] (0,0) -- (90:\radius) arc (90:90-135.72:\radius) -- cycle; % listicle 37.7
-  \fill[perscolor!70] (0,0) -- (90-135.72:\radius) arc (90-135.72:90-135.72-130.32:\radius) -- cycle; % product 36.2
-  \fill[yellow!70!orange] (0,0) -- (90-266.04:\radius) arc (90-266.04:90-266.04-24.48:\radius) -- cycle; % news 6.8
-  \fill[gray!30] (0,0) -- (90-290.52:\radius) arc (90-290.52:90-360:\radius) -- cycle; % other 19.3
-  \node[font=\tiny] at (35:0.85) {37.7\%};
-  \node[font=\tiny] at (-50:0.85) {36.2\%};
-\end{scope}
-
-% Gemini Cited
-\begin{scope}[shift={(8,-4)}]
-  \node[font=\scriptsize,gray] at (0,1.45) {Order (N=653)};
-  % listicle 56.8%, product_page 22.7%, comparison 4.0%, other 16.5%
-  \def\radius{1.3}
-  \fill[entcolor!70] (0,0) -- (90:\radius) arc (90:90-204.48:\radius) -- cycle; % listicle 56.8
-  \fill[perscolor!70] (0,0) -- (90-204.48:\radius) arc (90-204.48:90-204.48-81.72:\radius) -- cycle; % product 22.7
-  \fill[orange!60] (0,0) -- (90-286.2:\radius) arc (90-286.2:90-286.2-14.4:\radius) -- cycle; % comparison 4.0
-  \fill[gray!30] (0,0) -- (90-300.6:\radius) arc (90-300.6:90-360:\radius) -- cycle; % other 16.5
-  \node[font=\tiny] at (0:0.85) {\textbf{56.8\%}};
-  \node[font=\tiny] at (-70:0.85) {22.7\%};
-\end{scope}
-
-% === Legend ===
-\begin{scope}[shift={(4,-6.5)}]
-  \fill[entcolor!70] (-3.5,0) rectangle (-3.2,0.25); \node[font=\scriptsize,right] at (-3.15,0.125) {Listicle};
-  \fill[perscolor!70] (-1.5,0) rectangle (-1.2,0.25); \node[font=\scriptsize,right] at (-1.15,0.125) {Product Page};
-  \fill[yellow!70!orange] (0.8,0) rectangle (1.1,0.25); \node[font=\scriptsize,right] at (1.15,0.125) {News};
-  \fill[gray!30] (2.5,0) rectangle (2.8,0.25); \node[font=\scriptsize,right] at (2.85,0.125) {Other};
-\end{scope}
-
-\end{tikzpicture}
-\caption{Source type composition: Menu (study set, top row) vs.\ Order (cited set, bottom row) across all three systems. Gemini's listicle share increases from 44.1\% to 56.8\% during selection, while GPT's product page share remains stable --- illustrating Gemini's ``listicle amplification'' effect.}
-\label{fig:type-composition-pies}
-\end{figure}
 
 \subsection{Cited vs.\ Additional --- Structural DNA Comparison (by Page Type)}
 \label{sec:cited-vs-additional}
@@ -1057,8 +797,6 @@ Product pages show essentially flat structural profiles between cited and additi
 
 We report page-length as \textbf{context} (not a grounding budget claim): listicles are longer and more heterogeneous than vendor pages, which can influence extractability and selection behavior.
 
-Computed from raw fetched text dumps in \texttt{data/fetched\_content/} (see \texttt{data/enrichment/content\_size\_stats\_raw.csv}).
-
 \begin{table}[H]
 \centering
 \caption{Content size by page type bucket}
@@ -1091,7 +829,7 @@ With the DNA profile established in Section~\ref{sec:content-dna}, we now measur
 
 \textbf{Methodology---per-run, SERP-constrained Welch's t-test:} For each run, every SERP URL (filtered by content type) is classified as either \textbf{Cited} or \textbf{Not-Cited} in that run. A cited URL only counts if it also appears in the SERP for that run, ensuring both groups are drawn from the same retrieval pool. Zero overlap between groups. A URL may appear in multiple runs; each is an independent selection event. We test eight binary Content DNA features using Welch's two-sample t-test. \texttt{freshness\_cue\_strength} is binarized at $\geq$3 (``strong freshness cues''). A per-unique-URL robustness check (deduplicating across runs) produces the same direction of drift for every significant feature, confirming that [saying confirm again sdoesnt make sense use more humble words] the results are not driven by repeated counting.
 
-\textbf{GPT data:} SERP from Bing Page~1 (business + personal) and Google Top-10 (personal only). Citations from \texttt{geo\_fresh.db}.
+\textbf{GPT data:} SERP from Bing Page~1 (business + personal) and Google Top-10 (personal only).
 
 \textbf{Gemini data:} SERP from Google Top-10 (fan-out queries via SerpApi). Cited URLs reconstructed per-run from raw Gemini responses via \texttt{master\_bundle.json} (Vertex grounding chunks resolved to real URLs; 2{,}278 mappings, 100\% coverage).
 
@@ -1423,33 +1161,6 @@ Gemini ($n{=}365$) & 34.8\% & 61.1\% & 79.5\% & 2.53$\times$ & 1.48$\times$ & 1.
 The \#1 item in a listicle is selected at 1.7--2.5$\times$ the uniform baseline, and the top-5 items account for 76--81\% of all selections despite comprising roughly half the listicle on average. This mirrors the SERP-level position bias observed in Section~\ref{sec:position-bias}: just as models disproportionately cite Rank~1 in the SERP, they disproportionately extract the \#1 product from within a cited listicle. Position bias thus operates at two nested levels --- SERP rank and within-listicle rank.
 
 A plausible mechanism for within-listicle position bias emerges from recent work on how LLMs process source content. \textcite{petrovic2025grounding} shows that Google's grounding infrastructure operates with a fixed ``content budget'' of approximately 2{,}000 words per query, with rank~\#1 sources receiving 28\% of the budget (531 words) versus 13\% for rank~\#5 (266 words); pages exceeding 3{,}000 words receive only 13\% coverage, meaning items listed further down a long listicle may never enter the grounding chunks sent to the model. \textcite{indig2026attention} reports a complementary finding for ChatGPT: 44.2\% of citations originate from the first 30\% of a source page's text (a ``ski ramp'' distribution, $p < 0.0001$ over 18{,}012 verified citations), with content in the final 30\% accounting for only 24.7\% of citations. Together, these findings suggest that the top-item skew we observe is not merely a learned preference but may reflect an architectural constraint: items positioned later in a listicle are less likely to be included in the content window the model actually processes.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    ybar,
-    bar width=8pt,
-    width=0.8\textwidth,
-    height=7cm,
-    xlabel={\#1, Top-3, Top-5},
-    ylabel={\% of Selected Items},
-    symbolic x coords={\#1,Top-3,Top-5},
-    xtick=data,
-    ymin=0, ymax=100,
-    ymajorgrids=true,
-    legend style={at={(0.5,1.03)}, anchor=south, legend columns=3},
-    enlarge x limits=0.25,
-]
-\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(\#1,18.9) (Top-3,50.9) (Top-5,76.0)};
-\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(\#1,31.7) (Top-3,60.5) (Top-5,81.0)};
-\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(\#1,34.8) (Top-3,61.1) (Top-5,79.5)};
-\legend{GPT Business, GPT Personal, Gemini}
-\end{axis}
-\end{tikzpicture}
-\caption{Listicle rank bias: observed share of selected items coming from top ranks, by system. All three systems over-select the \#1 item relative to a uniform baseline, with Gemini and GPT Personal showing the strongest top-item skew.}
-\label{fig:listicle-rank-bias}
-\end{figure}
 
 \subsection{Semantic Fidelity: Reading Comprehension vs.\ Attribution}
 \label{sec:semantic-fidelity}
