@@ -7,6 +7,7 @@
 
 % Layout and typography
 \usepackage[margin=2.5cm]{geometry}
+\usepackage{placeins}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
@@ -103,7 +104,7 @@ This thesis investigates the grounding behavior of large language models (LLMs) 
 
 We then compared the citations found in LLM responses against external search-engine baselines (Bing and Google organic results) to measure overlap, visibility gaps, and position bias. We found that 78--84\% of citations overlap with these search indices. ChatGPT Business accounts showed more than 80\% overlap with Bing. ChatGPT Plus showed approximately 60\% with Bing and Google separately, exceeding 80\% when combined. The remaining 18--20\% of links for which we could not find an overlap with search results were predominantly from websites such as Wikipedia, Reddit, app stores, and major tech publications such as The Verge and Wired, suggesting that presence in these sources plays a crucial role in AI visibility that bypasses regular search engine competition.
 
-We further developed a Content DNA enrichment pipeline to profile the structural characteristics of approximately 6{,}500 URLs. We then examined whether there is a preference towards specific page structures such as tables, bullet points, and numbered lists on product pages or listicles. Both ChatGPT and Gemini exhibit statistically significant preferences for structured listicle content: comparison tables show $+$7.8\,pp lift for Gemini ($p<0.01$) and up to $+$19.7\,pp for ChatGPT ($p<0.001$), numbered lists $+$7.1 to $+$11.2\,pp, and bullet points up to $+$14.0\,pp. We then investigated whether there is any correlation between a product's placement position in a listicle and found a strong top-rank bias. We also conducted a semantic fidelity audit of over 1{,}100 product claims in these listicles, analyzing how accurately LLMs cite what they see on the page. Genuine attribution errors were rare, confirming that retrieval-augmented grounding substantially reduces hallucination risk.
+We further developed a Content DNA enrichment pipeline to profile the structural characteristics of approximately 6{,}500 URLs. We then examined whether there is a preference towards specific page structures such as tables, bullet points, and numbered lists on product pages or listicles. Both ChatGPT and Gemini exhibit statistically significant preferences for structured content: for listicles, comparison tables, numbered lists, and bullet points were over-selected; for product pages, numbered lists and bullet points showed similar effects. We then investigated whether there is any correlation between a product's placement position in a listicle and found a strong top-rank bias. We also conducted a semantic fidelity audit of over 1{,}100 product claims in these listicles, analyzing how accurately LLMs cite what they see on the page. Genuine attribution errors were rare, confirming that retrieval-augmented grounding substantially reduces hallucination risk.
 
 These results provide an empirical foundation for Generative Engine Optimization (GEO), showing that SEO remains a prerequisite for LLM visibility while identifying structural content features, invisible-link channels, and external citations as factors that any robust GEO measurement framework must account for.
 
@@ -138,7 +139,6 @@ These results provide an empirical foundation for Generative Engine Optimization
 
 \input{chapters/appendix_a}
 \input{chapters/appendix_b}
-\input{chapters/appendix_c}
 
 % ---------- Bibliography ----------
 
