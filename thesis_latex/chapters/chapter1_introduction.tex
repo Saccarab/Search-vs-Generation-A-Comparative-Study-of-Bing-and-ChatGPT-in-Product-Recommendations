@@ -137,8 +137,6 @@ Regardless of their effectiveness, the fact that these efforts exist tells us so
 \section{Related Work}
 \label{sec:related-work}
 
-Research on how LLMs select and cite web sources is young (most production RAG systems with grounding launched in 2024--2025), and the literature remains relatively thin. The work closest to ours falls into three categories: citation fidelity audits, large-scale observational studies of citation patterns, and investigations of the grounding mechanics that sit between retrieval and generation. We review each in turn, highlighting the specific gaps this thesis addresses.
-
 \subsection{Citation Fidelity in RAG Systems}
 \label{sec:rw-fidelity}
 
@@ -154,7 +152,9 @@ Research on how LLMs select and cite web sources is young (most production RAG s
 \subsection{Grounding Mechanics and the Content Budget}
 \label{sec:rw-grounding-mechanics}
 
-Another important question \textcite{petrovic2025grounding} tries to answer is how much of a retrieved page actually makes it into the model's context. The study measured Gemini's grounding chunks and found that the system operates with a fixed content budget of approximately 2,000 words per query, with the top-ranked source receiving 28\% of the budget and pages over 3,000 words achieving only 13\% coverage. \textcite{petrovic2025filter} further quantified the compression ratio between retrieved content and generated output: only 15--25\% of retrieved text survives into the final response. \textcite{indig2026attention} analyzed 1.2~million ChatGPT responses and found a ``ski ramp'' distribution where 44.2\% of citations originate from the first 30\% of a source page. We conduct a similar analysis within our listicle position bias results (Section~\ref{sec:reranking}): if the model's grounding window is limited, items listed later in a long listicle may never enter the context. While we do not measure grounding budgets directly, our study provides complementary evidence from the selection side: we observe the downstream effect (position-dependent uptake rates) that these budget constraints appear to produce.
+Another important question \textcite{petrovic2025grounding} tries to answer is how much of a retrieved page actually makes it into the model's context. The study measured Gemini's grounding chunks and found that the system operates with a fixed content budget of approximately 2,000 words per query, with the top-ranked source receiving 28\% of the budget and pages over 3,000 words achieving only 13\% coverage. \textcite{petrovic2025filter} further quantified the compression ratio between retrieved content and generated output: only 15--25\% of retrieved text survives into the final response. \textcite{indig2026attention} analyzed 1.2~million ChatGPT responses and found a ``ski ramp'' distribution where 44.2\% of citations originate from the first 30\% of a source page. 
+
+We conduct a similar analysis within our listicle position bias results (Section~\ref{sec:reranking}): if the model's grounding window is limited, items listed later in a long listicle may never enter the context. While we do not measure grounding budgets directly, our study provides complementary evidence from the selection side: we observe the downstream effect (position-dependent uptake rates) that these budget constraints appear to produce.
 Prior work has audited citation fidelity (but not selection mechanics), measured citation patterns at scale (but without access to retrieval pipelines), and quantified grounding budgets (but not the downstream selection effects). This thesis attempts to connect these threads by tracing the retrieval-to-citation pipeline across multiple LLMs and tiers (ChatGPT Business vs.\ Personal, and Gemini), with particular attention to within-listicle position bias, structural content features that predict citation, citations that fall outside search indices entirely, and claim-level attribution.
 
 \section{Research Questions}
