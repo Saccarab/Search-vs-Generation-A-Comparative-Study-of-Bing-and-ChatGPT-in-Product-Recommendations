@@ -440,34 +440,6 @@ Q7 & 0.1\% & 2 \\
 
 Not all runs produce queries at every index; Q5+ counts are lower partly because fewer runs generate that many fan-out queries (a function of the minimum thinking budget used; see Section~2.4.2). The Q1 dominance is striking: the first fan-out query accounts for more citations than Q2--Q7 combined. Compared to GPT's balanced 50/50 split, Gemini's retrieval is heavily front-loaded toward its first grounding-support query.
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    ybar,
-    bar width=12pt,
-    width=0.7\textwidth,
-    height=6cm,
-    xlabel={Fan-Out Query Index},
-    ylabel={Citations},
-    symbolic x coords={Q1,Q2,Q3,Q4,Q5,Q6,Q7},
-    xtick=data,
-    ymin=0,
-    ymajorgrids=true,
-    nodes near coords,
-    every node near coord/.append style={font=\scriptsize},
-    fill=gemcolor,
-    draw=gemcolor!80!black,
-]
-\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(Q1,613) (Q2,299) (Q3,191) (Q4,122) (Q5,46) (Q6,10) (Q7,2)};
-\end{axis}
-\end{tikzpicture}
-
-
-\caption{Gemini per-query citation decay. The first fan-out query (Q1) accounts for 613 of 1,283 total citations --- more than Q2 through Q7 combined --- demonstrating Gemini's heavy front-loading toward its first grounding-support query.}
-\label{fig:gemini-query-decay}
-\end{figure}
-
 %-----------------------------------------------------------------------
 \section{Invisible Links \& Citation Characteristics}
 \label{sec:invisible-links-section}
