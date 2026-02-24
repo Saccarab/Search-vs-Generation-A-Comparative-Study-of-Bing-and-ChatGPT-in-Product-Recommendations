@@ -492,10 +492,9 @@ Max rejected in a single run & 44 & 29 \\
 \end{tabular}
 \end{table}
 
+\needspace{10\baselineskip}
 \paragraph{Rejected links are overwhelmingly invisible from both search indices.}
 Only \textasciitilde6--10\% of rejected links appear in our Bing scrape, and an even lower \textasciitilde3--4\% appear in Google --- compared to 57--86\% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that rejected links are simply ``Bing-invisible but Google-findable.'' Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
-
-\paragraph{Top rejected domains (Business):}
 
 \begin{table}[H]
 \centering
@@ -530,13 +529,9 @@ The boundary between rejected and cited/additional is itself stochastic. Compari
 \subsection{Top Invisible Domains}
 \label{sec:top-invisible-domains}
 
-\paragraph{GPT Business --- Top Invisible Domains (all citation types, excluding niche SaaS)}
-
-Business uses Bing exclusively (see Section~\ref{sec:global-overlap}), so Bing-invisible = truly invisible. This table includes cited, additional, \textbf{and} rejected links (as defined in Section~\ref{sec:rejected} above).
-
 \begin{table}[H]
 \centering
-\caption{GPT Business --- top invisible domains (all citation types)}
+\caption{GPT Business --- top invisible domains (all citation types, excluding niche SaaS). Business uses Bing exclusively, so Bing-invisible = truly invisible. Includes cited, additional, and rejected links.}
 \label{tab:ent-invisible-all}
 \begin{tabular}{rlr}
 \toprule
@@ -563,13 +558,9 @@ Rank & Domain & Count \\
 
 All citation types (cited + additional + rejected) are included, with www/non-www variants merged. The list is dominated by reference sites (Wikipedia, arxiv), tech publications, and news outlets. As documented in Section~\ref{sec:rejected}, a large share of these counts comes from \textbf{rejected} links---URLs present in the search result pool but never surfaced in the response.
 
-\paragraph{GPT Personal --- Top Invisible Domains (all citation types, excluding niche SaaS, with Google recovery)}
-
-Personal uses multiple search providers (see Section~\ref{sec:global-overlap}), so a Bing-only invisible check overstates the gap. Ordered by \textbf{truly invisible} count (not in Bing \textbf{or} Google). Includes all citation types.
-
 \begin{table}[H]
 \centering
-\caption{GPT Personal --- top invisible domains with Google recovery (all citation types)}
+\caption{GPT Personal --- top invisible domains with Google recovery (all citation types, excluding niche SaaS). Ordered by truly invisible count (not in Bing or Google).}
 \label{tab:pers-invisible-all}
 \begin{tabular}{rlrrr}
 \toprule
@@ -772,11 +763,11 @@ Product pages show essentially flat structural profiles between cited and additi
 
 With the DNA profile established in Section~\ref{sec:content-dna}, we now measure how each model's selection systematically diverges from the available pool along enriched feature dimensions.
 
-\textbf{Methodology---per-run, SERP-constrained Welch's t-test:} For each run, every SERP URL (filtered by content type) is classified as either \textbf{Cited} or \textbf{Not-Cited} in that run. A cited URL only counts if it also appears in the SERP for that run, ensuring both groups are drawn from the same retrieval pool. Zero overlap between groups. A URL may appear in multiple runs; each is an independent selection event. We test eight binary Content DNA features using Welch's two-sample t-test. \texttt{freshness\_cue\_strength} is binarized at $\geq$3 (``strong freshness cues''). A per-unique-URL robustness check (deduplicating across runs) produces the same direction of drift for every significant feature, confirming that [saying confirm again sdoesnt make sense use more humble words] the results are not driven by repeated counting.
+\textbf{Methodology---per-run, SERP-constrained Welch's t-test:} For each run, every SERP URL (filtered by content type) is classified as either \textbf{Cited} or \textbf{Not-Cited} in that run. A cited URL only counts if it also appears in the SERP for that run, ensuring both groups are drawn from the same retrieval pool. Zero overlap between groups. A URL may appear in multiple runs; each is an independent selection event. We test eight binary Content DNA features using Welch's two-sample t-test. \texttt{freshness\_cue\_strength} is binarized at $\geq$3 (``strong freshness cues''). A per-unique-URL robustness check (deduplicating across runs) produces the same direction of drift for every significant feature, confirming that the results are not driven by repeated counting.
 
 \textbf{GPT data:} SERP from Bing Page~1 (business + personal) and Google Top-10 (personal only).
 
-\textbf{Gemini data:} SERP from Google Top-10 (fan-out queries via SerpApi). Cited URLs reconstructed per-run from raw Gemini responses via \texttt{master\_bundle.json} (Vertex grounding chunks resolved to real URLs; 2{,}278 mappings, 100\% coverage).
+\textbf{Gemini data:} SERP from Google Top-10 (fan-out queries via SerpApi). Cited URLs reconstructed per-run from raw Gemini responses.
 
 \textbf{Two-stage decomposition (GPT only):}
 \begin{enumerate}
