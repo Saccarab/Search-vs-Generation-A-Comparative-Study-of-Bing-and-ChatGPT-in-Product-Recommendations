@@ -492,7 +492,7 @@ Our reported invisible rates (16.3\% Business, 19.4\% Personal) are \textbf{uppe
 \begin{enumerate}
     \item \textbf{The Rank 200 ceiling}: Our Bing scrape stops at Rank 200, but the page-level match histogram (Section~\ref{sec:page-dist}) shows no convergence---matches are still accumulating at Pages 15--16 with a smooth decay curve that does not reach zero. Scraping to Rank 300 or 400 would almost certainly recover additional matches, shrinking the invisible set. The ``invisible'' label for these URLs does not mean they are absent from Bing's index---only that they fell beyond our scrape depth.
 
-    \item \textbf{Bing Page 1 truncation (the ``Missing Middle'')}: As documented in Section~2.2.1, nearly half of our Bing scrapes had 5 or fewer organic results on Page~1 due to UI-level pagination instability. Results that would normally rank at positions 3--7 can be dropped entirely from a truncated scrape---they do not simply shift to Page~2. This is especially consequential because Page~1 is where we observe the highest match rates (Section~\ref{sec:page-dist})---so every result missed due to Page~1 truncation is statistically more likely to be a citation match than a result missed deeper in the index. These ``missing middle'' results are almost certainly available to ChatGPT through its backend API integration with Bing, which likely returns a clean, stable ranked list without the consumer UI's truncation artifacts.
+    \item \textbf{Bing Page 1 truncation}: As documented in Section~2.2.1, nearly half of our Bing scrapes had 5 or fewer organic results on Page~1 due to UI-level pagination instability. Results that would normally rank at positions 3--7 can be dropped entirely from a truncated scrape---they do not simply shift to Page~2. This is especially consequential because Page~1 is where we observe the highest match rates (Section~\ref{sec:page-dist})---so every result missed due to Page~1 truncation is statistically more likely to be a citation match than a result missed deeper in the index. These ``missing middle'' results are almost certainly available to ChatGPT through its backend API integration with Bing, which likely returns a clean, stable ranked list without the consumer UI's truncation artifacts.
 \end{enumerate}
 
 Both factors disproportionately affect \textbf{niche SaaS and product domains}---the very category our prompt set targets. These domains are likely present in the Bing index but fell beyond our scrape depth or were lost to Page~1 truncation. Using our Content DNA page-type labels (Section~\ref{sec:content-dna}), we identify and \textbf{exclude} URLs classified as \texttt{product\_page} from the invisible domain tables below. This filtering is modest---removing 31 entries (4.0\%) for Business and 113 entries (6.7\%) for Personal---so the resulting tables are not substantially altered, but the excluded entries are precisely the category most vulnerable to the two scraping artifacts above.
@@ -521,7 +521,7 @@ Max rejected in a single run & 44 & 29 \\
 \end{table}
 
 \paragraph{Rejected links are overwhelmingly invisible from both search indices.}
-As shown in Table~\ref{tab:global-overlap}, only \textasciitilde6--10\% of rejected links appear in our Bing scrape, and an even lower \textasciitilde3--4\% appear in Google --- compared to 57--86\% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that rejected links are simply ``Bing-invisible but Google-findable.'' Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
+Only \textasciitilde6--10\% of rejected links appear in our Bing scrape, and an even lower \textasciitilde3--4\% appear in Google --- compared to 57--86\% for cited and additional across both indices. This near-zero overlap holds regardless of search engine, ruling out the possibility that rejected links are simply ``Bing-invisible but Google-findable.'' Whatever index or retrieval path surfaces these URLs, it is largely opaque to both consumer search interfaces we measured.
 
 \paragraph{Top rejected domains (Business):}
 
@@ -751,17 +751,19 @@ To determine whether cited links differ structurally from additional links, we s
 \caption{Cited vs.\ Additional structural DNA comparison --- listicles only}
 \label{tab:cited-vs-additional-listicles}
 \small
-\begin{tabular}{lrrrr}
+\begin{tabular}{l rr rr}
 \toprule
-Field & Bus.\ Cited (n=205) & Bus.\ Additional (n=522) & Pers.\ Cited (n=173) & Pers.\ Additional (n=487) \\
+ & \multicolumn{2}{c}{Business} & \multicolumn{2}{c}{Personal} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+Field & \makecell{Cited\\(n=205)} & \makecell{Addtl.\\(n=522)} & \makecell{Cited\\(n=173)} & \makecell{Addtl.\\(n=487)} \\
 \midrule
 \texttt{has\_tables} & \textbf{45.9\%} & 41.2\% & \textbf{56.6\%} & 48.3\% \\
 \texttt{has\_numbered\_lists} & 79.5\% & 77.6\% & 72.3\% & 76.0\% \\
 \texttt{has\_bullet\_points} & 88.8\% & 90.8\% & \textbf{93.1\%} & 88.9\% \\
 \texttt{has\_pros\_cons} & \textbf{56.1\%} & 52.1\% & \textbf{63.6\%} & 56.9\% \\
-\texttt{expertise\_signal\_score} & 3.48 & 3.48 & 3.64 & 3.59 \\
-\texttt{spamminess\_score} & 0.57 & 0.55 & 0.60 & 0.62 \\
-\texttt{readability\_score} & 4.06 & 4.05 & 4.07 & 4.06 \\
+\texttt{expertise\_signal} & 3.48 & 3.48 & 3.64 & 3.59 \\
+\texttt{spamminess} & 0.57 & 0.55 & 0.60 & 0.62 \\
+\texttt{readability} & 4.06 & 4.05 & 4.07 & 4.06 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -775,17 +777,19 @@ Cited listicles consistently show higher rates of tables (+4.7\,pp Business, +8.
 \caption{Cited vs.\ Additional structural DNA comparison --- product pages only}
 \label{tab:cited-vs-additional-product}
 \small
-\begin{tabular}{lrrrr}
+\begin{tabular}{l rr rr}
 \toprule
-Field & Bus.\ Cited (n=328) & Bus.\ Additional (n=476) & Pers.\ Cited (n=276) & Pers.\ Additional (n=435) \\
+ & \multicolumn{2}{c}{Business} & \multicolumn{2}{c}{Personal} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+Field & \makecell{Cited\\(n=328)} & \makecell{Addtl.\\(n=476)} & \makecell{Cited\\(n=276)} & \makecell{Addtl.\\(n=435)} \\
 \midrule
 \texttt{has\_tables} & 11.9\% & 10.1\% & 7.2\% & 8.7\% \\
 \texttt{has\_numbered\_lists} & \textbf{63.7\%} & 59.7\% & 48.6\% & 47.8\% \\
 \texttt{has\_bullet\_points} & 89.0\% & 86.1\% & 84.8\% & 84.4\% \\
 \texttt{has\_pros\_cons} & 1.5\% & 2.1\% & 1.8\% & 2.3\% \\
-\texttt{expertise\_signal\_score} & 3.52 & 3.59 & 3.76 & 3.82 \\
-\texttt{spamminess\_score} & 0.09 & 0.11 & 0.09 & 0.09 \\
-\texttt{readability\_score} & 4.06 & 4.05 & 4.09 & 4.03 \\
+\texttt{expertise\_signal} & 3.52 & 3.59 & 3.76 & 3.82 \\
+\texttt{spamminess} & 0.09 & 0.11 & 0.09 & 0.09 \\
+\texttt{readability} & 4.06 & 4.05 & 4.09 & 4.03 \\
 \bottomrule
 \end{tabular}
 \end{table}
