@@ -8,12 +8,10 @@
 
   LLMs are rapidly becoming the interface through which consumers discover products. By mid-2025, ChatGPT alone had reached approximately 10\% of the world's adult population, with information-seeking and practical guidance accounting for nearly 80\% of all conversations \parencite{chatterji2025chatgpt}. Yet especially for commercial intent prompts these models do not generate recommendations from memory alone anymore. When a user asks for a product recommendation, the system can search the web in real time, retrieve relevant sources, and ground its response in what
   it finds. This retrieval-and-grounding workflow is commonly referred to as retrieval-augmented generation (RAG), and it is
-  increasingly standard in LLM conversations when up-to-date information is required. The model supplies the reasoning; the web supplies the knowledge. This architecture is
-  not a transitional compromise but the economically and technically inevitable design: inference is expensive, retrieval is
-  cheap, and no model can be retrained hourly to keep pace with prices, reviews, and product launches.
+  increasingly standard in LLM conversations when up-to-date information is required. The model supplies the reasoning; the web supplies the knowledge.
 
   If retrieval is the foundation, then what gets retrieved determines what gets recommended. And what gets retrieved is
-  governed, overwhelmingly, by search engine indices. This thesis provides the empirical evidence for that claim. We trace the
+  determined, overwhelmingly, by search engine indices. This thesis provides the empirical evidence for that claim. We trace the
   full retrieval-to-citation pipeline, from fan-out query generation through candidate retrieval, source selection, and
   claim-level attribution, and show that the vast majority of LLM citations originate from conventional search results.
   Despite growing industry speculation that generative AI will render traditional search optimization obsolete, we will argue in this thesis that Search Engine
