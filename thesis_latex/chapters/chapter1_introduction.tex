@@ -24,7 +24,6 @@
 % --- Market context (flows from intro, no section header) ---
 
 To place this study in context, it is important to understand the current scale of AI-driven search traffic relative to traditional search. Table~\ref{tab:traffic-share} presents referral traffic data from Ahrefs' panel of 74,752 websites as of January 2026 \parencite{ahrefs2026chatgptvsgoogle}.
-
 \begin{table}[htbp]
 \centering
 \caption{Referral traffic share by source (January 2026). Data from Ahrefs panel of 74,752 websites \parencite{ahrefs2026chatgptvsgoogle}. AI assistants collectively account for less than one-third of one percent of referral traffic.}
@@ -49,10 +48,7 @@ Claude & $<$0.01\% & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-The numbers are stark: Google alone commands over 100$\times$ the referral traffic of all AI assistants combined. Traditional search engines collectively account for approximately 40.7\% of referral traffic; AI search accounts for 0.26\%. By any absolute measure, AI-driven search remains a marginal channel.
-
-However, the growth trajectory is noteworthy. Between June 2025 and January 2026, total search traffic across the Ahrefs panel declined by 7.5\% (from 494M to 457M visits), while AI chatbot referral traffic grew by 27\% (from 2.9M to 3.7M visits). Google's share dropped from 42.2\% to 38.9\% ($-$3.2\,pp). Among AI platforms, Gemini showed the fastest recent growth (+53.1\% month-over-month in January 2026), followed by Claude (+20.7\%) and ChatGPT (+9.2\%). These growth rates, sustained over even a few years, would shift AI search from a rounding error to a commercially significant channel.
+The numbers are stark: Google alone commands over 100$\times$ the referral traffic of all AI assistants combined. However, the growth trajectory is noteworthy. Between June 2025 and January 2026, total search traffic across the Ahrefs panel declined by 7.5\% (from 494M to 457M visits), while AI chatbot referral traffic grew by 27\% (from 2.9M to 3.7M visits). Google's share dropped from 42.2\% to 38.9\% ($-$3.2\,pp). Among AI platforms, Gemini showed the fastest recent growth (+53.1\% month-over-month in January 2026), followed by Claude (+20.7\%) and ChatGPT (+9.2\%). These growth rates, sustained over even a few years, would incerase the economic AI serach visibility substantially.   
 
 This creates the motivation for studying the mechanics of LLM citation \emph{now}, while the systems are still young and the patterns are forming. If AI search traffic continues to grow (and if LLM-referred users convert at higher rates than traditional search users, as Ahrefs' own data suggests \parencite{law2025aiconversions}), then the question of \emph{how} LLMs select which sources and products to recommend becomes even more significant. This thesis looks into the mechanics of that selection process: how the retrieval-to-citation pipeline works and sources and products appear in the final response.
 
@@ -109,13 +105,12 @@ Ahrefs, one of the largest SEO analytics platforms, has also added AI search mon
 
 The dominant industry narrative frames GEO as a replacement for SEO, a new discipline for a new era. Some industry practitioners have suggested that LLM-referred users may exhibit higher conversion rates and purchase intent than traditional search traffic, lending urgency to the claim. However, the empirical question this thesis investigates is whether GEO is genuinely distinct from SEO or whether it is, in practice, a thin optimization layer on top of the same ranking foundation. The answer, as the following chapters demonstrate, is substantially the latter, but with empirically real exceptions that the concluding chapter delineates (Section~\ref{sec:geo-not-seo}).
 
-\section{Background: From SEO to GEO}
+\section{Background}
 \label{sec:theoretical-framework}
 
-\subsection{Search Optimization in the Age of Generative AI}
+\subsection{From SEO to GEO}
 \label{sec:evolution-search}
-
-Search Engine Optimization (SEO) is the established practice of optimizing content for visibility in organic search results through content, external website link-based authority signals, and technical performance. As LLMs increasingly mediate search interactions, a similar optimization practice is emerging. The industry has not converged on a single term for this; common labels include GEO (Generative Engine Optimization), AEO (Answer Engine Optimization), AI~SEO and AIO (AI Optimization). Throughout this thesis we adopt \textbf{GEO} following \textcite{aggarwal2024geo}, as it is the most established term in academic literature, but the underlying concept is the same across labels: optimizing content so that it survives the retrieval-to-citation pipeline of RAG-based search systems. Understanding why GEO exists, and why it does not replace SEO, requires tracing the architectural evolution that made retrieval central to how LLMs generate answers.
+Search Engine Optimization (SEO) is the established practice of optimizing content for visibility in organic search results through content, external website link-based authority signals, and technical performance. As LLMs increasingly mediate search interactions, a similar optimization practice is emerging. The industry has not converged on a single term for this; common labels include GEO (Generative Engine Optimization), AEO (Answer Engine Optimization), AI~SEO and AIO (AI Optimization). Throughout this thesis we adopt \textbf{GEO} following \textcite{aggarwal2024geo}, as it is the most established term in academic literature, but the underlying concept is the same across labels: optimizing content so that it survives the retrieval-to-citation pipeline. Understanding why GEO exists, and why it does not replace SEO, requires tracing the architectural evolution that made retrieval central to how LLMs generate answers.
 
 \subsection{The Rise of Retrieval-Augmented Generation}
 \label{sec:rag-evolution}
@@ -128,14 +123,15 @@ RAG became the industry standard for three reinforcing reasons. First, it provid
 \label{sec:rag-economics}
 \label{sec:reasoning-models}
 
-The logical endpoint of this architecture was articulated by Sam Altman at Snowflake Summit 2025: \textit{``a very tiny model with superhuman reasoning, 1 trillion tokens of context, and access to every tool you can imagine''}\footnote{Source: ``Sam Altman Talks AGI Timeline \& Next-Gen AI Capabilities,'' Snowflake Summit 2025. Available at \url{https://www.youtube.com/watch?v=qhnJDDX2hhU}.}. In this vision, the model does not need to contain knowledge, only the ability to reason over externally provided information. The web becomes a distributed memory layer for AI orchestrators, queried on demand rather than compressed into weights.
+maybe phrase differently
+This architecture concept was articulated by Sam Altman at Snowflake Summit 2025: \textit{``a very tiny model with superhuman reasoning, 1 trillion tokens of context, and access to every tool you can imagine''}\footnote{Source: ``Sam Altman Talks AGI Timeline \& Next-Gen AI Capabilities,'' Snowflake Summit 2025. Available at \url{https://www.youtube.com/watch?v=qhnJDDX2hhU}.}. In this vision, the model does not need to contain knowledge, only the ability to reason over externally provided information. The web becomes a distributed memory layer for AI orchestrators, queried on demand rather than compressed into weights.
 
-This vision is not aspirational; it is economically inevitable. Inference (the computational cost of LLM ``thinking'') is orders of magnitude more expensive than retrieval via traditional search indexing. Training encodes knowledge at enormous one-time cost and cannot keep pace with a web that changes by the minute. Retrieval, by contrast, is cheap, real-time, and already built at planetary scale by search engines. The economic logic is clear: let the model reason, and let the search index remember. The practical consequence for this thesis is equally clear: if retrieval is the foundation of AI-generated answers, then what gets retrieved determines what gets recommended, and what gets retrieved is governed by search engine ranking.
+This vision is not aspirational; it is economically inevitable. Inference (the computational cost of LLM ``thinking'') is orders of magnitude more expensive than retrieval via traditional search indexing. It also cannot produce as fresh results as the web that changes by the minute. Retrieval, by contrast, is cheap, real-time. The economic logic is clear: let the model reason, and let the search index remember. The practical consequence for this thesis is equally clear: if retrieval is the foundation of AI-generated answers, then what gets retrieved determines what gets recommended.
 
 \subsection{From Search to Grounding}
 \label{sec:structural-pivot}
 
-As RAG becomes the default architecture, the industry has begun adopting the term \emph{grounding} to describe the specific function that retrieval serves within it: anchoring an LLM's response in real-time, verifiable web data to reduce hallucinations and ensure factual accuracy. Unlike traditional search ranking, which optimizes for human click-through rates, grounding optimizes for machine consumption: providing the model with source material it can reason over and cite. The question this thesis investigates is what matters for citation selection beyond ranking. Our Content DNA analysis (Section~\ref{sec:selection-drift}) provides an empirical answer: structural content features (tables, numbered lists, pros/cons sections) predict citation at statistically significant rates. The optimization surface is the information architecture of the page, not how it is served.
+As RAG becomes the default architecture, the industry has begun adopting the term \emph{grounding} to describe the specific function that retrieval serves within it: anchoring an LLM's response in real-time, verifiable web data to reduce hallucinations and ensure factual accuracy. Unlike traditional search ranking, which optimizes for human click-through rates, grounding optimizes for machine consumption: providing the model with source material it can reason over and cite. Another question this thesis investigates is what matters for citation selection beyond ranking. Our Content DNA analysis (Section~\ref{sec:selection-drift}) aims to provide an empirical answer by analyzing various  webpage characteristics 
 
 \section{Related Work}
 \label{sec:related-work}
