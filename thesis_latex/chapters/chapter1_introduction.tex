@@ -10,18 +10,9 @@
   it finds. This retrieval-and-grounding workflow is commonly referred to as retrieval-augmented generation (RAG), and it is
   increasingly standard in LLM conversations when up-to-date information is required. The model supplies the reasoning; the web supplies the knowledge.
 
-  If retrieval is the foundation, then what gets retrieved determines what gets recommended. And what gets retrieved is
-  determined, overwhelmingly, by search engine indices. This thesis provides the empirical evidence for that claim. We trace the
-  full retrieval-to-citation pipeline, from fan-out query generation through candidate retrieval, source selection, and
-  claim-level attribution, and show that the vast majority of LLM citations originate from conventional search results.
-  Despite growing industry speculation that generative AI will render traditional search optimization obsolete, we will argue in this thesis that Search Engine
-  Optimization (SEO) is not dead; it is the prerequisite.
-
-  But even if SEO is the prerequisite, is it sufficient? If it is not, content creators would need to optimize for both search engines and LLM-specific preferences. We investigate this question by examining grounding behavior as the measurable pipeline from retrieval through selection, citation, and final text generation: which sources the system retrieves, which survive into the response, how claims map to sources, and whether the cited content is faithfully reproduced.
-
 % --- Market context (flows from intro, no section header) ---
 
-Table~\ref{tab:traffic-share} shows the current scale of AI-driven search traffic relative to traditional search, based on Ahrefs' panel of 74,752 websites as of January 2026 \parencite{ahrefs2026chatgptvsgoogle}.
+To put this into context, Table~\ref{tab:traffic-share} shows the current scale of AI-driven search traffic relative to traditional search.
 \begin{table}[htbp]
 \centering
 \caption{Referral traffic share by source (January 2026). Data from Ahrefs panel of 74,752 websites \parencite{ahrefs2026chatgptvsgoogle}. AI assistants collectively account for less than one-third of one percent of referral traffic.}
@@ -46,10 +37,9 @@ Claude & $<$0.01\% & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
-The numbers are stark: Google alone commands over 100$\times$ the referral traffic of all AI assistants combined. However, the growth trajectory is noteworthy. Between June 2025 and January 2026, total search traffic across the Ahrefs panel declined by 7.5\% (from 494M to 457M visits), while AI chatbot referral traffic grew by 27\% (from 2.9M to 3.7M visits). Google's share dropped from 42.2\% to 38.9\% ($-$3.2\,pp). Among AI platforms, Gemini showed the fastest recent growth (+53.1\% month-over-month in January 2026), followed by Claude (+20.7\%) and ChatGPT (+9.2\%). These growth rates, sustained over even a few years, would increase the economic value of AI search visibility substantially.   
+The numbers are stark: Google alone commands over 100$\times$ the referral traffic of all AI assistants combined. However, the growth trajectory is noteworthy. Between June 2025 and January 2026, total search traffic across the Ahrefs panel declined by 7.5\% (from 494M to 457M visits), while AI chatbot referral traffic grew by 27\% (from 2.9M to 3.7M visits). Google's share dropped from 42.2\% to 38.9\% ($-$3.2\,pp). Among AI platforms, Gemini showed the fastest recent growth (+53.1\% month-over-month in January 2026), followed by Claude (+20.7\%) and ChatGPT (+9.2\%). These growth rates, sustained over even a few years, would make appearing in LLM responses significantly more valuable for businesses, especially if LLM-referred users convert at higher rates than traditional search users, as some data already suggests \parencite{law2025aiconversions}.
 
-This creates the motivation for studying the mechanics of LLM citation \emph{now}, while the systems are still young and the patterns are forming. If AI search traffic continues to grow (and if LLM-referred users convert at higher rates than traditional search users, as Ahrefs' own data suggests \parencite{law2025aiconversions}), then the question of \emph{how} LLMs select which sources and products to recommend becomes even more significant. This thesis looks into the mechanics of that selection process: how the retrieval-to-citation pipeline works and how sources and products appear in the final response.
-
+  As the industry also speculates, does this mean traditional SEO is dead? We will argue the opposite but also look at where GEO diverges from SEO. We trace the full retrieval-to-citation pipeline, from fan-out query generation through candidate retrieval, source selection, and citation accuracy, and show that the vast majority of LLM citations originate from conventional search results. So SEO is not dead; it is the prerequisite for GEO. 
 \section{The Commercial Catalyst for RAG}
 \label{sec:commercial-catalyst}
 
