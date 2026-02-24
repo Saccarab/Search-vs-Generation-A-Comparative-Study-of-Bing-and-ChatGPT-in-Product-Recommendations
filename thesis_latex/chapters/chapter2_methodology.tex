@@ -10,27 +10,33 @@ The contrast between these three environments revealed notable differences, espe
 
 We have 79 unique prompts in our dataset that we have gathered from two platforms. 65 of these prompts were taken from Profound's Prompt Volumes feature \parencite{profound2026promptvolumes}, which provides prompt-level data derived from licensed and opt-in prompts of real ChatGPT users. Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent. The other 14 prompts were taken from Ahrefs' AI Citations feature \parencite{ahrefs2025aicitations}, which we have used to capture additional prompts within our target verticals. Prompts span collection dates from January 2025 to January 2026, with the majority concentrated between July and December 2025.
 
-From the available prompts, we filtered for product discovery queries with commercial intent ---
+From the available prompts, we filtered for product discovery queries with commercial intent
 prompts where users ask for tool recommendations, comparisons, or ``best of'' lists.
-These are the queries most likely to trigger web search grounding
-(see Section~\ref{sec:commercial-catalyst}), ensuring the retrieval pipeline
-is consistently active and observable.
+as are the queries most likely to trigger web search grounding
+(see Section~\ref{sec:commercial-catalyst}).
 All queries were concentrated in the AI and Software-as-a-Service (SaaS) sectors,
 particularly speech and language technology (speech-to-text,
 live transcription, voice translation, text-to-speech).
 This domain focus reflects the author's professional expertise in this vertical,
-which enabled more nuanced analysis of retrieval relevance and citation quality.
-Representative examples include: \emph{``Which free AI would you recommend 
- for translating my video?''} (P001), \emph{``Is there a transcription software available for a one-time payment instead of a subscription?''} (P003), \emph{``Are there live translation software options for video chats like Zoom or Teams?''} (P044), and \emph{``Can you recommend free text-to-speech extensions that don't sound robotic?''} (P069).
-We wanted to make sure that even if the 
+which allowed the author to assess retrieval relevance and spot citation errors
+that a domain outsider might miss.
 
-Each of the 79 prompts was executed in 3 independent runs per subscription tier (with a 4th run added only in cases of technical failure or RAG non-triggering), yielding 474 ChatGPT runs (237 Business + 237 Personal) and 237 Gemini runs, for 711 total runs across all conditions.
+\paragraph{Prompt categories.}
+The 79 prompts fall into 4 categories:
+\begin{itemize}
+  \item Live/real-time translation (25 prompts, 31.6\%) ---
+    e.g.\ \emph{``Is there a Windows application for live translation
+    during calls in Google Meet?''}
+  \item Post-production translation (24, 30.4\%) ---
+    e.g.\ \emph{``Which free AI would you recommend for translating my video?''}
+  \item Post-production transcription / speech-to-text (21, 26.6\%) ---
+    e.g.\ \emph{``Is there a transcription software available for a one-time payment
+    instead of a subscription?''}
+  \item Text-to-speech (9, 11.4\%) ---
+    e.g.\ \emph{``Can you recommend free text-to-speech extensions
+    that don't sound robotic?''}
+\end{itemize}
 
-\paragraph{Intent-based prompt clusters.}
-Although the 79 prompts span 9 fine-grained \texttt{parent\_keyword} categories, they reduce to 4 functional clusters when grouped by user intent: \textbf{live/real-time} (25 prompts, 31.6\%), \textbf{post-production translation} (24, 30.4\%), \textbf{post-production transcription/STT} (21, 26.6\%), and \textbf{text-to-speech} (9, 11.4\%). The first three clusters are roughly balanced; TTS forms a smaller tail. Representative examples include: \emph{``Is there a Windows application for live translation during calls in Google Meet?''} (live), \emph{``Which free AI would you recommend for translating my video?''} (post-prod translation), \emph{``What are the best free audio to text transcription tools?''} (transcription/STT), and \emph{``Can you recommend free text-to-speech extensions that don't sound robotic?''} (TTS).
-
-\paragraph{Search trigger coverage.}
-Five prompts never triggered RAG in any of their 6 runs (P013, P036, P056, P059, P062); a sixth (P067) also never triggered. All 6 have \texttt{NULL} sonic classifier data across every run; the classifier was never invoked, indicating suppression at a layer upstream of the classifier itself. Two are non-English (P056~Italian, P062~Spanish). Among runs with valid sonic data, the classifier is \textbf{deterministic}: all 3 runs of the same prompt on the same account produce byte-identical probability values, confirming that run-to-run stochasticity originates in post-classifier layers. Thirteen runs exhibited post-classifier overrides (high \texttt{simple\_search\_prob} but search suppressed); 11 of 13 occurred on Personal accounts. All downstream citation analyses exclude non-triggering runs.
 
 \section{Anatomy of a ChatGPT Response}
 \label{sec:chatgpt-anatomy}
