@@ -1,0 +1,55 @@
+% appendix_d.tex
+\chapter{ChatGPT Network Parameter Glossary}
+\label{app:network-glossary}
+
+A glossary of the recurring fields observed in ChatGPT's raw event stream payloads,
+limited to parameters we directly captured during data collection.
+
+\section*{Identifiers / Linkage}
+
+\begin{description}
+    \item[\texttt{conversation\_id}] Conversation session identifier (useful for grouping, not analysis).
+    \item[\texttt{message.id}] Unique message identifier in the stream.
+    \item[\texttt{parent\_id}] Links a message to its parent; helps follow the chain of events.
+    \item[\texttt{request\_id}] Correlates events belonging to the same request; often shared across tool calls and patches for that run.
+    \item[\texttt{turn\_exchange\_id} / \texttt{turn\_trace\_id}] Internal tracing IDs for a single turn; useful for debugging continuity across events.
+\end{description}
+
+\section*{Search Trigger \& Decision}
+
+\begin{description}
+    \item[\texttt{sonic\_classification\_result}] The search trigger classifier output (probabilities + thresholds).
+    \item[\texttt{web\_search\_triggered} / \texttt{web\_search\_forced}] Whether search ran / was forced (when present).
+    \item[\texttt{message\_marker}] Markers like \texttt{search\_start} that indicate when retrieval begins.
+\end{description}
+
+\section*{Fan-Out Queries \& Search Turns}
+
+\begin{description}
+    \item[\texttt{metadata.search\_model\_queries.queries[]}] The model-generated fan-out query list for a search turn.
+    \item[\texttt{search\_turns\_count}] Which search turn we are in (1, 2, 3\ldots); multi-turn fan-out appears as repeated query batches with increasing counts.
+    \item[\texttt{search\_tool\_call\_count}] Run-level count of search tool invocations; typically correlates with \texttt{max(search\_turns\_count)}.
+    \item[\texttt{search\_source} / \texttt{client\_reported\_search\_source}] Indicates the origin mode (often \texttt{composer\_auto}).
+\end{description}
+
+\section*{Retrieved Candidates}
+
+\begin{description}
+    \item[\texttt{metadata.search\_result\_groups}] The grouped retrieval pool (URLs, titles, snippets).
+    \item[\texttt{ref\_id}] The key (turn/ref indices) we use to map candidates to citations (\texttt{turn\_index}, \texttt{ref\_type}, \texttt{ref\_index}).
+    \item[\texttt{debug\_sonic\_thread\_id}] Internal identifier for the search thread (debugging/trace only).
+\end{description}
+
+\section*{Citation / Attribution Artifacts}
+
+\begin{description}
+    \item[\texttt{content\_references}] Citation token spans inserted into the streamed response; indices point to the citation token location, not the claim boundary.
+    \item[\texttt{safe\_urls} and \texttt{url\_moderation} events] Safety/allow-list decisions for URLs that show up in citations and link cards.
+\end{description}
+
+\section*{Completion / Response Framing}
+
+\begin{description}
+    \item[\texttt{finish\_details}] How generation ended (stop reason / tokens).
+    \item[\texttt{model\_slug} / \texttt{default\_model\_slug}] The model variant used for the run.
+\end{description}

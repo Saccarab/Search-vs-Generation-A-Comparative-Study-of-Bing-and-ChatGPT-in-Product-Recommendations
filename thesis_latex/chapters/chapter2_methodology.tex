@@ -40,112 +40,78 @@ The 79 prompts fall into 4 categories:
 \section{Anatomy of a ChatGPT Response}
 \label{sec:chatgpt-anatomy}
 
-This section describes what we can observe about ChatGPT's retrieval and citation pipeline from captured network payloads, and the naming conventions and field definitions that structure our analysis.
-
-\subsection{Pipeline Overview}
+\subsection{Search Trigger}
 \label{sec:pipeline-overview}
-
-Our network instrumentation captured raw event-stream payloads from the ChatGPT production UI (\texttt{chatgpt.com}) using the Chrome DevTools protocol. The payloads reveal a three-layer pipeline (Sonic Classifier, Sonicberry Orchestrator, and Generation Model) rather than a monolithic model. The detailed architecture, layer descriptions, and observed flow are reported as empirical findings in Section~\ref{sec:three-layer}. The methodological implication is that because each layer emits distinct payload fields, we can separately instrument the search-trigger decision, the fan-out query dispatch, and the citation-generation phase.
-
-\subsection{Source Categories (Naming Conventions)}
-\label{sec:source-categories}
-
-We classify every URL that appears in ChatGPT's network response into one of three categories, derived from distinct locations in the payload. \textbf{Cited} URLs appear as inline footnote references in the generated answer; mechanically, these are URLs linked via \texttt{content\_references} token spans, rendering as numbered superscript links in the ChatGPT UI. \textbf{Additional} URLs are attached to the response but not referenced inline; they appear in the \texttt{sources\_additional} array and render as a collapsible ``Sources'' section below the main response. \textbf{Rejected} URLs are present in the \texttt{search\_result\_groups} payload (the raw search results delivered to the model during generation) but were not promoted to either cited or additional status; they never appear in the user-facing response. We compute them as: all URLs in \texttt{search\_result\_groups} minus those already classified as cited or additional (see Section~\ref{sec:rejected} for detailed analysis).
-
-The \texttt{search\_result\_groups} field represents the retrieval pool as it appears in ChatGPT's network stream. We do not know the exact upstream source of these results; while ChatGPT is documented to use Bing, the field itself does not identify the backing search provider, and we cannot rule out internal indices or other retrieval paths.
-
-\subsection{Search Trigger Instrumentation}
 \label{sec:search-trigger-method}
 
-We log the system's search-decision artifacts where present in the event stream: the \texttt{sonic\_classification\_result} (classifier output with \texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, and thresholds), \texttt{web\_search\_triggered} (whether search actually ran), and \texttt{web\_search\_forced} (whether search was forced). Business streams are the richest source of these fields. The full Sonic Classifier configuration and its empirical behavior are reported in Section~\ref{sec:search-trigger}.
+When a user submits a prompt, the first thing ChatGPT decides is whether to search the web at all. Figure~\ref{fig:searching-web} shows what the user sees when the system commits to searching: a brief ``Searching the web'' indicator before any results appear.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{figures/searching_web.png}
+\caption{The first visible indicator of the retrieval pipeline: ChatGPT displays ``Searching the web'' before any fan-out queries or results are shown to the user.}
+\label{fig:searching-web}
+\end{figure}
+
+Behind this indicator, our network instrumentation captured the search-trigger decision via the \texttt{sonic\_classification\_result} field in the event stream. This field contains a classifier output with probabilities (\texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}) and thresholds that determine whether the prompt warrants a web search. The event stream also includes \texttt{web\_search\_triggered} (whether search actually ran) and \texttt{web\_search\_forced} (whether search was forced regardless of classifier output). The full classifier configuration and its behavior are reported in Section~\ref{sec:search-trigger}.
 
 \subsection{Fan-Out Queries and the \texttt{web.run} Agentic Loop}
 \label{sec:fan-out-queries}
 
-Fan-out queries are the multiple search queries ChatGPT issues for a single user prompt, reshaping and expanding the retrieval scope. They are the gate that determines which sources are even eligible to be cited. We observe them via the \texttt{search\_model\_queries.queries} field in the network stream. [maybe give an example based on our urns?]
+Fan-out queries are the multiple search queries ChatGPT issues for a single user prompt, reshaping and expanding the retrieval scope. They are the gate that determines which sources are even eligible to be cited. We observe them via the \texttt{search\_model\_queries.queries} field in the network stream.
 
-Our instrumentation revealed that the generation model (gpt-5-2) calls a tool named \texttt{web.run} via the Sonicberry orchestrator. Each \texttt{web.run} call that dispatches exactly 2 queries in parallel. In 94\% of runs, a single \texttt{web.run} call suffices. In 2.7\% of runs, the generation model evaluates the returned results and calls \texttt{web.run} again, creating an iterative re-search loop tracked by the \texttt{search\_turns\_count} field. In the raw network stream, each \texttt{web.run} message carries the query array (always length~2) and an incrementing search turn count; multi-turn calls may be chained (\texttt{parent\_id} linking to the previous call) or independent. The empirical distribution of search turns, re-search strategies, and query drift are reported in Section~\ref{sec:multi-turn}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{figures/fan_out_query.png}
+\caption{ChatGPT exposes only one fan-out query to the user (``Searching for best app for voice translation''). Network instrumentation reveals that a second query is always dispatched in parallel but never shown in the UI.}
+\label{fig:fan-out-ui}
+\end{figure}
 
-\subsection{Retrieved Candidate Pool}
-\label{sec:retrieved-candidates}
+Our instrumentation revealed that the generation model (gpt-5-2) calls a tool named \texttt{web.run} via the Sonicberry orchestrator. Each \texttt{web.run} call dispatches exactly 2 queries in parallel. In 94\% of runs, a single \texttt{web.run} call suffices. In 2.7\% of runs, the generation model evaluates the returned results and calls \texttt{web.run} again, creating an iterative re-search loop tracked by the \texttt{search\_turns\_count} field. In the raw network stream, each \texttt{web.run} message carries the query array (always length~2) and an incrementing search turn count; multi-turn calls may be chained (\texttt{parent\_id} linking to the previous call) or independent. The empirical distribution of search turns, re-search strategies, and query drift are reported in Section~\ref{sec:multi-turn}.
 
-The \texttt{search\_result\_groups} field contains the full retrieval pool delivered to the model: grouped search entries with URL, title, snippet, and \texttt{ref\_id} (turn/reference index keys). This is the model's ``shortlist menu'' prior to selection: every URL that the model could have cited or attached.
+The full retrieval pool is captured in the \texttt{search\_result\_groups} field
+(URLs, titles, snippets), representing every URL the model could have cited.
+Citation-to-source mapping is reconstructed from \texttt{content\_references}
+token spans and the streamed response text; the full pipeline is described
+in Section~\ref{sec:claim-to-link}.
+A full glossary of the network payload fields we captured
+is provided in Appendix~\ref{app:network-glossary}.
 
-\subsection{Citation Tokens and Claim Mapping}
-\label{sec:citation-tokens}
+\subsection{Source Categories}
+\label{sec:source-categories}
 
-Two payload elements enable claim-to-source reconstruction: \texttt{content\_references} (citation token spans with \texttt{start\_idx}/\texttt{end\_idx} marking where citations appear in the output stream) and the streamed \texttt{response\_text}. From these, we extract claim blocks (the text segments preceding each citation token) and map them to their backing sources by resolving \texttt{ref\_id} keys against \texttt{search\_result\_groups}. This reconstruction pipeline is described in detail in Section~\ref{sec:claim-to-link}.
+Figure~\ref{fig:chatgpt-anatomy} shows a typical ChatGPT response to a product
+recommendation query. We use it to define three source categories that structure
+the rest of our analysis:
 
-\subsection{Limitations of Network Instrumentation}
-\label{sec:network-limitations}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/gpt_ss.png}
+\caption{Anatomy of a ChatGPT response. The citations panel on the
+  right splits into \textcolor{red}{cited} sources (above ``More'')
+  and \textcolor{green!60!black}{additional} sources (below it).
+  Clicking a citation chip opens a popup
+  (\textcolor{orange}{orange}) that may bundle multiple URLs
+  (here 2/2), navigable via arrows. A third category,
+  \textbf{rejected} URLs, appears only in the network payload and is
+  never shown to the user.}
+\label{fig:chatgpt-anatomy}
+\end{figure}
 
-The network stream does not include the exact on-page snippets or chunks that were fetched and inserted into the model's context window. Our ChatGPT-side grounding analyses are therefore output-side proxies (claim-attributed text), not true input-side snippet budgets. [there was text here that say it doesnt allow us to do gemini kind of budget study but neither does gemini tbh idk how dejan did it xd]
-
-\subsection{Network Parameter Glossary (ChatGPT)}
-\label{sec:network-glossary}
-
-\textit{A practical glossary of the recurring fields we use when decoding the raw event stream. This is intentionally limited to parameters we directly observed in captured payloads.}
-
-\subsubsection{Identifiers / linkage}
-\label{sec:glossary-identifiers}
-
-\begin{description}
-    \item[\texttt{conversation\_id}] Conversation session identifier (useful for grouping, not analysis).
-    \item[\texttt{message.id}] Unique message identifier in the stream.
-    \item[\texttt{parent\_id}] Links a message to its parent; helps follow the chain of events.
-    \item[\texttt{request\_id}] Correlates events belonging to the same request; often shared across tool calls and patches for that run.
-    \item[\texttt{turn\_exchange\_id} / \texttt{turn\_trace\_id}] Internal tracing IDs for a single turn; useful for debugging continuity across events.
-\end{description}
-
-\subsubsection{Search trigger \& decision}
-\label{sec:glossary-search-trigger}
-
-\begin{description}
-    \item[\texttt{sonic\_classification\_result}] The search trigger classifier output (probabilities + thresholds).
-    \item[\texttt{web\_search\_triggered} / \texttt{web\_search\_forced}] Whether search ran / was forced (when present).
-    \item[\texttt{message\_marker}] Markers like \texttt{search\_start} that indicate when retrieval begins.
-\end{description}
-
-\subsubsection{Fan-out queries \& search turns}
-\label{sec:glossary-fan-out}
-
-\begin{description}
-    \item[\texttt{metadata.search\_model\_queries.queries[]}] The model-generated fan-out query list for a search turn (our ``hidden queries'').
-    \item[\texttt{search\_turns\_count}] Which search turn we are in (1, 2, 3\ldots); multi-turn fan-out appears as repeated query batches with increasing counts.
-    \item[\texttt{search\_tool\_call\_count}] Run-level count of search tool invocations; typically correlates with \texttt{max(search\_turns\_count)} (single-turn: 1; multi-turn: 2+).
-    \item[\texttt{search\_source} / \texttt{client\_reported\_search\_source}] Indicates the origin mode (often \texttt{composer\_auto}); useful for auditing when behavior changes.
-
-\end{description}
-
-\subsubsection{Retrieved candidates (what came back from search)}
-\label{sec:glossary-retrieved}
-
-\begin{description}
-    \item[\texttt{metadata.search\_result\_groups}] The grouped retrieval pool (URLs, titles, snippets).
-    \item[\texttt{ref\_id}] The key (turn/ref indices) we use to map candidates to citations (\texttt{turn\_index}, \texttt{ref\_type}, \texttt{ref\_index}).
-    \item[\texttt{debug\_sonic\_thread\_id}] Internal identifier for the search thread (debugging/trace only).
-\end{description}
-
-\subsubsection{Citation / attribution artifacts}
-\label{sec:glossary-citation}
-
-\begin{description}
-    \item[\texttt{content\_references}] Citation token spans inserted into the streamed response; indices point to the citation token location, not the claim boundary.
-    \item[\texttt{safe\_urls} and \texttt{url\_moderation} events] Safety/allow-list decisions for URLs that show up in citations and link cards.
-\end{description}
-
-\subsubsection{Completion / response framing}
-\label{sec:glossary-completion}
-
-\begin{description}
-    \item[\texttt{finish\_details}] How generation ended (stop reason / tokens).
-    \item[\texttt{model\_slug} / \texttt{default\_model\_slug}] The model variant used for the run.
-\end{description}
+\begin{itemize}
+  \item \textbf{Cited} --- URLs that appear as inline citation chips
+    in the generated answer (red in Figure~\ref{fig:chatgpt-anatomy}).
+  \item \textbf{Additional} --- URLs attached to the response but not
+    referenced inline; they render as a collapsible ``Sources'' section
+    below the response (green in Figure~\ref{fig:chatgpt-anatomy}).
+  \item \textbf{Rejected} --- URLs present in the raw search results
+    delivered to the model but never surfaced in the response.
+    We compute them as all retrieved URLs minus those classified
+    as cited or additional (see Section~\ref{sec:rejected}).
+\end{itemize}
 
 \section{Anatomy of a Gemini Response}
 \label{sec:gemini-anatomy}
-
-\textit{How the Gemini Vertex AI API exposes grounding metadata compared to ChatGPT's hidden network stream.}
 
 \subsection{The \texttt{groundingMetadata} Schema}
 \label{sec:grounding-metadata}
