@@ -192,21 +192,19 @@ SerpApi has also been a discussed company in the GEO landscape recently. On Dece
 
 The companies building RAG systems rely on third-party scrapers to access the live web, while the search engines are actively closing off that access. As scraping becomes more restricted, studies like this one will become harder to replicate.
 
-\subsection{Google SERP Baseline (SerpApi)}
+\subsection{Google SERP Baseline}
 \label{sec:google-serp-types}
 
 Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard search results), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 25 organic results per query. The total result count per query is higher when including the non-organic types. This Google baseline serves as the primary overlap surface for the Gemini study. Since OpenAI confirms that Enterprise and Edu workspaces use Bing exclusively as their search provider \parencite{openai2024enterprise}, Google also serves as a control group for the ChatGPT Business study, and as a third-provider verification for ChatGPT Personal---allowing us to test whether citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:citation-overlap}).
 
-\subsection{Bing SERP Scraping (Browser Extension)}
+\subsection{Bing SERP Scraping}
 \label{sec:bing-scraping}
 
-With no stable Bing API available (Section~\ref{sec:structural-pivot}), we used a Chrome browser extension originally forked from a related study \parencite{cirac2025bingscraper} and substantially modified for our requirements. The extension scrapes Bing's live consumer UI via DOM interaction. The extension runs as a Manifest~V3 content script that simulates human search interaction: typing queries character-by-character with randomized inter-key delays (10--50\,ms), clicking the search button, and waiting for DOM stabilization (result count checked across 3 consecutive iterations before proceeding).
+With no official Bing API available (Section~\ref{sec:structural-pivot}), we initially tested SerpApi's Bing endpoint, but found that results beyond the first page were highly irrelevant, mirroring the pagination instability we later documented (Section~\ref{sec:bing-pagination-instability}). We therefore used a Chrome browser extension originally forked from a related study \parencite{cirac2025bingscraper} and substantially modified for our requirements. The extension scrapes Bing's live consumer UI by simulating human search interaction: typing queries with randomized delays, clicking the search button through DOM, and waiting for the page to stabilize before extracting results.
 
-Organic results are isolated from ads using a multi-layer filtering approach. The primary selector (\texttt{.b\_algo:not(.b\_adTop):not(.b\_adBottom):not([data-apurl])}) is supplemented by a secondary function that checks DOM class markers, text-prefix matching (\texttt{/\^{}Sponsored\textbackslash b/i}), CSS \texttt{::before} pseudo-element inspection, and URL-based filtering of known ad-click endpoints. Unresolved Bing redirect URLs (\texttt{bing.com/ck/}) are discarded as probable ads. For each result, the extension extracts position, title, URL, domain, display URL, snippet, and page number; Bing's redirect-wrapped URLs are decoded via URL-parameter extraction with Base64 and hex-byte fallback, and tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}) are stripped to normalize URLs for overlap matching.
+Organic results are seperated from ads by filtering on Bing's ``Sponsored'' tags. For each result, the extension extracts position, title, URL, domain, snippet, and page number. Tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}, etc.) are stripped to normalize URLs for overlap matching. The extension paginates until at least 200 results are collected per query ($\sim$20 pages), with delays between pages. All Bing scrapes were routed through a US-based proxy to match the retrieval environment used for ChatGPT runs (Section~\ref{sec:proxy-requirement}).
 
-The extension paginates through 20 pages of results ($\sim$10 organic results per page = Rank~200 per query), with 3-second waits between pages and positions numbered strictly sequentially across pages. All Bing scrapes were routed through a US-based proxy to match the retrieval environment used for ChatGPT runs (see Section~\ref{sec:proxy-requirement}), ensuring that localized SERP variation does not inflate or deflate overlap measurements.
-
-\section{Methodological Evolution: From Top~30 to ``Deep Hunt'' (Rank~200)}
+\subsection{Methodological Evolution: From Top~30 to ``Deep Hunt'' (Rank~200)}
 \label{sec:methodological-evolution}
 
 Our scrape depth evolved through three stages as the study uncovered progressively more of ChatGPT's retrieval architecture. The initial design used only the single fan-out query visible in ChatGPT's UI (the ``Searching for\ldots'' text) and scraped the Top~30 Bing results for each, yielding a 40.3\% citation overlap. At this stage we had no knowledge of the hidden double fan-out mechanism; we assumed the UI-displayed query was the only query issued.
@@ -224,7 +222,7 @@ To test whether these citations were truly ``invisible'' or merely ``buried,'' w
 
 Even Rank~200 may not be sufficient. Our page-level distribution data (Section~\ref{sec:page-dist}) shows that citation matches do not reach zero at Pages~15--16; the long tail continues with a smooth decay curve. Extending to Rank~300 or beyond would likely recover additional matches and further narrow the ``truly invisible'' set (see Section~\ref{sec:fw-deeper-crawling}).
 
-\subsection{Bing Pagination Instability}
+\subsubsection{Bing Pagination Instability}
 \label{sec:bing-pagination-instability}
 
 A critical methodological challenge arose from Bing's inconsistent UI pagination behavior.
