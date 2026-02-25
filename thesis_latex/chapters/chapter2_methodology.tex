@@ -62,7 +62,7 @@ Behind this indicator, our network instrumentation captured the search-trigger d
 \subsection{Fan-Out Queries}
 \label{sec:fan-out-queries}
 
-Once the search trigger fires, ChatGPT does not search for the user's prompt verbatim. Instead, it generates its own search queries behind the scenes---commonly referred to as \emph{fan-out queries}. As Figure~\ref{fig:fan-out-ui} shows, the UI exposes only one of them (``Searching for best app for voice translation''). Our network instrumentation reveals that a second query is always dispatched in parallel but never shown to the user; both are captured in the \texttt{search\_model\_queries} field.
+Once the search trigger fires, ChatGPT does not search for the user's prompt verbatim. Instead, it rewrites the prompt into one or more targeted search queries \parencite{openai2024search}---commonly referred to as \emph{fan-out queries}. As Figure~\ref{fig:fan-out-ui} shows, the UI exposes only one of them (``Searching for best app for voice translation''). Our network instrumentation reveals that a second query is always dispatched in parallel but never shown to the user; both are captured in the \texttt{search\_model\_queries} field.
 
 \begin{figure}[htbp]
 \centering
@@ -73,7 +73,9 @@ Once the search trigger fires, ChatGPT does not search for the user's prompt ver
 
 Each pair of fan-out queries is dispatched via a tool call named \texttt{web.run}. In 94\% of our runs, we observed a single \texttt{web.run} call that produces 2 queries. In the remainder of our runs, the model issued additional \texttt{web.run} calls, creating more fan-out query pairs. The distribution of search turns and query strategies are reported in Section~\ref{sec:multi-turn}.
 
-The results from these queries form the full retrieval pool, captured in the \texttt{search\_result\_groups} field, which contains the URL, title, snippet, and publication date for each candidate (the publication date field is populated for roughly half of all entries; its potential as a selection signal is discussed in Section~\ref{sec:fw-pub-date}). To determine which of these candidates were actually cited, we reconstruct the citation-to-source mapping from \texttt{content\_references}, which records the start index of each citation token in the streamed response text. The full mapping pipeline is described in Section~\ref{sec:claim-to-link}. A glossary of all network payload fields we captured is provided in Appendix~\ref{app:network-glossary}.
+The results from these queries form the full retrieval pool, captured in the \texttt{search\_result\_groups}
+ field, which contains the URL, title, snippet, and 
+ publication date for each candidate. To determine which of these candidates were actually cited, we reconstruct the citation-to-source mapping from \texttt{content\_references}, which records the start index of each citation token in the streamed response text. The full mapping pipeline is described in Section~\ref{sec:claim-to-link}. A glossary of all network payload fields we captured is provided in Appendix~\ref{app:network-glossary}.
 
 \subsection{Source Categories}
 \label{sec:source-categories}
