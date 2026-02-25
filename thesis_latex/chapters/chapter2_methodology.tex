@@ -195,7 +195,7 @@ The companies building RAG systems rely on third-party scrapers to access the li
 \subsection{Google SERP Baseline (SerpApi)}
 \label{sec:google-serp-types}
 
-Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard web listings), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 25 organic results per query. The total result count per query is higher when including the non-organic types. This Google baseline serves as the control surface against which we measure citation overlap, complementing the deeper Bing Top-200 scrape described below.
+Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard web listings), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 25 organic results per query. The total result count per query is higher when including the non-organic types. This Google baseline serves as the primary overlap surface for the Gemini study, and as a third-provider control for ChatGPT citations---allowing us to test whether ChatGPT citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:overlap-results}).
 
 \subsection{Bing SERP Scraping (Browser Extension)}
 \label{sec:bing-scraping}
