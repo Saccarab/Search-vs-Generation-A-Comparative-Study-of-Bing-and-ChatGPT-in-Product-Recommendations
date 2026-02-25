@@ -329,52 +329,41 @@ The prompt, the full response with inline citations,
  The viewer also includes aggregate dashboards for 
  overlap statistics, domain-level exploration, and breakdowns of truly invisible URLs (Section~\ref{sec:top-invisible-domains}) across all runs. We built a similar tool for Gemini, comparing grounding chunks and supports against the Google SERP baseline. Both tools were used throughout the analysis reported in Chapter~\ref{ch:findings}.
 
-\section{Content DNA Enrichment (LLM-as-a-Labeler)}
+\section{Content DNA Enrichment}
 \label{sec:content-dna}
 
-To quantify selection effects (what gets cited versus what was available), we needed to move beyond URLs and domains to a structured profile of each page's content characteristics.
+Knowing which URLs were cited was not enough; we also need to know what kind of pages they are, so we can understand what features lead to the citation decision. We built a pipeline that labels every URL in our dataset with a structural profile which we call its Content DNA. This profile includes page type (listicle, product page, documentation), whether the page has tables, numbered lists, or pros/cons sections, and how fresh the content is (Figure~\ref{fig:dna-snip}).
 
-\subsection{The Labeling Pipeline}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/dna-snip.png}
+    \caption{Content DNA profiles for three URLs from the data viewer's URL breakdown view (Section~\ref{sec:analysis-applications}). The Features column shows structural qualities detected on the page, such as whether it contains tables, numbered lists, or pros/cons sections.}
+    \label{fig:dna-snip}
+\end{figure}
+
 \label{sec:labeling-pipeline}
-
-We developed an automated enrichment pipeline using GPT-5-mini and Gemini~2.5~Flash as structured labelers. The pipeline operates in three stages. First, raw HTML was fetched for each URL and converted to clean markdown/text. Second, the LLM was prompted to evaluate each page against a structured schema covering page type (\texttt{listicle}, \texttt{product\_page}, \texttt{documentation}, \texttt{forum\_ugc}), content format (\texttt{best\_of\_list}, \texttt{landing\_page}, \texttt{comparison\_matrix}), and structural features (\texttt{has\_tables}, \texttt{has\_numbered\_lists}, \texttt{has\_pros\_cons}). The schema also captured tone and promotional intensity scores, but these showed no discriminative power in downstream analysis (tone distribution was uniformly $\sim$70\% promotional across all systems, a natural consequence of the product-recommendation prompt set) and are omitted from the findings. Third, a subset of labels was manually audited to ensure the labeler correctly distinguished between vendor-owned landing pages and independent editorial listicles.
-
-\subsection{Enrichment Logic and Static Overrides}
-\label{sec:enrichment-logic}
-
-The labeling pipeline uses a hybrid approach. General web pages, blogs, and niche product sites were labeled by GPT-5-mini. However, high-volume domains with fixed, well-understood structures were assigned static ``pre-made'' labels to save API quota and ensure consistency: \texttt{reddit.com} was labeled as \texttt{forum\_ugc}, \texttt{en.wikipedia.org} as \texttt{reference}, \texttt{arxiv.org} as \texttt{academic\_paper}, and app stores (\texttt{apps.apple.com}, \texttt{play.google.com}) as \texttt{app\_store\_listing}. Many of the top ``invisible'' domains (Section~\ref{sec:top-invisible-domains}) were handled via these static overrides because their structure does not require per-page LLM analysis.
-
-A consistent skip list (\texttt{wikipedia.org}, \texttt{reddit.com}, \texttt{arxiv.org}, \texttt{github.com}, \texttt{youtube.com}, app stores, social media platforms, and first-party support/docs sites) was applied across all enrichment runs. These domains have fixed, well-understood structures (a Wikipedia article is always \texttt{type=reference}, a Reddit thread is always \texttt{type=forum\_ugc}), and their content is unlikely to contain the structural features (comparison tables, numbered lists, pros/cons blocks) that drive our drift analysis. They were therefore assigned heuristic labels with conservative defaults rather than full LLM enrichment.
-
-\textbf{Consequence for drift analysis:} Because these skipped domains receive zeroed-out structural scores (no tables, no numbered lists, no pros/cons), including them in feature-level drift comparisons would create artificial signal. The selection drift analysis in Section~3.5 therefore focuses on \textbf{product pages and listicles}, the two dominant types where full LLM enrichment was performed and where structural features are meaningfully variable. This scoping avoids comparing LLM-enriched pages against heuristically-labeled ones, which would conflate labeling method differences with actual content differences.
-
-\subsection{Cross-Model Agreement}
 \label{sec:labeler-fidelity}
 
-To test whether Content DNA is model-dependent, we ran a direct agreement audit between \textbf{Gemini 2.5 Flash} and \textbf{GPT-5-mini} on \textbf{2,660 overlapping URLs} (\texttt{docs/inter\_model\_fidelity\_report.md}).
+We built an automated pipeline using GPT-5-mini and Gemini~2.5~Flash to label each URL's structural characteristics. The pipeline works in three stages:
 
-\begin{itemize}
-    \item \textbf{Structural fields (agreement)}: \texttt{has\_pros\_cons} \textbf{94.6\%}, \texttt{has\_sources\_or\_citations} \textbf{93.8\%}, \texttt{has\_clear\_authorship} \textbf{93.3\%}, \texttt{has\_tables} \textbf{92.9\%}, \texttt{has\_numbered\_lists} \textbf{91.1\%}
-    \item \textbf{Categorical fields (agreement)}: \texttt{content\_format} \textbf{92.1\%}, \texttt{type} \textbf{87.7\%}, \texttt{tone} \textbf{77.7\%}
-    \item \textbf{Score consistency (correlation)}: \texttt{freshness\_cue\_strength} \textbf{$r = 0.841$} (strong trend agreement, different absolute thresholds)
-\end{itemize}
+\begin{enumerate}
+    \item \textbf{Fetch.} Raw HTML is downloaded for each URL and converted to clean text.
+    \item \textbf{Label.} The LLM reads the page and assigns labels for page type, structural features, and freshness, as shown in Figure~\ref{fig:dna-snip}. The full labeling prompt is in Appendix~\ref{app:dna-prompt}.
+    \item \textbf{Audit.} A subset of labels was manually checked, focusing on the distinction between product landing pages and editorial blogs.
+\end{enumerate}
 
-A parallel cross-model validation was performed on the listicle semantic fidelity judge (Section~\ref{sec:semantic-fidelity}), where all 1{,}116 claims were judged by both models. Agreement rates (93--100\% on structural fields, 93.9\% within $\pm$1 on fidelity scores) are consistent with the DNA labeler results above.
+To verify that labels are not model-dependent, we had GPT-5-mini and Gemini~2.5~Flash each label all 6{,}000+ URLs and compared their outputs against each other. Agreement was 91--95\% on structural fields (tables, numbered lists, pros/cons, authorship, citations) and 88--92\% on categorical fields (page type, format).
 
-\subsection{Downstream Analyses}
-\label{sec:selection-research-questions}
-
-The enrichment data feeds three analyses in Chapter~\ref{ch:findings}. First, we compare the structural DNA of cited versus additional links to identify which content features correlate with inline citation (Section~\ref{sec:cited-vs-serp}). Second, we track cross-run citation consistency: whether URLs demoted to ``additional'' in one run are promoted to ``cited'' in a different run of the same prompt (Section~\ref{sec:flip-flop}). Third, we compare the DNA of top-ranked Bing and Google links that the models ignored against those they cited, testing whether ignored links lack the structural features found in cited ones (Section~\ref{sec:cited-vs-serp}).
+Well-known domains with fixed structures such as Reddit, Wikipedia, app stores, and YouTube were excluded from LLM labeling and assigned defaults instead. Our structural analyses in Chapter~\ref{ch:findings} therefore focus on pages the pipeline identified as product pages and listicles, where these features are meaningfully present.
 
 \section{Use of AI Tools in This Research}
 \label{sec:ai-tools-disclosure}
 
-This thesis used large language models as research tools at every stage. We disclose this for transparency.
+This study used large language models at every stage, and we disclose their role for transparency.
 
-\textbf{Data enrichment and judging.} The Content DNA labeling pipeline (Section~\ref{sec:labeling-pipeline}) used \textbf{GPT-5-mini} and \textbf{Gemini 2.5 Flash} as structured labelers to classify $\sim$6{,}000 URLs. The semantic fidelity judge (Section~\ref{sec:semantic-fidelity}) used the same two models to evaluate 1{,}116 listicle product claims. Cross-model agreement was validated in both cases (91--100\% on structural fields), and all flagged attribution failures were manually verified.
+The Content DNA labeling pipeline (Section~\ref{sec:labeling-pipeline}) used GPT-5-mini and Gemini 2.5 Flash as structured labelers. 
+The same two models served as judges on our semantic fidelity audit (Section~\ref{sec:semantic-fidelity}). Cross-model agreement was validated in both cases, and all flagged attribution failures were manually verified.
 
-\textbf{Analysis scripting.} Many of the analysis scripts (Python, Node.js) were written with AI assistance using multiple models across two IDE integrations: \textbf{Gemini 3.0 Flash} (Google) was the primary model used via Cursor, with \textbf{GPT-5.2} and \textbf{GPT-5.2 Codex} (OpenAI) and \textbf{Claude Opus 4.5} (Anthropic) used occasionally via Cursor as well. Later-stage analysis and writing shifted to \textbf{Claude Opus 4.5/4.6} via Claude Code. The author specified the analysis logic, reviewed all outputs, and iteratively refined both the code and the interpretation of results through extended dialogue with the models.
+Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools were also used for proofreading, structural editing, and \LaTeX{} formatting, with Claude Code and OpenAI Prism used at different stages. Every number in this thesis was verified against the underlying data.
 
-\textbf{Writing and editing.} Thesis prose, tables, and \LaTeX{} formatting were drafted with Claude Opus 4.5/4.6 via Claude Code. Later-stage proofreading and literature search were assisted by \textbf{OpenAI Prism}, a \LaTeX-native workspace with integrated GPT-5.2. In all cases the author provided the arguments, data, and framing; the models produced draft text that the author reviewed and revised. Every number in this thesis was verified against the underlying data.
-
-We acknowledge the circularity: a thesis that studies how LLMs ground their outputs was itself partly written with LLM assistance. We consider transparency about this preferable to understating their role.
+We prefer transparency on their use.
