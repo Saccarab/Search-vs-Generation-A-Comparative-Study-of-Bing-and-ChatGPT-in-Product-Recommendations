@@ -103,7 +103,7 @@ the rest of our analysis:
     in the generated answer (orange or red in Figure~\ref{fig:chatgpt-anatomy}).
   \item \textbf{Additional} --- URLs attached to the response but not
     referenced inline.(green in Figure~\ref{fig:chatgpt-anatomy}).
-  \item \textbf{Rejected} --- URLs present in the raw search results but were never used in the response or were shown in the user interface.
+  \item \textbf{Rejected} --- URLs present in the raw search results but never used in the response or shown in the user interface (Section~\ref{sec:rejected}).
 \end{itemize}
 
 \subsection{Citation Mapping}
@@ -161,20 +161,20 @@ Unlike ChatGPT, where we had to scrape the network stream, Gemini provides struc
   ]
 }
 \end{lstlisting}
-\caption{Abbreviated \texttt{groundingMetadata} from a real Gemini API response. \texttt{webSearchQueries} contains the fan-out queries, \texttt{groundingChunks} lists the retrieved sources (as Vertex redirect URLs with domain-level titles), and \texttt{groundingSupports} maps specific response segments back to the chunks that support them.}
+\caption{\texttt{groundingMetadata} from a real Gemini API response. \texttt{webSearchQueries} contains the fan-out queries, 
+\texttt{groundingChunks} lists the retrieved sources (as Vertex redirect URLs with domain-level titles), 
+and \texttt{groundingSupports} maps specific response segments back to the links that support them.}
 \label{fig:gemini-json}
 \end{figure}
 
 \subsection{Key Differences in Instrumentation}
 \label{sec:gemini-instrumentation-differences}
 
-The most significant difference is transparency: Gemini is ``grounding-first'': it exposes the source URLs it retrieved and maps specific response segments back to those sources via \texttt{groundingSupports}, enabling higher-resolution fidelity analysis than ChatGPT's output-side-only instrumentation allows. However, Gemini does not expose the raw page text it ingested; we see which URLs were used and which response segments they support, but not the actual snippets the model read from each page.
+Unlike ChatGPT, where we had to extract citation tokens from the network stream and stitch them back together with character offsets (Section~\ref{sec:citation-mapping}), Gemini provides the segment-to-source mapping directly in its API response via \texttt{groundingSupports}. One practical challenge is that \texttt{groundingChunks} contain Vertex redirect URLs rather than raw destination URLs; we built a resolution script to follow each redirect and recover the actual domain.
 
-A practical challenge is that Gemini's \texttt{groundingChunks} do not expose raw URLs; instead, they contain internal redirect URLs (e.g., \texttt{vertexaisearch.cloud.google.com/\ldots}) that must be followed to discover the actual destination domain. We built a dedicated resolution script that collects all unique Vertex redirect URLs, follows each via HTTP, and produces a Vertex URL $\rightarrow$ resolved destination mapping. Redirects that failed programmatically (due to timeouts or anti-bot blocks) were resolved via a custom Chrome extension (\texttt{VertexResolverExtension}) that opens each URL in a background tab and captures the final destination. Without this resolution step, no domain-level or overlap analysis would be possible on the Gemini data.
+We used Gemini~3.0~Flash, the most recent flagship model that Google serves as the default on \texttt{gemini.google.com}. All runs used the minimum thinking budget available via the API, which made retrieval behavior easier to observe and kept fan-out counts bounded and comparable across runs. Even at minimum thinking, Gemini occasionally produced up to 7 fan-out queries across multiple search turns. Unlike ChatGPT, where fan-outs always come in pairs of 2, Gemini's fan-out counts varied.
 
-All Gemini runs used the minimum thinking budget available via the API. Even at minimum thinking, Gemini occasionally issued multiple rounds of fan-out queries; higher thinking budgets amplify this effect, producing longer retrieval chains. Our use of minimum thinking keeps the fan-out count bounded and comparable across runs, but means the study captures baseline retrieval behavior rather than maximum-depth grounding capability.
-
-Finally, our Gemini data comes entirely from the Vertex~AI API, which provides structured grounding metadata but does not carry IP or locale signals. Inspecting the Gemini consumer UI (\texttt{gemini.google.com}) via network packet analysis, mirroring our ChatGPT instrumentation approach, could reveal additional signals not exposed in the API. This remains a potential avenue for future work (Section~\ref{sec:fw-perplexity-aio}).
+All Gemini data was collected via the Vertex~AI API, which does not carry IP or locale signals. Inspecting the Gemini consumer UI (\texttt{gemini.google.com}) via network packet analysis could reveal additional signals not exposed in the API; this remains a potential avenue for future work (Section~\ref{sec:fw-perplexity-aio}).
 
 \section{Search Engine Baselines}
 \label{sec:serp-baselines}
