@@ -173,7 +173,7 @@ and \texttt{groundingSupports} maps specific response segments back to the links
 
 Unlike ChatGPT, where we had to extract citation tokens from the network stream and stitch them back together with character offsets (Section~\ref{sec:citation-mapping}), Gemini provides the segment-to-source mapping directly in its API response via \texttt{groundingSupports}. One practical challenge is that \texttt{groundingChunks} contain Vertex redirect URLs rather than raw destination URLs; we built a resolution script to follow each redirect and recover the actual domain.
 
-We used Gemini~3.0~Flash, the most recent model (at the time of this reserach) that Google serves as the default on \texttt{gemini.google.com}. All runs used the minimum thinking budget available on the API, which made retrieval behavior easier to observe and kept fan-out counts relatively lower. Even at minimum thinking, Gemini occasionally produced up to 8 fan-out queries across multiple search turns. Unlike ChatGPT, where there were 2 fan-out queries on most of the runs.
+We used Gemini~3.0~Flash, the most recent model (at the time of this research) that Google serves as the default on \texttt{gemini.google.com}. All runs used the minimum thinking budget available on the API, which made retrieval behavior easier to observe and kept fan-out counts relatively lower. Even at minimum thinking, Gemini occasionally produced up to 8 fan-out queries across multiple search turns. Unlike ChatGPT, where there were 2 fan-out queries on most of the runs.
 
 All Gemini data was collected via the Vertex~AI API. Inspecting the Gemini consumer UI with a similar methodology to what we did for ChatGPT might give results that are more comparable, but we chose to use the API due to its convenience and reliability. This remains a potential avenue for future work (Section~\ref{sec:lim-gemini}).
 
@@ -206,14 +206,14 @@ Our Google SERP baseline was collected via SerpApi, which returns results in mul
 
 With no official Bing API available (Section~\ref{sec:structural-pivot}), we initially tested SerpApi's Bing endpoint, but found that results beyond the first page were highly irrelevant, mirroring the pagination instability we later documented (Section~\ref{sec:bing-pagination-instability}). We therefore used a Chrome browser extension originally forked from a related study \parencite{cirac2025bingscraper} and substantially modified for our requirements. The extension scrapes Bing's live consumer UI by simulating human search interaction: typing queries with randomized delays, clicking the search button through DOM, and waiting for the page to stabilize before extracting results.
 
-Organic results are seperated from ads by filtering on Bing's ``Sponsored'' tags. For each result, the extension extracts position, title, URL, domain, snippet, and page number. Tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}, etc.) are stripped to normalize URLs for overlap matching. The extension paginates until at least 200 results are collected per query ($\sim$20 pages), with delays between pages. All Bing scrapes were routed through a US-based proxy to match the retrieval environment used for ChatGPT runs (Section~\ref{sec:proxy-requirement}).
+Organic results are separated from ads by filtering on Bing's ``Sponsored'' tags. For each result, the extension extracts position, title, URL, domain, snippet, and page number. Tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}, etc.) are stripped to normalize URLs for overlap matching. The extension paginates until at least 200 results are collected per query ($\sim$20 pages), with delays between pages. All Bing scrapes were routed through a US-based proxy to match the retrieval environment used for ChatGPT runs (Section~\ref{sec:proxy-requirement}).
 
-\subsection{Methodological Evolution: From Top~30 to ``Deep Hunt'' (Rank~200)}
+\subsection{Why We Scraped Bing to Rank~200}
 \label{sec:methodological-evolution}
 
-Our scrape depth evolved through three stages as the study uncovered progressively more of ChatGPT's retrieval architecture. The initial design used only the single fan-out query visible in ChatGPT's UI (the ``Searching for\ldots'' text) and scraped the Top~30 Bing results for each, yielding a 40.3\% citation overlap. At this stage we had no knowledge of the hidden double fan-out mechanism; we assumed the UI-displayed query was the only query issued.
+We detail this section extensively because getting an accurate representation of what ChatGPT looks at from Bing Search was important for our study. Our Google baseline stops at $\sim$25 organic results per query (Section~\ref{sec:google-serp-types}); initially we scraped a similar Top~30 for Bing. This yielded only a 40.3\% citation overlap, which we felt was too low. We then discovered that the ``Searching for\ldots'' text in the UI (Figure~\ref{fig:fan-out-ui}) only surfaces one of the two fan-out queries ChatGPT sends per search turn (Section~\ref{sec:pipeline-overview}), meaning our initial scrapes were matching against an incomplete query set.
 
-The first turning point came with network instrumentation (Section~\ref{sec:pipeline-overview}). Capturing raw event-stream payloads revealed that ChatGPT always dispatches \emph{two} fan-out queries per search turn, not one; the ``Searching for\ldots'' text surfaces only one of them. This meant our initial scrapes were matching against an incomplete query set, systematically understating true overlap. Even after correcting for the double fan-out, qualitative review using our custom Data Viewer (Figure~\ref{fig:data-viewer}) revealed a persistent visibility gap: ChatGPT was citing high-quality, relevant pages that were completely absent from the Top~30 human-facing results.
+After re-running with both fan-out queries, our Data Viewer (Figure~\ref{fig:data-viewer}) still showed a significant visibility gap: ChatGPT was citing relevant pages completely absent from the Top~30. This prompted us to look more closely into how Bing's search interface behaves.
 
 \begin{figure}[htbp]
 \centering
@@ -222,43 +222,19 @@ The first turning point came with network instrumentation (Section~\ref{sec:pipe
 \label{fig:data-viewer}
 \end{figure}
 
-To test whether these citations were truly ``invisible'' or merely ``buried,'' we expanded to a Deep Hunt at Rank~200. Many citations did appear at depth: Bing surfaces the exact pages ChatGPT cites, but at ranks well beyond typical human scrolling. However, the poor relevance and instability of results beyond Page~1 (see Section~\ref{sec:bing-pagination-instability}) suggest that Bing's consumer UI may not maintain a tightly curated ranked list beyond the first page.
-
-Even Rank~200 may not be sufficient. Our page-level distribution data (Section~\ref{sec:page-dist}) shows that citation matches do not reach zero at Pages~15--16; the long tail continues with a smooth decay curve. Extending to Rank~300 or beyond would likely recover additional matches and further narrow the ``truly invisible'' set (see Section~\ref{sec:fw-deeper-crawling}).
-
 \subsubsection{Bing Pagination Instability}
 \label{sec:bing-pagination-instability}
 
-Bing's consumer UI does not paginate consistently. This is partly why the retirement of the Bing Search API matters for grounding research: the consumer UI we were forced to scrape is a far noisier baseline than a stable API would have provided.
-
-Bing's first page of organic results is not a fixed ``Top~10.'' In some scrapes, 
-Page~1 returned as few as 2 organic results due to ads, Copilot answer blocks, and video carousels consuming the available space. Tables~\ref{tab:bing-truncated} and~\ref{tab:bing-full} illustrate this with two scrapes of the same query (\texttt{"free AI tools for translating video"}), run minutes apart (raw screenshots in Appendix~\ref{app:bing-pagination}).
-
-\begin{table}[htbp]
-\centering
-\caption{Truncated Bing scrape: only 2 organic results on Page~1. Ranks 3--7 from the full scrape (Table~\ref{tab:bing-full}) are absent from Page~2 and never reappear at any subsequent depth.}
-\label{tab:bing-truncated}
-\small
-\begin{tabular}{@{}clp{6.5cm}c@{}}
-\toprule
-\textbf{Rank} & \textbf{Domain} & \textbf{Title} & \textbf{Page} \\
-\midrule
-1 & zeemo.ai & Free Online Video Translator With High Accuracy & 1 \\
-2 & wayin.ai & Free AI Video Translator -- Translate 100+ Languages & 1 \\
-\midrule
-3 & zeemo.ai & Free Online Video Translator\ldots\ \textit{(repeated)} & 2 \\
-4 & a2e.ai & A2E -- Free, Uncensored AI Videos & 2 \\
-5 & dreamfaceapp.com & Best Free AI Tools for Video \& Image Generation & 2 \\
-6 & happyscribe.com & Online Video Translator -- AI Video Translator & 2 \\
-7 & notegpt.io & AI Audio Translator: Translate Mp3 \& Audio Files & 2 \\
-8 & maestra.ai & AI Video Translator -- Translate to English \& 125+\ldots & 2 \\
-\bottomrule
-\end{tabular}
-\end{table}
+Bing's first page of organic results is not a fixed ``Top~10.'' In some scrapes,
+Page~1 returned as few as 2 organic results due to ads, Copilot answer
+ blocks, and video carousels consuming the available space. Tables~\ref{tab:bing-full}
+ and~\ref{tab:bing-truncated} illustrate the first 2 result pages for two scrapes of the same query
+ (\texttt{"free AI tools for translating video"}), ran seconds apart (raw screenshots in
+ Appendix~\ref{app:bing-pagination}).
 
 \begin{table}[htbp]
 \centering
-\caption{Full Bing scrape of the same query, same session. Page~1 returns 7+ tightly relevant video translation tools. \textbf{Bold} entries (ranks 3--7) are the results that disappear entirely in the truncated scrape.}
+\caption{Bing scrape with a full Page~1: 7 results.\textbf{Bold} entries (ranks 3--7) disappear entirely in the shorter scrape (Table~\ref{tab:bing-truncated}).}
 \label{tab:bing-full}
 \small
 \begin{tabular}{@{}clp{6.5cm}c@{}}
@@ -283,14 +259,61 @@ Page~1 returned as few as 2 organic results due to ads, Copilot answer blocks, a
 \end{tabular}
 \end{table}
 
-In the full scrape (Table~\ref{tab:bing-full}), Page~1 returned 7 tightly relevant video translation tools. In the truncated scrape (Table~\ref{tab:bing-truncated}), the same query returned only \texttt{zeemo.ai} and \texttt{wayin.ai} on Page~1; the remaining 5 results (ranks 3--7, bolded in Table~\ref{tab:bing-full}) were lost entirely; they did not resurface on Page~2 or at any subsequent depth, even when scraping to Rank~200.
+\begin{table}[htbp]
+\centering
+\caption{Same query another run, only 2 organic results on Page~1. Ranks 3--7 from Table~\ref{tab:bing-full} never reappear.}
+\label{tab:bing-truncated}
+\small
+\begin{tabular}{@{}clp{6.5cm}c@{}}
+\toprule
+\textbf{Rank} & \textbf{Domain} & \textbf{Title} & \textbf{Page} \\
+\midrule
+1 & zeemo.ai & Free Online Video Translator With High Accuracy & 1 \\
+2 & wayin.ai & Free AI Video Translator -- Translate 100+ Languages & 1 \\
+\midrule
+3 & zeemo.ai & Free Online Video Translator\ldots\ \textit{(repeated)} & 2 \\
+4 & a2e.ai & A2E -- Free, Uncensored AI Videos & 2 \\
+5 & dreamfaceapp.com & Best Free AI Tools for Video \& Image Generation & 2 \\
+6 & happyscribe.com & Online Video Translator -- AI Video Translator & 2 \\
+7 & notegpt.io & AI Audio Translator: Translate Mp3 \& Audio Files & 2 \\
+8 & maestra.ai & AI Video Translator -- Translate to English \& 125+\ldots & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-Page~2 showed two patterns. First, a sharp relevance drop: the truncated run's Page~2 included \texttt{a2e.ai} (uncensored AI videos) and \texttt{dreamfaceapp.com} (image generation), off-topic results that would never appear on a well-curated Page~1. The full run's Page~2 similarly included \texttt{pdftranslate.ai} (PDF translation) and \texttt{lipsync.video} (lip-sync tool), tangentially related at best. Second, both Page~2 results shared a similar character despite their Page~1 results differing substantially: \texttt{notegpt.io} and \texttt{maestra.ai} appeared on Page~2 in both runs. This suggests that Bing's Page~2 starts from a fixed offset regardless of how many organic results Page~1 actually displayed. From Page~3 onward, continuity resumed with a gradual decay. Our citation-overlap data corroborates this pattern: Page~1 concentrates the bulk of matches, Page~2 shows a conspicuous dip, and Pages~3+ settle into a gradual decay (Section~\ref{sec:page-dist}).
+In the first scrape (Table~\ref{tab:bing-full}), Page~1 returned 7 tightly relevant video translation tools. Page~2 was already noticeably weaker: alongside relevant results like \texttt{maestra.ai} (AI Video Translator) and \texttt{notegpt.io} (AI Audio Translator), it included off-topic pages such as \texttt{pdftranslate.ai} (PDF translation) and \texttt{notegpt.io} (YouTube Video Summarizer).
 
-This instability has two consequences for our overlap measurements. First, it introduces a conservative bias: if our scrape captured a truncated Page~1, we may have missed high-ranking results that ChatGPT's backend integration almost certainly had access to, causing us to classify some citations as ``invisible'' when they were in fact present in the index. Second, it is why we needed to scrape to Rank~200, not because ChatGPT is truly ``deep hunting'' at those ranks, but to compensate for UI-layer instability and recover matches that a stable API would have returned in the Top~10--30.
+The second scrape of the same query (Table~\ref{tab:bing-truncated}) we ran right after returned
+ only 2 organic results on Page~1: \texttt{zeemo.ai} and \texttt{wayin.ai}. This was consistent with the first run
+ but the remaining 5 results (ranks 3--7, bolded in Table~\ref{tab:bing-full}) did not shift to Page~2 as we have expected.
+ Page~2 showed a similar mix of relevant and off-topic results, including \texttt{a2e.ai} (uncensored AI videos) and \texttt{dreamfaceapp.com} (image generation).
 
-We strongly suspect that ChatGPT does not receive the same noisy, truncated pagination that Bing's web UI serves to human users. Bing likely provides its index to ChatGPT via a backend integration that returns a clean, stable ranked list without ads, carousels, or pagination artifacts. Our Bing-UI-scraped baseline is therefore a degraded proxy for what ChatGPT actually sees, further supporting the interpretation that our overlap figures are conservative lower bounds. This instability was not observed in our Google SERP data collected via SerpApi, which returned consistent, stable organic rankings across paginated requests, an asymmetry worth noting for researchers attempting to replicate grounding studies.
+We observed four patterns from this and subsequent scrapes:
 
+\begin{enumerate}
+    \item \textbf{Page~1 results can be lost entirely.} Bing's Page~2 appears to start from a fixed offset regardless of how many organic results Page~1 actually displayed. When Page~1 is compressed by ads or carousels, the displaced results do not shift to Page~2. This is significant because Page~1 is where we expect the highest citation overlap with ChatGPT.
+    \item \textbf{Page~2 is disproportionately noisy.} Off-topic and irrelevant results concentrate on Page~2 far more than its position would suggest. Our overlap data confirms this: Page~2 citation-match rates were comparable to Page~8- (Section~\ref{sec:page-dist}).
+    \item \textbf{Pages~3+ are more predictable.} From Page~3 onward, results followed a more consistent pattern, though irrelevant results still appeared occasionally. Our citation-overlap data corroborates this: after Page3 we see a gradual decay of relevancy we expected to see. (Section~\ref{sec:page-dist}).
+    \item \textbf{Matches continued deep into the results.} We kept finding citation matches well past Rank~150. 
+    If Bing's backend index is properly ordered---which it likely is through
+     its internal API---these results could fit in a tightly ranked Top~30 instead of being scattered across 200.
+\end{enumerate}
+
+Because of these findings we expanded our Bing scrapes to Rank~200. We went down this depth to compensate for UI-layer instability and
+ recover matches that a stable API would have probably returned in the Top~10--30. Our page-level distribution data (Section~\ref{sec:page-dist}) shows
+ that citation matches do not reach zero at Pages~15--16 but continue with a smooth decay curve. 
+Extending to Rank~300 or beyond would recover additional matches with diminishing returns, further narrowing the ``truly invisible'' set (see Section~\ref{sec:fw-deeper-crawling}).
+
+\subsubsection{The Retirement of the Bing Search API}
+
+Microsoft retired public access to the Bing Search API in August~2025
+(Section~\ref{sec:structural-pivot}). Since then, the programmatic consumers of
+Bing's index are backend partners like OpenAI or Microsoft's own AI Agents infrastructure
+ \footnote{\url{https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools-classic/bing-grounding}}.
+  This leaves little incentive for Microsoft to maintain stable consumer pagination at depth since 
+  human users rarely paginate past Page~1.
+   Our Bing-UI-scraped baseline is therefore a degraded proxy for 
+   what ChatGPT actually sees. 
 \section{Analysis Applications}
 \label{sec:analysis-applications}
 
@@ -315,7 +338,7 @@ A consistent skip list (\texttt{wikipedia.org}, \texttt{reddit.com}, \texttt{arx
 
 \textbf{Consequence for drift analysis:} Because these skipped domains receive zeroed-out structural scores (no tables, no numbered lists, no pros/cons), including them in feature-level drift comparisons would create artificial signal. The selection drift analysis in Section~3.5 therefore focuses on \textbf{product pages and listicles}, the two dominant types where full LLM enrichment was performed and where structural features are meaningfully variable. This scoping avoids comparing LLM-enriched pages against heuristically-labeled ones, which would conflate labeling method differences with actual content differences.
 
-\subsection{Labeler Fidelity (cross-model agreement)}
+\subsection{Cross-Model Agreement}
 \label{sec:labeler-fidelity}
 
 To test whether Content DNA is model-dependent, we ran a direct agreement audit between \textbf{Gemini 2.5 Flash} and \textbf{GPT-5-mini} on \textbf{2,660 overlapping URLs} (\texttt{docs/inter\_model\_fidelity\_report.md}).
@@ -328,20 +351,20 @@ To test whether Content DNA is model-dependent, we ran a direct agreement audit 
 
 A parallel cross-model validation was performed on the listicle semantic fidelity judge (Section~\ref{sec:semantic-fidelity}), where all 1{,}116 claims were judged by both models. Agreement rates (93--100\% on structural fields, 93.9\% within $\pm$1 on fidelity scores) are consistent with the DNA labeler results above.
 
-\subsection{Research Questions for Selection Analysis}
+\subsection{Downstream Analyses}
 \label{sec:selection-research-questions}
 
-The enrichment data enables three lines of analysis. First, we compare the structural DNA of cited versus additional links to identify which content features predict inline citation versus supplementary attachment. Second, we track cross-run citation consistency: whether URLs demoted to ``additional'' in one run are promoted to ``cited'' in a different run of the same prompt, quantifying the stochasticity of the citation boundary (Section~\ref{sec:flip-flop}). Third, we compare the DNA of Bing Page~1 or Google Top 10 links that ChatGPT ignored against those it cited, testing whether ignored links exhibit lower structural complexity (Section~\ref{sec:cited-vs-serp}).
+The enrichment data feeds three analyses in Chapter~\ref{ch:findings}. First, we compare the structural DNA of cited versus additional links to identify which content features correlate with inline citation (Section~\ref{sec:cited-vs-serp}). Second, we track cross-run citation consistency: whether URLs demoted to ``additional'' in one run are promoted to ``cited'' in a different run of the same prompt (Section~\ref{sec:flip-flop}). Third, we compare the DNA of top-ranked Bing and Google links that the models ignored against those they cited, testing whether ignored links lack the structural features found in cited ones (Section~\ref{sec:cited-vs-serp}).
 
 \section{Use of AI Tools in This Research}
 \label{sec:ai-tools-disclosure}
 
-This thesis made extensive use of large language models as research tools at every stage of the work. We disclose this both for transparency and because we believe it reflects the reality of how empirical research involving LLMs is increasingly conducted.
+This thesis used large language models as research tools at every stage. We disclose this for transparency.
 
 \textbf{Data enrichment and judging.} The Content DNA labeling pipeline (Section~\ref{sec:labeling-pipeline}) used \textbf{GPT-5-mini} and \textbf{Gemini 2.5 Flash} as structured labelers to classify $\sim$6{,}000 URLs. The semantic fidelity judge (Section~\ref{sec:semantic-fidelity}) used the same two models to evaluate 1{,}116 listicle product claims. Cross-model agreement was validated in both cases (91--100\% on structural fields), and all flagged attribution failures were manually verified.
 
 \textbf{Analysis scripting.} Many of the analysis scripts (Python, Node.js) were written with AI assistance using multiple models across two IDE integrations: \textbf{Gemini 3.0 Flash} (Google) was the primary model used via Cursor, with \textbf{GPT-5.2} and \textbf{GPT-5.2 Codex} (OpenAI) and \textbf{Claude Opus 4.5} (Anthropic) used occasionally via Cursor as well. Later-stage analysis and writing shifted to \textbf{Claude Opus 4.5/4.6} via Claude Code. The author specified the analysis logic, reviewed all outputs, and iteratively refined both the code and the interpretation of results through extended dialogue with the models.
 
-\textbf{Writing and editing.} Drafts of thesis prose, tables, and \LaTeX{} formatting were developed in collaboration with Claude Opus 4.5/4.6 via Claude Code. Later-stage proofreading, formatting, and literature search were also assisted by \textbf{OpenAI Prism}, a \LaTeX-native workspace with integrated GPT-5.2. The workflow was dialogic: the author provided the arguments, data, and framing decisions; the models produced draft text; the author reviewed, challenged, and revised. Every finding, interpretation, and number in this thesis was verified by the author against the underlying data. The intellectual contribution (the research questions, the experimental design, the instrumentation approach, and the analytical arguments) is the author's own.
+\textbf{Writing and editing.} Thesis prose, tables, and \LaTeX{} formatting were drafted with Claude Opus 4.5/4.6 via Claude Code. Later-stage proofreading and literature search were assisted by \textbf{OpenAI Prism}, a \LaTeX-native workspace with integrated GPT-5.2. In all cases the author provided the arguments, data, and framing; the models produced draft text that the author reviewed and revised. Every number in this thesis was verified against the underlying data.
 
-We note a reflexive dimension to this disclosure: a thesis that studies how LLMs ground their outputs in web sources was itself produced with LLMs as writing and analysis tools, subject to the same grounding and fidelity questions we investigate. We consider this appropriate rather than paradoxical; the tools we study are the tools of our era, and using them transparently is preferable to understating their role.
+We acknowledge the circularity: a thesis that studies how LLMs ground their outputs was itself partly written with LLM assistance. We consider transparency about this preferable to understating their role.
