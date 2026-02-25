@@ -185,9 +185,11 @@ To measure how much LLM citations overlap with conventional search results, we c
 \label{sec:ethical-legal}
 \label{sec:structural-pivot}
 
-One of the biggest challenges in this study was accessing raw search indices programmatically. On August~11, 2025, Microsoft retired public access to the Bing Search API. This forced us to scrape Bing's consumer UI via a browser extension (Section~\ref{sec:bing-scraping}), a far noisier baseline than a stable API would have provided. Running the extension through a US-based proxy, we encountered no rate-limiting issues from Bing.
+One of the biggest challenges in this study was accessing raw search indices programmatically. On August~11, 2025, Microsoft retired public access to the Bing Search API. This forced us to scrape Bing's consumer UI
+ via a browser extension (Section~\ref{sec:bing-scraping}), which introduced its own challenges (Section~\ref{sec:bing-pagination-instability}). Running the extension through a 
+ US-based proxy, we encountered no rate-limiting issues from Bing.
 
-Google proved more difficult. Our initial attempts at scraping Google directly through a browser extension were met with escalating CAPTCHAs and rate limiting; the frequency of these challenges gradually increased until it became apparent that direct scraping would not be a feasible methodology for a study of this size. We therefore turned to SerpApi, a third-party scraping service that routes requests through residential proxies. We configured all SerpApi calls with a United States location parameter to align with the US-based proxy used for our ChatGPT and Bing scraping (Section~\ref{sec:proxy-requirement}).
+Scraping Google results proved to be more difficult. Our initial attempts at scraping Google directly through a browser extension were met with escalating CAPTCHAs and rate limiting; the frequency of these challenges gradually increased until it became apparent that direct scraping would not be a feasible methodology for a study of this size. We therefore turned to SerpApi, a third-party scraping service that routes requests through residential proxies. We configured all SerpApi calls with a United States location parameter to align with the US-based proxy used for our ChatGPT and Bing scraping (Section~\ref{sec:proxy-requirement}).
 
 SerpApi has also been a discussed company in the GEO landscape recently. On December~19, 2025, Google filed a lawsuit against SerpApi, alleging unlawful scraping and circumvention of security measures\footnote{\url{https://blog.google/innovation-and-ai/technology/safety-security/serpapi-lawsuit/}}. The SerpApi homepage has historically listed major AI players including Perplexity and OpenAI as customers; \textcite{theinformation2025openaiserpapi} reported that OpenAI used SerpApi to extract Google results for powering ChatGPT responses. In September~2025, Google also confirmed it no longer supports the \texttt{num} parameter that previously allowed retrieving up to 100 results per page, forcing all consumers of Google Search to paginate one page at a time \parencite{searchengineland2025num100}. This change means that anyone looking to scrape Google at scale would require more resources, such as the additional API credits we spent on SerpApi. It may also reflect a broader effort by Google to limit competitors from scraping its data to fuel their own LLMs.
 
@@ -228,9 +230,13 @@ Even Rank~200 may not be sufficient. Our page-level distribution data (Section~\
 \subsection{Bing Pagination Instability}
 \label{sec:bing-pagination-instability}
 
-A critical methodological challenge arose from Bing's inconsistent UI pagination behavior. This instability is partly why the retirement of the Bing Search API is consequential for grounding research: the consumer UI we were forced to scrape is a far noisier baseline than a stable API would have provided.
+A critical methodological challenge arose from Bing's inconsistent UI pagination behavior.
+ This instability is partly why the retirement of the Bing Search API is consequential 
+ for grounding research: the consumer UI we were forced to scrape is a far noisier baseline 
+ than a stable API would have given us.
 
-Bing's first page of organic results is not a fixed ``Top~10.'' In some scrapes, Page~1 returned as few as 2 organic results due to ads, Copilot answer blocks, and video carousels consuming the available space. Tables~\ref{tab:bing-truncated} and~\ref{tab:bing-full} illustrate this with two scrapes of the same query (\texttt{"free AI tools for translating video"}), run minutes apart (raw screenshots in Appendix~\ref{app:bing-pagination}).
+Bing's first page of organic results is not a fixed ``Top~10.'' In some scrapes, 
+Page~1 returned as few as 2 organic results due to ads, Copilot answer blocks, and video carousels consuming the available space. Tables~\ref{tab:bing-truncated} and~\ref{tab:bing-full} illustrate this with two scrapes of the same query (\texttt{"free AI tools for translating video"}), run minutes apart (raw screenshots in Appendix~\ref{app:bing-pagination}).
 
 \begin{table}[htbp]
 \centering
