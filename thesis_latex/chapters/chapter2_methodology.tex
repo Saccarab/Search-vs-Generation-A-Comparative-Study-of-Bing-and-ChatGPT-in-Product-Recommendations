@@ -15,7 +15,7 @@ All queries are in the AI speech and language technology sector
 (speech-to-text, live transcription, voice translation, text-to-speech).
 This domain focus reflects the author's professional expertise in this vertical,
 which allowed the author to assess retrieval relevance and spot citation errors
-that a domain outsider might miss.
+that a domain outsider might miss. While 79 prompts is modest compared to large-scale observational studies, each prompt was run 3 times across 3 environments (711 total runs), producing over 2{,}000 fan-out queries---each scraped on both Bing (to Rank~200) and Google---and approximately 12{,}000 total citations to analyze. Scaling beyond this would have been impractical given the per-query scraping and enrichment costs.
 
 \paragraph{Prompt categories.}
 The 79 prompts fall into 4 categories:
@@ -218,7 +218,7 @@ After re-running with both fan-out queries, our Data Viewer (Figure~\ref{fig:dat
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figures/data_viewer.png}
-\caption{The Data Viewer built for this study, showing run P001\_r2 (Personal tier). \textbf{Left panel:} the ChatGPT response with inline citation badges showing each cited domain and its Bing rank. \textbf{Right panel:} the SERP overlap screen, listing scraped Bing results alongside the model's citations.}
+\caption{The Data Viewer built for this study, showing a captured run \textbf{Left panel:} the ChatGPT response with inline citation badges showing each cited domain and its Bing rank. \textbf{Right panel:} the SERP overlap screen, listing scraped Bing results alongside the model's citations.}
 \label{fig:data-viewer}
 \end{figure}
 
@@ -317,7 +317,17 @@ Bing's index are backend partners like OpenAI or Microsoft's own AI Agents infra
 \section{Analysis Applications}
 \label{sec:analysis-applications}
 
-We built two separate interactive tools for qualitative inspection and aggregate analysis. The \textbf{ChatGPT Analysis Viewer} provides per-query/run comparison of ChatGPT responses against Bing SERP results (Top~200), highlighting cited, additional, and invisible links with overlap status. It includes an aggregate dashboard and enabled the manual spot-checking that revealed the Bing pagination instability documented in Section~\ref{sec:bing-pagination-instability}. The \textbf{Gemini Grounding Analyzer} provides the equivalent for Gemini, visualizing the grounding pipeline by comparing grounding chunks against grounding supports against the Google SERP control, with per-query-index overlap distributions and aggregate grounding dashboards.
+Prior studies have analyzed LLM citation overlap at scale---\textcite{ong2025chatgptgoogle} processed over 
+100,000 fan-out queries---but without per-run inspection tools, patterns in the data can go unnoticed. 
+ This is why we built a viewer application that recreates the ChatGPT interface for 
+ each captured run. 
+ 
+The prompt, the full response with inline citations, 
+ and the Bing and Google search results for that run's
+  fan-out queries side by side (Figure~\ref{fig:data-viewer}). 
+  Overlapping results are color-coded: green for Bing matches, yellow for Google matches. The viewer also shows how many of the run's cited links are covered by each SERP baseline and breaks down overlap contribution per fan-out query. This let us go through runs one by one and look for patterns.
+ The viewer also includes aggregate dashboards for 
+ overlap statistics, domain-level exploration, and breakdowns of truly invisible URLs (Section~\ref{sec:top-invisible-domains}) across all runs. We built a similar tool for Gemini, comparing grounding chunks and supports against the Google SERP baseline. Both tools were used throughout the analysis reported in Chapter~\ref{ch:findings}.
 
 \section{Content DNA Enrichment (LLM-as-a-Labeler)}
 \label{sec:content-dna}
