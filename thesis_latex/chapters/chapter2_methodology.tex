@@ -10,10 +10,7 @@ The contrast between these three environments revealed notable differences, espe
 
 We have 79 unique prompts in our dataset that we have gathered from two platforms. 65 of these prompts were taken from Profound's Prompt Volumes feature \parencite{profound2026promptvolumes}, which provides prompt-level data derived from licensed and opt-in prompts of real ChatGPT users. Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent. The other 14 prompts were taken from Ahrefs' AI Citations feature \parencite{ahrefs2025aicitations}, which we have used to capture additional prompts within our target verticals. Prompts span collection dates from January 2025 to January 2026, with the majority concentrated between July and December 2025.
 
-From the available prompts, we filtered for product discovery queries with commercial intent
-prompts where users ask for tool recommendations, comparisons, or ``best of'' lists.
-as are the queries most likely to trigger web search grounding
-(see Section~\ref{sec:commercial-catalyst}).
+From the available prompts, we filtered for product discovery queries with commercial intent---prompts where users ask for tool recommendations, comparisons, or ``best of'' lists---as these are the queries most likely to trigger web search grounding (see Section~\ref{sec:commercial-catalyst}).
 All queries are in the AI speech and language technology sector
 (speech-to-text, live transcription, voice translation, text-to-speech).
 This domain focus reflects the author's professional expertise in this vertical,
@@ -74,7 +71,7 @@ Once the search trigger fires, ChatGPT does not search for the user's prompt ver
 \label{fig:fan-out-ui}
 \end{figure}
 
-Each pair of fan-out queries is dispatched via a tool call named \texttt{web.run}. In 94\% of our runs, we observed a single \texttt{web.run} call that produces 2 queries. On remainder of our runs, we observed that model will do additional web.run calls and create more fan outs query pairs. The distribution of search turns and query strategies are reported in Section~\ref{sec:multi-turn}.
+Each pair of fan-out queries is dispatched via a tool call named \texttt{web.run}. In 94\% of our runs, we observed a single \texttt{web.run} call that produces 2 queries. In the remainder of our runs, the model issued additional \texttt{web.run} calls, creating more fan-out query pairs. The distribution of search turns and query strategies are reported in Section~\ref{sec:multi-turn}.
 
 The results from these queries form the full retrieval pool, captured in the \texttt{search\_result\_groups} field, which contains the URL, title, snippet, and publication date for each candidate (the publication date field is populated for roughly half of all entries; its potential as a selection signal is discussed in Section~\ref{sec:fw-pub-date}). To determine which of these candidates were actually cited, we reconstruct the citation-to-source mapping from \texttt{content\_references}, which records the start index of each citation token in the streamed response text. The full mapping pipeline is described in Section~\ref{sec:claim-to-link}. A glossary of all network payload fields we captured is provided in Appendix~\ref{app:network-glossary}.
 
@@ -198,7 +195,7 @@ The companies building RAG systems rely on third-party scrapers to access the li
 \subsection{Google SERP Baseline (SerpApi)}
 \label{sec:google-serp-types}
 
-Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard web listings), video results (often YouTube-heavy), and discussion/forum blocks. For each query, we paginated SerpApi until at least 25 organic results were collected; in practice, this typically required approximately 3 pages of results. This ``Top-25 Organic'' baseline serves as the Google control surface against which we measure citation overlap, complementing the deeper Bing Top-200 scrape described below.
+Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard web listings), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 25 organic results per query. The total result count per query is higher when including the non-organic types. This Google baseline serves as the control surface against which we measure citation overlap, complementing the deeper Bing Top-200 scrape described below.
 
 \subsection{Bing SERP Scraping (Browser Extension)}
 \label{sec:bing-scraping}
