@@ -7,7 +7,7 @@ This chapter traces the full retrieval-to-citation pipeline, organized to mirror
 \section{Retrieval Strategy \& Fan-Out Analysis}
 \label{sec:fanout}
 
-This section examines the retrieval phase: how models reshape a single user prompt into multiple search queries before any citation decision occurs. The instrumentation and methodology underpinning these observations are defined in Sections~2.3.4, 2.7.1, and~2.7.2.
+This section examines the retrieval phase: how models reshape a single user prompt into multiple search queries before any citation decision occurs. Across all 711 runs, the three environments dispatched a total of 2{,}280 fan-out queries: 448 from Business, 424 from Personal, and 1{,}408 from Gemini. The instrumentation and methodology underpinning these observations are defined in Sections~\ref{sec:fan-out-queries} and~\ref{sec:gemini-anatomy}.
 
 \subsubsection{The Three-Layer Architecture (as observed)}
 \label{sec:three-layer}
