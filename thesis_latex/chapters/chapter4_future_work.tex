@@ -88,6 +88,11 @@ Our data reveals that the generation model (Layer~3) can autonomously decide to 
 
 Our invisible-link analysis (Section~\ref{sec:invisible-links}) identifies 16--22\% of citations from sources absent from both Bing and Google for the corresponding query. A plausible but untested explanation is that brands with strong presence on high-authority, training-likely surfaces (Wikipedia, Reddit, major publications) receive a parametric ``nudge'' in the model's recommendations even before retrieval is triggered. A controlled experiment could test this directly: comparing model recommendations with web search forced off (pure parametric recall) against recommendations with web search enabled (RAG-augmented), and measuring whether brands with strong non-linked mentions on training-likely surfaces receive disproportionate parametric attention. If confirmed, this would identify a GEO channel that is genuinely independent of SEO.
 
+\section{Publication Date as a Selection Signal}
+\label{sec:fw-pub-date}
+
+During thesis preparation, we discovered that ChatGPT's \texttt{search\_result\_groups} entries include a \texttt{pub\_date} field (Unix timestamp) for approximately half of retrieved URLs. This field was not part of our original analysis design. A preliminary count across the Business tier network data shows that 46\% of cited URLs carry a publication date compared to 63\% of non-cited URLs, but the sample is too small to draw conclusions. A dedicated study could investigate whether publication recency influences citation probability: do newer pages get cited more often, and does the presence of a machine-readable publication date itself act as a selection signal? This would complement the structural content features (tables, lists, freshness cues) already measured in Section~\ref{sec:selection-drift}.
+
 \section{User Perception and Conversion}
 \label{sec:fw-user-study}
 
