@@ -3,7 +3,7 @@
 
 This chapter describes the analytical tools and the instrumentation we used to study how ChatGPT and Gemini retrieve and cite web sources when answering product recommendation queries. ChatGPT prompts were run via the production web interface (\texttt{chatgpt.com}) and responses were captured via network payload inspection. We captured runs across two subscription tiers: \textbf{Personal} (a consumer ChatGPT Plus subscription) and \textbf{Business} (an organization-managed workspace account, provisioned through ChatGPT Business tier). All ChatGPT runs were done in Temporary Chat mode to prevent conversation history from influencing retrieval, and run with a U.S.\ proxy using a browser extension to prevent user location from affecting the results (Section~\ref{sec:proxy-requirement}). Gemini prompts were run via the Vertex~AI API (Gemini~3~Flash), which provides structured grounding metadata in JSON format.
 
-The contrast between these three environments revealed notable differences, especially between the ChatGPT Plus and Business tiers. We ran each prompt three times per environment to examine how results vary across runs, which also increased our sample size.
+The contrast between these three environments revealed notable differences, especially between the ChatGPT Plus and Business tiers. We ran each prompt three times per environment to examine how results vary across runs, which also increased our sample size. All prompts were executed between mid and late January 2026.
 
 \section{Selection of the Research Query Set}
 \label{sec:query-set-selection}
@@ -172,14 +172,22 @@ and \texttt{groundingSupports} maps specific response segments back to the links
 
 Unlike ChatGPT, where we had to extract citation tokens from the network stream and stitch them back together with character offsets (Section~\ref{sec:citation-mapping}), Gemini provides the segment-to-source mapping directly in its API response via \texttt{groundingSupports}. One practical challenge is that \texttt{groundingChunks} contain Vertex redirect URLs rather than raw destination URLs; we built a resolution script to follow each redirect and recover the actual domain.
 
-We used Gemini~3.0~Flash, the most recent flagship model that Google serves as the default on \texttt{gemini.google.com}. All runs used the minimum thinking budget available via the API, which made retrieval behavior easier to observe and kept fan-out counts bounded and comparable across runs. Even at minimum thinking, Gemini occasionally produced up to 7 fan-out queries across multiple search turns. Unlike ChatGPT, where fan-outs always come in pairs of 2, Gemini's fan-out counts varied.
+We used Gemini~3.0~Flash, the most recent model (at the time of this reserach) that Google serves as the default on \texttt{gemini.google.com}. All runs used the minimum thinking budget available on the API, which made retrieval behavior easier to observe and kept fan-out counts relatively lower. Even at minimum thinking, Gemini occasionally produced up to 8 fan-out queries across multiple search turns. Unlike ChatGPT, where there were 2 fan-out queries on most of the runs.
 
-All Gemini data was collected via the Vertex~AI API, which does not carry IP or locale signals. Inspecting the Gemini consumer UI (\texttt{gemini.google.com}) via network packet analysis could reveal additional signals not exposed in the API; this remains a potential avenue for future work (Section~\ref{sec:fw-perplexity-aio}).
+All Gemini data was collected via the Vertex~AI API. Inspecting the Gemini consumer UI with a similar methodology to what we did for ChatGPT might give results that are more comparable, but we chose to use the API due to its convenience and reliability. This remains a potential avenue for future work (Section~\ref{sec:lim-gemini}).
 
 \section{Search Engine Baselines}
 \label{sec:serp-baselines}
 
-With the ChatGPT and Gemini instrumentation established, we now describe the search engine baselines against which we measure citation overlap. These baselines answer the question: are the URLs these models cite also present in conventional search results for the same queries?
+To measure how much LLM citations overlap with conventional search results, we collected SERP baselines from both Google and Bing for each of our 79 queries.
+
+\subsection{The Shrinking Window of Search API Access}
+\label{sec:ethical-legal}
+\label{sec:structural-pivot}
+
+Accessing raw search indices for academic research has become increasingly difficult. On August~11, 2025, Microsoft retired public access to the Bing Search API, removing the only stable programmatic interface for collecting Bing results at scale. Four months later, on December~19, 2025, Google filed a lawsuit against SerpApi, the same third-party scraping service we used for our Google SERP baseline (Section~\ref{sec:google-serp-types}), alleging unlawful scraping and circumvention of security measures\footnote{\url{https://blog.google/innovation-and-ai/technology/safety-security/serpapi-lawsuit/}}. The SerpApi homepage has historically listed major AI players including Perplexity and OpenAI as customers; \textcite{theinformation2025openaiserpapi} reported that OpenAI used SerpApi to extract Google results for powering ChatGPT responses, though the listing was later removed. This suggests a complex ecosystem where the very companies building RAG systems may rely on third-party scrapers to access the live web. In September~2025, Google also confirmed it no longer supports the \texttt{num} parameter that previously allowed retrieving up to 100 results per page, forcing all consumers of Google Search to paginate one page at a time \parencite{searchengineland2025num100}.
+
+These developments shaped our data collection strategy directly: the Bing API retirement forced us to scrape the consumer UI (Section~\ref{sec:bing-scraping}), a far noisier proxy than a stable API would have provided. As traditional scraping becomes more restricted, the visibility gap between what an LLM can see (via direct API access) and what a researcher can see (via public search UIs) will likely widen, making studies like this one harder to replicate.
 
 \subsection{Google SERP Baseline (SerpApi)}
 \label{sec:google-serp-types}
@@ -189,16 +197,11 @@ Our Google SERP baseline was collected via SerpApi, which returns results in mul
 \subsection{Bing SERP Scraping (Browser Extension)}
 \label{sec:bing-scraping}
 
-Because Microsoft retired public Bing Search API access on August~11, 2025 (see Section~\ref{sec:structural-pivot}), no stable programmatic API was available for academic SERP collection. We therefore used a Chrome browser extension (\texttt{tools/Bing Results Scraper}) that scrapes Bing's live consumer UI via DOM interaction. The extension runs as a Manifest~V3 content script that simulates human search interaction: typing queries character-by-character with randomized inter-key delays (10--50\,ms), clicking the search button, and waiting for DOM stabilization (result count checked across 3 consecutive iterations before proceeding).
+With no stable Bing API available (Section~\ref{sec:structural-pivot}), we built a Chrome browser extension (\texttt{tools/Bing Results Scraper}) that scrapes Bing's live consumer UI via DOM interaction. The extension runs as a Manifest~V3 content script that simulates human search interaction: typing queries character-by-character with randomized inter-key delays (10--50\,ms), clicking the search button, and waiting for DOM stabilization (result count checked across 3 consecutive iterations before proceeding).
 
 Organic results are isolated from ads using a multi-layer filtering approach. The primary selector (\texttt{.b\_algo:not(.b\_adTop):not(.b\_adBottom):not([data-apurl])}) is supplemented by a secondary function that checks DOM class markers, text-prefix matching (\texttt{/\^{}Sponsored\textbackslash b/i}), CSS \texttt{::before} pseudo-element inspection, and URL-based filtering of known ad-click endpoints. Unresolved Bing redirect URLs (\texttt{bing.com/ck/}) are discarded as probable ads. For each result, the extension extracts position, title, URL, domain, display URL, snippet, and page number; Bing's redirect-wrapped URLs are decoded via URL-parameter extraction with Base64 and hex-byte fallback, and tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}) are stripped to normalize URLs for overlap matching.
 
 The extension paginates through 20 pages of results ($\sim$10 organic results per page = Rank~200 per query), with 3-second waits between pages and positions numbered strictly sequentially across pages. All Bing scrapes were routed through a US-based proxy to match the retrieval environment used for ChatGPT runs (see Section~\ref{sec:proxy-requirement}), ensuring that localized SERP variation does not inflate or deflate overlap measurements.
-
-\subsection{Ethical and Legal Constraints}
-\label{sec:ethical-legal}
-
-A significant challenge in RAG research is the increasing difficulty of accessing raw search indices. On December~19, 2025, Google filed a lawsuit against SerpApi, the same service we used for our Google SERP baseline (Section~\ref{sec:google-serp-types}), alleging unlawful scraping and circumvention of security measures\footnote{\url{https://blog.google/innovation-and-ai/technology/safety-security/serpapi-lawsuit/}}. The SerpApi homepage has historically listed major AI players including Perplexity and OpenAI (the latter subsequently removed) as customers\footnote{\url{https://serpapi.com/}}, suggesting a complex ecosystem where the very companies building RAG systems may rely on third-party scrapers to access the live web. This legal pressure has led to concrete technical restrictions: in September~2025, Google confirmed it no longer supports the \texttt{num} parameter that previously allowed retrieving up to 100 results per page, forcing all consumers of Google Search to paginate through results one page at a time \parencite{searchengineland2025num100}. These developments further justify our Deep Hunt (Rank~200) methodology: as traditional scraping becomes more restricted, the visibility gap between what an LLM can see (via direct API access) and what a researcher can see (via public search UIs) will likely widen.
 
 \section{Methodological Evolution: From Top~30 to ``Deep Hunt'' (Rank~200)}
 \label{sec:methodological-evolution}
@@ -218,7 +221,7 @@ To test whether these citations were truly ``invisible'' or merely ``buried,'' w
 
 Even Rank~200 may not be sufficient. Our page-level distribution data (Section~\ref{sec:page-dist}) shows that citation matches do not reach zero at Pages~15--16; the long tail continues with a smooth decay curve. Extending to Rank~300 or beyond would likely recover additional matches and further narrow the ``truly invisible'' set (see Section~\ref{sec:fw-deeper-crawling}).
 
-\subsection{Bing Pagination Instability (The ``Elastic Page~1'' Problem)}
+\subsection{Bing Pagination Instability}
 \label{sec:bing-pagination-instability}
 
 A critical methodological challenge arose from Bing's inconsistent UI pagination behavior. This instability is partly why the retirement of the Bing Search API is consequential for grounding research: the consumer UI we were forced to scrape is a far noisier baseline than a stable API would have provided.
