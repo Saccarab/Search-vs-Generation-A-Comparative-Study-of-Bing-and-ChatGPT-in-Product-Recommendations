@@ -55,29 +55,21 @@ When a user submits a prompt, the first thing ChatGPT decides is whether to sear
 
 Behind this indicator, our network instrumentation captured the search-trigger decision via the \texttt{sonic\_classification\_result} field in the event stream. This field contains a classifier output with probabilities (\texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}) and thresholds that determine whether the prompt warrants a web search. The event stream also includes \texttt{web\_search\_triggered} (whether search actually ran) and \texttt{web\_search\_forced} (whether search was forced regardless of classifier output). The full classifier configuration and its behavior are reported in Section~\ref{sec:search-trigger}.
 
-\subsection{Fan-Out Queries and the \texttt{web.run} Agentic Loop}
+\subsection{Fan-Out Queries}
 \label{sec:fan-out-queries}
 
-Fan-out queries are the multiple search queries ChatGPT issues for a single user prompt, reshaping and expanding the retrieval scope. They are the gate that determines which sources are even eligible to be cited. We observe them via the \texttt{search\_model\_queries.queries} field in the network stream.
+Once the search trigger fires, ChatGPT does not search for the user's prompt verbatim. Instead, it generates its own search queries behind the scenes---commonly referred to as \emph{fan-out queries}. As Figure~\ref{fig:fan-out-ui} shows, the UI exposes only one of them (``Searching for best app for voice translation''). Our network instrumentation reveals that a second query is always dispatched in parallel but never shown to the user; both are captured in the \texttt{search\_model\_queries} field.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{figures/fan_out_query.png}
-\caption{ChatGPT exposes only one fan-out query to the user (``Searching for best app for voice translation''). Network instrumentation reveals that a second query is always dispatched in parallel but never shown in the UI.}
+\caption{ChatGPT exposes only one fan-out query in the UI. Network instrumentation reveals that a second query is always dispatched in parallel but never shown to the user.}
 \label{fig:fan-out-ui}
 \end{figure}
 
-Our instrumentation revealed that the generation model (gpt-5-2) calls a tool named \texttt{web.run} via the Sonicberry orchestrator. Each \texttt{web.run} call dispatches exactly 2 queries in parallel. In 94\% of runs, a single \texttt{web.run} call suffices. In 2.7\% of runs, the generation model evaluates the returned results and calls \texttt{web.run} again, creating an iterative re-search loop tracked by the \texttt{search\_turns\_count} field. In the raw network stream, each \texttt{web.run} message carries the query array (always length~2) and an incrementing search turn count; multi-turn calls may be chained (\texttt{parent\_id} linking to the previous call) or independent. The empirical distribution of search turns, re-search strategies, and query drift are reported in Section~\ref{sec:multi-turn}.
+Each pair of fan-out queries is dispatched via a tool call named \texttt{web.run}. In 94\% of runs, a single \texttt{web.run} call (2 queries) suffices. In 2.7\% of runs, the model evaluates the returned results and calls \texttt{web.run} again, creating a re-search loop. The distribution of search turns and query strategies are reported in Section~\ref{sec:multi-turn}.
 
-The full retrieval pool is captured in the \texttt{search\_result\_groups} field
-(URLs, titles, snippets), representing every URL the model could have cited.
-Citation-to-source mapping is reconstructed from \texttt{content\_references}
-token spans and the streamed response text; the full pipeline is described
-in Section~\ref{sec:claim-to-link}.
-A full glossary of the network payload fields we captured
-is provided in Appendix~\ref{app:network-glossary}.
-
-\subsection{Source Categories}
+\subsection{Source Categories and Citation Mapping}
 \label{sec:source-categories}
 
 Figure~\ref{fig:chatgpt-anatomy} shows a typical ChatGPT response to a product
@@ -109,6 +101,8 @@ the rest of our analysis:
     We compute them as all retrieved URLs minus those classified
     as cited or additional (see Section~\ref{sec:rejected}).
 \end{itemize}
+
+The full retrieval pool---every URL the model could have cited---is captured in the \texttt{search\_result\_groups} field, which contains the URL, title, snippet, and publication date for each candidate. To determine which of these candidates were actually cited, we reconstruct the citation-to-source mapping from \texttt{content\_references}, which records the start index of each citation token in the streamed response text. The full mapping pipeline is described in Section~\ref{sec:claim-to-link}. A glossary of all network payload fields we captured is provided in Appendix~\ref{app:network-glossary}.
 
 \section{Anatomy of a Gemini Response}
 \label{sec:gemini-anatomy}
