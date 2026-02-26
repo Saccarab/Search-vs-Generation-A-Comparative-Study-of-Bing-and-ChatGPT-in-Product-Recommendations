@@ -186,7 +186,7 @@ When the user searches in a non-English language, GPT pairs a fan-out in the use
 This is corroborated at scale by \textcite{rudzki2026english}, who analyzed over 10~million prompts and 20~million query fan-outs from Peec~AI's production monitoring data. They report that \textbf{78\%} of non-English ChatGPT sessions include at least one English-language sub-search, and \textbf{43\%} of all fan-out queries for non-English prompts target the English web---consistent with our 100\% rate.
 
 Gemini shows a variation of this pattern. For foreign-language prompts, it always 
-reserves the first grounding query slot (Index~0) for an English translation of the prompt.
+reserves the first grounding query slot (which is the strongest fan out, Section~\ref{sec:per-query-citation}) for an English translation of the prompt.
 
 \subsubsection{Case~2: Context-Triggered Local-Language Fan-Out}
 
@@ -218,13 +218,13 @@ received non-English fan-outs on 4 of 6 runs, switching between Chinese (enterpr
 Japanese (enterprise), and Spanish (personal); P048 (``Can I add a live translation app to calls?'') triggered on 3 of 6, 
 alternating between Japanese (enterprise) and Spanish (personal). 
 
-\subsubsection{Implications for Publisher Visibility}
+\subsubsection{GEO Takeaways on Localization}
+ 
+A website targeting only French speakers historically did not need to account for any of this. But for AI visibility, even if this website is well optimized for SEO and ranks high in French search results for relevant keywords, it is still competing against the entire English web for half of its AI visibility. To unlock the other half, the publisher would have to localize their site and build an equally strong---or stronger---SEO strategy for English keywords, which will often be far more competitive.
 
-Both ChatGPT and Gemini inject English fan-outs into foreign-language sessions (Case~1, Gemini's First-Query Bias). A website targeting only Spanish speakers, for example, now competes with English-language sources that were never part of the traditional Spanish SERP. Given Gemini's First-Query Bias (Section~\ref{sec:per-query-citation}) and GPT's 100\% English fan-out rate, an English version of a site is effectively a prerequisite for AI visibility---even if the target audience does not speak English.
+The reverse also holds: Cases~2 and~3 show that English-language prompts can produce localized fan-outs. A website ranking well in English search results might still lose potential visitors in Germany because ChatGPT, based on the user's IP address or simply the nature of the conversation, decided to issue a French or German fan-out instead.
 
-The reverse also holds: Cases~2 and~3 show that English-language prompts can produce localized fan-outs, routing retrieval into language indices where English-only publishers have no presence. A publisher ranking well in English SERPs becomes invisible to that retrieval path.
-
-Traditional SEO optimizes for the user's query language. These patterns show that GEO must account for the LLM searching in a \emph{different} language than the user typed.
+These findings show that a true multi-lingual SEO approach is almost a prerequisite for GEO.
 
 %-----------------------------------------------------------------------
 \section{Page-Level Citation Distribution}
