@@ -54,6 +54,15 @@
   showstringspaces=false
 }
 
+% Finding boxes
+\usepackage{mdframed}
+\newenvironment{findingbox}{%
+  \begin{mdframed}[linewidth=0.8pt, linecolor=black, backgroundcolor=gray!5,
+    innertopmargin=8pt, innerbottommargin=8pt, innerleftmargin=8pt, innerrightmargin=8pt]
+}{%
+  \end{mdframed}
+}
+
 % Links and URLs
 \usepackage{xurl}
 \usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=green!50!black,urlcolor=blue!70!black]{hyperref}
