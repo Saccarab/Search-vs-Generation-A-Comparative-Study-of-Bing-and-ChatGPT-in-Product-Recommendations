@@ -59,7 +59,16 @@ When a user submits a prompt, the first thing ChatGPT decides is whether to sear
 \label{fig:searching-web}
 \end{figure}
 
-Behind this indicator, our network instrumentation captured the search-trigger decision via the \texttt{sonic\_classification\_result} field in the event stream. This field contains a classifier output with probabilities (\texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}) and thresholds that determine whether the prompt warrants a web search. The event stream also includes \texttt{web\_search\_triggered} (whether search actually ran) and \texttt{web\_search\_forced} (whether search was forced regardless of classifier output). The full classifier configuration and its behavior are reported in Section~\ref{sec:search-trigger}.
+Behind this indicator, our network instrumentation captured the full search pipeline from the \texttt{conversation} endpoint's event stream. Figure~\ref{fig:network-response} shows this stream as seen in Chrome DevTools: the \texttt{conversation} endpoint (selected in the left panel) returns a streamed response containing search invocations, \texttt{tool:web} calls, and search results with titles and snippets.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/network_response.png}
+\caption{Chrome DevTools Network tab with the \texttt{conversation} endpoint selected (left panel), showing the streamed response containing search invocations, \texttt{tool:web} calls, and returned search results with titles and snippets.}
+\label{fig:network-response}
+\end{figure}
+
+The stream contains the classifier output (\texttt{sonic\_classification\_result}), fan-out queries, search results, and citation mappings. One caveat: the \texttt{web\_search\_triggered} boolean flag proved unreliable---some runs reported \texttt{false} despite containing \texttt{web.run} calls and search results. We therefore determined search status by checking for the presence of \texttt{web.run} tool calls rather than trusting the flag. The full classifier configuration is reported in Section~\ref{sec:search-trigger}.
 
 \subsection{Fan-Out Queries}
 \label{sec:fan-out-queries}
@@ -73,7 +82,14 @@ Once the search trigger fires, ChatGPT does not search for the user's prompt ver
 \label{fig:fan-out-ui}
 \end{figure}
 
-Each pair of fan-out queries is dispatched via a tool call named \texttt{web.run}. In 94\% of our runs, we observed a single \texttt{web.run} call that produces 2 queries. In the remainder of our runs, the model issued additional \texttt{web.run} calls, creating more fan-out query pairs. The distribution of search turns and query strategies are reported in Section~\ref{sec:multi-turn}.
+Figure~\ref{fig:fanout-raw} shows the raw \texttt{search\_model\_queries} object from the network stream containing the query pair, and Figure~\ref{fig:sonicberry} shows the \texttt{web.run} tool call that dispatches them. The model can issue multiple \texttt{web.run} calls per run; the distribution is reported in Section~\ref{sec:multi-turn}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/fan_out.png}
+\caption{Fan-out query pair as seen in the raw network event stream: the \texttt{search\_model\_queries} object contains the two reformulated queries.}
+\label{fig:fanout-raw}
+\end{figure}
 
 The results from these queries form the full retrieval pool, captured in the \texttt{search\_result\_groups}
  field, which contains the URL, title, snippet, and 
@@ -364,4 +380,4 @@ This study used large language models at every stage, and we disclose their role
 The Content DNA labeling pipeline (Section~\ref{sec:labeling-pipeline}) used GPT-5-mini and Gemini 2.5 Flash as structured labelers. 
 The same two models served as judges on our semantic fidelity audit (Section~\ref{sec:semantic-fidelity}). Cross-model agreement was validated in both cases, and all flagged attribution failures were manually verified.
 
-Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools were also used for proofreading, structural editing, and \LaTeX{} formatting, with Claude Code and OpenAI Prism used at different stages. Every number in this thesis was verified against the underlying data. We prefer transparency on their use.
+Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools were also used for proofreading, structural editing, and \LaTeX{} formatting, with Claude Code and OpenAI Prism used at different stages. Every number in this thesis was verified against the underlying data.

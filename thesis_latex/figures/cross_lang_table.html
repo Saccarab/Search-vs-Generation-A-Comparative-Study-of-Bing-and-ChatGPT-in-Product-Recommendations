@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cross-Language Fan-Out Examples</title>
+<style>
+  body { font-family: "Segoe UI", Arial, sans-serif; margin: 12px; background: #fff; color: #111; }
+  h3 { margin: 12px 0 2px 0; font-size: 13px; color: #b2182b; font-weight: 600; }
+  h3:first-of-type { margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; max-width: 700px; font-size: 13px; margin-bottom: 6px; line-height: 1.3; }
+  th { text-align: left; padding: 2px 6px; border-bottom: 1px solid #ccc; font-weight: 600; font-size: 12px; color: #333; }
+  td { padding: 2px 6px; vertical-align: top; }
+  .run { font-weight: 600; color: #2166ac; white-space: nowrap; }
+  .prompt { color: #111; }
+  .query { color: #555; }
+  .qlabel { font-weight: 600; color: #888; }
+</style>
+</head>
+<body>
+
+<!-- CASE 1: Foreign prompt → English fan-out -->
+<h3>&#9660; Case 1: Foreign prompt &rarr; English fan-out (6.3%, 30 runs)</h3>
+<table>
+<colgroup><col style="width:70px"><col style="width:38%"><col></colgroup>
+<thead><tr><th>Run</th><th>Prompt</th><th>Fan-out Queries</th></tr></thead>
+<tbody>
+<tr><td class="run">P019_r1</td><td class="prompt">Quel est le meilleur logiciel de traduction instantané ?</td><td class="query"><span class="qlabel">Q1:</span> meilleur logiciel de traduction instantanée traduction en temps réel logiciel<br><span class="qlabel">Q2:</span> best real-time translation software instant translation tools comparison</td></tr>
+<tr><td class="run">P032_r1</td><td class="prompt">什么实时翻译软件好用？</td><td class="query"><span class="qlabel">Q1:</span> 实时翻译软件 推荐 实时翻译App<br><span class="qlabel">Q2:</span> best real time translation apps features comparison</td></tr>
+<tr><td class="run">P038_r1</td><td class="prompt">Anlık ses çevirisi yapan programlar nelerdir?</td><td class="query"><span class="qlabel">Q1:</span> Anlık ses çevirisi yapan programlar gerçek zamanlı ses çevirisi uygulamaları<br><span class="qlabel">Q2:</span> Real time voice translation software apps real time speech translation tools</td></tr>
+</tbody>
+</table>
+
+<!-- CASE 2: English prompt + foreign context → local-language fan-out -->
+<h3>&#9660; Case 2: English prompt + foreign context &rarr; local-language fan-out (1.9%, 9 runs)</h3>
+<table>
+<colgroup><col style="width:70px"><col style="width:38%"><col></colgroup>
+<thead><tr><th>Run</th><th>Prompt</th><th>Fan-out Queries</th></tr></thead>
+<tbody>
+<tr><td class="run">P050_r1</td><td class="prompt">Can you recommend a free app for live time translation during a call with French speakers?</td><td class="query"><span class="qlabel">Q1:</span> free app live real time translation during call French speakers<br><span class="qlabel">Q2:</span> application gratuite traduction temps réel appel téléphonique traduire conversation en direct</td></tr>
+<tr><td class="run">P058_r1</td><td class="prompt">What is the best software for Parsian/Farsi audio-to-text transcription?</td><td class="query"><span class="qlabel">Q1:</span> best software for Persian Farsi audio to text transcription Persian speech to text<br><span class="qlabel">Q2:</span> بهترین نرم افزار تبدیل گفتار فارسی به متن Persian audio transcription software</td></tr>
+<tr><td class="run">P058_r3</td><td class="prompt">What is the best software for Parsian/Farsi audio-to-text transcription?</td><td class="query"><span class="qlabel">Q1:</span> best Farsi/Farsi (Persian) audio to text transcription software<br><span class="qlabel">Q2:</span> نرم افزار تشخیص گفتار فارسی تبدیل صدا به متن بهترین</td></tr>
+</tbody>
+</table>
+
+<!-- CASE 3: English prompt, no foreign context → foreign-language fan-out -->
+<h3>&#9660; Case 3: English prompt, no foreign context &rarr; foreign-language fan-out (4.9%, 23 runs)</h3>
+<table>
+<colgroup><col style="width:70px"><col style="width:38%"><col></colgroup>
+<thead><tr><th>Run</th><th>Prompt</th><th>Fan-out Queries</th></tr></thead>
+<tbody>
+<tr><td class="run">P007_r3</td><td class="prompt">Is there a real time audio to text translation?</td><td class="query"><span class="qlabel">Q1:</span> real time audio to text translation technology<br><span class="qlabel">Q2:</span> 实时音频转文字 翻译 real time audio to text translate</td></tr>
+<tr><td class="run">P018_r1</td><td class="prompt">Can you suggest a free website or program that can translate my 20-minute video and add subtitles?</td><td class="query"><span class="qlabel">Q1:</span> free website or program to translate video and add subtitles automatically<br><span class="qlabel">Q2:</span> 免费工具 翻译视频 字幕 自动 translate video subtitle free online</td></tr>
+<tr><td class="run">P018_r2</td><td class="prompt">Can you suggest a free website or program that can translate my 20-minute video and add subtitles?</td><td class="query"><span class="qlabel">Q1:</span> free website program to translate and add subtitles to video automatically<br><span class="qlabel">Q2:</span> 無料 video 翻訳 字幕 自動 サービス free translate subtitles video</td></tr>
+<tr><td class="run">P048_r1</td><td class="prompt">Can I add a live translation app to calls?</td><td class="query"><span class="qlabel">Q1:</span> Can I add live translation app to phone calls live translation during calls how to do<br><span class="qlabel">Q2:</span> ライブ通話 翻訳アプリ 通話中 翻訳 phone call live translation apps</td></tr>
+<tr><td class="run">P048_r2</td><td class="prompt">Can I add a live translation app to calls?</td><td class="query"><span class="qlabel">Q1:</span> add live translation to phone calls apps that translate calls live<br><span class="qlabel">Q2:</span> リアルタイム 翻訳 通話 アプリ live translation during calls iPhone Android</td></tr>
+</tbody>
+</table>
+
+</body>
+</html>

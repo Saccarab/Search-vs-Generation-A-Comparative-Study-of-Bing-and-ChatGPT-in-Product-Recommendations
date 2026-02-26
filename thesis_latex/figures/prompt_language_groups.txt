@@ -1,0 +1,129 @@
+PROMPT LANGUAGE GROUPING — Cross-Language Fan-Out Analysis
+===========================================================
+
+GROUP A: FOREIGN-LANGUAGE PROMPTS (prompt text is non-English)
+--------------------------------------------------------------
+P019: Quel est le meilleur logiciel de traduction instantané ?                    [French]    6/6 cross-lang (100%)
+P032: 什么实时翻译软件好用？                                                        [Chinese]   6/6 cross-lang (100%)
+P038: Anlık ses çevirisi yapan programlar nelerdir?                               [Turkish]   6/6 cross-lang (100%)
+P055: Welche Transkriptionssoftware ist die beste?                                [German]    6/6 cross-lang (100%)
+P060: Anlık çeviri yapan programlar nelerdir?                                     [Turkish]   6/6 cross-lang (100%)
+P056: Come posso tradurre una conversazione in tempo reale?                       [Italian]   SEARCH NOT TRIGGERED (no fan-out data)
+P062: ¿Hay alguna forma de traducir en tiempo real?                               [Spanish]   SEARCH NOT TRIGGERED (no fan-out data)
+
+Summary: 30/30 = 100% cross-language rate when search triggers.
+         P056 and P062 never triggered search at all (answered from training knowledge).
+
+
+GROUP B: ENGLISH PROMPT + SPECIFIC FOREIGN LANGUAGE MENTIONED
+--------------------------------------------------------------
+P058: What is the best software for Parsian/Farsi audio-to-text transcription?                6/6 cross-lang (100%)
+P050: Can you recommend a free app for live time translation during a call with French speakers?   2/6 cross-lang (33%)
+P047: I need a Chrome extension for live Chinese to English translation...                    1/6 cross-lang (17%)
+P040: Can you recommend an application for live voice translation from French to English?     0/6 cross-lang (0%)
+P026: I need a video translator that can transcribe Spanish videos into English.              0/6 cross-lang (0%)
+P075: I need a video translator that can transcribe Spanish videos into English.              0/6 cross-lang (0%)
+P036: What is the accurate translator English to Japanese with audio?                         SEARCH NOT TRIGGERED (no fan-out data)
+
+Summary: 9/36 = 25% overall, but ranges from 100% (Farsi) to 0% (Spanish, French-to-English).
+         Pattern: triggers reliably when the foreign language is the TARGET of the tool
+         (P058 needs a tool that works WITH Farsi), but not when the foreign language
+         is just the INPUT to an English tool (P026/P075 want English tools that process Spanish).
+
+
+GROUP C: ENGLISH PROMPT + GENERIC "FOREIGN LANGUAGE" MENTION
+--------------------------------------------------------------
+P020: Request a tool to translate foreign audio to English in real-time during video playback.   1/6 cross-lang (17%)
+P057: Can you recommend a video translator app to help me understand content in a foreign language in English?   0/6 (0%)
+P077: Can you recommend a video translator app to help me understand content in a foreign language in English?   0/6 (0%)
+
+
+GROUP D: ENGLISH PROMPT ABOUT TRANSLATION — NO LANGUAGE SPECIFIED
+------------------------------------------------------------------
+These prompts are about translation tools but don't mention any specific language.
+Any cross-language fan-out here is purely IP/locale-driven (spontaneous).
+
+Cross-lang triggered:
+  P007: Is there a real time audio to text translation?                                       3/6 (50%)
+  P018: Can you suggest a free website or program that can translate my 20-minute video and add subtitles?   4/6 (67%)
+  P048: Can I add a live translation app to calls?                                            3/6 (50%)
+  P063: What is the best machine translation tool for live translation that saves context?     3/6 (50%)
+  P044: Are there live translation software options for video chats like Zoom or Teams?        2/6 (33%)
+  P016: I need live transcribing while using online streaming or watching videos.              1/6 (17%)
+  P034: Is there a Windows application for live translation during calls in Google Meet?       1/6 (17%)
+  P043: Can you recommend software for live call subtitles in same language and translation?   1/6 (17%)
+  P054: What is the best instant translator for conferences?                                  1/6 (17%)
+  P072: Can you recommend the best video translator extension for YouTube?                    1/6 (17%)
+
+Never triggered:
+  P001: Which free AI would you recommend for translating my video?
+  P012: What is the best platform to convert video voice into another language?
+  P014: What is the best app for voice translation?
+  P015: Can you provide a tool for voice translation?
+  P021: Can you suggest a free website or program that can translate my 20-minute video and add subtitles?
+  P027: Best Video Translator for agencies to expand reach and speed up content creation.
+  P028: Can you suggest any free programs to convert videos to 480p?
+  P035: Can you list translation services with live interpreters and their 2-day pricing?
+  P037: What is the AI app that changes the language of videos?
+  P042: Can you recommend a real-time voice translator app?
+  P045: What are the biggest opportunities for live speech translation in sports arenas?
+  P046: What are direct competitors of Doctranslate?
+  P049: Can you recommend an extension that provides live translation with subtitles?
+  P051: What are some good real-time translation software options?
+  P061: Is there an AI that translates audio?
+  P067: How can I add a live translation service for official meetings?
+  P068: Can you recommend an app or extension that provides live audio translation like Google Translate?
+  P073: Can you recommend the best video translator for YouTube?
+  P074: Can you recommend live video translator apps for Mac?
+  P076: What is the best free AI video translator?
+  P078: Can you recommend tools for live translation on video calls?
+
+
+GROUP E: ENGLISH PROMPT ABOUT TRANSCRIPTION / TTS — NO TRANSLATION
+-------------------------------------------------------------------
+These prompts are about speech-to-text or text-to-speech only. No translation concept.
+Cross-language fan-out is extremely unlikely here.
+
+Cross-lang triggered:
+  P017: Can you recommend a text to speech service that can generate such a conversation with multiple voices?   1/6 (17%)
+  P031: Are there currently any free audio to text transcription services?                    1/6 (17%)
+  P069: Can you recommend free text-to-speech extensions that dont sound robotic?             1/6 (17%)
+
+Never triggered:
+  P002: What are some text-to-speech services that can create conversations with multiple voices?
+  P003: Is there a transcription software available for a one-time payment instead of a subscription?
+  P004: I have an audio file and need to know which app or AI tool can transcribe it.
+  P005: Can you recommend a text-to-speech service that generates conversations with multiple voices?
+  P006: I have an audio and I need the transcript. Which app or AI tool can I use?
+  P008: Is there an AI that changes your voice?
+  P009: Which app or AI tool can I use to get the transcript of an audio?
+  P010: Give me the best speech to text solutions.
+  P011: How can I quickly and for free convert text to speech?
+  P013: How can I convert an audio file to text?
+  P022: What are some free AI tools for audio transcription?
+  P023: What tools are available for text to speech?
+  P024: Give me the best speech to text solutions.
+  P025: Are there any free applications that can read text in naturalistic voices?
+  P029: Is there an API for audio transcription to text?
+  P030: Whats a good voiceover AI that allows me to change the voice of generated speech?
+  P033: Can you recommend an AI application for audio file transcription to text?
+  P039: What are some free transcription AI tools available?
+  P041: What other text-to-speech software options are available besides Outplayed?
+  P052: Can you provide me with some text-to-speech voices or programs?
+  P053: Can you recommend the best free AI text-to-speech software with celebrity voices for IoT applications?
+  P059: Can I get AI to transcribe a video?
+  P064: Can you recommend the best audio to text AI transcription and summarization platforms?
+  P065: Are there any free audio to text transcription services?
+  P066: What are the highest quality audio to text transcription websites?
+  P070: What are the best free audio to text transcription tools?
+  P071: Can you recommend a transcription website to convert my audio into text?
+  P079: What are the top 3 speech-to-text transcription tools available in the market now?
+
+
+TOTALS
+------
+Group A (foreign prompt):              7 prompts, 30/30 triggered when search fired (100%)
+Group B (English + specific language):  7 prompts, 9/36 triggered (25%, range 0-100%)
+Group C (English + generic "foreign"):  3 prompts, 1/18 triggered (6%)
+Group D (English, translation topic):  31 prompts, 20/~186 triggered (sporadic, IP-driven)
+Group E (English, transcription/TTS):  31 prompts, 3/~186 triggered (rare, IP-driven)

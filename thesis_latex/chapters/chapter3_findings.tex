@@ -13,7 +13,9 @@ When a user sends a message, ChatGPT must first decide whether to search the web
 \label{sec:search-trigger}
 \label{sec:three-layer}
 
-All of the following observations come from the raw network event stream that ChatGPT sends to the browser during response generation (Section~\ref{sec:chatgpt-anatomy}). Before ChatGPT generates anything, a classifier called the Sonic Classifier runs. Its job is to decide whether the question needs fresh web data or whether the model can answer from its training knowledge. It runs once when the user sends a message.
+All of the following observations come from the raw network event stream that ChatGPT sends to the browser during response generation (Section~\ref{sec:chatgpt-anatomy}, Figure~\ref{fig:network-response}). Before ChatGPT generates anything, a classifier called the Sonic Classifier runs.
+ Its job is to decide whether the question needs fresh web data or whether the model can answer from its training knowledge.
+  It runs once when the user sends a message.
 
 A previous classifier version (\texttt{sonic\_force\_pg\_switcher}), documented by \textcite{resoneo2026chatgpt} and \textcite{williamscook2025sonic}, used a single probability and a single-step decision:
 
@@ -35,7 +37,7 @@ It outputs three probabilities---\texttt{simple\_search\_prob}, \texttt{complex\
 
 \noindent Search is now the default---it is only suppressed if \texttt{no\_search\_prob} crosses the 17.5\% gate. The system no longer asks ``should I search?'' but ``should I \emph{not} search?'' This likely reflects the trajectory toward treating web grounding as the norm (Section~\ref{sec:reasoning-models}).
 
-Table~\ref{tab:classifier-examples} shows how the three probabilities vary across prompts. Multi-constraint queries like P046 push \texttt{complex\_search\_prob} higher, while straightforward product questions like P022 keep it near zero. None crossed the 0.4 complex-search threshold, so all classified runs were routed to simple search. P016 stands out with the highest \texttt{no\_search\_prob} in the dataset (.174)---just 0.001 below the 0.175 suppression threshold---and is the prompt whose search behavior diverged most sharply between tiers.
+Table~\ref{tab:classifier-examples} shows the three probabilities for selected prompts. No prompt in our dataset crossed the 0.4 complex-search threshold, so all classified runs were routed to simple search.
 
 \begin{table}[H]
 \centering
@@ -83,19 +85,35 @@ Table~\ref{tab:search-trigger-breakdown} summarizes the search trigger outcomes 
 Only three prompts showed mixed behavior. The clearest case is P016 (\emph{``I need live transcribing while using online streaming or watching videos.''}): on Business, all three runs searched; on Personal, none did. Its \texttt{no\_search\_prob} of .174 sits just 0.001 below the 0.175 suppression threshold---same prompt, different tier, opposite outcome. The classifier configuration and thresholds are identical across tiers, so the divergence occurs somewhere downstream. P004 and P045 also showed within-tier variation---searching in 2 of 3 runs on the same tier---but this was rare (2 of 79 prompts).
 
 
-When search was triggered, we observed \texttt{web.run} tool calls in the event stream issuing pairs of reformulated queries---the fan-out queries discussed in the next section. As of late February~2026, the classifier probabilities are no longer exposed in the event stream; the search decision now happens entirely server-side. The rest of the pipeline (\texttt{web.run} calls, fan-out queries) remains visible.
+When search was triggered, we observed \texttt{web.run} tool calls in the event stream issuing pairs of reformulated queries---the fan-out queries discussed in the next section. As of late February~2026, the \texttt{sonic\_classification\_result} block (classifier ID, thresholds, and probabilities) is no longer exposed in the event stream; the search decision now happens entirely server-side. The underlying Sonicberry model (\texttt{alpha.sonic\_thinky\_v1\_paid}) remains identical to our January data collection period and is still visible in the stream (Figure~\ref{fig:sonicberry}), as are \texttt{web.run} calls and fan-out queries.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/sonic_berry.png}
+\caption{A \texttt{web.run} tool call from the network event stream, showing the \texttt{sonicberry\_model\_id} in the metadata block.}
+\label{fig:sonicberry}
+\end{figure}
 
 \section{Fan-Out Queries}
 \label{sec:fanout-queries}
 \label{sec:freshness-steering}
 
-Once the search decision is made, the model reformulates the user's prompt into one or more search engine queries, commonly called \emph{fan-out queries} (exposed as \texttt{webSearchQueries} in Gemini's grounding metadata). Across all runs, the three environments produced 2{,}280 fan-out queries: 448 from Business, 424 from Personal, and 1{,}408 from Gemini. ChatGPT issues exactly two queries per search turn, though it occasionally triggers additional turns (Section~\ref{sec:multi-turn}). Gemini exposes 3--7 queries per run in its grounding metadata; whether these are issued in parallel or across sequential internal turns is not visible, though the later queries in the list tend to target specific products by name---a pattern reminiscent of ChatGPT's multi-turn re-search behavior.
+Once the search decision is made, the model reformulates the user's prompt into search engine queries, commonly called \emph{fan-out queries}. For example, when a user asks \emph{``What are some free AI tools for audio transcription?''} (P022), ChatGPT issues two queries:
+
+\begin{quote}
+\small
+\texttt{Q1:} free AI tools for audio transcription\\
+\texttt{Q2:} best free speech to text transcription tools online
+\end{quote}
+
+\noindent The first query closely mirrors the user's prompt; the second rephrases it with synonyms and broader terms, widening the retrieval pool (see Figure~\ref{fig:fanout-raw} for how these appear in the raw network stream). Across all runs, the three environments produced 2{,}280 fan-out queries: 448 from Business, 424 from Personal, and 1{,}408 from Gemini. ChatGPT issues exactly two queries per search turn, though it occasionally triggers additional turns (Section~\ref{sec:multi-turn}). Gemini exposes 3--7 queries per run in its grounding metadata.
 
 \subsection{Multi-Turn Re-Search}
 \label{sec:multi-turn}
 
-ChatGPT occasionally issues more than one search turn. In 12 of 432 searched runs (across 5 prompts), the model evaluated its first-round results, then issued a second (or third) \texttt{web.run} call with new queries. First-round queries are generic reformulations of the user prompt, while later rounds target specific products discovered in the initial results (Table~\ref{tab:multi-turn-queries}). The re-search decision is made by the generation model after evaluating first-round results, not by the classifier (which runs only once, before any search).
-
+In 12 of 432 searched runs (across 5 prompts), the model evaluated its first-round results, 
+then issued a second (or third) \texttt{web.run} call with new queries. 
+First-round queries are generic fan outs of the user prompt, while later rounds target specific products discovered in the initial results (Table~\ref{tab:multi-turn-queries}).
 \begin{table}[H]
 \centering
 \caption{Multi-turn query content for ChatGPT re-search runs.}
@@ -113,64 +131,100 @@ P073\_r3 & \textbf{3} & ``best video translator for YouTube\ldots'' & Turn 2: ``
 \end{tabular}
 \end{table}
 
-Gemini's grounding metadata does not expose turn boundaries, but a similar progression is visible in the query list: early queries tend to be broad, while later ones name specific products. Whether Gemini performs sequential re-searches internally or plans all queries upfront is not observable from the data.
+Gemini's grounding metadata does not expose separate turns, but the query sequence suggests the same pattern. In P002\_r1, for example, Q1--Q2 are generic reformulations of the prompt (\emph{``AI text to speech multi-speaker dialogue tools 2025''}, \emph{``best text to speech services for multi-voice conversations''}), while Q3--Q7 each target a specific brand discovered from those initial results: Murf~AI, ElevenLabs, Speechify, Play.ht. The progression from broad category queries to narrow brand queries mirrors ChatGPT's multi-turn re-search, suggesting that Gemini evaluates its first-round results and issues follow-up queries for individual products---it is just not exposed as discrete turns.
 
-\subsection{Freshness Steering}
+\subsection{Year Injection in Fan-Out Queries}
 \label{sec:freshness-subsection}
 
-Gemini and ChatGPT take opposite approaches to recency. 96.7\% of Gemini runs (297/307 with valid grounding metadata) explicitly inject a year (2025 or 2026) into their fan-out queries---74.3\% in the very first query, a further 22.5\% only in later queries. By searching for ``Best [Product] 2025,'' Gemini forces the retrieval of time-stamped listicles, which then dominate its grounding. This has a direct implication for content visibility: pages that include the current year in their title or headings (e.g.\ ``Best Translation Tools 2025'') are far more likely to match Gemini's year-injected queries and enter its retrieval pool, making year-tagged content a near-prerequisite for Gemini visibility.
+Gemini systematically injects year tokens into its fan-out queries. For the same prompt (P006, \emph{``What are the best apps or AI tools to transcribe audio to text?''}), ChatGPT searched for \emph{``apps or AI tools to transcribe audio to text''} and \emph{``best speech-to-text transcription tools AI''}---no year token. Gemini's raw grounding metadata for the same prompt shows year tokens in every query:
 
-ChatGPT also occasionally injects year tokens, but far less systematically: only 5.1\% of runs include an explicit year signal. Notably, 20.9\% of the search results in ChatGPT's network event stream carry a \texttt{pub\_date} timestamp (1{,}616 of 7{,}719 results)---this is not something we scraped from page content but a field Bing returns to ChatGPT, suggesting it may factor into ranking or selection. Among those with a date, 61\% are from 2025, 12\% from January~2026, and 16\% from 2024.
+\begin{lstlisting}[language=json,numbers=none]
+"webSearchQueries": [
+  "AI tools for transcribing long audio files 2026",
+  "best AI audio to text transcription tools 2025 2026",
+  "best free audio transcription apps 2026",
+  "highest accuracy AI transcription services 2026"
+]
+\end{lstlisting}
 
-\subsection{Cross-Language Fan-Out \& Localization Bias}
+This is not an isolated case. 96.7\% of Gemini runs (297/307 with valid grounding metadata) include at least one year-injected query, and 66.8\% of all individual Gemini queries (940/1{,}408) contain a year token. Figure~\ref{fig:gemini-year-serp} shows what this produces on the SERP side: searching for one of these year-injected queries returns almost exclusively year-tagged listicles (``11 Best AI Transcription Apps\ldots\ in 2026,'' ``The 3 Best Transcription Services of 2026,'' etc.). This means Gemini's citations are biased toward this kind of content---pages with the current year in their title or headings are far more likely to match these queries and enter the retrieval pool.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{figures/serp_fanout.png}
+\caption{Google SERP for Gemini's year-injected query \emph{``best AI audio to text transcription tools 2025 2026''}.
+ Nearly every result is a year-tagged listicle.}
+\label{fig:gemini-year-serp}
+\end{figure}
+ChatGPT also occasionally injects year tokens, but only in 5.1\% of runs. Its freshness preferences are discussed in Section~\ref{sec:selection-drift}.
+
+\subsection{Cross-Language Fan-Out}
 \label{sec:localization-bias}
 
-ChatGPT injects cross-language queries into its fan-out, driven by prompt language, geographic context, and IP/locale signals, meaning a user searching in one language will have part of their retrieval routed through a different language's search index. This operates in both directions: foreign-language prompts receive English fan-outs, and English prompts can receive foreign-language fan-outs based on IP geolocation. Gemini, which we accessed via the Vertex~AI API without IP or locale signals, exhibits a narrower and unidirectional pattern: for foreign-language prompts it consistently anchors the first fan-out query in English, but we never observed the reverse; English prompts never received foreign-language fan-outs (Section~\ref{sec:gemini-english-anchor}). In both systems, cross-language routing has implications for which publishers gain or lose visibility.
+OpenAI documents that ChatGPT ``collects general location information
+ based on your IP address and may share that general location with 
+ third-party search providers'' \parencite{openai2024searchhelp}. 
+ A user in Munich who asks ``best bakery'' will see the fan-out rewritten 
+ to ``best bakery near Munich Germany''---the location is injected directly into the query text. We call this \textbf{explicit localization}.
 
-As described in Section~\ref{sec:query-set-selection}, our dataset contains 72 English prompts and 7 foreign-language prompts.
+Our software dataset has no local-commerce queries that would trigger explicit localization, but we observed something we call \textbf{implicit localization}. When this same user in Munich asks ``best free website to translate a video and add subtitles,'' the response text is in English---yet many of its citations point to German web pages. This happens because one fan-out is issued in English and the other in German, routing half the retrieval into the German-language search index without the user ever seeing it. This observation was one of the reasons we routed all data collection through a US-based proxy (Section~\ref{sec:proxy-requirement}).
 
-We distinguish two forms of localization. \textbf{Explicit localization} occurs when the query targets an inherently local category; even without a geographic qualifier, a query like ``best bakery'' triggers location-injected fan-out queries (e.g., ``best bakery near Munich Germany''). This primarily applies to local-commerce queries and is not a factor in our SaaS/software dataset. \textbf{Implicit localization} occurs when the search engine uses the user's IP, browser language, or search history to localize results for a general query. In our fan-out data, implicit localization manifests as one of the two fan-out queries being rewritten into the prompt's local language. For example, when issuing an English prompt from Munich, Germany, we observed one query in English (\texttt{"free website or program to translate video and add subtitles"}) and a parallel query in German (\texttt{"kostenlos video \"ubersetzen und Untertitel automatisch hinzuf\"ugen\ldots"}), routing half the retrieval into the German-language index despite an English user prompt.
+Across our GPT runs we identified three patterns of implicit localization, all orchestrated through fan-out queries invisible to the end user.
 
-\subsubsection{GPT: Cross-Language Fan-Out Taxonomy}
+\subsubsection{Case~1: Foreign Prompt $\rightarrow$ English Fan-Out}
 
-Cross-language fan-out signals were observed in \textbf{13.1\%} of GPT runs (62/474), distributed across three distinct patterns:
+When the user searches in a non-English language, GPT pairs a fan-out in the user's language with one in English. For example, P019 (\emph{``Quel est le meilleur logiciel de traduction instantan\'{e}~?''}) produces:
 
-\begin{enumerate}
-    \item \textbf{Case~1 --- Foreign prompt $\rightarrow$ English fan-out (6.3\%, 30 runs):} The user searches in a non-English language; GPT generates one fan-out query in English alongside one in the user's language. The English query typically targets global review sites and English-language listicles, pulling the grounding pool toward anglophone sources.
+\begin{quote}
+\small
+\texttt{Q1:} meilleur logiciel de traduction instantan\'{e}e traduction en temps r\'{e}el logiciel\\
+\texttt{Q2:} best real-time translation software instant translation tools comparison
+\end{quote}
 
-    \item \textbf{Case~2 --- English prompt + foreign context $\rightarrow$ local-language fan-out (1.9\%, 9 runs):} The user searches in English but the prompt references an inherently local category (e.g., ``best pizza in Istanbul,'' ``local translation services in Berlin''). GPT responds by generating a locale-aware fan-out query in the relevant local language (Turkish, German), alongside the English query.
+\noindent Of the 7 foreign-language prompts in our dataset, 5 triggered web search; all 5 produced this pattern on every run (\textbf{30/30 = 100\%}). The remaining two (Italian, Spanish) were answered from training knowledge without triggering search at all.
 
-    \item \textbf{Case~3 --- English prompt, no foreign context $\rightarrow$ foreign-language fan-out (4.9\%, 23 runs):} The user searches in English with no geographic or cultural markers in the prompt, yet GPT generates a non-English fan-out query. These ``untriggered'' localizations are consistent with OpenAI's documented behaviour: ChatGPT ``collects general location information based on your IP address and may share that general location with third-party search providers to improve the accuracy of your results'' \parencite{openai2024searchhelp}. The model infers the user's location and proactively diversifies retrieval into the local language even when the user gave no such signal.
-\end{enumerate}
+This is corroborated at scale by \textcite{rudzki2026english}, who analyzed over 10~million prompts and 20~million query fan-outs from Peec~AI's production monitoring data. They report that \textbf{78\%} of non-English ChatGPT sessions include at least one English-language sub-search, and \textbf{43\%} of all fan-out queries for non-English prompts target the English web---consistent with our 100\% rate.
 
-Cases~2 and~3 vary in cross-run consistency: some prompts exhibit the behavior on every run (e.g., P018), while others do so only sporadically (e.g., P048 in 2 of 3 runs). Cases~2 and~3 are GPT-only observations; Gemini was accessed via the Vertex~AI API without IP-based locale signals, so these patterns could not be tested (Section~\ref{sec:gemini-instrumentation-differences}).
+Gemini shows a variation of this pattern. For foreign-language prompts, it always 
+reserves the first grounding query slot (Index~0) for an English translation of the prompt.
 
-In all three cases, the fan-out query pair is split: one query in language~A, one in language~B. This means the retrieval pool is drawn from two separate language indexes of the search engine.
+\subsubsection{Case~2: Context-Triggered Local-Language Fan-Out}
 
-\subsubsection{External Validation at Scale}
-
-Our Case~1 finding is corroborated at scale by \textcite{rudzki2026english}, who analyzed over 10~million prompts and 20~million query fan-outs from Peec~AI's production monitoring data (controlling for location-language matching). They report that \textbf{78\%} of non-English ChatGPT sessions include at least one English-language sub-search, and \textbf{43\%} of all fan-out queries for non-English prompts target the English web. Our Case~1 rate (6.3\%) represents a lower bound because our dataset is predominantly English-language prompts; the Peec~AI data confirms that when users \emph{do} search in foreign languages, the English fan-out is near-universal.
-
-\textbf{Scope of corroboration:} Rudzki's analysis exclusively covers Case~1 (foreign prompt $\rightarrow$ English fan-out). \textbf{Cases~2 and~3, where English-language prompts receive foreign-language fan-outs, are unique to our study} and represent a novel empirical contribution. The reverse direction of the bias (English users losing visibility to IP/geolocation-driven localized retrieval) has not been previously documented.
-
-\subsubsection{Gemini: The ``English Anchor'' Effect}
-\label{sec:gemini-english-anchor}
-
-Because our Gemini data was collected through the Vertex~AI API (which does not carry IP or locale signals), we cannot test whether Gemini exhibits the same IP/locale-driven localization as GPT. This remains a limitation (see Section~2.4.2). However, we observe a distinct pattern:
+When the prompt is in English but mentions a foreign language---either explicitly in the text or implicitly through IP/locale signals---GPT sometimes pairs the English fan-out with one in a local language. Unlike Case~1's near-universal trigger, Case~2 is selective: whether it fires depends on how central the foreign language is to the user's intent.
 
 \begin{itemize}
-    \item Even for foreign-language prompts, Gemini \textbf{always} reserves the first grounding-support query slot (Index~0) for an English translation of the prompt.
-    \item Due to the \textbf{First-Query Bias} (Section~\ref{sec:per-query-citation}), English-language search results dominate the final response.
-    \item In 100\% of our localized Gemini runs, the cited sources were primarily global/English SaaS platforms and tech publications (e.g., \texttt{pcmag.com}, \texttt{techradar.com}), creating a ``Global Information Bubble'' even for non-English users.
+    \item P058 ``best software for Parsian/Farsi audio-to-text transcription'' $\rightarrow$ Farsi fan-out on every run (tool must work \emph{in} Farsi)
+    \item P050 ``free app for\ldots a call with French speakers'' $\rightarrow$ French fan-out on some of the runs only (since user themselves might not necessarily be speaking French)
+    \item P026 ``transcribe Spanish videos into English'' $\rightarrow$ never triggered (foreign language is just the input source)
 \end{itemize}
 
-\subsubsection{Publisher \& GEO Implications}
+\subsubsection{Case~3: Untriggered Cross-Language Fan-Out}
+\label{sec:untriggered-cross-lang}
 
-\begin{enumerate}
-    \item \textbf{Non-English publishers lose visibility (Case~1):} When foreign-language queries get an English fan-out (78\% of the time per Peec~AI), English-language sources enter the grounding pool and compete directly with local-language sources. Given LLMs' structural preference for well-formatted English listicles (see Section~\ref{sec:selection-drift}), local publishers face a systematic disadvantage.
-    \item \textbf{English-only publishers lose visibility (Cases~2--3):} Conversely, when English-speaking users get localized fan-outs (6.8\% of our runs), publishers without localized pages are invisible to that retrieval path. Even if a publisher ranks well in English SERPs, IP-driven localization can route part of the LLM's retrieval away from their content.
-    \item \textbf{The language of optimization matters:} Traditional SEO focuses on ranking in the user's query language. GEO must account for the fact that the LLM may search in a \emph{different} language than the user typed.
-\end{enumerate}
+The most surprising pattern: \textbf{24 runs} across 15 English-language prompts received non-English fan-outs despite containing no foreign-language signal whatsoever. This includes prompts about translation tools (e.g., P018 ``Can you suggest a free website or program that can translate my 20-minute video and add subtitles?'' $\rightarrow$ Chinese fan-out), but also prompts with no connection to language at all:
+
+\begin{itemize}
+    \item P016 ``I need live transcribing while using online streaming'' $\rightarrow$ Chinese fan-out
+    \item P017 ``Can you recommend a text to speech service\ldots'' $\rightarrow$ Japanese fan-out
+    \item P048 ``Can I add a live translation app to calls?'' $\rightarrow$ Spanish fan-out
+    \item P031 ``Are there currently any free audio to text transcription services?'' $\rightarrow$ Japanese fan-out
+\end{itemize}
+
+\noindent Nothing in these prompts explains why the model would search in Chinese or Japanese. Unlike Case~2, where the prompt at least mentions a foreign language, here the prompt gives no signal at all.
+
+Case~3 also shows cross-run instability: the same prompt can produce different target languages across runs. 
+P018 (``Can you suggest a free website or program that can translate my 20-minute video and add subtitles?'') 
+received non-English fan-outs on 4 of 6 runs, switching between Chinese (enterprise), 
+Japanese (enterprise), and Spanish (personal); P048 (``Can I add a live translation app to calls?'') triggered on 3 of 6, 
+alternating between Japanese (enterprise) and Spanish (personal). 
+
+\subsubsection{Implications for Publisher Visibility}
+
+Both ChatGPT and Gemini inject English fan-outs into foreign-language sessions (Case~1, Gemini's First-Query Bias). A website targeting only Spanish speakers, for example, now competes with English-language sources that were never part of the traditional Spanish SERP. Given Gemini's First-Query Bias (Section~\ref{sec:per-query-citation}) and GPT's 100\% English fan-out rate, an English version of a site is effectively a prerequisite for AI visibility---even if the target audience does not speak English.
+
+The reverse also holds: Cases~2 and~3 show that English-language prompts can produce localized fan-outs, routing retrieval into language indices where English-only publishers have no presence. A publisher ranking well in English SERPs becomes invisible to that retrieval path.
+
+Traditional SEO optimizes for the user's query language. These patterns show that GEO must account for the LLM searching in a \emph{different} language than the user typed.
 
 %-----------------------------------------------------------------------
 \section{Page-Level Citation Distribution}
