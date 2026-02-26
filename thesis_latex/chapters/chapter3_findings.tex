@@ -1,65 +1,51 @@
 \chapter{Findings \& Analysis}
 \label{ch:findings}
 
-This chapter traces the full retrieval-to-citation pipeline, organized to mirror the stages through which a user's prompt becomes a set of product recommendations. We begin with the retrieval strategy itself (how models reshape a single prompt into multiple search queries; Section~\ref{sec:fanout}) and then follow the results through the pipeline: how citations are distributed across SERP pages (Section~\ref{sec:position-bias}), what fraction of citations exist in conventional search indices and how provider strategy differs across subscription tiers (Section~\ref{sec:citation-overlap}), how rank position within pages shapes citation likelihood (Section~\ref{sec:gemini-google-rank}), what the ``invisible'' remainder looks like and how citation status fluctuates across runs (Section~\ref{sec:invisible-links-section}), how the structural characteristics of cited sources differ from the available pool (Sections~\ref{sec:content-dna}--\ref{sec:selection-drift}), and finally how the model extracts and reproduces individual products from within cited listicles (Section~\ref{sec:listicle-bias}).
+This chapter presents our findings, organized along the retrieval-to-citation pipeline: from search trigger and query generation, through source overlap with conventional search engines, to structural content preferences and citation fidelity.
 
 %-----------------------------------------------------------------------
-\section{Retrieval Strategy \& Fan-Out Analysis}
+\section{Retrieval Strategy}
 \label{sec:fanout}
 
-This section examines the retrieval phase: how models reshape a single user prompt into multiple search queries before any citation decision occurs. Across all 711 runs, the three environments dispatched a total of 2{,}280 fan-out queries: 448 from Business, 424 from Personal, and 1{,}408 from Gemini. The instrumentation and methodology underpinning these observations are defined in Sections~\ref{sec:fan-out-queries} and~\ref{sec:gemini-anatomy}.
-
-\subsubsection{The Three-Layer Architecture (as observed)}
-\label{sec:three-layer}
-
-Our network instrumentation reveals a three-layer pipeline, not a monolithic model. The high-level flow as observed in the event stream:
-\begin{enumerate}
-    \item \textbf{User prompt received.}
-    \item \textbf{Search decision (Layer~1 --- Sonic Classifier):} a three-class classifier (\texttt{sonic\_classifier\_5p2\_3cls\_ev3}) fires once per turn and outputs \texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, and \texttt{no\_search\_prob} (summing to 1.0). These are evaluated against thresholds in priority order (\texttt{no\_search} $\rightarrow$ \texttt{complex} $\rightarrow$ \texttt{simple}). If \texttt{no\_search\_prob} $\geq 0.175$, the classifier signals suppression; otherwise it signals search (though external mechanisms can still override this decision; see below). The classifier's probability output is deterministic: the same prompt on the same account tier produces byte-identical probabilities across runs. However, whether search ultimately fires also depends on external mechanisms that can override the classifier's decision (see below), which is why some prompts show mixed search behaviour across runs despite stable classifier output.
-    \item \textbf{Fan-out query generation + retrieval (Layer~2 --- Sonicberry Orchestrator):} an orchestrator (\texttt{alpha.sonic\_thinky\_v1\_paid}) manages the \texttt{web.run} tool-call loop. Each \texttt{web.run} call dispatches exactly 2 reformulated queries. Results return as \texttt{search\_result\_groups}.
-    \item \textbf{Re-search decision (Layer~3 --- Generation Model):} the generation model (\texttt{gpt-5-2}) evaluates the retrieved pool and may call \texttt{web.run} again (incrementing \texttt{search\_turns\_count}). This creates an agentic re-search loop: 94\% of runs complete in 1 turn (2 queries), 2.5\% require 2 turns (4 queries), 0.2\% require 3 turns (6 queries). Unlike the classifier, this decision is non-deterministic: the same input can produce different turn counts across runs.
-    \item \textbf{Selection:} the model promotes some sources to be cited inline, and may also attach extra sources as ``additional.''
-    \item \textbf{Generation:} answer text is streamed with citation tokens (e.g., \texttt{citeturn0search0}) that are merged into the final response.
-\end{enumerate}
+When a user asks for a product recommendation, the model first needs to decide whether to search the web at all
+and if it decides that a search is required, what terms to search for to ground its response. This section examines both of those decisions.
 
 \subsection{ChatGPT Search Trigger Behavior}
 \label{sec:search-trigger}
+\label{sec:three-layer}
 
-A prerequisite to any fan-out analysis is determining when ChatGPT triggers web search at all. The Sonic Classifier, a three-class model that fires once per conversation turn, governs this decision.
+All of the following observations come from the raw network event stream that ChatGPT sends to the browser during response generation (Section~\ref{sec:chatgpt-anatomy}). Before ChatGPT generates anything, a classifier called the Sonic Classifier runs. Its job is to decide whether the question needs fresh web data or whether the model can answer from its training knowledge. It runs once when the user sends a message and outputs three probabilities---\texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, and \texttt{no\_search\_prob}---that sum to 1.0. The classifier's configuration, including the thresholds below, is sent as part of the network event stream alongside every response---this is how we were able to extract them.
 
-\begin{itemize}
-    \item \textbf{Overall search rate:} \textbf{89.0\%} of 474 runs triggered web search (422/474). Business: \textbf{91.1\%}, Personal: \textbf{86.9\%}, a 4.2~pp gap.
-    \item \textbf{Classifier behavior:} The Sonic Classifier output a median \texttt{simple\_search\_prob} of \textbf{96.8\%} for product-recommendation prompts. Neither the \texttt{complex\_search\_threshold} (0.4) nor the \texttt{no\_search\_threshold} (0.175) was ever crossed; all runs fell into ``simple search'' territory. The closest miss: P016 business at \texttt{no\_search\_prob} = 0.1737 (missed the 17.5\% gate by 0.0013).
-    \item \textbf{External suppression:} The 52 no-search runs were \textbf{not} caused by the classifier's probability output:
-    \begin{itemize}
-        \item 39 runs had \textbf{null classification} (classifier never executed; raw network response files were empty)
-        \item 13 runs had the classifier \textbf{overridden} despite \texttt{simple\_search\_prob} as high as 99.7\%, yet the exact suppression mechanism is not visible in the payload, but plausible candidates include server-side A/B gates, tool routing logic (\texttt{passthrough\_tool\_calls}), or session-level factors. These overrides occurred predominantly on Personal accounts (11 of 13)
-    \end{itemize}
-    \item \textbf{Prompt-level consistency:} 61/79 prompts (77.2\%) always triggered search across all 6 runs; 6 prompts (7.6\%) never triggered search; 12 prompts (15.2\%) showed mixed behavior; P016 had a perfect 50/50 split.
-    \item \textbf{Citation impact:} Search-triggered runs averaged \textbf{9.94 citations/run} vs \textbf{2.62} for no-search runs (\textasciitilde4x). Business no-search runs averaged just 1.10 citations; Personal no-search runs managed 3.65, suggesting Personal more readily generates citation-like references from parametric memory. For context, \textcite{punturo2026citationsources} report $\sim$4 unique citations per search-triggered turn across 730K general-purpose conversations; our 2.5$\times$ higher rate reflects the comprehensive sourcing that product-finding prompts demand compared to average ChatGPT usage, which includes many non-search intents (coding, creative writing, casual conversation).
-    \item \textbf{Ghost citations:} 7 runs (all Personal) produced citation-formatted markers with \textbf{zero backing URLs}: the model generated text that looks like a sourced reference (e.g., bracketed numbers or inline links) but with no actual URL in the payload behind them, amounting to hallucinated citation syntax.
-    \item \textbf{Parametric URL recall:} A further 5 no-search runs (all Personal) produced \textbf{fully sourced citations without web search}, producing up to 14 real URLs per run, recalled entirely from the model's training data rather than live retrieval. This demonstrates that the generation model can surface specific URLs from parametric memory when the search pathway is suppressed.
-\end{itemize}
+Our classifier config (\texttt{sonic\_classifier\_5p2\_3cls\_ev3}, model \texttt{snc-pg-sw-3cls-ev3}), identical across both Business and Personal tiers throughout the data collection window (January~2026), evaluates the probabilities in a fixed order:
 
-\paragraph{Sonic Classifier configuration (observed across all 474 runs):}
-\begin{itemize}
-    \item \textbf{Classifier:} \texttt{sonic\_classifier\_5p2\_3cls\_ev3} (model: \texttt{snc-pg-sw-3cls-ev3}, snapshot: \texttt{wli-searchdb-model5-2025-09-23-20-17}). This version was identical across both Business and Personal tiers (same model, same snapshot, same thresholds) and remained constant throughout our data collection window (January 2026). The version identifier is significant: independent observations document a structurally different classifier (\texttt{sonic\_force\_pg\_switcher}) on the free tier (see note below), indicating that classifier behavior can change substantially between versions and plan tiers.
-    \item \textbf{3-class output:} \texttt{simple\_search\_prob} + \texttt{complex\_search\_prob} + \texttt{no\_search\_prob} = 1.0
-    \item \textbf{Thresholds (evaluated in order):}
-    \begin{enumerate}
-        \item \texttt{no\_search\_threshold} = 0.175
-        \item \texttt{complex\_search\_threshold} = 0.4
-        \item \texttt{simple\_search\_threshold} = 0 (catch-all)
-    \end{enumerate}
-    \item \textbf{First-turn override:} \texttt{force\_search\_first\_turn\_threshold} = 0.00001 (near-zero, almost always forces search on first message)
-    \item \textbf{Business vs.\ Personal config divergence:} Both tiers use the same classifier model and thresholds, but differ in peripheral settings: Business has \texttt{prefetch\_threshold: null} + \texttt{passthrough\_tool\_calls: true}; Personal has \texttt{prefetch\_threshold: 0.55} + no passthrough tools
-\end{itemize}
+\begin{enumerate}
+    \item If \texttt{no\_search\_prob} $\geq 0.175$, suppress search (answer from training knowledge).
+    \item Else if \texttt{complex\_search\_prob} $\geq 0.4$, trigger a complex search (never observed in our data; its exact behavior is unknown).
+    \item Else trigger a simple search (threshold = 0, so this is the catch-all).
+\end{enumerate}
 
-\paragraph{The search-default paradigm shift.} The most architecturally significant finding from our classifier analysis is the inversion of the search decision's burden of proof. Earlier versions of the classifier, documented by \textcite{resoneo2025chatgpt} and \textcite{williamscook2025sonic}, used a single \texttt{search\_prob} that had to exceed a threshold (65\%) before web search would fire, making parametric inference the default and search opt-in. The version we observe on paid tiers inverts this: search is the \emph{default}, and is suppressed only if \texttt{no\_search\_prob} $\geq 0.175$. The question the classifier answers is no longer ``should I search?'' but ``should I \emph{not} search?'' With a catch-all \texttt{simple\_search\_threshold} of~0, any prompt that fails to clear the suppression gate will trigger retrieval. For product-recommendation queries, this means web grounding is near-guaranteed on paid tiers.
+\noindent Search is the default---it is only suppressed if \texttt{no\_search\_prob} crosses the 17.5\% gate. Earlier versions, documented by \textcite{resoneo2025chatgpt} and \textcite{williamscook2025sonic}, used a structurally different classifier config (\texttt{sonic\_force\_pg\_switcher}) with a single-step decision:
 
-\paragraph{Free-tier vs.\ paid-tier divergence.} The Resoneo and Williams-Cook observations appear to describe the free-tier classifier (\texttt{sonic\_force\_pg\_switcher}), which retains the older opt-in architecture with a single probability and a higher activation threshold. This architectural divergence (opt-in search on the free tier versus opt-out search on paid tiers) is consistent with practitioner observations that paid plans trigger grounding more aggressively, and means our findings on search trigger rates, fan-out behavior, and citation selection apply specifically to paid ChatGPT deployments.
+\begin{enumerate}
+    \item If \texttt{search\_prob} $> 0.65$, trigger a simple search. Otherwise, answer from training knowledge.
+\end{enumerate}
 
-\paragraph{Scope caveat:} Because our 79 prompts were deliberately designed to elicit product recommendations requiring web data, the classifier overwhelmingly routed them to search; no run ever crossed the \texttt{no\_search\_threshold} or the \texttt{complex\_search\_threshold}. The thresholds and cascade logic described above are extracted from the classifier's configuration payload, not from empirical observation of suppression events. The 52 no-search runs in our dataset resulted from external mechanisms (null classification or server-side overrides), not from the classifier's probability output exceeding the configured gate. A fuller discussion of this limitation and its implications is in Section~\ref{sec:lim-search-trigger}.
+\noindent That version was opt-in: the model would only search if it was confident enough. Our version inverts this, likely reflecting the trajectory toward treating web grounding as the norm (Section~\ref{sec:reasoning-models}).
+
+Across our 474 ChatGPT runs, the classifier triggered a web search 89\% of the time (91.1\% on Business, 86.9\% on Personal). In every classified run, the model was routed to simple search---the median search probability was 96.8\%.
+
+Most prompts (61 of 79) searched consistently across all six runs. A prompt like \emph{``Is there a transcription software available for a one-time payment instead of a subscription?''} is unambiguously commercial, and the classifier routes it to search without hesitation. Six prompts, however, never triggered search in either tier. These tend to be phrased as general how-to questions:
+
+\begin{quote}
+\emph{``How can I convert an audio file to text?''} (P013)\\
+\emph{``Can I get AI to transcribe a video?''} (P059)
+\end{quote}
+
+\noindent For these, the model answered entirely from training knowledge, and most runs produced no citations at all.
+
+The remaining 12 prompts showed mixed behavior. The clearest case is P016, \emph{``I need live transcribing while using online streaming or watching videos.''} On Business, all three runs searched and returned around 25 citations each. On Personal, none of the three searched, and none produced a single citation---same prompt, different tier, opposite outcome. Other mixed prompts typically searched in two out of three runs within the same tier, suggesting the classifier sometimes lands near its decision boundary.
+
+The 52 no-search runs were not caused by the classifier deciding against search. In 39 cases the classifier was skipped entirely (its payload arrived empty), and in 13 cases something else in the pipeline overrode it despite search probabilities as high as 99.7\%. When search did fire, it produced roughly 10 citations per run on average, compared to about 3 without. For context, \textcite{punturo2026citationsources} report approximately 4 citations per search-triggered turn across 730K general-purpose conversations; our higher rate reflects the volume of sources that product-recommendation queries demand. A fuller discussion of these edge cases is in Section~\ref{sec:lim-search-trigger}.
 
 \subsection{Freshness Steering}
 \label{sec:freshness-steering}
@@ -73,7 +59,7 @@ A prerequisite to any fan-out analysis is determining when ChatGPT triggers web 
 \subsection{GPT Multi-Turn Fan-Out: Empirical Findings}
 \label{sec:multi-turn}
 
-While the majority of GPT runs complete their retrieval in a single search turn, a small but revealing subset triggers additional rounds of search. The following analysis reconstructs the agentic re-search loop from \texttt{web.run} tool-call chains in raw network responses.
+Across all 711 runs, the three environments produced a total of 2{,}280 fan-out queries: 448 from Business, 424 from Personal, and 1{,}408 from Gemini. The majority of GPT runs complete their retrieval in a single search turn, but a small subset triggers additional rounds.
 
 \paragraph{Distribution (across 474 runs, including 435 with valid search data):}
 
@@ -104,7 +90,7 @@ We cannot determine \textit{why} the model chose to re-search; we can only obser
 
 \begin{table}[H]
 \centering
-\caption{Multi-turn query content for selected prompts} [Wait unlike I talked above this is actually quite similar to thinking searches gemini does]
+\caption{Multi-turn query content for selected prompts} 
 \label{tab:multi-turn-queries}
 \small
 \begin{tabular}{lrcp{3.8cm}p{4.5cm}}
