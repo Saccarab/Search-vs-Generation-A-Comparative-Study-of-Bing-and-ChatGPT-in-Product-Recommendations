@@ -220,22 +220,69 @@ alternating between Japanese (enterprise) and Spanish (personal).
 
 \subsubsection{GEO Takeaways on Localization}
  
-A website targeting only French speakers historically did not need to account for localization. But for AI visibility, even if this website is well optimized for SEO and ranks high in French search results for relevant keywords, it is still competing against the entire English web for half of its AI visibility. To unlock the other half, the publisher would have to localize their site and build an equally strong---or stronger---SEO strategy for English keywords, which will often be far more competitive.
+A website targeting only French speakers historically did not need to account for localization. 
+But for AI visibility, even if this website is well optimized for SEO and ranks high in French search results for relevant keywords, it is still competing against the entire English web for half of its AI visibility. To unlock the other half, the publisher would have to
+ localize their site and build an SEO strategy for English keywords, which will often be far more competitive and require more investment.
 
 The reverse also holds: Cases~2 and~3 show that English-language prompts can produce localized fan-outs. A website ranking well in English search results might still lose potential visitors in Germany because ChatGPT, based on the user's IP address or simply the nature of the conversation, decided to issue a French or German fan-out instead.
 
 These findings show that a true multi-lingual SEO approach is almost a prerequisite for GEO.
 
 %-----------------------------------------------------------------------
-\section{Page-Level Citation Distribution}
+\section{Citation Origins}
 \label{sec:position-bias}
+\label{sec:citation-overlap}
 
-Having established how models generate fan-out queries and trigger search, we now examine how citations are distributed across SERP pages. Understanding where citations land within the SERP provides the necessary context for interpreting what falls outside conventional search indices (Section~\ref{sec:citation-overlap}) and how rank position shapes citation likelihood (Section~\ref{sec:gemini-google-rank}).
+We have seen how fan-out queries are generated and how localization shapes their language. 
+The next question is: where do the resulting citations come from?
+We trace citations back to search engine results and examine how deep into the SERP models reach, and quantify how much falls outside conventional search entirely.
 
-\subsection{Page-Level Distribution (The ``Long Tail'' of Retrieval)}
+\subsection{Index Affinity: Which Search Engine?}
+\label{sec:global-overlap}
+
+For each LLM citation, we checked whether the exact URL appeared in our Bing or Google SERP scrape for the same fan-out queries that produced it. Tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, etc.) are stripped before matching (Section~\ref{sec:bing-scraping}). The most consequential finding is that the search index behind ChatGPT's citations depends on the subscription tier.
+
+\begin{table}[H]
+\centering
+\caption{Global citation overlap by provider and subscription tier}
+\label{tab:global-overlap}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+ & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Personal} & Gemini \\
+\midrule
+Total Cited Links & 1,637 & 1,839 & 1,651 \\
+Total Additional Links & 2,820 & 4,506 & --- \\
+Total Rejected Links & 631 & 496 & --- \\
+Bing Overlap (Cited) & \textbf{81.3\%} & 67.6\% & --- \\
+Bing Overlap (Additional) & \textbf{86.3\%} & 56.3\% & --- \\
+Google Overlap (Cited) & 27.8\% & \textbf{64.6\%} & \textbf{77.7\%} \\
+Google Overlap (Additional) & 20.7\% & 52.1\% & --- \\
+\midrule
+Total Index Coverage & 83.7\% & 80.6\% & 77.7\% \\
+Invisible (neither index) & 16.3\% & 19.4\% & 22.3\% \\
+\bottomrule
+\multicolumn{4}{l}{\scriptsize Coverage: Business/Personal = Bing $\cup$ Google; Gemini = Google only.}
+\end{tabular}
+\end{table}
+
+
+Across all three tiers, \textbf{78--84\%} of citations trace back to a conventional search index. 
+This confirms that traditional search ranking is the dominant factor for AI visibility. The remaining 16--22\% (the ``invisible'' share) is another element that makes GEO distinct from SEO,
+ and we examine it in Section~\ref{sec:invisible-links}.
+
+Within these overlap ranges, \emph{which} index matters depends on the tier. \textbf{GPT Business} retrieves exclusively from Bing \parencite{openai2024enterprise}: 81.3\% Bing overlap, only 27.8\% Google. That 27.8\% is our baseline---the natural overlap that occurs because Bing and Google index many of the same pages. \textbf{GPT Personal} jumps to \textbf{64.6\%} Google overlap, a 36.8\,pp increase over that baseline, while its Bing overlap drops to 67.6\%. This is consistent with Personal drawing on Google in addition to Bing, as OpenAI's documentation implies by referencing ``third-party search providers'' in the plural \parencite{openai2024search}. Gemini retrieves from Google at \textbf{77.7\%} overlap---lower than one might expect for Google's own model, with the remaining 22.3\% invisible from the SERP.
+
+For publishers, this means that optimizing only for Google is not 
+enough for ChatGPT visibility. Just as the cross-language fan-out findings (Section~\ref{sec:localization-bias}) 
+showed that an English website is a prerequisite even for non-English audiences, the index affinity 
+data shows that Bing rankings matter for ChatGPT---especially for Business-tier users, where 81.3\% of citations come from Bing and only 27.8\% from Google. A brand that ranks well on Google but has no Bing presence may be effectively invisible to the largest ChatGPT deployment tier.
+
+\subsection{Page Rank distribution of the Cited Links}
 \label{sec:page-dist}
 
-Our analysis of 237 runs per engine tier (79 queries $\times$ 3 runs) reveals that LLM citations are not concentrated on the first page of search results but are distributed deep into the SERP.
+Our analysis of 237 runs per engine tier (79 queries $\times$ 3 runs) 
+reveals that LLM citations are not concentrated on the first page of search results but are distributed deep into the SERP.
 
 \subsubsection{Bing Page Distribution (Deep Hunt)}
 \label{sec:bing-page-dist}
@@ -270,13 +317,7 @@ Page 16 & 103 & 204 \\
 \end{tabular}
 \end{table}
 
-\paragraph{Observations on the Bing page distribution:}
-\begin{itemize}
-    \item \textbf{Business vs Personal Page 1 gap}: Business shows nearly 3$\times$ the Page 1 matches (1,468 vs 521), consistent with Business's higher Bing affinity (81.3\% overlap vs 67.6\%; see Section~\ref{sec:global-overlap}). Personal's lower Page 1 count aligns with its multi-provider retrieval strategy, as many of its citations match Google rather than Bing. 
-    \item \textbf{The ``Page 2 Dip''}: Page 2 shows a conspicuous drop compared to both Page 1 and Pages 3--5. As discussed in Section~2.2.1, this is likely an artifact of Bing's UI pagination instability (truncated Page 1 results not shifting cleanly to Page 2) rather than a model preference.
-    \item \textbf{Smooth decay after Page 3}: Pages 3--16 show a gradual, expected decay in match counts, consistent with the long-tail pattern. The fact that we still see hundreds of matches on Pages 4--10 demonstrates that many GPT citations fall well beyond what human searchers would see.
-    \item \textbf{The ``Page 1'' Elasticity caveat}: We avoid defining Page 1 as a fixed ``Rank 1--10'' range. In Bing's consumer UI, the first page length varies based on ads, rich snippets, and vertical blocks (see Section~2.2.1).
-\end{itemize}
+Business shows nearly 3$\times$ the Page~1 matches (1{,}468 vs 521), consistent with its higher Bing affinity. But the key observation is the long tail: hundreds of matches persist on Pages~4--10, and the decay curve has not reached zero by Page~16. Many GPT citations fall well beyond what human searchers would ever see. The Page~2 dip is a scraping artifact (Bing's UI pagination instability; see Section~2.2.1), not a model preference.
 
 \subsubsection{Google Page Distribution}
 \label{sec:google-page-dist}
@@ -313,112 +354,8 @@ Rank & Bus. & Pers. & Rank & Bus. & Pers. \\
 
 Personal shows \textasciitilde2.7$\times$ the Google matches of Business across all ranks, consistent with its multi-provider retrieval strategy (Section~\ref{sec:global-overlap}). The Google distribution is limited to $\sim$29 ranks due to SerpApi's shallower scrape depth ($\sim$25 results vs Bing's 200). Non-organic SERP features account for minimal matches (23/44 PAA matches for Business/Personal; $\leq$3 each for video and discussion).
 
-%-----------------------------------------------------------------------
-\section{Citation Overlap \& Position Bias}
-\label{sec:citation-overlap}
-
-Section~\ref{sec:position-bias} covered citations that \emph{matched} a SERP result. This section addresses two complementary questions: what fraction of citations exist in conventional search indices in the first place, and how does rank position within those indices shape citation likelihood?
-
-\subsection{Global Overlap \& Provider Discrepancy}
-\label{sec:global-overlap}
-
-We analyzed the overlap between LLM citations and the underlying search index (Bing/Google) across 237 runs. This analysis reveals a significant discrepancy in index affinity between subscription tiers, one of the study's most consequential findings.
-
-\begin{table}[H]
-\centering
-\caption{Global citation overlap by provider and subscription tier}
-\label{tab:global-overlap}
-\small
-\begin{tabular}{lrrr}
-\toprule
- & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Personal} & Gemini \\
-\midrule
-Total Cited Links & 1,637 & 1,839 & 1,651 \\
-Total Additional Links & 2,820 & 4,506 & --- \\
-Total Rejected Links & 631 & 496 & --- \\
-Bing Overlap (Cited) & \textbf{81.3\%} & 67.6\% & --- \\
-Bing Overlap (Additional) & \textbf{86.3\%} & 56.3\% & --- \\
-Google Overlap (Cited) & 27.8\% & \textbf{64.6\%} & \textbf{77.7\%} \\
-Google Overlap (Additional) & 20.7\% & 52.1\% & --- \\
-\midrule
-Total Index Coverage & 83.7\% & 80.6\% & 77.7\% \\
-Invisible (neither index) & 16.3\% & 19.4\% & 22.3\% \\
-\bottomrule
-\multicolumn{4}{l}{\scriptsize Coverage: Business/Personal = Bing $\cup$ Google; Gemini = Google only.}
-\end{tabular}
-\end{table}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    ybar,
-    bar width=10pt,
-    width=0.85\textwidth,
-    height=7cm,
-    ylabel={\%},
-    symbolic x coords={GPT Business, GPT Personal, Gemini},
-    xtick=data,
-    ymin=0, ymax=100,
-    ymajorgrids=true,
-    legend style={at={(0.5,1.03)}, anchor=south, legend columns=3},
-    enlarge x limits=0.25,
-    nodes near coords,
-    nodes near coords align={vertical},
-    every node near coord/.append style={font=\scriptsize},
-]
-\addplot[fill=entcolor, draw=entcolor!80!black] coordinates {(GPT Business,81.3) (GPT Personal,67.6) (Gemini,0)};
-\addplot[fill=perscolor, draw=perscolor!80!black] coordinates {(GPT Business,27.8) (GPT Personal,64.6) (Gemini,77.7)};
-\addplot[fill=gemcolor, draw=gemcolor!80!black] coordinates {(GPT Business,16.3) (GPT Personal,19.4) (Gemini,22.3)};
-\legend{Bing Overlap (Cited), Google Overlap (Cited), Invisible}
-\end{axis}
-\end{tikzpicture}
-\caption{Global citation overlap by provider. GPT Business is Bing-dominant (81.3\%), GPT Personal shows balanced multi-provider retrieval, and Gemini relies exclusively on Google (77.7\%). The ``invisible'' share (citations not found in either index) ranges from 16--22\%. Gemini's Bing bar is zero because it does not use the Bing index.}
-\label{fig:global-overlap}
-\end{figure}
-
-\subsection{Gemini: Google Position Bias}
+\subsection{Rank Concentration: LLMs vs.\ Human Click-Through}
 \label{sec:gemini-google-rank}
-
-Since Gemini retrieves exclusively from a single index (Google at 77.7\%), we can isolate rank-level position bias without the multi-provider confound that complicates GPT analysis. We match Gemini citations against SerpApi organic results for the same grounding-support queries.
-
-\begin{table}[H]
-\centering
-\caption{Gemini citation distribution by Google rank (Top~10)}
-\label{tab:gemini-google-rank}
-\begin{tabular}{lrr}
-\toprule
-Rank & Citations & Cited \% \\
-\midrule
-\textbf{Rank 1} & \textbf{181} & \textbf{15.7\%} \\
-Rank 2 & 105 & 9.1\% \\
-Rank 3 & 93 & 8.1\% \\
-Rank 4 & 92 & 8.0\% \\
-Rank 5 & 70 & 6.1\% \\
-Rank 6 & 62 & 5.4\% \\
-Rank 7 & 72 & 6.2\% \\
-Rank 8 & 51 & 4.4\% \\
-Rank 9 & 39 & 3.4\% \\
-Rank 10 & 21 & 1.8\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{itemize}
-    \item \textbf{Rank~1 dominance}: Gemini shows a clear concentration at the first organic result (15.7\%), nearly double the second rank (9.1\%).
-    \item \textbf{Selection decay}: Citations decay gradually through Rank~9, then drop sharply at Rank~10 (1.8\%). Ranks 11--15 (not shown) stabilize at \textasciitilde2\%, indicating that results beyond Google's first page are still cited but at a much lower rate.
-\end{itemize}
-
-\subsubsection{Key Observations on Provider Strategy}
-\label{sec:provider-strategy}
-
-\begin{itemize}
-    \item \textbf{GPT Business: High Bing Affinity.} Business citations overlap with the Bing index at \textbf{81.3\%}, the highest single-index overlap in the study. Business's Google overlap is only \textbf{27.8\%}, which we treat as a \textbf{control baseline}: it approximates the natural domain overlap between the two indices (popular URLs that appear in both Bing and Google). Any Google overlap substantially above this \textasciitilde28\% baseline in other tiers is consistent with Google-sourced retrieval. OpenAI's documentation for organization-managed tiers explicitly names Bing as the search provider \parencite{openai2024enterprise}, and our data aligns with that statement.
-    \item \textbf{GPT Personal: High Google Affinity.} Personal citations overlap with Google at \textbf{64.6\%}, a \textbf{36.8 percentage-point increase} over the Business control baseline (27.8\%). Simultaneously, Personal's Bing overlap drops to 67.6\% (from Business's 81.3\%). The combined Bing+Google coverage reaches \textbf{80.6\%}, the highest total coverage of any tier. OpenAI's general documentation describes ChatGPT search as leveraging ``third-party search providers'' in the plural \parencite{openai2024search}; the magnitude of the Google overlap shift is consistent with Personal-tier retrieval drawing on the Google index in addition to Bing.
-    \item \textbf{Implication: Index-Dependent Visibility.} The 36.8\,pp Google overlap gap means that a brand ranking well in Google but poorly in Bing may be visible to Personal ChatGPT users but largely invisible to Business users, and vice versa. This is not a minor calibration difference; it represents a fundamentally different retrieval surface depending on the ChatGPT plan.
-\end{itemize}
-
-\subsection{Cross-System Rank Concentration (Page 1)}
 \label{sec:cross-system-rank}
 
 To compare how much each system favors higher-ranked results, we restrict to \textbf{Page 1 results} and compute each rank's share of all Page-1 matches. For GPT Personal, we take the \textbf{best (highest) rank} each citation achieves across both indices to avoid double-counting. Bing data excludes runs affected by the scraper artifact (Section~\ref{sec:bing-page-dist}); ranks 6--10 use only runs where Bing Page~1 had 8+ results.
@@ -427,7 +364,7 @@ Table~\ref{tab:cross-rank-ctr} places the cross-system rank concentration alongs
 
 \begin{table}[H]
 \centering
-\caption{Page-1 rank concentration: LLM citation share vs.\ human CTR. LLM share = matches at rank~$N$ / total Page-1 matches. Human CTR from \textcite{firstpagesage2026ctr} (Google organic, 2026). Totals: GPT Business = 797; GPT Personal = 921; Gemini = 786.}
+\caption{Page-1 rank distribution: LLM citation share vs.\ human CTR. LLM columns show matches at rank~$N$ as a share of Page-1 matches only (not all citations); Human CTR from \textcite{firstpagesage2026ctr} (Google organic, 2026) uses all clicks as the denominator. The columns are therefore not directly comparable in magnitude---see text for discussion.}
 \label{tab:cross-rank-ctr}
 \label{tab:cross-rank-concentration}
 \label{tab:ctr-comparison}
@@ -456,7 +393,7 @@ Top-3 & 68.7\% & 49.8\% & 44.6\% & 48.2\% \\
     \item \textbf{Gemini has the steepest rank-1 concentration}: 23.0\% at rank 1, dropping immediately to 13.4\% at rank 2, a 10-point cliff.
     \item \textbf{GPT Business has a ``top-2'' effect}: Ranks 1--2 together account for \textbf{36.1\%} of Page-1 matches, with rank 2 (18.7\%) slightly above rank 1 (17.4\%).
     \item \textbf{GPT Personal is the flattest profile}: 18.1\% $\rightarrow$ 9.4\% across ranks 1--5. Drawing from two indices creates more rank diversity.
-    \item \textbf{LLMs ``look further down'' than humans}: Human CTR concentrates 68.7\% in the top~3; LLMs spread 45--50\% across the same ranks. The shape is the same monotonic decay, but flatter; the optimization target has not changed, only the consumer of the ranking.
+    \item \textbf{LLMs ``look further down'' than humans}: Within Page~1, the shape is similar---monotonic decay from rank~1---but flatter for LLMs (top-3 = 45--50\% vs.\ 68.7\% for humans). An important caveat: the denominators differ. Human CTR sums to $\sim$94\% across ranks 1--10 because humans rarely go past Page~1---Page~1 \emph{is} effectively the entire search experience. The LLM columns sum to 100\% only because they are restricted to Page-1 matches by definition. As Section~\ref{sec:page-dist} showed, a large share of LLM citations come from Pages~2--16, so the true fraction of \emph{all} LLM citations landing on Page~1 is far lower than 100\%. The table compares the shape of rank preference within Page~1, not the overall reliance on it.
 \end{itemize}
 
 \subsection{Per-Query Citation Distribution}
@@ -493,30 +430,13 @@ Not all runs produce queries at every index; Q5+ counts are lower partly because
 \section{Invisible Links \& Citation Characteristics}
 \label{sec:invisible-links-section}
 
-\subsection{Invisible Links --- The Visibility Gap}
+\subsection{The Visibility Gap: Invisible Links}
 \label{sec:invisible-links}
 
-We use \textbf{Visibility Gap} as the empirical gap between what is \textbf{cited} and what is visible in conventional SERP UX. The methodological pivot (Top-30 $\rightarrow$ Deep Hunt Rank-200) is defined once in Section~2.2; here we report the \textbf{residual unmatched} set and what it looks like. This analysis focuses on ChatGPT, where the invisible-link question is most consequential: ChatGPT dominates LLM search traffic (Section~\ref{sec:commercial-catalyst}), and the relationship between its citations and the Bing index is not self-evident. Gemini grounds on Google's own index, making an invisible-link analysis less revealing; the interesting question for Gemini is not \emph{whether} it draws from Google, but \emph{how} it selects within that index, which we address in the selection drift and fidelity analyses.
+The overlap tables above show that \textbf{16--22\%} of LLM citations appear in neither the Bing nor the Google SERPs we collected. These ``invisible'' links represent sources that enter the model's grounding pool through channels opaque to conventional search---and understanding what they are reveals an alternative path to AI visibility. This analysis focuses on ChatGPT, where the invisible-link question is most consequential; Gemini grounds on Google's own index, so the interesting question there is not \emph{whether} it draws from Google but \emph{how} it selects (addressed in the selection drift and fidelity analyses).
 
-\begin{itemize}
-    \item \textbf{What is being compared}: \textbf{cited URLs} vs \textbf{presence/absence} in the \textit{per-run} SERP snapshot (and/or Bing Deep Hunt $\leq$200).
-    \item \textbf{Output}: \textbf{matched} vs \textbf{invisible} (unmatched).
-    \item \textbf{Invisible rate (headline)}: use the \textbf{``Invisible (Missing)''} row in Section~\ref{sec:global-overlap} as the canonical rate.
-    \item \textbf{Long tail context} (how deep ``matched'' links are): see Section~\ref{sec:page-dist} (Bing Pages 1--16).
-\end{itemize}
-
-\subsubsection{Scraping Limitations that Inflate the Invisible Count}
 \label{sec:invisible-conservative}
-
-Our reported invisible rates (16.3\% Business, 19.4\% Personal) are \textbf{upper bounds} on truly index-absent citations. Two systematic factors inflate the invisible count:
-
-\begin{enumerate}
-    \item \textbf{The Rank 200 ceiling}: Our Bing scrape stops at Rank 200, but the page-level match histogram (Section~\ref{sec:page-dist}) shows no convergence; matches are still accumulating at Pages 15--16 with a smooth decay curve that does not reach zero. Scraping to Rank 300 or 400 would almost certainly recover additional matches, shrinking the invisible set. The ``invisible'' label for these URLs does not mean they are absent from Bing's index; it means only that they fell beyond our scrape depth.
-
-    \item \textbf{Bing Page 1 truncation}: As documented in Section~2.2.1, nearly half of our Bing scrapes had 5 or fewer organic results on Page~1 due to UI-level pagination instability. Results that would normally rank at positions 3--7 can be dropped entirely from a truncated scrape; they do not simply shift to Page~2. This is especially consequential because Page~1 is where we observe the highest match rates (Section~\ref{sec:page-dist}), so every result missed due to Page~1 truncation is statistically more likely to be a citation match than a result missed deeper in the index. These ``missing middle'' results are almost certainly available to ChatGPT through its backend API integration with Bing, which likely returns a clean, stable ranked list without the consumer UI's truncation artifacts.
-\end{enumerate}
-
-Both factors disproportionately affect \textbf{niche SaaS and product domains}, the very category our prompt set targets. These domains are likely present in the Bing index but fell beyond our scrape depth or were lost to Page~1 truncation. Using our Content DNA page-type labels (Section~\ref{sec:content-dna}), we identify and \textbf{exclude} URLs classified as \texttt{product\_page} from the invisible domain tables below. This filtering is modest, removing 31 entries (4.0\%) for Business and 113 entries (6.7\%) for Personal, so the resulting tables are not substantially altered, but the excluded entries are precisely the category most vulnerable to the two scraping artifacts above.
+These rates are \textbf{upper bounds}. Our Bing scrape stops at Rank~200, but the page-level histogram (Section~\ref{sec:page-dist}) shows matches still accumulating at Pages~15--16 with no convergence. Additionally, nearly half of our Bing Page~1 scrapes were truncated due to UI pagination instability (Section~2.2.1), missing results that ChatGPT's backend API integration almost certainly receives. Both artifacts disproportionately affect niche SaaS domains---the very category our prompts target. We exclude URLs classified as \texttt{product\_page} (31 entries / 4.0\% for Business, 113 / 6.7\% for Personal) from the invisible domain tables below to account for this.
 
 \subsection{Rejected Links --- The Search Pool Remainder}
 \label{sec:rejected}
