@@ -438,7 +438,7 @@ Top-3 & 68.7\% & 62.6\% & 57.8\% & 47.5\% \\
 \end{tabular}
 \end{table}
 
-All three LLMs show a top-rank preference that parallels human click-through behavior, but the curve is flatter: top-3 shares range from 47.5\% (Gemini) to 62.6\% (GPT Business) versus 68.7\% for human clicks. GPT Business shows the strongest rank-1 signal (24.9\%), while Gemini is the flattest---its citations spread more evenly across ranks 1--7.
+All three LLMs show a top-rank preference with a similar decay shape to human click-through behavior, but flatter: top-3 shares range from 47.5\% (Gemini) to 62.6\% (GPT Business) versus 68.7\% for human clicks. GPT Business shows the strongest rank-1 signal (24.9\%), while Gemini is the flattest---its citations spread more evenly across ranks 1--7. This comparison is restricted to Page~1 matches only. Unlike human search, where Page~1 captures the vast majority of clicks, LLM citations match well beyond Page~1 (Figure~\ref{fig:overlap-dist}), so the concentration shown here reflects rank preference within Page~1, not overall reliance on it.
 
 \begin{table}[H]
 \centering
