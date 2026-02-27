@@ -304,13 +304,35 @@ The second scrape of the same query (Table~\ref{tab:bing-truncated}) we ran righ
  but the remaining 5 results (ranks 3--7, bolded in Table~\ref{tab:bing-full}) did not shift to Page~2 as we have expected.
  Page~2 showed a similar mix of relevant and off-topic results, including \texttt{a2e.ai} (uncensored AI videos) and \texttt{dreamfaceapp.com} (image generation).
 
+This compression was not limited to a few edge cases. Table~\ref{tab:bing-page1-size} shows the Page~1 organic result count across our full dataset: the median was only 3 results, with the distribution nearly identical across both tiers.
+
+\begin{table}[H]
+\centering
+\caption{Bing Page~1 organic result count across scrapes.}
+\label{tab:bing-page1-size}
+\small
+\begin{tabular}{lrr}
+\toprule
+Page~1 Size & Business & Personal \\
+\midrule
+2 results & 172 (38\%) & 195 (46\%) \\
+3 results & 55 (12\%) & 36 (8\%) \\
+4--6 results & 71 (16\%) & 65 (15\%) \\
+7--10 results & 93 (21\%) & 81 (19\%) \\
+\midrule
+Median & 3 & 3 \\
+Mean & 4.3 & 4.1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 We observed four patterns from this and subsequent scrapes:
 
 \begin{enumerate}
-    \item \textbf{Page~1 results can be lost entirely.} Bing's Page~2 appears to start from a fixed offset regardless of how many organic results Page~1 actually displayed. When Page~1 is compressed by ads or carousels, the displaced results do not shift to Page~2. This is significant because Page~1 is where we expect the highest citation overlap with ChatGPT.
+    \item \textbf{Page~1 results can be lost entirely.} Bing's Page~2 appears to start from a fixed offset regardless of how many organic results Page~1 actually displayed. When Page~1 is compressed by ads or carousels---which happened in the majority of our scrapes (Table~\ref{tab:bing-page1-size})---the displaced results do not shift to Page~2. This is significant because Page~1 is where we expect the highest citation overlap with ChatGPT.
     \item \textbf{Page~2 is disproportionately noisy.} Off-topic and irrelevant results concentrate on Page~2 far more than its position would suggest. Our overlap data confirms this: Page~2 citation-match rates were comparable to Page~8- (Section~\ref{sec:page-dist}).
     \item \textbf{Pages~3+ are more predictable.} From Page~3 onward, results followed a more consistent pattern, though irrelevant results still appeared occasionally. Our citation-overlap data corroborates this: after Page~3 we see a gradual decay in relevancy. (Section~\ref{sec:page-dist}).
-    \item \textbf{Matches continued deep into the results.} We kept finding citation matches well past Rank~150. 
+    \item \textbf{Matches continued deep into the results.} We kept finding citation matches well past Rank~150.
     If Bing's backend index is properly ordered---which it likely is through
      its internal API---these results could fit in a tightly ranked Top~30 instead of being scattered across 200.
 \end{enumerate}

@@ -282,101 +282,139 @@ showed that an English website is a prerequisite even for non-English audiences,
 data shows that Bing rankings matter for ChatGPT especially for Business-tier users
 A brand that ranks well on Google but has no Bing presence may be effectively invisible to the largest ChatGPT deployment tier.
 
-\subsection{ChatGPT and Bing Overlap}
+\subsection{Overlap Distribution by SERP Position}
 \label{sec:page-dist}
 \label{sec:bing-page-dist}
-
-Match counts in this section combine both cited and additional links.
-
-\begin{table}[H]
-\centering
-\caption{Bing page-level citation match distribution}
-\label{tab:bing-page-dist}
-\begin{tabular}{lrr}
-\toprule
-Page Index & GPT Business Matches & GPT Personal Matches \\
-\midrule
-\textbf{Page 1} & \textbf{1,468} & \textbf{521} \\
-Page 2 & 333 & 345 \\
-Page 3 & 656 & 663 \\
-Page 4 & 692 & 602 \\
-Page 5 & 641 & 667 \\
-Page 6 & 560 & 579 \\
-Page 7 & 453 & 590 \\
-Page 8 & 437 & 480 \\
-Page 9 & 312 & 433 \\
-Page 10 & 271 & 426 \\
-Page 11 & 248 & 391 \\
-Page 12 & 202 & 327 \\
-Page 13 & 191 & 293 \\
-Page 14 & 166 & 286 \\
-Page 15 & 140 & 264 \\
-Page 16 & 103 & 204 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The steep drop on Page~2 is consistent with the Bing pagination instability we documented in Section~\ref{sec:bing-pagination-instability}, where Page~1 of the consumer SERP often cuts short. Regardless, the concentration of matches on Page~1 shows how significant a role page rank plays in getting cited by ChatGPT.
-
-\subsection{ChatGPT and Google Overlap}
 \label{sec:google-page-dist}
 
-\begin{table}[H]
-\centering
-\caption{GPT citation matches by Google SERP rank}
-\label{tab:gpt-google-dist}
-\begin{tabular}{lrr}
-\toprule
-Rank & GPT Business & GPT Personal \\
-\midrule
-\textbf{1} & \textbf{88} & \textbf{168} \\
-2 & 59 & 128 \\
-3 & 34 & 145 \\
-4 & 37 & 107 \\
-5 & 41 & 112 \\
-6 & 39 & 113 \\
-7 & 33 & 103 \\
-8 & 26 & 92 \\
-9 & 21 & 48 \\
-10 & 14 & 38 \\
-\addlinespace
-11 & 17 & 58 \\
-12 & 18 & 57 \\
-13 & 14 & 65 \\
-14 & 18 & 41 \\
-15 & 16 & 48 \\
-16 & 18 & 50 \\
-17 & 9 & 38 \\
-18 & 9 & 46 \\
-19 & 17 & 23 \\
-20 & 8 & 29 \\
-\addlinespace
-21 & 11 & 30 \\
-22 & 7 & 21 \\
-23 & 4 & 39 \\
-24 & 7 & 27 \\
-25 & 6 & 18 \\
-26 & 6 & 14 \\
-27 & 8 & 22 \\
-28 & 3 & 16 \\
-29 & --- & 6 \\
-\bottomrule
-\end{tabular}
-\end{table}
+Match counts below combine cited links (URLs that appear in the final response) and additional links (URLs that ChatGPT retrieved but did not surface to the user; see Section~\ref{sec:chatgpt-anatomy}).
 
-Personal shows roughly 2.7$\times$ the Google matches of Business across all ranks, again reflecting its multi-provider retrieval. Note that this distribution only covers $\sim$29 ranks because SerpApi returns fewer results than our Bing scrape.
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=8pt,
+    width=\textwidth,
+    height=6cm,
+    ylabel={Matches},
+    xlabel={Bing Page},
+    ymin=0,
+    ymax=1600,
+    xtick={1,...,16},
+    xticklabel style={font=\scriptsize},
+    yticklabel style={font=\scriptsize},
+    ylabel style={font=\small},
+    xlabel style={font=\small},
+    title style={font=\small\bfseries},
+    title={GPT Business -- Bing},
+    fill=entcolor,
+    draw=entcolor!80!black,
+]
+\addplot coordinates {
+    (1,1468) (2,333) (3,656) (4,692) (5,641)
+    (6,560) (7,453) (8,437) (9,312) (10,271)
+    (11,248) (12,202) (13,191) (14,166) (15,140) (16,103)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Business on Bing: clear Page~1 spike.}
+\label{fig:bing-business-dist}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=8pt,
+    width=\textwidth,
+    height=6cm,
+    ylabel={Matches},
+    xlabel={Bing Page},
+    ymin=0,
+    ymax=700,
+    xtick={1,...,16},
+    xticklabel style={font=\scriptsize},
+    yticklabel style={font=\scriptsize},
+    ylabel style={font=\small},
+    xlabel style={font=\small},
+    title style={font=\small\bfseries},
+    title={GPT Personal -- Bing},
+    fill=perscolor,
+    draw=perscolor!80!black,
+]
+\addplot coordinates {
+    (1,521) (2,345) (3,663) (4,602) (5,667)
+    (6,579) (7,590) (8,480) (9,433) (10,426)
+    (11,391) (12,327) (13,293) (14,286) (15,264) (16,204)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Personal on Bing: flatter profile.}
+\label{fig:bing-personal-dist}
+\end{subfigure}
+
+\vspace{1em}
+
+\begin{subfigure}[t]{0.48\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=5pt,
+    width=\textwidth,
+    height=6cm,
+    ylabel={Matches},
+    xlabel={Google Rank},
+    ymin=0,
+    ymax=180,
+    xtick={1,3,5,7,9,11,13,15,17,19,21,23,25,27,29},
+    xticklabel style={font=\scriptsize},
+    yticklabel style={font=\scriptsize},
+    ylabel style={font=\small},
+    xlabel style={font=\small},
+    title style={font=\small\bfseries},
+    title={GPT Personal -- Google},
+    fill=perscolor,
+    draw=perscolor!80!black,
+]
+\addplot coordinates {
+    (1,168) (2,128) (3,145) (4,107) (5,112)
+    (6,113) (7,103) (8,92) (9,48) (10,38)
+    (11,58) (12,57) (13,65) (14,41) (15,48)
+    (16,50) (17,38) (18,46) (19,23) (20,29)
+    (21,30) (22,21) (23,39) (24,27) (25,18)
+    (26,14) (27,22) (28,16) (29,6)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Personal on Google: top-rank concentration with Page~2 bump.}
+\label{fig:google-personal-dist}
+\end{subfigure}
+\caption{Citation match distribution by SERP position. Each chart uses its own Y-axis scale.}
+\label{fig:overlap-dist}
+\label{fig:bing-page-dist}
+\label{fig:google-rank-dist}
+\end{figure}
+
+The Page~2 dip on both Bing charts is consistent with the pagination instability documented in Section~\ref{sec:bing-pagination-instability}. For Business, the Page~1 concentration is striking: even though the median Page~1 contained only 3 organic results per query (Section~\ref{sec:bing-pagination-instability}), it still accounts for the largest share of citation matches by a wide margin. Top-ranked Bing results drive citations. Personal's flatter Bing profile is harder to interpret because our scrape used the consumer UI, not the Bing Search API that ChatGPT actually queries. With API access, Personal's Bing distribution would likely show more top-rank concentration as well---just at lower volume than Business, since Personal splits its retrieval across engines.
+
+On Google, Personal's top ranks (1--8) show the highest concentration. There is a notable dip at ranks 9--10 (48 and 38 matches), followed by a bump at ranks 11--13 (58, 57, 65)---the top of what would be Page~2 in a standard 10-result SERP. This mirrors a well-documented pattern in human search behavior: the bottom of Page~1 receives less attention than the top of Page~2, because users who navigate to a second page are more intent-driven and more likely to engage with the first results they see there. The fact that LLM citation patterns reflect the same shape suggests that SERP rank influences AI citations in ways that parallel human click-through behavior.
 
 \subsection{Rank Concentration: LLMs vs.\ Human Click-Through}
 \label{sec:gemini-google-rank}
 \label{sec:cross-system-rank}
 
-To compare how much each system favors higher-ranked results, we restrict to \textbf{Page 1 results} and compute each rank's share of all Page-1 matches. For GPT Personal, we take the \textbf{best (highest) rank} each citation achieves across both indices to avoid double-counting. Bing data excludes runs affected by the scraper artifact (Section~\ref{sec:bing-page-dist}); ranks 6--10 use only runs where Bing Page~1 had 8+ results.
+To quantify this parallel, we restrict to Page~1 results and compute each rank's share of all Page-1 matches. For GPT Personal, we take the best (highest) rank each citation achieves across both indices to avoid double-counting. Bing data excludes runs affected by the scraper artifact (Section~\ref{sec:bing-page-dist}); ranks 6--10 use only runs where Bing Page~1 had 8+ results.
 
-Table~\ref{tab:cross-rank-ctr} places the cross-system rank concentration alongside Google organic click-through rates reported by First Page Sage \parencite{firstpagesage2026ctr} for comparison.
+Table~\ref{tab:cross-rank-ctr} places the cross-system rank concentration alongside Google organic click-through rates reported by First Page Sage \parencite{firstpagesage2026ctr}.
 
 \begin{table}[H]
 \centering
-\caption{Page-1 rank distribution: LLM citation share vs.\ human CTR. LLM columns show matches at rank~$N$ as a share of Page-1 matches only (not all citations); Human CTR from \textcite{firstpagesage2026ctr} (Google organic, 2026) uses all clicks as the denominator. The columns are therefore not directly comparable in magnitude---see text for discussion.}
+\caption{Page-1 rank concentration: LLM citation share vs.\ human CTR \parencite{firstpagesage2026ctr}.}
 \label{tab:cross-rank-ctr}
 \label{tab:cross-rank-concentration}
 \label{tab:ctr-comparison}
@@ -403,6 +441,23 @@ Top-3 & 68.7\% & 49.8\% & 44.6\% & 48.2\% \\
 Gemini shows the steepest rank-1 concentration at 23.0\%, dropping to 13.4\% at rank~2. GPT Business spreads its weight across ranks 1--2 (17.4\% and 18.7\% respectively, 36.1\% combined), while GPT Personal is the flattest, ranging from 18.1\% at rank~1 to 9.4\% at rank~5---likely because drawing from two indices creates more rank diversity.
 
 All three LLM profiles are flatter than human click-through behavior: the top-3 ranks account for 45--50\% of Page-1 matches for LLMs versus 68.7\% of clicks for humans. An important caveat: the denominators differ. Human CTR sums to $\sim$94\% across ranks 1--10 because humans rarely go past Page~1. The LLM columns sum to 100\% only because they are restricted to Page-1 matches by definition; as Table~\ref{tab:bing-page-dist} showed, many citations match beyond Page~1. The comparison therefore shows the shape of rank preference within Page~1, not overall reliance on it.
+
+\begin{table}[H]
+\centering
+\caption{Non-organic Google SERP feature matches}
+\label{tab:non-organic-matches}
+\begin{tabular}{lrr}
+\toprule
+Feature & GPT Business & GPT Personal \\
+\midrule
+People Also Ask (PAA) & 23 & 44 \\
+Video & 3 & 3 \\
+Discussion & --- & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Non-organic matches are minimal overall, confirming that ChatGPT citations align almost entirely with organic results. That said, Personal shows roughly double the PAA matches of Business (44 vs 23), consistent with its higher Google affinity---these features are Google-specific, so higher match counts are another indicator that the Personal tier retrieves from Google.
 
 \subsection{Per-Query Citation Distribution}
 \label{sec:per-query-citation}
