@@ -408,9 +408,9 @@ On Google, Personal's top ranks (1--8) show the highest concentration. There is 
 \label{sec:gemini-google-rank}
 \label{sec:cross-system-rank}
 
-To quantify this parallel, we restrict to Page~1 results and compute each rank's share of all Page-1 matches. For GPT Personal, we take the best (highest) rank each citation achieves across both indices to avoid double-counting. Bing data excludes runs affected by the scraper artifact (Section~\ref{sec:bing-page-dist}); ranks 6--10 use only runs where Bing Page~1 had 8+ results.
+For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Personal). Each citation is counted once at its best rank. This mirrors how human CTR is measured: of all selections, what share went to each rank? Bing ranks 6--10 use only runs where Page~1 had 8+ results, since most scrapes returned fewer (Table~\ref{tab:bing-page1-size}).
 
-Table~\ref{tab:cross-rank-ctr} places the cross-system rank concentration alongside Google organic click-through rates reported by First Page Sage \parencite{firstpagesage2026ctr}.
+Table~\ref{tab:cross-rank-ctr} places this LLM rank concentration alongside Google organic click-through rates reported by First Page Sage \parencite{firstpagesage2026ctr}.
 
 \begin{table}[H]
 \centering
@@ -422,23 +422,23 @@ Table~\ref{tab:cross-rank-ctr} places the cross-system rank concentration alongs
 \toprule
 Rank & Human CTR & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Personal} & Gemini \\
 \midrule
-\textbf{1} & \textbf{39.8\%} & 17.4\% & 18.1\% & \textbf{23.0\%} \\
-2 & 18.7\% & \textbf{18.7\%} & 14.3\% & 13.4\% \\
-3 & 10.2\% & 13.7\% & 12.2\% & 11.8\% \\
-4 & 7.2\% & 10.5\% & 11.6\% & 11.7\% \\
-5 & 5.1\% & 10.2\% & 9.4\% & 8.9\% \\
-6 & 4.4\% & 8.3\% & 10.5\% & 7.9\% \\
-7 & 3.0\% & 7.5\% & 8.3\% & 9.2\% \\
-8 & 2.1\% & 5.9\% & 7.2\% & 6.5\% \\
-9 & 1.9\% & 5.0\% & 5.1\% & 5.0\% \\
-10 & 1.6\% & 2.8\% & 3.3\% & 2.7\% \\
+\textbf{1} & \textbf{39.8\%} & \textbf{24.9\%} & \textbf{26.7\%} & 20.6\% \\
+2 & 18.7\% & 24.0\% & 17.5\% & 13.9\% \\
+3 & 10.2\% & 13.7\% & 13.5\% & 12.9\% \\
+4 & 7.2\% & 9.2\% & 11.4\% & 12.3\% \\
+5 & 5.1\% & 7.7\% & 9.1\% & 10.9\% \\
+6 & 4.4\% & 6.0\% & 7.2\% & 8.0\% \\
+7 & 3.0\% & 5.3\% & 5.8\% & 8.7\% \\
+8 & 2.1\% & 4.0\% & 4.4\% & 6.0\% \\
+9 & 1.9\% & 3.3\% & 2.6\% & 4.3\% \\
+10 & 1.6\% & 1.8\% & 1.8\% & 2.3\% \\
 \midrule
-Top-3 & 68.7\% & 49.8\% & 44.6\% & 48.2\% \\
+Top-3 & 68.7\% & 62.6\% & 57.8\% & 47.5\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-All three LLMs show a top-rank preference that parallels human click-through behavior, but the curve is flatter: the top-3 ranks account for 45--50\% of Page-1 matches versus 68.7\% of human clicks. Gemini shows the steepest rank-1 concentration (23.0\%), while GPT Personal is the flattest---likely because drawing from two indices creates more rank diversity.
+All three LLMs show a top-rank preference that parallels human click-through behavior, but the curve is flatter: top-3 shares range from 47.5\% (Gemini) to 62.6\% (GPT Business) versus 68.7\% for human clicks. GPT Business shows the strongest rank-1 signal (24.9\%), while Gemini is the flattest---its citations spread more evenly across ranks 1--7.
 
 \begin{table}[H]
 \centering
