@@ -274,7 +274,22 @@ GPT Business states that it retrieves exclusively through its official partner, 
 
 GPT Personal jumps to 64.6\% Google overlap, a 36.8\,pp
 increase over that baseline, while its Bing overlap drops to 67.6\%.
-This suggests that the Personal tier retrieves from Google alongside Bing, which aligns with OpenAI's documentation referring to ``third-party search providers'' in the plural \parencite{openai2024search}.
+This suggests that the Personal tier retrieves from Google alongside Bing, which aligns with OpenAI's documentation referring to ``third-party search providers'' in the plural \parencite{openai2024search}. Citation matches against Google SERP features (Table~\ref{tab:serp-feature-matches}) support this: Personal shows roughly double the PAA matches of Business (44 vs 23). Since these features are Google-specific, the disparity is another indicator that Personal retrieves from Google more heavily.
+
+\begin{table}[H]
+\centering
+\caption{Citation matches against Google SERP features.}
+\label{tab:serp-feature-matches}
+\begin{tabular}{lrr}
+\toprule
+Feature & GPT Business & GPT Personal \\
+\midrule
+People Also Ask (PAA) & 23 & 44 \\
+Video & 3 & 3 \\
+Discussion & --- & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 For publishers, this means that optimizing only for Bing (as many would think) or Google is not 
 enough for ChatGPT visibility. Just as the cross-language fan-out findings (Section~\ref{sec:localization-bias}) 
@@ -394,21 +409,57 @@ Match counts below combine cited links (URLs that appear in the final response) 
 \caption{Personal on Google: top-rank concentration with Page~2 bump.}
 \label{fig:google-personal-dist}
 \end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=5pt,
+    width=\textwidth,
+    height=6cm,
+    ylabel={Matches},
+    xlabel={Google Rank},
+    ymin=0,
+    ymax=200,
+    xtick={1,3,5,7,9,11,13,15,17,19,21,23,25,27,29},
+    xticklabel style={font=\scriptsize},
+    yticklabel style={font=\scriptsize},
+    ylabel style={font=\small},
+    xlabel style={font=\small},
+    title style={font=\small\bfseries},
+    title={Gemini -- Google},
+    fill=gemcolor,
+    draw=gemcolor!80!black,
+]
+\addplot coordinates {
+    (1,181) (2,105) (3,93) (4,92) (5,70)
+    (6,62) (7,72) (8,51) (9,39) (10,21)
+    (11,24) (12,26) (13,22) (14,23) (15,21)
+    (16,20) (17,22) (18,18) (19,22) (20,14)
+    (21,7) (22,11) (23,13) (24,9) (25,7)
+    (26,15) (27,11) (28,0) (29,2)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Gemini on Google: rank-1 spike with gradual decay.}
+\label{fig:google-gemini-dist}
+\end{subfigure}
 \caption{Citation match distribution by SERP position. Each chart uses its own Y-axis scale.}
 \label{fig:overlap-dist}
 \label{fig:bing-page-dist}
 \label{fig:google-rank-dist}
 \end{figure}
 
-The Page~2 dip on both Bing charts is consistent with the pagination instability documented in Section~\ref{sec:bing-pagination-instability}: Page~2 is disproportionately noisy, and Pages~3+ recover because they contain relevant results that were displaced from Page~1. With a median of only 3 organic results on Page~1 (Table~\ref{tab:bing-page1-size}), much of what a stable API would rank in the top 20--30 ends up scattered across deeper pages in our consumer-UI scrape. The match counts on Pages~3--8 reflect this---they are not evidence of deep retrieval but of top-ranked results pushed down by UI-layer compression. Personal's flatter Bing profile likely exaggerates this effect, since the consumer UI introduces more instability than the Bing Search API that ChatGPT actually queries.
+The Page~2 dip on both Bing charts is consistent with the pagination instability documented in Section~\ref{sec:bing-pagination-instability}: with a median of only 3 organic results on Page~1 (Table~\ref{tab:bing-page1-size}), Page~2 is disproportionately noisy, and the steady match counts on Pages~3--8 suggest that our consumer-UI scrape scatters results that a stable API would rank higher.
 
-On Google, Personal's top ranks (1--8) show the highest concentration. There is a notable dip at ranks 9--10 (48 and 38 matches), followed by a bump at ranks 11--13 (58, 57, 65)---the top of what would be Page~2 in a standard 10-result SERP. This mirrors a well-documented pattern in human search behavior: the bottom of Page~1 receives less attention than the top of Page~2, because users who navigate to a second page are more intent-driven and more likely to engage with the first results they see there. The fact that LLM citation patterns reflect the same shape suggests that SERP rank influences AI citations in ways that parallel human click-through behavior.
+On Google, Personal's top ranks (1--8) show the highest concentration. There is a notable dip at ranks 9--10 (48 and 38 matches), followed by a bump at ranks 11--13 (58, 57, 65)---the top of what would be Page~2 in a standard 10-result SERP. This mirrors a well-documented pattern in human search behavior: the bottom of Page~1 receives less attention than the top of Page~2, because users who navigate to a second page are more intent-driven and more likely to engage with the first results they see there. Gemini on Google shows a similar shape to GPT Personal on Google, reinforcing that this positional bias is not specific to one LLM. The fact that both systems reflect the same rank-driven pattern suggests that SERP rank influences AI citations in ways that parallel human search.
 
 \subsection{Rank Concentration: LLMs vs.\ Human Click-Through}
 \label{sec:gemini-google-rank}
 \label{sec:cross-system-rank}
 
-For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Personal). Each citation is counted once at its best rank. This mirrors how human CTR is measured: of all selections, what share went to each rank? Bing ranks 6--10 use only runs where Page~1 had 8+ results, since most scrapes returned fewer (Table~\ref{tab:bing-page1-size}).
+For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Personal). Each citation is counted once at its best rank, mirroring how human CTR is measured: of all selections, what share went to each rank? The comparison is restricted to Page~1: on Google, 28.7\% of Personal citation matches fall beyond rank~10, so the table captures rank preference \emph{within} Page~1, not overall reliance on it. We clearly saw that LLMs look deeper than humans do, but we include this comparison regardless because the parallel in positional bias between human and LLM behavior is noteworthy.
 
 Table~\ref{tab:cross-rank-ctr} places this LLM rank concentration alongside Google organic click-through rates reported by First Page Sage \parencite{firstpagesage2026ctr}.
 
@@ -422,46 +473,45 @@ Table~\ref{tab:cross-rank-ctr} places this LLM rank concentration alongside Goog
 \toprule
 Rank & Human CTR & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Personal} & Gemini \\
 \midrule
-\textbf{1} & \textbf{39.8\%} & \textbf{24.9\%} & \textbf{26.7\%} & 20.6\% \\
-2 & 18.7\% & 24.0\% & 17.5\% & 13.9\% \\
-3 & 10.2\% & 13.7\% & 13.5\% & 12.9\% \\
-4 & 7.2\% & 9.2\% & 11.4\% & 12.3\% \\
-5 & 5.1\% & 7.7\% & 9.1\% & 10.9\% \\
-6 & 4.4\% & 6.0\% & 7.2\% & 8.0\% \\
-7 & 3.0\% & 5.3\% & 5.8\% & 8.7\% \\
-8 & 2.1\% & 4.0\% & 4.4\% & 6.0\% \\
-9 & 1.9\% & 3.3\% & 2.6\% & 4.3\% \\
-10 & 1.6\% & 1.8\% & 1.8\% & 2.3\% \\
+\textbf{1} & \textbf{39.8\%} & \textbf{24.9\%} & \textbf{26.7\%} & 23.0\% \\
+2 & 18.7\% & 24.0\% & 17.5\% & 13.4\% \\
+3 & 10.2\% & 13.7\% & 13.5\% & 11.8\% \\
+4 & 7.2\% & 9.2\% & 11.4\% & 11.7\% \\
+5 & 5.1\% & 7.7\% & 9.1\% & 8.9\% \\
+6 & 4.4\% & 6.0\% & 7.2\% & 7.9\% \\
+7 & 3.0\% & 5.3\% & 5.8\% & 9.2\% \\
+8 & 2.1\% & 4.0\% & 4.4\% & 6.5\% \\
+9 & 1.9\% & 3.3\% & 2.6\% & 5.0\% \\
+10 & 1.6\% & 1.8\% & 1.8\% & 2.7\% \\
 \midrule
-Top-3 & 68.7\% & 62.6\% & 57.8\% & 47.5\% \\
+Top-3 & 68.7\% & 62.6\% & 57.8\% & 48.2\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-All three LLMs show a top-rank preference with a similar decay shape to human click-through behavior, but flatter: top-3 shares range from 47.5\% (Gemini) to 62.6\% (GPT Business) versus 68.7\% for human clicks. GPT Business shows the strongest rank-1 signal (24.9\%), while Gemini is the flattest---its citations spread more evenly across ranks 1--7. This comparison is restricted to Page~1 matches only. Unlike human search, where Page~1 captures the vast majority of clicks, LLM citations match well beyond Page~1 (Figure~\ref{fig:overlap-dist}), so the concentration shown here reflects rank preference within Page~1, not overall reliance on it.
-
-\begin{table}[H]
-\centering
-\caption{Non-organic Google SERP feature matches}
-\label{tab:non-organic-matches}
-\begin{tabular}{lrr}
-\toprule
-Feature & GPT Business & GPT Personal \\
-\midrule
-People Also Ask (PAA) & 23 & 44 \\
-Video & 3 & 3 \\
-Discussion & --- & 3 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Non-organic matches are minimal overall, confirming that ChatGPT citations align almost entirely with organic results. That said, Personal shows roughly double the PAA matches of Business (44 vs 23), consistent with its higher Google affinity---these features are Google-specific, so higher match counts are another indicator that the Personal tier retrieves from Google.
+All three LLMs show a top-rank preference with a similar decay shape to human click-through behavior, but flatter: top-3 shares range from 48.2\% (Gemini) to 62.6\% (GPT Business) versus 68.7\% for human clicks. GPT Business shows the strongest rank-1 signal (24.9\%), while Gemini is the flattest---its citations spread more evenly across ranks 1--8.
 
 \subsection{Per-Query Citation Distribution}
 \label{sec:per-query-citation}
 
-Since both systems issue multiple fan-out queries per run, we checked whether citations are drawn evenly across them or concentrated in one.
-Gemini is different. It issues a variable number of grounding-support queries (typically 3--7), and citations are heavily concentrated in the first one:
+Since both systems issue multiple fan-out queries per run, we checked whether citations are drawn evenly across them or concentrated in one. For ChatGPT, which issues two fan-out queries per run, overlap is nearly identical between the two queries across all tiers (Table~\ref{tab:gpt-per-query}). Neither query consistently dominates; citations are drawn from both equally.
+
+\begin{table}[H]
+\centering
+\caption{GPT per-query citation overlap (474 fan-out queries per tier).}
+\label{tab:gpt-per-query}
+\begin{tabular}{llrr}
+\toprule
+Index & Tier & Query 1 & Query 2 \\
+\midrule
+Bing & Business & 63.7\% & 64.2\% \\
+Bing & Personal & 54.1\% & 52.4\% \\
+Google & Personal & 50.4\% & 46.4\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Gemini issues a variable number of grounding queries per run (typically 3--7), and citations are heavily concentrated in the first one:
 
 \begin{table}[H]
 \centering
