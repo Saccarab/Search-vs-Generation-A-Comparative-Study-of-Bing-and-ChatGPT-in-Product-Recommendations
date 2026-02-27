@@ -547,10 +547,10 @@ further establish that a solid SEO carries a lot weight for AI visibility.
 \subsection{The Visibility Gap: Invisible Links}
 \label{sec:invisible-links}
 
-The overlap tables above show that \textbf{16--22\%} of LLM citations appear in neither the Bing nor the Google SERPs we collected. These ``invisible'' links represent sources that enter the model's grounding pool through channels opaque to conventional search. This analysis focuses on ChatGPT, where the invisible-link question is most consequential; Gemini grounds on Google's own index, so the interesting question there is not \emph{whether} it draws from Google but \emph{how} it selects (addressed in the selection drift and fidelity analyses).
+The overlap tables above show that \textbf{16--22\%} of LLM citations appear in neither the Bing nor the Google SERPs we collected. These ``invisible'' links represent sources that enter the model's grounding pool through channels opaque to conventional search.
 
 \label{sec:invisible-conservative}
-These rates are \textbf{upper bounds}. Our Bing scrape stops at Rank~200, but the page-level histogram (Section~\ref{sec:page-dist}) shows matches still accumulating at Pages~15--16 with no convergence. Additionally, nearly half of our Bing Page~1 scrapes were truncated due to UI pagination instability (Section~\ref{sec:bing-pagination-instability}), missing results that ChatGPT's backend API integration almost certainly receives. To get a cleaner invisible list, we exclude URLs classified as \texttt{product\_page} (31 for Business, 113 for Personal) from the invisible domain tables below---these are the page types most likely to appear deeper in Bing's index beyond our scrape depth.
+These rates are \textbf{upper bounds}. Our Bing scrape stops at Rank~200, but the page-level histogram (Section~\ref{sec:page-dist}) shows matches still accumulating at Pages~15--16 with no convergence, so some ``invisible'' URLs likely exist deeper in Bing's index. To filter out these cases, we exclude URLs classified as \texttt{product\_page} (31 for Business, 113 for Personal) from the invisible domain tables below---given the profile of our SERPs, results beyond our scrape depth should mostly be product pages or listicles. The exclusion is small relative to the total citation pool and serves as a final refinement rather than a major correction.
 
 \subsection{Rejected Links --- The Search Pool Remainder}
 \label{sec:rejected}
