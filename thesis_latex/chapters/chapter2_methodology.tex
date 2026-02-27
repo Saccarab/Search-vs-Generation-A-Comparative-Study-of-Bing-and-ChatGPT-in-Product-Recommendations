@@ -248,6 +248,30 @@ Page~1 returned as few as 2 organic results due to ads, Copilot answer
  (\texttt{"free AI tools for translating video"}), ran seconds apart (raw screenshots in
  Appendix~\ref{app:bing-pagination}).
 
+Table~\ref{tab:bing-page1-size} shows the Page~1 organic result count across our full dataset: the median was only 3 results, with the distribution nearly identical across both tiers.
+
+\begin{table}[H]
+\centering
+\caption{Bing Page~1 organic result count across scrapes.}
+\label{tab:bing-page1-size}
+\small
+\begin{tabular}{lrr}
+\toprule
+Page~1 Size & Business & Personal \\
+\midrule
+2 results & 172 (38\%) & 195 (46\%) \\
+3 results & 55 (12\%) & 36 (8\%) \\
+4--6 results & 71 (16\%) & 65 (15\%) \\
+7--10 results & 93 (21\%) & 81 (19\%) \\
+\midrule
+Median & 3 & 3 \\
+Mean & 4.3 & 4.1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Tables~\ref{tab:bing-full} and~\ref{tab:bing-truncated} illustrate this with two scrapes of the same query, ran seconds apart:
+
 \begin{table}[htbp]
 \centering
 \caption{Bing scrape with a full Page~1: 7 results.\textbf{Bold} entries (ranks 3--7) disappear entirely in the shorter scrape (Table~\ref{tab:bing-truncated}).}
@@ -303,28 +327,6 @@ The second scrape of the same query (Table~\ref{tab:bing-truncated}) we ran righ
  only 2 organic results on Page~1: \texttt{zeemo.ai} and \texttt{wayin.ai}. This was consistent with the first run
  but the remaining 5 results (ranks 3--7, bolded in Table~\ref{tab:bing-full}) did not shift to Page~2 as we have expected.
  Page~2 showed a similar mix of relevant and off-topic results, including \texttt{a2e.ai} (uncensored AI videos) and \texttt{dreamfaceapp.com} (image generation).
-
-This compression was not limited to a few edge cases. Table~\ref{tab:bing-page1-size} shows the Page~1 organic result count across our full dataset: the median was only 3 results, with the distribution nearly identical across both tiers.
-
-\begin{table}[H]
-\centering
-\caption{Bing Page~1 organic result count across scrapes.}
-\label{tab:bing-page1-size}
-\small
-\begin{tabular}{lrr}
-\toprule
-Page~1 Size & Business & Personal \\
-\midrule
-2 results & 172 (38\%) & 195 (46\%) \\
-3 results & 55 (12\%) & 36 (8\%) \\
-4--6 results & 71 (16\%) & 65 (15\%) \\
-7--10 results & 93 (21\%) & 81 (19\%) \\
-\midrule
-Median & 3 & 3 \\
-Mean & 4.3 & 4.1 \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 We observed four patterns from this and subsequent scrapes:
 
