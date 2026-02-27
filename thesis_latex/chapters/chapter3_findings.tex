@@ -238,7 +238,9 @@ Having established how fan-out queries are generated and how localization shapes
 \subsection{Index Affinity: Which Search Engine?}
 \label{sec:global-overlap}
 
-For each LLM citation, we checked whether the exact URL appeared in our Bing or Google SERP scrape for the same fan-out queries that produced it. Tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, etc.) are stripped before matching (Section~\ref{sec:bing-scraping}). The most consequential finding is that the search index behind ChatGPT's citations depends on the subscription tier.
+For each LLM citation, we checked whether the exact URL appeared in our Bing or Google SERP scrape for 
+the same fan-out queries that produced it.
+The most significant finding is that the search index behind ChatGPT's citations depends a lot on the subscription tier.
 
 \begin{table}[H]
 \centering
@@ -269,18 +271,22 @@ Across all three tiers, \textbf{78--84\%} of citations trace back to a conventio
 This confirms that traditional search ranking is the dominant factor for AI visibility. The remaining 16--22\% (the ``invisible'' share) is another element that makes GEO distinct from SEO,
  and we examine it in Section~\ref{sec:invisible-links}.
 
-Within these overlap ranges, \emph{which} index matters depends on the tier. \textbf{GPT Business} retrieves exclusively from Bing \parencite{openai2024enterprise}: 81.3\% Bing overlap, only 27.8\% Google. That 27.8\% is our baseline---the natural overlap that occurs because Bing and Google index many of the same pages. \textbf{GPT Personal} jumps to \textbf{64.6\%} Google overlap, a 36.8\,pp increase over that baseline, while its Bing overlap drops to 67.6\%. This is consistent with Personal drawing on Google in addition to Bing, as OpenAI's documentation implies by referencing ``third-party search providers'' in the plural \parencite{openai2024search}. Gemini retrieves from Google at \textbf{77.7\%} overlap---lower than one might expect for Google's own model, with the remaining 22.3\% invisible from the SERP.
+GPT Business states that it retrieves exclusively through its official partner, the Bing Search API \parencite{openai2024enterprise}, and our data confirms this: 81.3\% Bing overlap versus only 27.8\% Google. Even when an LLM does not retrieve from a given engine, some overlap is expected because there are only so many websites that cover a given topic. Any search engine searching for the same keywords will end up returning many of the same pages. We treat that 27.8\% as the natural overlap that comes from this shared relevancy pool.
 
-For publishers, this means that optimizing only for Google is not 
+GPT Personal jumps to 64.6\% Google overlap, a 36.8\,pp
+increase over that baseline, while its Bing overlap drops to 67.6\%.
+This suggests that the Personal tier retrieves from Google alongside Bing, which aligns with OpenAI's documentation referring to ``third-party search providers'' in the plural \parencite{openai2024search}.
+
+For publishers, this means that optimizing only for Bing (as many would think) or Google is not 
 enough for ChatGPT visibility. Just as the cross-language fan-out findings (Section~\ref{sec:localization-bias}) 
 showed that an English website is a prerequisite even for non-English audiences, the index affinity 
-data shows that Bing rankings matter for ChatGPT---especially for Business-tier users, where 81.3\% of citations come from Bing and only 27.8\% from Google. A brand that ranks well on Google but has no Bing presence may be effectively invisible to the largest ChatGPT deployment tier.
+data shows that Bing rankings matter for ChatGPT especially for Business-tier users
+A brand that ranks well on Google but has no Bing presence may be effectively invisible to the largest ChatGPT deployment tier.
 
 \subsection{Page Rank distribution of the Cited Links}
 \label{sec:page-dist}
 
-Our analysis of 237 runs per engine tier (79 queries $\times$ 3 runs) 
-reveals that LLM citations are not concentrated on the first page of search results but are distributed deep into the SERP.
+Having established which search indices each tier draws from, we now examine where in those indices the cited links tend to appear.
 
 \subsubsection{Bing Page Distribution (Deep Hunt)}
 \label{sec:bing-page-dist}
