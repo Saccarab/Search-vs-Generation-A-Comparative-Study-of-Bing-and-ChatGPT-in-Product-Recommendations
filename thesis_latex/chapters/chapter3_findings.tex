@@ -400,7 +400,7 @@ Match counts below combine cited links (URLs that appear in the final response) 
 \label{fig:google-rank-dist}
 \end{figure}
 
-The Page~2 dip on both Bing charts is consistent with the pagination instability documented in Section~\ref{sec:bing-pagination-instability}. For Business, the Page~1 concentration is striking: even though the median Page~1 contained only 3 organic results per query (Section~\ref{sec:bing-pagination-instability}), it still accounts for the largest share of citation matches by a wide margin. Top-ranked Bing results drive citations. Personal's flatter Bing profile is harder to interpret because our scrape used the consumer UI, not the Bing Search API that ChatGPT actually queries. With API access, Personal's Bing distribution would likely show more top-rank concentration as well---just at lower volume than Business, since Personal splits its retrieval across engines.
+The Page~2 dip on both Bing charts is consistent with the pagination instability documented in Section~\ref{sec:bing-pagination-instability}: Page~2 is disproportionately noisy, and Pages~3+ recover because they contain relevant results that were displaced from Page~1. With a median of only 3 organic results on Page~1 (Table~\ref{tab:bing-page1-size}), much of what a stable API would rank in the top 20--30 ends up scattered across deeper pages in our consumer-UI scrape. The match counts on Pages~3--8 reflect this---they are not evidence of deep retrieval but of top-ranked results pushed down by UI-layer compression. Personal's flatter Bing profile likely exaggerates this effect, since the consumer UI introduces more instability than the Bing Search API that ChatGPT actually queries.
 
 On Google, Personal's top ranks (1--8) show the highest concentration. There is a notable dip at ranks 9--10 (48 and 38 matches), followed by a bump at ranks 11--13 (58, 57, 65)---the top of what would be Page~2 in a standard 10-result SERP. This mirrors a well-documented pattern in human search behavior: the bottom of Page~1 receives less attention than the top of Page~2, because users who navigate to a second page are more intent-driven and more likely to engage with the first results they see there. The fact that LLM citation patterns reflect the same shape suggests that SERP rank influences AI citations in ways that parallel human click-through behavior.
 
@@ -438,9 +438,7 @@ Top-3 & 68.7\% & 49.8\% & 44.6\% & 48.2\% \\
 \end{tabular}
 \end{table}
 
-Gemini shows the steepest rank-1 concentration at 23.0\%, dropping to 13.4\% at rank~2. GPT Business spreads its weight across ranks 1--2 (17.4\% and 18.7\% respectively, 36.1\% combined), while GPT Personal is the flattest, ranging from 18.1\% at rank~1 to 9.4\% at rank~5---likely because drawing from two indices creates more rank diversity.
-
-All three LLM profiles are flatter than human click-through behavior: the top-3 ranks account for 45--50\% of Page-1 matches for LLMs versus 68.7\% of clicks for humans. An important caveat: the denominators differ. Human CTR sums to $\sim$94\% across ranks 1--10 because humans rarely go past Page~1. The LLM columns sum to 100\% only because they are restricted to Page-1 matches by definition; as Table~\ref{tab:bing-page-dist} showed, many citations match beyond Page~1. The comparison therefore shows the shape of rank preference within Page~1, not overall reliance on it.
+All three LLMs show a top-rank preference that parallels human click-through behavior, but the curve is flatter: the top-3 ranks account for 45--50\% of Page-1 matches versus 68.7\% of human clicks. Gemini shows the steepest rank-1 concentration (23.0\%), while GPT Personal is the flattest---likely because drawing from two indices creates more rank diversity.
 
 \begin{table}[H]
 \centering
