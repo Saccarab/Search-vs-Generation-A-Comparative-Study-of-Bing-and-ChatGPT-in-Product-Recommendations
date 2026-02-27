@@ -167,7 +167,8 @@ OpenAI documents that ChatGPT ``collects general location information
  A user in Munich who asks ``best bakery'' will see the fan-out rewritten 
  to ``best bakery near Munich Germany''---the location is injected directly into the query text. We call this \textbf{explicit localization}.
 
-Our software dataset has no local-commerce queries that would trigger explicit localization, but we observed something we call \textbf{implicit localization}. When this same user in Munich asks ``best free website to translate a video and add subtitles,'' the response text is in English---yet many of its citations point to German web pages. This happens because one fan-out is issued in English and the other in German, routing half the retrieval into the German-language search index without the user ever seeing it. This observation was one of the reasons we routed all data collection through a US-based proxy (Section~\ref{sec:proxy-requirement}).
+Our software dataset has no local-commerce queries that would trigger explicit localization, but we observed something we call \textbf{implicit localization}. When this same user in Munich asks ``best free website to translate a video and add subtitles,'' the response text is in English---yet many of its citations point to German web pages. This happens because one fan-out is issued in English and the other in German, routing half the retrieval into the 
+German-language search index without the user ever seeing it. This observation was one of the reasons we routed all data collection through a US-based proxy (Section~\ref{sec:proxy-requirement}).
 
 Across our GPT runs we identified three patterns of implicit localization, all orchestrated through fan-out queries invisible to the end user.
 
@@ -451,15 +452,36 @@ Match counts below combine cited links (URLs that appear in the final response) 
 \label{fig:google-rank-dist}
 \end{figure}
 
-The Page~2 dip on both Bing charts is consistent with the pagination instability documented in Section~\ref{sec:bing-pagination-instability}: with a median of only 3 organic results on Page~1 (Table~\ref{tab:bing-page1-size}), Page~2 is disproportionately noisy, and the steady match counts on Pages~3--8 suggest that our consumer-UI scrape scatters results that a stable API would rank higher.
+The Page~2 dip on both Bing charts is consistent with the pagination
+instability documented in Section~\ref{sec:bing-pagination-instability}.
+Page~1 leads in match count for Business despite returning a median of only
+3 organic results (Table~\ref{tab:bing-page1-size})---with a full 10-result page,
+the spike would likely be substantially larger.
+The flatter distribution on Bing is indicative of how noisy the consumer UI pagination is,
+and the Bing overlap charts should be seen as a proxy rather than a direct ranking signal.
+Matches remain steady through Pages~3--8 and even at Page~16 we do not fully converge---yet
+the gradual decline shows that an underlying ranking signal persists; these are not random results.
+To put this in perspective: comparing cumulative match counts, our Bing rank~150 carries
+roughly the same information as Google rank~25, and the entire 200-position Bing scrape
+covers approximately what Google's top~29 ranks do.
 
-On Google, Personal's top ranks (1--8) show the highest concentration. There is a notable dip at ranks 9--10 (48 and 38 matches), followed by a bump at ranks 11--13 (58, 57, 65)---the top of what would be Page~2 in a standard 10-result SERP. This mirrors a well-documented pattern in human search behavior: the bottom of Page~1 receives less attention than the top of Page~2, because users who navigate to a second page are more intent-driven and more likely to engage with the first results they see there. Gemini on Google shows a similar shape to GPT Personal on Google, reinforcing that this positional bias is not specific to one LLM. The fact that both systems reflect the same rank-driven pattern suggests that SERP rank influences AI citations in ways that parallel human search.
+On Google, the overlap distribution looks much more like we would expect from a Top~30 SERP.
+Personal's top ranks (1--8) show the highest concentration, with a notable dip at
+ranks 9--10 (48 and 38 matches) followed by an increase at ranks 11--13 (58, 57, 65)---the
+top of what would be Page~2 in a standard 10-result SERP.
+This mirrors a well-documented pattern in human search behavior: the bottom of Page~1
+receives less attention than the top of Page~2.
+Seeing this pattern in an AI citation overlap distribution is unexpected, and hints that
+how LLMs pick results from SERPs has strong parallels with human behavior.
+Gemini on Google shows a similar shape, reinforcing that this positional bias is not
+specific to one LLM.
 
 \subsection{Rank Concentration: LLMs vs.\ Human Click-Through}
 \label{sec:gemini-google-rank}
 \label{sec:cross-system-rank}
 
-For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Personal). Each citation is counted once at its best rank, mirroring how human CTR is measured: of all selections, what share went to each rank? The comparison is restricted to Page~1: on Google, 28.7\% of Personal citation matches fall beyond rank~10, so the table captures rank preference \emph{within} Page~1, not overall reliance on it. We clearly saw that LLMs look deeper than humans do, but we include this comparison regardless because the parallel in positional bias between human and LLM behavior is noteworthy.
+For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Personal). Each citation is counted once at its best rank, mirroring how human CTR is measured: of all selections, what share went to each rank? The comparison is restricted to Page~1: on Google, 28.7\% of Personal citation matches fall beyond rank~10, so the table captures rank preference \emph{within} Page~1, not overall reliance on it. We clearly can tell that LLMs look deeper than humans do, 
+but we include this comparison regardless because the parallel in positional bias between human and LLM behavior is noteworthy.
 
 Table~\ref{tab:cross-rank-ctr} places this LLM rank concentration alongside Google organic click-through rates reported by First Page Sage \parencite{firstpagesage2026ctr}.
 
