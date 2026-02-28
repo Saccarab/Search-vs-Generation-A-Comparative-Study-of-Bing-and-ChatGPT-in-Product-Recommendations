@@ -801,9 +801,9 @@ Our main takeaway is that if
 brands can establish presence on high-authority sources like Wikipedia
 and major news or tech websites, they gain a path into ChatGPT
 citations that bypasses conventional SEO competition---especially
-valuable when targeting B2B customers on the Business tier.
-Wikipedia carries similar weight on Personal, but tech editorial
-sites, while still providing some edge, do not appear as decisive.
+valuable when targeting B2B customers on the ChatGPT Business tier.
+Wikipedia carries similar weight on Personal, but the visibility advantage
+from appearing on tech editorial sites is less pronounced.
 The growing trend of Reddit marketing also looks justified:
 reddit domains consistently surface as supplementary sources
 on the Personal tier.
@@ -811,9 +811,9 @@ on the Personal tier.
 \subsection{Citation Flip-Flop Rate}
 \label{sec:flip-flop}
 
-We also wanted to understand if source categories are fixed
-or if an additional link can become cited in a different run.
-This is where our cross-run design (3~runs per prompt) becomes
+We also wanted to understand whether ChatGPT's source category assignments 
+are fixed or if a URL can appear in different sections of a response across runs.
+This is where our cross-run design (3~runs per prompt) became
 particularly useful.
 The tables above suggest that most invisible domains sit in a
 fixed lane. Wikipedia is always cited, arxiv is
@@ -849,14 +849,63 @@ Dominant type & \multicolumn{2}{c}{news + reference (58--76\%)} \\
 \end{tabular}
 \end{table}
 
-\noindent About one in four additional URLs also appears as cited
-in at least one other run, with near-identical rates across tiers.
-On the same prompt across different runs, one in five switches to cited.
-This reshuffling concentrates among product pages and listicles---the commercial content types that brands compete over most directly.
+\noindent The almost identical promotion rates across our entire dataset suggest that
+ChatGPT has a fixed budget for URLs that it takes into consideration and enters the citation pool
+(the sources panel in the ChatGPT UI).
+This bucket of sources, which has a dominating concentration of product pages and listicles, is then utilized
+within the response text interchangeably.
 
-Rejected URLs can also be promoted, though at lower rates and with a different profile: 
-news articles and reference pages (primarily Wikipedia) dominate. When they are actually promoted most of the time
-they become cited sources instead and not just move to the additional sources section.
+Rejected URLs can also be promoted, though at lower rates (8--17\%) and with a different profile: news articles and reference pages (primarily Wikipedia) dominate, and when promoted they skip the additional category almost entirely, going straight to cited.
+
+\subsection{Cited vs Additional --- Structural Comparison}
+\label{sec:cited-vs-additional}
+
+Are cited and additional links structurally different, or is the boundary arbitrary? Both groups were surfaced by ChatGPT: cited URLs appeared in the response text, additional URLs were shown as supplementary sources. Gemini does not have an ``additional'' category, so this comparison is GPT-only.
+
+\begin{table}[H]
+\centering
+\caption{Cited vs Additional drift --- listicles (Welch's $t$-test)}
+\label{tab:ttest-cited-addl-listicle}
+\begin{tabular}{lrrlrrl}
+\toprule
+ & \multicolumn{3}{c}{Business (C=450, A=1{,}489)} & \multicolumn{3}{c}{Personal (C=312, A=1{,}577)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
+\midrule
+Tables          & $+$5.8pp & 2.20 & $*$   & $+$8.1pp & 2.62 & $**$  \\
+Numbered Lists  & $+$2.9pp & 1.30 & ns    & $+$6.1pp & 2.14 & $*$   \\
+Bullet Points   & $-$0.3pp & $-$0.10 & ns & $+$5.7pp & 1.84 & ns    \\
+Pros/Cons       & $+$3.4pp & 1.26 & ns    & $+$3.6pp & 1.16 & ns    \\
+Clear Authorship& $-$1.5pp & $-$0.58 & ns & $-$6.7pp & $-$2.18 & $*$ \\
+Sources/Citations& $+$0.4pp & 0.17 & ns   & $-$3.8pp & $-$1.93 & ns  \\
+Vendor Owned    & $+$0.4pp & 0.15 & ns    & $-$0.9pp & $-$0.32 & ns  \\
+Freshness ($\geq$3) & $-$0.8pp & $-$0.38 & ns & $-$1.0pp & $-$0.47 & ns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Cited vs Additional drift --- product pages (Welch's $t$-test)}
+\label{tab:ttest-cited-addl-pp}
+\begin{tabular}{lrrlrrl}
+\toprule
+ & \multicolumn{3}{c}{Business (C=790, A=882)} & \multicolumn{3}{c}{Personal (C=970, A=1{,}422)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
+\midrule
+Bullet Points   & $+$5.9pp & 2.52 & $*$       & $+$9.8pp & 5.15 & $***$ \\
+Numbered Lists  & $+$4.7pp & 1.92 & ns        & $+$7.1pp & 3.63 & $***$ \\
+Tables          & $+$0.0pp & 0.00 & ns         & $+$3.7pp & 3.03 & $**$  \\
+Vendor Owned    & $+$0.9pp & 1.41 & ns         & $+$1.8pp & 2.73 & $**$  \\
+Clear Authorship& $+$0.1pp & 0.21 & ns         & $-$0.8pp & $-$1.11 & ns \\
+Sources/Citations& $+$0.1pp & 0.13 & ns        & $+$0.5pp & 0.68 & ns   \\
+Freshness ($\geq$3) & $-$0.8pp & $-$0.51 & ns & $-$0.5pp & $-$0.29 & ns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Minimal differentiation. Business listicles show only 1 of 8 features reaching significance; Personal shows 3 of 8. Most structural selection has already occurred upstream at retrieval, leaving the cited and additional pools structurally similar. This explains the flip-flop finding: with no strong structural signal to distinguish cited from additional, the boundary between ``cite inline'' and ``show as supplementary'' is effectively arbitrary for the content types that brands compete over.
 
 %-----------------------------------------------------------------------
 \section{Content DNA \& Selection Drift}
@@ -864,13 +913,13 @@ they become cited sources instead and not just move to the additional sources se
 
 We profiled approximately 6{,}500 URLs with our Content DNA enrichment pipeline (Section~\ref{sec:content-dna-pipeline}): every URL each model cited or surfaced internally, plus the top-10 Bing and Google SERP results for the same queries. We focus the structural analysis on listicles and product pages, the two content types where features like tables, numbered lists, and vendor ownership are meaningful. The question is whether models show systematic preferences for these features when deciding what to cite.
 
-\subsection{Selection Drift}
+\subsection{Cited vs Non-Cited in SERP}
 \label{sec:selection-drift}
 \label{sec:cited-vs-serp}
 \label{sec:menu}
 \label{sec:order}
 
-For each run, every SERP URL (filtered by content type) is classified as Cited or Not-Cited, with zero overlap within any single run. We test eight binary Content DNA features using Welch's $t$-test (\texttt{freshness\_cue\_strength} binarized at $\geq$3); a per-unique-URL robustness check confirms the same direction of drift for every significant feature. Pool sizes differ across conditions (see table footnotes): Google Top-10 returns a consistent ten organic results per query, whereas Bing Page~1 yields a median of only three (Section~\ref{sec:bing-serp}), making the Bing pools smaller. A smaller pool is not necessarily a weaker comparison, however: the Bing results concentrate in the top ranks where citation probability is highest.
+To test this, we compare cited URLs against non-cited URLs from the same SERP. For each run, every SERP URL of the relevant type is classified as Cited or Not-Cited; we then test eight binary Content DNA features using Welch's $t$-test (\texttt{freshness\_cue\_strength} binarized at $\geq$3). A per-unique-URL robustness check confirms the same direction of drift for every significant feature. Pool sizes differ across conditions (see table footnotes): Google Top-10 returns a consistent ten organic results per query, whereas Bing Page~1 yields a median of only three (Section~\ref{sec:bing-serp}), making the Bing pools smaller but concentrated in the top ranks where citation probability is highest.
 
 \begin{table}[H]
 \centering
@@ -924,59 +973,9 @@ Freshness ($\geq$3) & $-$5.0\,*\phantom{**}      & $+$3.7\phantom{\,***}    & $+
 
 Product pages (Table~\ref{tab:drift-product-pages}) show flatter profiles---they are structurally homogeneous, leaving less for either model to differentiate on. Numbered lists remain the most consistent signal.
 
-\subsection{Cited vs Additional --- Structural Comparison}
-\label{sec:cited-vs-additional}
-
-The flip-flop analysis (Section~\ref{sec:flip-flop}) showed that one in five additional URLs switches to cited on the
- same prompt across runs. Are cited and additional links structurally different, or is the boundary arbitrary? 
-Both groups were shown to user at different levels by ChatGPT: cited URLs appeared in the response text, 
-additional URLs were shown as supplementary sources. 
-Gemini does not have ``additional'' category, so this comparison is GPT-only.
-
-\begin{table}[H]
-\centering
-\caption{Cited vs Additional drift --- listicles (Welch's $t$-test)}
-\label{tab:ttest-cited-addl-listicle}
-\begin{tabular}{lrrlrrl}
-\toprule
- & \multicolumn{3}{c}{Business (C=450, A=1{,}489)} & \multicolumn{3}{c}{Personal (C=312, A=1{,}577)} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
-\midrule
-Tables          & $+$5.8pp & 2.20 & $*$   & $+$8.1pp & 2.62 & $**$  \\
-Numbered Lists  & $+$2.9pp & 1.30 & ns    & $+$6.1pp & 2.14 & $*$   \\
-Bullet Points   & $-$0.3pp & $-$0.10 & ns & $+$5.7pp & 1.84 & ns    \\
-Pros/Cons       & $+$3.4pp & 1.26 & ns    & $+$3.6pp & 1.16 & ns    \\
-Clear Authorship& $-$1.5pp & $-$0.58 & ns & $-$6.7pp & $-$2.18 & $*$ \\
-Sources/Citations& $+$0.4pp & 0.17 & ns   & $-$3.8pp & $-$1.93 & ns  \\
-Vendor Owned    & $+$0.4pp & 0.15 & ns    & $-$0.9pp & $-$0.32 & ns  \\
-Freshness ($\geq$3) & $-$0.8pp & $-$0.38 & ns & $-$1.0pp & $-$0.47 & ns \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Cited vs Additional drift --- product pages (Welch's $t$-test)}
-\label{tab:ttest-cited-addl-pp}
-\begin{tabular}{lrrlrrl}
-\toprule
- & \multicolumn{3}{c}{Business (C=790, A=882)} & \multicolumn{3}{c}{Personal (C=970, A=1{,}422)} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
-\midrule
-Bullet Points   & $+$5.9pp & 2.52 & $*$       & $+$9.8pp & 5.15 & $***$ \\
-Numbered Lists  & $+$4.7pp & 1.92 & ns        & $+$7.1pp & 3.63 & $***$ \\
-Tables          & $+$0.0pp & 0.00 & ns         & $+$3.7pp & 3.03 & $**$  \\
-Vendor Owned    & $+$0.9pp & 1.41 & ns         & $+$1.8pp & 2.73 & $**$  \\
-Clear Authorship& $+$0.1pp & 0.21 & ns         & $-$0.8pp & $-$1.11 & ns \\
-Sources/Citations& $+$0.1pp & 0.13 & ns        & $+$0.5pp & 0.68 & ns   \\
-Freshness ($\geq$3) & $-$0.8pp & $-$0.51 & ns & $-$0.5pp & $-$0.29 & ns \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Minimal differentiation. Business listicles show only 1 of 8 features reaching significance (Tables $+$5.8\,pp); Personal listicles show 3 of 8. Most of the structural selection has already occurred upstream at the retrieval stage, leaving the cited and additional pools structurally similar. This explains the flip-flop finding: with no strong structural signal to distinguish cited from additional, the boundary between ``cite inline'' and ``show as supplementary'' is effectively arbitrary for the content types that brands compete over most.
+%-----------------------------------------------------------------------
+\section{Listicle Extraction \& Bias Analysis}
+\label{sec:listicle-bias}
 
 \subsection{Content-Size Context (Listicles vs Product Pages)}
 \label{sec:content-size}
@@ -1004,10 +1003,6 @@ Bucket & Median words & Median bytes & Coverage \\
 \textbf{Interpretation}: listicles are \textasciitilde2$\times$ longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
 
 \textbf{Relation to grounding budget research}: Our table measures \textbf{full page length} of candidate/cited sources, not the snippet-level context that is actually injected into the model's context window. For context on the system-level constraints these pages operate within: \textcite{petrovic2025grounding} report a per-query grounding budget of \textasciitilde2,000 words for Gemini (median 1,929, p95 2,798), with coverage inversely proportional to page length (61\% for pages under 1K words, dropping to 13\% for pages over 3K words). \textcite{petrovic2025filter} found that roughly one-third of source content (32\%) survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} analyzed 1.2 million ChatGPT search results and found that 44.2\% of citations originate from the first 30\% of page content, with citation likelihood correlating with definitive language and question-answer structure. These studies collectively describe how AI search systems ingest and compress web content, a pipeline our content size and Content DNA data sit within, but do not directly measure.
-
-%-----------------------------------------------------------------------
-\section{Listicle Extraction \& Bias Analysis}
-\label{sec:listicle-bias}
 
 The preceding sections examined which \emph{pages} the model selects from the SERP. This section shifts the unit of analysis one level deeper: given that a listicle has been cited, which \emph{products within that listicle} does the model extract, and how faithfully does it reproduce their details? We investigate three phenomena: host-product exclusion, within-listicle position bias, and semantic fidelity of product claims.
 
