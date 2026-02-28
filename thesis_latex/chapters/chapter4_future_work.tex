@@ -73,6 +73,11 @@ Our design uses 3 runs per prompt, which is sufficient to detect the $\sim$20\% 
 
 Our prompt set is concentrated in the AI and SaaS sectors, particularly speech and language technology. Replicating the study across different product categories (e.g., consumer electronics, fashion, financial services) would test whether the structural selection signals we observe (tables at +7.8 to +19.7\,pp, numbered lists at +7.1 to +11.2\,pp) are universal or category-dependent. Similarly, a dedicated cross-language study extending our Case~2 and Case~3 fan-out observations (Section~\ref{sec:localization-bias}) with a fully non-English prompt set would quantify the magnitude of the English retrieval bias that \textcite{rudzki2026english} documents at scale.
 
+\section{Multivariate Selection Modelling}
+\label{sec:fw-multivariate}
+
+Our selection drift analysis tests each Content DNA feature independently with Welch's $t$-tests, which cannot disentangle correlated features or control for confounds such as SERP rank. A logistic regression predicting citation from rank \emph{and} structural features simultaneously (e.g., $\text{cited} \sim \text{rank} + \text{tables} + \text{numbered\_lists} + \cdots$) would isolate the marginal contribution of each feature after controlling for position. Adding per-query fixed effects would further restrict the comparison to within the same SERP, eliminating topic-level confounds. This would move the analysis from the current correlational framing toward stronger causal claims about which structural signals independently influence citation probability.
+
 \section{Search Trigger Characterisation}
 \label{sec:fw-search-trigger}
 

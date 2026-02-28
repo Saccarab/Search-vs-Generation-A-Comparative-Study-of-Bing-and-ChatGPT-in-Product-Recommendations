@@ -828,88 +828,49 @@ different runs.
 
 \begin{table}[H]
 \centering
-\caption{Flip-flop rates}
+\caption{Promotion rates by source category}
 \label{tab:flipflop-cross}
 \begin{tabular}{lcc}
 \toprule
 & \textbf{Business} & \textbf{Personal} \\
 \midrule
+\multicolumn{3}{l}{\textit{Additional $\to$ Cited}} \\
 Unique additional URLs & 1{,}298 & 1{,}594 \\
-Also cited in $\geq$1 other run & 337 & 413 \\
-Flip-flop rate (cross-prompt) & 25.96\% & 25.91\% \\
+Promoted (cross-prompt) & 337\,(26.0\%) & 413\,(25.9\%) \\
+Promoted (same prompt) & 262\,(20.2\%) & 346\,(21.7\%) \\
+Dominant type & \multicolumn{2}{c}{listicle + product page (70--85\%)} \\
 \midrule
-Same-prompt flip-flop URLs & 262 & 346 \\
-Flip-flop rate (same prompt) & 20.2\% & 21.7\% \\
+\multicolumn{3}{l}{\textit{Rejected $\to$ Cited}} \\
+Unique rejected URLs & 287 & 206 \\
+Promoted (cross-prompt) & 49\,(17.1\%) & 29\,(14.1\%) \\
+Promoted (same prompt) & 24\,(8.4\%) & 11\,(5.3\%) \\
+Dominant type & \multicolumn{2}{c}{news + reference (58--76\%)} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \noindent About one in four additional URLs also appears as cited
-in at least one other run, with near-identical rates across tiers
-(25.96\% vs.\ 25.91\%). On the same prompt across different runs,
-one in five additional URLs switches to cited. The boundary between ``cite inline'' and ``show as supplementary''
-is not stable---and this reshuffling concentrates among product
-pages and listicles, predominantly the commercial content types that brands
-compete over most directly.
+in at least one other run, with near-identical rates across tiers.
+On the same prompt across different runs, one in five switches to cited.
+This reshuffling concentrates among product pages and listicles---the commercial content types that brands compete over most directly.
+
+Rejected URLs can also be promoted, though at lower rates and with a different profile: 
+news articles and reference pages (primarily Wikipedia) dominate. When they are actually promoted most of the time
+they become cited sources instead and not just move to the additional sources section.
 
 %-----------------------------------------------------------------------
 \section{Content DNA \& Selection Drift}
 \label{sec:content-dna}
 
-We enriched not just the URLs that each model cited but also the top-10 SERP results that were \emph{not} selected. This lets us compare what the model had available---the retrieval pool, or ``menu''---with what it actually cited---the ``order''---and ask whether models show systematic structural preferences when selecting sources.
-
-\subsection{The Retrieval Pool}
-\label{sec:menu}
-\label{sec:order}
-
-Tables~\ref{tab:menu-combined} and~\ref{tab:cited-combined} show the type distribution across the full retrieval pool and the cited-only subset, respectively.
-
-\begin{table}[H]
-\centering
-\caption{Retrieval pool (``Menu'') type distribution}
-\label{tab:menu-combined}
-\begin{tabular}{lrrrrrr}
-\toprule
- & \multicolumn{2}{c}{GPT Business} & \multicolumn{2}{c}{GPT Personal} & \multicolumn{2}{c}{Gemini} \\
- & \multicolumn{2}{c}{(N=2,858)} & \multicolumn{2}{c}{(N=2,194)} & \multicolumn{2}{c}{(N=2,939)} \\
-\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
-Type & Count & \% & Count & \% & Count & \% \\
-\midrule
-\textbf{listicle} & 989 & 34.6\% & 885 & 40.3\% & 1,296 & 44.1\% \\
-\textbf{product\_page} & 1,159 & 40.6\% & 808 & 36.8\% & 709 & 24.1\% \\
-news & 156 & 5.5\% & 105 & 4.8\% & 165 & 5.6\% \\
-editorial & 161 & 5.6\% & 121 & 5.5\% & --- & --- \\
-marketplace & --- & --- & --- & --- & 150 & 5.1\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Cited set (``Order'') type distribution}
-\label{tab:cited-combined}
-\begin{tabular}{lrrrrrr}
-\toprule
- & \multicolumn{2}{c}{GPT Business} & \multicolumn{2}{c}{GPT Personal} & \multicolumn{2}{c}{Gemini} \\
- & \multicolumn{2}{c}{(N=1,614)} & \multicolumn{2}{c}{(N=1,444)} & \multicolumn{2}{c}{(N=653)} \\
-\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
-Type & Count & \% & Count & \% & Count & \% \\
-\midrule
-\textbf{listicle} & 589 & 36.5\% & 544 & 37.7\% & 371 & 56.8\% \\
-\textbf{product\_page} & 649 & 40.2\% & 523 & 36.2\% & 148 & 22.7\% \\
-news & 104 & 6.4\% & 98 & 6.8\% & --- & --- \\
-comparison & --- & --- & --- & --- & 26 & 4.0\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Roughly 75\% of the retrieval pool consists of listicles and product pages, and the cited set mirrors this. Gemini leans heavier on listicles (56.8\% of citations vs.\ $\sim$37\% for GPT), consistent with its year-injected fan-out queries pulling in more ``Best X of 2026'' pages (Section~\ref{sec:freshness-subsection}) as opposed to product pages. Within each system, though, the menu-to-order shift in type proportions is modest---neither model radically favours one page type over another. Selection preferences instead show up in structural features \emph{within} those types, which we quantify next.
+We profiled approximately 6{,}500 URLs with our Content DNA enrichment pipeline (Section~\ref{sec:content-dna-pipeline}): every URL each model cited or surfaced internally, plus the top-10 Bing and Google SERP results for the same queries. We focus the structural analysis on listicles and product pages, the two content types where features like tables, numbered lists, and vendor ownership are meaningful. The question is whether models show systematic preferences for these features when deciding what to cite.
 
 \subsection{Selection Drift}
 \label{sec:selection-drift}
 \label{sec:cited-vs-serp}
+\label{sec:menu}
+\label{sec:order}
 
-For each run, every SERP URL (filtered by content type) is classified as Cited or Not-Cited. Each run is an independent selection event: if a URL is cited in run~1 but not run~2, it appears in the Cited group for run~1 and the Not-Cited group for run~2, with zero overlap within any single run. We test eight binary Content DNA features using Welch's two-sample $t$-test (\texttt{freshness\_cue\_strength} binarized at $\geq$3). A per-unique-URL robustness check (deduplicating across runs) produces the same direction of drift for every significant feature.
+For each run, every SERP URL (filtered by content type) is classified as Cited or Not-Cited, with zero overlap within any single run. We test eight binary Content DNA features using Welch's $t$-test (\texttt{freshness\_cue\_strength} binarized at $\geq$3); a per-unique-URL robustness check confirms the same direction of drift for every significant feature. Pool sizes differ across conditions (see table footnotes): Google Top-10 returns a consistent ten organic results per query, whereas Bing Page~1 yields a median of only three (Section~\ref{sec:bing-serp}), making the Bing pools smaller. A smaller pool is not necessarily a weaker comparison, however: the Bing results concentrate in the top ranks where citation probability is highest.
 
 \begin{table}[H]
 \centering
@@ -935,7 +896,7 @@ Freshness ($\geq$3) & $-$0.8\phantom{\,***}     & $+$16.6\,***              & $+
 \end{tabular}
 \end{table}
 
-Across conditions, both models over-select listicles that contain tables, numbered lists, and vendor-owned content. GPT Personal vs Google shows the largest effects (Tables $+$19.7\,pp, $p<0.001$). ChatGPT also shows strong freshness drift (up to $+$16.6\,pp for Personal vs Bing), while Gemini shows none---because 96.7\% of Gemini's fan-out queries already inject year tokens (Section~\ref{sec:freshness-subsection}), pre-filtering the SERP for freshness before selection happens. Clear Authorship diverges directionally: ChatGPT under-selects pages with bylines across all conditions (not significant under the SERP constraint), while Gemini over-selects them ($+$5.9\,pp, $p<0.05$).
+The clearest pattern in Table~\ref{tab:drift-listicles} is that structured content features---tables, numbered lists---are consistently over-selected across all four conditions. Two features diverge between systems rather than converging: Gemini shows no freshness drift because its fan-out queries already pre-filter for recency (Section~\ref{sec:freshness-subsection}), and Sources/Citations splits by tier, with Business over-selecting well-sourced listicles while Personal avoids them.
 
 \begin{table}[H]
 \centering
@@ -961,12 +922,16 @@ Freshness ($\geq$3) & $-$5.0\,*\phantom{**}      & $+$3.7\phantom{\,***}    & $+
 \end{tabular}
 \end{table}
 
-Product pages show flatter drift profiles. They are structurally homogeneous---high vendor-owned rates, low table and pros/cons rates---leaving less for either model to differentiate on. Numbered lists are the most consistent signal, and Gemini product pages show significant under-selection of pages with editorial sources/citations ($-$3.6\,pp, $p<0.001$).
+Product pages (Table~\ref{tab:drift-product-pages}) show flatter profiles---they are structurally homogeneous, leaving less for either model to differentiate on. Numbered lists remain the most consistent signal.
 
 \subsection{Cited vs Additional --- Structural Comparison}
 \label{sec:cited-vs-additional}
 
-The flip-flop analysis (Section~\ref{sec:flip-flop}) showed that one in five additional URLs switches to cited on the same prompt across runs. Are cited and additional links structurally different, or is the boundary arbitrary? Both groups were surfaced by ChatGPT: cited URLs appeared in the response text, additional URLs were shown as supplementary sources. Gemini lacks an ``additional'' category, so this comparison is GPT-only.
+The flip-flop analysis (Section~\ref{sec:flip-flop}) showed that one in five additional URLs switches to cited on the
+ same prompt across runs. Are cited and additional links structurally different, or is the boundary arbitrary? 
+Both groups were shown to user at different levels by ChatGPT: cited URLs appeared in the response text, 
+additional URLs were shown as supplementary sources. 
+Gemini does not have ``additional'' category, so this comparison is GPT-only.
 
 \begin{table}[H]
 \centering
