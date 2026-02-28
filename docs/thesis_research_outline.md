@@ -1382,6 +1382,23 @@ With per-run SERP-constrained methodology applied to both models, **Gemini also 
 
 **Product pages** show flatter drift profiles across both models. Product pages are structurally homogeneous (high vendor-owned rates, low table/pros-cons rates), leaving less for either model to differentiate on. The notable shared signal: both models significantly under-select pages with editorial sources/citations among product pages.
 
+**Features tested but excluded from thesis tables:**
+
+- **`heading_density` (binarized at ≥3):** Ceiling effect — 96–100% of all listicles and product pages score ≥3, leaving no variance to discriminate. No meaningful signal.
+- **`heading_density` (binarized at ≥4):** More variance, but direction is inconsistent across tiers. Business listicles *under-select* high heading density (−4.5pp, p<0.01) while Personal *over-selects* (+3.6pp, p<0.01 Bing / p<0.001 Google). Product pages show no signal on Business, weak positive on Personal vs Google (+3.7pp, p<0.05). Inconsistent direction makes this unreliable as a selection signal — excluded from thesis.
+- **`has_schema_markup`:** Not in the DNA CSV. Schema markup would need to be detected from raw HTML (JSON-LD / microdata), not from the LLM-based page labeling pipeline. Could be valuable future work.
+- **Score fields (`expertise_signal_score`, `readability_score`, `spamminess_score`, `promotional_intensity_score`):** Not tested. Would need binarization thresholds. Could be explored in future work.
+
+**Dedup vs non-dedup sensitivity (within-run fan-out deduplication):**
+
+The thesis uses per-run deduplication: if a URL appears in multiple fan-out SERPs within the same run, it counts once. A non-deduplicated variant (counting each fan-out appearance separately) produces the same directional results but changes significance in 15 cases across all conditions:
+- 7 features gain significance (ns → *)
+- 1 feature loses significance (Pers/Bing Sources/Cit: ** → ns)
+- 7 features upgrade significance level (* → ** or ** → ***)
+- No direction flips on any significant feature
+
+The dedup approach is more conservative (fewer significant results). The thesis reports the deduped version.
+
 ## 3.6 Listicle Extraction & Bias Analysis
 
 The preceding sections examined which *pages* the model selects from the SERP. This section shifts the unit of analysis one level deeper: given that a listicle has been cited, which *products within that listicle* does the model extract, and how faithfully does it reproduce their details? We investigate three phenomena: host-product exclusion, within-listicle position bias, and semantic fidelity of product claims.
