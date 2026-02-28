@@ -808,7 +808,8 @@ The growing trend of Reddit marketing also looks justified:
 reddit domains consistently surface as supplementary sources
 on the Personal tier.
 
-\subsection{Citation Flip-Flop Rate}
+%-----------------------------------------------------------------------
+\section{Citation Flip-Flop Rate}
 \label{sec:flip-flop}
 
 We also wanted to understand whether ChatGPT's source category assignments 
@@ -856,56 +857,6 @@ This bucket of sources, which has a dominating concentration of product pages an
 within the response text interchangeably.
 
 Rejected URLs can also be promoted, though at lower rates (8--17\%) and with a different profile: news articles and reference pages (primarily Wikipedia) dominate, and when promoted they skip the additional category almost entirely, going straight to cited.
-
-\subsection{Cited vs Additional --- Structural Comparison}
-\label{sec:cited-vs-additional}
-
-Are cited and additional links structurally different, or is the boundary arbitrary? Both groups were surfaced by ChatGPT: cited URLs appeared in the response text, additional URLs were shown as supplementary sources. Gemini does not have an ``additional'' category, so this comparison is GPT-only.
-
-\begin{table}[H]
-\centering
-\caption{Cited vs Additional drift --- listicles (Welch's $t$-test)}
-\label{tab:ttest-cited-addl-listicle}
-\begin{tabular}{lrrlrrl}
-\toprule
- & \multicolumn{3}{c}{Business (C=450, A=1{,}489)} & \multicolumn{3}{c}{Personal (C=312, A=1{,}577)} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
-\midrule
-Tables          & $+$5.8pp & 2.20 & $*$   & $+$8.1pp & 2.62 & $**$  \\
-Numbered Lists  & $+$2.9pp & 1.30 & ns    & $+$6.1pp & 2.14 & $*$   \\
-Bullet Points   & $-$0.3pp & $-$0.10 & ns & $+$5.7pp & 1.84 & ns    \\
-Pros/Cons       & $+$3.4pp & 1.26 & ns    & $+$3.6pp & 1.16 & ns    \\
-Clear Authorship& $-$1.5pp & $-$0.58 & ns & $-$6.7pp & $-$2.18 & $*$ \\
-Sources/Citations& $+$0.4pp & 0.17 & ns   & $-$3.8pp & $-$1.93 & ns  \\
-Vendor Owned    & $+$0.4pp & 0.15 & ns    & $-$0.9pp & $-$0.32 & ns  \\
-Freshness ($\geq$3) & $-$0.8pp & $-$0.38 & ns & $-$1.0pp & $-$0.47 & ns \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Cited vs Additional drift --- product pages (Welch's $t$-test)}
-\label{tab:ttest-cited-addl-pp}
-\begin{tabular}{lrrlrrl}
-\toprule
- & \multicolumn{3}{c}{Business (C=790, A=882)} & \multicolumn{3}{c}{Personal (C=970, A=1{,}422)} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
-\midrule
-Bullet Points   & $+$5.9pp & 2.52 & $*$       & $+$9.8pp & 5.15 & $***$ \\
-Numbered Lists  & $+$4.7pp & 1.92 & ns        & $+$7.1pp & 3.63 & $***$ \\
-Tables          & $+$0.0pp & 0.00 & ns         & $+$3.7pp & 3.03 & $**$  \\
-Vendor Owned    & $+$0.9pp & 1.41 & ns         & $+$1.8pp & 2.73 & $**$  \\
-Clear Authorship& $+$0.1pp & 0.21 & ns         & $-$0.8pp & $-$1.11 & ns \\
-Sources/Citations& $+$0.1pp & 0.13 & ns        & $+$0.5pp & 0.68 & ns   \\
-Freshness ($\geq$3) & $-$0.8pp & $-$0.51 & ns & $-$0.5pp & $-$0.29 & ns \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Minimal differentiation. Business listicles show only 1 of 8 features reaching significance; Personal shows 3 of 8. Most structural selection has already occurred upstream at retrieval, leaving the cited and additional pools structurally similar. This explains the flip-flop finding: with no strong structural signal to distinguish cited from additional, the boundary between ``cite inline'' and ``show as supplementary'' is effectively arbitrary for the content types that brands compete over.
 
 %-----------------------------------------------------------------------
 \section{Content DNA \& Selection Drift}
@@ -972,6 +923,56 @@ Freshness ($\geq$3) & $-$5.0\,*\phantom{**}      & $+$3.7\phantom{\,***}    & $+
 \end{table}
 
 Product pages (Table~\ref{tab:drift-product-pages}) show flatter profiles---they are structurally homogeneous, leaving less for either model to differentiate on. Numbered lists remain the most consistent signal.
+
+\subsection{Cited vs Additional --- Structural Comparison}
+\label{sec:cited-vs-additional}
+
+Are cited and additional links structurally different, or is the boundary arbitrary? Both groups were surfaced by ChatGPT: cited URLs appeared in the response text, additional URLs were shown as supplementary sources. Gemini does not have an ``additional'' category, so this comparison is GPT-only.
+
+\begin{table}[H]
+\centering
+\caption{Cited vs Additional drift --- listicles (Welch's $t$-test)}
+\label{tab:ttest-cited-addl-listicle}
+\begin{tabular}{lrrlrrl}
+\toprule
+ & \multicolumn{3}{c}{Business (C=450, A=1{,}489)} & \multicolumn{3}{c}{Personal (C=312, A=1{,}577)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
+\midrule
+Tables          & $+$5.8pp & 2.20 & $*$   & $+$8.1pp & 2.62 & $**$  \\
+Numbered Lists  & $+$2.9pp & 1.30 & ns    & $+$6.1pp & 2.14 & $*$   \\
+Bullet Points   & $-$0.3pp & $-$0.10 & ns & $+$5.7pp & 1.84 & ns    \\
+Pros/Cons       & $+$3.4pp & 1.26 & ns    & $+$3.6pp & 1.16 & ns    \\
+Clear Authorship& $-$1.5pp & $-$0.58 & ns & $-$6.7pp & $-$2.18 & $*$ \\
+Sources/Citations& $+$0.4pp & 0.17 & ns   & $-$3.8pp & $-$1.93 & ns  \\
+Vendor Owned    & $+$0.4pp & 0.15 & ns    & $-$0.9pp & $-$0.32 & ns  \\
+Freshness ($\geq$3) & $-$0.8pp & $-$0.38 & ns & $-$1.0pp & $-$0.47 & ns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Cited vs Additional drift --- product pages (Welch's $t$-test)}
+\label{tab:ttest-cited-addl-pp}
+\begin{tabular}{lrrlrrl}
+\toprule
+ & \multicolumn{3}{c}{Business (C=790, A=882)} & \multicolumn{3}{c}{Personal (C=970, A=1{,}422)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
+\midrule
+Bullet Points   & $+$5.9pp & 2.52 & $*$       & $+$9.8pp & 5.15 & $***$ \\
+Numbered Lists  & $+$4.7pp & 1.92 & ns        & $+$7.1pp & 3.63 & $***$ \\
+Tables          & $+$0.0pp & 0.00 & ns         & $+$3.7pp & 3.03 & $**$  \\
+Vendor Owned    & $+$0.9pp & 1.41 & ns         & $+$1.8pp & 2.73 & $**$  \\
+Clear Authorship& $+$0.1pp & 0.21 & ns         & $-$0.8pp & $-$1.11 & ns \\
+Sources/Citations& $+$0.1pp & 0.13 & ns        & $+$0.5pp & 0.68 & ns   \\
+Freshness ($\geq$3) & $-$0.8pp & $-$0.51 & ns & $-$0.5pp & $-$0.29 & ns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Minimal differentiation. Business listicles show only 1 of 8 features reaching significance; Personal shows 3 of 8. Most structural selection has already occurred upstream at retrieval, leaving the cited and additional pools structurally similar. This explains the flip-flop finding (Section~\ref{sec:flip-flop}): with no strong structural signal to distinguish cited from additional, the boundary between ``cite inline'' and ``show as supplementary'' is effectively arbitrary for the content types that brands compete over.
 
 %-----------------------------------------------------------------------
 \section{Listicle Extraction \& Bias Analysis}
