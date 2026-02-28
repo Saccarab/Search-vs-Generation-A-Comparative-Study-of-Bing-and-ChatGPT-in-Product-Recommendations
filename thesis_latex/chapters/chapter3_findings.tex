@@ -555,7 +555,17 @@ Q7 & 0.1\% & 2 \\
 \end{tabular}
 \end{table}
 
-Not all runs produce queries at every index; Q5+ counts are lower partly because fewer runs generate that many fan-out queries (see Section~2.4.2). The first fan-out query alone accounts for more citations than Q2--Q7 combined.
+Not all runs produce queries at every index; Q5+ counts are lower
+partly because fewer runs generate that many fan-out queries
+(see Section~2.4.2). As discussed in
+Section~\ref{sec:multi-turn}, Gemini's query sequence follows a
+multi-turn research-like pattern: Q1--Q2 are broad category
+reformulations of the user prompt, while Q3+ target specific
+brands discovered in the initial results. The steep citation
+drop-off reflects this progression---later queries are narrow
+brand look-ups that naturally match fewer SERP results. The first
+fan-out query alone accounts for more citations than Q2--Q7
+combined.
 
 Taken together, these findings show that search rank is the single strongest 
 predictor of where LLM citations come from. All three systems favour top-ranked 
@@ -564,29 +574,31 @@ and for ChatGPT both fan-out queries contribute equally. These findings
 further establish that a solid SEO carries a lot weight for AI visibility.
 
 %-----------------------------------------------------------------------
-\section{Invisible Links \& Citation Characteristics}
+\section{Invisible Links (ChatGPT)}
 \label{sec:invisible-links-section}
 
 \subsection{The Visibility Gap: Invisible Links}
 \label{sec:invisible-links}
 
-The overlap tables above show that \textbf{16--22\%} of LLM citations appear in neither
-the Bing nor the Google SERPs we collected. Before examining what these links are,
-it is worth considering why a citation might not match our scrapes.
+The overlap tables above show that \textbf{16--22\%} of ChatGPT citations appear in neither
+the Bing nor the Google SERPs we collected.
 Not every unmatched URL is truly ``invisible''---some fall into
 methodological blind spots:
 
+\begin{enumerate}
 \begin{enumerate}
 \item \textbf{Scrape depth.} Our Bing scrape stops at Rank~200 and Google at
 rank~30, but the overlap charts from Section~\ref{sec:page-dist}
 (especially the Bing one) indicate that going deeper would yield
 more matches. Citations that rank beyond our scrape depth
-will appear unmatched even though they exist in the search index.
+will appear invisible to us even though LLMs might have grabbed them from 
+search engines
 \item \textbf{Bing Page~1 truncation.} Nearly half of our Bing Page~1 scrapes
 returned only 2--3 organic results due to UI pagination instability
 (Section~\ref{sec:bing-pagination-instability}). Results that ChatGPT's
 backend API probably recieves from Bing Search API but our proxy might have missed will also look
 unmatched.
+
 \item \textbf{Other scraping inconsistencies.} Differences between our
 baseline proxies and the live SERP at the moment ChatGPT queried,
 timing gaps between our scrape and the LLM's retrieval, or edge cases
@@ -637,234 +649,180 @@ look at the citations that are not sourced from search engines.
 \subsection{Top Invisible Domains}
 \label{sec:top-invisible-domains}
 
-The following tables combine all citation types
-(cited + additional + rejected) that fall outside our SERP scrapes.
+After filtering out product pages and listicles (groups~1--3
+casualties), Table~\ref{tab:invisible-domains-sidebyside} lists
+the most frequent invisible domains for both tiers.
 
 \begin{table}[H]
 \centering
-\caption{GPT Business --- top invisible domains (all citation types)}
-\label{tab:ent-invisible-all}
-\begin{tabular}{rlr}
+\caption{Top invisible domains by tier (all citation source types)}
+\label{tab:invisible-domains-sidebyside}
+\small
+\begin{tabular}{lr@{\hskip 2em}lr}
 \toprule
-Rank & Domain & Count \\
+\multicolumn{2}{c}{Business} &
+\multicolumn{2}{c}{Personal} \\
+\cmidrule(lr){1-2} \cmidrule(lr){3-4}
+Domain & Count & Domain & Count \\
 \midrule
-1 & en.wikipedia.org & 116 \\
-2 & arxiv.org & 83 \\
-3 & theverge.com & 70 \\
-4 & sfgate.com & 46 \\
-5 & timesofindia.indiatimes.com & 36 \\
-6 & tomsguide.com & 34 \\
-7 & time.com & 34 \\
-8 & lifewire.com & 34 \\
-9 & wired.com & 32 \\
-10 & androidcentral.com & 28 \\
-11 & techradar.com & 27 \\
-12 & nypost.com & 22 \\
-13 & microsoft.com & 15 \\
-14 & windowscentral.com & 11 \\
-15 & tvtechnology.com & 10 \\
+en.wikipedia.org & 109 & en.wikipedia.org & 87 \\
+arxiv.org & 83 & arxiv.org & 69 \\
+theverge.com & 51 & theverge.com & 47 \\
+sfgate.com & 46 & reddit.com & 44 \\
+lifewire.com & 34 & sfgate.com & 42 \\
+time.com & 34 & wired.com & 40 \\
+timesofindia.indiatimes.com & 32 & apps.apple.com & 33 \\
+wired.com & 32 & lifewire.com & 28 \\
+androidcentral.com & 25 & nypost.com & 28 \\
+nypost.com & 22 & timesofindia.indiatimes.com & 27 \\
+techradar.com & 15 & androidcentral.com & 22 \\
+tomsguide.com & 11 & techradar.com & 14 \\
+windowscentral.com & 11 & medium.com & 13 \\
+tvtechnology.com & 10 & tvtechnology.com & 11 \\
+apnews.com & 8 & tomsguide.com & 9 \\
+investopedia.com & 6 & windowscentral.com & 8 \\
+es.wikipedia.org & 6 & chromewebstore.google.com & 8 \\
+sohu.com & 6 & blog.google & 7 \\
+pitchfork.com & 4 & reuters.com & 6 \\
+musicradar.com & 4 & support.google.com & 6 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\noindent Since Personal uses both Bing and Google, the table below
-shows how many Bing-invisible citations per domain were recovered
-by our Google scrape, and how many remain invisible in both indices.
-
-\begin{table}[H]
-\centering
-\caption{GPT Personal --- top invisible domains with Google recovery (all citation types)}
-\label{tab:pers-invisible-all}
-\begin{tabular}{rlrrr}
-\toprule
-Rank & Domain & Truly Invisible & Bing-Invisible & Google Recovered \\
-\midrule
-1 & apps.apple.com & \textbf{94} & 139 & 45 (32\%) \\
-2 & en.wikipedia.org & \textbf{91} & 91 & 0 \\
-3 & reddit.com & \textbf{90} & 216 & \textbf{126} (58\%) \\
-4 & arxiv.org & \textbf{70} & 70 & 0 \\
-5 & theverge.com & \textbf{67} & 67 & 0 \\
-6 & sfgate.com & \textbf{42} & 42 & 0 \\
-7 & wired.com & \textbf{40} & 40 & 0 \\
-8 & tomsguide.com & \textbf{35} & 35 & 0 \\
-9 & timesofindia.indiatimes.com & \textbf{31} & 31 & 0 \\
-10 & nypost.com & \textbf{28} & 28 & 0 \\
-11 & lifewire.com & \textbf{28} & 28 & 0 \\
-12 & techradar.com & \textbf{27} & 29 & 2 \\
-13 & chromewebstore.google.com & \textbf{27} & 54 & \textbf{27} (50\%) \\
-14 & medium.com & \textbf{25} & 29 & 4 \\
-15 & androidcentral.com & \textbf{23} & 23 & 0 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\noindent Both tables share Wikipedia, arxiv, and major tech
-publications, but the differences between tiers are striking.
-Business is almost strictly high-authority tech review sites
-(tomsguide, theverge, wired, techradar), while Personal surfaces
-consumer-oriented content that Business does not: \texttt{reddit.com}
-(216 Bing-invisible, 126 recovered by Google),
-\texttt{apps.apple.com} (139 Bing-invisible),
-\texttt{chromewebstore.google.com} (54 Bing-invisible), and
-\texttt{medium.com} (29)---none of which appear in the Business
-invisible list at all. Personal's invisible profile includes app
-store listings, user-generated content, and community posts,
-while Business sticks to editorial and reference sources.
+\noindent Both tiers share Wikipedia, arxiv, and major tech editorial
+sites, but the differences are striking.
+Business is almost strictly high-authority tech review outlets
+(theverge, wired, tomsguide, techradar), while Personal surfaces
+consumer-oriented content that Business does not:
+\texttt{reddit.com} (rank~4),
+\texttt{apps.apple.com} (rank~7), and
+\texttt{medium.com}---none of which appear in the Business list
+at all. Personal's invisible profile includes app store listings,
+user-generated content, and community posts, while Business sticks
+to editorial and reference sources.
 
 This contrast mirrors the tier differences we observed in
 Section~\ref{sec:global-overlap}: even outside of search results,
-the two ChatGPT tiers appear to draw from different retrieval
-resources tailored to their subscription audience.
+the two ChatGPT tiers draw from different retrieval pools.
 
-However, these counts include \textbf{rejected links}---URLs present
-in the retrieval pool but never surfaced to the user---which are
-overwhelmingly invisible (\textgreater90\% not in our SERPs).
-To separate what the model actually showed users from what it
-silently discarded, we now examine rejected links in detail.
+Invisible links from different source categories (Section~2.3.2) play differense roles in a response, however.
+Some are cited inline, others are listed as supplementary material,
+and many just sit in the network response payloads without being 
+shown in the response at all.
+
 
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\subsection{Rejected Links}
+\subsection{Invisible Domains by Source Category}
+\label{sec:invisible-citation-fate}
 \label{sec:rejected}
-
-Rejected links (Section~2.3.2)
-are URLs present in the retrieval pool but never promoted to cited
-or additional status. They are overwhelmingly invisible: only
-\textasciitilde6--10\% appear in our Bing scrape and
-\textasciitilde3--4\% in Google, compared to 57--86\% for cited
-and additional links.
-
-\begin{table}[H]
-\centering
-\caption{Top rejected domains (Business)}
-\label{tab:rejected-domains}
-\begin{tabular}{rlr}
-\toprule
-Rank & Domain & Rejected Count \\
-\midrule
-1 & arxiv.org & 82 \\
-2 & theverge.com & 49 \\
-3 & en.wikipedia.org & 35 \\
-4 & time.com & 34 \\
-5 & timesofindia.indiatimes.com & 33 \\
-6 & lifewire.com & 32 \\
-7 & techradar.com & 29 \\
-8 & wired.com & 25 \\
-9 & sfgate.com & 24 \\
-10 & nypost.com & 22 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\subsection{User-Facing Invisible Domains}
 \label{sec:cited-invisible-final}
 
-The tables in Section~\ref{sec:top-invisible-domains} included
-rejected links, which inflated the counts for news and reference
-domains. The table below shows only cited and additional links---the
-invisible domains that actually appeared in the user-facing response.
-
 \begin{table}[H]
 \centering
-\caption{User-facing invisible domains (cited + additional, top 10 per tier)}
-\label{tab:cited-invisible-domains}
+\caption{GPT Business --- invisible domains by source category
+(bold marks dominant column per row)}
+\label{tab:ent-invisible-combined}
 \small
-\begin{tabular}{rlr@{\hskip 2em}rlr}
+\begin{tabular}{lrrrr}
 \toprule
-\multicolumn{3}{c}{Business (280)} &
-\multicolumn{3}{c}{Personal (653)} \\
-\cmidrule(lr){1-3} \cmidrule(lr){4-6}
- & Domain & Count & & Domain & Count \\
+Domain & Cited & Addtl & Rejected & Total \\
 \midrule
-1 & en.wikipedia.org & 81 & 1 & reddit.com & 116 \\
-2 & sfgate.com & 22 & 2 & apps.apple.com & 90 \\
-3 & theverge.com & 22 & 3 & en.wikipedia.org & 65 \\
-4 & tomsguide.com & 22 & 4 & chromewebstore.google.com & 29 \\
-5 & androidcentral.com & 8 & 5 & tomsguide.com & 20 \\
-6 & wired.com & 7 & 6 & facebook.com & 14 \\
-7 & techradar.com & 5 & 7 & elevenlabs.io & 11 \\
-8 & chromewebstore.google.com & 4 & 8 & blog.google & 10 \\
-9 & geeky-gadgets.com & 4 & 9 & theverge.com & 10 \\
-10 & timesofindia.indiatimes.com & 4 & 10 & support.google.com & 8 \\
+en.wikipedia.org & \textbf{75} & 0 & 34 & 109 \\
+arxiv.org & 0 & 1 & \textbf{82} & 83 \\
+theverge.com & 13 & 0 & \textbf{38} & 51 \\
+sfgate.com & 22 & 0 & \textbf{24} & 46 \\
+lifewire.com & 2 & 0 & \textbf{32} & 34 \\
+time.com & 0 & 0 & \textbf{34} & 34 \\
+timesofindia.indiatimes.com & 2 & 0 & \textbf{30} & 32 \\
+wired.com & 7 & 0 & \textbf{25} & 32 \\
+androidcentral.com & 7 & 0 & \textbf{18} & 25 \\
+nypost.com & 0 & 0 & \textbf{22} & 22 \\
+techradar.com & 4 & 0 & \textbf{11} & 15 \\
+tomsguide.com & 5 & 0 & \textbf{6} & 11 \\
+sohu.com & 0 & \textbf{4} & 0 & 4 \\
+affordablelanguageservices.com & 0 & \textbf{3} & 0 & 3 \\
+zhuanlan.zhihu.com & 0 & \textbf{2} & 0 & 2 \\
+jeenie.com & 0 & \textbf{2} & 0 & 2 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\noindent Once rejected links and product page / listicle noise are
-stripped, the tier contrast sharpens further. Business is almost
-entirely Wikipedia and tech editorial sites. Personal is led by
-\texttt{reddit.com} (116), app stores (apps.apple.com, chromewebstore,
-play.google.com), and even \texttt{facebook.com}---consumer and
-community sources that do not appear in the Business list at all.
-
-These invisible domains also split sharply by citation type.
-Wikipedia is almost exclusively \emph{cited}: 75 of its 75 Business
-invisible instances and 58 of 61 Personal instances appear inline,
-never as supplementary material.
-The editorial tier (sfgate, theverge) follows the same pattern.
-By contrast, \texttt{reddit.com}'s 42 invisible instances are
-overwhelmingly additional (40 additional vs.\ 2 cited), and
-\texttt{apps.apple.com} skews similarly (26 additional vs.\ 7 cited).
-In short, reference and editorial sources are invisible but still get
-cited inline; UGC and app-store links are invisible \emph{and} stuck in
-supplementary status.
-
-\subsection{Cited vs.\ Additional: Systematic Bias}
-\label{sec:cited-additional-bias}
-
-Not every URL has an equal chance of being cited inline.
-Of all unique additional URLs, \textbf{73--74\%} never appear as
-cited in any run---they are permanently stuck in supplementary status.
-The split is not random; certain page types and domains are
-systematically excluded from inline citation.
-
 \begin{table}[H]
 \centering
-\caption{Page types that skew toward always-additional
-(unique URLs, Personal)}
-\label{tab:always-additional}
+\caption{GPT Personal --- invisible domains by source category
+(bold marks dominant column per row)}
+\label{tab:pers-invisible-combined}
 \small
-\begin{tabular}{lrrr}
+\begin{tabular}{lrrrr}
 \toprule
-Type & Always-Additional & Cited & Ratio \\
+Domain & Cited & Addtl & Rejected & Total \\
 \midrule
-forum / UGC & 137 & 16 & 8.6$\times$ \\
-documentation & 59 & 18 & 3.3$\times$ \\
-marketplace / directory & 40 & 9 & 4.4$\times$ \\
-listicle & 366 & 165 & 2.2$\times$ \\
-\midrule
-product\_page & 252 & 278 & 0.9$\times$ \\
-reference (Wikipedia) & 8 & 28 & 0.3$\times$ \\
+en.wikipedia.org & \textbf{58} & 3 & 26 & 87 \\
+arxiv.org & 1 & 0 & \textbf{68} & 69 \\
+theverge.com & 3 & 0 & \textbf{44} & 47 \\
+reddit.com & 2 & \textbf{40} & 2 & 44 \\
+sfgate.com & 5 & 0 & \textbf{37} & 42 \\
+wired.com & 0 & 0 & \textbf{40} & 40 \\
+apps.apple.com & 7 & \textbf{26} & 0 & 33 \\
+lifewire.com & 6 & 0 & \textbf{22} & 28 \\
+nypost.com & 0 & 0 & \textbf{28} & 28 \\
+timesofindia.indiatimes.com & 0 & 0 & \textbf{27} & 27 \\
+androidcentral.com & 2 & 0 & \textbf{20} & 22 \\
+techradar.com & 2 & 0 & \textbf{12} & 14 \\
+medium.com & 3 & \textbf{10} & 0 & 13 \\
+tvtechnology.com & 0 & 0 & \textbf{11} & 11 \\
+tomsguide.com & 3 & 0 & \textbf{6} & 9 \\
+windowscentral.com & 3 & 0 & \textbf{5} & 8 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\noindent Forum and UGC content (primarily \texttt{reddit.com}:
-96~always-additional vs.\ 11~cited in Personal) almost never makes
-it to inline citation. \texttt{github.com} (9 vs.\ 0 in Business)
-and \texttt{youtube.com} (7 vs.\ 0) are similarly locked out.
-On the other end, product pages and Wikipedia articles are more
-likely to be cited inline than to remain supplementary.
+\noindent Wikipedia is almost exclusively cited inline 75 of 75
+Business invisible instances and 58 of 61 Personal instances appear
+as inline citations, never as supplementary material.
+\texttt{arxiv.org}, \texttt{nypost.com}, and \texttt{time.com}
+seem to be fetched mostly as sources we named as "rejected". 
+We observe them in the network response but we don't see them as inline citations
+or in user visible citations display menu.
+but never show up in the response text or source list.
+Why the model retrieves sources it never surfaces is unclear. They
+maybe serving as background context for response generation.
 
-This means the cited/additional boundary is partly systematic
-(some types are effectively blocked from inline citation) and
-partly stochastic---which is what the flip-flop analysis below
-measures.
+On the Personal tier, reddit appears mostly as an
+additional source but is still rarely cited inline.
+\texttt{reddit.com}, \texttt{apps.apple.com}, and
+\texttt{medium.com} make it into the user-visible citation list,
+but they rarely earn direct inline citations.
+Tech editorial sites (sfgate, theverge, wired) show a mixed
+profile---they are cited at moderate rates but also appear
+frequently among rejected links.
+
+Our main takeaway is that if
+brands can establish presence on high-authority sources like Wikipedia
+and major news or tech websites, they gain a path into ChatGPT
+citations that bypasses conventional SEO competition---especially
+valuable when targeting B2B customers on the Business tier.
+Wikipedia carries similar weight on Personal, but tech editorial
+sites, while still providing some edge, do not appear as decisive.
+The growing trend of Reddit marketing also looks justified:
+reddit domains consistently surface as supplementary sources
+on the Personal tier.
 
 \subsection{Citation Flip-Flop Rate}
 \label{sec:flip-flop}
 
-For the URLs that \emph{can} cross the boundary, the model's
-decision is stochastic: the same URL may be cited inline in one
-run and demoted to additional in the next.
-We measure this \textbf{flip-flop rate} at two scopes.
-
-\paragraph{Cross-prompt flip-flop.}
-Of all unique additional URLs across each account type, we identify those that also appear as cited in at least one other run (any prompt).
+We also wanted to understand if source categories are fixed
+or if an additional link can become cited in a different run.
+The tables above suggest that most invisible domains sit in a
+fixed lane. Wikipedia is always cited, arxiv is
+always rejected, reddit is mostly additional. But for listicles
+and product pages the picture is different: a URL that appears as
+additional in one response can be promoted to cited in another.
+We call this a \textbf{flip-flop}.
 
 \begin{table}[H]
 \centering
-\caption{Cross-prompt flip-flop rate: additional URLs that appear as cited in at least one other run.}
+\caption{Flip-flop rates}
 \label{tab:flipflop-cross}
 \begin{tabular}{lcc}
 \toprule
@@ -872,35 +830,22 @@ Of all unique additional URLs across each account type, we identify those that a
 \midrule
 Unique additional URLs & 1{,}298 & 1{,}594 \\
 Also cited in $\geq$1 other run & 337 & 413 \\
-\textbf{Flip-flop rate} & \textbf{25.96\%} & \textbf{25.91\%} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The near-identical rates (25.96\% vs 25.91\%) are striking given the different retrieval indices (Bing-only for Business, Bing+Google for Personal). Since both account types execute the same 79 prompts targeting the same product categories, their URL pools overlap substantially. The convergence likely reflects the model applying a consistent citation threshold to similar URL pools.
-
-\paragraph{Per-prompt flip-flop.}
-Restricting to same-prompt, different-run flip-flops isolates the model's run-to-run stochasticity from cross-query URL reuse.
-
-\begin{table}[H]
-\centering
-\caption{Per-prompt flip-flop rate: URLs that switch between additional and cited across different runs of the same prompt.}
-\label{tab:flipflop-perprompt}
-\begin{tabular}{lcc}
-\toprule
-& \textbf{Business} & \textbf{Personal} \\
+Flip-flop rate (cross-prompt) & 25.96\% & 25.91\% \\
 \midrule
-Per-prompt flip-flop URLs & 262 & 346 \\
-\textbf{Flip-flop rate} & \textbf{20.2\%} & \textbf{21.7\%} \\
-Prompts with $\geq$1 flip-flop & 71/79 (89.9\%) & 69/79 (87.3\%) \\
-Avg flip-flops per prompt & 4.9 (max 11) & 7.1 (max 17) \\
+Same-prompt flip-flop URLs & 262 & 346 \\
+Flip-flop rate (same prompt) & 20.2\% & 21.7\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Roughly 78\% of the cross-prompt flip-flop effect is already visible within-prompt; most flip-flopping is driven by run-to-run stochasticity on the same query, not by different queries sharing URLs. With only 3 runs per prompt, nearly 90\% of prompts already exhibit at least one flip-flop; the observed 20--22\% rate is likely a lower bound.
-
-The finding confirms that the model's boundary between ``cite inline'' and ``show as supplementary'' is genuinely stochastic: same query, same model, different outcome. The Content DNA analysis in Section~\ref{sec:cited-vs-additional} reinforces this interpretation: the Cited vs.\ Additional structural comparison shows minimal differentiation (Business listicles: only 1 of 8 features significant; Personal listicles: 3 of 8), meaning the model's own enrichment profile reveals no strong signal distinguishing the two categories. If cited and additional links are structurally near-identical, the boundary between them is effectively a near-random threshold rather than a signal-driven decision. A brand's source may be cited inline in one session and demoted to additional in the next, even for identical queries.
+\noindent About one in four additional URLs also appears as cited
+in at least one other run, with near-identical rates across tiers
+(25.96\% vs.\ 25.91\%). Even when we restrict to the same prompt
+across different runs, one in five additional URLs switches to
+cited. The boundary between ``cite inline'' and ``show as
+supplementary'' is not stable: the model reshuffles which links
+earn inline citation and which are demoted to supplementary,
+even for identical queries.
 
 %-----------------------------------------------------------------------
 \section{Content DNA Profile \& Cited vs.\ Additional Comparison}
