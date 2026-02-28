@@ -862,7 +862,13 @@ Rejected URLs can also be promoted, though at lower rates (8--17\%) and with a d
 \section{Content DNA \& Selection Drift}
 \label{sec:content-dna}
 
-We profiled approximately 6{,}500 URLs with our Content DNA enrichment pipeline (Section~\ref{sec:content-dna-pipeline}): every URL each model cited or surfaced internally, plus the top-10 Bing and Google SERP results for the same queries. We focus the structural analysis on listicles and product pages, the two content types where features like tables, numbered lists, and vendor ownership are meaningful. The question is whether models show systematic preferences for these features when deciding what to cite.
+The previous sections examined which pages models select from the SERP. Here we ask a different question: do models prefer pages with specific structural characteristics?
+
+We profiled approximately 6{,}500 URLs with our Content DNA enrichment pipeline (Section~\ref{sec:labeling-pipeline}):
+ every URL each model cited or surfaced internally, plus the top-10 Bing and Google organic results for the same queries.
+  Enriching both cited and non-cited URLs lets us compare what the model had available against what it 
+  actually selected. We restrict this analysis to listicles and product pages where 
+  having structural content features like tables, numbered lists, and pros/cons sections are meaningful differentiators.
 
 \subsection{Cited vs Non-Cited in SERP}
 \label{sec:selection-drift}
@@ -870,8 +876,14 @@ We profiled approximately 6{,}500 URLs with our Content DNA enrichment pipeline 
 \label{sec:menu}
 \label{sec:order}
 
-To test this, we compare cited URLs against non-cited URLs from the same SERP. For each run, every SERP URL of the relevant type is classified as Cited or Not-Cited; we then test eight binary Content DNA features using Welch's $t$-test (\texttt{freshness\_cue\_strength} binarized at $\geq$3). A per-unique-URL robustness check confirms the same direction of drift for every significant feature. Pool sizes differ across conditions (see table footnotes): Google Top-10 returns a consistent ten organic results per query, whereas Bing Page~1 yields a median of only three (Section~\ref{sec:bing-serp}), making the Bing pools smaller but concentrated in the top ranks where citation probability is highest.
+For each run, we pool the top-10 results across all fan-out queries and classify
+ each unique URL as Cited-Inline or Not-Cited. A URL cited in run~1 but not run~2 contributes to both buckets.
 
+Google Top-10 returns a consistent ten organic results per query but Bing Page~1 yields
+a mean of only four organic results due to UI scraping limitations we have covered
+ (Section~\ref{sec:bing-pagination-instability}), making the Bing pools considerably smaller. 
+ Though this concentrates the comparison in the top ranks where citation probability is highest,
+ so we end up comparing results of a similar ranking range.
 \begin{table}[H]
 \centering
 \caption{Selection drift --- listicles (pp, Welch's $t$-test)}
@@ -892,11 +904,11 @@ Clear Author.       & $-$1.8\phantom{\,***}     & $-$11.9\phantom{\,***}   & $-$
 Freshness ($\geq$3) & $-$0.8\phantom{\,***}     & $+$16.6\,***              & $+$9.4\,***              & $-$0.1\phantom{\,***}   \\
 \bottomrule
 \multicolumn{5}{l}{\scriptsize *\,$p<.05$;\; **\,$p<.01$;\; ***\,$p<.001$} \\
-\multicolumn{5}{l}{\scriptsize Cited/NC $N$: Biz 242/858, Pers-Bing 53/959, Pers-Goog 160/2{,}100, Gem 468/3{,}349.}
+\multicolumn{5}{l}{\scriptsize Cited / Not-Cited $N$: Biz 242/858, Pers-Bing 53/959, Pers-Goog 160/2{,}100, Gem 468/3{,}349.}
 \end{tabular}
 \end{table}
 
-The clearest pattern in Table~\ref{tab:drift-listicles} is that structured content features---tables, numbered lists---are consistently over-selected across all four conditions. Two features diverge between systems rather than converging: Gemini shows no freshness drift because its fan-out queries already pre-filter for recency (Section~\ref{sec:freshness-subsection}), and Sources/Citations splits by tier, with Business over-selecting well-sourced listicles while Personal avoids them.
+Structured content features (tables, numbered lists, bullet points) are over-selected across almost all conditions. Gemini shows no significant freshness drift; this is consistent with its fan-out queries injecting year tokens that pre-filter the SERP for recency before selection occurs (Section~\ref{sec:freshness-subsection}). GPT Personal shows a robust freshness preference that is significant against both Bing and Google independently, while GPT Business shows none. Vendor-owned pages are also consistently over-selected, suggesting that brands produce more structurally thorough content that LLMs prefer, possibly because the models are cautious about surfacing commercial results that lack supporting detail.
 
 \begin{table}[H]
 \centering
@@ -911,23 +923,22 @@ The clearest pattern in Table~\ref{tab:drift-listicles} is that structured conte
 Tables              & $+$0.6\phantom{\,***}     & $+$2.8\phantom{\,***}    & $+$3.1\,**\phantom{*}    & $-$4.4\,**\phantom{*}   \\
 Numbered Lists      & $+$11.4\,***               & $-$4.6\phantom{\,***}    & $+$6.8\,***              & $+$8.8\,*\phantom{**}   \\
 Bullet Points       & $+$6.0\phantom{\,***}      & $+$7.5\phantom{\,***}    & $+$7.8\,***              & $+$1.7\phantom{\,***}   \\
-Vendor Owned        & $-$0.7\phantom{\,***}      & $+$0.6\,*\phantom{**}    & $+$1.1\phantom{\,***}    & $+$3.0\,***             \\
 Pros/Cons           & $+$2.0\,*\phantom{**}      & $-$0.0\phantom{\,***}    & $-$0.1\phantom{\,***}    & $+$1.1\phantom{\,***}   \\
 Sources/Cit.        & $-$0.8\phantom{\,***}      & $+$1.1\phantom{\,***}    & $-$0.2\phantom{\,***}    & $-$3.6\,***             \\
 Clear Author.       & $-$0.4\phantom{\,***}      & $+$0.5\phantom{\,***}    & $-$0.4\phantom{\,***}    & $-$1.5\phantom{\,***}   \\
 Freshness ($\geq$3) & $-$5.0\,*\phantom{**}      & $+$3.7\phantom{\,***}    & $+$2.1\phantom{\,***}    & $-$2.2\phantom{\,***}   \\
 \bottomrule
 \multicolumn{5}{l}{\scriptsize *\,$p<.05$;\; **\,$p<.01$;\; ***\,$p<.001$} \\
-\multicolumn{5}{l}{\scriptsize Cited/NC $N$: Biz 273/1{,}038, Pers-Bing 180/1{,}065, Pers-Goog 728/2{,}938, Gem 181/1{,}522.}
+\multicolumn{5}{l}{\scriptsize Cited / Not-Cited $N$: Biz 273/1{,}038, Pers-Bing 180/1{,}065, Pers-Goog 728/2{,}938, Gem 181/1{,}522.}
 \end{tabular}
 \end{table}
 
-Product pages (Table~\ref{tab:drift-product-pages}) show flatter profiles---they are structurally homogeneous, leaving less for either model to differentiate on. Numbered lists remain the most consistent signal.
+Product pages show flatter and less consistent drift profiles, making it hard to draw conclusive statements apart from numbered lists, which are over-selected in three of four conditions. Product pages are structurally more homogeneous, leaving less for either model to differentiate on.
 
 \subsection{Cited vs Additional --- Structural Comparison}
 \label{sec:cited-vs-additional}
 
-Are cited and additional links structurally different, or is the boundary arbitrary? Both groups were surfaced by ChatGPT: cited URLs appeared in the response text, additional URLs were shown as supplementary sources. Gemini does not have an ``additional'' category, so this comparison is GPT-only.
+Both groups here were surfaced by ChatGPT: cited URLs appeared inline in the response text, additional URLs were shown as supplementary sources. Gemini does not have an ``additional'' category, so this comparison is GPT-only.
 
 \begin{table}[H]
 \centering
@@ -964,7 +975,6 @@ Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
 Bullet Points   & $+$5.9pp & 2.52 & $*$       & $+$9.8pp & 5.15 & $***$ \\
 Numbered Lists  & $+$4.7pp & 1.92 & ns        & $+$7.1pp & 3.63 & $***$ \\
 Tables          & $+$0.0pp & 0.00 & ns         & $+$3.7pp & 3.03 & $**$  \\
-Vendor Owned    & $+$0.9pp & 1.41 & ns         & $+$1.8pp & 2.73 & $**$  \\
 Clear Authorship& $+$0.1pp & 0.21 & ns         & $-$0.8pp & $-$1.11 & ns \\
 Sources/Citations& $+$0.1pp & 0.13 & ns        & $+$0.5pp & 0.68 & ns   \\
 Freshness ($\geq$3) & $-$0.8pp & $-$0.51 & ns & $-$0.5pp & $-$0.29 & ns \\
@@ -972,80 +982,93 @@ Freshness ($\geq$3) & $-$0.8pp & $-$0.51 & ns & $-$0.5pp & $-$0.29 & ns \\
 \end{tabular}
 \end{table}
 
-Minimal differentiation. Business listicles show only 1 of 8 features reaching significance; Personal shows 3 of 8. Most structural selection has already occurred upstream at retrieval, leaving the cited and additional pools structurally similar. This explains the flip-flop finding (Section~\ref{sec:flip-flop}): with no strong structural signal to distinguish cited from additional, the boundary between ``cite inline'' and ``show as supplementary'' is effectively arbitrary for the content types that brands compete over.
+Listicle drifts are modest compared to the SERP-level analysis above. 
+Product pages show stronger cited-vs-additional differentiation on the Personal 
+tier, particularly for bullet points and numbered lists. Overall the two pools 
+are structurally similar, which supplements the flip-flop finding (Section~\ref{sec:flip-flop}) claiming that these links can be interchangeable.
 
 %-----------------------------------------------------------------------
 \section{Listicle Extraction \& Bias Analysis}
 \label{sec:listicle-bias}
 
-\subsection{Content-Size Context (Listicles vs Product Pages)}
-\label{sec:content-size}
+The preceding sections examined which \emph{pages} the model selects from the SERP.
+This section shifts one level deeper: given that a listicle has been cited,
+which \emph{products within that listicle} does the model extract, and how faithfully
+does it reproduce their details?
 
-We report page-length as \textbf{context} (not a grounding budget claim): listicles are longer and more heterogeneous than vendor pages, which can influence extractability and selection behavior.
+\subsection{Selection Order vs.\ Listicle Rank}
+\label{sec:reranking}
+\label{sec:content-size}
 
 \begin{table}[H]
 \centering
-\caption{Content size by page type bucket}
+\caption{Median content size by page type}
 \label{tab:content-size}
-\begin{tabular}{lrrr}
+\begin{tabular}{lr}
 \toprule
-Bucket & Median words & Median bytes & Coverage \\
+Page type & Median words \\
 \midrule
-\texttt{all::listicle} & 2,094 & 14,645 & 99.7\% \\
-\texttt{all::product\_page} & 927 & 6,593 & 97.7\% \\
-\texttt{menu\_any::listicle} & 2,111 & 14,747 & 99.8\% \\
-\texttt{menu\_any::product\_page} & 930 & 6,614 & 98.0\% \\
-\texttt{cited\_any::listicle} & 2,182 & 15,343 & 99.5\% \\
-\texttt{cited\_any::product\_page} & 925 & 6,563 & 96.1\% \\
+Listicle & 2{,}094 \\
+Product page & 927 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Interpretation}: listicles are \textasciitilde2$\times$ longer than product pages (median words). Menu vs cited size differences are small, suggesting selection effects are not driven by length alone.
+The length difference matters for what the model actually processes: \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 3K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
 
-\textbf{Relation to grounding budget research}: Our table measures \textbf{full page length} of candidate/cited sources, not the snippet-level context that is actually injected into the model's context window. For context on the system-level constraints these pages operate within: \textcite{petrovic2025grounding} report a per-query grounding budget of \textasciitilde2,000 words for Gemini (median 1,929, p95 2,798), with coverage inversely proportional to page length (61\% for pages under 1K words, dropping to 13\% for pages over 3K words). \textcite{petrovic2025filter} found that roughly one-third of source content (32\%) survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} analyzed 1.2 million ChatGPT search results and found that 44.2\% of citations originate from the first 30\% of page content, with citation likelihood correlating with definitive language and question-answer structure. These studies collectively describe how AI search systems ingest and compress web content, a pipeline our content size and Content DNA data sit within, but do not directly measure.
-
-The preceding sections examined which \emph{pages} the model selects from the SERP. This section shifts the unit of analysis one level deeper: given that a listicle has been cited, which \emph{products within that listicle} does the model extract, and how faithfully does it reproduce their details? We investigate three phenomena: host-product exclusion, within-listicle position bias, and semantic fidelity of product claims.
-
-\subsection{Scope: Solo-Cited Claims Only (Multi-Citation Filtering)}
+Based on these findings, for an average listicle of over 2{,}000 words, products listed later may receive less model attention. Since attributing a product recommendation to a specific source is difficult when multiple links support the same claim, we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
 \label{sec:solo-cited}
 
-Listicle bias analysis requires attributing a product recommendation to a specific source. When a claim is backed by multiple citations (e.g., a listicle \textit{and} a product page), it becomes ambiguous which source drove the selection: was the product picked because it appeared in the listicle, or because the model also had the vendor's own page? To avoid this attribution problem, the analyses in Sections~\ref{sec:self-promo}--\ref{sec:semantic-fidelity} are restricted to \textbf{solo-cited claims}: product recommendations backed by exactly one URL.
+For each solo-cited claim, we ran an LLM-as-judge prompt through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}116 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the Content DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}).
 
-This filtering excludes a non-trivial share of claims. GPT produces 458 multi-cited claims out of 4,296 total claim occurrences (10.7\%), while Gemini produces 788 out of 2,287 (34.5\%). Among multi-cited claims involving at least one listicle, approximately 20\% are mixed listicle+product-page citations (GPT: 21.1\%, Gemini: 19.6\%).
+\begin{table}[H]
+\centering
+\caption{Share of selected products originating from top listicle positions}
+\label{tab:listicle-rank-bias}
+\begin{tabular}{l cccc}
+\toprule
+& Uniform \#1 & \#1 & Top-3 & Top-5 \\
+\midrule
+GPT Business ($n{=}391$) & 10.9\% & 18.9\% & 50.9\% & 76.0\% \\
+GPT Personal ($n{=}205$) & 13.5\% & 31.7\% & 60.5\% & 81.0\% \\
+Gemini ($n{=}365$) & 13.8\% & 34.8\% & 61.1\% & 79.5\% \\
+\bottomrule
+\multicolumn{5}{l}{\scriptsize Uniform \#1 = mean $1/N$ where $N$ is the listicle size}
+\end{tabular}
+\end{table}
+
+We compare each product's position in the model's response against its rank in the source listicle. Exact rank alignment is low: Gemini matches in 29.5\% of cases and GPT in 27.9\%, so models \textbf{re-rank} rather than preserve source order. Despite re-ranking, they strongly over-select from the top: the \#1 item is selected at 1.7--2.5$\times$ the uniform baseline, and the top-5 account for 76--81\% of all selections. This mirrors the SERP-level position bias (Section~\ref{sec:position-bias}): position bias operates at two nested levels, SERP rank and within-listicle rank. Items further down a long listicle may simply never enter the context window the model processes.
 
 \subsection{Self-Promotion Bias \& Host Exclusion}
 \label{sec:self-promo}
 
-When a model cites a listicle authored by a vendor does the model include the host's own product in its recommendations? We define \textit{host exclusion} as the rate at which the host's product is omitted from the model's response despite being present in the listicle.
-
-Table~\ref{tab:host-exclusion} summarizes the results across solo-cited listicles where the host's own product was identified in the source.
+Roughly 62\% of listicles in our dataset are vendor-owned, so we wanted to see if models apply any bias for or against the products of the host domain.
 
 \begin{table}[H]
 \centering
-\caption{Host-product exclusion in solo-cited listicles. ``Bias multiplier'' compares the observed host selection rate against a uniform random baseline ($1/\bar{N}$, where $\bar{N}$ is the mean number of products in the listicle).}
+\caption{Host-product exclusion in solo-cited listicles}
 \label{tab:host-exclusion}
 \begin{tabular}{lcc}
 \toprule
 & \textbf{Gemini} & \textbf{GPT} \\
 \midrule
 Listicles with host product present & 405 & 431 \\
-Host \textbf{omitted} from response & 291 (71.9\%) & 274 (63.6\%) \\
-Host \textbf{included} in response & 114 (28.1\%) & 157 (36.4\%) \\
+Host omitted from response & 291 (71.9\%) & 274 (63.6\%) \\
+Host included in response & 114 (28.1\%) & 157 (36.4\%) \\
 \midrule
 Mean listicle size ($\bar{N}$) & 8.1 & 9.3 \\
 Random baseline ($1/\bar{N}$) & 12.4\% & 10.7\% \\
 Host selection rate & 28.1\% & 36.4\% \\
-\textbf{Bias multiplier} & \textbf{2.27$\times$} & \textbf{3.40$\times$} \\
+Bias multiplier & 2.27$\times$ & 3.40$\times$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-At first glance, these numbers suggest a dual pattern: dominant omission, yet a 2--3$\times$ selection advantage when the host product \emph{is} included. However, a position-controlled analysis reveals that this apparent ``host bias'' is largely explained by rank privilege. Among the subset of cases where the host product's listicle rank could be determined (via model response or evidence quotes), host products sit at rank~\#1 in over 93\% of cases for both GPT and Gemini; vendors overwhelmingly list their own product first. Comparing selection rates at the same position yields a much smaller residual:
+The 2--3$\times$ bias multiplier is misleading. Vendors overwhelmingly list their own product at rank~\#1 (over 93\% of cases for both GPT and Gemini), and rank~\#1 is over-selected regardless of host status (Section~\ref{sec:reranking}). Controlling for position:
 
 \begin{table}[H]
 \centering
-\caption{Host vs.\ non-host selection rates at listicle rank~\#1. The ``residual'' column shows the difference after controlling for position; compare against the raw bias multipliers in Table~\ref{tab:host-exclusion}.}
+\caption{Host vs non-host selection at listicle rank \#1}
 \label{tab:host-position-controlled}
 \begin{tabular}{lccc}
 \toprule
@@ -1057,55 +1080,16 @@ Gemini & 23.1\% (94/407) & 20.5\% (15/73)  & +2.5\,pp \\
 \end{tabular}
 \end{table}
 
-The 2.3--3.4$\times$ bias multiplier in Table~\ref{tab:host-exclusion} compares host selection against a \emph{uniform random} baseline across all ranks, but because hosts sit at rank~\#1 and rank~\#1 is over-selected regardless of host status (Section~\ref{sec:reranking}), the multiplier conflates position privilege with host identity. Once position is controlled, the residual advantage shrinks to +2.5--4.7\,pp, a modest effect that may reflect the host's more self favored description rather than any systematic host bias.
+The residual advantage shrinks to +2.5--4.7\,pp, likely explained by the more favorable language host domains use when describing their own products. The 64--72\% host omission rate tells the same story from the other side: non-host rank~\#1 items are skipped at even higher rates (79.5--85.7\%).
 
-Conversely, the 64--72\% ``omission rate'' also requires reframing: non-host rank~\#1 items are skipped at even higher rates (79.5--85.7\%). Models do not single out hosts for exclusion; they simply skip rank~\#1 items frequently, and host products happen to sit there.
-
-\subsection{Selection Order vs.\ Listicle Rank (The ``Re-Ranking'' Effect)}
-\label{sec:reranking}
-
-Do models preserve the internal ranking of a listicle when selecting products, or do they re-order items in their response? We measure this in two ways: \textit{rank alignment} (exact position match) and \textit{top-item skew} (over-selection from the top of the listicle).
-
-\paragraph{Rank alignment.} We compare each product's position in the model's response (1st, 2nd, 3rd, \ldots) against its rank in the source listicle, restricting to cases where \texttt{listicle\_rank} is recoverable. Exact alignment is low: Gemini matches in 29.5\% of cases (108/366) and GPT in 27.9\% (166/596). Models therefore \textbf{re-rank} listicle items rather than preserving the source order.
-
-\paragraph{Top-item skew.} Despite re-ranking, models strongly over-select items from the top of the listicle. Table~\ref{tab:listicle-rank-bias} reports the share of selected products originating from the top ranks, compared against a uniform baseline computed per-item as $\min(K/N,\;1)$ where $N$ is the listicle size.
-
-\begin{table}[H]
-\centering
-\caption{Listicle rank bias: observed share of selected products from the top-$K$ positions, with lift relative to uniform random selection. All systems over-select the \#1 item, with Gemini and GPT Personal showing the strongest skew.}
-\label{tab:listicle-rank-bias}
-\begin{tabular}{l ccc ccc}
-\toprule
-& \multicolumn{3}{c}{\textbf{Observed Rate}} & \multicolumn{3}{c}{\textbf{Lift vs.\ Uniform}} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-& \#1 & Top-3 & Top-5 & \#1 & Top-3 & Top-5 \\
-\midrule
-GPT Business ($n{=}391$) & 18.9\% & 50.9\% & 76.0\% & 1.73$\times$ & 1.55$\times$ & 1.40$\times$ \\
-GPT Personal ($n{=}205$) & 31.7\% & 60.5\% & 81.0\% & 2.34$\times$ & 1.49$\times$ & 1.22$\times$ \\
-Gemini ($n{=}365$) & 34.8\% & 61.1\% & 79.5\% & 2.53$\times$ & 1.48$\times$ & 1.18$\times$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The \#1 item in a listicle is selected at 1.7--2.5$\times$ the uniform baseline, and the top-5 items account for 76--81\% of all selections despite comprising roughly half the listicle on average. This mirrors the SERP-level position bias observed in Section~\ref{sec:position-bias}: just as models disproportionately cite Rank~1 in the SERP, they disproportionately extract the \#1 product from within a cited listicle. Position bias thus operates at two nested levels: SERP rank and within-listicle rank.
-
-A plausible mechanism follows from the grounding-budget research reviewed in Section~\ref{sec:content-size}: because retrieval systems allocate disproportionate content budget to early page content \parencite{petrovic2025grounding,indig2026attention}, items listed further down a long listicle may never enter the context window the model actually processes. The top-item skew we observe is therefore not merely a learned preference but may reflect an architectural constraint.
-
-\subsection{Semantic Fidelity: Reading Comprehension vs.\ Attribution}
+\subsection{Semantic Fidelity}
 \label{sec:semantic-fidelity}
 
-The final question in the listicle pipeline is whether models accurately reproduce the details of products they extract. We decompose fidelity into two distinct phenomena:
-
-\begin{enumerate}
-    \item \textbf{Attribution accuracy}: Does the cited listicle actually contain the product the model claims it does?
-    \item \textbf{Reading comprehension} (pure fidelity): When the product is present, how accurately does the model extract its details?
-\end{enumerate}
-
-We evaluate both using an LLM-as-judge approach, scoring fidelity on a 1--5 scale by comparing each product claim against the source listicle text. A single inline prompt performs all tasks per case: fidelity scoring, listicle presence verification, rank extraction, host-product detection, and roster-item classification. Cross-model validation (all 1{,}116 claims judged by both Gemini 2.5 Flash and GPT-5-mini) confirmed that structural fields agree at 93--100\% and fidelity scores agree within $\pm$1 in 93.9\% of 1{,}826 matched product pairs, consistent with the DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}). Table~\ref{tab:semantic-fidelity} reports the results.
+The final question is whether models accurately reproduce the details of products they extract. Using the same LLM-as-judge pipeline, we score fidelity on a 1--5 scale by comparing each product claim against the source listicle text.
 
 \begin{table}[H]
 \centering
-\caption{Semantic fidelity of solo-cited listicle product claims. ``Pure fidelity'' is the mean score (1--5 scale) for products confirmed present in the source. ``Attribution failure'' is the share of product items where the cited listicle does not contain the claimed product.}
+\caption{Semantic fidelity of solo-cited listicle claims}
 \label{tab:semantic-fidelity}
 \begin{tabular}{lcc}
 \toprule
@@ -1113,20 +1097,13 @@ We evaluate both using an LLM-as-judge approach, scoring fidelity on a 1--5 scal
 \midrule
 Product items evaluated & 421 & 689 \\
 Product present in source & 394 (93.6\%) & 684 (99.3\%) \\
-\textbf{Attribution failure} & \textbf{27 (6.4\%)} & \textbf{5 (0.7\%)} \\
-\quad of which: table-attribution collapse & 15 & 0 \\
+Attribution failure & 27 (6.4\%) & 5 (0.7\%) \\
 \midrule
-\textbf{Pure fidelity} (present only) & \textbf{4.81 / 5.0} & \textbf{4.71 / 5.0} \\
+Pure fidelity (present only) & 4.81 / 5.0 & 4.71 / 5.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Both models achieve near-perfect reading comprehension when the product is present in the source (4.71--4.81 out of 5.0). The primary failure mode is not misunderstanding but \textit{mis-attribution}: the model recommends a product and attaches a citation, but the cited listicle does not actually contain that product. All 44 cases initially flagged by the LLM judge were manually verified by inspecting the cited listicle page, the raw grounding metadata, and the model's response text. Of these, 12 proved to be false positives caused by the LLM judge missing products present under variant names, the GPT product-extraction pipeline misidentifying category descriptors as product names, or incomplete page fetches. The remaining 32 cases (27~Gemini, 5~GPT) are genuine attribution failures, yielding verified rates of 6.4\% for Gemini and 0.7\% for GPT. We note that this manual audit covers only the positive cases (items the judge flagged as failures); the negative cases, where the judge confirmed the product was present, were not independently re-checked, so the true failure rate may be marginally higher if the judge produced false negatives.
+Reading comprehension is high: when the product is present in the source, both models score 4.71--4.81 out of 5.0. Fidelity scores were validated via cross-model agreement (GPT-5-mini vs Gemini 2.5 Flash on all 1{,}116 claims), with scores matching within $\pm$1 in 93.9\% of cases.
 
-Critically, 15 of Gemini's 27 failures share a single root cause: \textit{table-attribution collapse}. When Gemini generates a summary comparison table, its grounding API assigns the entire table to a single source chunk, even though individual products in the table were correctly attributed to different sources earlier in the response. This is a systematic artefact of how Gemini's grounding infrastructure handles tabular output rather than a hallucination or comprehension failure. Excluding these table cases would reduce Gemini's rate to 2.9\% (12/421).
-
-Once table-attribution collapse is set aside, the genuine content-level failure rate (cases where a model cites a source for a product that truly does not appear anywhere on that page) drops to 2.9\% for Gemini (12/421) and 0.7\% for GPT (5/689). In other words, across 1{,}110 solo-cited product claims, only 17 represent cases where the model pointed a reader to a source that could not substantiate the recommendation.
-
-For context, \textcite{wu2025sourcecheckup} evaluated seven LLMs on medical citation accuracy using a substantially more rigorous verification framework (800~questions, 58K~statement--source pairs, physician validation) and found that retrieval-augmented models (GPT-4o and Gemini Ultra with web search) substantially outperform API-only models on both URL validity and statement-level support, yet even their best-performing configuration (GPT-4o with RAG) achieved only $\sim$70\% statement-level support. Our analysis is narrower in scope, limited to solo-cited listicle product claims with an LLM judge and manual review rather than a comprehensive statement-level verification pipeline, and operates in a different domain (commercial products vs.\ medical queries) on newer model generations. Direct comparison of absolute rates is therefore not meaningful, but the directional finding is consistent: grounding infrastructure materially reduces citation errors compared to parametric-only generation, reinforcing the broader argument that retrieval-augmented architectures remain essential for trustworthy AI-mediated search.
-
-This finding reframes the ``hallucination problem'' in production RAG systems. For product recommendations backed by solo-cited listicles, models rarely fabricate facts about a product they have read; the comprehension layer is robust. The remaining errors are attribution errors: the model ``knows'' the facts but ``forgets'' which specific source it found them in.
+The primary failure mode is attribution, not comprehension: the model cites a source that does not contain the claimed product. We manually reviewed all 44 flagged cases and confirmed 32 genuine failures (27~Gemini, 5~GPT). 15 of Gemini's failures stem from a single infrastructure bug where its grounding API assigns an entire comparison table to one source chunk, rather than a comprehension error. Excluding these reduces Gemini's rate to 2.9\% (12/421). Across 1{,}110 solo-cited claims, only 17 are genuine attribution failures.
