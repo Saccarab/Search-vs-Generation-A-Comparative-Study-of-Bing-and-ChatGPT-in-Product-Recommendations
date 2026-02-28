@@ -813,12 +813,18 @@ on the Personal tier.
 
 We also wanted to understand if source categories are fixed
 or if an additional link can become cited in a different run.
+This is where our cross-run design (3~runs per prompt) becomes
+particularly useful.
 The tables above suggest that most invisible domains sit in a
 fixed lane. Wikipedia is always cited, arxiv is
 always rejected, reddit is mostly additional. But for listicles
 and product pages the picture is different: a URL that appears as
 additional in one response can be promoted to cited in another.
-We call this a \textbf{flip-flop}.
+We call this a \textbf{flip-flop}. We measure it at two scopes:
+across all prompts (a URL is additional in one prompt and cited
+in another, which is plausible given the relatively similar
+intents in our prompt dataset, Section~\ref{sec:query-set-selection}) and within the same prompt across
+different runs.
 
 \begin{table}[H]
 \centering
@@ -840,12 +846,11 @@ Flip-flop rate (same prompt) & 20.2\% & 21.7\% \\
 
 \noindent About one in four additional URLs also appears as cited
 in at least one other run, with near-identical rates across tiers
-(25.96\% vs.\ 25.91\%). Even when we restrict to the same prompt
-across different runs, one in five additional URLs switches to
-cited. The boundary between ``cite inline'' and ``show as
-supplementary'' is not stable: the model reshuffles which links
-earn inline citation and which are demoted to supplementary,
-even for identical queries.
+(25.96\% vs.\ 25.91\%). On the same prompt across different runs,
+one in five additional URLs switches to cited. The boundary between ``cite inline'' and ``show as supplementary''
+is not stable---and this reshuffling concentrates among product
+pages and listicles, predominantly the commercial content types that brands
+compete over most directly.
 
 %-----------------------------------------------------------------------
 \section{Content DNA Profile \& Cited vs.\ Additional Comparison}
