@@ -115,21 +115,13 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Large language models (LLMs) increasingly mediate product discovery, and which sources they cite
- directly affects brand and publisher visibility. Due to the black box nature of LLMs, the emerging 
- practice of Generative Engine Optimization (GEO) lacks the understanding that Search Engine Optimization (SEO) has built over decades.
- This thesis examines how ChatGPT and Gemini select and cite web 
- sources when answering commercial product queries. We executed 79 
- prompts three times each across three conditions (ChatGPT Plus, ChatGPT Business, and Gemini),
-  yielding 711 runs. We then compared the citations in these responses against Bing and Google organic search results for the fan-out queries LLMs issued 
-  behind the scenes, and profiled the structural characteristics of approximately 6{,}500 URLs.
+Large language models (LLMs) increasingly mediate product discovery, and which sources they cite directly affects brand and publisher visibility. Due to the black box nature of LLMs, the emerging practice of Generative Engine Optimization (GEO) lacks the understanding that Search Engine Optimization (SEO) has built over decades. This thesis examines how ChatGPT and Gemini select and cite web sources when answering commercial product queries. 
 
-ChatGPT Business showed 81.3\% citation overlap with Bing but only 27.8\% with Google; ChatGPT 
-Plus showed substantial overlap with both (67.6\% Bing, 64.6\% Google), suggesting multi-provider retrieval. Gemini showed 77.7\% overlap with Google.
- Across all systems, 16--22\% of citations appeared in neither index, predominantly from Wikipedia, Reddit, app stores, and major tech publications. Which search index a ChatGPT tier draws from significantly affects citation behaviour: source selection drift, domain preferences, and content type distributions all differed between Business and Plus. Both ChatGPT and Gemini over-select for structured content (tables, numbered lists, bullet points) on listicles, show a preference for fresh content, and exhibit strong position bias toward the top of cited listicles. A semantic fidelity audit of over 1{,}100 product claims confirmed that genuine attribution errors were rare.
+We developed a methodology to run a given prompt against both LLMs, capture the response, and extract which sources were cited and which search queries the models issued behind the scenes. We executed 79 prompts three times each across three conditions (ChatGPT Plus, ChatGPT Business, and Gemini), yielding 711 runs. We then measured how often LLM citations appear in Bing and Google search results for those same queries, and where they rank. To understand what drives source selection, we profiled the structural characteristics of approximately 6{,}500 URLs. We also checked whether the models accurately reproduce product details by auditing over 1{,}100 individual claims extracted from cited sources.
 
-These results show that SEO remains a prerequisite for LLM visibility while identifying structural
- content features, invisible-link channels, and tier-level retrieval differences as factors that any robust GEO measurement framework must account for.
+ChatGPT Business shows 81.3\% citation overlap with Bing but only 27.8\% with Google; ChatGPT Plus shows substantial overlap with both (67.6\% Bing, 64.6\% Google), suggesting it retrieves from multiple search providers; and Gemini shows 77.7\% overlap with Google. Across all systems, 16--22\% of citations appeared in neither search engine, predominantly from Wikipedia, Reddit, app stores, and major tech publications. Which search engine a ChatGPT tier draws from also affects what it selects: the two tiers differed in which page types, domains, and structural features they preferred. Both ChatGPT and Gemini favoured pages with tables, numbered lists, and bullet points when selecting from listicles (list-format articles such as ``Top~10 Best\ldots''), showed a preference for recently published content, and cited products from the top of a listicle far more often than those listed further down. When models did cite a source, they rarely misrepresented its content.
+
+These results show that ranking in a conventional search engine remains a prerequisite for LLM visibility, while page structure, sources that bypass search results entirely, and differences between subscription tiers are factors that any attempt to measure or optimise for GEO must account for.
 
 \newpage
 
