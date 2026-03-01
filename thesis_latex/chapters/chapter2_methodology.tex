@@ -1,7 +1,7 @@
 \chapter{Methodology \& Tools}
 \label{ch:methodology}
 
-This chapter describes the analytical tools and the instrumentation we used to study how ChatGPT and Gemini retrieve and cite web sources when answering product recommendation queries. ChatGPT prompts were run via the production web interface (\texttt{chatgpt.com}) and responses were captured via network payload inspection. We captured runs across two subscription tiers: \textbf{Personal} (a consumer ChatGPT Plus subscription) and \textbf{Business} (an organization-managed workspace account, provisioned through ChatGPT Business tier). All ChatGPT runs were done in Temporary Chat mode to prevent conversation history from influencing retrieval, and run with a U.S.\ proxy using a browser extension to prevent user location from affecting the results (Section~\ref{sec:proxy-requirement}). Gemini prompts were run via the Vertex~AI API (Gemini~3~Flash), which provides structured grounding metadata in JSON format.
+This chapter describes the analytical tools and the instrumentation we used to study how ChatGPT and Gemini retrieve and cite web sources when answering product recommendation queries. ChatGPT prompts were run via the production web interface (\texttt{chatgpt.com}) and responses were captured via network payload inspection. We captured runs across two subscription tiers: \textbf{Plus} (a consumer subscription) and \textbf{Business} (an organization-managed workspace account, provisioned through ChatGPT Business tier). All ChatGPT runs were done in Temporary Chat mode to prevent conversation history from influencing retrieval, and run with a U.S.\ proxy using a browser extension to prevent user location from affecting the results (Section~\ref{sec:proxy-requirement}). Gemini prompts were run via the Vertex~AI API (Gemini~3~Flash), which provides structured grounding metadata in JSON format.
 
 The contrast between these three environments revealed notable differences, especially between the ChatGPT Plus and Business tiers. We ran each prompt three times per environment to examine how results vary across runs, which also increased our sample size. All prompts were executed between mid and late January 2026.
 
@@ -215,7 +215,7 @@ The companies building RAG systems rely on third-party scrapers to access the li
 \subsection{Google SERP Baseline}
 \label{sec:google-serp-types}
 
-Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard search results), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 25 organic results per query. The total result count per query is higher when including the non-organic types. This Google baseline serves as the primary overlap surface for the Gemini study. Since OpenAI confirms that Enterprise and Edu workspaces use Bing exclusively as their search provider \parencite{openai2024enterprise}, Google also serves as a control group for the ChatGPT Business study, and as a third-provider verification for ChatGPT Personal---allowing us to test whether citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:citation-overlap}).
+Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard search results), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 25 organic results per query. The total result count per query is higher when including the non-organic types. This Google baseline serves as the primary overlap surface for the Gemini study. Since OpenAI confirms that Enterprise and Edu workspaces use Bing exclusively as their search provider \parencite{openai2024enterprise}, Google also serves as a control group for the ChatGPT Business study, and as a third-provider verification for ChatGPT Plus---allowing us to test whether citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:citation-overlap}).
 
 \subsection{Bing SERP Scraping}
 \label{sec:bing-scraping}
@@ -252,7 +252,7 @@ Page~1 returned as few as 2 organic results due to ads, Copilot answer
 \small
 \begin{tabular}{lrr}
 \toprule
-Page~1 Size & Business & Personal \\
+Page~1 Size & Business & Plus \\
 \midrule
 2 results & 172 (38\%) & 195 (46\%) \\
 3 results & 55 (12\%) & 36 (8\%) \\
@@ -337,7 +337,7 @@ We observed four patterns from this and subsequent scrapes:
 Because of these findings we expanded our Bing scrapes to Rank~200 to compensate for UI-layer instability and
  recover matches that a stable API would have probably returned in the Top~10--30. Our page-level distribution data (Section~\ref{sec:page-dist}) shows
  that citation matches do not reach zero at Pages~15--16 but continue with a smooth decay curve. 
-Extending to Rank~300 or beyond would recover additional matches with diminishing returns, further narrowing the ``truly invisible'' set (see Section~\ref{sec:fw-deeper-crawling}).
+Extending to Rank~300 or beyond would recover additional matches with diminishing returns, further narrowing the ``truly invisible'' set (see Section~\ref{sec:future-work}).
 
 \subsubsection{The Retirement of the Bing Search API}
 

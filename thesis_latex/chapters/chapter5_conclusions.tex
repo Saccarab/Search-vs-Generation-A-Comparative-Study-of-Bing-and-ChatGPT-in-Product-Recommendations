@@ -86,13 +86,13 @@ tiers behave. There had been reports that OpenAI draws on Google's
 search data alongside Bing
 \parencite{theinformation2025openaiserpapi}, and our data is
 consistent with this: Business citations overlap with Google at
-only 27.8\% while Personal reaches 64.6\%.
+only 27.8\% while Plus reaches 64.6\%.
 Behavioural differences between these two tiers of the same product also 
 extend past which search index they seem to ground on.
-Citations showed significant negative selection drift on Personal but
+Citations showed significant negative selection drift on Plus but
 trended positive on Business
 (Section~\ref{sec:selection-drift}). Reddit appeared frequently as a
-resource on Personal but almost never on Business, and news-related
+resource on Plus but almost never on Business, and news-related
 sources were used much more inline on the Business tier
 (Section~\ref{sec:invisible-links}). Running the same prompts on the
 same model under two deployment configurations gave us a natural
@@ -120,13 +120,12 @@ agreements with search providers or increasingly creative
 instrumentation.
 
 The trajectory points to more retrieval, not less. Semantic fidelity
-is already high when using RAG for commercial queries and commercial domains
-continuously produce frequently updated content for models to ground on. As
-retrieval strengthens and trigger rates rise, this fidelity will only
-improve. Browsing is exponentially cheaper than inference
-(Section~\ref{sec:rag-economics}), and the economic pressure on
-model providers favours smaller models paired with heavier retrieval
-over brute-force parametric generation. If today's search trigger
-rates represent the floor rather than the ceiling, the efforts and results of SEO and GEO will only align further.
-In our data, GEO is best understood as an extension of SEO rather
-than a discipline of its own.
+is already high when using RAG for commercial queries, and commercial
+domains continuously produce fresh content for models to ground on.
+Retrieval is also far cheaper than inference
+(Section~\ref{sec:rag-economics}), giving model providers an economic
+reason to lean on search rather than scale up parametric knowledge.
+If today's search trigger rates represent the floor rather than the
+ceiling, SEO and GEO will only align further. In our data, GEO is
+best understood as an extension of SEO rather than a discipline of
+its own.

@@ -26,7 +26,7 @@ A previous classifier version (\texttt{sonic\_force\_pg\_switcher}), documented 
 \noindent The classifier's configuration, including its thresholds, is sent as part of the network event stream alongside every response---this is how we were able to extract them.
 
 \noindent The model would only search if it was confident that we need a search triggered. 
-The version we observed (\texttt{sonic\_classifier\_5p2\_3cls\_ev3}, model \texttt{snc-pg-sw-3cls-ev3}), identical across both Business and Personal tiers throughout our data collection window (January~2026), worked a little differently. 
+The version we observed (\texttt{sonic\_classifier\_5p2\_3cls\_ev3}, model \texttt{snc-pg-sw-3cls-ev3}), identical across both Business and Plus tiers throughout our data collection window (January~2026), worked a little differently. 
 It outputs three probabilities---\texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, and \texttt{no\_search\_prob}---that sum to 1.0, and evaluates them in a fixed order:
 
 \begin{enumerate}
@@ -66,7 +66,7 @@ Table~\ref{tab:search-trigger-breakdown} summarizes the search trigger outcomes 
 \small
 \begin{tabular}{@{}lrrr@{}}
 \toprule
- & \textbf{Business} & \textbf{Personal} & \textbf{Total} \\
+ & \textbf{Business} & \textbf{Plus} & \textbf{Total} \\
 \midrule
 \multicolumn{4}{@{}l}{\emph{Run-level outcomes (237 runs per tier)}} \\
 \quad Search triggered & 218 (92.0\%) & 214 (90.3\%) & 432 (91.1\%) \\
@@ -82,7 +82,7 @@ Table~\ref{tab:search-trigger-breakdown} summarizes the search trigger outcomes 
 
 \noindent The six prompts that never searched tend to be phrased as general how-to questions---e.g.\ \emph{``How can I convert an audio file to text?''} (P013)---for which the model answered entirely from training knowledge and produced few or no citations.
 
-Only three prompts showed mixed behavior. The clearest case is P016 (\emph{``I need live transcribing while using online streaming or watching videos.''}): on Business, all three runs searched; on Personal, none did. Its \texttt{no\_search\_prob} of .174 sits just 0.001 below the 0.175 suppression threshold---same prompt, different tier, opposite outcome. The classifier configuration and thresholds are identical across tiers, so the divergence occurs somewhere downstream. P004 and P045 also showed within-tier variation---searching in 2 of 3 runs on the same tier---but this was rare (2 of 79 prompts).
+Only three prompts showed mixed behavior. The clearest case is P016 (\emph{``I need live transcribing while using online streaming or watching videos.''}): on Business, all three runs searched; on Plus, none did. Its \texttt{no\_search\_prob} of .174 sits just 0.001 below the 0.175 suppression threshold---same prompt, different tier, opposite outcome. The classifier configuration and thresholds are identical across tiers, so the divergence occurs somewhere downstream. P004 and P045 also showed within-tier variation---searching in 2 of 3 runs on the same tier---but this was rare (2 of 79 prompts).
 
 
 When search was triggered, we observed \texttt{web.run} tool calls in the event stream issuing pairs of reformulated queries---the fan-out queries discussed in the next section. As of late February~2026, the \texttt{sonic\_classification\_result} block (classifier ID, thresholds, and probabilities) is no longer exposed in the event stream; the search decision now happens entirely server-side. The underlying Sonicberry model (\texttt{alpha.sonic\_thinky\_v1\_paid}) remains identical to our January data collection period and is still visible in the stream (Figure~\ref{fig:sonicberry}), as are \texttt{web.run} calls and fan-out queries.
@@ -106,14 +106,14 @@ Once the search decision is made, the model reformulates the user's prompt into 
 \texttt{Q2:} best free speech to text transcription tools online
 \end{quote}
 
-\noindent The first query closely mirrors the user's prompt; the second rephrases it with synonyms and broader terms, widening the retrieval pool (see Figure~\ref{fig:fanout-raw} for how these appear in the raw network stream). Across all runs, the three environments produced 2{,}280 fan-out queries: 448 from Business, 424 from Personal, and 1{,}408 from Gemini. ChatGPT issues exactly two queries per search turn, though it occasionally triggers additional turns (Section~\ref{sec:multi-turn}). Gemini exposes 3--7 queries per run in its grounding metadata.
+\noindent The first query closely mirrors the user's prompt; the second rephrases it with synonyms and broader terms, widening the retrieval pool (see Figure~\ref{fig:fanout-raw} for how these appear in the raw network stream). Across all runs, the three environments produced 2{,}280 fan-out queries: 448 from Business, 424 from Plus, and 1{,}408 from Gemini. ChatGPT issues exactly two queries per search turn, though it occasionally triggers additional turns (Section~\ref{sec:multi-turn}). Gemini exposes 3--7 queries per run in its grounding metadata.
 
 \subsection{Multi-Turn Re-Search}
 \label{sec:multi-turn}
 
 In 12 of 432 searched runs (across 5 prompts), the model evaluated its first-round results, 
 then issued a second (or third) \texttt{web.run} call with new queries. 
-First-round queries are generic fan outs of the user prompt, while later rounds target specific products discovered in the initial results (Table~\ref{tab:multi-turn-queries}).
+First-round queries are generic fan-outs of the user prompt, while later rounds target specific products discovered in the initial results (Table~\ref{tab:multi-turn-queries}).
 \begin{table}[H]
 \centering
 \caption{Multi-turn query content for ChatGPT re-search runs.}
@@ -249,7 +249,7 @@ The most significant finding is that the search index behind ChatGPT's citations
 \small
 \begin{tabular}{@{}lrrr@{}}
 \toprule
- & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Personal} & Gemini \\
+ & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Plus} & Gemini \\
 \midrule
 Total Cited Links & 1,637 & 1,839 & 1,651 \\
 Total Additional Links & 2,820 & 4,506 & --- \\
@@ -262,7 +262,7 @@ Google Overlap (Additional) & 20.7\% & 52.1\% & --- \\
 Total Index Coverage & 83.7\% & 80.6\% & 77.7\% \\
 Invisible (neither index) & 16.3\% & 19.4\% & 22.3\% \\
 \bottomrule
-\multicolumn{4}{l}{\scriptsize Coverage: Business/Personal = Bing $\cup$ Google; Gemini = Google only.}
+\multicolumn{4}{l}{\scriptsize Coverage: Business/Plus = Bing $\cup$ Google; Gemini = Google only.}
 \end{tabular}
 \end{table}
 
@@ -273,9 +273,9 @@ This confirms that traditional search ranking is the dominant factor for AI visi
 
 GPT Business states that it retrieves exclusively through its official partner, the Bing Search API \parencite{openai2024enterprise}, and our data confirms this: 81.3\% Bing overlap versus only 27.8\% Google. Even when an LLM does not retrieve from a given engine, some overlap is expected because there are only so many websites that cover a given topic. Any search engine searching for the same keywords will end up returning many of the same pages. We treat that 27.8\% as the natural overlap that comes from this shared relevancy pool.
 
-GPT Personal jumps to 64.6\% Google overlap, a 36.8\,pp
+GPT Plus jumps to 64.6\% Google overlap, a 36.8\,pp
 increase over that baseline, while its Bing overlap drops to 67.6\%.
-This suggests that the Personal tier retrieves from Google alongside Bing, which aligns with OpenAI's documentation referring to ``third-party search providers'' in the plural \parencite{openai2024search}. Citation matches against Google SERP features (Table~\ref{tab:serp-feature-matches}) support this: Personal shows roughly double the PAA matches of Business (44 vs 23). Since these features are Google-specific, the disparity is another indicator that Personal retrieves from Google more heavily.
+This suggests that the Plus tier retrieves from Google alongside Bing, which aligns with OpenAI's documentation referring to ``third-party search providers'' in the plural \parencite{openai2024search}. Citation matches against Google SERP features (Table~\ref{tab:serp-feature-matches}) support this: Plus shows roughly double the PAA matches of Business (44 vs 23). Since these features are Google-specific, the disparity is another indicator that Plus retrieves from Google more heavily.
 
 \begin{table}[H]
 \centering
@@ -283,7 +283,7 @@ This suggests that the Personal tier retrieves from Google alongside Bing, which
 \label{tab:serp-feature-matches}
 \begin{tabular}{lrr}
 \toprule
-Feature & GPT Business & GPT Personal \\
+Feature & GPT Business & GPT Plus \\
 \midrule
 People Also Ask (PAA) & 23 & 44 \\
 Video & 3 & 3 \\
@@ -358,7 +358,7 @@ Match counts below combine cited links (URLs that appear in the final response) 
     ylabel style={font=\small},
     xlabel style={font=\small},
     title style={font=\small\bfseries},
-    title={GPT Personal -- Bing},
+    title={GPT Plus -- Bing},
     fill=perscolor,
     draw=perscolor!80!black,
 ]
@@ -369,7 +369,7 @@ Match counts below combine cited links (URLs that appear in the final response) 
 };
 \end{axis}
 \end{tikzpicture}
-\caption{Personal on Bing: flatter profile.}
+\caption{Plus on Bing: flatter profile.}
 \label{fig:bing-personal-dist}
 \end{subfigure}
 
@@ -393,7 +393,7 @@ Match counts below combine cited links (URLs that appear in the final response) 
     ylabel style={font=\small},
     xlabel style={font=\small},
     title style={font=\small\bfseries},
-    title={GPT Personal -- Google},
+    title={GPT Plus -- Google},
     fill=perscolor,
     draw=perscolor!80!black,
 ]
@@ -407,7 +407,7 @@ Match counts below combine cited links (URLs that appear in the final response) 
 };
 \end{axis}
 \end{tikzpicture}
-\caption{Personal on Google: top-rank concentration with Page~2 bump.}
+\caption{Plus on Google: top-rank concentration with Page~2 bump.}
 \label{fig:google-personal-dist}
 \end{subfigure}
 \hfill
@@ -466,7 +466,7 @@ The flatter distribution on Bing is indicative of how noisy the consumer UI pagi
 and the Bing overlap charts should be seen as a proxy rather than a direct ranking signal.
 
 On Google, the overlap distribution looks much more like we would expect from a Top~30 SERP.
-Personal's top ranks (1--8) show the highest concentration, with a notable dip at
+Plus's top ranks (1--8) show the highest concentration, with a notable dip at
 ranks 9--10 (48 and 38 matches) followed by an increase at ranks 11--13 (58, 57, 65)---the
 top of what would be Page~2 in a standard 10-result SERP.
 This mirrors a well-documented pattern in human search behavior: the bottom of Page~1
@@ -480,7 +480,7 @@ specific to one LLM.
 \label{sec:gemini-google-rank}
 \label{sec:cross-system-rank}
 
-For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Personal). Each citation is counted once at its best rank, mirroring how human CTR is measured: of all selections, what share went to each rank? The comparison is restricted to Page~1: on Google, 28.7\% of Personal citation matches fall beyond rank~10, 
+For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Plus). Each citation is counted once at its best rank, mirroring how human CTR is measured: of all selections, what share went to each rank? The comparison is restricted to Page~1: on Google, 28.7\% of Plus citation matches fall beyond rank~10, 
 so the table captures rank preference Page~1, not overall reliance on it. We clearly can tell that LLMs look deeper than humans do, 
 but we include this comparison regardless because the parallel in positional bias between human and LLM behavior is noteworthy.
 
@@ -494,7 +494,7 @@ Table~\ref{tab:cross-rank-ctr} places this LLM rank concentration alongside Goog
 \label{tab:ctr-comparison}
 \begin{tabular}{lrrrr}
 \toprule
-Rank & Human CTR & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Personal} & Gemini \\
+Rank & Human CTR & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Plus} & Gemini \\
 \midrule
 \textbf{1} & \textbf{39.8\%} & \textbf{24.9\%} & \textbf{26.7\%} & 23.0\% \\
 2 & 18.7\% & 24.0\% & 17.5\% & 13.4\% \\
@@ -528,8 +528,8 @@ Since both systems issue multiple fan-out queries per run, we checked whether ci
 Index & Tier & Query 1 & Query 2 \\
 \midrule
 Bing & Business & 63.7\% & 64.2\% \\
-Bing & Personal & 54.1\% & 52.4\% \\
-Google & Personal & 50.4\% & 46.4\% \\
+Bing & Plus & 54.1\% & 52.4\% \\
+Google & Plus & 50.4\% & 46.4\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -660,7 +660,7 @@ the most frequent invisible domains for both tiers.
 \begin{tabular}{lr@{\hskip 2em}lr}
 \toprule
 \multicolumn{2}{c}{Business} &
-\multicolumn{2}{c}{Personal} \\
+\multicolumn{2}{c}{Plus} \\
 \cmidrule(lr){1-2} \cmidrule(lr){3-4}
 Domain & Count & Domain & Count \\
 \midrule
@@ -691,12 +691,12 @@ musicradar.com & 4 & support.google.com & 6 \\
 \noindent Both tiers share Wikipedia, arxiv, and major tech editorial
 sites, but the differences are striking.
 Business is almost strictly high-authority tech review outlets
-(theverge, wired, tomsguide, techradar), while Personal surfaces
+(theverge, wired, tomsguide, techradar), while Plus surfaces
 consumer-oriented content that Business does not:
 \texttt{reddit.com} (rank~4),
 \texttt{apps.apple.com} (rank~7), and
 \texttt{medium.com}---none of which appear in the Business list
-at all. Personal's invisible profile includes app store listings,
+at all. Plus's invisible profile includes app store listings,
 user-generated content, and community posts, while Business sticks
 to editorial and reference sources.
 
@@ -748,7 +748,7 @@ jeenie.com & 0 & \textbf{2} & 0 & 2 \\
 
 \begin{table}[H]
 \centering
-\caption{GPT Personal --- invisible domains by source category
+\caption{GPT Plus --- invisible domains by source category
 (bold marks dominant column per row)}
 \label{tab:pers-invisible-combined}
 \small
@@ -776,18 +776,18 @@ windowscentral.com & 3 & 0 & \textbf{5} & 8 \\
 \end{tabular}
 \end{table}
 
-\noindent Wikipedia is almost exclusively cited inline: 75 of 75 Business invisible instances and 58 of 61 Personal instances appear as inline citations, never as supplementary material. \texttt{arxiv.org}, \texttt{nypost.com}, and \texttt{time.com} appear mostly as rejected sources --- present in the network response but never surfaced to the user. Why the model retrieves sources it never uses is unclear; they may serve as background context for response generation. On the Personal tier, \texttt{reddit.com}, \texttt{apps.apple.com}, and \texttt{medium.com} make it into the user-visible citation list but rarely earn direct inline citations. Tech editorial sites (\texttt{sfgate.com}, \texttt{theverge.com}, \texttt{wired.com}) show a mixed profile---cited at moderate rates but also appearing frequently among rejected links.
+\noindent Wikipedia is almost exclusively cited inline: 75 of 75 Business invisible instances and 58 of 61 Plus instances appear as inline citations, never as supplementary material. \texttt{arxiv.org}, \texttt{nypost.com}, and \texttt{time.com} appear mostly as rejected sources --- present in the network response but never surfaced to the user. Why the model retrieves sources it never uses is unclear; they may serve as background context for response generation. On the Plus tier, \texttt{reddit.com}, \texttt{apps.apple.com}, and \texttt{medium.com} make it into the user-visible citation list but rarely earn direct inline citations. Tech editorial sites (\texttt{sfgate.com}, \texttt{theverge.com}, \texttt{wired.com}) show a mixed profile---cited at moderate rates but also appearing frequently among rejected links.
 
 Our main takeaway is that if
 brands can establish presence on high-authority sources like Wikipedia
 and major news or tech websites, they gain a path into ChatGPT
 citations that bypasses conventional SEO competition---especially
 valuable when targeting B2B customers on the ChatGPT Business tier.
-Wikipedia carries similar weight on Personal, but the visibility advantage
+Wikipedia carries similar weight on Plus, but the visibility advantage
 from appearing on tech editorial sites is less pronounced.
 The growing trend of Reddit marketing also looks justified:
 reddit domains consistently surface as supplementary sources
-on the Personal tier.
+on the Plus tier.
 
 %-----------------------------------------------------------------------
 \section{Citation Flip-Flop Rate}
@@ -814,7 +814,7 @@ different runs.
 \label{tab:flipflop-cross}
 \begin{tabular}{lcc}
 \toprule
-& \textbf{Business} & \textbf{Personal} \\
+& \textbf{Business} & \textbf{Plus} \\
 \midrule
 \multicolumn{3}{l}{\textit{Additional $\to$ Cited}} \\
 Unique additional URLs & 1{,}298 & 1{,}594 \\
@@ -873,7 +873,7 @@ a mean of only four organic results due to UI scraping limitations we have cover
 \setlength{\tabcolsep}{8pt}
 \begin{tabular}{lrrrr}
 \toprule
- & \makecell{GPT Business\\Bing} & \makecell{GPT Personal\\Bing} & \makecell{GPT Personal\\Google} & \makecell{Gemini\\Google} \\
+ & \makecell{GPT Business\\Bing} & \makecell{GPT Plus\\Bing} & \makecell{GPT Plus\\Google} & \makecell{Gemini\\Google} \\
 \midrule
 Tables              & $+$11.4\,**\phantom{*}   & $+$3.8\phantom{\,***}    & $+$19.7\,***              & $+$7.8\,**\phantom{*}   \\
 Numbered Lists      & $+$10.3\,***              & $+$11.2\,*\phantom{**}   & $+$9.7\,*\phantom{**}    & $+$7.1\,**\phantom{*}   \\
@@ -889,7 +889,7 @@ Freshness ($\geq$3) & $-$0.8\phantom{\,***}     & $+$16.6\,***              & $+
 \end{tabular}
 \end{table}
 
-Structured content features (tables, numbered lists, bullet points) are over-selected across almost all conditions. Gemini shows no significant freshness drift; this is consistent with its fan-out queries injecting year tokens that pre-filter the SERP for recency before selection occurs (Section~\ref{sec:freshness-subsection}). GPT Personal shows a robust freshness preference that is significant against both Bing and Google independently, while GPT Business shows none. Vendor-owned pages are also consistently over-selected, suggesting that brands produce more structurally thorough content that LLMs prefer, possibly because the models are cautious about surfacing commercial results that lack supporting detail.
+Structured content features (tables, numbered lists, bullet points) are over-selected across almost all conditions. Gemini shows no significant freshness drift; this is consistent with its fan-out queries injecting year tokens that pre-filter the SERP for recency before selection occurs (Section~\ref{sec:freshness-subsection}). GPT Plus shows a robust freshness preference that is significant against both Bing and Google independently, while GPT Business shows none. Vendor-owned pages are also consistently over-selected, suggesting that brands produce more structurally thorough content that LLMs prefer, possibly because the models are cautious about surfacing commercial results that lack supporting detail.
 
 \begin{table}[H]
 \centering
@@ -899,7 +899,7 @@ Structured content features (tables, numbered lists, bullet points) are over-sel
 \setlength{\tabcolsep}{8pt}
 \begin{tabular}{lrrrr}
 \toprule
- & \makecell{GPT Business\\Bing} & \makecell{GPT Personal\\Bing} & \makecell{GPT Personal\\Google} & \makecell{Gemini\\Google} \\
+ & \makecell{GPT Business\\Bing} & \makecell{GPT Plus\\Bing} & \makecell{GPT Plus\\Google} & \makecell{Gemini\\Google} \\
 \midrule
 Tables              & $+$0.6\phantom{\,***}     & $+$2.8\phantom{\,***}    & $+$3.1\,**\phantom{*}    & $-$4.4\,**\phantom{*}   \\
 Numbered Lists      & $+$11.4\,***               & $-$4.6\phantom{\,***}    & $+$6.8\,***              & $+$8.8\,*\phantom{**}   \\
@@ -927,7 +927,7 @@ Both groups here were surfaced by ChatGPT: cited URLs appeared inline in the res
 \label{tab:ttest-cited-addl-listicle}
 \begin{tabular}{lrrlrrl}
 \toprule
- & \multicolumn{3}{c}{Business (C=450, A=1{,}489)} & \multicolumn{3}{c}{Personal (C=312, A=1{,}577)} \\
+ & \multicolumn{3}{c}{Business (C=450, A=1{,}489)} & \multicolumn{3}{c}{Plus (C=312, A=1{,}577)} \\
 \cmidrule(lr){2-4} \cmidrule(lr){5-7}
 Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
 \midrule
@@ -949,7 +949,7 @@ Freshness ($\geq$3) & $-$0.8pp & $-$0.38 & ns & $-$1.0pp & $-$0.47 & ns \\
 \label{tab:ttest-cited-addl-pp}
 \begin{tabular}{lrrlrrl}
 \toprule
- & \multicolumn{3}{c}{Business (C=790, A=882)} & \multicolumn{3}{c}{Personal (C=970, A=1{,}422)} \\
+ & \multicolumn{3}{c}{Business (C=790, A=882)} & \multicolumn{3}{c}{Plus (C=970, A=1{,}422)} \\
 \cmidrule(lr){2-4} \cmidrule(lr){5-7}
 Feature & Drift & $t$ & Sig & Drift & $t$ & Sig \\
 \midrule
@@ -964,7 +964,7 @@ Freshness ($\geq$3) & $-$0.8pp & $-$0.51 & ns & $-$0.5pp & $-$0.29 & ns \\
 \end{table}
 
 Listicle drifts are modest compared to the SERP-level analysis above. 
-Product pages show stronger cited-vs-additional differentiation on the Personal 
+Product pages show stronger cited-vs-additional differentiation on the Plus 
 tier, particularly for bullet points and numbered lists. Overall the two pools 
 are structurally similar, which supplements the flip-flop finding (Section~\ref{sec:flip-flop}) claiming that these links can be interchangeable.
 
@@ -1011,7 +1011,7 @@ For each solo-cited claim, we ran an LLM-as-judge prompt through both GPT-5-mini
 & Uniform \#1 & \#1 & Top-3 & Top-5 \\
 \midrule
 GPT Business ($n{=}391$) & 10.9\% & 18.9\% & 50.9\% & 76.0\% \\
-GPT Personal ($n{=}205$) & 13.5\% & 31.7\% & 60.5\% & 81.0\% \\
+GPT Plus ($n{=}205$) & 13.5\% & 31.7\% & 60.5\% & 81.0\% \\
 Gemini ($n{=}365$) & 13.8\% & 34.8\% & 61.1\% & 79.5\% \\
 \bottomrule
 \multicolumn{5}{l}{\scriptsize Uniform \#1 = mean $1/N$ where $N$ is the listicle size}
