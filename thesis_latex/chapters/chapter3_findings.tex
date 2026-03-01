@@ -977,14 +977,11 @@ This section shifts one level deeper: given that a listicle has been cited,
 which \emph{products within that listicle} does the model extract, and how faithfully
 does it reproduce their details?
 
-\subsection{Selection Order vs.\ Listicle Rank}
-\label{sec:reranking}
-\label{sec:content-size}
-
 \begin{table}[H]
 \centering
 \caption{Median content size by page type}
 \label{tab:content-size}
+\label{sec:content-size}
 \begin{tabular}{lr}
 \toprule
 Page type & Median words \\
@@ -995,12 +992,15 @@ Product page & 927 \\
 \end{tabular}
 \end{table}
 
-The length difference matters for what the model actually processes: \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 3K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
+Prior work suggests that content length and position within a page affect how much of a source the model actually processes. \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 3K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
 
 Based on these findings, for an average listicle of over 2{,}000 words, products listed later may receive less model attention. Since attributing a product recommendation to a specific source is difficult when multiple links support the same claim, we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
 \label{sec:solo-cited}
 
 For each solo-cited claim, we ran an LLM-as-judge prompt through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}116 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the Content DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}).
+
+\subsection{Selection Order vs.\ Listicle Rank}
+\label{sec:reranking}
 
 \begin{table}[H]
 \centering
