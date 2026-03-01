@@ -106,7 +106,7 @@ Once the search decision is made, the model reformulates the user's prompt into 
 \texttt{Q2:} best free speech to text transcription tools online
 \end{quote}
 
-\noindent The first query closely mirrors the user's prompt; the second rephrases it with synonyms and broader terms, widening the retrieval pool (see Figure~\ref{fig:fanout-raw} for how these appear in the raw network stream). Across all runs, the three environments produced 2{,}280 fan-out queries: 448 from Business, 424 from Plus, and 1{,}408 from Gemini. ChatGPT issues exactly two queries per search turn, though it occasionally triggers additional turns (Section~\ref{sec:multi-turn}). Gemini exposes 3--7 queries per run in its grounding metadata.
+\noindent The first query closely mirrors the user's prompt; the second rephrases it with synonyms and broader terms, widening the retrieval pool (see Figure~\ref{fig:fanout-raw} for how these appear in the raw network stream). Across all runs, the three environments produced 2{,}280 fan-out queries: 448 from Business, 424 from Plus, and 1{,}408 from Gemini. ChatGPT issues exactly two queries per search turn, though it occasionally triggers additional turns (Section~\ref{sec:multi-turn}). This is consistent with \textcite{rudzki2026country}, who report a stable range of 2.3--2.8 fan-out queries per prompt across 20~million queries in the same time period. Gemini exposes 3--7 queries per run in its grounding metadata.
 
 \subsection{Multi-Turn Re-Search}
 \label{sec:multi-turn}
@@ -184,7 +184,7 @@ When the user searches in a non-English language, GPT pairs a fan-out in the use
 
 \noindent Of the 7 foreign-language prompts in our dataset, 5 triggered web search; all 5 produced this pattern on every run (\textbf{30/30 = 100\%}). The remaining two (Italian, Spanish) were answered from training knowledge without triggering search at all.
 
-This is corroborated at scale by \textcite{rudzki2026english}, who analyzed over 10~million prompts and 20~million query fan-outs from Peec~AI's production monitoring data. They report that \textbf{78\%} of non-English ChatGPT sessions include at least one English-language sub-search, and \textbf{43\%} of all fan-out queries for non-English prompts target the English web---consistent with our 100\% rate.
+This is corroborated at scale by \textcite{rudzki2026english}, who analyzed over 10~million prompts and 20~million query fan-outs from Peec~AI's production monitoring data. They report that \textbf{78\%} of non-English ChatGPT sessions include at least one English-language sub-search, and \textbf{43\%} of all fan-out queries for non-English prompts target the English web---consistent with our 100\% rate. \textcite{rudzki2026country} further show that this pattern is uniform across all countries and languages in their dataset, confirming that ChatGPT's fan-out behavior is not region-specific.
 
 Gemini shows a variation of this pattern. For foreign-language prompts, it always 
 reserves the first grounding query slot (which is the strongest fan out, Section~\ref{sec:per-query-citation}) for an English translation of the prompt.
@@ -216,8 +216,8 @@ The most surprising pattern: \textbf{24 runs} across 15 English-language prompts
 Case~3 also shows cross-run instability: the same prompt can produce different target languages across runs. 
 P018 (``Can you suggest a free website or program that can translate my 20-minute video and add subtitles?'') 
 received non-English fan-outs on 4 of 6 runs, switching between Chinese (enterprise), 
-Japanese (enterprise), and Spanish (personal); P048 (``Can I add a live translation app to calls?'') triggered on 3 of 6, 
-alternating between Japanese (enterprise) and Spanish (personal). 
+Japanese (Business), and Spanish (Plus); P048 (``Can I add a live translation app to calls?'') triggered on 3 of 6, 
+alternating between Japanese (Business) and Spanish (Plus). 
 
 \subsubsection{GEO Takeaways on Localization}
  
