@@ -7,100 +7,54 @@ This study traces the retrieval-to-citation pipeline for ChatGPT and Gemini on c
 \section{Limitations}
 \label{sec:limitations}
 
-\subsection{Single-Domain Focus}
-\label{sec:lim-domain}
-
-All 79 prompts target AI and SaaS products, particularly speech and language technology. This domain focus was a deliberate methodological choice that enabled deeper qualitative analysis (Section~\ref{sec:query-set-selection}), but it limits external validity: the structural selection signals we observe (e.g., tables at +7.8 to +19.7\,pp, numbered lists at +7.1 to +11.2\,pp) may be partly driven by the nature of software-comparison content rather than universal LLM preferences. Categories with different content structures, such as consumer electronics (spec-heavy), fashion (image-heavy), and financial services (regulation-heavy), could produce different drift profiles.
-
-\subsection{SERP Baseline Limitations}
-\label{sec:lim-serp}
-
-Neither Bing nor Google provides a stable, publicly accessible search API suitable for academic SERP collection. Microsoft retired the Bing Search API in August 2025 (Section~\ref{sec:structural-pivot}), forcing us to scrape the consumer UI via a browser extension, a noisy proxy subject to the Page~1 truncation artifact documented in Section~\ref{sec:bing-pagination-instability}. For Google, we relied on SerpApi, a third-party scraping service that is itself the subject of litigation by Google (Section~\ref{sec:ethical-legal}), and which returned only $\sim$25 organic results per query. Both baselines are therefore degraded approximations of the underlying indices.
-
-More fundamentally, even a perfect SERP baseline would not necessarily reflect what the LLMs actually receive. ChatGPT's Bing integration is a backend API that likely returns a clean, stable ranked list without the ads, carousels, and pagination artifacts of the consumer UI. Gemini's retrieval is mediated by Google's internal grounding infrastructure, not the public search interface. Our overlap measurements therefore compare LLM citations against a \emph{proxy} for the retrieval surface, not the surface itself. The reported invisible rate (16--22\%) is best interpreted as an upper bound: some ``invisible'' citations are likely present in the index but fell beyond our scrape depth (Rank~200 for Bing, $\sim$25 for Google) or were missed due to UI-layer instability.
-
-\subsection{Run Count and Stochasticity}
-\label{sec:lim-runs}
-
-With 3 runs per prompt per tier, we can detect the $\sim$20\% flip-flop rate but cannot characterize its full distribution. Some prompts may have stable citation sets while others are highly volatile; 3 runs cannot distinguish these cases with confidence. The observed flip-flop rate is likely a lower bound: with only 3 observations per prompt, near-threshold URLs that flip in 1 of 10 runs would be missed entirely.
-
 \subsection{Observational Design}
 \label{sec:lim-observational}
 
-This study is observational, not experimental. We measure correlations between structural features and citation selection, but we cannot establish causation. A page with tables may be cited more often because the model prefers tables, because table-containing pages tend to be higher quality, or because table-containing pages rank higher in the SERP (confounding position with structure). The SERP-level comparison controls for index presence but not for rank within the index. A true causal test would require creating matched page variants (with and without tables) at controlled SERP positions, a design that is not feasible with production search engines.
+This study is observational, not experimental. We measure correlations between structural features and citation selection, but we cannot establish 
+causation. A page with tables may be cited more often because the model prefers tables, because table-containing pages tend to be higher quality, or because table-containing pages rank higher
+ in the SERP. The SERP-level comparison controls for index presence but not for rank within the index. A true causal test would require creating matched page variants (with and without tables) at controlled SERP positions, a design that is not feasible with production search engines.
 
-\subsection{Gemini API vs.\ Consumer UI}
-\label{sec:lim-gemini}
-
-All Gemini runs were collected via the Vertex~AI API, which provides structured grounding metadata but does not carry IP or locale signals (Section~\ref{sec:gemini-instrumentation-differences}). This means we cannot test whether Gemini exhibits the same IP/locale-driven cross-language fan-out observed in ChatGPT (Cases~2--3, Section~\ref{sec:localization-bias}). More broadly, the API may expose a different retrieval surface than the consumer UI at \texttt{gemini.google.com}; the two are not guaranteed to behave identically. This also introduces an asymmetry in our cross-system comparison: ChatGPT was studied through the production consumer UI, while Gemini was studied through a developer API. Differences in grounding behavior between the two models may therefore partly reflect instrumentation differences rather than genuine model-level divergence.
-
-\subsection{Foreign-Language Prompt Coverage}
+\subsection{Dataset Scope}
+\label{sec:lim-runs}
+\label{sec:lim-domain}
 \label{sec:lim-language}
 
-Our cross-language fan-out findings (Section~\ref{sec:localization-bias}) are based on only 7 non-English prompts out of 79 total. While the patterns we observe, particularly Cases~2 and~3 (where English prompts receive foreign-language fan-outs), are corroborated at scale by independent data from Peec~AI \parencite{rudzki2026english}, our own sample is too small to quantify the magnitude of cross-language effects with precision or to test whether they vary by language pair.
+With 79 prompts and 3 runs per prompt per tier, the dataset is sufficient to identify broad patterns but limits per-prompt precision. All prompts target AI and SaaS products, a deliberate choice that enabled deeper qualitative analysis (Section~\ref{sec:query-set-selection}) but means the structural selection signals we observe may be partly driven by software-comparison content rather than universal LLM preferences. Only 7 prompts are non-English; Cases~2 and~3 (English prompts receiving foreign-language fan-outs, Section~\ref{sec:localization-bias}) are novel observations we have not encountered in prior work, making larger-scale corroboration particularly valuable. More prompts, more runs per prompt, greater category and language diversity, and coverage of other ChatGPT tiers (particularly the free tier, which uses a different search classifier) would all strengthen the findings.
+
+\subsection{SERP Baselines and Instrumentation Asymmetry}
+\label{sec:lim-serp}
+\label{sec:lim-gemini}
+
+We scraped Bing's consumer UI via a browser extension (subject to the Page~1 truncation artifact in Section~\ref{sec:bing-pagination-instability}) and collected roughly 3 pages of Google organic results via SerpApi. The LLMs receive results through backend APIs, not the consumer interfaces we scraped, so our overlap measurements compare citations against a \emph{proxy} for the retrieval surface; the reported invisible rate (16--22\%) is best interpreted as an upper bound. An additional asymmetry: ChatGPT was studied through the production consumer UI while Gemini was studied through the Vertex~AI API, which provides structured grounding metadata but does not carry IP or locale signals (Section~\ref{sec:gemini-instrumentation-differences}). Some cross-system differences may therefore reflect instrumentation rather than genuine model-level divergence.
 
 \subsection{Semantic Fidelity Scope}
 \label{sec:lim-fidelity}
 
-Our semantic fidelity audit is restricted to solo-cited listicle product claims, those backed by exactly one URL. Multi-cited claims, where a product recommendation is attributed to two or more sources simultaneously, were excluded entirely from the fidelity analysis because it is impossible to determine which source the model actually drew from. This exclusion is non-trivial: multi-cited claims account for 10.7\% of GPT claims and 34.5\% of Gemini claims (Section~\ref{sec:solo-cited}). The fidelity of these multi-source claims, where the model may synthesize or conflate information across sources, remains unmeasured and may exhibit different error patterns than solo-cited claims. Additionally, our LLM-as-judge approach was validated by manual review of all flagged cases (positive predictions) but not of all negative predictions, so the true attribution failure rate may be marginally higher if the judge produced false negatives.
+Our semantic fidelity audit covers only solo-cited listicle claims (backed by exactly one URL). Multi-cited claims were excluded because it is impossible to determine which source the model drew from; these account for 10.7\% of GPT claims and 34.5\% of Gemini claims (Section~\ref{sec:solo-cited}) and may exhibit different error patterns.
 
 \subsection{Search Trigger Analysis Scope}
 \label{sec:lim-search-trigger}
 
-Our Sonic Classifier analysis (Section~\ref{sec:search-trigger}) is based exclusively on paid ChatGPT tiers (Business and Plus) and a prompt set designed to elicit product recommendations, queries that inherently require web retrieval. As a result, the classifier routed virtually all runs to simple search: the median \texttt{simple\_search\_prob} was 96.8\%, and no run ever crossed the \texttt{no\_search\_threshold} (0.175) or the \texttt{complex\_search\_threshold} (0.4). The 52 runs that did not trigger search were suppressed by external mechanisms (null classification or server-side overrides), not by the classifier's probability output. We therefore describe the classifier's threshold cascade from its embedded configuration rather than from empirical observation of the suppression gate firing.
+Our Sonic Classifier analysis (Section~\ref{sec:search-trigger}) covers only paid ChatGPT tiers and commercial prompts that inherently require web retrieval. The classifier routed virtually all runs to simple search, leaving the suppression and complex-search pathways unobserved. The classifier metadata is no longer exposed in the network event stream as of late February~2026, meaning future studies cannot replicate this analysis without alternative instrumentation. Our findings also apply strictly to paid-tier deployments; the free tier uses a structurally different classifier with an inverted default.
 
-This has three consequences. First, we cannot empirically confirm that the \texttt{no\_search\_prob} $\geq 0.175$ gate actually suppresses search when crossed; we only know the threshold exists in the configuration. Second, we have no observations of the complex-search pathway, so its behavioural differences from simple search remain uncharacterised. Third, our findings on search trigger rates, fan-out patterns, and citation behaviour apply strictly to paid-tier deployments; the free tier uses a structurally different classifier (\texttt{sonic\_force\_pg\_switcher}) with an inverted default, as discussed in Section~\ref{sec:search-trigger}.
+\section{Replication and Scale}
+\label{sec:fw-replication}
 
-\section{Extending to Perplexity and Google AI Overviews}
-\label{sec:fw-perplexity-aio}
+The limitations above (Sections~\ref{sec:lim-runs}--\ref{sec:lim-language}) point to three natural scaling directions: deeper and repeated SERP crawling to tighten bounds on the invisible citation rate, more runs per prompt to distinguish stable brands from marginal ones, and replication across product categories and languages to test whether our structural signals generalise beyond AI and SaaS. A longitudinal dimension, re-running the same queries at fixed intervals, would additionally reveal whether citation patterns are temporally stable or drift as models, indices, and web content evolve.
 
-This study covers ChatGPT and Gemini, but the AI search landscape includes at least two other high-traffic systems with distinct architectures. \textbf{Perplexity} (288K monthly referral visitors as of January 2026; \cite{ahrefs2026chatgptvsgoogle}) is a search-first product that foregrounds citations more prominently than ChatGPT and may exhibit different position bias and selection drift patterns as a result. \textbf{Google AI Overviews} (formerly Search Generative Experience) is integrated directly into the Google SERP, which means the grounding pipeline shares infrastructure with the organic index in ways that ChatGPT's Bing-mediated retrieval does not. Replicating our methodology on these platforms would test whether the core findings (position bias, structural selection drift, the Page~2 cliff) are universal properties of RAG-based search or specific to the systems we studied.
+Extending to other systems, particularly Perplexity \parencite{ahrefs2026chatgptvsgoogle} and Google AI Overviews, would test whether our findings are universal properties of RAG-based search or specific to ChatGPT and Gemini. Neither platform publishes structured grounding metadata, so network-level instrumentation similar to ours (Section~\ref{sec:pipeline-overview}) may be necessary.
 
-A practical challenge is instrumentation: Perplexity exposes inline citations in its UI but does not publish grounding metadata, and Google AI Overviews lack a public API for structured grounding data. Network instrumentation techniques similar to those we developed for ChatGPT (Section~\ref{sec:pipeline-overview}) may be necessary.
+\section{Methodological Deepening}
+\label{sec:fw-methodology}
 
-\section{Deeper and Repeated SERP Crawling}
-\label{sec:fw-deeper-crawling}
+Our selection drift analysis tests each Content DNA feature independently with Welch's $t$-tests, which cannot disentangle correlated features or control for confounds such as SERP rank. A logistic regression predicting citation from rank \emph{and} structural features simultaneously would isolate the marginal contribution of each feature after controlling for position. Adding per-query fixed effects would further restrict the comparison to within the same SERP, eliminating topic-level confounds and moving the analysis toward stronger causal claims. Such a model could also incorporate publication date, which ChatGPT's retrieval metadata exposes for approximately half of retrieved URLs, as an additional signal.
 
-Our Bing scrape stops at Rank~200, but the page-level match histogram (Section~\ref{sec:page-dist}) shows no convergence: matches are still accumulating at Pages~15--16 with a smooth decay curve that does not reach zero. Extending to Rank~300 or beyond would clarify how much of the ``invisible'' set is truly absent from the search index versus merely buried at greater depth. Complementarily, repeated scrapes of the same query would mitigate the Bing Page~1 truncation artifact documented in Section~\ref{sec:bing-pagination-instability}, where nearly half of our scrapes returned fewer than 6 organic results on Page~1. Combining deeper crawling with repeated scraping would produce tighter bounds on the truly invisible citation rate.
-
-\section{Expanded Runs and Longitudinal Tracking}
-\label{sec:fw-longitudinal}
-
-Our design uses 3 runs per prompt, which is sufficient to detect the $\sim$20\% flip-flop rate (Section~\ref{sec:flip-flop}) but insufficient to characterize the full distribution of citation stochasticity. Expanding to 10+ runs per prompt would enable confidence intervals on per-prompt citation probabilities and reveal whether some brands occupy a stable ``always cited'' position while others are marginal. Re-running the same query set at fixed intervals (e.g., quarterly) would additionally reveal whether citation patterns are temporally stable or drift as model weights, retrieval indices, and web content evolve.
-
-\section{Cross-Category and Cross-Language Replication}
-\label{sec:fw-cross-category}
-
-Our prompt set is concentrated in the AI and SaaS sectors, particularly speech and language technology. Replicating the study across different product categories (e.g., consumer electronics, fashion, financial services) would test whether the structural selection signals we observe (tables at +7.8 to +19.7\,pp, numbered lists at +7.1 to +11.2\,pp) are universal or category-dependent. Similarly, a dedicated cross-language study extending our Case~2 and Case~3 fan-out observations (Section~\ref{sec:localization-bias}) with a fully non-English prompt set would quantify the magnitude of the English retrieval bias that \textcite{rudzki2026english} documents at scale.
-
-\section{Multivariate Selection Modelling}
-\label{sec:fw-multivariate}
-
-Our selection drift analysis tests each Content DNA feature independently with Welch's $t$-tests, which cannot disentangle correlated features or control for confounds such as SERP rank. A logistic regression predicting citation from rank \emph{and} structural features simultaneously (e.g., $\text{cited} \sim \text{rank} + \text{tables} + \text{numbered\_lists} + \cdots$) would isolate the marginal contribution of each feature after controlling for position. Adding per-query fixed effects would further restrict the comparison to within the same SERP, eliminating topic-level confounds. This would move the analysis from the current correlational framing toward stronger causal claims about which structural signals independently influence citation probability.
-
-\section{Search Trigger Characterisation}
+\section{Search Trigger and Agentic Behaviour}
 \label{sec:fw-search-trigger}
 
-Our prompt set, optimised for product-recommendation queries, produced a near-uniform classifier response: 96.8\% median simple-search probability, with no crossings of the suppression or complex-search thresholds (Section~\ref{sec:lim-search-trigger}). A study with a deliberately heterogeneous prompt set, spanning conversational, factual, creative, and coding queries alongside commercial prompts, would map the full decision surface of the three-class classifier, identify the prompt characteristics that push \texttt{no\_search\_prob} above the 0.175 gate, and test whether the complex-search pathway (threshold 0.4) produces materially different retrieval behaviour (e.g., more fan-out queries or deeper result pools). Comparing free-tier and paid-tier classifier versions on the same prompt set would additionally quantify the architectural divergence we infer from configuration differences alone (Section~\ref{sec:search-trigger}), and test whether the opt-in versus opt-out framing produces measurably different grounding rates for borderline queries.
-
-A longitudinal dimension is also warranted. During our data collection, we observed multiple classifier versions deployed in succession, with the version active at the time of writing no longer matching the one we instrumented (Section~\ref{sec:search-trigger}). Tracking classifier thresholds and routing behaviour over time would reveal whether the search-on default we document is a stable architectural choice or a parameter that OpenAI actively tunes. Similarly, reasoning-mode variants (e.g., ChatGPT's ``thinking'' mode and Gemini's extended thinking options) may route queries through different retrieval pipelines or apply different grounding budgets. Testing whether these modes alter citation selection, fan-out patterns, or search trigger rates would clarify how much of our findings generalise beyond the standard generation mode.
-
-\section{Agentic Re-Search Behaviour}
-\label{sec:fw-agentic-research}
-
-Our data reveals that the generation model (Layer~3) can autonomously decide to issue additional search turns after evaluating initial results (Section~\ref{sec:three-layer}). In our dataset, 94\% of search-triggered runs completed in a single turn (2 queries), but 2.5\% required 2 turns (4 queries) and 0.2\% required 3 turns (6 queries). This agentic re-search loop is non-deterministic (the same prompt can produce different turn counts across runs), yet we could not identify what triggers it: the complex-search probability was negligible in all multi-turn cases, ruling out the classifier as the driver. A dedicated study could investigate the conditions under which the generation model decides to re-search (e.g., low-confidence initial results, insufficient source diversity, query ambiguity), whether additional turns improve citation quality or simply add redundant sources, and whether the re-search mechanism introduces systematic biases in which domains or content types ultimately get cited.
-
-\section{The Parametric Nudge Hypothesis}
-\label{sec:fw-parametric-nudge}
-
-Our invisible-link analysis (Section~\ref{sec:invisible-links}) identifies 16--22\% of citations from sources absent from both Bing and Google for the corresponding query. A plausible but untested explanation is that brands with strong presence on high-authority, training-likely surfaces (Wikipedia, Reddit, major publications) receive a parametric ``nudge'' in the model's recommendations even before retrieval is triggered. A controlled experiment could test this directly: comparing model recommendations with web search forced off (pure parametric recall) against recommendations with web search enabled (RAG-augmented), and measuring whether brands with strong non-linked mentions on training-likely surfaces receive disproportionate parametric attention. If confirmed, this would identify a GEO channel that is genuinely independent of SEO.
-
-\section{Publication Date as a Selection Signal}
-\label{sec:fw-pub-date}
-
-During thesis preparation, we discovered that ChatGPT's \texttt{search\_result\_groups} entries include a \texttt{pub\_date} field (Unix timestamp) for approximately half of retrieved URLs. This field was not part of our original analysis design. A preliminary count across the Business tier network data shows that 46\% of cited URLs carry a publication date compared to 63\% of non-cited URLs, but the sample is too small to draw conclusions. A dedicated study could investigate whether publication recency influences citation probability: do newer pages get cited more often, and does the presence of a machine-readable publication date itself act as a selection signal? This would complement the structural content features (tables, lists, freshness cues) already measured in Section~\ref{sec:selection-drift}.
+A heterogeneous prompt set (conversational, factual, creative, coding) would map the full decision surface of the Sonic Classifier, including the suppression and complex-search pathways our commercial prompts left unobserved (Section~\ref{sec:lim-search-trigger}). We observed multiple classifier versions during data collection, and the version active at the time of writing no longer matches the one we instrumented; tracking these changes longitudinally would reveal whether the search-on default is stable or actively tuned. Reasoning-mode variants (ChatGPT's ``thinking'' mode, Gemini's extended thinking) may route queries through different retrieval pipelines and are worth testing separately. Finally, the model's ability to autonomously issue additional search turns (Section~\ref{sec:three-layer}) remains unexplained: we could not identify what triggers re-search, and whether additional turns improve citation quality or introduce systematic biases is an open question.
 
 \section{User Perception and Conversion}
 \label{sec:fw-user-study}
 
-This study measures what the model cites but not how users respond to those citations. A controlled user study comparing LLM-generated recommendations against a conventional SERP (e.g., Bing Top~10) on the same queries, measuring preference, trust, click-through, and purchase intent, would complement the structural analysis and test the industry hypothesis that LLM-referred users convert at higher rates than traditional search traffic.
+This study measures what the model cites but not how users respond to those citations. A controlled user study comparing LLM-generated recommendations against a conventional SERP on the same queries, measuring preference, trust, click-through, and purchase intent, would complement the structural analysis and test the industry hypothesis that LLM-referred users convert at higher rates than traditional search traffic.
