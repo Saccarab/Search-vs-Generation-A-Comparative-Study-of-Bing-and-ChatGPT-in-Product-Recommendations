@@ -5,71 +5,101 @@
 \section{GEO Is Mostly SEO}
 \label{sec:geo-is-seo}
 
-We ran 79 prompts three times each across ChatGPT Business,
-ChatGPT Personal, and Gemini, yielding 711 runs. Across all three
-conditions, 78--84\% of LLM citations trace back to a conventional
-search index (Section~\ref{sec:global-overlap}). We established
+Commercial prompts trigger web search over half the time, three
+times the baseline rate (Figure~\ref{fig:trigger-rate}), making
+retrieval the default for product recommendations. Across 711
+runs spanning both models and three deployment tiers, 78--84\% of
+LLM citations trace back to a conventional search index
+(Section~\ref{sec:global-overlap}). We established
 that LLMs do look deeper than human users but citations from beyond
-rank~10 are still quite rare (Section~\ref{sec:page-dist}) which is 
+rank~10 are still quite rare (Section~\ref{sec:page-dist}) which is
 the backbone of our argument that GEO is mostly SEO.
 
 Within the ranked results, models show consistent structural
 preferences. For listicles, pages with tables, numbered lists, and
-bullet points are over-selected relative to the SERP baseline. We saw a similar selection pattern on product
-pages for bullet points for numbered lists (Section~\ref{sec:selection-drift}). But these features were already
-standard SEO advice before GEO became a term: they help human readers
-scan and compare products, and search engines have long rewarded
-content that serves readers well. 
-The fact that LLMs also prefer them is not necessarily a new optimization surface. 
+bullet points are over-selected relative to the SERP baseline. We
+saw a similar selection pattern on product pages for numbered lists
+(Section~\ref{sec:selection-drift}). But these features were already
+standard SEO advice before GEO became a term: they help human
+readers scan and compare products, and search engines have long
+rewarded content that serves readers well. The fact that LLMs also
+prefer them is not necessarily a new optimization surface. Gemini pre-filters for
+recency through year-token injection in fan-out queries, and GPT
+shows genuine freshness preference at the citation stage
+(Section~\ref{sec:freshness-subsection}). Keeping content current
+has always been good SEO practice and it is now also a good GEO
+practice.
 
-Freshness is another converging signal: Gemini pre-filters for recency through year-token
-injection in fan-out queries, and GPT shows genuine freshness
-preference at the citation stage
-(Section~\ref{sec:freshness-subsection}). Keeping content current has
-always been good SEO practice and it is now also a good GEO practice.
+Listicles are the primary fuel for product recommendations and they
+are also the page type that predominantly reaches the model through
+SERP results. Our findings show that a listicle must rank to be retrieved in the first
+place. A brand could, in theory, craft a ``top~10 AI tools''
+listicle that games our findings, burying real competitors at the
+bottom of the list, omitting them entirely, or only listing soft
+alternatives. But as long as search engines still weigh engagement
+signals like bounce rate and time on page, a listicle that readers
+find unhelpful will not rank or will not maintain rankings long term.
+An unranked listicle is invisible to the grounding pipeline
+regardless of how well it is structured or how well it plays the LLM
+manipulation game. GEO optimization relies on the SEO optimization
+loop: build comprehensive content that serves human readers, earn the
+rankings, and the LLM citations follow.
 
-Listicles are the fuel for product recommendations, and
-within them. But theyu are also the page type segment we established 
-that predominantly comes through SERP. So a listicle must rank to be
-retrieved in the first place. A brand in theory could build a listicle blog content for ``top~10 AI tools'' 
-where they carefully craft their competitor list in line with out findings. 
-They could place their real competitors down in the lists or don't even mention them.
-Only list soft competitors or w/e id ku can reframe this sentnce. But as long as search
-engines still weigh engagement signals like bounce rate and time on
-page, the page will not rank or won't maintain rankings long term. 
+Localisation is another area where GEO mirrors SEO. Localising
+websites has been important for traditional search visibility for
+years, but our cross-language fan-out analysis
+(Section~\ref{sec:localization-bias}) shows it matters even more for
+AI visibility. Due to the English bias in LLM fan-out queries
+\parencite{rudzki2026english}, a foreign-language business that
+lacks English-language pages will lose a substantial share of its
+potential AI visibility. The reverse also applies: an English-only
+domain needs foreign-language pages to maintain access to
+English-speaking users in non-English-speaking countries, or even
+users searching for a concept that happens to have foreign-language
+origins, or even to retain visibility when an LLM
+generates an unexpected foreign-language fan-out query.
 
-An unranked listicle is invisible to the grounding pipeline regardless of how well it is structured
-or how well it is playing the LLM manipulation game. The
-GEO optimization relies on SEO optimization loop. Our findings show us that the best way for AI visibility is to build
-comprehensive content that serves human readers, earn the rankings,
-and the LLM citations follow.
-
-One our other significant findings regarding implications for webmasters and publishers is once again something that has been 
-important for regular SEO strategies for a while. Localizing your website has been quite important for a while 
-but we show here that [cite our localization fanotu section here] due to the English bias (can cite peec ai), you will lose half your AI visibility equity
-even if you are a foreign language business. And the other way also applies, a English only domain also needs to have foreign language pages to maintain their access 
-to English speaking audience who live in foreign language speaking countries or even people that are potentially just searching for a foreign language concept. And
-even at the most extreme they'd be securing their AI visibility slot when LLMs just decides to hallucinate a foreign language fanout query.  
-
-The workflow that of identify the prompts you rank for that GEO platforms are beginning to offer 
-needs to be complemented by an understanding of fan out queries.
-Once a brand understands fan out queries that LLMs responses the intent 
-they can execute keyword gap analysis on these which would just mirror traditional SEO gap analysis.
+The workflow that GEO platforms are beginning to offer (identifying
+the prompts a brand appears in and tracking visibility over time)
+needs to be complemented by an understanding of fan-out queries. Once
+a brand maps the fan-out queries that LLMs generate for prompts in
+their niche, they can run a keyword gap analysis on those queries,
+which mirrors traditional SEO gap analysis.
 
 The one partial exception is the invisible-link channel: 16--22\% of
 citations point to URLs that do not appear in either Bing or Google
 for the corresponding query (Section~\ref{sec:invisible-links}),
 concentrated in Wikipedia, Reddit, app stores, and major tech
-publications. These sources enter the response through pathways that seem 
-to bypass search results. They give brands marketing power that can be permanent and hard to contest by their competitors
-assuming OpenAI maintains their current workflow on how they ground responses.
+publications. These sources enter the response through pathways that
+appear to bypass search results. They give brands a form of marketing
+presence that is durable and difficult for competitors to displace,
+as long as the current grounding workflow remains in place.
 
-The entire chain --- query generation, retrieval, source selection,
-product extraction --- is grounded in the same web infrastructure that
-SEO has optimized for decades. A brand that already runs rigorous SEO
-gap analysis is, in practice, already covering most of the GEO gap.
+The entire chain (query generation, retrieval, source selection,
+product extraction) is grounded in the same web infrastructure
+that SEO has optimized for decades. A brand that already runs
+rigorous SEO gap analysis is, in practice, already covering most of
+the GEO gap.
 
-#maybe this below contetn build into the screaping is getting tough bit?
+\section{Outlook}
+\label{sec:outlook}
+
+One finding we did not anticipate was how differently the two ChatGPT
+tiers behave. There had been reports that OpenAI draws on Google's
+search data alongside Bing
+\parencite{theinformation2025openaiserpapi}, and our data is
+consistent with this: Business citations overlap with Google at
+only 27.8\% while Personal reaches 64.6\%.
+Behavioural differences between these two tiers of the same product also 
+extend past which search index they seem to ground on.
+Citations showed significant negative selection drift on Personal but
+trended positive on Business
+(Section~\ref{sec:selection-drift}). Reddit appeared frequently as a
+resource on Personal but almost never on Business, and news-related
+sources were used much more inline on the Business tier
+(Section~\ref{sec:invisible-links}). Running the same prompts on the
+same model under two deployment configurations gave us a natural
+contrast that strengthened the analysis. 
 
 This thesis opened with the observation that commercial queries
 trigger web search at 3$\times$ the overall baseline rate
@@ -79,68 +109,26 @@ most consequential. Our findings confirm that this retrieval
 dependency is the foundation of AI visibility: without SERP ranking,
 there is no citation.
 
-\section{Outlook}
-\label{sec:outlook}
-\label{sec:geo-not-seo}
-
-We didnt see expect to see
-The backend varies by
-subscription tier --- there had been reports that OpenAI draws on
-Google's search data alongside Bing
-\parencite{theinformation2025openaiserpapi}, and our data confirms
-this: Business citations overlap with Google at only 27.8\% while
-Personal reaches 64.6\%, a gap larger than we expected. The
-behavioural differences between tiers extended beyond index choice:
-source citations showed significant negative selection drift on
-Personal but trended positive on Business
-(Section~\ref{sec:selection-drift}), Reddit appeared frequently as
-a resource on Personal but almost never on Business, and
-news-related sources were more prominent on the Enterprise tier
-(Section~\ref{sec:invisible-links}).
-# maybe rewrite just this sentence idk if thhis adds anything
-We didn't expect this but it gave a lot of contrast to our dataset, being able to run
-same dataset on same model but with slightly different behavior also allowed us to 
-ground these results between each other apart from allowing us to see how these models behave differently.
-
-# maybe her we touch on scraping war talk about reddit, openai scraping allegedly google fighting againt it bing retiring thes kinbd of stuff? idk how toe segue clearnly though
-
-
-
-
-The trajectory points to more retrieval, not less. 
-
-
-Semantic fidelity is already high when using RAG 
-for commercial queries and will get better --- fewer than 2\% genuine attribution
-errors --- and commercial domains produce abundant, frequently updated
-content for models to ground on. As retrieval strengthens and trigger
-rates rise, this fidelity will only improve. 
-
-Browsing is
-exponentially cheaper than inference
-(Section~\ref{sec:rag-economics}), and the economic pressure on model
-providers favours smaller models paired with heavier retrieval over
-brute-force parametric generation. As retrieval expands to cover more
-query types and more turns per conversation, the dependence on search
-indices will deepen, not diminish. If today's search trigger
+The trajectory points to more retrieval, not less. Semantic fidelity
+is already high when using RAG for commercial queries and commercial domains 
+continuously produce frequently updated content for models to ground on. As
+retrieval strengthens and trigger rates rise, this fidelity will only
+improve. Browsing is exponentially cheaper than inference
+(Section~\ref{sec:rag-economics}), and the economic pressure on
+model providers favours smaller models paired with heavier retrieval
+over brute-force parametric generation in this domain of prompts we have analyzed. If today's search trigger
 rates represent the floor rather than the ceiling, GEO does not
-diverge from SEO over time --- it converges further as serach gains more importance. # maybe one is duplciat ehere between als t2 use whiever sounds better
+diverge from SEO over time; it converges further.
 
-# can be said much better 
-As the dependece inrease the war that has already  started on who 
-is getting how much access to search indices and they are tryign to find workaround.
-
-
-At the same time, studying these systems is getting harder. During the
-course of this research, Microsoft retired the Bing Search API
-(Section~\ref{sec:structural-pivot}), Google has limited organic
-results to approximately 100 per query, and the third-party scraping
-services that fill the gap face active litigation from both Google
-\parencite{google2025serpapi} and Reddit. The infrastructure for
-independent research into LLM grounding behaviour is eroding just as
-the commercial stakes are rising. The empirical data documented in
-this thesis captures a snapshot of a system in rapid flux; replicating
-or extending this work will require either new access agreements with
-search providers or increasingly creative instrumentation.
-
-# idk maybe we need a final chatper or move one of the previous ones
+As this dependence on search indices deepens, so does the contest
+over access to them. OpenAI has been accused of scraping Google's
+index \parencite{theinformation2025openaiserpapi}, Google has
+responded with litigation against third-party scraping services
+\parencite{google2025serpapi}, Reddit is suing those same services
+over data access, and Microsoft has retired the Bing Search API
+entirely (Section~\ref{sec:structural-pivot}). The programmatic access
+to search indices is caught in the middle of this access war. The empirical data documented in
+this thesis captures a snapshot of a system in rapid flux;
+replicating or extending this work will require either new access
+agreements with search providers or increasingly creative
+instrumentation.
