@@ -586,7 +586,6 @@ Not every unmatched URL is truly ``invisible''---some fall into
 methodological blind spots:
 
 \begin{enumerate}
-\begin{enumerate}
 \item \textbf{Scrape depth.} Our Bing scrape stops at Rank~200 and Google at
 rank~30, but the overlap charts from Section~\ref{sec:page-dist}
 (especially the Bing one) indicate that going deeper would yield
@@ -777,19 +776,7 @@ windowscentral.com & 3 & 0 & \textbf{5} & 8 \\
 \end{tabular}
 \end{table}
 
-\noindent Wikipedia is almost exclusively cited inline 75 of 75
-Business invisible instances and 58 of 61 Personal instances appear
-as inline citations, never as supplementary material.
-\texttt{arxiv.org}, \texttt{nypost.com}, and \texttt{time.com}
-seem to be fetched mostly as sources we named as "rejected". 
-We observe them in the network response but we don't see them as inline citations
-or in user visible citations display menu.
-but never show up in the response text or source list.
-Why the model retrieves sources it never surfaces is unclear. They
-maybe serving as background context for response generation.
-
-On the Personal tier, reddit appears mostly as an
-additional source but is still rarely cited inline.
+\noindent Wikipedia is almost exclusively cited inline: 75 of 75 Business invisible instances and 58 of 61 Personal instances appear as inline citations, never as supplementary material. \texttt{arxiv.org}, \texttt{nypost.com}, and \texttt{time.com} appear mostly as rejected sources --- present in the network response but never surfaced to the user. Why the model retrieves sources it never uses is unclear; they may serve as background context for response generation. On the Personal tier, \texttt{reddit.com} appears mostly as an additional source but is still rarely cited inline.
 \texttt{reddit.com}, \texttt{apps.apple.com}, and
 \texttt{medium.com} make it into the user-visible citation list,
 but they rarely earn direct inline citations.
@@ -1106,4 +1093,4 @@ Pure fidelity (present only) & 4.81 / 5.0 & 4.71 / 5.0 \\
 
 Reading comprehension is high: when the product is present in the source, both models score 4.71--4.81 out of 5.0. Fidelity scores were validated via cross-model agreement (GPT-5-mini vs Gemini 2.5 Flash on all 1{,}116 claims), with scores matching within $\pm$1 in 93.9\% of cases.
 
-The primary failure mode is attribution, not comprehension: the model cites a source that does not contain the claimed product. We manually reviewed all 44 flagged cases and confirmed 32 genuine failures (27~Gemini, 5~GPT). 15 of Gemini's failures stem from a single infrastructure bug where its grounding API assigns an entire comparison table to one source chunk, rather than a comprehension error. Excluding these reduces Gemini's rate to 2.9\% (12/421). Across 1{,}110 solo-cited claims, only 17 are genuine attribution failures.
+The primary failure mode is attribution, not comprehension: the model cites a source that does not contain the claimed product. We manually reviewed all 44 flagged cases and confirmed 32 genuine failures (27~Gemini, 5~GPT). 15 of Gemini's failures stem from a single infrastructure bug where its grounding API assigns an entire comparison table to one source chunk, rather than a comprehension error. Excluding these reduces Gemini's rate to 2.9\% (12/421). Across 1{,}110 solo-cited claims, only 17 are genuine attribution failures. In short, models rarely fabricate product details; when errors occur, they misattribute rather than misread.
