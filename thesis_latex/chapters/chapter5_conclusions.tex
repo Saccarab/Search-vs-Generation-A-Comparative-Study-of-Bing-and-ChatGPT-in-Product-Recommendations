@@ -32,8 +32,7 @@ practice.
 
 Listicles are the primary fuel for product recommendations and they
 are also the page type that predominantly reaches the model through
-SERP results. Our findings show that a listicle must rank to be retrieved in the first
-place. A brand could, in theory, craft a ``top~10 AI tools''
+SERP results. A listicle must rank to be retrieved in the first place. A brand could, in theory, craft a ``top~10 AI tools''
 listicle that games our findings, burying real competitors at the
 bottom of the list, omitting them entirely, or only listing soft
 alternatives. But as long as search engines still weigh engagement
@@ -42,22 +41,20 @@ find unhelpful will not rank or will not maintain rankings long term.
 An unranked listicle is invisible to the grounding pipeline
 regardless of how well it is structured or how well it plays the LLM
 manipulation game. GEO optimization relies on the SEO optimization
-loop: build comprehensive content that serves human readers, earn the
-rankings, and the LLM citations follow.
+loop: a listicle that serves human readers earns the rankings, and
+the LLM citations follow from that.
 
-Localisation is another area where GEO mirrors SEO. Localising
-websites has been important for traditional search visibility for
-years, but our cross-language fan-out analysis
-(Section~\ref{sec:localization-bias}) shows it matters even more for
-AI visibility. Due to the English bias in LLM fan-out queries
+Localisation has always been in a brand's best SEO interest, and
+our cross-language fan-out analysis
+(Section~\ref{sec:localization-bias}) shows it is equally in their
+best GEO interest. Due to the English bias in LLM fan-out queries
 \parencite{rudzki2026english}, a foreign-language business that
 lacks English-language pages will lose a substantial share of its
 potential AI visibility. The reverse also applies: an English-only
 domain needs foreign-language pages to maintain access to
 English-speaking users in non-English-speaking countries, or even
-users searching for a concept that happens to have foreign-language
-origins, or even to retain visibility when an LLM
-generates an unexpected foreign-language fan-out query.
+users searching for a prompt that happens to have foreign-language
+context.
 
 The workflow that GEO platforms are beginning to offer (identifying
 the prompts a brand appears in and tracking visibility over time)
@@ -71,8 +68,8 @@ citations point to URLs that do not appear in either Bing or Google
 for the corresponding query (Section~\ref{sec:invisible-links}),
 concentrated in Wikipedia, Reddit, app stores, and major tech
 publications. These sources enter the response through pathways that
-appear to bypass search results. They give brands a form of marketing
-presence that is durable and difficult for competitors to displace,
+appear to bypass search results. They give brands a form of visibility that is durable and difficult for competitors
+to displace,
 as long as the current grounding workflow remains in place.
 
 The entire chain (query generation, retrieval, source selection,
@@ -129,6 +126,7 @@ retrieval strengthens and trigger rates rise, this fidelity will only
 improve. Browsing is exponentially cheaper than inference
 (Section~\ref{sec:rag-economics}), and the economic pressure on
 model providers favours smaller models paired with heavier retrieval
-over brute-force parametric generation in this domain of prompts we have analyzed. If today's search trigger
-rates represent the floor rather than the ceiling, GEO does not
-diverge from SEO over time; it converges further.
+over brute-force parametric generation. If today's search trigger
+rates represent the floor rather than the ceiling, the efforts and results of SEO and GEO will only align further.
+In our data, GEO is best understood as an extension of SEO rather
+than a discipline of its own.
