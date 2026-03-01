@@ -2,147 +2,145 @@
 \chapter{Conclusions \& Practical Implications}
 \label{ch:conclusions}
 
-\section{GEO Is SEO --- With One Exception}
+\section{GEO Is Mostly SEO}
 \label{sec:geo-is-seo}
 
-Our data indicates that Generative Engine Optimization is not a replacement for SEO but an extension of it. The Page~2 cliff (see Section~\ref{sec:page-dist}) shows that position bias remains a dominant factor in LLM citation behavior: most citations come from Rank~1--10, with a sharp decline beyond that. In practice, citations require retrieval, and retrieval is strongly mediated by ranking. Across our conditions, the grounding pipeline primarily draws on search indices: Bing for Business, Bing+Google for Personal, and Google for Gemini. Without SERP visibility, there is typically no grounding and, therefore, limited citation opportunity.
+We ran 79 prompts three times each across ChatGPT Business,
+ChatGPT Personal, and Gemini, yielding 711 runs. Across all three
+conditions, 78--84\% of LLM citations trace back to a conventional
+search index (Section~\ref{sec:global-overlap}). We established
+that LLMs do look deeper than human users but citations from beyond
+rank~10 are still quite rare (Section~\ref{sec:page-dist}) which is 
+the backbone of our argument that GEO is mostly SEO.
 
-An important exception is the \textbf{invisible link channel}. We find that 16--22\% of LLM citations point to URLs that do not appear in either Bing (Top~200) or Google (Top~25 Organic) for the corresponding query (see Section~\ref{sec:invisible-links}). These citations suggest an acquisition pathway that is not well-explained by conventional SERP visibility alone. The most frequent invisible domains (see Section~\ref{sec:top-invisible-domains}) include \textbf{Wikipedia}, \textbf{Reddit}, \textbf{app stores}, and \textbf{major news/tech publications} (e.g., The Verge, Wired, Tom's Guide). The mechanism by which these sources enter the response is not directly observable in our data; plausible explanations include retrieval pathways not captured by our SERP baselines, deeper index layers beyond our Rank~200 ceiling, or other non-SERP mechanisms.
+Within the ranked results, models show consistent structural
+preferences. For listicles, pages with tables, numbered lists, and
+bullet points are over-selected relative to the SERP baseline. We saw a similar selection pattern on product
+pages for bullet points for numbered lists (Section~\ref{sec:selection-drift}). But these features were already
+standard SEO advice before GEO became a term: they help human readers
+scan and compare products, and search engines have long rewarded
+content that serves readers well. 
+The fact that LLMs also prefer them is not necessarily a new optimization surface. 
 
-\subsection{Invisible Links as a Marketing Channel}
-\label{sec:invisible-marketing}
+Freshness is another converging signal: Gemini pre-filters for recency through year-token
+injection in fan-out queries, and GPT shows genuine freshness
+preference at the citation stage
+(Section~\ref{sec:freshness-subsection}). Keeping content current has
+always been good SEO practice and it is now also a good GEO practice.
 
-The marketing implications of invisible citations may be substantial. Unlike paid search ads (Google Ads, Bing Ads), which require continuous spend and stop when budgets pause, an invisible citation can function as a durable, unpaid placement in an LLM response. A brand that is mentioned on a Wikipedia page, discussed in a Reddit thread, or reviewed in a major publication may gain exposure pathways that are less dependent on ranking for the original commercial query. Compared to ads, which are explicitly labeled and auction-based, citations may carry a different credibility signal to users because they appear embedded in the assistant's explanation.
+Listicles are the fuel for product recommendations, and
+within them. But theyu are also the page type segment we established 
+that predominantly comes through SERP. So a listicle must rank to be
+retrieved in the first place. A brand in theory could build a listicle blog content for ``top~10 AI tools'' 
+where they carefully craft their competitor list in line with out findings. 
+They could place their real competitors down in the lists or don't even mention them.
+Only list soft competitors or w/e id ku can reframe this sentnce. But as long as search
+engines still weigh engagement signals like bounce rate and time on
+page, the page will not rank or won't maintain rankings long term. 
 
-This may help explain why brands increasingly invest in \textbf{Reddit presence} [and not in vain according to our study] (community engagement, seeded discussions, AMA campaigns) and \textbf{Wikipedia notability}: not primarily for direct referral traffic, but for the indirect effect of increasing brand mentions on surfaces that LLMs may draw on outside conventional SERP results. In our dataset, Reddit accounts for 90+ truly invisible cited occurrences in GPT Personal (see Section~\ref{sec:top-invisible-domains}). We also observe that Google recovers an additional 58\% of Bing-invisible Reddit URLs, indicating that some ``invisible'' sources are likely query- and engine-dependent rather than fundamentally outside search indices.
+An unranked listicle is invisible to the grounding pipeline regardless of how well it is structured
+or how well it is playing the LLM manipulation game. The
+GEO optimization relies on SEO optimization loop. Our findings show us that the best way for AI visibility is to build
+comprehensive content that serves human readers, earn the rankings,
+and the LLM citations follow.
 
-\textbf{Strategic takeaway}: while SEO remains a prerequisite for the majority of citations that flow through search indices, brands may benefit from treating Wikipedia pages, Reddit discussions, and coverage in authoritative publications as a parallel GEO channel that can influence LLM responses through partially non-SERP pathways.
+One our other significant findings regarding implications for webmasters and publishers is once again something that has been 
+important for regular SEO strategies for a while. Localizing your website has been quite important for a while 
+but we show here that [cite our localization fanotu section here] due to the English bias (can cite peec ai), you will lose half your AI visibility equity
+even if you are a foreign language business. And the other way also applies, a English only domain also needs to have foreign language pages to maintain their access 
+to English speaking audience who live in foreign language speaking countries or even people that are potentially just searching for a foreign language concept. And
+even at the most extreme they'd be securing their AI visibility slot when LLMs just decides to hallucinate a foreign language fanout query.  
 
-\section{Listicles as the Critical Node --- But Only If They Rank}
-\label{sec:listicles-critical-node}
+The workflow that of identify the prompts you rank for that GEO platforms are beginning to offer 
+needs to be complemented by an understanding of fan out queries.
+Once a brand understands fan out queries that LLMs responses the intent 
+they can execute keyword gap analysis on these which would just mirror traditional SEO gap analysis.
 
-[give percentages gemini 50pp 35pp gpt kinda of]
+The one partial exception is the invisible-link channel: 16--22\% of
+citations point to URLs that do not appear in either Bing or Google
+for the corresponding query (Section~\ref{sec:invisible-links}),
+concentrated in Wikipedia, Reddit, app stores, and major tech
+publications. These sources enter the response through pathways that seem 
+to bypass search results. They give brands marketing power that can be permanent and hard to contest by their competitors
+assuming OpenAI maintains their current workflow on how they ground responses.
 
-Our listicle analysis (see Section~\ref{sec:listicle-bias}) confirms that listicles are the primary ``on-ramp'' for product citations in LLM-generated recommendations. When an LLM retrieves a listicle, it extracts products from it at measurable rates, with a strong top-rank bias (\#1 item selected at 1.7--2.5$\times$ the random baseline; see Section~\ref{sec:reranking}). Listicles are the mechanism through which individual products enter the LLM's recommendation set.
+The entire chain --- query generation, retrieval, source selection,
+product extraction --- is grounded in the same web infrastructure that
+SEO has optimized for decades. A brand that already runs rigorous SEO
+gap analysis is, in practice, already covering most of the GEO gap.
 
-However, this power is entirely contingent on the listicle ranking in the SERP. A listicle that does not appear in Bing's Top~10 (or Google's Top~10 for Gemini) is unlikely to be retrieved, and a listicle that is not retrieved has zero influence on the LLM's output. The Page~2 cliff applies to listicles just as harshly as to any other content type.
+#maybe this below contetn build into the screaping is getting tough bit?
 
-This creates an important tension for content creators: \textbf{listicles optimized purely for LLM extraction may fail to rank}. A listicle that omits real competitors (a common tactic in self-promotional ``best of'' content) may satisfy the LLM's structural preferences (tables, numbered lists, pros/cons), but if human readers find the content unhelpful and do not engage with it, the page will not earn the engagement signals, backlinks, and dwell time that search engines use to rank content. An unranked listicle, no matter how well-structured, is invisible to the grounding pipeline.
+This thesis opened with the observation that commercial queries
+trigger web search at 3$\times$ the overall baseline rate
+(Figure~\ref{fig:trigger-rate}), making product recommendations the
+arena where retrieval is most active and where source selection is
+most consequential. Our findings confirm that this retrieval
+dependency is the foundation of AI visibility: without SERP ranking,
+there is no citation.
 
-\textbf{The practical implication}: listicle content should be created for both audiences simultaneously. The structural features that predict LLM citation (tables at +7.8 to +19.7\,pp lift, numbered lists at +7.1 to +11.2\,pp, bullet points at +9.7 to +14.0\,pp; see Section~\ref{sec:selection-drift}) are, conveniently, the same features that help human readers compare products. Honest, comprehensive listicles that include genuine competitors will rank better, and ranking is the gatekeeper to LLM visibility.
-
-\textbf{Connection to the GEO analytics industry}: The centrality of listicles in LLM grounding is precisely what the emerging GEO analytics platforms are built to track. Tools like Profound, Peec AI, and Ahrefs' AI search features offer brands dashboards that monitor their \textbf{position within LLM-generated recommendations}: where they rank relative to competitors, which prompts surface their brand, and the \textbf{sentiment} with which the model describes them. The core commercial value proposition of these platforms reduces to a competitive intelligence question: \emph{which listicles and third-party sources cite your brand but not your competitor, and vice versa?} Our findings on listicle rank bias (top-item selection at 1.7--2.5$\times$ baseline), host exclusion (64--72\% omission rate), and structural selection drift provide the empirical foundation for why this tracking matters: small differences in listicle position or inclusion can translate into measurable differences in LLM citation probability.
-
-\section{Structural Content DNA --- What LLMs Select For}
-\label{sec:structural-dna-conclusions}
-
-Our selection drift analysis (see Section~\ref{sec:selection-drift}) reveals consistent, measurable preferences in what LLMs choose to cite from the available retrieval pool. These preferences are not random noise; they represent the ``structural filter'' that sits between retrieval and citation.
-
-\textbf{For listicles} (where drift signals are strongest):
-\begin{itemize}
-    \item \textbf{Tables} are the most consistent positive signal: $+$11.4\,pp for GPT Business (vs.\ Bing, $p<0.01$), $+$19.7\,pp for GPT Personal (vs.\ Google, $p<0.001$), and $+$7.8\,pp for Gemini (vs.\ Google, $p<0.01$). Listicles with comparison tables are measurably more likely to be cited.
-    \item \textbf{Numbered lists} show strong lift across all systems: $+$10.3\,pp for GPT Business ($p<0.001$), $+$9.7\,pp for GPT Personal (vs.\ Google, $p<0.05$), and $+$7.1\,pp for Gemini ($p<0.01$). Ordered structure appears to be a universal selection signal.
-    \item \textbf{Bullet points} show $+$9.7\,pp for GPT Personal (vs.\ Google, $p<0.05$) and $+$4.5\,pp for Gemini (directionally positive but not significant under SERP constraint), reinforcing the pattern that scannable, comparison-oriented structure is generally preferred.
-\end{itemize}
-
-\textbf{For product pages}, drift profiles are much flatter (most features within $\pm$2pp), reflecting the structural homogeneity of vendor pages. Selection among product pages likely depends on relevance and authority signals not captured by Content DNA. [we did find product pgae dirft also no? towards numbered list and stuff?]
-
-\textbf{Freshness as a GPT-specific signal}: GPT's freshness drift is more informative than Gemini's because GPT rarely injects year tokens into its fan-out queries (5.1\% of runs vs Gemini's 96.7\%; see Section~\ref{sec:freshness-steering}). This means GPT's freshness preferences at the citation stage reflect genuine selection behavior rather than query-level pre-filtering. For content targeting GPT specifically, keeping publication dates current and including temporal markers (``2026 update,'' ``as of January 2026'') may provide a small but real selection advantage.
-
-\section{The Dual-Deployment Reality}
-\label{sec:dual-deployment}
-
-Our overlap analysis (Section~\ref{sec:global-overlap}) reveals that Business and Personal ChatGPT operate over substantially different retrieval surfaces. Business citations overlap with the Bing index at 81.3\% but only 27.8\% with Google; Personal citations show 64.6\% Google overlap, a 36.8\,pp increase that is consistent with Personal-tier retrieval drawing on the Google index in addition to Bing. The practical consequence is that a brand ranking well in Google but poorly in Bing may be visible to Personal ChatGPT users but largely invisible to Business users, and vice versa.
-
-For brands targeting ChatGPT as a recommendation channel, optimizing for \textbf{both} Bing and Google indices is necessary to achieve full coverage across subscription tiers. This is a departure from the Google-centric SEO mindset that dominates the industry, and it underscores why monitoring citation behavior per subscription tier, not just per model, is commercially necessary.
-
-\section{The Cross-Language Retrieval Blind Spot}
-\label{sec:cross-language-conclusion}
-
-Our cross-language fan-out analysis (Section~\ref{sec:localization-bias}) reveals that LLM retrieval operates across language boundaries in ways that neither users nor publishers anticipate. We identified three cases: foreign-language prompts receiving English fan-outs (Case~1), English prompts with foreign context receiving local-language fan-outs (Case~2), and English prompts with no foreign context receiving IP/geolocation-driven foreign fan-outs (Case~3).
-
-Case~1 is corroborated at scale by \textcite{rudzki2026english}, whose analysis of 10M+ prompts found that 78\% of non-English ChatGPT sessions include at least one English sub-search, with 43\% of all fan-out queries issued in English. Cases~2 and~3, the reverse direction in which English users are routed into foreign-language retrieval, are novel to this study.
-
-The practical implication is bidirectional: non-English publishers must compete with English-language sources that enter their users' retrieval pools uninvited, while English-only publishers may lose visibility when IP-driven localization routes part of the LLM's retrieval into a language they do not publish in. For GEO, this means the \textbf{language of optimization} is no longer determined solely by the user's query; it is determined by the model's retrieval architecture.
-
-\section{The Host Exclusion Paradox --- Resolved by Position}
-\label{sec:host-exclusion}
-
-[idk this bis feels weird there is no paradox no?]
-Neither ChatGPT nor Gemini exhibits a meaningful host bias in listicle extraction (Section~\ref{sec:self-promo}). Although host products appear to be omitted 64--72\% of the time, a position-controlled comparison shows that non-host items at the same rank are skipped at comparable or higher rates (79.5--85.7\%). The residual host advantage after controlling for position is just +2.5--4.7\,pp, a modest effect likely explained by the host's more detailed self-description rather than any systematic favoritism or penalization.
-
-The mechanism behind within-listicle position bias is illuminated by \textcite{petrovic2025grounding}, who shows that Gemini's grounding operates with a fixed $\sim$2{,}000-word content budget that allocates 28\% to the top-ranked source and only 13\% to the fifth, and by \textcite{indig2026attention}, who finds that 44.2\% of ChatGPT citations originate from the first 30\% of page text. Items positioned later in a listicle may never enter the content window the model processes, an architectural constraint rather than a learned preference.
-
-\textbf{Practical implication}: the host exclusion effect is largely a \emph{position} effect, not an anti-self-promotion heuristic. Brands hosting their own listicles are not penalized for self-promotion, but they are not meaningfully advantaged either. The safer strategy remains being \textbf{mentioned in third-party listicles}, which avoids any position confound and benefits from the same listicle-driven citation pathway. For content creators, the lesson reinforces what the Dejan and Growth Memo studies suggest: front-load the most important products, because items deeper in the page face a diminishing probability of being grounded.
-
-\section{Citation Stochasticity --- The Flip-Flop Effect}
-\label{sec:flip-flop-conclusion}
-
-The boundary between inline citation and supplementary attachment is genuinely stochastic (Section~\ref{sec:flip-flop}). Approximately 20\% of supplementary URLs are promoted to inline citations in a different run of the same query, and this rate is consistent across both subscription tiers ($\sim$26\% cross-prompt, $\sim$21\% within-prompt). The search-trigger classifier is fully deterministic (byte-identical across runs), so the stochasticity originates entirely in post-classifier layers.
-
-For GEO, this means that citation visibility is partially probabilistic: a brand's source may be cited inline in one session and demoted to supplementary in the next, even for identical queries. Monitoring tools that report ``Share of Model'' from single snapshots will systematically miss this variance. Any robust GEO measurement framework must account for the $\sim$20\% within-prompt citation instability we observe.
-
-\section{Fan-Out Keyword Analysis: The Convergence of GEO and SEO Gap Analysis}
-\label{sec:fanout-gap-analysis}
-
-Our fan-out data suggests a concrete methodology for GEO. The logic is straightforward:
-
-[meh this entire bit on now starting to give suggestions is kinad bad imo might be discarded]
-
-\begin{enumerate}
-    \item \textbf{Acquire real prompt volumes.} Platforms like Profound and Peec~AI surface the actual prompts users submit to ChatGPT, along with volume estimates.
-    \item \textbf{Extract fan-out queries.} For each high-volume prompt, identify the fan-out queries the model generates. Tools already exist for this: QueryFanout.ai\footnote{\url{https://queryfanout.ai/}} and Dejan~AI's fan-out tool\footnote{\url{https://dejan.ai/tools/fanout/}} \parencite{petrovic2026fanout,queryfanout2026} make API calls to Google and extract the fan-out queries from the grounding response. Notably, these queries are not generated by Gemini itself; rather, Google's QDG (Query Decomposition and Generation) classifier determines whether grounding is needed, and if so, a dedicated fan-out model generates the sub-queries that are supplied to Gemini alongside the \texttt{webSearchQueries} in \texttt{groundingMetadata}. Fan-out generation is conditional: if the classifier determines no grounding is needed, no fan-out queries are produced. For ChatGPT, our network instrumentation (Section~\ref{sec:multi-turn}) shows that GPT dispatches exactly 2 fan-out queries per search turn as reformulations of the user's intent.
-    \item \textbf{Cluster the fan-outs.} Aggregate fan-out queries across prompts and cluster them by keyword similarity, exactly as one would in traditional keyword research. The resulting clusters represent the \emph{actual search queries} that feed the model's retrieval pool.
-    \item \textbf{Run a keyword gap analysis.} For each fan-out cluster, check whether the brand ranks in the top positions of Bing and Google. Gaps in ranking correspond directly to gaps in LLM visibility.
-    \item \textbf{Optimize using standard SEO.} Close the gaps with conventional techniques: content creation, link building, technical optimization. The target keywords are the fan-out queries; the ranking goal is the same Page~1 visibility that drives traditional search traffic.
-\end{enumerate}
-
-\subsection{Why Fan-Out Analysis May Be Unnecessary}
-
-However, the more consequential observation is that \textbf{dedicated fan-out analysis may not be necessary at all}. Fan-out queries are, by design, reformulations of user intent into search-engine-compatible keywords. A prompt like ``What's the best AI video translator?'' generates fan-outs such as ``best AI video translation tools 2026'' and ``AI video translator comparison free'', queries that are nearly identical to what a human user would type into Google or Bing.
-
-Traditional SEO keyword research infrastructure is mature and well-supplied with data. Thousands of website owners connect their properties to platforms like Ahrefs, SEMrush, and Google Search Console, providing these tools with keyword volume, intent classification, and competitive gap data refined over more than a decade. Adobe's acquisition of SEMrush in November 2025 \parencite{adobe2025semrush} underscores the strategic value the industry places on this keyword intelligence layer. A thorough traditional SEO gap analysis using these tools would likely identify the same keyword clusters that fan-out analysis reveals, because the model's query reformulation is itself constrained by the search index it targets.
-
-The implication is that fan-out-based GEO gap analysis and traditional SEO gap analysis \textbf{converge in practice}. The marginal value of fan-out data over conventional keyword research is real but bounded: it captures the specific phrasings the model uses (which may differ subtly from human search behavior), the freshness signals it injects (Section~\ref{sec:freshness-steering}), and the cross-language fan-outs that route retrieval into unexpected indices (Section~\ref{sec:localization-bias}). \textcite{rudzki2026country} report that fan-out queries are growing longer on average across 20~million analyzed QFOs, which may signal that long-tail keyword targeting becomes relatively more important in a GEO context than in traditional SEO. But the core keyword universe is substantially the same.
-
-A brand that already runs rigorous SEO gap analysis is, in most cases, already covering the GEO gap, reinforcing the thesis that \textbf{GEO is not a replacement for SEO but a thin, measurable layer on top of it}.
-
-\subsection{The Invisible-Link Channel as a Parallel Strategy}
-\label{sec:invisible-strategy}
-
-One area where GEO strategy does diverge from traditional SEO is the \textbf{invisible-link channel} (Section~\ref{sec:invisible-links}). Our data shows that 16--22\% of citations point to URLs absent from both Bing (Top~200) and Google (Top~25 Organic), dominated by Wikipedia, Reddit, app stores, and major tech publications. These sources enter the LLM's response through pathways not fully explained by conventional SERP ranking.
-
-For brands, this suggests a parallel optimization track: securing mentions, even \emph{unlinked} mentions, on high-authority surfaces like Wikipedia pages, Reddit discussions, and authoritative publications. Such mentions serve at least two functions. First, they may provide a direct retrieval pathway into the LLM's grounding pool via the invisible-link channel. Second, they may influence the model's \emph{parametric} knowledge: brands discussed on high-authority surfaces during training may receive a baseline ``nudge'' in the model's recommendations, even before retrieval is triggered.
-
-\textbf{A potential future study} could test this parametric nudge hypothesis directly by comparing model recommendations with web search forced off (pure parametric recall) against recommendations with web search enabled (RAG-augmented), measuring whether brands with strong non-linked mentions on training-likely surfaces receive disproportionate parametric attention. If confirmed, this would identify a GEO channel that is genuinely independent of SEO: influencing the model's prior beliefs through training-data presence rather than search-index ranking.
-
-\section{Where GEO Is Not Just SEO}
+\section{Outlook}
+\label{sec:outlook}
 \label{sec:geo-not-seo}
 
-The preceding sections argue that the foundation of GEO is SEO. But framing GEO as \emph{merely} SEO would overstate the case and undervalue the genuine novelty of the emerging GEO analytics layer. Several dimensions of LLM-mediated search visibility are not captured by traditional SEO tools:
+We didnt see expect to see
+The backend varies by
+subscription tier --- there had been reports that OpenAI draws on
+Google's search data alongside Bing
+\parencite{theinformation2025openaiserpapi}, and our data confirms
+this: Business citations overlap with Google at only 27.8\% while
+Personal reaches 64.6\%, a gap larger than we expected. The
+behavioural differences between tiers extended beyond index choice:
+source citations showed significant negative selection drift on
+Personal but trended positive on Business
+(Section~\ref{sec:selection-drift}), Reddit appeared frequently as
+a resource on Personal but almost never on Business, and
+news-related sources were more prominent on the Enterprise tier
+(Section~\ref{sec:invisible-links}).
+# maybe rewrite just this sentence idk if thhis adds anything
+We didn't expect this but it gave a lot of contrast to our dataset, being able to run
+same dataset on same model but with slightly different behavior also allowed us to 
+ground these results between each other apart from allowing us to see how these models behave differently.
 
-\begin{enumerate}
-    \item \textbf{Share of Model.} Traditional SEO tracks ranking position; GEO tracks whether a brand actually appears in the model's generated response. A brand may rank \#1 in Google and still be absent from ChatGPT's answer for the same query, or vice versa. Platforms like Profound, Peec~AI, and Ahrefs' AI search features provide this monitoring capability, tracking brand mentions, competitor comparisons, and citation frequency across LLM outputs. No traditional SEO tool can replicate this.
+# maybe her we touch on scraping war talk about reddit, openai scraping allegedly google fighting againt it bing retiring thes kinbd of stuff? idk how toe segue clearnly though
 
-    \item \textbf{Citation sentiment.} SEO measures visibility (do users see you?); GEO must also measure \emph{framing} (how does the model describe you?). An LLM may cite a brand but frame it negatively (``expensive but capable'') or omit key differentiators. Sentiment tracking within AI-generated responses is a genuinely new optimization surface.
 
-    \item \textbf{Cross-model divergence.} Our Business--Personal provider split (Section~\ref{sec:global-overlap}) demonstrates that the same query can produce different citation sets depending on the deployment context. A brand visible in GPT Personal (which retrieves from both Bing and Google) may be invisible in GPT Business (locked to Bing). To our knowledge, no existing GEO platform currently monitors visibility \emph{per subscription tier} of the same model; yet our data shows this distinction can produce a 36.8\,pp difference in Google overlap alone. As LLM deployments fragment across tiers (consumer, enterprise, API, embedded), per-tier visibility monitoring will become a necessary GEO capability that has no analogue in traditional SEO.
 
-    \item \textbf{Citation stochasticity.} Our flip-flop analysis (Section~\ref{sec:flip-flop}) shows that $\sim$20\% of supplementary URLs are promoted to inline citations across reruns of the same query. Any single-snapshot visibility report will systematically misrepresent a brand's true citation frequency. Robust GEO monitoring requires repeated sampling, a design pattern built into GEO platforms but absent from traditional rank trackers.
 
-    \item \textbf{Prompt volumes.} What users ask ChatGPT is not identical to what they search on Google. Prompt volume data from GEO platforms reveals demand signals that keyword tools may miss, particularly for conversational, multi-turn, or comparison-oriented queries that are natural in chat but uncommon in search boxes.
+The trajectory points to more retrieval, not less. 
 
-    \item \textbf{The invisible-link channel as a marketing surface.} Our finding that 16--22\% of citations originate from sources invisible to conventional SERPs (Section~\ref{sec:invisible-links}), dominated by Wikipedia, Reddit, app stores, and major publications, suggests a marketing channel with unusual properties. Unlike paid search ads, which require continuous spend and stop when budgets pause, an invisible citation functions as a durable, unpaid placement in an LLM response. A brand mentioned on a Wikipedia page, discussed in a Reddit thread, or reviewed in a major publication may gain exposure through pathways that bypass search ranking entirely. As the GEO ecosystem matures, we may see brands invest more deliberately in presence on these high-authority surfaces, not for direct referral traffic, but for their influence on LLM citation behavior. In principle, this logic extends to any high-authority, training-likely surface: academic publications, app store listings, and curated directories could all function as indirect citation channels.
-\end{enumerate}
 
-\textbf{The better framing}, then, is not ``GEO is just SEO'' but ``\textbf{GEO is a specialization within SEO}'', analogous to how mobile SEO, local SEO, or video SEO are not separate disciplines but specific lenses on the same foundation. The prerequisite is ranking. The monitoring layer is new. And the stakes are growing: according to Ahrefs' panel of 74{,}752 websites \parencite{ahrefs2026chatgptvsgoogle}, Google's share of referral traffic declined from 42.2\% to 38.9\% between June 2025 and January 2026 ($-$3.2\,pp), while ChatGPT referral traffic grew by 27\% over the 
-[redundant info on percentage increase?] same period. AI-driven traffic remains a small fraction of total referrals ($<$0.3\%), but the growth trajectory and the high-intent nature of LLM-referred users make the mechanics of citation selection, which this study documents, commercially material.
+Semantic fidelity is already high when using RAG 
+for commercial queries and will get better --- fewer than 2\% genuine attribution
+errors --- and commercial domains produce abundant, frequently updated
+content for models to ground on. As retrieval strengthens and trigger
+rates rise, this fidelity will only improve. 
 
-\section{The Economic Moat of Retrieval}
-\label{sec:economic-moat}
+Browsing is
+exponentially cheaper than inference
+(Section~\ref{sec:rag-economics}), and the economic pressure on model
+providers favours smaller models paired with heavier retrieval over
+brute-force parametric generation. As retrieval expands to cover more
+query types and more turns per conversation, the dependence on search
+indices will deepen, not diminish. If today's search trigger
+rates represent the floor rather than the ceiling, GEO does not
+diverge from SEO over time --- it converges further as serach gains more importance. # maybe one is duplciat ehere between als t2 use whiever sounds better
 
-The broader conclusion from our study reinforces the architectural argument made in Section~\ref{sec:rag-economics}: retrieval is cheaper than inference, and this economic reality ensures that the web remains the foundation of AI-generated answers. Our Sonic Classifier analysis (Section~\ref{sec:search-trigger}) provides direct architectural evidence: on paid ChatGPT tiers, the classifier's burden of proof has been inverted from ``should I search?'' (\texttt{search\_prob} must exceed 65\% on the free tier) to ``should I \emph{not} search?'' (\texttt{no\_search\_prob} must exceed 17.5\% on paid tiers, with a catch-all threshold of~0 for simple search). Search is the default; inference-only responses are the exception. For product-recommendation queries, this near-guarantees web grounding on every turn, and with it, the continued centrality of SERP visibility. LLMs are not replacing search; they are consuming it. The ``tiny model with superhuman reasoning'' vision (see Section~\ref{sec:reasoning-models}) depends on an external knowledge layer, and that layer is the indexed web.
+# can be said much better 
+As the dependece inrease the war that has already  started on who 
+is getting how much access to search indices and they are tryign to find workaround.
 
-Our semantic fidelity audit (Section~\ref{sec:semantic-fidelity}) provides empirical support for why this architecture works: across 1{,}110 solo-cited product claims, the verified attribution failure rate is just 6.4\% for Gemini and 0.7\% for GPT, with most Gemini failures attributable to a systematic table-grounding artefact rather than comprehension errors. While our fidelity analysis is narrower in scope than dedicated verification studies (\textcite{wu2025sourcecheckup} employ a comprehensive 58K-pair statement-level pipeline with physician validation on medical queries), the directional finding is consistent: their study shows that enabling retrieval substantially reduces citation errors compared to parametric-only generation, and our results on newer models in a different domain reinforce this conclusion. As long as retrieval remains the mechanism that keeps LLM outputs factually anchored, the web, and the SEO that governs access to it, will remain central to AI-mediated information delivery.
 
-For the foreseeable future, SEO remains the prerequisite for AI visibility. Content that is not searchable is not retrievable, and content that is not retrievable is invisible to the generation pipeline. GEO adds a new optimization surface (structural content DNA, listicle positioning, invisible link channels) but it does not replace the fundamental requirement to rank.
+At the same time, studying these systems is getting harder. During the
+course of this research, Microsoft retired the Bing Search API
+(Section~\ref{sec:structural-pivot}), Google has limited organic
+results to approximately 100 per query, and the third-party scraping
+services that fill the gap face active litigation from both Google
+\parencite{google2025serpapi} and Reddit. The infrastructure for
+independent research into LLM grounding behaviour is eroding just as
+the commercial stakes are rising. The empirical data documented in
+this thesis captures a snapshot of a system in rapid flux; replicating
+or extending this work will require either new access agreements with
+search providers or increasingly creative instrumentation.
+
+# idk maybe we need a final chatper or move one of the previous ones
