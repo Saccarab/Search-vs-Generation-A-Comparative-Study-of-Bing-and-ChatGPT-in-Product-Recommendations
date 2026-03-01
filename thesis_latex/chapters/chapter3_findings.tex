@@ -52,7 +52,7 @@ What are direct competitors of Doctranslate that offer similar services? (P046) 
 Can you recommend the best free AI TTS software with celebrity voices for IoT? (P053) & .736 & .259 & .005 \\
 What is the best machine translation tool for live translation that saves context? (P063) & .955 & .037 & .008 \\
 I need live transcribing while using online streaming or watching videos. (P016) & .792 & .034 & .174 \\
-What are some free AI tools for audio transcription? (P022) & .997 & .0002 & .003 \\
+What are some free AI tools for audio transcription? (P022) & .996 & .0002 & .004 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -69,20 +69,20 @@ Table~\ref{tab:search-trigger-breakdown} summarizes the search trigger outcomes 
  & \textbf{Business} & \textbf{Plus} & \textbf{Total} \\
 \midrule
 \multicolumn{4}{@{}l}{\emph{Run-level outcomes (237 runs per tier)}} \\
-\quad Search triggered & 218 (92.0\%) & 214 (90.3\%) & 432 (91.1\%) \\
-\quad No search & 19 (8.0\%) & 23 (9.7\%) & 42 (8.9\%) \\
+\quad Search triggered & 213 (89.9\%) & 209 (88.2\%) & 422 (89.0\%) \\
+\quad No search & 24 (10.1\%) & 28 (11.8\%) & 52 (11.0\%) \\
 \midrule
 \multicolumn{4}{@{}l}{\emph{Prompt-level consistency (79 prompts, across all 6 runs)}} \\
-\quad Always searched (6/6) & \multicolumn{2}{c}{} & 70 \\
+\quad Always searched (6/6) & \multicolumn{2}{c}{} & 68 \\
 \quad Never searched (0/6) & \multicolumn{2}{c}{} & 6 \\
-\quad Mixed & \multicolumn{2}{c}{} & 3 \\
+\quad Mixed & \multicolumn{2}{c}{} & 5 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \noindent The six prompts that never searched tend to be phrased as general how-to questions---e.g.\ \emph{``How can I convert an audio file to text?''} (P013)---for which the model answered entirely from training knowledge and produced few or no citations.
 
-Only three prompts showed mixed behavior. The clearest case is P016 (\emph{``I need live transcribing while using online streaming or watching videos.''}): on Business, all three runs searched; on Plus, none did. Its \texttt{no\_search\_prob} of .174 sits just 0.001 below the 0.175 suppression threshold---same prompt, different tier, opposite outcome. The classifier configuration and thresholds are identical across tiers, so the divergence occurs somewhere downstream. P004 and P045 also showed within-tier variation---searching in 2 of 3 runs on the same tier---but this was rare (2 of 79 prompts).
+Five prompts showed mixed behavior. The clearest case is P016 (\emph{``I need live transcribing while using online streaming or watching videos.''}): on Business, all three runs searched; on Plus, none did. Its \texttt{no\_search\_prob} of .174 sits just 0.001 below the 0.175 suppression threshold---same prompt, different tier, opposite outcome. The classifier configuration and thresholds are identical across tiers, so the divergence occurs somewhere downstream. P004, P011, P029, and P067 also showed within-tier variation---searching in some runs but not others on the same tier---but this was rare (4 of 79 prompts).
 
 
 When search was triggered, we observed \texttt{web.run} tool calls in the event stream issuing pairs of reformulated queries---the fan-out queries discussed in the next section. As of late February~2026, the \texttt{sonic\_classification\_result} block (classifier ID, thresholds, and probabilities) is no longer exposed in the event stream; the search decision now happens entirely server-side. The underlying Sonicberry model (\texttt{alpha.sonic\_thinky\_v1\_paid}) remains identical to our January data collection period and is still visible in the stream (Figure~\ref{fig:sonicberry}), as are \texttt{web.run} calls and fan-out queries.
@@ -111,7 +111,7 @@ Once the search decision is made, the model reformulates the user's prompt into 
 \subsection{Multi-Turn Re-Search}
 \label{sec:multi-turn}
 
-In 12 of 432 searched runs (across 5 prompts), the model evaluated its first-round results, 
+In 13 of 422 searched runs (across 6 prompts), the model evaluated its first-round results, 
 then issued a second (or third) \texttt{web.run} call with new queries. 
 First-round queries are generic fan-outs of the user prompt, while later rounds target specific products discovered in the initial results (Table~\ref{tab:multi-turn-queries}).
 \begin{table}[H]
