@@ -521,7 +521,7 @@ Since both systems issue multiple fan-out queries per run, we checked whether ci
 
 \begin{table}[H]
 \centering
-\caption{GPT per-query citation overlap (474 fan-out queries per tier).}
+\caption{GPT per-query citation overlap (448 Business / 424 Plus fan-out queries).}
 \label{tab:gpt-per-query}
 \begin{tabular}{llrr}
 \toprule
@@ -992,12 +992,12 @@ Product page & 927 \\
 \end{tabular}
 \end{table}
 
-Prior work suggests that content length and position within a page affect how much of a source the model actually processes. \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 3K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
+Prior work suggests that content length and position within a page affect how much of a source the model actually processes. \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 2K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
 
 Based on these findings, for an average listicle of over 2{,}000 words, products listed later may receive less model attention. Since attributing a product recommendation to a specific source is difficult when multiple links support the same claim, we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
 \label{sec:solo-cited}
 
-For each solo-cited claim, we ran an LLM-as-judge prompt through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}116 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the Content DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}).
+For each solo-cited claim, we ran an LLM-as-judge prompt through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}110 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the Content DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}).
 
 \subsection{Selection Order vs.\ Listicle Rank}
 \label{sec:reranking}
@@ -1085,6 +1085,6 @@ Pure fidelity (present only) & 4.81 / 5.0 & 4.71 / 5.0 \\
 \end{tabular}
 \end{table}
 
-Reading comprehension is high: when the product is present in the source, both models score 4.71--4.81 out of 5.0. Fidelity scores were validated via cross-model agreement (GPT-5-mini vs Gemini 2.5 Flash on all 1{,}116 claims), with scores matching within $\pm$1 in 93.9\% of cases.
+Reading comprehension is high: when the product is present in the source, both models score 4.71--4.81 out of 5.0. Fidelity scores were validated via cross-model agreement (GPT-5-mini vs Gemini 2.5 Flash on all 1{,}110 claims), with scores matching within $\pm$1 in 93.9\% of cases.
 
 The primary failure mode is attribution, not comprehension: the model cites a source that does not contain the claimed product. We manually reviewed all 44 flagged cases and confirmed 32 genuine failures (27~Gemini, 5~GPT). 15 of Gemini's failures stem from a single infrastructure bug where its grounding API assigns an entire comparison table to one source chunk, rather than a comprehension error. Excluding these reduces Gemini's rate to 2.9\% (12/421). Across 1{,}110 solo-cited claims, only 17 are genuine attribution failures. In short, models rarely fabricate product details; when errors occur, they misattribute rather than misread.
