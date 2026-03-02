@@ -471,15 +471,14 @@ how LLMs pick results from SERPs has strong parallels with human behavior.
 \label{sec:gemini-google-rank}
 \label{sec:cross-system-rank}
 
-For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Plus). Each citation is counted once at its best rank, mirroring how human CTR is measured: of all selections, what share went to each rank? The comparison is restricted to Page~1: on Google, 28.7\% of Plus citation matches fall beyond rank~10, 
-so the table captures rank preference Page~1, not overall reliance on it. We clearly can tell that LLMs look deeper than humans do, 
-but we include this comparison regardless because of the parallel in positional bias between human and LLM behavior.
+For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Plus). Each citation is counted once at its best rank, mirroring how human CTR is measured: of all selections, what share went to each rank?
 
+The comparison is restricted to Page 1. LLMs do look deeper than humans (28.7\% of Plus matches fall beyond rank 10), but the parallel in positional bias is worth noting which is why we restrict the comparison to Page 1. 
 Table~\ref{tab:cross-rank-ctr} places this LLM rank concentration alongside Google organic click-through rates reported by First Page Sage \parencite{firstpagesage2026ctr}.
 
 \begin{table}[H]
 \centering
-\caption{Page-1 rank concentration: LLM citation share vs.\ human CTR \parencite{firstpagesage2026ctr}.}
+\caption{Page-1 rank concentration: LLM citation share vs.\ human CTR.}
 \label{tab:cross-rank-ctr}
 \label{tab:cross-rank-concentration}
 \label{tab:ctr-comparison}
@@ -503,7 +502,7 @@ Top-3 & 68.7\% & 62.6\% & 57.8\% & 48.2\% \\
 \end{tabular}
 \end{table}
 
-All three LLMs show a top-rank preference with a similar decay shape to human click-through behavior, but flatter: top-3 shares range from 48.2\% (Gemini) to 62.6\% (GPT Business) versus 68.7\% for human clicks. GPT Business shows the strongest rank-1 signal (24.9\%), while Gemini is the flattest; its citations spread more evenly across ranks 1--8.
+All three LLMs show a top-rank preference with a similar decay shape to human click-through behavior, but flatter: top-3 shares range from 48.2\% (Gemini) to 62.6\% (GPT Business) versus 68.7\% for human clicks. GPT Plus shows the strongest rank-1 signal (26.7\%), while Gemini is the flattest; its citations spread more evenly across ranks 1--8.
 
 \subsection{Per-Query Citation Distribution}
 \label{sec:per-query-citation}
@@ -570,10 +569,7 @@ further establish that a solid SEO carries a lot weight for AI visibility.
 \subsection{The Visibility Gap: Invisible Links}
 \label{sec:invisible-links}
 
-The overlap tables above show that 16--22\% of ChatGPT citations appear in neither
-the Bing nor the Google SERPs we collected.
-Not every unmatched URL is truly ``invisible''; some fall into
-methodological blind spots:
+16--22\% of ChatGPT citations appear in neither the Bing nor the Google SERPs we collected. If these links genuinely bypass search results, they represent a separate channel for AI visibility, one that operates independently of SERP ranking. We wanted to understand where they come from and how concentrated they are. Not every unmatched URL is truly ``invisible'', however; some fall into methodological blind spots:
 
 \begin{enumerate}
 \item \textbf{Scrape depth.} Our Bing scrape stops at Rank~200 and Google at
@@ -581,7 +577,7 @@ rank~30, but the overlap charts from Section~\ref{sec:page-dist}
 (especially the Bing one) indicate that going deeper would yield
 more matches. Citations that rank beyond our scrape depth
 will appear invisible to us even though LLMs might have grabbed them from 
-search engines
+search engines.
 \item \textbf{Bing Page~1 truncation.} Nearly half of our Bing Page~1 scrapes
 returned only 2--3 organic results due to UI pagination instability
 (Section~\ref{sec:bing-pagination-instability}). Results that ChatGPT's
