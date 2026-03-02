@@ -34,7 +34,7 @@ It outputs three probabilities (\texttt{simple\_search\_prob}, \texttt{complex\_
 \end{enumerate}
 
 \noindent Search is only suppressed if \texttt{no\_search\_prob} crosses the 17.5\% gate. The system no longer asks ``should I search?'' but ``should I \emph{not} search?'' (Section~\ref{sec:reasoning-models}).
-Table~\ref{tab:classifier-examples} shows the three probabilities parameters which we have observed to be deterministic for a given prompt across different runs.
+Table~\ref{tab:classifier-examples} shows the three probabilities parameters which we observed to be stable for a given prompt across different runs.
 
 \begin{table}[H]
 \centering
@@ -230,8 +230,7 @@ The reverse also holds: Cases~2 and~3 show that English-language prompts can pro
 \label{sec:global-overlap}
 
 For each LLM citation, we checked whether the exact URL appeared in our Bing or Google SERP scrape for 
-the same fan-out queries that produced it.
-
+the same fan-out queries that produced it (Table~\ref{tab:global-overlap}).
 
 \begin{table}[H]
 \centering
@@ -261,7 +260,7 @@ Across all three tiers, 78--84\% of citations trace back to a conventional searc
 This is consistent with traditional search ranking being the primary pathway to AI visibility. The remaining 16--22\% (the ``invisible'' share) is another element that makes GEO distinct from SEO,
  and we examine it in Section~\ref{sec:invisible-links}.
 
-GPT Business states that it retrieves exclusively through its official partner, the Bing Search API \parencite{openai2024enterprise}, and our data is consistent with this: 81.3\% Bing overlap versus only 27.8\% Google. Even when an LLM does not retrieve from a given engine, some overlap is expected because there are only so many websites that cover a given topic. Any search engine searching for the same keywords will end up returning many of the same pages. We treat this 27.8\% as the natural overlap that comes from this shared relevancy pool.
+OpenAI documentation describes Bing as the search provider for Enterprise and Edu workspaces \parencite{openai2024enterprise}. Business is a separate tier, but our data suggests a similar pattern: Business shows 81.3\% Bing overlap versus only 27.8\% Google. Even when an LLM does not retrieve from a given engine, some overlap is expected because there are only so many websites that cover a given topic. Any search engine searching for the same keywords will end up returning many of the same pages. We treat this 27.8\% as the natural overlap that comes from this shared relevancy pool.
 
 GPT Plus jumps to 64.6\% Google overlap, a 36.8\,pp
 increase over that baseline, while its Bing overlap drops to 67.6\%.
@@ -327,7 +326,6 @@ Match counts below combine cited links (URLs that appear in the final response) 
 \end{axis}
 \end{tikzpicture}
 \caption{GPT Business on Bing.}
-\label{fig:bing-business-dist}
 \end{subfigure}
 \hfill
 \begin{subfigure}[t]{0.48\textwidth}
@@ -360,7 +358,6 @@ Match counts below combine cited links (URLs that appear in the final response) 
 \end{axis}
 \end{tikzpicture}
 \caption{GPT Plus on Bing.}
-\label{fig:bing-personal-dist}
 \end{subfigure}
 
 \vspace{1em}
@@ -398,7 +395,6 @@ Match counts below combine cited links (URLs that appear in the final response) 
 \end{axis}
 \end{tikzpicture}
 \caption{GPT Plus on Google.}
-\label{fig:google-personal-dist}
 \end{subfigure}
 \hfill
 \begin{subfigure}[t]{0.48\textwidth}
@@ -434,15 +430,12 @@ Match counts below combine cited links (URLs that appear in the final response) 
 \end{axis}
 \end{tikzpicture}
 \caption{Gemini on Google.}
-\label{fig:google-gemini-dist}
 \end{subfigure}
 \caption{Citation match distribution by SERP position. Each chart uses its own Y-axis scale.}
 \label{fig:overlap-dist}
-\label{fig:bing-page-dist}
-\label{fig:google-rank-dist}
 \end{figure}
 
-The Page~2 dip on both Bing charts is consistent with the pagination
+The Page~2 dip on both Bing charts (Figure~\ref{fig:overlap-dist}) is consistent with the pagination
 instability documented in Section~\ref{sec:bing-pagination-instability}.
 Page~1 leads in match count for Business despite returning a median of only
 3 organic results (Table~\ref{tab:bing-page1-size}), with a full 10-result page,
@@ -480,8 +473,6 @@ Table~\ref{tab:cross-rank-ctr} places this LLM rank concentration alongside Goog
 \centering
 \caption{Page-1 rank concentration: LLM citation share vs.\ human CTR.}
 \label{tab:cross-rank-ctr}
-\label{tab:cross-rank-concentration}
-\label{tab:ctr-comparison}
 \begin{tabular}{lrrrr}
 \toprule
 Rank & Human CTR & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Plus} & Gemini \\
@@ -553,9 +544,7 @@ multi-turn research-like pattern: Q1--Q2 are broad category
 reformulations of the user prompt, while Q3+ target specific
 brands discovered in the initial results. The steep citation
 drop-off reflects this progression: later queries are narrow
-brand look-ups that naturally match fewer SERP results. The first
-fan-out query alone accounts for more citations than Q2--Q7
-combined.
+brand look-ups that naturally match fewer SERP results. The first fan-out query alone accounts for more citations than any single later query.
 
 Taken together, these findings show that search rank is the strongest correlate of where LLM citations come from. All three systems favour top-ranked 
 results with a positional bias that mirrors human click-through patterns, 
@@ -593,35 +582,35 @@ in URL normalization can all produce false negatives.
 \label{sec:invisible-conservative}
 \noindent This means the 16--22\% invisible rate is likely
 inflated by our scrape limitations.
-To see how much, we compared the content DNA profile of overlapped
+To see how much, we compared the structural profile of overlapped
 and invisible citations. GPT Business has our highest index
-coverage (83.7\%, Bing $\cup$ Google), so we use it as the reference case.
+coverage (83.7\%), so we use it as the reference case (Table~\ref{tab:invisible-type-breakdown}).
 
 \begin{table}[H]
 \centering
-\caption{GPT Business cited links: content DNA profile of overlapped vs.\ invisible}
+\caption{GPT Business: structural profile of overlapped vs.\ invisible links}
 \label{tab:invisible-type-breakdown}
 \small
 \begin{tabular}{lrrrr}
 \toprule
- & \multicolumn{2}{c}{Overlapped (1{,}370)} & \multicolumn{2}{c}{Invisible (267)} \\
+ & \multicolumn{2}{c}{Overlapped (3{,}768)} & \multicolumn{2}{c}{Invisible (689)} \\
 \cmidrule(lr){2-3} \cmidrule(lr){4-5}
 Type & Count & \% & Count & \% \\
 \midrule
-product\_page & 747 & 54.5\% & 43 & 16.1\% \\
-listicle & 430 & 31.4\% & 20 & 7.5\% \\
-reference (Wikipedia, etc.) & 3 & 0.2\% & 90 & 33.7\% \\
-news / editorial & 19 & 1.4\% & 93 & 34.8\% \\
-app store listing & 35 & 2.6\% & 4 & 1.5\% \\
-other & 136 & 9.9\% & 17 & 6.4\% \\
+listicle & 1{,}757 & 46.6\% & 182 & 26.4\% \\
+product\_page & 1{,}485 & 39.4\% & 187 & 27.1\% \\
+reference (Wikipedia, etc.) & 3 & 0.1\% & 91 & 13.2\% \\
+news / editorial & 74 & 2.0\% & 114 & 16.5\% \\
+app store listing & 49 & 1.3\% & 7 & 1.0\% \\
+other & 400 & 10.6\% & 108 & 15.7\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\noindent Overlapped citations are 85.9\% product pages and
+\noindent Overlapped links are 86.0\% product pages and
 listicles, the page types that dominate product-recommendation SERPs.
-In the invisible set, those same types drop to 23.6\%, while
-reference and news/editorial pages jump from under 2\% to 68.5\%.
+In the invisible set, those same types still account for 53.6\%, while
+reference and news/editorial pages jump from 2.0\% to 29.8\%.
 
 The product pages and listicles that do appear in the invisible set
 are small SaaS landing pages and blog-style ``best X tools'' posts, the
@@ -701,6 +690,8 @@ shown in the response at all.
 \label{sec:invisible-citation-fate}
 \label{sec:rejected}
 \label{sec:cited-invisible-final}
+
+Tables~\ref{tab:ent-invisible-combined} and~\ref{tab:pers-invisible-combined} break down invisible domains by source category for each tier.
 
 \begin{table}[H]
 \centering
@@ -788,7 +779,7 @@ We call this a \textbf{flip-flop}. We measure it at two scopes:
 across all prompts (a URL is additional in one prompt and cited
 in another, which is plausible given the relatively similar
 intents in our prompt dataset, Section~\ref{sec:query-set-selection}) and within the same prompt across
-different runs.
+different runs (Table~\ref{tab:flipflop-cross}).
 
 \begin{table}[H]
 \centering
@@ -821,12 +812,12 @@ This pool, predominantly product pages and listicles, is then drawn from interch
 Unsurfaced URLs can also be promoted, though at lower rates (5--17\%) and with a different profile: news articles and reference pages (primarily Wikipedia) dominate, and when promoted they skip the additional category almost entirely, going straight to cited.
 
 %-----------------------------------------------------------------------
-\section{Content DNA \& Selection Drift}
+\section{Structural Profiles \& Selection Drift}
 \label{sec:content-dna-findings}
 
 The previous sections examined which pages models select from the SERP. Here we ask a different question: do models prefer pages with specific structural characteristics?
 
-We profiled approximately 6{,}500 URLs with our Content DNA enrichment pipeline (Section~\ref{sec:labeling-pipeline}):
+We profiled approximately 6{,}500 URLs with our enrichment pipeline (Section~\ref{sec:labeling-pipeline}):
  every URL each model cited or surfaced internally, plus the top-10 Bing and Google organic results for the same queries.
   Enriching both cited and non-cited URLs lets us compare what the model had available against what it 
   actually selected. We restrict this analysis to listicles and product pages where 
@@ -843,7 +834,7 @@ Cited-Inline or Not-Cited. A URL cited in run~1 but not run~2 contributes
 to both buckets. Google returns a consistent ten organic results per query,
 but Bing Page~1 yields a mean of only four due to UI scraping limitations
 (Section~\ref{sec:bing-pagination-instability}), making the Bing pools
-smaller and concentrated in the top ranks.
+smaller and concentrated in the top ranks (Table~\ref{tab:drift-listicles}).
 \begin{table}[H]
 \centering
 \caption{Selection drift: listicles (pp, Welch's $t$-test)}
@@ -893,12 +884,12 @@ Freshness ($\geq$3) & $-$5.0\,*\phantom{**}      & $+$3.7\phantom{\,***}    & $+
 \end{tabular}
 \end{table}
 
-Product pages show flatter drift profiles than listicles. Numbered lists are the clearest signal, over-selected in three of four conditions, and bullet points trend positive across all four though only reaching significance once. Product pages are structurally more homogeneous than listicles, leaving fewer features to differentiate on.
+Product pages show flatter drift profiles than listicles (Table~\ref{tab:drift-product-pages}). Numbered lists are the clearest signal, over-selected in three of four conditions, and bullet points trend positive across all four though only reaching significance once. Product pages are structurally more homogeneous than listicles, leaving fewer features to differentiate on.
 
 \subsection{Cited vs Additional: Structural Comparison}
 \label{sec:cited-vs-additional}
 
-The previous subsection compared cited pages against the SERP pool. Here we ask a narrower question: among the URLs that ChatGPT chose to surface, are there structural differences between those it cited inline and those it listed as supplementary sources? If the boundary between cited and additional is structurally arbitrary, it would help explain the flip-flop rates we observed in Section~\ref{sec:flip-flop}. Gemini does not have an ``additional'' category, so this comparison is GPT-only.
+The previous subsection compared cited pages against the SERP pool. Here we ask a narrower question: among the URLs that ChatGPT chose to surface, are there structural differences between those it cited inline and those it listed as supplementary sources? If the boundary between cited and additional is structurally arbitrary, it would help explain the flip-flop rates we observed in Section~\ref{sec:flip-flop}. Gemini does not have an ``additional'' category, so this comparison is GPT-only (Tables~\ref{tab:ttest-cited-addl-listicle} and~\ref{tab:ttest-cited-addl-pp}).
 
 \begin{table}[H]
 \centering
@@ -973,11 +964,11 @@ Product page & 927 \\
 
 Prior work suggests that content length and position within a page affect how much of a source the model actually processes. \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 3K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. In a separate study, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
 
-Based on these findings, for a median listicle of over 2{,}000 words, products listed later may receive less model attention. 
+Based on these findings, for a median listicle of over 2{,}000 words (Table~\ref{tab:content-size}), products listed later may receive less model attention. 
 When multiple listicles support the same claim, we cannot tell which one the model drew from, so we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
 \label{sec:solo-cited}
 
-For each solo-cited claim, we ran an LLM-as-judge prompt (Appendix~\ref{app:fidelity-prompt}) through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}110 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the Content DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}).
+For each solo-cited claim, we ran an LLM-as-judge prompt (Appendix~\ref{app:fidelity-prompt}) through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}110 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the structural profile labeler benchmark (Section~\ref{sec:labeler-fidelity}).
 
 \subsection{Selection Order vs.\ Listicle Rank}
 \label{sec:reranking}
@@ -998,12 +989,12 @@ Gemini ($n{=}365$) & 13.8\% & 34.8\% & 61.1\% & 79.5\% \\
 \end{tabular}
 \end{table}
 
-We compare each product's position in the model's response against its rank in the source listicle. Exact rank alignment is low: Gemini matches in 29.5\% of cases and GPT in 27.9\%, so models \textbf{re-rank} rather than preserve source order. Despite re-ranking, they strongly over-select from the top: the \#1 item is selected at 1.7--2.5$\times$ the uniform baseline, and the top-5 account for 76--81\% of all selections. This mirrors the SERP-level position bias (Section~\ref{sec:position-bias}): positional over-selection appears at two nested levels, SERP rank and within-listicle rank. Items further down a long listicle may simply never enter the context window the model processes.
+Table~\ref{tab:listicle-rank-bias} compares each product's position in the model's response against its rank in the source listicle. Exact rank alignment is low: Gemini matches in 29.5\% of cases and GPT in 27.9\%, so models \textbf{re-rank} rather than preserve source order. Despite re-ranking, they strongly over-select from the top: the \#1 item is selected at 1.7--2.5$\times$ the uniform baseline, and the top-5 account for 76--81\% of all selections. This mirrors the SERP-level position bias (Section~\ref{sec:position-bias}): positional over-selection appears at two nested levels, SERP rank and within-listicle rank. Items further down a long listicle may simply never enter the context window the model processes.
 
 \subsection{Self-Promotion Bias \& Host Exclusion}
 \label{sec:self-promo}
 
-Roughly 62\% of listicles in our dataset are vendor-owned, so we wanted to see if models apply any bias for or against the products of the host domain.
+Roughly 62\% of listicles in our dataset are vendor-owned, so we wanted to see if models apply any bias for or against the products of the host domain (Table~\ref{tab:host-exclusion}).
 
 \begin{table}[H]
 \centering
@@ -1043,7 +1034,7 @@ The residual advantage shrinks to +2.5--4.7\,pp, likely explained by the more fa
 \subsection{Semantic Fidelity}
 \label{sec:semantic-fidelity}
 
-The previous sections traced which sources are retrieved and which products are selected. The last step in the pipeline is whether models accurately reproduce the details of products they extract. Using the same LLM-as-judge pipeline, we score fidelity on a 1--5 scale by comparing each product claim against the source listicle text.
+The previous sections traced which sources are retrieved and which products are selected. The last step in the pipeline is whether models accurately reproduce the details of products they extract. Using the same LLM-as-judge pipeline, we score fidelity on a 1--5 scale by comparing each product claim against the source listicle text (Table~\ref{tab:semantic-fidelity}).
 
 \begin{table}[H]
 \centering

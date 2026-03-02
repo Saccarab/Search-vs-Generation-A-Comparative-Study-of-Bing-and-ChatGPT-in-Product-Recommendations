@@ -210,7 +210,7 @@ The companies building RAG systems rely on third-party scrapers to access the li
 \subsection{Google SERP Baseline}
 \label{sec:google-serp-types}
 
-Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard search results), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 30 results per query. This Google baseline serves as the primary overlap surface for the Gemini study. Since OpenAI confirms that Enterprise and Edu workspaces use Bing exclusively as their search provider \parencite{openai2024enterprise}, Google also serves as a control group for the ChatGPT Business study, and as a third-provider verification for ChatGPT Plus, allowing us to test whether citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:citation-overlap}).
+Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard search results), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 30 results per query. This Google baseline serves as the primary overlap surface for the Gemini study. Since OpenAI documentation describes Bing as the search provider for Enterprise and Edu workspaces \parencite{openai2024enterprise}, Google also serves as a control group for the ChatGPT Business study, and as a third-provider verification for ChatGPT Plus, allowing us to test whether citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:citation-overlap}).
 
 \subsection{Bing SERP Scraping}
 \label{sec:bing-scraping}
@@ -355,15 +355,15 @@ This application displayed the prompt, the full response with inline citations,
  The viewer also includes aggregate dashboards for 
  overlap statistics, domain-level exploration, and breakdowns of truly invisible URLs (Section~\ref{sec:top-invisible-domains}) across all runs for wider perspective analysis. We built a similar tool for Gemini, comparing grounding chunks and supports against the Google SERP baseline.
 
-\section{Content DNA Enrichment}
+\section{Structural Profile Enrichment}
 \label{sec:content-dna}
 
-Knowing which URLs were cited was not enough; we also needed to know what kind of pages they are, so we could compare the structure of cited pages against those that were not. We built a pipeline that labels every URL in our dataset with a structural profile which we call its Content DNA. This profile includes page type (listicle, product page, documentation), whether the page has tables, numbered lists, or pros/cons sections, and how fresh the content is (Figure~\ref{fig:dna-snip}).
+Knowing which URLs were cited was not enough; we also needed to know what kind of pages they are, so we could compare the structure of cited pages against those that were not. We built a pipeline that labels every URL in our dataset with a structural profile. This profile includes page type (listicle, product page, documentation), whether the page has tables, numbered lists, or pros/cons sections, and how fresh the content is (Figure~\ref{fig:dna-snip}).
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/dna-snip.png}
-    \caption{Content DNA profiles for three URLs from the data viewer's URL breakdown view}
+    \caption{Structural profiles for three URLs from the data viewer's URL breakdown view}
     \label{fig:dna-snip}
 \end{figure}
 
@@ -387,15 +387,15 @@ Well-known domains with fixed structures such as Reddit, Wikipedia, app stores, 
 
 This study used large language models at every stage, and we disclose their role for transparency.
 
-The Content DNA labeling pipeline (Section~\ref{sec:labeling-pipeline}) used GPT-5-mini and Gemini 2.5 Flash as structured labelers. 
+The structural profile labeling pipeline (Section~\ref{sec:labeling-pipeline}) used GPT-5-mini and Gemini 2.5 Flash as structured labelers. 
 The same two models served as judges on our semantic fidelity audit (Section~\ref{sec:semantic-fidelity}) and listicle bias audit. Cross-model agreement was validated in all cases, and all flagged attribution failures were manually verified.
 
-Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools such as Claude Code\footnote{\url{https://claude.ai/code}} and OpenAI Prism\footnote{\url{https://openai.com/prism/}} were also used for literature review, proofreading, structural editing, and \LaTeX{} formatting.
+Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools such as Claude Code\footnote{\url{https://claude.ai/code}} and OpenAI Prism\footnote{\url{https://openai.com/prism/}} were also used for literature review, proofreading, structural editing, \LaTeX{} formatting, and translating the abstract into German.
 
 Human validation was performed throughout the research process:
 \begin{itemize}
     \item All semantic fidelity audit failures were manually reviewed for false positives. Both LLM judges (GPT-5-mini and Gemini 2.5 Flash) were run on the same claims and cross-validated; structural field agreement was 93--100\% (Section~\ref{sec:semantic-fidelity}).
-    \item Content DNA labels were spot-checked continuously through the Data Viewer (Section~\ref{sec:analysis-applications}, Figure~\ref{fig:data-viewer}).
+    \item Structural profile labels were spot-checked continuously through the Data Viewer (Section~\ref{sec:analysis-applications}, Figure~\ref{fig:data-viewer}).
     \item Key tables and prose claims were cross-checked against database queries to catch rounding errors and stale numbers.
     \item The Data Viewer provided per-prompt, per-run visibility into all citation mappings, SERP overlaps, and source categories throughout the analysis, allowing the author to identify and correct data pipeline issues as they arose.
 \end{itemize}
