@@ -9,30 +9,31 @@ Commercial prompts trigger web search over half the time, three
 times the baseline rate (Figure~\ref{fig:trigger-rate}), making
 retrieval the default for product recommendations. Across 711
 runs spanning both models and three deployment tiers, 78--84\% of
-LLM citations trace back to a conventional search index
-(Section~\ref{sec:global-overlap}). We established
-that LLMs do look deeper than human users but citations from beyond
-rank~10 drop off sharply (Section~\ref{sec:page-dist}) which is
-the backbone of our argument that GEO is mostly SEO.
+LLM citations trace back to conventional search results
+(Section~\ref{sec:global-overlap}). Models do look deeper into these
+results than human users, but citations from beyond rank~10 drop
+off sharply (Section~\ref{sec:page-dist}). A page has to rank, and has to rank high, to be cited.
+This is the backbone of our argument that GEO is mostly SEO.
 
 Within the ranked results, models show consistent structural
 preferences. For listicles, pages with tables, numbered lists, and
 bullet points are over-selected relative to the SERP baseline. We
 saw a similar selection pattern on product pages for numbered lists
-(Section~\ref{sec:selection-drift}). But these features were already
-standard SEO advice before GEO became a term: they help human
-readers scan and compare products, and search engines have long
-rewarded content that serves readers well. The fact that LLMs also
-prefer them is not necessarily a new optimization surface. We showed that Gemini pre-filters for
-recency through year-token injection in fan-out queries, and GPT Plus
-shows genuine freshness preference at the citation stage
-(Section~\ref{sec:freshness-subsection}). Keeping content current
-has been good SEO practice and it is now also a good GEO
-practice.
+(Section~\ref{sec:selection-drift}). But these features were already standard SEO advice before LLMs
+entered the picture: they help human readers scan and compare products,
+and search engines have long rewarded content that serves readers
+well. LLMs preferring the same features does not create a new
+optimization surface. The same applies to freshness: Gemini
+pre-filters for recency through year-token injection in fan-out
+queries, and GPT Plus shows genuine freshness preference at the
+citation stage (Section~\ref{sec:freshness-subsection}). Keeping
+content current has been good SEO practice and it is now also good
+GEO practice.
 
-Listicles are the primary fuel for product recommendations and they
-are also the page type that predominantly reaches the model through
-SERP results. A listicle must rank to be retrieved in the first place. A brand could, in theory, craft a ``top~10 AI tools''
+These structural preferences matter most on listicles, which are
+the dominant page type in both the retrieval pool and the citation
+set. But a listicle must rank to be retrieved in the first place.
+A brand could, in theory, craft a ``top~10 AI tools''
 listicle that games our findings, burying real competitors at the
 bottom of the list, omitting them entirely, or only listing soft
 alternatives. But as long as search engines still weigh engagement
@@ -46,18 +47,15 @@ the LLM citations follow from that.
 
 Our cross-language fan-out analysis
 (Section~\ref{sec:localization-bias}) adds a localisation dimension
-to GEO. Due to the English bias in LLM fan-out queries
-\parencite{rudzki2026english}, a foreign-language business that
-lacks English-language pages will miss a substantial share of
-retrieval opportunities, since 43\% of all fan-out queries are
-issued in English regardless of the prompt's language.
-
-The workflow that GEO platforms are beginning to offer (identifying
-the prompts a brand appears in and tracking visibility over time)
-needs to be complemented by an understanding of fan-out queries. Once
-a brand maps the fan-out queries that LLMs generate for prompts in
-their niche, they can run a keyword gap analysis on those queries,
-which mirrors traditional SEO gap analysis.
+to GEO. When a non-English prompt triggers search, ChatGPT
+typically pairs a local-language fan-out with an English one,
+routing roughly half the retrieval through English results.
+A foreign-language business that lacks English-language pages will
+miss that half entirely. \textcite{rudzki2026english} report a
+similar pattern at scale: 43\% of all fan-out queries are issued
+in English regardless of the prompt's language. The fan-out queries
+that LLMs generate map directly to the keyword-level analysis that
+SEO has relied on for decades.
 
 The one partial exception is the invisible-link channel: 16--22\% of
 citations point to URLs that do not appear in either Bing or Google
@@ -91,23 +89,19 @@ resource on Plus but almost never on Business, and news-related
 sources were used much more inline on the Business tier
 (Section~\ref{sec:invisible-links}). Running the same prompts on the
 same model under two deployment configurations gave us a natural
-contrast that strengthened the analysis. 
-
-This thesis opened with the observation that commercial queries
-trigger web search at 3$\times$ the overall baseline rate
-(Figure~\ref{fig:trigger-rate}), making product recommendations the
-arena where retrieval is most active and where source selection is
-most consequential. Our data supports the view that retrieval
-dependency is the foundation of AI visibility: without SERP ranking,
-most citations do not occur.
+contrast that strengthened the analysis. These tier differences
+also underscore how central search index access is to AI visibility.
 
 As this dependence on search indices deepens, so does the contest
-over access to them. OpenAI has been accused of scraping Google's
-index \parencite{theinformation2025openaiserpapi}, Google has
-responded with litigation against third-party scraping services
-\parencite{google2025serpapi}, Reddit is suing those same services
-over data access \parencite{reddit2025perplexity}, and Microsoft has retired the Bing Search API
-entirely (Section~\ref{sec:structural-pivot}). The programmatic access
+over access to them. OpenAI sought a direct partnership with Google
+for search data access but was rejected
+\parencite{techwireasia2025chrome}, and has been accused of using
+third-party scraping services to access Google's index instead.
+Google has since sued those services
+\parencite{google2025serpapi}. Meanwhile, Reddit is suing over
+data access \parencite{reddit2025perplexity}, and Microsoft has
+retired the Bing Search API entirely
+(Section~\ref{sec:structural-pivot}). The programmatic access
 to search indices is caught in the middle of this access war. The empirical data documented in
 this thesis captures a snapshot of a system in rapid flux;
 replicating or extending this work will require either new access
@@ -117,10 +111,10 @@ instrumentation.
 The trajectory points to more retrieval, not less. Semantic fidelity
 is already high when using RAG for commercial queries, and commercial
 domains continuously produce fresh content for models to ground on.
-Retrieval is also far cheaper than inference
-(Section~\ref{sec:rag-economics}), giving model providers an economic
-reason to lean on search rather than scale up parametric knowledge.
+Retrieval is also cheaper than inference
+(Section~\ref{sec:rag-economics}), giving model providers an
+economic incentive to lean on search rather than scale up parametric
+knowledge.
 If today's search trigger rates represent the floor rather than the
-ceiling, SEO and GEO will only align further. In our data, GEO is
-best understood as an extension of SEO rather than a discipline of
-its own.
+ceiling, SEO and GEO will only align further. In our data, AI visibility is best understood as an extension of
+SEO rather than a discipline of its own.

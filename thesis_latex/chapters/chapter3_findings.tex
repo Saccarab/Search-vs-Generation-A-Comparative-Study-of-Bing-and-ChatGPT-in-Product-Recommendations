@@ -208,8 +208,8 @@ When the prompt is in English but mentions a foreign language (either explicitly
 
 Case~3 also shows cross-run instability: the same prompt can produce different target languages across runs. 
 P018 (``Can you suggest a free website or program that can translate my 20-minute video and add subtitles?'') 
-received non-English fan-outs on 4 of 6 runs, switching between Chinese (enterprise), 
-Japanese (Business), and Spanish (Plus); P048 (``Can I add a live translation app to calls?'') triggered on 3 of 6, 
+received non-English fan-outs on 4 of 6 runs, switching between Chinese and Japanese (Business)
+and Spanish (Plus); P048 (``Can I add a live translation app to calls?'') triggered on 3 of 6, 
 alternating between Japanese (Business) and Spanish (Plus). 
 
 \subsubsection{GEO Takeaways on Localization}
@@ -261,7 +261,7 @@ Across all three tiers, 78--84\% of citations trace back to a conventional searc
 This is consistent with traditional search ranking being the primary pathway to AI visibility. The remaining 16--22\% (the ``invisible'' share) is another element that makes GEO distinct from SEO,
  and we examine it in Section~\ref{sec:invisible-links}.
 
-GPT Business states that it retrieves exclusively through its official partner, the Bing Search API \parencite{openai2024enterprise}, and our data confirms this: 81.3\% Bing overlap versus only 27.8\% Google. Even when an LLM does not retrieve from a given engine, some overlap is expected because there are only so many websites that cover a given topic. Any search engine searching for the same keywords will end up returning many of the same pages. We treat this 27.8\% as the natural overlap that comes from this shared relevancy pool.
+GPT Business states that it retrieves exclusively through its official partner, the Bing Search API \parencite{openai2024enterprise}, and our data is consistent with this: 81.3\% Bing overlap versus only 27.8\% Google. Even when an LLM does not retrieve from a given engine, some overlap is expected because there are only so many websites that cover a given topic. Any search engine searching for the same keywords will end up returning many of the same pages. We treat this 27.8\% as the natural overlap that comes from this shared relevancy pool.
 
 GPT Plus jumps to 64.6\% Google overlap, a 36.8\,pp
 increase over that baseline, while its Bing overlap drops to 67.6\%.
@@ -595,7 +595,7 @@ in URL normalization can all produce false negatives.
 inflated by our scrape limitations.
 To see how much, we compared the content DNA profile of overlapped
 and invisible citations. GPT Business has our highest index
-coverage (83.7\%, Bing-only), so we use it as the reference case.
+coverage (83.7\%, Bing $\cup$ Google), so we use it as the reference case.
 
 \begin{table}[H]
 \centering
@@ -1043,7 +1043,7 @@ The residual advantage shrinks to +2.5--4.7\,pp, likely explained by the more fa
 \subsection{Semantic Fidelity}
 \label{sec:semantic-fidelity}
 
-The final question is whether models accurately reproduce the details of products they extract. Using the same LLM-as-judge pipeline, we score fidelity on a 1--5 scale by comparing each product claim against the source listicle text.
+The previous sections traced which sources are retrieved and which products are selected. The last step in the pipeline is whether models accurately reproduce the details of products they extract. Using the same LLM-as-judge pipeline, we score fidelity on a 1--5 scale by comparing each product claim against the source listicle text.
 
 \begin{table}[H]
 \centering
