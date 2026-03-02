@@ -44,17 +44,13 @@ manipulation game. GEO optimization relies on the SEO optimization
 loop: a listicle that serves human readers earns the rankings, and
 the LLM citations follow from that.
 
-Localisation has always been in a brand's best SEO interest, and
-our cross-language fan-out analysis
-(Section~\ref{sec:localization-bias}) shows it is equally in their
-best GEO interest. Due to the English bias in LLM fan-out queries
+Our cross-language fan-out analysis
+(Section~\ref{sec:localization-bias}) adds a localisation dimension
+to GEO. Due to the English bias in LLM fan-out queries
 \parencite{rudzki2026english}, a foreign-language business that
-lacks English-language pages will lose a substantial share of its
-potential AI visibility. The reverse also applies: an English-only
-domain needs foreign-language pages to maintain access to
-English-speaking users in non-English-speaking countries, or even
-users searching for a prompt that happens to have foreign-language
-context.
+lacks English-language pages will miss a substantial share of
+retrieval opportunities, since 43\% of all fan-out queries are
+issued in English regardless of the prompt's language.
 
 The workflow that GEO platforms are beginning to offer (identifying
 the prompts a brand appears in and tracking visibility over time)
