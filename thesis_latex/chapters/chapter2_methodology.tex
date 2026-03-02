@@ -391,3 +391,11 @@ The Content DNA labeling pipeline (Section~\ref{sec:labeling-pipeline}) used GPT
 The same two models served as judges on our semantic fidelity audit (Section~\ref{sec:semantic-fidelity}) and listicle bias audit. Cross-model agreement was validated in all cases, and all flagged attribution failures were manually verified.
 
 Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools such as Claude Code\footnote{\url{https://claude.ai/code}} and OpenAI Prism\footnote{\url{https://openai.com/prism/}} were also used for literature review, proofreading, structural editing, and \LaTeX{} formatting.
+
+Human validation was performed throughout the research process:
+\begin{itemize}
+    \item All semantic fidelity audit failures were manually reviewed for false positives. Both LLM judges (GPT-5-mini and Gemini 2.5 Flash) were run on the same claims and cross-validated; structural field agreement was 93--100\% (Section~\ref{sec:semantic-fidelity}).
+    \item Content DNA labels were spot-checked continuously through the Data Viewer (Section~\ref{sec:analysis-applications}, Figure~\ref{fig:data-viewer}).
+    \item Key tables and prose claims were cross-checked against database queries to catch rounding errors and stale numbers.
+    \item The Data Viewer provided per-prompt, per-run visibility into all citation mappings, SERP overlaps, and source categories throughout the analysis, allowing the author to identify and correct data pipeline issues as they arose.
+\end{itemize}

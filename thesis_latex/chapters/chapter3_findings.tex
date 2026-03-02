@@ -141,7 +141,7 @@ Gemini systematically injects year tokens into its fan-out queries. For example,
 ]
 \end{lstlisting}
 
-This is not an isolated case. 96.7\% of Gemini runs (297/307 with valid grounding metadata) include at least one year-injected query, and 66.8\% of all individual Gemini queries (940/1{,}408) contain a year token. Figure~\ref{fig:gemini-year-serp} shows what this produces on the SERP side: searching for one of these year-injected queries returns almost exclusively year-tagged listicles (``11 Best AI Transcription Apps\ldots\ in 2026,'' ``The 3 Best Transcription Services of 2026,'' etc.). This means that pages with the current year in their title or headings are far more likely to match these queries, enter the retrieval pool and get cited by Gemini.
+This is not an isolated case. 97.8\% of Gemini runs (221/226 with valid grounding metadata) include at least one year-injected query, and 68.3\% of all individual Gemini queries (708/1{,}036) contain a year token. Figure~\ref{fig:gemini-year-serp} shows what this produces on the SERP side: searching for one of these year-injected queries returns almost exclusively year-tagged listicles (``11 Best AI Transcription Apps\ldots\ in 2026,'' ``The 3 Best Transcription Services of 2026,'' etc.). This means that pages with the current year in their title or headings are far more likely to match these queries, enter the retrieval pool and get cited by Gemini.
 
 \begin{figure}[H]
 \centering
@@ -816,8 +816,7 @@ Dominant type & \multicolumn{2}{c}{news + reference (58--76\%)} \\
 \noindent The almost identical promotion rates across our entire dataset suggest that
 ChatGPT has a fixed budget for URLs that it takes into consideration and enters the citation pool
 (the sources panel in the ChatGPT UI).
-This bucket of sources, which has a dominating concentration of product pages and listicles, is then utilized
-within the response text interchangeably.
+This pool, predominantly product pages and listicles, is then drawn from interchangeably within the response text.
 
 Unsurfaced URLs can also be promoted, though at lower rates (8--17\%) and with a different profile: news articles and reference pages (primarily Wikipedia) dominate, and when promoted they skip the additional category almost entirely, going straight to cited.
 
@@ -839,14 +838,12 @@ We profiled approximately 6{,}500 URLs with our Content DNA enrichment pipeline 
 \label{sec:menu}
 \label{sec:order}
 
-For each run, we pool the top-10 results across all fan-out queries and classify
- each unique URL as Cited-Inline or Not-Cited. A URL cited in run~1 but not run~2 contributes to both buckets.
-
-Google Top-10 returns a consistent ten organic results per query but Bing Page~1 yields
-a mean of only four organic results due to UI scraping limitations we have covered
- (Section~\ref{sec:bing-pagination-instability}), making the Bing pools considerably smaller. 
- Though this concentrates the comparison in the top ranks where citation probability is highest,
- so we end up comparing results of a similar ranking range.
+For each run, we classify every unique URL from the top-10 SERP results as
+Cited-Inline or Not-Cited. A URL cited in run~1 but not run~2 contributes
+to both buckets. Google returns a consistent ten organic results per query,
+but Bing Page~1 yields a mean of only four due to UI scraping limitations
+(Section~\ref{sec:bing-pagination-instability}), making the Bing pools
+smaller and concentrated in the top ranks.
 \begin{table}[H]
 \centering
 \caption{Selection drift: listicles (pp, Welch's $t$-test)}
@@ -871,7 +868,7 @@ Freshness ($\geq$3) & $-$0.8\phantom{\,***}     & $+$16.6\,***              & $+
 \end{tabular}
 \end{table}
 
-Structured content features (tables, numbered lists, bullet points) are over-selected across almost all conditions. Gemini shows no significant freshness drift; this is consistent with its fan-out queries injecting year tokens that pre-filter the SERP for recency before selection occurs (Section~\ref{sec:freshness-subsection}). GPT Plus shows a consistent freshness preference that is significant against both Bing and Google independently, while GPT Business shows none. Vendor-owned pages are also consistently over-selected, suggesting that brands produce more structurally thorough content that LLMs prefer, possibly because commercial results lacking supporting detail are less likely to survive selection.
+Structured content features (tables, numbered lists, bullet points) are over-selected across almost all conditions. Gemini shows no significant freshness drift; we attribute this to its fan-out queries injecting year tokens that pre-filter the SERP for recency before selection occurs (Section~\ref{sec:freshness-subsection}). GPT Plus shows a consistent freshness preference that is significant against both Bing and Google independently, while GPT Business shows none. Vendor-owned pages are also consistently over-selected across all four conditions.
 
 \begin{table}[H]
 \centering
@@ -896,12 +893,12 @@ Freshness ($\geq$3) & $-$5.0\,*\phantom{**}      & $+$3.7\phantom{\,***}    & $+
 \end{tabular}
 \end{table}
 
-Product pages show flatter and less consistent drift profiles, making it hard to draw conclusive statements apart from numbered lists, which are over-selected in three of four conditions. Product pages are structurally more homogeneous, leaving less for either model to differentiate on.
+Product pages show flatter drift profiles than listicles. Numbered lists are the clearest signal, over-selected in three of four conditions, and bullet points trend positive across all four though only reaching significance once. Product pages are structurally more homogeneous than listicles, leaving fewer features to differentiate on.
 
 \subsection{Cited vs Additional: Structural Comparison}
 \label{sec:cited-vs-additional}
 
-Both groups here were surfaced by ChatGPT: cited URLs appeared inline in the response text, additional URLs were shown as supplementary sources. Gemini does not have an ``additional'' category, so this comparison is GPT-only.
+The previous subsection compared cited pages against the SERP pool. Here we ask a narrower question: among the URLs that ChatGPT chose to surface, are there structural differences between those it cited inline and those it listed as supplementary sources? If the boundary between cited and additional is structurally arbitrary, it would help explain the flip-flop rates we observed in Section~\ref{sec:flip-flop}. Gemini does not have an ``additional'' category, so this comparison is GPT-only.
 
 \begin{table}[H]
 \centering
@@ -956,7 +953,7 @@ are structurally similar, which supplements the flip-flop finding (Section~\ref{
 
 The preceding sections examined which \emph{pages} the model selects from the SERP.
 This section shifts one level deeper: given that a listicle has been cited,
-which \emph{products within that listicle} does the model extract, and how faithfully
+which products within that listicle does the model extract, and how faithfully
 does it reproduce their details?
 
 \begin{table}[H]
@@ -974,9 +971,10 @@ Product page & 927 \\
 \end{tabular}
 \end{table}
 
-Prior work suggests that content length and position within a page affect how much of a source the model actually processes. \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 3K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
+Prior work suggests that content length and position within a page affect how much of a source the model actually processes. \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 3K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. In a separate study, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
 
-Based on these findings, for a median listicle of over 2{,}000 words, products listed later may receive less model attention. Since attributing a product recommendation to a specific source is difficult when multiple links support the same claim, we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
+Based on these findings, for a median listicle of over 2{,}000 words, products listed later may receive less model attention. 
+When multiple listicles support the same claim, we cannot tell which one the model drew from, so we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
 \label{sec:solo-cited}
 
 For each solo-cited claim, we ran an LLM-as-judge prompt (Appendix~\ref{app:fidelity-prompt}) through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}110 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the Content DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}).
@@ -1016,18 +1014,15 @@ Roughly 62\% of listicles in our dataset are vendor-owned, so we wanted to see i
 & \textbf{Gemini} & \textbf{GPT} \\
 \midrule
 Listicles with host product present & 405 & 431 \\
-Host omitted from response & 291 (71.9\%) & 274 (63.6\%) \\
-Host included in response & 114 (28.1\%) & 157 (36.4\%) \\
-\midrule
+Host selected & 114 (28.1\%) & 157 (36.4\%) \\
 Mean listicle size ($\bar{N}$) & 8.1 & 9.3 \\
 Random baseline ($1/\bar{N}$) & 12.4\% & 10.7\% \\
-Host selection rate & 28.1\% & 36.4\% \\
 Bias multiplier & 2.27$\times$ & 3.40$\times$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The 2--3$\times$ bias multiplier is misleading. Vendors overwhelmingly list their own product at rank~\#1 (over 93\% of cases for both GPT and Gemini), and rank~\#1 is over-selected regardless of host status (Section~\ref{sec:reranking}). Controlling for position:
+However, the previous section showed that rank~\#1 items are over-selected overall. Since vendors list their own product at rank~\#1 in over 93\% of cases, position alone could explain much of this bias. Controlling for position:
 
 \begin{table}[H]
 \centering
@@ -1043,7 +1038,7 @@ Gemini & 23.1\% (94/407) & 20.5\% (15/73)  & +2.5\,pp \\
 \end{tabular}
 \end{table}
 
-The residual advantage shrinks to +2.5--4.7\,pp, likely explained by the more favorable language host domains use when describing their own products. The 64--72\% host omission rate tells the same story from the other side: non-host rank~\#1 items are skipped at even higher rates (79.5--85.7\%).
+The residual advantage shrinks to +2.5--4.7\,pp, likely explained by the more favorable language host domains use when describing their own products.
 
 \subsection{Semantic Fidelity}
 \label{sec:semantic-fidelity}
