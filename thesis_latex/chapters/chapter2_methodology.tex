@@ -12,7 +12,7 @@ The contrast between these three environments revealed notable differences, espe
 
 We have 79 unique prompts in our dataset that we have gathered from two platforms. 65 of these prompts were taken from Profound's Prompt Volumes feature \parencite{profound2026promptvolumes}, which provides prompt-level data derived from licensed and opt-in prompts of real ChatGPT users. Profound states that surfaced prompts may be rewritten for anonymity or clarity, so these are representative of real user intent. The other 14 prompts were taken from Ahrefs' AI Citations feature \parencite{ahrefs2025aicitations}, which we have used to capture additional prompts within our target verticals. Prompts span collection dates from January 2025 to January 2026, with the majority concentrated between July and December 2025.
 
-From the available prompts, we filtered for product discovery queries with commercial intent---prompts where users ask for tool recommendations, comparisons, or ``best of'' lists---as these are the queries most likely to trigger web search grounding (see Section~\ref{sec:commercial-catalyst}).
+From the available prompts, we filtered for product discovery queries with commercial intent (prompts where users ask for tool recommendations, comparisons, or ``best of'' lists), as these are the queries most likely to trigger web search grounding (see Section~\ref{sec:commercial-catalyst}).
 All queries are in the AI speech and language technology sector
 (speech-to-text, live transcription, voice translation, text-to-speech).
 While 79 prompts is modest compared to large-scale observational studies, each prompt was run 3 times across 3 environments (711 total runs), producing over 2{,}000 fan-out queries. We then scraped search results of these queries on both Bing (to Rank~200) and Google that yielded approximately 12{,}000 citations that we analyzed. Scaling beyond this would have been impractical given the per-query scraping and enrichment costs.
@@ -20,15 +20,15 @@ While 79 prompts is modest compared to large-scale observational studies, each p
 \paragraph{Prompt categories.}
 The 79 prompts fall into 4 categories:
 \begin{itemize}
-  \item Live/real-time translation (25 prompts, 31.6\%) ---
+  \item Live/real-time translation (25 prompts, 31.6\%):
     e.g.\ \emph{``Is there a Windows application for live translation
     during calls in Google Meet?''}
-  \item Post-production translation (24, 30.4\%) ---
+  \item Post-production translation (24, 30.4\%):
     e.g.\ \emph{``Which free AI would you recommend for translating my video?''}
-  \item Post-production transcription / speech-to-text (21, 26.6\%) ---
+  \item Post-production transcription / speech-to-text (21, 26.6\%):
     e.g.\ \emph{``Is there a transcription software available for a one-time payment
     instead of a subscription?''}
-  \item Text-to-speech (9, 11.4\%) ---
+  \item Text-to-speech (9, 11.4\%):
     e.g.\ \emph{``Can you recommend free text-to-speech extensions
     that don't sound robotic?''}
 \end{itemize}
@@ -90,7 +90,7 @@ Once the search trigger fires, ChatGPT does not search for the user's prompt ver
 \end{figure}
 
 The cited sources in these prompts form the baseline retrieval pool which contains the URL, title, snippet, and 
- publication date for each candidate. To determine which of these candidates were actually cited, we reconstruct the citation-to-source mapping from \texttt{content\_references}, which records the start index of each citation token in the streamed response text. The full mapping pipeline is described in Section~\ref{sec:claim-to-link}. A glossary of all network payload fields we captured is provided in Appendix~\ref{app:network-glossary}.
+ publication date for each candidate. To determine which of these candidates were actually cited, we reconstruct the citation-to-source mapping from \texttt{content\_references} (a field in the network event stream; see Appendix~\ref{app:network-glossary}), which records the start index of each citation token in the streamed response text. The full mapping pipeline is described in Section~\ref{sec:claim-to-link}. A glossary of all network payload fields we captured is provided in Appendix~\ref{app:network-glossary}.
 
 \subsection{Source Categories}
 \label{sec:source-categories}
@@ -113,11 +113,11 @@ the rest of our analysis:
 \end{figure}
 
 \begin{itemize}
-  \item \textbf{Cited} --- URLs that appear as inline citation chips
+  \item \textbf{Cited:} URLs that appear as inline citation chips
     in the generated answer (orange or red in Figure~\ref{fig:chatgpt-anatomy}).
-  \item \textbf{Additional} --- URLs attached to the response but not
+  \item \textbf{Additional:} URLs attached to the response but not
     referenced inline.(green in Figure~\ref{fig:chatgpt-anatomy}).
-  \item \textbf{Rejected} --- URLs present in the raw search results but never used in the response or shown in the user interface (Section~\ref{sec:rejected}).
+  \item \textbf{Unsurfaced:} URLs present in the raw search results but never used in the response or shown in the user interface (Section~\ref{sec:rejected}).
 \end{itemize}
 
 \subsection{Citation Mapping}
@@ -210,14 +210,14 @@ The companies building RAG systems rely on third-party scrapers to access the li
 \subsection{Google SERP Baseline}
 \label{sec:google-serp-types}
 
-Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard search results), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 30 results per query. This Google baseline serves as the primary overlap surface for the Gemini study. Since OpenAI confirms that Enterprise and Edu workspaces use Bing exclusively as their search provider \parencite{openai2024enterprise}, Google also serves as a control group for the ChatGPT Business study, and as a third-provider verification for ChatGPT Plus---allowing us to test whether citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:citation-overlap}).
+Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard search results), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 30 results per query. This Google baseline serves as the primary overlap surface for the Gemini study. Since OpenAI confirms that Enterprise and Edu workspaces use Bing exclusively as their search provider \parencite{openai2024enterprise}, Google also serves as a control group for the ChatGPT Business study, and as a third-provider verification for ChatGPT Plus, allowing us to test whether citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:citation-overlap}).
 
 \subsection{Bing SERP Scraping}
 \label{sec:bing-scraping}
 
 With no official Bing API available (Section~\ref{sec:structural-pivot}), we initially tested SerpApi's Bing endpoint, but found that results beyond the first page were highly irrelevant, mirroring the pagination instability we later document(Section~\ref{sec:bing-pagination-instability}). Therefore we used a Chrome browser extension  forked from a related study \parencite{cirac2025bingscraper} and modified for our requirements. The extension scrapes Bing's live consumer UI by simulating human search interaction: typing queries with randomized delays, clicking the search button through DOM, and waiting for the page to stabilize before extracting results.
 
-Organic results are separated from ads by filtering on Bing's ``Sponsored'' tags. For each result, the extension extracts position, title, URL, domain, snippet, and page number. Tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}, etc.) are stripped to normalize URLs for overlap matching. The extension paginates until at least 200 results are collected per query ($\sim$20 pages), with delays between pages. All Bing scrapes were routed through a US-based proxy to match the retrieval environment used for ChatGPT runs (Section~\ref{sec:proxy-requirement}).
+Organic results are separated from ads by filtering on Bing's ``Sponsored'' tags. For each result, the extension extracts position, title, URL, domain, snippet, and page number. Tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}, etc.) are stripped to normalize URLs for overlap matching. The extension paginates until at least 200 results are collected per query, with delays between pages. All Bing scrapes were routed through a US-based proxy to match the retrieval environment used for ChatGPT runs (Section~\ref{sec:proxy-requirement}).
 
 \subsection{Why We Scraped Bing to Rank~200}
 \label{sec:methodological-evolution}
@@ -343,8 +343,8 @@ Bing's index are backend partners like OpenAI or Microsoft's own AI Agents infra
 \section{Analysis Applications}
 \label{sec:analysis-applications}
 
-Prior studies have analyzed LLM citation overlap at scale---\textcite{ong2025chatgptgoogle} processed over 
-100,000 fan-out queries---but without per-run inspection tools, patterns in the data can go unnoticed. 
+Prior studies have analyzed LLM citation overlap at scale (\textcite{ong2025chatgptgoogle} processed over
+100,000 fan-out queries) but without per-run inspection tools, patterns in the data can go unnoticed. 
   In order to analyze common patterns across prompts, we built a viewer application that recreates the ChatGPT interface for 
  each captured run. 
  
@@ -358,7 +358,7 @@ This application displayed the prompt, the full response with inline citations,
 \section{Content DNA Enrichment}
 \label{sec:content-dna}
 
-Knowing which URLs were cited was not enough; we also needed to know what kind of pages they are, so we could understand what features lead to the citation decision. We built a pipeline that labels every URL in our dataset with a structural profile which we call its Content DNA. This profile includes page type (listicle, product page, documentation), whether the page has tables, numbered lists, or pros/cons sections, and how fresh the content is (Figure~\ref{fig:dna-snip}).
+Knowing which URLs were cited was not enough; we also needed to know what kind of pages they are, so we could compare the structure of cited pages against those that were not. We built a pipeline that labels every URL in our dataset with a structural profile which we call its Content DNA. This profile includes page type (listicle, product page, documentation), whether the page has tables, numbered lists, or pros/cons sections, and how fresh the content is (Figure~\ref{fig:dna-snip}).
 
 \begin{figure}[htbp]
     \centering
@@ -390,4 +390,4 @@ This study used large language models at every stage, and we disclose their role
 The Content DNA labeling pipeline (Section~\ref{sec:labeling-pipeline}) used GPT-5-mini and Gemini 2.5 Flash as structured labelers. 
 The same two models served as judges on our semantic fidelity audit (Section~\ref{sec:semantic-fidelity}) and listicle bias audit. Cross-model agreement was validated in all cases, and all flagged attribution failures were manually verified.
 
-Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools such as Claude Code and OpenAI Prism were also used for literature review, proofreading, structural editing, and \LaTeX{} formatting.
+Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools such as Claude Code\footnote{\url{https://claude.ai/code}} and OpenAI Prism\footnote{\url{https://openai.com/prism/}} were also used for literature review, proofreading, structural editing, and \LaTeX{} formatting.

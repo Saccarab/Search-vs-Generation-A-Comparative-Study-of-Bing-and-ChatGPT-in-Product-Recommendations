@@ -28,20 +28,20 @@ DuckDuckGo & 0.29\% & 3.7M \\
 ChatGPT & 0.23\% & 3.3M \\
 Perplexity & 0.02\% & 288K \\
 Gemini & 0.01\% & 197K \\
-Claude & $<$0.01\% & --- \\
+Claude & $<$0.01\% & n/a \\
 \midrule
-\textbf{All traditional search} & \textbf{$\sim$40.7\%} & --- \\
+\textbf{All traditional search} & \textbf{$\sim$40.7\%} & -- \\
 \textbf{All AI combined} & \textbf{0.26\%} & \textbf{$\sim$3.8M} \\
 \bottomrule
 \end{tabular}
 \end{table}
-The numbers are stark: Google alone commands over 100$\times$ the referral traffic of all AI assistants combined. However, the growth trajectory is noteworthy. Between June 2025 and January 2026, total search traffic across the Ahrefs panel declined by 7.5\% (from 494M to 457M visits), while AI chatbot referral traffic grew by 27\% (from 2.9M to 3.7M visits). Google's share dropped from 42.2\% to 38.9\% ($-$3.2\,pp). Among AI platforms, Gemini showed the fastest recent growth (+53.1\% month-over-month in January 2026), followed by Claude (+20.7\%) and ChatGPT (+9.2\%) \parencite{ahrefs2026chatgptvsgoogle}. These growth rates, sustained over even a few years, would make AI visibility even more valuable for businesses, especially if LLM-referred users convert at higher rates than traditional search users, as some data already suggests \parencite{law2025aiconversions}.
+The numbers are stark: Google alone commands over 100$\times$ the referral traffic of all AI assistants combined. Between June 2025 and January 2026, total search traffic across the Ahrefs panel declined by 7.5\% (from 494M to 457M visits), while AI chatbot referral traffic grew by 27\% (from 2.9M to 3.7M visits). Google's share dropped from 42.2\% to 38.9\% ($-$3.2\,pp). Among AI platforms, Gemini showed the fastest recent growth (+53.1\% month-over-month in January 2026), followed by Claude (+20.7\%) and ChatGPT (+9.2\%) \parencite{ahrefs2026chatgptvsgoogle}. These growth rates, sustained over even a few years, would make AI visibility even more valuable for businesses, especially if LLM-referred users convert at higher rates than traditional search users, as some data already suggests \parencite{law2025aiconversions}.
 
   We trace the full retrieval-to-citation pipeline, from fan-out query generation through candidate retrieval, source selection, and citation accuracy, and show that the vast majority of LLM citations originate from Google and Bing search results.
 \section{The Focus on Product Recommendations}
 \label{sec:commercial-catalyst}
 
-LLMs are more likely to ground their answers when the user's intent demands real-time, verifiable information (prices, availability, feature comparisons, reviews, local information) that parametric knowledge cannot reliably provide. Product recommendations sit squarely in this category: they require freshness, competitive breadth, factual precision, and, most fundamentally, working links to the actual products and services the user wants to evaluate. This makes product recommendations the segment where the retrieval pipeline is most active and where the mechanics of source selection are most commercially consequential. Figure~\ref{fig:trigger-rate} confirms this: commercial queries trigger web search at 3$\times$ the overall baseline rate \parencite{punturo2026citationsources}.
+LLMs are more likely to ground their answers when the user's intent demands real-time, verifiable information (prices, availability, feature comparisons, reviews, local information) that parametric knowledge cannot reliably provide. Product recommendations sit squarely in this category: they require freshness, competitive breadth, factual precision, and, most fundamentally, working links to the actual products and services the user wants to evaluate. This makes product recommendations the segment where the retrieval pipeline is most active and where the mechanics of source selection are most commercially consequential. Figure~\ref{fig:trigger-rate} illustrates this: commercial queries trigger web search at 3$\times$ the overall baseline rate \parencite{punturo2026citationsources}.
 \begin{figure}[htbp]
     \centering
     \begin{tikzpicture}
@@ -73,7 +73,7 @@ LLMs are more likely to ground their answers when the user's intent demands real
     };
     \end{axis}
     \end{tikzpicture}
-    \caption{ChatGPT web search trigger rate by query intent. Data from \textcite{punturo2026citationsources}, based on 667,000 real-user ChatGPT conversations tracked by Profound as of January~6, 2026.}
+    \caption{ChatGPT web search trigger rate by query intent. Data from \textcite{punturo2026citationsources}, based on 730,000 real-user ChatGPT conversations tracked by Profound as of January~6, 2026.}
     \label{fig:trigger-rate}
 \end{figure}
 
@@ -129,7 +129,7 @@ Regardless of their effectiveness, the fact that these efforts exist tells us so
 \subsection{Grounding Mechanics and the Content Budget}
 \label{sec:rw-grounding-mechanics}
 
-\textcite{petrovic2025grounding} investigated how much of a retrieved page actually makes it into the model's context. The study measured Gemini's grounding chunks and found that the system operates with a fixed content budget of approximately 2,000 words per query, with the top-ranked source receiving 28\% of the budget and pages over 2,000 words achieving only 13\% coverage. \textcite{petrovic2025filter} further quantified the compression ratio between retrieved content and generated output: roughly one-third of retrieved text survives into the final response. \textcite{indig2026attention} analyzed 1.2~million search results and AI-generated answers and found a ``ski ramp'' distribution where 44.2\% of citations originate from the first 30\% of a source page. 
+\textcite{petrovic2025grounding} investigated how much of a retrieved page actually makes it into the model's context. The study measured Gemini's grounding chunks and found that the system operates with a fixed content budget of approximately 2,000 words per query, with the top-ranked source receiving 28\% of the budget and pages over 3,000 words achieving only 13\% coverage. \textcite{petrovic2025filter} further quantified the compression ratio between retrieved content and generated output: roughly one-third of retrieved text survives into the final response. \textcite{indig2026attention} analyzed 1.2~million search results and AI-generated answers and found a ``ski ramp'' distribution where 44.2\% of citations originate from the first 30\% of a source page. 
 
 We conduct a similar analysis within our listicle position bias results (Section~\ref{sec:reranking}): if the model's grounding window is limited, items listed later in a long listicle may never enter the context. While we do not measure grounding budgets directly, our study provides complementary evidence from the selection side: we observe the downstream effect (position-dependent uptake rates) that these budget constraints appear to produce.
 
@@ -143,7 +143,7 @@ Prior work has audited citation fidelity (but not selection mechanics), measured
 This core question decomposes into four sub-questions:
 
 \begin{enumerate}
-    \item RQ1a (Selection and visibility): How do cited, additional, rejected, and invisible sources differ in domain and type, and how does this differ between Business and Plus tiers?
+    \item RQ1a (Selection and visibility): How do cited, additional, unsurfaced, and invisible sources differ in domain and type, and how does this differ between Business and Plus tiers?
     \item RQ1b (External support): How often do LLM citations appear in conventional search engine results (Bing and Google)?
     \item RQ1c (Selection bias): Do models exhibit preferences for specific structural content features (e.g., tables, numbered lists, freshness cues) when selecting from the retrieved pool, and how do these preferences vary across systems?
     \item RQ1d (Listicle fidelity): When listicles are cited, which products within them are selected or ignored, and how faithfully does the model reproduce their details?

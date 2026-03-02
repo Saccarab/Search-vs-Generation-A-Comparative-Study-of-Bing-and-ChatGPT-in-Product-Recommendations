@@ -25,7 +25,7 @@ A previous classifier version (\texttt{sonic\_force\_pg\_switcher}), documented 
 
 \noindent The classifier's configuration, including its thresholds, is sent as part of the network event stream alongside every response.
 The version we observed (\texttt{sonic\_classifier\_5p2\_3cls\_ev3}, model \texttt{snc-pg-sw-3cls-ev3}), identical across both Business and Plus tiers throughout our data collection window (January~2026), worked differently. 
-It outputs three probabilities---\texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, and \texttt{no\_search\_prob}---that sum to 1.0, and evaluates them in a fixed order:
+It outputs three probabilities (\texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, and \texttt{no\_search\_prob}) that sum to 1.0, and evaluates them in a fixed order:
 
 \begin{enumerate}
     \item If \texttt{no\_search\_prob} $\geq 0.175$, suppress search (answer from training knowledge).
@@ -54,7 +54,7 @@ What are some free AI tools for audio transcription? (P022) & .996 & .0002 & .00
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:search-trigger-breakdown} summarizes the search trigger outcomes across all 474 ChatGPT runs. The high search rate is expected given that our prompts are commercial product queries---exactly the kind of question that benefits from fresh web data.
+Table~\ref{tab:search-trigger-breakdown} summarizes the search trigger outcomes across all 474 ChatGPT runs. The high search rate is expected given that our prompts are commercial product queries, exactly the kind of question that benefits from fresh web data.
 
 \begin{table}[H]
 \centering
@@ -158,9 +158,9 @@ OpenAI documents that ChatGPT ``collects general location information
  based on your IP address and may share that general location with 
  third-party search providers'' \parencite{openai2024searchhelp}. 
  A user in Munich who asks ``best bakery'' will see the fan-out rewritten 
- to ``best bakery near Munich Germany''---the location is injected directly into the query text. We call this \textbf{explicit localization}.
+ to ``best bakery near Munich Germany''; the location is injected directly into the query text. We call this \textbf{explicit localization}.
 
-Our software dataset has no local-commerce queries that would trigger explicit localization, but we observed something we call \textbf{implicit localization}. When this same user in Munich asks ``best free website to translate a video and add subtitles,'' the response text is in English---yet many of its citations point to German web pages. This happens because one fan-out is issued in English and the other in German, routing half the retrieval into the 
+Our software dataset has no local-commerce queries that would trigger explicit localization, but we observed something we call \textbf{implicit localization}. When this same user in Munich asks ``best free website to translate a video and add subtitles,'' the response text is in English, yet many of its citations point to German web pages. This happens because one fan-out is issued in English and the other in German, routing half the retrieval into the 
 German-language search index without the user ever seeing it. This observation was one of the reasons we routed all data collection through a US-based proxy (Section~\ref{sec:proxy-requirement}).
 
 Across our GPT runs we identified three patterns of implicit localization, all orchestrated through fan-out queries invisible to the end user.
@@ -184,7 +184,7 @@ reserves the first grounding query slot (which is the strongest fan out, Section
 
 \subsubsection{Case~2: Context-Triggered Local-Language Fan-Out}
 
-When the prompt is in English but mentions a foreign language---either explicitly in the text or implicitly through IP/locale signals---GPT sometimes pairs the English fan-out with one in a local language. Unlike Case~1's near-universal trigger, Case~2 is selective: whether it fires depends on how central the foreign language is to the user's intent.
+When the prompt is in English but mentions a foreign language (either explicitly in the text or implicitly through IP/locale signals), GPT sometimes pairs the English fan-out with one in a local language. Unlike Case~1's near-universal trigger, Case~2 is selective: whether it fires depends on how central the foreign language is to the user's intent.
 
 \begin{itemize}
     \item P058 ``best software for Parsian/Farsi audio-to-text transcription'' $\rightarrow$ Farsi fan-out on every run (tool must work \emph{in} Farsi)
@@ -243,12 +243,12 @@ the same fan-out queries that produced it.
  & \makecell[r]{GPT\\Business} & \makecell[r]{GPT\\Plus} & Gemini \\
 \midrule
 Total Cited Links & 1,637 & 1,839 & 1,651 \\
-Total Additional Links & 2,820 & 4,506 & --- \\
-Total Rejected Links & 631 & 496 & --- \\
-Bing Overlap (Cited) & \textbf{81.3\%} & 67.6\% & --- \\
-Bing Overlap (Additional) & \textbf{86.3\%} & 56.3\% & --- \\
+Total Additional Links & 2,820 & 4,506 & -- \\
+Total Unsurfaced Links & 631 & 496 & -- \\
+Bing Overlap (Cited) & \textbf{81.3\%} & 67.6\% & -- \\
+Bing Overlap (Additional) & \textbf{86.3\%} & 56.3\% & -- \\
 Google Overlap (Cited) & 27.8\% & \textbf{64.6\%} & \textbf{77.7\%} \\
-Google Overlap (Additional) & 20.7\% & 52.1\% & --- \\
+Google Overlap (Additional) & 20.7\% & 52.1\% & -- \\
 \midrule
 Total Index Coverage & 83.7\% & 80.6\% & 77.7\% \\
 Invisible (neither index) & 16.3\% & 19.4\% & 22.3\% \\
@@ -258,7 +258,7 @@ Invisible (neither index) & 16.3\% & 19.4\% & 22.3\% \\
 \end{table}
 
 Across all three tiers, 78--84\% of citations trace back to a conventional search index. 
-This confirms that traditional search ranking is the dominant factor for AI visibility. The remaining 16--22\% (the ``invisible'' share) is another element that makes GEO distinct from SEO,
+This is consistent with traditional search ranking being the primary pathway to AI visibility. The remaining 16--22\% (the ``invisible'' share) is another element that makes GEO distinct from SEO,
  and we examine it in Section~\ref{sec:invisible-links}.
 
 GPT Business states that it retrieves exclusively through its official partner, the Bing Search API \parencite{openai2024enterprise}, and our data confirms this: 81.3\% Bing overlap versus only 27.8\% Google. Even when an LLM does not retrieve from a given engine, some overlap is expected because there are only so many websites that cover a given topic. Any search engine searching for the same keywords will end up returning many of the same pages. We treat this 27.8\% as the natural overlap that comes from this shared relevancy pool.
@@ -277,7 +277,7 @@ Feature & GPT Business & GPT Plus \\
 \midrule
 People Also Ask (PAA) & 23 & 44 \\
 Video & 3 & 3 \\
-Discussion & --- & 3 \\
+Discussion & -- & 3 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -445,11 +445,11 @@ Match counts below combine cited links (URLs that appear in the final response) 
 The Page~2 dip on both Bing charts is consistent with the pagination
 instability documented in Section~\ref{sec:bing-pagination-instability}.
 Page~1 leads in match count for Business despite returning a median of only
-3 organic results (Table~\ref{tab:bing-page1-size})---with a full 10-result page,
+3 organic results (Table~\ref{tab:bing-page1-size}), with a full 10-result page,
 the spike would likely be substantially larger showing how much importance ChatGPT 
 gives to Bing first page results.
-Matches remain steady through Pages~3--8 and even at Page~16 we do not fully converge---yet
-the gradual decline shows that an underlying ranking signal persists.
+Matches remain steady through Pages~3--8 and even at Page~16 we do not fully converge, yet
+the gradual decline suggests that an underlying ranking signal persists.
 To put this in perspective: comparing cumulative match counts, Bing Pages~3--16
 cover roughly the same information as Google ranks~5--29.
 The flatter distribution on Bing is indicative of how noisy the consumer UI pagination is,
@@ -459,7 +459,7 @@ Gemini on Google shows a similar shape, reinforcing that this positional bias is
 specific to one LLM.
 Overlap distribution of ChatGPT Plus overlap Google results looks much more like we would expect from a Top~30 SERP.
 ChatGPT Plus' top ranks (1--8) show the highest concentration, with a notable dip at
-ranks 9--10 (48 and 38 matches) followed by an increase at ranks 11--13 (58, 57, 65)---the
+ranks 9--10 (48 and 38 matches) followed by an increase at ranks 11--13 (58, 57, 65), the
 top of what would be Page~2 in a standard 10-result SERP.
 This mirrors a pattern in human search behavior: the bottom of Page~1
 receives less attention than the top of Page~2.
@@ -473,7 +473,7 @@ how LLMs pick results from SERPs has strong parallels with human behavior.
 
 For each unique citation URL per run, we find the highest rank at which that URL appears on Page~1 of its corresponding search index (Bing for GPT Business, Google for Gemini, best of both for GPT Plus). Each citation is counted once at its best rank, mirroring how human CTR is measured: of all selections, what share went to each rank? The comparison is restricted to Page~1: on Google, 28.7\% of Plus citation matches fall beyond rank~10, 
 so the table captures rank preference Page~1, not overall reliance on it. We clearly can tell that LLMs look deeper than humans do, 
-but we include this comparison regardless because the parallel in positional bias between human and LLM behavior is noteworthy.
+but we include this comparison regardless because of the parallel in positional bias between human and LLM behavior.
 
 Table~\ref{tab:cross-rank-ctr} places this LLM rank concentration alongside Google organic click-through rates reported by First Page Sage \parencite{firstpagesage2026ctr}.
 
@@ -503,7 +503,7 @@ Top-3 & 68.7\% & 62.6\% & 57.8\% & 48.2\% \\
 \end{tabular}
 \end{table}
 
-All three LLMs show a top-rank preference with a similar decay shape to human click-through behavior, but flatter: top-3 shares range from 48.2\% (Gemini) to 62.6\% (GPT Business) versus 68.7\% for human clicks. GPT Business shows the strongest rank-1 signal (24.9\%), while Gemini is the flattest---its citations spread more evenly across ranks 1--8.
+All three LLMs show a top-rank preference with a similar decay shape to human click-through behavior, but flatter: top-3 shares range from 48.2\% (Gemini) to 62.6\% (GPT Business) versus 68.7\% for human clicks. GPT Business shows the strongest rank-1 signal (24.9\%), while Gemini is the flattest; its citations spread more evenly across ranks 1--8.
 
 \subsection{Per-Query Citation Distribution}
 \label{sec:per-query-citation}
@@ -548,18 +548,17 @@ Q7 & 0.1\% & 2 \\
 
 Not all runs produce queries at every index; Q5+ counts are lower
 partly because fewer runs generate that many fan-out queries
-(see Section~2.4.2). As discussed in
+(see Section~\ref{sec:gemini-instrumentation-differences}). As discussed in
 Section~\ref{sec:multi-turn}, Gemini's query sequence follows a
 multi-turn research-like pattern: Q1--Q2 are broad category
 reformulations of the user prompt, while Q3+ target specific
 brands discovered in the initial results. The steep citation
-drop-off reflects this progression---later queries are narrow
+drop-off reflects this progression: later queries are narrow
 brand look-ups that naturally match fewer SERP results. The first
 fan-out query alone accounts for more citations than Q2--Q7
 combined.
 
-Taken together, these findings show that search rank is the single strongest 
-predictor of where LLM citations come from. All three systems favour top-ranked 
+Taken together, these findings show that search rank is the strongest correlate of where LLM citations come from. All three systems favour top-ranked 
 results with a positional bias that mirrors human click-through patterns, 
 and for ChatGPT both fan-out queries contribute equally. These findings 
 further establish that a solid SEO carries a lot weight for AI visibility.
@@ -573,7 +572,7 @@ further establish that a solid SEO carries a lot weight for AI visibility.
 
 The overlap tables above show that 16--22\% of ChatGPT citations appear in neither
 the Bing nor the Google SERPs we collected.
-Not every unmatched URL is truly ``invisible''---some fall into
+Not every unmatched URL is truly ``invisible''; some fall into
 methodological blind spots:
 
 \begin{enumerate}
@@ -604,7 +603,7 @@ coverage (83.7\%, Bing-only), so we use it as the reference case.
 
 \begin{table}[H]
 \centering
-\caption{GPT Business cited links --- content DNA profile of overlapped vs.\ invisible}
+\caption{GPT Business cited links: content DNA profile of overlapped vs.\ invisible}
 \label{tab:invisible-type-breakdown}
 \small
 \begin{tabular}{lrrrr}
@@ -624,12 +623,12 @@ other & 136 & 9.9\% & 17 & 6.4\% \\
 \end{table}
 
 \noindent Overlapped citations are 85.9\% product pages and
-listicles---the page types that dominate product-recommendation SERPs.
+listicles, the page types that dominate product-recommendation SERPs.
 In the invisible set, those same types drop to 23.6\%, while
 reference and news/editorial pages jump from under 2\% to 68.5\%.
 
 The product pages and listicles that do appear in the invisible set
-are small SaaS landing pages and blog-style ``best X tools'' posts---the
+are small SaaS landing pages and blog-style ``best X tools'' posts, the
 same profile as the overlapped set. These are most likely cases from
 groups~1--3 above (scrape depth, Page~1 truncation, or other
 scraping inconsistencies). We remove them using our content DNA
@@ -686,7 +685,7 @@ Business is almost strictly high-authority tech review outlets
 consumer-oriented content that Business does not:
 \texttt{reddit.com} (rank~4),
 \texttt{apps.apple.com} (rank~7), and
-\texttt{medium.com}---none of which appear in the Business list
+\texttt{medium.com}, none of which appear in the Business list
 at all. ChatGPT Plus' invisible profile includes app store listings,
 user-generated content, and community posts, while Business sticks
 to editorial and reference sources.
@@ -695,7 +694,7 @@ This contrast mirrors the tier differences we observed in
 Section~\ref{sec:global-overlap}: even outside of search results,
 the two ChatGPT tiers draw from different retrieval pools.
 
-Invisible links from different source categories (Section~2.3.2) play different roles in a response, however.
+Invisible links from different source categories (Section~\ref{sec:source-categories}) play different roles in a response, however.
 Some are cited inline, others are listed as supplementary material,
 and many just sit in the network response payloads without being 
 shown in the response at all.
@@ -709,13 +708,13 @@ shown in the response at all.
 
 \begin{table}[H]
 \centering
-\caption{GPT Business --- invisible domains by source category
+\caption{GPT Business: invisible domains by source category
 (bold marks dominant column per row)}
 \label{tab:ent-invisible-combined}
 \small
 \begin{tabular}{lrrrr}
 \toprule
-Domain & Cited & Addtl & Rejected & Total \\
+Domain & Cited & Addtl & Unsurfaced & Total \\
 \midrule
 en.wikipedia.org & \textbf{75} & 0 & 34 & 109 \\
 arxiv.org & 0 & 1 & \textbf{82} & 83 \\
@@ -739,13 +738,13 @@ jeenie.com & 0 & \textbf{2} & 0 & 2 \\
 
 \begin{table}[H]
 \centering
-\caption{GPT Plus --- invisible domains by source category
+\caption{GPT Plus: invisible domains by source category
 (bold marks dominant column per row)}
 \label{tab:pers-invisible-combined}
 \small
 \begin{tabular}{lrrrr}
 \toprule
-Domain & Cited & Addtl & Rejected & Total \\
+Domain & Cited & Addtl & Unsurfaced & Total \\
 \midrule
 en.wikipedia.org & \textbf{58} & 3 & 26 & 87 \\
 arxiv.org & 1 & 0 & \textbf{68} & 69 \\
@@ -767,12 +766,12 @@ windowscentral.com & 3 & 0 & \textbf{5} & 8 \\
 \end{tabular}
 \end{table}
 
-\noindent Wikipedia is almost exclusively cited inline: 75 of 75 Business invisible instances and 58 of 61 Plus instances appear as inline citations, never as supplementary material. \texttt{arxiv.org}, \texttt{nypost.com}, and \texttt{time.com} appear mostly as rejected sources --- present in the network response but never surfaced to the user. Why the model retrieves sources it never uses is unclear; they may serve as background context for response generation. On the Plus tier, \texttt{reddit.com}, \texttt{apps.apple.com}, and \texttt{medium.com} make it into the user-visible citation list but rarely earn direct inline citations. Tech editorial sites (\texttt{sfgate.com}, \texttt{theverge.com}, \texttt{wired.com}) show a mixed profile---cited at moderate rates but also appearing frequently among rejected links.
+\noindent Wikipedia is almost exclusively cited inline: 75 of 75 Business invisible instances and 58 of 61 Plus instances appear as inline citations, never as supplementary material. \texttt{arxiv.org}, \texttt{nypost.com}, and \texttt{time.com} appear mostly as unsurfaced sources --- present in the network response but never surfaced to the user. Why the model retrieves sources it never uses is unclear; they may serve as background context for response generation. On the Plus tier, \texttt{reddit.com}, \texttt{apps.apple.com}, and \texttt{medium.com} make it into the user-visible citation list but rarely earn direct inline citations. Tech editorial sites (\texttt{sfgate.com}, \texttt{theverge.com}, \texttt{wired.com}) show a mixed profile---cited at moderate rates but also appearing frequently among unsurfaced links.
 
 Our main takeaway is that if
 brands can establish presence on high-authority sources like Wikipedia
 and major news or tech websites, they gain a path into ChatGPT
-citations that bypasses conventional SEO competition---especially
+citations that bypasses conventional SEO competition, especially
 valuable when targeting B2B customers on the ChatGPT Business tier.
 Wikipedia carries similar weight on Plus, but the visibility advantage
 from appearing on tech editorial sites is less pronounced.
@@ -790,7 +789,7 @@ This is where our cross-run design (3~runs per prompt) became
 particularly useful.
 The tables above suggest that most invisible domains sit in a
 fixed lane. Wikipedia is always cited, arxiv is
-always rejected, reddit is mostly additional. But for listicles
+always unsurfaced, reddit is mostly additional. But for listicles
 and product pages the picture is different: a URL that appears as
 additional in one response can be promoted to cited in another.
 We call this a \textbf{flip-flop}. We measure it at two scopes:
@@ -813,8 +812,8 @@ Promoted (cross-prompt) & 337\,(26.0\%) & 413\,(25.9\%) \\
 Promoted (same prompt) & 262\,(20.2\%) & 346\,(21.7\%) \\
 Dominant type & \multicolumn{2}{c}{listicle + product page (70--85\%)} \\
 \midrule
-\multicolumn{3}{l}{\textit{Rejected $\to$ Cited}} \\
-Unique rejected URLs & 287 & 206 \\
+\multicolumn{3}{l}{\textit{Unsurfaced $\to$ Cited}} \\
+Unique unsurfaced URLs & 287 & 206 \\
 Promoted (cross-prompt) & 49\,(17.1\%) & 29\,(14.1\%) \\
 Promoted (same prompt) & 24\,(8.4\%) & 11\,(5.3\%) \\
 Dominant type & \multicolumn{2}{c}{news + reference (58--76\%)} \\
@@ -828,7 +827,7 @@ ChatGPT has a fixed budget for URLs that it takes into consideration and enters 
 This bucket of sources, which has a dominating concentration of product pages and listicles, is then utilized
 within the response text interchangeably.
 
-Rejected URLs can also be promoted, though at lower rates (8--17\%) and with a different profile: news articles and reference pages (primarily Wikipedia) dominate, and when promoted they skip the additional category almost entirely, going straight to cited.
+Unsurfaced URLs can also be promoted, though at lower rates (8--17\%) and with a different profile: news articles and reference pages (primarily Wikipedia) dominate, and when promoted they skip the additional category almost entirely, going straight to cited.
 
 %-----------------------------------------------------------------------
 \section{Content DNA \& Selection Drift}
@@ -858,7 +857,7 @@ a mean of only four organic results due to UI scraping limitations we have cover
  so we end up comparing results of a similar ranking range.
 \begin{table}[H]
 \centering
-\caption{Selection drift --- listicles (pp, Welch's $t$-test)}
+\caption{Selection drift: listicles (pp, Welch's $t$-test)}
 \label{tab:drift-listicles}
 \small
 \setlength{\tabcolsep}{8pt}
@@ -880,11 +879,11 @@ Freshness ($\geq$3) & $-$0.8\phantom{\,***}     & $+$16.6\,***              & $+
 \end{tabular}
 \end{table}
 
-Structured content features (tables, numbered lists, bullet points) are over-selected across almost all conditions. Gemini shows no significant freshness drift; this is consistent with its fan-out queries injecting year tokens that pre-filter the SERP for recency before selection occurs (Section~\ref{sec:freshness-subsection}). GPT Plus shows a robust freshness preference that is significant against both Bing and Google independently, while GPT Business shows none. Vendor-owned pages are also consistently over-selected, suggesting that brands produce more structurally thorough content that LLMs prefer, possibly because the models are cautious about surfacing commercial results that lack supporting detail.
+Structured content features (tables, numbered lists, bullet points) are over-selected across almost all conditions. Gemini shows no significant freshness drift; this is consistent with its fan-out queries injecting year tokens that pre-filter the SERP for recency before selection occurs (Section~\ref{sec:freshness-subsection}). GPT Plus shows a consistent freshness preference that is significant against both Bing and Google independently, while GPT Business shows none. Vendor-owned pages are also consistently over-selected, suggesting that brands produce more structurally thorough content that LLMs prefer, possibly because commercial results lacking supporting detail are less likely to survive selection.
 
 \begin{table}[H]
 \centering
-\caption{Selection drift --- product pages (pp, Welch's $t$-test)}
+\caption{Selection drift: product pages (pp, Welch's $t$-test)}
 \label{tab:drift-product-pages}
 \small
 \setlength{\tabcolsep}{8pt}
@@ -907,14 +906,14 @@ Freshness ($\geq$3) & $-$5.0\,*\phantom{**}      & $+$3.7\phantom{\,***}    & $+
 
 Product pages show flatter and less consistent drift profiles, making it hard to draw conclusive statements apart from numbered lists, which are over-selected in three of four conditions. Product pages are structurally more homogeneous, leaving less for either model to differentiate on.
 
-\subsection{Cited vs Additional --- Structural Comparison}
+\subsection{Cited vs Additional: Structural Comparison}
 \label{sec:cited-vs-additional}
 
 Both groups here were surfaced by ChatGPT: cited URLs appeared inline in the response text, additional URLs were shown as supplementary sources. Gemini does not have an ``additional'' category, so this comparison is GPT-only.
 
 \begin{table}[H]
 \centering
-\caption{Cited vs Additional drift --- listicles (Welch's $t$-test)}
+\caption{Cited vs Additional drift: listicles (Welch's $t$-test)}
 \label{tab:ttest-cited-addl-listicle}
 \begin{tabular}{lrrlrrl}
 \toprule
@@ -936,7 +935,7 @@ Freshness ($\geq$3) & $-$0.8pp & $-$0.38 & ns & $-$1.0pp & $-$0.47 & ns \\
 
 \begin{table}[H]
 \centering
-\caption{Cited vs Additional drift --- product pages (Welch's $t$-test)}
+\caption{Cited vs Additional drift: product pages (Welch's $t$-test)}
 \label{tab:ttest-cited-addl-pp}
 \begin{tabular}{lrrlrrl}
 \toprule
@@ -983,7 +982,7 @@ Product page & 927 \\
 \end{tabular}
 \end{table}
 
-Prior work suggests that content length and position within a page affect how much of a source the model actually processes. \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 2K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
+Prior work suggests that content length and position within a page affect how much of a source the model actually processes. \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 3K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
 
 Based on these findings, for an average listicle of over 2{,}000 words, products listed later may receive less model attention. Since attributing a product recommendation to a specific source is difficult when multiple links support the same claim, we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
 \label{sec:solo-cited}
@@ -1009,7 +1008,7 @@ Gemini ($n{=}365$) & 13.8\% & 34.8\% & 61.1\% & 79.5\% \\
 \end{tabular}
 \end{table}
 
-We compare each product's position in the model's response against its rank in the source listicle. Exact rank alignment is low: Gemini matches in 29.5\% of cases and GPT in 27.9\%, so models \textbf{re-rank} rather than preserve source order. Despite re-ranking, they strongly over-select from the top: the \#1 item is selected at 1.7--2.5$\times$ the uniform baseline, and the top-5 account for 76--81\% of all selections. This mirrors the SERP-level position bias (Section~\ref{sec:position-bias}): position bias operates at two nested levels, SERP rank and within-listicle rank. Items further down a long listicle may simply never enter the context window the model processes.
+We compare each product's position in the model's response against its rank in the source listicle. Exact rank alignment is low: Gemini matches in 29.5\% of cases and GPT in 27.9\%, so models \textbf{re-rank} rather than preserve source order. Despite re-ranking, they strongly over-select from the top: the \#1 item is selected at 1.7--2.5$\times$ the uniform baseline, and the top-5 account for 76--81\% of all selections. This mirrors the SERP-level position bias (Section~\ref{sec:position-bias}): positional over-selection appears at two nested levels, SERP rank and within-listicle rank. Items further down a long listicle may simply never enter the context window the model processes.
 
 \subsection{Self-Promotion Bias \& Host Exclusion}
 \label{sec:self-promo}

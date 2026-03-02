@@ -12,7 +12,7 @@ runs spanning both models and three deployment tiers, 78--84\% of
 LLM citations trace back to a conventional search index
 (Section~\ref{sec:global-overlap}). We established
 that LLMs do look deeper than human users but citations from beyond
-rank~10 are still quite rare (Section~\ref{sec:page-dist}) which is
+rank~10 drop off sharply (Section~\ref{sec:page-dist}) which is
 the backbone of our argument that GEO is mostly SEO.
 
 Within the ranked results, models show consistent structural
@@ -24,7 +24,7 @@ standard SEO advice before GEO became a term: they help human
 readers scan and compare products, and search engines have long
 rewarded content that serves readers well. The fact that LLMs also
 prefer them is not necessarily a new optimization surface. We showed that Gemini pre-filters for
-recency through year-token injection in fan-out queries, and GPT
+recency through year-token injection in fan-out queries, and GPT Plus
 shows genuine freshness preference at the citation stage
 (Section~\ref{sec:freshness-subsection}). Keeping content current
 has been good SEO practice and it is now also a good GEO
@@ -85,7 +85,7 @@ consistent with this: Business citations overlap with Google at
 only 27.8\% while Plus reaches 64.6\%.
 Behavioural differences between these two tiers of the same product also 
 extend past which search index they seem to ground on.
-Citations showed significant negative selection drift on Plus but
+Citations showed negative selection drift on Plus but
 trended positive on Business
 (Section~\ref{sec:selection-drift}). Reddit appeared frequently as a
 resource on Plus but almost never on Business, and news-related
@@ -98,9 +98,9 @@ This thesis opened with the observation that commercial queries
 trigger web search at 3$\times$ the overall baseline rate
 (Figure~\ref{fig:trigger-rate}), making product recommendations the
 arena where retrieval is most active and where source selection is
-most consequential. Our findings confirm that this retrieval
+most consequential. Our data supports the view that retrieval
 dependency is the foundation of AI visibility: without SERP ranking,
-there is no citation.
+most citations do not occur.
 
 As this dependence on search indices deepens, so does the contest
 over access to them. OpenAI has been accused of scraping Google's
