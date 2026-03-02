@@ -461,7 +461,7 @@ Overlap distribution of ChatGPT Plus overlap Google results looks much more like
 ChatGPT Plus' top ranks (1--8) show the highest concentration, with a notable dip at
 ranks 9--10 (48 and 38 matches) followed by an increase at ranks 11--13 (58, 57, 65)---the
 top of what would be Page~2 in a standard 10-result SERP.
-This mirrors a well-documented pattern in human search behavior: the bottom of Page~1
+This mirrors a pattern in human search behavior: the bottom of Page~1
 receives less attention than the top of Page~2.
 Seeing this pattern in an AI citation overlap distribution is unexpected, and hints that
 how LLMs pick results from SERPs has strong parallels with human behavior.
@@ -988,7 +988,7 @@ Prior work suggests that content length and position within a page affect how mu
 Based on these findings, for an average listicle of over 2{,}000 words, products listed later may receive less model attention. Since attributing a product recommendation to a specific source is difficult when multiple links support the same claim, we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
 \label{sec:solo-cited}
 
-For each solo-cited claim, we ran an LLM-as-judge prompt through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}110 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the Content DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}).
+For each solo-cited claim, we ran an LLM-as-judge prompt (Appendix~\ref{app:fidelity-prompt}) through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}110 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the Content DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}).
 
 \subsection{Selection Order vs.\ Listicle Rank}
 \label{sec:reranking}

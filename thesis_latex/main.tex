@@ -1,18 +1,35 @@
-% main.tex -- Master thesis file
-% Grounding Behavior in LLM-Mediated Commercial Search
+\RequirePackage[l2tabu,orthodox]{nag}
 
-\documentclass[12pt,a4paper]{report}
+% TUM thesis: one-sided, KOMA-Script book class
+\documentclass[headsepline,footsepline,footinclude=false,oneside,fontsize=11pt,paper=a4,listof=totoc,bibliography=totoc,DIV=12]{scrbook}
+
+% ---------- TUM thesis metadata ----------
+\newcommand*{\getUniversity}{Technische Universität München}
+\newcommand*{\getFaculty}{TUM School of Computation, Information and Technology}
+\newcommand*{\getTitle}{Is GEO Just SEO? Grounding Behavior in LLM-Mediated Commercial Search}
+\newcommand*{\getAuthor}{Ali Şan Kaya} % TODO: your name
+\newcommand*{\getDoctype}{Master's Thesis in Information Systems}
+\newcommand*{\getExaminer}{Prof.\ Dr.\ Chunyang Chen}
+\newcommand*{\getSupervisor}{Prof.\ Dr.\ Chunyang Chen}
+\newcommand*{\getSupervisorTwo}{Prof.\ Dr.\ Christine Eckert}
+\newcommand*{\getSubmissionDate}{March 2, 2026}
+\newcommand*{\getSubmissionLocation}{Munich}
 
 % ---------- Packages ----------
 
 % Layout and typography
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{placeins}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[english]{babel}
-\usepackage{microtype}
-\usepackage{csquotes}
+\usepackage[sc]{mathpazo}
+\usepackage[ngerman,english]{babel}
+\usepackage[autostyle]{csquotes}
+\usepackage[final]{microtype}
+\usepackage{scrhack}
+\usepackage{placeins}
+
+% Language switching (for cover/title/disclaimer)
+\usepackage{ifthen}
+\usepackage{pdftexcmds}
 
 % Math
 \usepackage{amsmath}
@@ -23,12 +40,15 @@
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{rotating}
+\usepackage{pdfpages}
 
 % Tables
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{makecell}
 \usepackage{needspace}
+\usepackage{multirow}
+\usepackage{array}
 
 % Charts (pgfplots)
 \usepackage{pgfplots}
@@ -36,10 +56,27 @@
 \usepgfplotslibrary{groupplots}
 
 % Colors and code listings
+\PassOptionsToPackage{table,svgnames,dvipsnames}{xcolor}
 \usepackage{xcolor}
 \definecolor{entcolor}{HTML}{2166AC}
 \definecolor{perscolor}{HTML}{B2182B}
 \definecolor{gemcolor}{HTML}{1B7837}
+
+% TUM corporate design colors
+\definecolor{TUMBlue}{HTML}{0065BD}
+\definecolor{TUMSecondaryBlue}{HTML}{005293}
+\definecolor{TUMSecondaryBlue2}{HTML}{003359}
+\definecolor{TUMBlack}{HTML}{000000}
+\definecolor{TUMWhite}{HTML}{FFFFFF}
+\definecolor{TUMDarkGray}{HTML}{333333}
+\definecolor{TUMGray}{HTML}{808080}
+\definecolor{TUMLightGray}{HTML}{CCCCC6}
+\definecolor{TUMAccentGray}{HTML}{DAD7CB}
+\definecolor{TUMAccentOrange}{HTML}{E37222}
+\definecolor{TUMAccentGreen}{HTML}{A2AD00}
+\definecolor{TUMAccentLightBlue}{HTML}{98C6EA}
+\definecolor{TUMAccentBlue}{HTML}{64A0C8}
+
 \usepackage{listings}
 \lstset{
   basicstyle=\ttfamily\small,
@@ -47,11 +84,13 @@
   frame=single,
   numbers=left,
   numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
+  keywordstyle=\bfseries\color{TUMBlue},
   commentstyle=\color{green!50!black},
-  stringstyle=\color{red!60!black},
+  stringstyle=\color{TUMAccentGreen},
   tabsize=2,
-  showstringspaces=false
+  showstringspaces=false,
+  columns=fullflexible,
+  autogobble
 }
 
 % Finding boxes
@@ -67,6 +106,9 @@
 \newcommand{\tss}[1]{\textsuperscript{#1}}
 \usepackage{tabularx}
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}}
 
 % Links and URLs
 \usepackage{xurl}
@@ -76,78 +118,53 @@
 \usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
 \addbibresource{references.bib}
 
-% ---------- Title metadata ----------
+% ---------- KOMA-Script settings ----------
+\setkomafont{disposition}{\normalfont\bfseries} % serif font for headings
+\linespread{1.05} % adjust line spread for mathpazo font
 
-\title{%
-  \textbf{Is GEO Just SEO?}\\[0.5em]
-  \Large Grounding Behavior in LLM-Mediated Commercial Search\\[0.3em]
-  \large ChatGPT and Gemini%
+% Add table of contents to PDF bookmarks
+\BeforeTOCHead[toc]{{\cleardoublepage\pdfbookmark[0]{\contentsname}{toc}}}
+
+% Settings for pgfplots
+\pgfplotsset{
+  cycle list={TUMBlue\\TUMAccentOrange\\TUMAccentGreen\\TUMSecondaryBlue2\\TUMDarkGray\\},
 }
-\author{[Author Name]}
-\date{January 2026}
+
+% Search order for graphics
+\graphicspath{
+    {logos/}
+    {figures/}
+}
+
+% TODO helper
+\newcommand{\todo}[1]{{\bfseries{\scshape{\color{TUMAccentOrange}[(TODO: #1)]}}}}
 
 % ==========================================================
 \begin{document}
 % ==========================================================
 
-% ---------- Front matter ----------
+\selectlanguage{english}
 
-\pagenumbering{roman}
+% Set page numbering to avoid "destination with the same identifier" warning for cover page.
+\pagenumbering{alph}
+\input{pages/cover}
 
-% Title page
-\begin{titlepage}
-  \centering
-  \vspace*{2cm}
-  {\LARGE\bfseries Is GEO Just SEO?\\[0.4em]
-   Grounding Behavior in LLM-Mediated Commercial Search\\[0.2em]
-   \large with ChatGPT and Gemini\par}
-  \vspace{2.5cm}
-  {\Large [Author Name]\par}
-  \vspace{1.5cm}
-  {\large Master's Thesis\par}
-  \vspace{0.5cm}
-  {\large January 2026\par}
-  \vfill
-  {\large [University / Department]\par}
-\end{titlepage}
+\frontmatter{}
 
-% Abstract
-\chapter*{Abstract}
-\addcontentsline{toc}{chapter}{Abstract}
+\input{pages/title}
+\input{pages/disclaimer}
+% \input{pages/acknowledgements} % TODO: uncomment if needed
+\input{pages/abstract}
 
-Large language models (LLMs) increasingly mediate product discovery, and which sources they cite directly affect
- brand and publisher visibility. Due to the black box nature of LLMs, the emerging practice of Generative Engine
-  Optimization (GEO) lacks the understanding that Search Engine Optimization (SEO) has built over decades. 
-  This thesis examines how ChatGPT and Gemini select and cite web sources when answering product recommendation queries. 
-  We developed a methodology to run a given prompt against both LLMs, capture the response, and extract which search
-   queries the models issued behind the scenes and the structural features of each cited page.
-    We executed 79 prompts three times each across two ChatGPT subscription tiers (Plus and Business) and 
-    Gemini, yielding 711 runs. We then measured how often LLM citations appear in Bing and Google search 
-    results for those same queries, and where they rank. To understand what drives source selection, we profiled
- the structural characteristics of approximately 6{,}500 URLs and made comparisons between what is available in search results and what LLMs cited. We also checked whether the models accurately reproduce product details by auditing over 1{,}100 individual claims extracted from cited sources.
-
-77.7\% of Gemini's cited links were found among Google search results for the same queries. For ChatGPT Business, 81.3\% appeared in Bing results but only 27.8\% in Google, whereas Plus' citations appeared in both (67.6\% Bing, 64.6\% Google), suggesting it retrieves from multiple search providers. Across all systems, 16--22\% of citations did not appear in any search results for those queries. These came predominantly from Wikipedia, Reddit, app stores, and major tech publications. Both ChatGPT and Gemini favoured pages with tables, numbered lists, and bullet points when selecting from listicles (list-format articles such as ``Top~10 Best\ldots''), and showed a preference for recently published content. Products positioned near the top of a listicle were cited far more often than those further down. When models did cite a source, they rarely misrepresented its content.
-
-Our results show that search engine ranking is a prerequisite for LLM visibility, while highlighting where GEO diverges from traditional SEO.
-
-\newpage
-
-% Table of contents
-\tableofcontents
-
-% List of figures
-\listoffigures
-\addcontentsline{toc}{chapter}{\listfigurename}
-
-% List of tables
-\listoftables
-\addcontentsline{toc}{chapter}{\listtablename}
-
-\newpage
+\microtypesetup{protrusion=false}
+\tableofcontents{}
+\listoffigures{}
+\listoftables{}
+\microtypesetup{protrusion=true}
 
 % ---------- Main matter ----------
 
-\pagenumbering{arabic}
+\mainmatter{}
 
 \input{chapters/chapter1_introduction}
 \input{chapters/chapter2_methodology}
@@ -157,13 +174,14 @@ Our results show that search engine ranking is a prerequisite for LLM visibility
 
 % ---------- Appendices ----------
 
-\appendix
+\appendix{}
 
 \input{chapters/appendix_a}
 \input{chapters/appendix_b}
 \input{chapters/appendix_c}
 \input{chapters/appendix_d}
 \input{chapters/appendix_e}
+\input{chapters/appendix_f}
 
 % ---------- Bibliography ----------
 

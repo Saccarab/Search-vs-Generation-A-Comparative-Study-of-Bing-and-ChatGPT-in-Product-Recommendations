@@ -1,0 +1,118 @@
+% appendix_f.tex
+\chapter{Semantic Fidelity Judge Prompt}
+\label{app:fidelity-prompt}
+
+The prompt below was used by both GPT-5-mini and Gemini~2.5~Flash as an LLM-as-judge to evaluate listicle citation fidelity (Section~\ref{sec:listicle-bias}). For each cited listicle, the judge receives the listicle's full page text and the roster of products the model claimed from that source. It performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass.
+
+\begin{lstlisting}
+You are an evaluator. Your job is to verify whether a
+cited listicle supports what the model claimed about
+specific products.
+
+Return ONLY valid JSON. No prose, no markdown.
+
+DEFINITIONS
+- "response_claim_snippet" = exact text from the model
+  response about the product.
+- "evidence_quote" = exact quote from the LISTICLE PAGE
+  TEXT that supports or contradicts the claim.
+- "multiple_products_suspected" = whether this single
+  roster item appears to reference MORE THAN ONE distinct
+  product/tool (e.g., "Kapwing & VEED.io" or "Otter.ai
+  or Fireflies"). If unsure, set false.
+- "roster_item_is_product" = whether product_name is
+  actually a specific product/tool name (not "Yes",
+  "Notes", "Tips", a full sentence, or a source label).
+- "roster_item_type" = one of:
+  "product" | "general_claim" | "meta_or_source_label"
+- "present_in_listicle" meaning:
+  - If roster_item_is_product is true:
+    "yes" | "no" | "unclear"
+  - If roster_item_is_product is false: MUST be "n/a"
+- "total_products_in_listicle" = total count of distinct
+  products/tools recommended or listed on the page.
+
+SCORING: semantic_fidelity_score_1_5
+5 = Fully supported (product present + claim clearly
+    supported, including numbers if any)
+4 = Mostly supported (minor mismatch/detail off)
+3 = Partially supported/vague (product present but claim
+    not clearly supported)
+2 = Weakly supported (thin/indirect evidence)
+1 = Not supported or contradicted (product missing or
+    claim contradicts page)
+
+TASK
+Given:
+(1) LISTICLE URL
+(2) LISTICLE PAGE TEXT
+(3) PROVIDED ROSTER from the model response (ordered)
+    with claim snippets
+
+A) Scan the LISTICLE PAGE TEXT and count the total number
+   of distinct products/tools recommended.
+B) For EACH product in the provided roster:
+   A-1) Set roster_item_is_product (true/false) and
+        roster_item_type.
+   A0)  Set multiple_products_suspected true/false based
+        ONLY on the product_name + response_claim_snippet.
+   A)   If roster_item_is_product is false:
+        - present_in_listicle MUST be "n/a"
+        - listicle_rank MUST be null
+        - (You can still score semantic_fidelity_score_1_5
+          based on whether the claim snippet is supported
+          by the page text.)
+        Else (roster_item_is_product is true):
+        - Decide if the product is present in the
+          listicle: "yes" | "no" | "unclear"
+        - If present, extract its listicle rank/position
+          if clearly stated, else null
+   C)   Provide an evidence_quote from the page text
+   D)   Give semantic_fidelity_score_1_5 and a short
+        rationale
+
+Also:
+E) Determine whether the listicle includes a product that
+   appears to be owned by the host domain (same
+   brand/product as the website). If yes, output its name
+   and an evidence_quote, and whether it is missing from
+   the provided roster.
+
+INPUTS
+LISTICLE_URL: {listicle_url}
+HOST_DOMAIN: {host_domain}
+
+PROVIDED_ROSTER_FROM_RESPONSE (ordered):
+{roster_json}
+
+LISTICLE_PAGE_TEXT:
+{page_text}
+
+OUTPUT JSON SCHEMA
+{
+  "listicle_url": string,
+  "host_domain": string,
+  "total_products_in_listicle": integer,
+  "products": [
+    {
+      "product_name": string,
+      "roster_item_is_product": true|false,
+      "roster_item_type": "product"|"general_claim"
+        |"meta_or_source_label",
+      "multiple_products_suspected": true|false,
+      "present_in_listicle": "yes"|"no"|"unclear"|"n/a",
+      "listicle_rank": integer|null,
+      "response_claim_snippet": string,
+      "evidence_quote": string|null,
+      "semantic_fidelity_score_1_5": 1|2|3|4|5,
+      "rationale": string
+    }
+  ],
+  "host_product": {
+    "host_product_in_listicle": true|false|"unclear",
+    "host_product_name": string|null,
+    "evidence_quote": string|null,
+    "missing_from_provided_roster": true|false|"unclear"
+  }
+}
+\end{lstlisting}
