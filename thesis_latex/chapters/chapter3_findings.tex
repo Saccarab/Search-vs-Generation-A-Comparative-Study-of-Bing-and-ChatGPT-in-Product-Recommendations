@@ -592,7 +592,7 @@ in URL normalization can all produce false negatives.
 
 \label{sec:invisible-conservative}
 \noindent This means the 16--22\% invisible rate is likely
-\textbf{inflated} by our scrape limitations.
+inflated by our scrape limitations.
 To see how much, we compared the content DNA profile of overlapped
 and invisible citations. GPT Business has our highest index
 coverage (83.7\%, Bing-only), so we use it as the reference case.
@@ -627,16 +627,16 @@ The product pages and listicles that do appear in the invisible set
 are small SaaS landing pages and blog-style ``best X tools'' posts, the
 same profile as the overlapped set. These are most likely cases from
 groups~1--3 above (scrape depth, Page~1 truncation, or other
-scraping inconsistencies). We remove them using our content DNA
-classification (Section~\ref{sec:content-dna}) to get a cleaner
-look at the citations that are not sourced from search engines.
+scraping inconsistencies). Since product pages and listicles make up
+the bulk of the overlapped set, removing them from the invisible set
+gives a cleaner view of citations that genuinely bypass search results.
 
 \subsection{Top Invisible Domains}
 \label{sec:top-invisible-domains}
 
-After filtering out product pages and listicles (groups~1--3
-casualties), Table~\ref{tab:invisible-domains-sidebyside} lists
-the most frequent invisible domains for both tiers.
+After filtering out product pages and listicles (the groups~1--3
+cases), Table~\ref{tab:invisible-domains-sidebyside} lists the most
+frequent invisible domains for both tiers.
 
 \begin{table}[H]
 \centering
@@ -674,18 +674,18 @@ musicradar.com & 4 & support.google.com & 6 \\
 \end{tabular}
 \end{table}
 
-\noindent Both tiers share Wikipedia, arxiv, and major tech editorial
-sites, but the differences are striking.
-Business is almost strictly high-authority tech review outlets
+\noindent Both tiers share Wikipedia, arXiv (a preprint repository for scientific papers), and major tech editorial
+sites. Business is almost strictly high-authority tech review outlets
 (theverge, wired, tomsguide, techradar), while Plus surfaces
 consumer-oriented content that Business does not:
 \texttt{reddit.com} (rank~4),
-\texttt{apps.apple.com} (rank~7), and
+\texttt{apps.apple.com} (rank~7),
+\texttt{chromewebstore.google.com}, and
 \texttt{medium.com}, none of which appear in the Business list
-at all. ChatGPT Plus' invisible profile includes app store listings,
-user-generated content, and community posts, while Business sticks
-to editorial and reference sources.
-
+at all. These are actionable links: a user can install an extension,
+download an app, or read a community discussion directly from the
+citation. Business sticks to editorial and reference sources that
+inform but do not lead to immediate product interaction.
 This contrast mirrors the tier differences we observed in
 Section~\ref{sec:global-overlap}: even outside of search results,
 the two ChatGPT tiers draw from different retrieval pools.
@@ -762,18 +762,14 @@ windowscentral.com & 3 & 0 & \textbf{5} & 8 \\
 \end{tabular}
 \end{table}
 
-\noindent Wikipedia is almost exclusively cited inline: 75 of 75 Business invisible instances and 58 of 61 Plus instances appear as inline citations, never as supplementary material. \texttt{arxiv.org}, \texttt{nypost.com}, and \texttt{time.com} appear mostly as unsurfaced sources --- present in the network response but never surfaced to the user. Why the model retrieves sources it never uses is unclear; they may serve as background context for response generation. On the Plus tier, \texttt{reddit.com}, \texttt{apps.apple.com}, and \texttt{medium.com} make it into the user-visible citation list but rarely earn direct inline citations. Tech editorial sites (\texttt{sfgate.com}, \texttt{theverge.com}, \texttt{wired.com}) show a mixed profile---cited at moderate rates but also appearing frequently among unsurfaced links.
+\noindent Wikipedia is almost exclusively cited inline: 75 of 75 Business invisible instances and 58 of 61 Plus instances appear as inline citations, with only 3 Plus instances appearing as supplementary material. \texttt{arxiv.org}, \texttt{nypost.com}, and \texttt{time.com} appear mostly as unsurfaced sources (retrieved but never shown to the user). Why the model retrieves sources it never surfaces is unclear, though we observed cases where unsurfaced sources appeared as cited in subsequent runs of the same prompt (Section~\ref{sec:flip-flop}). On the Plus tier, \texttt{reddit.com}, \texttt{apps.apple.com}, and \texttt{medium.com} make it into the user-visible citation list but rarely earn direct inline citations. Tech editorial sites (\texttt{sfgate.com}, \texttt{theverge.com}, \texttt{wired.com}) show a mixed profile---cited at moderate rates but also appearing frequently among unsurfaced links.
 
-Our main takeaway is that if
-brands can establish presence on high-authority sources like Wikipedia
-and major news or tech websites, they gain a path into ChatGPT
-citations that bypasses conventional SEO competition, especially
-valuable when targeting B2B customers on the ChatGPT Business tier.
-Wikipedia carries similar weight on Plus, but the visibility advantage
-from appearing on tech editorial sites is less pronounced.
-The growing trend of Reddit marketing also looks justified:
-reddit domains consistently surface as supplementary sources
-on the Plus tier.
+Brands that establish presence on high-authority sources like
+Wikipedia and major tech editorial sites gain a citation channel
+that operates independently of SERP ranking. Both tiers draw
+heavily from these sources, while Plus additionally surfaces
+consumer-oriented platforms like Reddit, app stores, and community
+sites.
 
 %-----------------------------------------------------------------------
 \section{Citation Flip-Flop Rate}
@@ -980,7 +976,7 @@ Product page & 927 \\
 
 Prior work suggests that content length and position within a page affect how much of a source the model actually processes. \textcite{petrovic2025grounding} report a per-query grounding budget of approximately 2{,}000 words for Gemini, with coverage dropping from 61\% for pages under 1K words to 13\% for pages over 3K; \textcite{petrovic2025filter} estimate that roughly one-third of source content survives into AI-generated citations. At the sub-page level, \textcite{indig2026attention} found that 44.2\% of ChatGPT citations originate from the first 30\% of page content.
 
-Based on these findings, for an average listicle of over 2{,}000 words, products listed later may receive less model attention. Since attributing a product recommendation to a specific source is difficult when multiple links support the same claim, we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
+Based on these findings, for a median listicle of over 2{,}000 words, products listed later may receive less model attention. Since attributing a product recommendation to a specific source is difficult when multiple links support the same claim, we filtered to claims backed by a single listicle (excluding 10.7\% of GPT and 34.5\% of Gemini claims).
 \label{sec:solo-cited}
 
 For each solo-cited claim, we ran an LLM-as-judge prompt (Appendix~\ref{app:fidelity-prompt}) through both GPT-5-mini and Gemini 2.5 Flash that performs fidelity scoring, listicle presence verification, rank extraction, and host-product detection in a single pass. Cross-model validation on all 1{,}110 claims confirmed structural field agreement at 93--100\% and fidelity scores within $\pm$1 in 93.9\% of matched pairs, consistent with the Content DNA labeler benchmark (Section~\ref{sec:labeler-fidelity}).
