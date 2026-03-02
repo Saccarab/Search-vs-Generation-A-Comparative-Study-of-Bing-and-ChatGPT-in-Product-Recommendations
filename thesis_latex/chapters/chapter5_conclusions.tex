@@ -35,8 +35,7 @@ the dominant page type in both the retrieval pool and the citation
 set. But a listicle must rank to be retrieved in the first place.
 A brand could, in theory, craft a ``top~10 AI tools''
 listicle that games our findings, burying real competitors at the
-bottom of the list, omitting them entirely, or only listing soft
-alternatives. But as long as search engines still weigh engagement
+bottom of the list or omitting them entirely. But as long as search engines still weigh engagement
 signals like bounce rate and time on page, a listicle that readers
 find unhelpful will not rank or will not maintain rankings long term.
 An unranked listicle is invisible to the grounding pipeline
@@ -47,7 +46,7 @@ the LLM citations follow from that.
 
 Our cross-language fan-out analysis
 (Section~\ref{sec:localization-bias}) adds a localisation dimension
-to GEO. When a non-English prompt triggers search, ChatGPT
+to this argument. When a non-English prompt triggers search, ChatGPT
 typically pairs a local-language fan-out with an English one,
 routing roughly half the retrieval through English results.
 A foreign-language business that lacks English-language pages will
@@ -62,15 +61,7 @@ citations point to URLs that do not appear in either Bing or Google
 for the corresponding query (Section~\ref{sec:invisible-links}),
 concentrated in Wikipedia, Reddit, app stores, and major tech
 publications. These sources enter the response through pathways that
-appear to bypass search results. They give brands a form of visibility that is durable and difficult for competitors
-to displace,
-as long as the current grounding workflow remains in place.
-
-The entire chain (query generation, retrieval, source selection,
-product extraction) is grounded in the same web infrastructure
-that SEO has optimized for decades. A brand that already runs
-rigorous SEO gap analysis is, in practice, already covering most of
-the GEO gap.
+appear to bypass search results.
 
 \section{Outlook}
 \label{sec:outlook}
@@ -81,8 +72,7 @@ search data alongside Bing
 \parencite{theinformation2025openaiserpapi}, and our data is
 consistent with this: Business citations overlap with Google at
 only 27.8\% while Plus reaches 64.6\%.
-Behavioural differences between these two tiers of the same product also 
-extend past which search index they seem to ground on.
+Behavioural differences between these two tiers go beyond which search index they ground on.
 Both tiers showed positive structural drift on features like tables and numbered lists, but differed in degree and on metadata features: Plus showed negative drift on Sources/Citations and Clear Authorship where Business did not
 (Section~\ref{sec:selection-drift}). Reddit appeared frequently as a
 resource on Plus but almost never on Business, and news-related
@@ -101,8 +91,7 @@ Google has since sued those services
 \parencite{google2025serpapi}. Meanwhile, Reddit is suing over
 data access \parencite{reddit2025perplexity}, and Microsoft has
 retired the Bing Search API entirely
-(Section~\ref{sec:structural-pivot}). The programmatic access
-to search indices is caught in the middle of this access war. The empirical data documented in
+(Section~\ref{sec:structural-pivot}). Programmatic access to search indices is the core of this contest. The empirical data documented in
 this thesis captures a snapshot of a system in rapid flux;
 replicating or extending this work will require either new access
 agreements with search providers or increasingly creative
@@ -116,5 +105,5 @@ Retrieval is also cheaper than inference
 economic incentive to lean on search rather than scale up parametric
 knowledge.
 If today's search trigger rates represent the floor rather than the
-ceiling, SEO and GEO will only align further. In our data, AI visibility is best understood as an extension of
+ceiling, SEO and GEO will only align further. AI visibility is best understood as an extension of
 SEO rather than a discipline of its own.
