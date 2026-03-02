@@ -3,7 +3,7 @@
 Large language models (LLMs) increasingly mediate product discovery, and which sources they cite directly affect
  brand and publisher visibility. Due to the black box nature of LLMs, the emerging practice of Generative Engine
   Optimization (GEO) lacks the understanding that Search Engine Optimization (SEO) has built over decades.
-  This thesis examines how ChatGPT and Gemini select and cite web sources when answering product recommendation queries.
+  This thesis examines how ChatGPT and Gemini select and cite web sources when answering commercial-intent product recommendation queries.
   We developed a methodology to run a given prompt against both LLMs, capture the response, and extract which search
    queries the models issued behind the scenes and the structural features of each cited page.
     We executed 79 prompts three times each across two ChatGPT subscription tiers (Plus and Business) and
@@ -13,4 +13,4 @@ Large language models (LLMs) increasingly mediate product discovery, and which s
 
 77.7\% of Gemini's cited links were found among Google search results for the same queries. For ChatGPT Business, 81.3\% appeared in Bing results but only 27.8\% in Google, whereas Plus' citations appeared in both (67.6\% Bing, 64.6\% Google), suggesting it retrieves from multiple search providers. Across all systems, 16--22\% of citations did not appear in any search results for those queries. These came predominantly from Wikipedia, Reddit, app stores, and major tech publications. Both ChatGPT and Gemini favoured pages with tables, numbered lists, and bullet points when selecting from listicles (list-format articles such as ``Top~10 Best\ldots''), and showed a preference for recently published content. Products positioned near the top of a listicle were cited far more often than those further down. When models did cite a source, they rarely misrepresented its content.
 
-Our results show that search engine ranking is a prerequisite for LLM visibility, while highlighting where GEO diverges from traditional SEO.
+These findings show that search engine ranking is a prerequisite for LLM visibility, and that GEO is best understood as an extension of SEO rather than a discipline of its own.
