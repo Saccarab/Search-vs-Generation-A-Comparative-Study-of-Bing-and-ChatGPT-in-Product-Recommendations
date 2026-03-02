@@ -1,7 +1,9 @@
 \chapter{Methodology \& Tools}
 \label{ch:methodology}
 
-This chapter describes the analytical tools and the instrumentation we used to study how ChatGPT and Gemini retrieve and cite web sources when answering product recommendation queries. ChatGPT prompts were run via the production web interface (\texttt{chatgpt.com}) and responses were captured via network payload inspection. We captured runs across two subscription tiers: \textbf{Plus} (a consumer subscription) and \textbf{Business} (an organization-managed workspace account, provisioned through ChatGPT Business tier). All ChatGPT runs used GPT-5.2, the default model on \texttt{chatgpt.com} during the data collection period. Runs were done in Temporary Chat mode to prevent conversation history from influencing retrieval, and run with a U.S.\ proxy using a browser extension to prevent user location from affecting the results (Section~\ref{sec:proxy-requirement}). Gemini prompts were run via the Vertex~AI API (Gemini~3~Flash), which provides structured grounding metadata in JSON format.
+This chapter describes the analytical tools and the instrumentation we used to study how ChatGPT and Gemini retrieve and cite web sources when answering product recommendation queries. ChatGPT prompts were run via the production web interface (\texttt{chatgpt.com}) and responses were captured via network payload inspection. We captured runs across two subscription tiers: \textbf{Plus} (a consumer subscription) and \textbf{Business} (an organization-managed workspace account, provisioned through ChatGPT Business tier). 
+All ChatGPT runs used GPT-5.2, the default model on \texttt{chatgpt.com} during the data collection period. Runs were done in Temporary Chat mode to prevent conversation history from 
+influencing retrieval, and run with a U.S.\ proxy using a browser extension to prevent user location from affecting the results (Section~\ref{sec:proxy-requirement}). Gemini prompts were run via the Vertex~AI API (Gemini~3~Flash), which provides structured grounding metadata in JSON format.
 
 The contrast between these three environments revealed notable differences, especially between the ChatGPT Plus and Business tiers. We ran each prompt three times per environment to examine how results vary across runs, which also increased our sample size. All prompts were executed between mid and late January 2026.
 
@@ -13,9 +15,7 @@ We have 79 unique prompts in our dataset that we have gathered from two platform
 From the available prompts, we filtered for product discovery queries with commercial intent---prompts where users ask for tool recommendations, comparisons, or ``best of'' lists---as these are the queries most likely to trigger web search grounding (see Section~\ref{sec:commercial-catalyst}).
 All queries are in the AI speech and language technology sector
 (speech-to-text, live transcription, voice translation, text-to-speech).
-This domain focus reflects the author's professional expertise in this vertical,
-which allowed the author to assess retrieval relevance and spot citation errors
-that a domain outsider might miss. While 79 prompts is modest compared to large-scale observational studies, each prompt was run 3 times across 3 environments (711 total runs), producing over 2{,}000 fan-out queries---each scraped on both Bing (to Rank~200) and Google---and approximately 12{,}000 total citations to analyze. Scaling beyond this would have been impractical given the per-query scraping and enrichment costs.
+While 79 prompts is modest compared to large-scale observational studies, each prompt was run 3 times across 3 environments (711 total runs), producing over 2{,}000 fan-out queries. We then scraped search results of these queries on both Bing (to Rank~200) and Google that yielded approximately 12{,}000 citations that we analyzed. Scaling beyond this would have been impractical given the per-query scraping and enrichment costs.
 
 \paragraph{Prompt categories.}
 The 79 prompts fall into 4 categories:
@@ -59,40 +59,37 @@ When a user submits a prompt, the first thing ChatGPT decides is whether to sear
 \label{fig:searching-web}
 \end{figure}
 
-Behind this indicator, our network instrumentation captured the full search pipeline from the \texttt{conversation} endpoint's event stream. Figure~\ref{fig:network-response} shows this stream as seen in Chrome DevTools: the \texttt{conversation} endpoint (selected in the left panel) returns a streamed response containing search invocations, \texttt{tool:web} calls, and search results with titles and snippets.
+Behind this indicator, our network instrumentation captured the full search pipeline from the \texttt{conversation} endpoint's event stream. Figure~\ref{fig:network-response} shows this stream as seen in Chrome DevTools: the \texttt{conversation} endpoint (selected in the left panel) returns a streamed response containing search invocations, \texttt{tool:web} calls, and search results with titles and snippets. The stream contains the classifier output (\texttt{sonic\_classification\_result}), fan-out queries, search results, and citation mappings.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figures/network_response.png}
-\caption{Chrome DevTools Network tab with the \texttt{conversation} endpoint selected (left panel), showing the streamed response containing search invocations, \texttt{tool:web} calls, and returned search results with titles and snippets.}
+\caption{Chrome DevTools Network tab with the \texttt{conversation} endpoint selected (left panel), showing the streamed response containing search invocations}
 \label{fig:network-response}
 \end{figure}
 
-The stream contains the classifier output (\texttt{sonic\_classification\_result}), fan-out queries, search results, and citation mappings. One caveat: the \texttt{web\_search\_triggered} boolean flag proved unreliable---some runs reported \texttt{false} despite containing \texttt{web.run} calls and search results. We therefore determined search status by checking for the presence of \texttt{web.run} tool calls rather than trusting the flag. The full classifier configuration is reported in Section~\ref{sec:search-trigger}.
+
 
 \subsection{Fan-Out Queries}
 \label{sec:fan-out-queries}
 
-Once the search trigger fires, ChatGPT does not search for the user's prompt verbatim. Instead, it rewrites the prompt into one or more targeted search queries \parencite{openai2024search}---commonly referred to as \emph{fan-out queries}. As Figure~\ref{fig:fan-out-ui} shows, the UI exposes only one of them (``Searching for best app for voice translation''). Our network instrumentation reveals that a second query is always dispatched in parallel but never shown to the user; both are captured in the \texttt{search\_model\_queries} field.
+Once the search trigger fires, ChatGPT does not search for the user's prompt verbatim. Instead, it rewrites the prompt into one or more targeted search queries \parencite{openai2024search}---commonly referred to as \emph{fan-out queries}. As Figure~\ref{fig:fan-out-ui} shows, the UI exposes only one of them (``Searching for best app for voice translation''). Our network instrumentation reveals that a second query is always dispatched in parallel but never shown to the user. We capture both of them in the \texttt{search\_model\_queries} field (Figure~\ref{fig:fanout-raw}).
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{figures/fan_out_query.png}
-\caption{The single fan-out query visible in ChatGPT's UI. A second query is always dispatched but hidden in the interface.}
+\caption{The single fan-out query visible in ChatGPT's UI. }
 \label{fig:fan-out-ui}
 \end{figure}
-
-Figure~\ref{fig:fanout-raw} shows the raw \texttt{search\_model\_queries} object from the network stream containing the query pair, and Figure~\ref{fig:sonicberry} shows the \texttt{web.run} tool call that dispatches them. The model can issue multiple \texttt{web.run} calls per run; the distribution is reported in Section~\ref{sec:multi-turn}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figures/fan_out.png}
-\caption{Fan-out query pair as seen in the raw network event stream: the \texttt{search\_model\_queries} object contains the two reformulated queries.}
+\caption{Fan-out query pair as seen in the raw network event stream}
 \label{fig:fanout-raw}
 \end{figure}
 
-The results from these queries form the full retrieval pool, captured in the \texttt{search\_result\_groups}
- field, which contains the URL, title, snippet, and 
+The cited sources in these prompts form the baseline retrieval pool which contains the URL, title, snippet, and 
  publication date for each candidate. To determine which of these candidates were actually cited, we reconstruct the citation-to-source mapping from \texttt{content\_references}, which records the start index of each citation token in the streamed response text. The full mapping pipeline is described in Section~\ref{sec:claim-to-link}. A glossary of all network payload fields we captured is provided in Appendix~\ref{app:network-glossary}.
 
 \subsection{Source Categories}
@@ -132,11 +129,11 @@ Each inline citation chip in the response corresponds to a token in the network 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figures/run_viewer_citation_claim.png}
-\caption{Citation-to-source mapping from the Data Viewer (a per-run inspection tool built for this study; see Section~\ref{sec:analysis-applications}). The top panel highlights citation tokens inline within the response text. The bottom table resolves each token to its claim text, target URL, and character offsets.}
+\caption{Citation-to-source mapping from the Data Viewer (a per-run inspection tool built for this study; see Section~\ref{sec:analysis-applications}).}
 \label{fig:claim-extraction}
 \end{figure}
 
-Some citation chips bundle multiple sources under a single display, indicated by a ``+1'' or ``+2'' suffix (shown as the \textcolor{orange}{orange} popup in Figure~\ref{fig:chatgpt-anatomy}). In the network stream, these appear as concatenated tokens (e.g., \texttt{turn0search8} + \texttt{search15}), meaning a single text span is grounded by two or more URLs. Multi-cited claims are reported further in Section~\ref{sec:solo-cited}.
+Some citation chips bundle multiple sources under a single display, indicated by a ``+1'' or ``+2'' suffix (shown as the \textcolor{orange}{orange} popup in Figure~\ref{fig:chatgpt-anatomy}). In the network stream, these appear as concatenated tokens (e.g., \texttt{turn0search8} + \texttt{search15}), meaning a single text span is grounded by two or more URLs.
 
 \section{Anatomy of a Gemini Response}
 \label{sec:gemini-anatomy}
@@ -144,7 +141,7 @@ Some citation chips bundle multiple sources under a single display, indicated by
 \subsection{The \texttt{groundingMetadata} Schema}
 \label{sec:grounding-metadata}
 
-Unlike ChatGPT, where we had to scrape the network stream, Gemini provides structured grounding data directly in the API response. Figure~\ref{fig:gemini-json} shows an abbreviated real response with the three key fields:
+Unlike ChatGPT, where we had to scrape the network stream, Gemini provides structured grounding data directly in the API response. Figure~\ref{fig:gemini-json} shows a response sample from our dataset with the three key fields:
 
 \begin{figure}[htbp]
 \begin{lstlisting}[language={}, basicstyle=\ttfamily\small, frame=single,
@@ -178,9 +175,7 @@ Unlike ChatGPT, where we had to scrape the network stream, Gemini provides struc
   ]
 }
 \end{lstlisting}
-\caption{\texttt{groundingMetadata} from a real Gemini API response. \texttt{webSearchQueries} contains the fan-out queries, 
-\texttt{groundingChunks} lists the retrieved sources (as Vertex redirect URLs with domain-level titles), 
-and \texttt{groundingSupports} maps specific response segments back to the links that support them.}
+\caption{\texttt{groundingMetadata} snippet from a Gemini API response.}
 \label{fig:gemini-json}
 \end{figure}
 
@@ -215,21 +210,19 @@ The companies building RAG systems rely on third-party scrapers to access the li
 \subsection{Google SERP Baseline}
 \label{sec:google-serp-types}
 
-Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard search results), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 25 organic results per query. The total result count per query is higher when including the non-organic types. This Google baseline serves as the primary overlap surface for the Gemini study. Since OpenAI confirms that Enterprise and Edu workspaces use Bing exclusively as their search provider \parencite{openai2024enterprise}, Google also serves as a control group for the ChatGPT Business study, and as a third-provider verification for ChatGPT Plus---allowing us to test whether citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:citation-overlap}).
+Our Google SERP baseline was collected via SerpApi, which returns results in multiple \texttt{result\_type} buckets: organic results (standard search results), video results (often YouTube-heavy), discussion/forum blocks, and People Also Ask (\texttt{related\_question}) entries. For each query, we paginated SerpApi until at least 20 organic results were collected; in practice, this typically required 3 pages, yielding approximately 30 results per query. This Google baseline serves as the primary overlap surface for the Gemini study. Since OpenAI confirms that Enterprise and Edu workspaces use Bing exclusively as their search provider \parencite{openai2024enterprise}, Google also serves as a control group for the ChatGPT Business study, and as a third-provider verification for ChatGPT Plus---allowing us to test whether citations that do not appear in Bing can be found in Google instead (Section~\ref{sec:citation-overlap}).
 
 \subsection{Bing SERP Scraping}
 \label{sec:bing-scraping}
 
-With no official Bing API available (Section~\ref{sec:structural-pivot}), we initially tested SerpApi's Bing endpoint, but found that results beyond the first page were highly irrelevant, mirroring the pagination instability we later documented (Section~\ref{sec:bing-pagination-instability}). We therefore used a Chrome browser extension originally forked from a related study \parencite{cirac2025bingscraper} and substantially modified for our requirements. The extension scrapes Bing's live consumer UI by simulating human search interaction: typing queries with randomized delays, clicking the search button through DOM, and waiting for the page to stabilize before extracting results.
+With no official Bing API available (Section~\ref{sec:structural-pivot}), we initially tested SerpApi's Bing endpoint, but found that results beyond the first page were highly irrelevant, mirroring the pagination instability we later document(Section~\ref{sec:bing-pagination-instability}). Therefore we used a Chrome browser extension  forked from a related study \parencite{cirac2025bingscraper} and modified for our requirements. The extension scrapes Bing's live consumer UI by simulating human search interaction: typing queries with randomized delays, clicking the search button through DOM, and waiting for the page to stabilize before extracting results.
 
 Organic results are separated from ads by filtering on Bing's ``Sponsored'' tags. For each result, the extension extracts position, title, URL, domain, snippet, and page number. Tracking parameters (\texttt{utm\_*}, \texttt{fbclid}, \texttt{gclid}, etc.) are stripped to normalize URLs for overlap matching. The extension paginates until at least 200 results are collected per query ($\sim$20 pages), with delays between pages. All Bing scrapes were routed through a US-based proxy to match the retrieval environment used for ChatGPT runs (Section~\ref{sec:proxy-requirement}).
 
 \subsection{Why We Scraped Bing to Rank~200}
 \label{sec:methodological-evolution}
 
-We detail this section extensively because getting an accurate representation of what ChatGPT looks at from Bing Search was important for our study. Our Google baseline stops at $\sim$25 organic results per query (Section~\ref{sec:google-serp-types}); initially we scraped a similar Top~30 for Bing. This yielded only a 40.3\% citation overlap, which we felt was too low. We then discovered that the ``Searching for\ldots'' text in the UI (Figure~\ref{fig:fan-out-ui}) only surfaces one of the two fan-out queries ChatGPT sends per search turn (Section~\ref{sec:pipeline-overview}), meaning our initial scrapes were matching against an incomplete query set.
-
-After re-running with both fan-out queries, our Data Viewer (Figure~\ref{fig:data-viewer}) still showed a significant visibility gap: ChatGPT was citing relevant pages completely absent from the Top~30. This prompted us to look more closely into how Bing's search interface behaves.
+We detail this section extensively because getting an accurate representation of what ChatGPT looks at from Bing Search was important for our study. Our Google baseline stops at $\sim$30 results per query (Section~\ref{sec:google-serp-types}) and initially we scraped a similar range on Bing Search UI. This yielded a citation and search results overlap lower than our expectations. This prompted us to look more closely into how Bing's search interface behaves.
 
 \begin{figure}[htbp]
 \centering
@@ -243,7 +236,7 @@ After re-running with both fan-out queries, our Data Viewer (Figure~\ref{fig:dat
 
 Bing's first page of organic results is not a fixed ``Top~10.'' In some scrapes,
 Page~1 returned as few as 2 organic results due to ads, Copilot answer
- blocks, and video carousels consuming the available space---the median across all scrapes was only 3 (Table~\ref{tab:bing-page1-size}).
+ blocks, and video carousels consuming the available space. The first page mean length length across all scrapes was 4 while median was only 3. (Table~\ref{tab:bing-page1-size}).
 
 \begin{table}[H]
 \centering
@@ -265,11 +258,10 @@ Mean & 4.3 & 4.1 \\
 \end{tabular}
 \end{table}
 
-\noindent Tables~\ref{tab:bing-full} and~\ref{tab:bing-truncated} illustrate this with two scrapes of the same query, ran seconds apart:
 
 \begin{table}[htbp]
 \centering
-\caption{Bing scrape with a full Page~1: 7 results.\textbf{Bold} entries (ranks 3--7) disappear entirely in the shorter scrape (Table~\ref{tab:bing-truncated}).}
+\caption{Bing scrape with a full Page~1: 7 results. \textbf{Bold} entries (ranks 3--7) disappear entirely in the shorter scrape (Table~\ref{tab:bing-truncated}).}
 \label{tab:bing-full}
 \small
 \begin{tabular}{@{}clp{6.5cm}c@{}}
@@ -296,7 +288,7 @@ Mean & 4.3 & 4.1 \\
 
 \begin{table}[htbp]
 \centering
-\caption{Same query another run, only 2 organic results on Page~1. Ranks 3--7 from Table~\ref{tab:bing-full} never reappear.}
+\caption{Second run for the same query with a smaller first page size}
 \label{tab:bing-truncated}
 \small
 \begin{tabular}{@{}clp{6.5cm}c@{}}
@@ -326,17 +318,16 @@ The second scrape of the same query (Table~\ref{tab:bing-truncated}) we ran righ
 We observed four patterns from this and subsequent scrapes:
 
 \begin{enumerate}
-    \item \textbf{Page~1 results can be lost entirely.} Bing's Page~2 appears to start from a fixed offset regardless of how many organic results Page~1 actually displayed. When Page~1 is compressed by ads or carousels---which happened in the majority of our scrapes (Table~\ref{tab:bing-page1-size})---the displaced results do not shift to Page~2. This is significant because Page~1 is where we expect the highest citation overlap with ChatGPT.
-    \item \textbf{Page~2 is disproportionately noisy.} Off-topic and irrelevant results concentrate on Page~2 far more than its position would suggest. Our overlap data confirms this: Page~2 citation-match rates were comparable to Page~8- (Section~\ref{sec:page-dist}).
+    \item \textbf{Page~1 results can be lost entirely.} Bing's Page~2 appears to start from a fixed offset regardless of how many organic results Page~1 actually displayed. When Page~1 is compressed by ads or carousels the displaced results do not shift to Page~2. This is significant because Page~1 is where we expect the highest citation overlap with ChatGPT.
+    \item \textbf{Page~2 is disproportionately noisy.} Off-topic and irrelevant results concentrate on Page~2 far more than its position would suggest. Our overlap data confirms this: Page~2 citation-match rates were comparable to Page~8 (Section~\ref{sec:page-dist}).
     \item \textbf{Pages~3+ are more predictable.} From Page~3 onward, results followed a more consistent pattern, though irrelevant results still appeared occasionally. Our citation-overlap data corroborates this: after Page~3 we see a gradual decay in relevancy. (Section~\ref{sec:page-dist}).
     \item \textbf{Matches continued deep into the results.} We kept finding citation matches well past Rank~150.
-    If Bing's backend index is properly ordered---which it likely is through
-     its internal API---these results could fit in a tightly ranked Top~30 instead of being scattered across 200.
+    If Bing's backend index was ranked tightly enough these results could fit in a top~30 instead of being scattered across 200.
 \end{enumerate}
 
 Because of these findings we expanded our Bing scrapes to Rank~200 to compensate for UI-layer instability and
  recover matches that a stable API would have probably returned in the Top~10--30. Our page-level distribution data (Section~\ref{sec:page-dist}) shows
- that citation matches do not reach zero at Pages~15--16 but continue with a smooth decay curve. 
+ that citation matches do not reach zero at pages~15--16 but continue with a smooth decay curve. 
 Extending to Rank~300 or beyond would recover additional matches with diminishing returns, further narrowing the ``truly invisible'' set (see Section~\ref{sec:future-work}).
 
 \subsubsection{The Retirement of the Bing Search API}
@@ -354,15 +345,15 @@ Bing's index are backend partners like OpenAI or Microsoft's own AI Agents infra
 
 Prior studies have analyzed LLM citation overlap at scale---\textcite{ong2025chatgptgoogle} processed over 
 100,000 fan-out queries---but without per-run inspection tools, patterns in the data can go unnoticed. 
- This is why we built a viewer application that recreates the ChatGPT interface for 
+  In order to analyze common patterns across prompts, we built a viewer application that recreates the ChatGPT interface for 
  each captured run. 
  
-The prompt, the full response with inline citations, 
- and the Bing and Google search results for that run's
+This application displayed the prompt, the full response with inline citations, 
+  the Bing and Google search results for that run's
   fan-out queries side by side (Figure~\ref{fig:data-viewer}). 
-  Overlapping results are color-coded: green for Bing matches, yellow for Google matches. The viewer also shows how many of the run's cited links are covered by each SERP baseline and breaks down overlap contribution per fan-out query. This let us go through runs one by one and look for patterns.
+  Overlapping results are color-coded: green for Bing matches, yellow for Google matches. 
  The viewer also includes aggregate dashboards for 
- overlap statistics, domain-level exploration, and breakdowns of truly invisible URLs (Section~\ref{sec:top-invisible-domains}) across all runs. We built a similar tool for Gemini, comparing grounding chunks and supports against the Google SERP baseline. Both tools were used throughout the analysis reported in Chapter~\ref{ch:findings}.
+ overlap statistics, domain-level exploration, and breakdowns of truly invisible URLs (Section~\ref{sec:top-invisible-domains}) across all runs for wider perspective analysis. We built a similar tool for Gemini, comparing grounding chunks and supports against the Google SERP baseline.
 
 \section{Content DNA Enrichment}
 \label{sec:content-dna}
@@ -372,7 +363,7 @@ Knowing which URLs were cited was not enough; we also needed to know what kind o
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/dna-snip.png}
-    \caption{Content DNA profiles for three URLs from the data viewer's URL breakdown view (Section~\ref{sec:analysis-applications}). The Features column shows structural qualities detected on the page, such as whether it contains tables, numbered lists, or pros/cons sections.}
+    \caption{Content DNA profiles for three URLs from the data viewer's URL breakdown view}
     \label{fig:dna-snip}
 \end{figure}
 
@@ -397,6 +388,6 @@ Well-known domains with fixed structures such as Reddit, Wikipedia, app stores, 
 This study used large language models at every stage, and we disclose their role for transparency.
 
 The Content DNA labeling pipeline (Section~\ref{sec:labeling-pipeline}) used GPT-5-mini and Gemini 2.5 Flash as structured labelers. 
-The same two models served as judges on our semantic fidelity audit (Section~\ref{sec:semantic-fidelity}). Cross-model agreement was validated in both cases, and all flagged attribution failures were manually verified.
+The same two models served as judges on our semantic fidelity audit (Section~\ref{sec:semantic-fidelity}) and listicle bias audit. Cross-model agreement was validated in all cases, and all flagged attribution failures were manually verified.
 
-Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools were also used for proofreading, structural editing, and \LaTeX{} formatting, with Claude Code and OpenAI Prism used at different stages. Every number in this thesis was verified against the underlying data.
+Most of the analysis scripts (Python, Node.js) were written with AI assistance through dialogue with various models: Gemini 3.0 Flash and GPT-5.2 via Cursor, and Claude Opus 4.5/4.6 via Claude Code. The author specified the analysis logic and reviewed all outputs. AI tools such as Claude Code and OpenAI Prism were also used for literature review, proofreading, structural editing, and \LaTeX{} formatting.

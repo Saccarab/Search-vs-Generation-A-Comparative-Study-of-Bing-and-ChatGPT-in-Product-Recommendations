@@ -23,10 +23,8 @@ A previous classifier version (\texttt{sonic\_force\_pg\_switcher}), documented 
     \item If \texttt{search\_prob} $> 0.65$, trigger a simple search. Otherwise, answer from training knowledge.
 \end{enumerate}
 
-\noindent The classifier's configuration, including its thresholds, is sent as part of the network event stream alongside every response---this is how we were able to extract them.
-
-\noindent The model would only search if it was confident that we need a search triggered. 
-The version we observed (\texttt{sonic\_classifier\_5p2\_3cls\_ev3}, model \texttt{snc-pg-sw-3cls-ev3}), identical across both Business and Plus tiers throughout our data collection window (January~2026), worked a little differently. 
+\noindent The classifier's configuration, including its thresholds, is sent as part of the network event stream alongside every response.
+The version we observed (\texttt{sonic\_classifier\_5p2\_3cls\_ev3}, model \texttt{snc-pg-sw-3cls-ev3}), identical across both Business and Plus tiers throughout our data collection window (January~2026), worked differently. 
 It outputs three probabilities---\texttt{simple\_search\_prob}, \texttt{complex\_search\_prob}, and \texttt{no\_search\_prob}---that sum to 1.0, and evaluates them in a fixed order:
 
 \begin{enumerate}
@@ -35,13 +33,12 @@ It outputs three probabilities---\texttt{simple\_search\_prob}, \texttt{complex\
     \item Else trigger a simple search (threshold = 0, so this is the catch-all).
 \end{enumerate}
 
-\noindent Search is now the default---it is only suppressed if \texttt{no\_search\_prob} crosses the 17.5\% gate. The system no longer asks ``should I search?'' but ``should I \emph{not} search?'' This likely reflects the trajectory toward treating web grounding as the norm (Section~\ref{sec:reasoning-models}).
-
-Table~\ref{tab:classifier-examples} shows the three probabilities for selected prompts. No prompt in our dataset crossed the 0.4 complex-search threshold, so all classified runs were routed to simple search.
+\noindent Search is only suppressed if \texttt{no\_search\_prob} crosses the 17.5\% gate. The system no longer asks ``should I search?'' but ``should I \emph{not} search?'' (Section~\ref{sec:reasoning-models}).
+Table~\ref{tab:classifier-examples} shows the three probabilities parameters which we have observed to be deterministic for a given prompt across different runs.
 
 \begin{table}[H]
 \centering
-\caption{Sonic Classifier probabilities for selected prompts. The three values sum to 1.0 and are deterministic for a given prompt.}
+\caption{Sonic Classifier probabilities for example prompts from the dataset.}
 \label{tab:classifier-examples}
 \small
 \begin{tabular}{@{}p{5.2cm}rrr@{}}
@@ -61,7 +58,7 @@ Table~\ref{tab:search-trigger-breakdown} summarizes the search trigger outcomes 
 
 \begin{table}[H]
 \centering
-\caption{Search trigger breakdown across 474 ChatGPT runs (79 prompts $\times$ 3 runs $\times$ 2 tiers).}
+\caption{Search trigger ratebreakdown}
 \label{tab:search-trigger-breakdown}
 \small
 \begin{tabular}{@{}lrrr@{}}
@@ -80,17 +77,14 @@ Table~\ref{tab:search-trigger-breakdown} summarizes the search trigger outcomes 
 \end{tabular}
 \end{table}
 
-\noindent The six prompts that never searched tend to be phrased as general how-to questions---e.g.\ \emph{``How can I convert an audio file to text?''} (P013)---for which the model answered entirely from training knowledge and produced few or no citations.
+\noindent The six prompts that never searched are general how-to questions---e.g.\ \emph{``How can I convert an audio file to text?''} (P013)---for which the model answered entirely from training knowledge and produced few or no citations. Five prompts showed mixed behavior. The clearest case is P016 (\emph{``I need live transcribing while using online streaming or watching videos.''}): on Business, all three runs searched; on Plus, none did. Its \texttt{no\_search\_prob} of .174 sits just 0.001 below the 0.175 suppression threshold.  But even though the classifier configuration and thresholds are identical across tiers, we got a different search decision on a different tier. P004, P011, P029, and P067 also showed within-tier variation. They triggered a search in some runs but not on others in the same tier.
 
-Five prompts showed mixed behavior. The clearest case is P016 (\emph{``I need live transcribing while using online streaming or watching videos.''}): on Business, all three runs searched; on Plus, none did. Its \texttt{no\_search\_prob} of .174 sits just 0.001 below the 0.175 suppression threshold---same prompt, different tier, opposite outcome. The classifier configuration and thresholds are identical across tiers, so the divergence occurs somewhere downstream. P004, P011, P029, and P067 also showed within-tier variation---searching in some runs but not others on the same tier---but this was rare (4 of 79 prompts).
-
-
-When search was triggered, we observed \texttt{web.run} tool calls in the event stream issuing pairs of reformulated queries---the fan-out queries discussed in the next section. As of late February~2026, the \texttt{sonic\_classification\_result} block (classifier ID, thresholds, and probabilities) is no longer exposed in the event stream; the search decision now happens entirely server-side. The underlying Sonicberry model (\texttt{alpha.sonic\_thinky\_v1\_paid}) remains identical to our January data collection period and is still visible in the stream (Figure~\ref{fig:sonicberry}), as are \texttt{web.run} calls and fan-out queries.
+When search was triggered, we observed \texttt{web.run} tool calls in the event stream and then returning web search queries. As of late February~2026, the \texttt{sonic\_classification\_result} block (classifier ID, thresholds, and probabilities) is no longer exposed in the event stream; the search decision now happens entirely server-side. The underlying Sonicberry model (\texttt{alpha.sonic\_thinky\_v1\_paid}) remains identical to our January data collection period and is still visible in the stream (Figure~\ref{fig:sonicberry}), as are \texttt{web.run} calls and fan-out queries.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figures/sonic_berry.png}
-\caption{A \texttt{web.run} tool call from the network event stream, showing the \texttt{sonicberry\_model\_id} in the metadata block.}
+\caption{A \texttt{web.run} tool call from the network event stream, showing the classifier model id in the metadata block.}
 \label{fig:sonicberry}
 \end{figure}
 
@@ -111,7 +105,7 @@ Once the search decision is made, the model reformulates the user's prompt into 
 \subsection{Multi-Turn Re-Search}
 \label{sec:multi-turn}
 
-In 13 of 422 searched runs (across 6 prompts), the model evaluated its first-round results, 
+In 13 of 422 searched runs  (across 6 prompts) of ChatGPT, the model evaluated its first-round results, 
 then issued a second (or third) \texttt{web.run} call with new queries. 
 First-round queries are generic fan-outs of the user prompt, while later rounds target specific products discovered in the initial results (Table~\ref{tab:multi-turn-queries}).
 \begin{table}[H]
@@ -131,12 +125,12 @@ P073\_r3 & \textbf{3} & ``best video translator for YouTube\ldots'' & Turn 2: ``
 \end{tabular}
 \end{table}
 
-Gemini's grounding metadata does not expose separate turns, but the query sequence suggests the same pattern. In P002\_r1, for example, Q1--Q2 are generic reformulations of the prompt (\emph{``AI text to speech multi-speaker dialogue tools 2025''}, \emph{``best text to speech services for multi-voice conversations''}), while Q3--Q7 each target a specific brand discovered from those initial results: Murf~AI, ElevenLabs, Speechify, Play.ht. The progression from broad category queries to narrow brand queries mirrors ChatGPT's multi-turn re-search, suggesting that Gemini evaluates its first-round results and issues follow-up queries for individual products---it is just not exposed as discrete turns.
+Gemini's grounding metadata does not expose separate turns, but the query sequence suggests the same pattern. In P002\_r1, for example, Q1--Q2 are generic reformulations of the prompt (\emph{``AI text to speech multi-speaker dialogue tools 2025''}, \emph{``best text to speech services for multi-voice conversations''}), while Q3--Q7 each target a specific brand discovered from those initial results: Murf~AI, ElevenLabs, Speechify, Play.ht. The progression from broad category queries to narrow brand queries mirrors ChatGPT's multi-turn re-search, suggesting that Gemini evaluates its first-round results and issues follow-up queries for individual products. 
 
 \subsection{Year Injection in Fan-Out Queries}
 \label{sec:freshness-subsection}
 
-Gemini systematically injects year tokens into its fan-out queries. For the same prompt (P006, \emph{``What are the best apps or AI tools to transcribe audio to text?''}), ChatGPT searched for \emph{``apps or AI tools to transcribe audio to text''} and \emph{``best speech-to-text transcription tools AI''}---no year token. Gemini's raw grounding metadata for the same prompt shows year tokens in every query:
+Gemini systematically injects year tokens into its fan-out queries. For example, in fan outs queries of the prompt (P006, \emph{``What are the best apps or AI tools to transcribe audio to text?''}), Gemini's raw grounding metadata shows year tokens in single every one:
 
 \begin{lstlisting}[language=json,numbers=none]
 "webSearchQueries": [
@@ -147,13 +141,12 @@ Gemini systematically injects year tokens into its fan-out queries. For the same
 ]
 \end{lstlisting}
 
-This is not an isolated case. 96.7\% of Gemini runs (297/307 with valid grounding metadata) include at least one year-injected query, and 66.8\% of all individual Gemini queries (940/1{,}408) contain a year token. Figure~\ref{fig:gemini-year-serp} shows what this produces on the SERP side: searching for one of these year-injected queries returns almost exclusively year-tagged listicles (``11 Best AI Transcription Apps\ldots\ in 2026,'' ``The 3 Best Transcription Services of 2026,'' etc.). This means Gemini's citations are biased toward this kind of content---pages with the current year in their title or headings are far more likely to match these queries and enter the retrieval pool.
+This is not an isolated case. 96.7\% of Gemini runs (297/307 with valid grounding metadata) include at least one year-injected query, and 66.8\% of all individual Gemini queries (940/1{,}408) contain a year token. Figure~\ref{fig:gemini-year-serp} shows what this produces on the SERP side: searching for one of these year-injected queries returns almost exclusively year-tagged listicles (``11 Best AI Transcription Apps\ldots\ in 2026,'' ``The 3 Best Transcription Services of 2026,'' etc.). This means that pages with the current year in their title or headings are far more likely to match these queries, enter the retrieval pool and get cited by Gemini.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\textwidth]{figures/serp_fanout.png}
-\caption{Google SERP for Gemini's year-injected query \emph{``best AI audio to text transcription tools 2025 2026''}.
- Nearly every result is a year-tagged listicle.}
+\caption{Google SERP for Gemini's year-injected query \emph{``best AI audio to text transcription tools 2025 2026''}.}
 \label{fig:gemini-year-serp}
 \end{figure}
 ChatGPT also occasionally injects year tokens, but only in 5.1\% of runs. Its freshness preferences are discussed in Section~\ref{sec:selection-drift}.
@@ -195,14 +188,14 @@ When the prompt is in English but mentions a foreign language---either explicitl
 
 \begin{itemize}
     \item P058 ``best software for Parsian/Farsi audio-to-text transcription'' $\rightarrow$ Farsi fan-out on every run (tool must work \emph{in} Farsi)
-    \item P050 ``free app for\ldots a call with French speakers'' $\rightarrow$ French fan-out on some of the runs only (since user themselves might not necessarily be speaking French)
+    \item P050 ``free app for\ldots a call with French speakers'' $\rightarrow$ French fan-out on some of the runs only
     \item P026 ``transcribe Spanish videos into English'' $\rightarrow$ never triggered (foreign language is just the input source)
 \end{itemize}
 
 \subsubsection{Case~3: Untriggered Cross-Language Fan-Out}
 \label{sec:untriggered-cross-lang}
 
-The most surprising pattern: \textbf{24 runs} across 15 English-language prompts received non-English fan-outs despite containing no foreign-language signal whatsoever. This includes prompts about translation tools (e.g., P018 ``Can you suggest a free website or program that can translate my 20-minute video and add subtitles?'' $\rightarrow$ Chinese fan-out), but also prompts with no connection to language at all:
+24 runs across 15 English-language prompts received non-English fan-outs despite containing no foreign-language signal whatsoever. This includes prompts about translation tools (e.g., P018 ``Can you suggest a free website or program that can translate my 20-minute video and add subtitles?'' $\rightarrow$ Chinese fan-out), but also prompts with no connection to language at all:
 
 \begin{itemize}
     \item P016 ``I need live transcribing while using online streaming'' $\rightarrow$ Chinese fan-out
@@ -211,7 +204,7 @@ The most surprising pattern: \textbf{24 runs} across 15 English-language prompts
     \item P031 ``Are there currently any free audio to text transcription services?'' $\rightarrow$ Japanese fan-out
 \end{itemize}
 
-\noindent Nothing in these prompts explains why the model would search in Chinese or Japanese. Unlike Case~2, where the prompt at least mentions a foreign language, here the prompt gives no signal at all.
+\noindent Nothing in these prompts explains why the model would search in Chinese or Japanese unlike Case~2, where the prompt at least mentions a foreign language, here the prompt gives no signal at all.
 
 Case~3 also shows cross-run instability: the same prompt can produce different target languages across runs. 
 P018 (``Can you suggest a free website or program that can translate my 20-minute video and add subtitles?'') 
@@ -225,9 +218,7 @@ A website targeting only French speakers historically did not need to account fo
 But for AI visibility, even if this website is well optimized for SEO and ranks high in French search results for relevant keywords, it is still competing against the entire English web for half of its AI visibility. To unlock the other half, the publisher would have to
  localize their site and build an SEO strategy for English keywords, which will often be far more competitive and require more investment.
 
-The reverse also holds: Cases~2 and~3 show that English-language prompts can produce localized fan-outs. A website ranking well in English search results might still lose potential visitors in Germany because ChatGPT, based on the user's IP address or simply the nature of the conversation, decided to issue a French or German fan-out instead.
-
-These findings show that a true multi-lingual SEO approach is almost a prerequisite for GEO.
+The reverse also holds: Cases~2 and~3 show that English-language prompts can produce localized fan-outs. A website ranking well in English search results might still lose potential visitors in Germany because ChatGPT, based on the user's IP address or simply the nature of the conversation, decided to issue a French or German fan-out instead. These findings show that a true multi-lingual SEO approach is almost a prerequisite for GEO.
 
 %-----------------------------------------------------------------------
 \section{Citation Origins}
@@ -235,12 +226,12 @@ These findings show that a true multi-lingual SEO approach is almost a prerequis
 \label{sec:citation-overlap}
 
 
-\subsection{Index Affinity: Which Search Engine?}
+\subsection{Search engine citation overlap}
 \label{sec:global-overlap}
 
 For each LLM citation, we checked whether the exact URL appeared in our Bing or Google SERP scrape for 
 the same fan-out queries that produced it.
-The most significant finding is that the search index behind ChatGPT's citations depends a lot on the subscription tier.
+
 
 \begin{table}[H]
 \centering
@@ -266,16 +257,15 @@ Invisible (neither index) & 16.3\% & 19.4\% & 22.3\% \\
 \end{tabular}
 \end{table}
 
-
 Across all three tiers, 78--84\% of citations trace back to a conventional search index. 
 This confirms that traditional search ranking is the dominant factor for AI visibility. The remaining 16--22\% (the ``invisible'' share) is another element that makes GEO distinct from SEO,
  and we examine it in Section~\ref{sec:invisible-links}.
 
-GPT Business states that it retrieves exclusively through its official partner, the Bing Search API \parencite{openai2024enterprise}, and our data confirms this: 81.3\% Bing overlap versus only 27.8\% Google. Even when an LLM does not retrieve from a given engine, some overlap is expected because there are only so many websites that cover a given topic. Any search engine searching for the same keywords will end up returning many of the same pages. We treat that 27.8\% as the natural overlap that comes from this shared relevancy pool.
+GPT Business states that it retrieves exclusively through its official partner, the Bing Search API \parencite{openai2024enterprise}, and our data confirms this: 81.3\% Bing overlap versus only 27.8\% Google. Even when an LLM does not retrieve from a given engine, some overlap is expected because there are only so many websites that cover a given topic. Any search engine searching for the same keywords will end up returning many of the same pages. We treat this 27.8\% as the natural overlap that comes from this shared relevancy pool.
 
 GPT Plus jumps to 64.6\% Google overlap, a 36.8\,pp
 increase over that baseline, while its Bing overlap drops to 67.6\%.
-This suggests that the Plus tier retrieves from Google alongside Bing, which aligns with OpenAI's documentation referring to ``third-party search providers'' in the plural \parencite{openai2024search}. Citation matches against Google SERP features (Table~\ref{tab:serp-feature-matches}) support this: Plus shows roughly double the PAA matches of Business (44 vs 23). Since these features are Google-specific, the disparity is another indicator that Plus retrieves from Google more heavily.
+This suggests that the Plus tier retrieves from Google alongside Bing, which aligns with OpenAI's documentation referring to ``third-party search providers'' in the plural \parencite{openai2024search}. Citation matches against Google SERP features (Table~\ref{tab:serp-feature-matches}) support this: Plus shows roughly double the PAA matches of Business (44 vs 23). 
 
 \begin{table}[H]
 \centering
@@ -294,16 +284,16 @@ Discussion & --- & 3 \\
 
 For publishers, this means that optimizing only for Bing (as many would think) or Google is not 
 enough for ChatGPT visibility. Just as the cross-language fan-out findings (Section~\ref{sec:localization-bias}) 
-showed that an English website is a prerequisite even for non-English audiences, the index affinity 
-data shows that Bing rankings matter for ChatGPT especially for Business-tier users
-A brand that ranks well on Google but has no Bing presence may be effectively invisible to the largest ChatGPT deployment tier.
+showed that an English website is a prerequisite even for non-English audiences, the search engine overlap  
+data shows that Bing rankings matter for ChatGPT especially for Business-tier users.
+A brand that ranks well on Google but has no Bing presence may be effectively invisible to Business or educational workspace users due to how ChatGPT does its grounding in these contexts.
 
 \subsection{Overlap Distribution by SERP Position}
 \label{sec:page-dist}
 \label{sec:bing-page-dist}
 \label{sec:google-page-dist}
 
-Match counts below combine cited links (URLs that appear in the final response) and additional links (URLs that ChatGPT retrieved but did not surface to the user; see Section~\ref{sec:chatgpt-anatomy}).
+Match counts below combine cited links (URLs that appear in the final response) and additional links (URLs that ChatGPT retrieved but did not cite inline to the user; see Section~\ref{sec:chatgpt-anatomy}).
 
 \begin{figure}[H]
 \centering
@@ -465,7 +455,9 @@ cover roughly the same information as Google ranks~5--29.
 The flatter distribution on Bing is indicative of how noisy the consumer UI pagination is,
 and the Bing overlap charts should be seen as a proxy rather than a direct ranking signal.
 
-On Google, the overlap distribution looks much more like we would expect from a Top~30 SERP.
+Gemini on Google shows a similar shape, reinforcing that this positional bias is not
+specific to one LLM.
+Overlap distribution of ChatGPT Plus overlap Google results looks much more like we would expect from a Top~30 SERP.
 ChatGPT Plus' top ranks (1--8) show the highest concentration, with a notable dip at
 ranks 9--10 (48 and 38 matches) followed by an increase at ranks 11--13 (58, 57, 65)---the
 top of what would be Page~2 in a standard 10-result SERP.
@@ -473,8 +465,7 @@ This mirrors a well-documented pattern in human search behavior: the bottom of P
 receives less attention than the top of Page~2.
 Seeing this pattern in an AI citation overlap distribution is unexpected, and hints that
 how LLMs pick results from SERPs has strong parallels with human behavior.
-Gemini on Google shows a similar shape, reinforcing that this positional bias is not
-specific to one LLM.
+
 
 \subsection{Rank Concentration: LLMs vs.\ Human Click-Through}
 \label{sec:gemini-google-rank}
