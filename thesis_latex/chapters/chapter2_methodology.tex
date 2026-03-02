@@ -336,10 +336,8 @@ Microsoft retired public access to the Bing Search API in August~2025
 (Section~\ref{sec:structural-pivot}). Since then, the programmatic consumers of
 Bing's index are backend partners like OpenAI or Microsoft's own AI Agents infrastructure
  \footnote{\url{https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools-classic/bing-grounding}}.
-  This leaves little incentive for Microsoft to maintain stable consumer pagination at depth since 
-  human users rarely paginate past Page~1.
-   Our approach is therefore a proxy for 
-   what ChatGPT actually sees. 
+  Without API access, we rely on consumer UI scraping, which is subject to pagination instability (Section~\ref{sec:bing-pagination-instability}).
+   Our approach is therefore a proxy for what ChatGPT actually sees. 
 \section{Analysis Applications}
 \label{sec:analysis-applications}
 
