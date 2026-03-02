@@ -1,4 +1,4 @@
-\chapter{\abstractname}
+\chapter{Abstract}
 
 Large language models (LLMs) increasingly mediate product discovery, and which sources they cite directly affect
  brand and publisher visibility. Due to the black box nature of LLMs, the emerging practice of Generative Engine
@@ -14,25 +14,3 @@ Large language models (LLMs) increasingly mediate product discovery, and which s
 77.7\% of Gemini's cited links were found among Google search results for the same queries. For ChatGPT Business, 81.3\% appeared in Bing results but only 27.8\% in Google, whereas Plus' citations appeared in both (67.6\% Bing, 64.6\% Google), suggesting it retrieves from multiple search providers. Across all systems, 16--22\% of citations did not appear in any search results for those queries. These came predominantly from Wikipedia, Reddit, app stores, and major tech publications. Both ChatGPT and Gemini favoured pages with tables, numbered lists, and bullet points when selecting from listicles (list-format articles such as ``Top~10 Best\ldots''), and showed a preference for recently published content. Products positioned near the top of a listicle were cited far more often than those further down. When models did cite a source, they rarely misrepresented its content.
 
 Our results show that search engine ranking is a prerequisite for LLM visibility, while highlighting where GEO diverges from traditional SEO.
-
-
-\makeatletter
-\ifthenelse{\pdf@strcmp{\languagename}{english}=0}
-{\renewcommand{\abstractname}{Kurzfassung}}
-{\renewcommand{\abstractname}{Abstract}}
-\makeatother
-
-\chapter{\abstractname}
-
-% TODO: German abstract (Kurzfassung)
-\begin{otherlanguage}{ngerman}
-
-\end{otherlanguage}
-
-
-% Undo the name switch
-\makeatletter
-\ifthenelse{\pdf@strcmp{\languagename}{english}=0}
-{\renewcommand{\abstractname}{Abstract}}
-{\renewcommand{\abstractname}{Kurzfassung}}
-\makeatother
