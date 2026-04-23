@@ -89,7 +89,7 @@ function setupEventListeners() {
     if (midSessionDownloadBtn) {
         midSessionDownloadBtn.addEventListener('click', () => {
             if (scrapingState.currentResults && scrapingState.currentResults.length > 0) {
-                const csvData = convertToCSV(scrapingState.currentResults);
+                const csvData = resultsToCSV(scrapingState.currentResults);
                 const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
                 downloadCSV(csvData, `chatgpt_partial_${timestamp}.csv`);
             } else {
@@ -424,6 +424,26 @@ function downloadResults() {
         const filename = `chatgpt_results_${timestamp}.csv`;
         downloadCSV(scrapingState.csvData, filename);
     }
+}
+
+// Sidepanel-local CSV converter. Mirrors content.js:convertToCSV because content.js
+// runs in the page context and its functions are not visible to the sidepanel.
+function resultsToCSV(results) {
+    if (!results || results.length === 0) return '';
+    const headers = Object.keys(results[0]);
+    let csv = headers.join(',') + '\n';
+    for (const row of results) {
+        const cells = headers.map(h => {
+            let v = row[h] ?? '';
+            if (h === 'response_text' || h === 'query' || h === 'generated_search_query') {
+                v = String(v).replace(/[\r\n]+/g, '  ');
+            }
+            const esc = String(v).replace(/"/g, '""');
+            return /[,"\n\r]/.test(esc) ? `"${esc}"` : esc;
+        });
+        csv += cells.join(',') + '\n';
+    }
+    return csv;
 }
 
 function downloadCSV(csvContent, filename) {

@@ -197,11 +197,17 @@ async function clickWebSearch() {
   }
 }
 
-async function waitForResponseFinished(selector, timeoutMs = 120000) {
+async function waitForResponseFinished(selector, timeoutMs = 600000) {
   return new Promise((resolve, reject) => {
     // Capture search query while waiting
     let capturedSearchQuery = null;
     let webSearchTriggered = false;
+    // GPT-5.3 UI: after generation, the send button disappears entirely (composer collapses).
+    // We detect completion via the stop button: it exists while streaming, then goes away.
+    // Require that we've *seen* the stop button at least once before we accept its absence as "done",
+    // otherwise we'd resolve instantly before streaming even starts.
+    let sawStopButton = false;
+    const STOP_BTN = '[data-testid="stop-button"]';
 
     const normalize = (s) => (s || '').replace(/\s+/g, ' ').trim();
     const parseSearchingFor = (s) => {
@@ -260,8 +266,18 @@ async function waitForResponseFinished(selector, timeoutMs = 120000) {
     const check = () => {
       captureSearchQuery();
 
+      const stopBtn = document.querySelector(STOP_BTN);
+      if (stopBtn) {
+        sawStopButton = true;
+        return false;
+      }
+
+      // Legacy fallback: old UI exposed a send-button testid on completion.
       const btn = document.querySelector(selector);
-      if (btn && btn.getAttribute("data-testid") === "send-button") {
+      const sendBtnVisible = btn && btn.getAttribute("data-testid") === "send-button";
+
+      // Primary signal: we saw the stop button, and now it's gone → generation finished.
+      if (sawStopButton || sendBtnVisible) {
         cleanup();
         resolve({ searchQuery: capturedSearchQuery, webSearchTriggered });
         return true;
@@ -1156,6 +1172,26 @@ async function processQueries(queries, runs_per_q = 1, force_web_search = true, 
     result.extraction_error = error.message;
   }
         
+        // Compute inline item-level citations. Primary: walk the rendered <li> tree and
+        // click citation chips for popover URLs. Fallback: regex URLs out of response_text
+        // when the UI didn't render list items (e.g. prose-only answers).
+        let items = [];
+        try {
+          items = await extractInlineItemCitations();
+        } catch (e) {
+          console.warn('[Items] extractInlineItemCitations failed:', e?.message);
+          items = [];
+        }
+        if (!items || items.length === 0) {
+          try {
+            const textUrls = extractUrlsFromText(result.response_text);
+            items = buildItemsFromTextUrls(result.response_text, textUrls);
+          } catch (e) {
+            console.warn('[Items] text-URL fallback failed:', e?.message);
+            items = [];
+          }
+        }
+
         // helper function to safely convert source data to Python list string format
         const formatSources = (sources) => {
           if (!sources) return '[]';
