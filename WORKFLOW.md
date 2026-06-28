@@ -137,6 +137,52 @@ Normalize URLs (strip `utm_*`, `gclid`, trailing slash, lowercase host), then ch
 
 ---
 
+## 5b. Database schema — `scripts/utility/build_wave_db.py`
+
+The matched data lives in a **SQLite** database (`geo_fresh.db` = GPT-5.2, `geo_v2.db` = 5.3, `geo_v3.db` = 5.5). `build_wave_db.py` reads the raw scrapes (ChatGPT CSV, Bing CSV, Google/SerpApi JSON) and `INSERT`s into the tables below. **Every URL gets `url_normalized` computed at insert** via one `norm_url()` function (lowercase, strip `http(s)://`/`www.`, drop `?query`, strip trailing `/`) — citations and SERP normalize identically, which is what makes the overlap join work.
+
+```sql
+prompts        (prompt_id, prompt, category)
+
+runs           (run_id, prompt_id, run_number, query, generated_search_query,
+                web_search_triggered, web_search_forced, items_count,
+                items_with_citations_count, hidden_queries, items_json,
+                response_text, search_result_groups_json, sources_cited_json,
+                sources_additional_json, sources_all_json, sonic_classification_json,
+                hidden_queries_json, account_type, content_references_json,
+                resolved_model_slug)
+
+citations      (id, run_id, prompt_id, run_number, citation_type, position,
+                url, url_normalized, title, domain, account_type)
+               -- citation_type: 'cited' | 'additional' | 'rejected'
+               -- account_type:  'enterprise' (Business) | 'personal' (Plus)
+
+bing_results   (id, run_id, query, position, page_num, title, url,
+                url_normalized, domain, snippet, account_type)
+
+google_results (id, run_id, chatgpt_run_id, prompt_id, account_type, query,
+                query_type, page_num, position, global_position, url, domain,
+                title, snippet, result_type, collected_at, url_normalized)
+```
+
+**How rows are produced (`ingest_chatgpt`):** one `runs` row per ChatGPT run, then its JSON blobs are exploded into `citations` — `sources_cited_json` → `cited`, `sources_additional_json` → `additional`, and retrieved-but-unsurfaced `content_references_json` items → `rejected`. Bing/Google scrapes load one row per result via `ingest_bing` / `ingest_google`.
+
+**Overlap is then SQL**, joining on `(run_id, url_normalized)`:
+
+```sql
+-- a cited URL "overlaps" Bing if it appears in that run's Bing results
+SELECT 1 FROM bing_results b
+WHERE b.run_id = c.run_id AND b.url_normalized = c.url_normalized
+  AND b.position <= 200;
+-- "invisible" = a cited URL found in NEITHER bing_results NOR google_results
+```
+
+`scripts/analysis/chatgpt_invisible_and_drift_tables.py` and the viewer run exactly these joins. Loading new data = map it into these tables (the loaders are wired to the study's own file columns, so a different source needs a thin adapter into the same schema).
+
+> Note: this SQLite schema is the **ChatGPT** pipeline. The Gemini app (`tools/GeminiVizApp`) uses a different store — a precomputed JSON bundle (`data/master_bundle.json`: `prompts`, `runs`, `resolvedUrls`, `enrichedData`, `rankDistribution`), not relational tables.
+
+---
+
 ## 6. Content / DNA enrichment
 
 For structural-feature analysis of cited (and additional) URLs.
